@@ -15,7 +15,7 @@ jupyter:
 
 # (Sci-kit) Image processing via NumPy and SciPy
 
-We saw on the [previous pages](0_images_as_numpy_arrays.Rmd) how images can be represented as NumPy arrays. This page will explore foundational image processing techniques, as operations on the values in a NumPy image array. First, we will explore how to acheive specific effects using NumPy and SciPy - and we will demonstrate what the operations are doing to an image at the level of the array pixels. Following that, we will show how more sophisticated extensions of these techniques can be implemented with Scikit-image, focusing on how it is often the same NumPy and Scipy operations that Sci-kit image is using "under the hood".
+This page will explore foundational image processing techniques, as operations on the values in a NumPy image array. First, we will explore how to acheive specific effects using NumPy and SciPy - and we will demonstrate what the operations are doing to an image at the level of the array pixels. Following that, we will show how more sophisticated extensions of these techniques can be implemented with Scikit-image, focusing on how it is often the same NumPy and Scipy operations that Sci-kit image is using "under the hood".
 
 Remember that *image processing is when we do something which changes the numbers inside the array, and therefore change the corresponding visual image*? Well, in fact, all that fancy image processing software is doing is just changing the pixel values inside image arrays, in various ways. This is true for both image processing software with a graphical user interface, like [Adobe Photoshop](https://www.adobe.com/th_en/products/photoshop), as well as code-based image processing software like Scikit-image.
 
