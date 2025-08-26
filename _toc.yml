@@ -1,0 +1,11 @@
+format: jb-book
+root: index
+parts:
+  - caption: Scikit-image via NumPy and SciPy
+    chapters:
+      - file: 0_images_as_numpy_arrays
+      - file: 1_colour_images_as_numpy_arrays
+      - file: 2_skimage_intro
+      - file: 3_skimage_processing_from_numpy_and_scipy
+      - file: 4_filters
+      - file: 6_morphology
