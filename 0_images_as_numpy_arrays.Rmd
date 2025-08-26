@@ -15,13 +15,11 @@ jupyter:
 
 # What is an image? - Images as NumPy arrays
 
-This page will examine the fundamental representation of images as NumPy arrays.
-
-Let's think about the meaning of the word "image".  The *intuitive meaning* is roughly "a picture of something", or perhaps more broadly a "visual representation of something". This is the familiar meaning which applies to images we encounter in everyday life, like advertisement posters, paintings, drawings, photographs etc.
+This page explores how images can be represented as NumPy arrays. To get started, let's think about the meaning of the word "image".  The *intuitive meaning* is roughly "a picture of something", or perhaps more broadly a "visual representation of something". This is the familiar meaning which applies to images we encounter in everyday life, like advertisement posters, paintings, drawings, photographs and so on.
 
 The *technical meaning* of image - in scientific computing - is *an at least two dimensional array*. Depending on your background and familiarity with the topic, this definition may sound more or less strange. We assure you that each meaning is consistent with the other. However, each meaning refers to different, but overlapping, sets of things. 
 
-Let's clarify the relationship between the two meanings of "image". Imagine an image - in the intuitive sense - printed on a piece of paper. The image has two dimensions, one dimensions runs along the *length* of the paper and one runs along *width* of the paper. Now imagine the *computer file* that was used to print the image onto the paper (e.g. the image file that was sent to a run-of-the-mill printer to produce the printed image). 
+Imagine an image - in the intuitive sense - printed on a piece of paper. The image has two dimensions, one dimensions runs along the *length* of the paper and one runs along *width* of the paper. Now imagine the *computer file* that was used to print the image onto the paper (e.g. the image file that was sent to a run-of-the-mill printer to produce the printed image). 
 
 The computer file must contain information which tells the printer what to put where along each dimension of the piece of paper - for instance should that location contain black, white, grey or a colour? By controlling these things, the information contained in the file will ultimately determine the look of the printed image (what it is a picture *of* etc.). 
 
@@ -31,7 +29,7 @@ Because the intuitive definition of "image" includes things like hand paintings,
 
 Normally, we take an image (in the intutive sense) and *then* represent it on a computer (by photographing or scanning it etc.). This can be referred to as *digitizing* an image. When digitizing, we take an image in the intuitive sense and convert it to an image in the technical sense, by representing it as an at least two-dimensional array of numbers. 
 
-To get a deeper understanding of the computer representation of images, let's do things the other way around to the normal procedure: let's create an image (in the technical sense of a two-dimensional array) and then view it as an image (in the intuitive sense) as a visual representation that we can look at as we would any picture.
+To get a deep understanding of the computer representation of images, let's do things the other way around to the normal procedure: let's create an image (in the technical sense of a two-dimensional array) and then view it as an image (in the intuitive sense) as a visual representation that we can look at as we would any picture.
 
 # The simplest images
 
@@ -63,9 +61,9 @@ This array is small enough that we can easily see it's dimensionality. If we so 
 two_D_ones_and_zeros.shape
 ```
 
-As you know, the output of the cell above means that the `two_d_ones_and_zeros` array has 2 rows and 2 columns.In virtue of having two dimensions, **this array is an image in the technical sense**. In fact, we will use the terms "array", "image" and "image array" interchangably throughout this tutorial series (where we are referring to arrays of two-dimensions or more).
+As you know, the output of the cell above means that the `two_d_ones_and_zeros` array has 2 rows and 2 columns.In virtue of having two dimensions, *this array is an image in the technical sense*. In fact, we will use the terms "array", "image" and "image array" interchangably throughout this tutorial series, where we are referring to arrays of two-dimensions or more.
 
-You may (understandably) be thinking "that array does not look much like an image...". How can we view it as an image in the intuitive sense - as a picture we can look at? One way is to use `plt.matshow()`, a function from the [Matplotlib library](https://matplotlib.org). The function name `plt.matshow()` stands for `mat`rix `show`. This function has this name because arrays are a representation of [matrices](https://en.wikipedia.org/wiki/Matrix_(mathematics)). As the name implies, it will display a a two-dimensional array graphically.
+You may (understandably) be thinking "that array does not look much like an image...". This is a reasonable response. So how can we view our array as an image in the intuitive sense - as a picture we can look at? One way is to use `plt.matshow()`, a function from the [Matplotlib library](https://matplotlib.org). The function name `plt.matshow()` stands for `mat`rix `show`. This function has this name because arrays are a representation of [matrices](https://en.wikipedia.org/wiki/Matrix_(mathematics)). As the name implies, it will display a a two-dimensional array graphically.
 
 Let's see how our `two_D_ones_and_zeros` looks when we pass it as an argument to `plt.matshow()`. We will use `plt.axis()` to keep the axes clear of numbers for now, to keep things uncluttered:
 
@@ -103,7 +101,7 @@ two_D_ones_and_zeros[0, 0]
 two_D_ones_and_zeros[0, 1]
 ```
 
-Also notice that for now we are dealing with an `float64` `dtype`. You will find other `dtypes` in image arrays, and this can have big implications for how the image is displayed by Matplotlib. For now we will just deal with these `float64` numbers, and we will return to the topic of `dtype`s [later in the tutorial series](1_colour_images_as_numpy_arrays).
+Also notice that for now we are dealing with an `float64` `dtype`. You will find other `dtypes` in image arrays, and this can have big implications for how the image is displayed by Matplotlib. For now we will just deal with these `float64` numbers, and we will return to the topic of `dtype`s [later](1_colour_images_as_numpy_arrays).
 
 
 # Pixels, pixel coordinates and interpolation
@@ -122,7 +120,7 @@ Thus, when our small (or *low-resolution*) image array is displayed/visualised o
 
 How does Matplotlib know what to show in the new, upscaled display pixels? It uses the original array pixels as a guide, to estimate what should go in the new display pixels, to give a good, albeit upscaled, representation of the information in the original image array. We will [go into more detail about this later in this tutorial series](3_skimage_processing_from_numpy_and_scipy).
 
-To give a glimpse of what has happened behind the scenes we will save the *displayed image* to a new `.png` file, using `plt.savefig()`. We have saved the file in the following path in the directory this notebook is in: `images/two_D_ones_and_zeros_from_plot.png`.
+To give a glimpse of what has happened behind the scenes we will save the *display image* to a new `.png` file, using `plt.savefig()`. We have saved the file in the following path in the directory this notebook is in: `images/two_D_ones_and_zeros_from_plot.png`.
 
 ```{python}
 # Show the image.
@@ -134,7 +132,7 @@ plt.savefig("images/two_D_ones_and_zeros_from_plot.png")
 
 We will then read this new `.png` image back into this notebook, and convert it to a numpy array to view it's `shape` attribute.
 
-Reading files using Scikit-image (`skimage`) will be covered on [later pages](2_skimage_intro), but for now we import`.imread()` from the input/output (`io`) module of Scikit-image to load the image that we just saved via the code in the cell above.
+Loading files using Scikit-image (`skimage`) will be covered on [later pages](2_skimage_intro), but for now we import`.imread()` from the input/output (`io`) module of Scikit-image to load the image that we just saved via the code in the cell above.
 
 *Note*: for reasons that will become clear later, we set the `as_gray` argument to `True` to ensure the image has the same number of dimensions as our original array.
 
@@ -167,7 +165,7 @@ plt.imshow(two_D_ones_and_zeros);
 
 When using `plt.imshow()` we now see some (possibly confusing) information on the axes. The `plt.matshow()` function, by default shows us the integer index of each element in the array. For the new display output from `plt.imshow()` we see axis tick labels ranging from -0.5 to 1.5.
 
-These numbers refer to the *display pixel coordinates* of the displayed image, rather than the *array pixel coordinates* that `plt.matshow()` puts on the axis by default. Compare the output from the cell below (from `plt.matshow()`) to the output of the cell above (from `plt.imshow()`) to see the difference:
+These numbers refer to the *display pixel coordinates* of the displayed image, rather than the *array pixel coordinates* that `plt.matshow()` puts on the axis by default. Compare the output from the cell below (from `plt.matshow()`) to the output of the cell above (from `plt.imshow()`) to see the difference in the default axis values:
 
 ```{python}
 # Use `plt.matshow()` - the axis ticks now show the array pixel coordinates
@@ -281,7 +279,15 @@ We can change the default colourmap for the rest of the plots we create in this 
 plt.rcParams['image.cmap'] = 'gray'
 ```
 
-You now understand the fundamentals of the computer representation of images! An image is array of numbers - often but not necessarily containing information about, or depicting, something in the world. Each element of the array (e.g. each number/array pixel) determines the pixel intensity of that pixel and tells the computer what *colour or grey-level* to show at that location when the image is displayed - e.g. when the image is visualised using display pixels on the screen of your device. 
+You now understand the fundamentals of the computer representation of images! Before moving on, let's recap where we are:
+
+* We know that an image (in the technical sense) is a numeric array of at least two dimensions - often but not necessarily containing information about, or depicting, something in the world.
+
+* We know that the number at each element of the array tells a computer what pixel intensity (e.g. grey-level) to show at that array pixel location. These pixel intensities determine the colour of the corresponding display pixels in the rendered image.
+
+* We know what happens when an image array contains fewer pixels than the rendered image e.g. using interpolation, the image will be upscaled to be displayed using more *display pixels* than there are *array pixels* in the original image array.
+
+* We have seen how changing the elements in an array can change what the image shows or depicts.
 
 # (Slightly) more complex images
 
@@ -387,19 +393,7 @@ Applying changes such as these to the numbers in the array is the fundamental me
 
 ![](images/processing_definition.png)
 
-So, remember this maxim: *"image processing" is when we do something which changes the numbers inside the image array, and therefore change the corresponding visual image*.
-
-Such image processing operations are carried out by popular software, including that used to edit images for various social media platforms. They are also carried out in a scientific context in fields like medical imaging, where they are applied to the image arrays we get from CT scans and MRI scans, for example.
-
-Now we know what an image is and how we can manipulate it, let's recap where we are:
-
-* We know that an image (in the technical sense) is a numeric array of at least two dimensions.
-
-* We know that the number at each element of the array tells a computer what pixel intensity (e.g. grey-level) to show at that array pixel location.
-
-* We have seen how changing the elements in an array can change what the image shows or depicts.
-
-* We know what happens when an image array contains fewer pixels than the rendered image e.g. using interpolation, the image will be upscaled to be displayed using more *display pixels* than there are *array pixels* in the original image array.
+So, remember this maxim: *"image processing" is when we do something which changes the numbers inside the image array, and therefore changes the corresponding visual image*. Such image processing operations are carried out by popular software, including that used to edit images for various social media platforms. They are also carried out in a scientific context in fields like medical imaging, where they are applied to the image arrays we get from CT scans and MRI scans, for example.
 
 # Simple images, complex images
 
@@ -420,7 +414,7 @@ Scary stuff. This image will seem slightly less intimidating when we see that it
 xeno.round(2) # We round the numbers for display, to make them nicer to view.
 ```
 
-These same princples apply to images of any complexity, including those produced by complex scanners like [functional brain imaging](https://en.wikipedia.org/wiki/Functional_neuroimaging) devices.
+These same princples apply to images of any complexity, including those produced by complex imaging eqauipment like [functional brain imaging](https://en.wikipedia.org/wiki/Functional_neuroimaging) devices.
 
 
 ::: {exercise-start}
@@ -428,7 +422,7 @@ These same princples apply to images of any complexity, including those produced
 :class: dropdown
 :::
  
-Now over to you to create some [computer art](https://en.wikipedia.org/wiki/Computer_art). Your job is to recreate the (slightly terrifying) image in the output of the cell below, **using only a Numpy array and `plt.matshow()`.** Run the cell to show the image.
+Now over to you to create some [computer art](https://en.wikipedia.org/wiki/Computer_art). Your job is to recreate the (slightly terrifying) image in the output of the cell below, **using only a NumPy array and `plt.matshow()`.** Run the cell to show the image.
 
 ```{python}
 # Importing a custom function to create the image.
@@ -440,7 +434,7 @@ create_smiley();
 
 The array you create should have `.shape` of (11, 8) - so 11 rows and 8 columns.
 
-*Hint*: you can use your knowledge from the previous sections, coupled with the helpful numbers on each axis of the image - which show the integer index location of each cell in the two-dimensional array - to work out what numbers need to be at each location in your array. You may also want to investigate placing [`plt.grid()`](https://matplotlib.org/stable/api/_as_gen/matplotlib.pyplot.grid.html) in the last line of the cell above and re-running the cell, in order to make it easier to identify row/column coordinates...
+*Hint*: you can use your knowledge from the previous sections, coupled with the axis tick numbers - which show the integer index location of each cell in the two-dimensional array - to work out what pixel values need to be at each location in your array. You may also want to investigate placing [`plt.grid()`](https://matplotlib.org/stable/api/_as_gen/matplotlib.pyplot.grid.html) in the last line of the cell above and re-running the cell, in order to make it easier to identify row/column coordinates...
 
 ```{python}
 # YOUR CODE HERE
