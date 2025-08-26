@@ -32,7 +32,7 @@ html:
   use_edit_page_button: true
   use_repository_button: true
   use_issues_button: true
-  baseurl: https://pxr687.github.io/skimage-tutorials
+  baseurl: https://pxr687.github.io/skimage-tutorials-temp
 
 repository:
   url: https://github.com/pxr687/skimage-tutorials-temp
