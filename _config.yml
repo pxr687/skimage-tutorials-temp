@@ -35,7 +35,7 @@ html:
   baseurl: https://pxr687.github.io/skimage-tutorials
 
 repository:
-  url: https://github.com/pxr687/skimage-tutorials
+  url: https://github.com/pxr687/skimage-tutorials-temp
   branch: main
 
 launch_buttons:
