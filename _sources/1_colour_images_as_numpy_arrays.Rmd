@@ -76,7 +76,7 @@ plt.colorbar();
 two_D_ones_and_zeros.dtype
 ```
 
-Conversely, the array `two_D_other_integers` contains different integer values. Note that, though the *numbers* themselves are integers, they are represent by NumPy as `float64` values:
+Conversely, the array `two_D_other_integers` contains different integer values. Note that, though the *numbers* themselves are integers, they are represented as NumPy as `float64` values:
 
 ```{python}
 # Another image from earlier.
