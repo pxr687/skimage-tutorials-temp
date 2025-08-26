@@ -140,6 +140,8 @@ two_D_other_integers.shape
 
 An image which has what we will call *true colour* contains information **in each array pixel about more than just *intensity* - it also contains information about *colour*.**  So, to hammer this point home: greyscale and binary images displayed with the `viridis` colourmap do not contain true colour information in their array pixel values. Instead Matplotlib is *displaying* binary and greyscale information using colours. To introduce true colour into the image, we need a spooky third dimension... 
 
+# True Colour in 3D
+
 Sounds Sci-Fi! But what does it mean?
 
 Let's focus on our lowly 4-pixel binary array (4 *array pixels*, that is):
@@ -440,6 +442,8 @@ So, this has given us:
 
 ![](images/three_slice_blue_visualised.png)
 
+## Colour channels
+
 What is happening here?
 
 Recall that we referred to the 2-D arrays that we used at the start of this tutorial as *single-channel image arrays*? The 3-D arrays we just created are  *three-channel image arrays*. This means that each array pixel has three values, one in each slice of the 3-D stacks we created. You can think of each slice as being one *colour channel*. Each colour channel controls the amount of a specific colour in the image, depending on the values of the array pixels in that slice.
@@ -543,6 +547,8 @@ plt.imshow(coffee);
 ```
 
 Looks great! Though at the time of writing one of the authors is on their third coffee today...
+
+# Pixels and `dtype`
 
 Why is the highest pixel value in the `coffee` image the bizarrely specific integer value of 255? We will talk more about image data types [later](2_skimage_intro), but other values/`dtypes` would work here also, though they will affect which numbers represent the highest and lowest pixel values are. Here are some options:
 

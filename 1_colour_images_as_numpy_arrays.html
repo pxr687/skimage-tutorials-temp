@@ -188,6 +188,8 @@
 
 
 
+
+
 <li class="toctree-l1"><a class="reference internal" href="2_skimage_intro.html">Introducing Scikit-image</a></li>
 
 
@@ -438,6 +440,11 @@ document.write(`
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
 <li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">What about colour?</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#true-colour-in-3d">True Colour in 3D</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#colour-channels">Colour channels</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#pixels-and-dtype">Pixels and <code class="docutils literal notranslate"><span class="pre">dtype</span></code></a></li>
 <li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#more-actually-complex-images">More (actually) complex images</a></li>
 <li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#summary">Summary</a></li>
 <li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#references">References</a></li>
@@ -622,6 +629,9 @@ document.write(`
 </div>
 </div>
 <p>An image which has what we will call <em>true colour</em> contains information <strong>in each array pixel about more than just <em>intensity</em> - it also contains information about <em>colour</em>.</strong>  So, to hammer this point home: greyscale and binary images displayed with the <code class="docutils literal notranslate"><span class="pre">viridis</span></code> colourmap do not contain true colour information in their array pixel values. Instead Matplotlib is <em>displaying</em> binary and greyscale information using colours. To introduce true colour into the image, we need a spooky third dimension…</p>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="true-colour-in-3d">
+<h1>True Colour in 3D<a class="headerlink" href="#true-colour-in-3d" title="Link to this heading">#</a></h1>
 <p>Sounds Sci-Fi! But what does it mean?</p>
 <p>Let’s focus on our lowly 4-pixel binary array (4 <em>array pixels</em>, that is):</p>
 <div class="cell docutils container">
@@ -1147,6 +1157,8 @@ Our 3-D stacked array is of the right shape:</p>
 </div>
 <p>So, this has given us:</p>
 <p><img alt="" src="_images/three_slice_blue_visualised.png" /></p>
+<section id="colour-channels">
+<h2>Colour channels<a class="headerlink" href="#colour-channels" title="Link to this heading">#</a></h2>
 <p>What is happening here?</p>
 <p>Recall that we referred to the 2-D arrays that we used at the start of this tutorial as <em>single-channel image arrays</em>? The 3-D arrays we just created are  <em>three-channel image arrays</em>. This means that each array pixel has three values, one in each slice of the 3-D stacks we created. You can think of each slice as being one <em>colour channel</em>. Each colour channel controls the amount of a specific colour in the image, depending on the values of the array pixels in that slice.</p>
 <p>Using these three-channel arrays, when Matplotlib produces the a two-dimensional <em>display image</em> (e.g. the matrix with coloured squares along the diagonal and black squares elsewhere). However, behind this 2-D display image there are three slices in the third dimension, each with the same number of rows and columns as the final 2-D display image. Each pixel (e.g. each array element) in the display image gets its colour information from a mix of the corresponding elements in each slice in the 3-D image array.</p>
@@ -1334,6 +1346,10 @@ Min Pixel Value: 0
 </div>
 </div>
 <p>Looks great! Though at the time of writing one of the authors is on their third coffee today…</p>
+</section>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="pixels-and-dtype">
+<h1>Pixels and <code class="docutils literal notranslate"><span class="pre">dtype</span></code><a class="headerlink" href="#pixels-and-dtype" title="Link to this heading">#</a></h1>
 <p>Why is the highest pixel value in the <code class="docutils literal notranslate"><span class="pre">coffee</span></code> image the bizarrely specific integer value of 255? We will talk more about image data types <a class="reference internal" href="2_skimage_intro.html"><span class="doc std std-doc">later</span></a>, but other values/<code class="docutils literal notranslate"><span class="pre">dtypes</span></code> would work here also, though they will affect which numbers represent the highest and lowest pixel values are. Here are some options:</p>
 <p>0 - 1: where 0 is the least intense, 1 is the most intense (<code class="docutils literal notranslate"><span class="pre">float64</span></code>).</p>
 <p>0 - 255: where 0 is the least intense, 255 is the most intense (<code class="docutils literal notranslate"><span class="pre">uint8</span></code>).</p>
@@ -1831,6 +1847,11 @@ Min Pixel Value: 0
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
 <li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">What about colour?</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#true-colour-in-3d">True Colour in 3D</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#colour-channels">Colour channels</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#pixels-and-dtype">Pixels and <code class="docutils literal notranslate"><span class="pre">dtype</span></code></a></li>
 <li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#more-actually-complex-images">More (actually) complex images</a></li>
 <li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#summary">Summary</a></li>
 <li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#references">References</a></li>

@@ -188,6 +188,8 @@
 
 
 
+
+
 <li class="toctree-l1"><a class="reference internal" href="2_skimage_intro.html">Introducing Scikit-image</a></li>
 
 
@@ -466,7 +468,7 @@ document.write(`
   <section class="tex2jax_ignore mathjax_ignore" id="image-filtering-i">
 <h1>Image filtering I<a class="headerlink" href="#image-filtering-i" title="Link to this heading">#</a></h1>
 <p>A common operation we will want to perform on images is <em>filtering</em>. This is where we modify all of the pixels in an image according to a certain rule or algorithm, often based on other pixel values within the “local neighbourhood” of a given pixel. Filtering techniques can be used to remove noise from an image, or to achieve specific visual effects, amongst other purposes.</p>
-<p>Here we will look at some foundational filtering techniques, threshold filtering and mean filtering. We will show how they work at the pixel-level using <code class="docutils literal notranslate"><span class="pre">numpy</span></code> and <code class="docutils literal notranslate"><span class="pre">scipy</span></code>, and then showing how to implement them in <code class="docutils literal notranslate"><span class="pre">skimage</span></code>.</p>
+<p>Here we will look at some important filtering techniques: threshold filtering and mean filtering. We will show how they work at the pixel-level, using <code class="docutils literal notranslate"><span class="pre">numpy</span></code> and <code class="docutils literal notranslate"><span class="pre">scipy</span></code>, and then we will show how to implement them in <code class="docutils literal notranslate"><span class="pre">skimage</span></code>.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>

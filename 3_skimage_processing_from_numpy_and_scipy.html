@@ -188,6 +188,8 @@
 
 
 
+
+
 <li class="toctree-l1"><a class="reference internal" href="2_skimage_intro.html">Introducing Scikit-image</a></li>
 
 
@@ -473,7 +475,7 @@ document.write(`
                   
   <section class="tex2jax_ignore mathjax_ignore" id="sci-kit-image-processing-via-numpy-and-scipy">
 <h1>(Sci-kit) Image processing via NumPy and SciPy<a class="headerlink" href="#sci-kit-image-processing-via-numpy-and-scipy" title="Link to this heading">#</a></h1>
-<p>We saw on the <a class="reference internal" href="0_images_as_numpy_arrays.html"><span class="std std-doc">previous pages</span></a> how images can be represented as NumPy arrays. This page will explore foundational image processing techniques, as operations on the values in a NumPy image array. First, we will explore how to acheive specific effects using NumPy and SciPy - and we will demonstrate what the operations are doing to an image at the level of the array pixels. Following that, we will show how more sophisticated extensions of these techniques can be implemented with Scikit-image, focusing on how it is often the same NumPy and Scipy operations that Sci-kit image is using “under the hood”.</p>
+<p>This page will explore foundational image processing techniques, as operations on the values in a NumPy image array. First, we will explore how to acheive specific effects using NumPy and SciPy - and we will demonstrate what the operations are doing to an image at the level of the array pixels. Following that, we will show how more sophisticated extensions of these techniques can be implemented with Scikit-image, focusing on how it is often the same NumPy and Scipy operations that Sci-kit image is using “under the hood”.</p>
 <p>Remember that <em>image processing is when we do something which changes the numbers inside the array, and therefore change the corresponding visual image</em>? Well, in fact, all that fancy image processing software is doing is just changing the pixel values inside image arrays, in various ways. This is true for both image processing software with a graphical user interface, like <a class="reference external" href="https://www.adobe.com/th_en/products/photoshop">Adobe Photoshop</a>, as well as code-based image processing software like Scikit-image.</p>
 <p>Let’s again build a simple image array, and look at how we can use NumPy to achieve some pretty radical changes to the original image. We will then look at the specific purposes that such changes are used for, with more complex images.</p>
 <p>First, we create our image array:</p>
