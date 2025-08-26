@@ -1,8 +1,6 @@
 # Scikit-image via NumPy and SciPy
 
-This is a tutorial series covering foundational image manipulation and processing using [Scikit-image](https://scikit-image.org). The series also explores image processing using two of the foundational libraries that Scikit-image is built from: [NumPy](https://numpy.org) and [SciPy](https://scipy.org). 
-
-The tutorials first cover the mechanics of representing images as NumPy arrays. NumPy arrays are the fundamental image representations that Scikit-image works with. Later tutorials focus on different types of image processing. First, it is shown how different image processing operations can be implemented using NumPy and SciPy functions, then how to implement more complex algorithms with Scikit-image, with a focus on how NumPy and SciPy functions are often being used "under the hood".
+This is a tutorial series covering foundational image manipulation and processing using [Scikit-image](https://scikit-image.org) and two of its constituent libraries: [NumPy](https://numpy.org) and [SciPy](https://scipy.org). The tutorials first cover the mechanics of representing images as NumPy arrays, which are the fundamental image representations that Scikit-image uses. Later tutorials focus on different classes of image processing operations. These operations are demonstrated first using NumPy and SciPy, followed by their implementation in Scikit-image, with a focus on how NumPy and SciPy are often being used "under the hood".
 
 ## Many sections are interactive
 

@@ -19,7 +19,7 @@ jupyter:
 All of the arrays we have encountered [so far](0_images_as_numpy_arrays) contain just one value at each array pixel location. This page will look at image arrays with more complex shapes, and show how this can encode colour information, giving us beautiful colour images, like this one:
 
 ![](images/xenomorph.png)
-(Image from [here](https://static1.srcdn.com/wordpress/wp-content/uploads/2019/07/Xenomorph-from-the-Alien-franchise.jpg))
+(Image from [here.](https://static1.srcdn.com/wordpress/wp-content/uploads/2019/07/Xenomorph-from-the-Alien-franchise.jpg))
 
 First, some library imports:
 
@@ -35,7 +35,7 @@ plt.rcParams['image.cmap'] = 'gray'
 from hints import hint_corrupted_camera
 ```
 
-Below, we create some low-resolution 2-D image arrays:
+Below, we create some low-resolution 2-D image arrays, with which to explore colour representation:
 
 ```{python}
 # A two-dimensional numpy array of 1's and 0's.
@@ -76,7 +76,7 @@ plt.colorbar();
 two_D_ones_and_zeros.dtype
 ```
 
-Conversely, the array `two_D_other_integers` contains different integer values. Note that, though the *numbers* themselves are integers, they are represented as NumPy as `float64` values:
+Conversely, the array `two_D_other_integers` contains different integer values. Note that, though the *numbers* themselves are integers, they are represented ny NumPy as `float64` values:
 
 ```{python}
 # Another image from earlier.
