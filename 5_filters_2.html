@@ -1,0 +1,1415 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="./" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Image filtering II &#8212; Scikit-image via NumPy and SciPy</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+
+  
+  <link href="_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="_static/styles/sphinx-book-theme.css?v=eba8b062" />
+    <link rel="stylesheet" type="text/css" href="_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.8ecb98da25f57f5357bf6f572d296f466b2cfe2517ffebfabe82451661e28f02.css?v=6644e6bb" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="_static/exercise.css" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-design.min.css?v=95c83b7e" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+    <script src="_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="_static/doctools.js?v=9a2dae69"></script>
+    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="_static/copybutton.js?v=f281be69"></script>
+    <script src="_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="_static/togglebutton.js?v=4a39c7ea"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="_static/design-tabs.js?v=f930bc37"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = '5_filters_2';</script>
+    <link rel="canonical" href="https://pxr687.github.io/skimage-tutorials/5_filters_2.html" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+        
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="index.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="_static/colourwheel.png" class="logo__image only-light" alt="Scikit-image via NumPy and SciPy - Home"/>
+    <script>document.write(`<img src="_static/colourwheel.png" class="logo__image only-dark" alt="Scikit-image via NumPy and SciPy - Home"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Scikit-image via NumPy and SciPy</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="0_images_as_numpy_arrays.html">What is an image? - Images as NumPy arrays</a></li>
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="1_colour_images_as_numpy_arrays.html">What about colour?</a></li>
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="2_skimage_intro.html">Introducing Scikit-image</a></li>
+
+
+
+
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="3_skimage_processing_from_numpy_and_scipy.html">(Sci-kit) Image processing via NumPy and SciPy</a></li>
+
+
+
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="4_filters.html">Image filtering I</a></li>
+
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="6_morphology.html">Morphology</a></li>
+
+
+
+
+
+
+
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/pxr687/skimage-tutorials-temp" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/pxr687/skimage-tutorials-temp/edit/main/5_filters_2.Rmd" target="_blank"
+   class="btn btn-sm btn-source-edit-button dropdown-item"
+   title="Suggest edit"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-pencil-alt"></i>
+  </span>
+<span class="btn__text-container">Suggest edit</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/pxr687/skimage-tutorials-temp/issues/new?title=Issue%20on%20page%20%2F5_filters_2.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="_sources/5_filters_2.Rmd" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.Rmd</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Image filtering II</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Image filtering II</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#to-do-here-sharpening-blurring">TO DO HERE: SHARPENING, BLURRING</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#gaussian-filter">Gaussian filter</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#from-meeting-move-this-to-before-median-filter">From meeting: move this to before median filter…</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#from-meeting-show-plt-surface-of-the-kernel-then-wireframe">From meeting: show plt.surface of the kernel then wireframe</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#from-meeting-show-this-as-a-surface-also">From meeting: show this as a surface also</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#gaussian-filters-in-skimage">Gaussian filters in <code class="docutils literal notranslate"><span class="pre">skimage</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#from-meeting-move-this-exercise-to-later-becuase-the-explanation-involves-a-discussion-of-integer-overflow-maybe-show-them-the-scaling-then-the-exercise-purpose-is-to-use-astype-float-on-the-original-array-to-avoid-overflow-have-a-hint-about-255-1-and-the-effect-on-the-image-also-discuss-whether-kernels-need-to-sum-to-1-yes-if-we-want-to-preserve-the-scaling-of-the-image-e-g-if-it-sums-to-100-all-the-pixel-values-will-be-times-100-etc">From meeting: move this exercise to later, becuase the explanation involves a discussion of integer overflow. Maybe show them the scaling, then the exercise purpose is to use <code class="docutils literal notranslate"><span class="pre">astype(float)</span></code> on the original array to avoid overflow. Have a hint about “255 + 1” and the effect on the image. Also discuss whether kernels need to sum to 1 (yes, if we want to preserve the scaling of the image e.g. if it sums to 100, all the pixel values will be times 100 etc.).</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#median-filter">Median filter</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#add-here-show-median-within-a-few-kernels-but-also-mention-it-cannot-be-done-via-convolution">Add here: show median within a few kernels - but also mention it cannot be done via convolution</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#edge-filtering">Edge filtering</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#link-back-to-np-diff-exercise-from-processing-page-e-g-as-very-simple-edge-detector">Link back to <code class="docutils literal notranslate"><span class="pre">np.diff()</span></code> exercise from processing page (e.g. as very simple edge detector)</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#sobel-and-roberts-filters">Sobel and Roberts filters</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#non-local-filters">Non-local filters</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#summary">Summary</a></li>
+</ul>
+
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="image-filtering-ii">
+<h1>Image filtering II<a class="headerlink" href="#image-filtering-ii" title="Link to this heading">#</a></h1>
+<p>3.3.5 onward from: <a class="reference external" href="https://lectures.scientific-python.org/packages/scikit-image/index.html">https://lectures.scientific-python.org/packages/scikit-image/index.html</a></p>
+<p>Based on: <a class="reference external" href="https://scikit-image.org/skimage-tutorials/lectures/1_image_filters.html">https://scikit-image.org/skimage-tutorials/lectures/1_image_filters.html</a></p>
+<p>Reference: <a class="reference external" href="https://www.kdnuggets.com/numpy-for-image-processing">https://www.kdnuggets.com/numpy-for-image-processing</a></p>
+<p>Reference: <a class="reference external" href="https://setosa.io/ev/image-kernels">https://setosa.io/ev/image-kernels</a></p>
+<p>Reference: <a class="reference external" href="https://wiki.imindlabs.com.au/ds/aml/4_problem_domains/1-image-processing/3_edge_detectors">https://wiki.imindlabs.com.au/ds/aml/4_problem_domains/1-image-processing/3_edge_detectors</a></p>
+<p>Reference: <a class="reference external" href="https://www.geeksforgeeks.org/deep-learning/types-of-convolution-kernels">https://www.geeksforgeeks.org/deep-learning/types-of-convolution-kernels</a></p>
+<p>Reference: skimage tutorials (check versions), scipy lecture notes</p>
+<p>Reference: <a class="reference external" href="https://jni.github.io/i2k-skimage-napari/lectures/1_image_filters.html">https://jni.github.io/i2k-skimage-napari/lectures/1_image_filters.html</a></p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">scipy.ndimage</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">ndi</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">skimage</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">ski</span>
+
+<span class="c1"># Set &#39;gray&#39; as the default colormap</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">rcParams</span><span class="p">[</span><span class="s1">&#39;image.cmap&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;gray&#39;</span>
+
+<span class="c1"># Set NumPy precision to 2 decimal places</span>
+<span class="n">np</span><span class="o">.</span><span class="n">set_printoptions</span><span class="p">(</span><span class="n">precision</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+
+<span class="c1">#  Custom functions for illustrations, and to quickly report image attributes.</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">noise_illustration</span><span class="w"> </span><span class="kn">import</span> <span class="n">generate_image</span><span class="p">,</span> <span class="n">original_image</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">gaussian_illustration</span><span class="w"> </span><span class="kn">import</span> <span class="n">make_gaussian_kernel</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">show_attributes</span><span class="w"> </span><span class="kn">import</span> <span class="n">show_attributes</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="to-do-here-sharpening-blurring">
+<h1>TO DO HERE: SHARPENING, BLURRING<a class="headerlink" href="#to-do-here-sharpening-blurring" title="Link to this heading">#</a></h1>
+<p>Other kernel types from this reference:
+<a class="reference external" href="https://www.geeksforgeeks.org/deep-learning/types-of-convolution-kernels/#1-identity-kernel">https://www.geeksforgeeks.org/deep-learning/types-of-convolution-kernels/#1-identity-kernel</a></p>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="gaussian-filter">
+<h1>Gaussian filter<a class="headerlink" href="#gaussian-filter" title="Link to this heading">#</a></h1>
+<section id="from-meeting-move-this-to-before-median-filter">
+<h2>From meeting: move this to before median filter…<a class="headerlink" href="#from-meeting-move-this-to-before-median-filter" title="Link to this heading">#</a></h2>
+<p>Use gaussian from here: <a class="reference external" href="https://sbme-tutorials.github.io/2018/cv/notes/4_week4.html">https://sbme-tutorials.github.io/2018/cv/notes/4_week4.html</a></p>
+<p>[Highlight that it is built from NumPy and SciPy - wrapper for <code class="docutils literal notranslate"><span class="pre">scipy.ndimage.gaussian_filter</span></code>?]</p>
+<p><a class="reference external" href="https://en.wikipedia.org/wiki/Gaussian_filter">Gaussian filtering</a> is another method of filtering, which can produce interesting results different to both mean filter and median filter.</p>
+<p>We will discuss why it is called “Gaussian” shortly, for now, have a look at the fancy kernel below <strong>From meeting</strong>: for now let’s use “gaussian” very loosely, let’s have a look at a gaussian, for the moment all we will take from it is that at the centre it has high values, thenthe values fall off at other sides. [Explain that the kernal below is Gaussian-like].</p>
+<ul class="simple">
+<li><p>Start in 1d, show 1D gaussian</p></li>
+<li><p>Show 2-D gaussian</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># A fancy kernel.</span>
+<span class="n">small_gaussian_kernel</span> <span class="o">=</span> <span class="mi">1</span><span class="o">/</span><span class="mi">16</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span>
+                                         <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span>
+                                         <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">]])</span>
+<span class="n">small_gaussian_kernel</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([[0.06, 0.12, 0.06],
+       [0.12, 0.25, 0.12],
+       [0.06, 0.12, 0.06]])
+</pre></div>
+</div>
+</div>
+</div>
+<p>Imagine this kernel plotted in 3D. It is in the <code class="docutils literal notranslate"><span class="pre">shape</span></code> of <code class="docutils literal notranslate"><span class="pre">(3,</span> <span class="pre">3)</span></code>. Imagine that the “floor” of the 3D plot is a 3-by-3 grid, with the integer index labels plotted on the x and y-axis. Imagine further that we plot the values in the kernel in the vertical direction, on the z-axis. Such a plot is shown below. A red wireframe connects the space in between each kernel value, to make the pattern between the individual elements clearer. The kernel values themselves are shown as dark blue text. The axis ticks show the integer index location of the kernel values.</p>
+</section>
+<section id="from-meeting-show-plt-surface-of-the-kernel-then-wireframe">
+<h2>From meeting: show plt.surface of the kernel then wireframe<a class="headerlink" href="#from-meeting-show-plt-surface-of-the-kernel-then-wireframe" title="Link to this heading">#</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Plot the fancy kernel.</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">mpl_toolkits.mplot3d</span><span class="w"> </span><span class="kn">import</span> <span class="n">Axes3D</span>
+<span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+<span class="n">y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+<span class="n">X</span><span class="p">,</span> <span class="n">Y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">meshgrid</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+<span class="n">Z</span> <span class="o">=</span> <span class="n">small_gaussian_kernel</span>
+<span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">9</span><span class="p">,</span><span class="mi">9</span><span class="p">))</span>
+<span class="n">ax</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="mi">111</span><span class="p">,</span> <span class="n">projection</span><span class="o">=</span><span class="s1">&#39;3d&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">plot_wireframe</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">Y</span><span class="p">,</span> <span class="n">Z</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;red&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_xticks</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">])</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_yticks</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">])</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Integer Index (axis = 0)&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Integer Index (axis = 1)&#39;</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">small_gaussian_kernel</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]):</span>
+    <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">small_gaussian_kernel</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]):</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">,</span> <span class="n">small_gaussian_kernel</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">],</span> 
+                <span class="nb">str</span><span class="p">(</span><span class="n">small_gaussian_kernel</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">]</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="mi">2</span><span class="p">)),</span> 
+                <span class="n">color</span><span class="o">=</span><span class="s1">&#39;darkblue&#39;</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/4ca7fecfa148adbb7a0e5f73d401f9140938c6b9c0f5fda580b4ecad8fbf3904.png" src="_images/4ca7fecfa148adbb7a0e5f73d401f9140938c6b9c0f5fda580b4ecad8fbf3904.png" />
+</div>
+</div>
+<p>Add something about: <a class="reference external" href="https://en.wikipedia.org/wiki/Crimson_Peak">https://en.wikipedia.org/wiki/Crimson_Peak</a></p>
+<p>Essentially, if we filter using this kernel, we “walk” this kernel through the image, with the top of the “red mountain” centred on a given pixel. The central pixel value is then replaced with an average of the pixels in the neighbourhood, but <em>the other pixels in the neighbourhood are weighted by the height of the red wireframe for that kernel value</em>. E.g. kernel elements which fall under higher points on the “mountain” will exert more influence on the weighted average, and pixels falling under lower points will exert a weaker influence.</p>
+<p>Let’s use this kernel to filter our <code class="docutils literal notranslate"><span class="pre">random_i</span></code> image:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">small_square</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="mi">20</span><span class="p">,</span> <span class="mi">20</span><span class="p">))</span>
+<span class="n">small_square</span><span class="p">[</span><span class="mi">9</span><span class="p">:</span><span class="mi">11</span><span class="p">,</span> <span class="mi">9</span><span class="p">:</span><span class="mi">11</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">small_square</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">small_square</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[[0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0.]
+ [0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0.]
+ [0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0.]
+ [0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0.]
+ [0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0.]
+ [0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0.]
+ [0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0.]
+ [0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0.]
+ [0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0.]
+ [0. 0. 0. 0. 0. 0. 0. 0. 0. 1. 1. 0. 0. 0. 0. 0. 0. 0. 0. 0.]
+ [0. 0. 0. 0. 0. 0. 0. 0. 0. 1. 1. 0. 0. 0. 0. 0. 0. 0. 0. 0.]
+ [0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0.]
+ [0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0.]
+ [0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0.]
+ [0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0.]
+ [0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0.]
+ [0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0.]
+ [0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0.]
+ [0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0.]
+ [0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0.]]
+</pre></div>
+</div>
+<img alt="_images/c712c8438d2ee7b33fb5d403933adf9cccabb50261bf47b7e506f3754dff7012.png" src="_images/c712c8438d2ee7b33fb5d403933adf9cccabb50261bf47b7e506f3754dff7012.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">small_gaussian_filtered_small_square</span> <span class="o">=</span> <span class="n">ndi</span><span class="o">.</span><span class="n">correlate</span><span class="p">(</span><span class="n">small_square</span><span class="p">,</span>
+                                               <span class="n">weights</span><span class="o">=</span><span class="n">small_gaussian_kernel</span><span class="p">)</span>
+
+<span class="c1"># Plot comparison images.</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">4</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Original&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">small_square</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Gaussian-like Filter </span><span class="se">\n</span><span class="s1">(3, 3) Kernel&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">small_gaussian_filtered_small_square</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/569172f0c90a0490a7a8b95a72f62148c47a42ea5303311f5aeb36a7dc519649.png" src="_images/569172f0c90a0490a7a8b95a72f62148c47a42ea5303311f5aeb36a7dc519649.png" />
+</div>
+</div>
+<p>Blurry! So to recap, we have averaged with a 3-by-3 pixel neightbourhood, replacing the central value of the kernel with a weighted average of all the pixel values in the neighbourhood. The weights are larger for pixels closer to the central value (e.g. closer to the centre of the “red mountain” on the plot above).</p>
+<p>This type of filtering is called <em>Gaussian filtering</em> because the kernel element values are from, or in the case of <code class="docutils literal notranslate"><span class="pre">fancy_kernel</span></code> approximates a Gaussian function. This is the function for the familiar <a class="reference external" href="https://en.wikipedia.org/wiki/Normal_distribution">normal distribution</a>. The plot of the kernel above, with the “red mountain” may not look much like the normal distribution to you at the moment, but bear with us.</p>
+<p>To see the Gaussian nature of this operation, let’s take a look at another, larger kernel below - it has <code class="docutils literal notranslate"><span class="pre">shape</span></code> <code class="docutils literal notranslate"><span class="pre">(9,</span> <span class="pre">9)</span></code>:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Another kernel.</span>
+<span class="n">big_gaussian_kernel</span> <span class="o">=</span> <span class="n">make_gaussian_kernel</span><span class="p">(</span><span class="mi">9</span><span class="p">)</span>
+
+<span class="n">big_gaussian_kernel</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([[0.  , 0.  , 0.  , 0.  , 0.  , 0.  , 0.  , 0.  , 0.  ],
+       [0.  , 0.  , 0.  , 0.01, 0.01, 0.01, 0.  , 0.  , 0.  ],
+       [0.  , 0.  , 0.01, 0.02, 0.03, 0.02, 0.01, 0.  , 0.  ],
+       [0.  , 0.01, 0.02, 0.05, 0.07, 0.05, 0.02, 0.01, 0.  ],
+       [0.  , 0.01, 0.03, 0.07, 0.09, 0.07, 0.03, 0.01, 0.  ],
+       [0.  , 0.01, 0.02, 0.05, 0.07, 0.05, 0.02, 0.01, 0.  ],
+       [0.  , 0.  , 0.01, 0.02, 0.03, 0.02, 0.01, 0.  , 0.  ],
+       [0.  , 0.  , 0.  , 0.01, 0.01, 0.01, 0.  , 0.  , 0.  ],
+       [0.  , 0.  , 0.  , 0.  , 0.  , 0.  , 0.  , 0.  , 0.  ]])
+</pre></div>
+</div>
+</div>
+</div>
+<p>Can you see any pattern in the arrangement of the numbers? Where are the high numbers, where are the low numbers?</p>
+<p>We will also plot this kernel in 3-D, as with the last kernel. Again, the integer index locations of the array form the horizontal (<span class="math notranslate nohighlight">\(x\)</span> and <span class="math notranslate nohighlight">\(y\)</span>) axis values, and the values within the array are plotted on the vertical (<span class="math notranslate nohighlight">\(z\)</span>) axis:</p>
+</section>
+<section id="from-meeting-show-this-as-a-surface-also">
+<h2>From meeting: show this as a surface also<a class="headerlink" href="#from-meeting-show-this-as-a-surface-also" title="Link to this heading">#</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Plot the current kernel.</span>
+<span class="n">x_lin</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="n">big_gaussian_kernel</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+<span class="n">y_lin</span> <span class="o">=</span> <span class="n">x_lin</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+<span class="n">x</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">meshgrid</span><span class="p">(</span><span class="n">x_lin</span><span class="p">,</span>
+                       <span class="n">y_lin</span><span class="p">)</span>
+<span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">10</span><span class="p">))</span>
+<span class="n">ax</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="mi">111</span><span class="p">,</span> <span class="n">projection</span><span class="o">=</span><span class="s1">&#39;3d&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">plot_wireframe</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">big_gaussian_kernel</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;red&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_xticks</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="n">x_lin</span><span class="o">.</span><span class="n">min</span><span class="p">(),</span> <span class="n">x_lin</span><span class="o">.</span><span class="n">max</span><span class="p">(),</span> <span class="n">big_gaussian_kernel</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]))</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_yticks</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="n">y_lin</span><span class="o">.</span><span class="n">min</span><span class="p">(),</span> <span class="n">y_lin</span><span class="o">.</span><span class="n">max</span><span class="p">(),</span> <span class="n">big_gaussian_kernel</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]))</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_xticklabels</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">big_gaussian_kernel</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]))</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_yticklabels</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">big_gaussian_kernel</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]))</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;Integer Index </span><span class="se">\n</span><span class="s1">`axis = 0`&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;Integer Index </span><span class="se">\n</span><span class="s1">`axis = 1`&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_zlabel</span><span class="p">(</span><span class="s1">&#39;Kernel Element Value&#39;</span><span class="p">,</span> <span class="n">labelpad</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">view_init</span><span class="p">(</span><span class="n">elev</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span> 
+<span class="n">plt</span><span class="o">.</span><span class="n">locator_params</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="s1">&#39;x&#39;</span><span class="p">,</span> <span class="n">nbins</span><span class="o">=</span><span class="mi">8</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">locator_params</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="s1">&#39;y&#39;</span><span class="p">,</span> <span class="n">nbins</span><span class="o">=</span><span class="mi">8</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/71b7ef1b3a935b6b67685c5c124ce5d07c3a7354f8eddc7a209f004e789310de.png" src="_images/71b7ef1b3a935b6b67685c5c124ce5d07c3a7354f8eddc7a209f004e789310de.png" />
+</div>
+</div>
+<p>Ah, that’s better, you may recognise this as a 2-D <a class="reference external" href="https://en.wikipedia.org/wiki/Normal_distribution">gaussian distribution</a>. For the <code class="docutils literal notranslate"><span class="pre">small_gaussian_kernel</span></code> it appeared more “spiky” as we have less points. In this bigger <code class="docutils literal notranslate"><span class="pre">(9,</span> <span class="pre">9)</span></code> kernel, we can more see a smoother, more obviously Gaussian “mountain”.</p>
+<p>Both our <code class="docutils literal notranslate"><span class="pre">(3,</span> <span class="pre">3)</span></code> kernel above, and the larger kernel we just plotted, are called a <a class="reference external" href="https://www.geeksforgeeks.org/deep-learning/types-of-convolution-kernels">gaussian blur kernels</a>. Let’s look at the <code class="docutils literal notranslate"><span class="pre">small_gaussian_kernel</span></code>:</p>
+<p><img alt="" src="_images/gaussian_kernel_2.png" /></p>
+<p>When comparing to the <code class="docutils literal notranslate"><span class="pre">big_gaussian_kernel</span></code>, you can see that the pattern in the numbers is the same. The biggest value occurs in the centre of the array, the smallest values are in the corners of the array. For the bigger Gaussian kernel, it is apparent that kernel values <em>closer</em> to the centre are larger, the values get smaller the further we get from the central pixel:</p>
+<p><img alt="" src="_images/big_gaussian_kernel.png" /></p>
+<p>Essentially, if we filter using this kernel, we “walk” the gaussian kernel through the image, with the top of the “mountain” centred on a given pixel. The central pixel value is then replaced with an average of the pixels in the neighbourhood, though these are weighted by how close they are to the central pixel e.g. by how close they fall to the centre of the gaussian surface we showed above. Pixels closer to the central pixel will exert more influence, pixels further away will exert a weaker influence.</p>
+<p>Let’s convolve <code class="docutils literal notranslate"><span class="pre">big_gaussian_kernel</span></code> with the <code class="docutils literal notranslate"><span class="pre">camera</span></code> image, using <code class="docutils literal notranslate"><span class="pre">ndi.correlate()</span></code>, as we used for the mean filter:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">big_gaussian_filtered_small_square</span> <span class="o">=</span> <span class="n">ndi</span><span class="o">.</span><span class="n">correlate</span><span class="p">(</span><span class="n">small_square</span><span class="p">,</span>
+                                                   <span class="n">weights</span><span class="o">=</span><span class="n">big_gaussian_kernel</span><span class="p">)</span>
+
+<span class="c1"># Plot comparison images.</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">4</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Original&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">matshow</span><span class="p">(</span><span class="n">small_square</span><span class="p">,</span> <span class="n">fignum</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Gaussian filter </span><span class="se">\n</span><span class="s1">(3, 3) Kernel&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">matshow</span><span class="p">(</span><span class="n">small_gaussian_filtered_small_square</span><span class="p">,</span> <span class="n">fignum</span><span class="o">=</span><span class="mi">0</span><span class="p">);</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Gaussian filter </span><span class="se">\n</span><span class="s1">(9, 9) Kernel&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">matshow</span><span class="p">(</span><span class="n">big_gaussian_filtered_small_square</span><span class="p">,</span> <span class="n">fignum</span><span class="o">=</span><span class="mi">0</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/e4c083a79bf2fecc8d55af80b369fd8a22d23d00d53d3f63a96ef48f7b2256f0.png" src="_images/e4c083a79bf2fecc8d55af80b369fd8a22d23d00d53d3f63a96ef48f7b2256f0.png" />
+</div>
+</div>
+<p>It is apparent that the larger kernel has “spread” the intensity of higher-valued pixels further than the small kernel.</p>
+<p>Both of these kernels, in relative terms, are quite small. As such, it is easier to see their effect in lower-resolution images. Higher resolution images will typically require larger kernels for the same results.</p>
+<p>Below, we make a pixelated version of <code class="docutils literal notranslate"><span class="pre">camera</span></code>:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">camera</span> <span class="o">=</span> <span class="n">ski</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">camera</span><span class="p">()</span>
+<span class="n">pixelated_camera</span> <span class="o">=</span> <span class="n">ski</span><span class="o">.</span><span class="n">transform</span><span class="o">.</span><span class="n">rescale</span><span class="p">(</span><span class="n">camera</span><span class="p">,</span> <span class="mf">0.2</span><span class="p">)</span> <span class="c1"># Rescale to 20% of original size.</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">pixelated_camera</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/96d650c1d3116141bb8a96d07618bb69a3cab32dfb82c055b7953a4e5b04dccd.png" src="_images/96d650c1d3116141bb8a96d07618bb69a3cab32dfb82c055b7953a4e5b04dccd.png" />
+</div>
+</div>
+<p>Below, we filter with separately with <code class="docutils literal notranslate"><span class="pre">small_gaussian_kernel</span></code> and <code class="docutils literal notranslate"><span class="pre">big_gaussian_kernel</span></code>:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">small_gaussian_filtered_pixelated_camera</span> <span class="o">=</span> <span class="n">ndi</span><span class="o">.</span><span class="n">correlate</span><span class="p">(</span><span class="n">pixelated_camera</span><span class="p">,</span>
+                                               <span class="n">weights</span><span class="o">=</span><span class="n">small_gaussian_kernel</span><span class="p">)</span>
+
+<span class="n">big_gaussian_filtered_pixelated_camera</span> <span class="o">=</span> <span class="n">ndi</span><span class="o">.</span><span class="n">correlate</span><span class="p">(</span><span class="n">pixelated_camera</span><span class="p">,</span>
+                                               <span class="n">weights</span><span class="o">=</span><span class="n">big_gaussian_kernel</span><span class="p">)</span>
+
+<span class="c1"># Plot comparison images.</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">4</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Original (Pixelated)&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">matshow</span><span class="p">(</span><span class="n">pixelated_camera</span><span class="p">,</span> <span class="n">fignum</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Gaussian filter </span><span class="se">\n</span><span class="s1">(3, 3) Kernel&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">matshow</span><span class="p">(</span><span class="n">small_gaussian_filtered_pixelated_camera</span><span class="p">,</span> <span class="n">fignum</span><span class="o">=</span><span class="mi">0</span><span class="p">);</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Gaussian filter </span><span class="se">\n</span><span class="s1">(9, 9) Kernel&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">matshow</span><span class="p">(</span><span class="n">big_gaussian_filtered_pixelated_camera</span><span class="p">,</span> <span class="n">fignum</span><span class="o">=</span><span class="mi">0</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/62b8bdc7ed9358345b6bb445050ded42bf2f8c92ff23806d71a4ab8e100f9872.png" src="_images/62b8bdc7ed9358345b6bb445050ded42bf2f8c92ff23806d71a4ab8e100f9872.png" />
+</div>
+</div>
+<p>The smoothing effect is clear, with the larger kernel creating a more striking smoothing effect.</p>
+</section>
+<section id="gaussian-filters-in-skimage">
+<h2>Gaussian filters in <code class="docutils literal notranslate"><span class="pre">skimage</span></code><a class="headerlink" href="#gaussian-filters-in-skimage" title="Link to this heading">#</a></h2>
+<p>This Gaussian filter is easiy to implement in <code class="docutils literal notranslate"><span class="pre">skimage</span></code>, let’s try it with the <code class="docutils literal notranslate"><span class="pre">cat</span></code> image from <code class="docutils literal notranslate"><span class="pre">ski.data</span></code>:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Load the `cat` image.</span>
+<span class="n">cat</span> <span class="o">=</span> <span class="n">ski</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">cat</span><span class="p">()</span>
+<span class="n">show_attributes</span><span class="p">(</span><span class="n">cat</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">cat</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Type: &lt;class &#39;numpy.ndarray&#39;&gt;
+dtype: uint8
+Shape: (300, 451, 3)
+Max Pixel Value: 231
+Min Pixel Value: 0
+</pre></div>
+</div>
+<img alt="_images/2a123916cdd6cc195c70345655c48bea133bb62ef7e9f500df9f5240a6d23b19.png" src="_images/2a123916cdd6cc195c70345655c48bea133bb62ef7e9f500df9f5240a6d23b19.png" />
+</div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">ski.filters.gaussian()</span></code> implements the Gaussian filter. We can control the <code class="docutils literal notranslate"><span class="pre">sigma</span></code> parameter, which controls the spread of the Gaussian “mountain” in the kernel. Lower values will reduce the weight of pixel values far from the central pixel, weighting only those close to it highly. Conversely, higher values will give greater weight to pixels further away from the central pixel:</p>
+<p><img alt="" src="_images/low_sigma_v_high_sigma.png" /></p>
+<p>Let’s apply the filter with a <code class="docutils literal notranslate"><span class="pre">sigma</span></code> of 3:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">ski</span><span class="o">.</span><span class="n">filters</span><span class="o">.</span><span class="n">gaussian</span><span class="p">(</span><span class="n">cat</span><span class="p">,</span> 
+                                <span class="n">sigma</span><span class="o">=</span><span class="mi">3</span><span class="p">));</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/262fe2a3c21195601a6bb86031cf2703c7a440e4266d1c3bf1e75b22b0d96691.png" src="_images/262fe2a3c21195601a6bb86031cf2703c7a440e4266d1c3bf1e75b22b0d96691.png" />
+</div>
+</div>
+<p>Different sigma values will introduce a blurrier effect, as for higher <code class="docutils literal notranslate"><span class="pre">sigma</span></code> values, pixels further from the central value within each kernel are exerting more influence in the averaging calculation:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Plot with different `sigma` values.</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">14</span><span class="p">,</span> <span class="mi">3</span><span class="p">))</span>
+<span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">sigma</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">12</span><span class="p">,</span> <span class="mi">2</span><span class="p">)):</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">ski</span><span class="o">.</span><span class="n">filters</span><span class="o">.</span><span class="n">gaussian</span><span class="p">(</span><span class="n">cat</span><span class="p">,</span> 
+                                    <span class="n">sigma</span><span class="o">=</span><span class="n">sigma</span><span class="p">))</span>
+
+    <span class="n">plt</span><span class="o">.</span><span class="n">xticks</span><span class="p">([])</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">yticks</span><span class="p">([])</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;sigma = </span><span class="si">{</span><span class="n">sigma</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">suptitle</span><span class="p">(</span><span class="s1">&#39;skimage.filters.gaussian()&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/33e85996f53758d0e8a24fa79f88a2316c7932be3d37a8ddc2c02a8308dd2025.png" src="_images/33e85996f53758d0e8a24fa79f88a2316c7932be3d37a8ddc2c02a8308dd2025.png" />
+</div>
+</div>
+<p>ex krazy-kernel</p>
+</section>
+<section id="from-meeting-move-this-exercise-to-later-becuase-the-explanation-involves-a-discussion-of-integer-overflow-maybe-show-them-the-scaling-then-the-exercise-purpose-is-to-use-astype-float-on-the-original-array-to-avoid-overflow-have-a-hint-about-255-1-and-the-effect-on-the-image-also-discuss-whether-kernels-need-to-sum-to-1-yes-if-we-want-to-preserve-the-scaling-of-the-image-e-g-if-it-sums-to-100-all-the-pixel-values-will-be-times-100-etc">
+<h2>From meeting: move this exercise to later, becuase the explanation involves a discussion of integer overflow. Maybe show them the scaling, then the exercise purpose is to use <code class="docutils literal notranslate"><span class="pre">astype(float)</span></code> on the original array to avoid overflow. Have a hint about “255 + 1” and the effect on the image. Also discuss whether kernels need to sum to 1 (yes, if we want to preserve the scaling of the image e.g. if it sums to 100, all the pixel values will be times 100 etc.).<a class="headerlink" href="#from-meeting-move-this-exercise-to-later-becuase-the-explanation-involves-a-discussion-of-integer-overflow-maybe-show-them-the-scaling-then-the-exercise-purpose-is-to-use-astype-float-on-the-original-array-to-avoid-overflow-have-a-hint-about-255-1-and-the-effect-on-the-image-also-discuss-whether-kernels-need-to-sum-to-1-yes-if-we-want-to-preserve-the-scaling-of-the-image-e-g-if-it-sums-to-100-all-the-pixel-values-will-be-times-100-etc" title="Link to this heading">#</a></h2>
+<p>Here is another kernel which follows a Gaussian-like pattern (e.g. pixels closer to the centre are weighted more heavily):</p>
+<p><img alt="" src="_images/almost_gaussian.png" /></p>
+<p>It is defined as a variable in the cell below:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">almost_gaussian_kernel</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span>
+                                  <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span>
+                                  <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span>
+                                  <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span>
+                                  <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span>
+                                  <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span>
+                                  <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span>
+                                  <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span>
+                                  <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">]])</span>
+
+<span class="n">almost_gaussian_kernel</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([[1, 1, 1, 2, 2, 2, 1, 1, 1],
+       [1, 1, 1, 2, 2, 2, 1, 1, 1],
+       [1, 1, 1, 2, 2, 2, 1, 1, 1],
+       [2, 2, 2, 4, 4, 4, 2, 2, 2],
+       [2, 2, 2, 4, 4, 4, 2, 2, 2],
+       [2, 2, 2, 4, 4, 4, 2, 2, 2],
+       [1, 1, 1, 2, 2, 2, 1, 1, 1],
+       [1, 1, 1, 2, 2, 2, 1, 1, 1],
+       [1, 1, 1, 2, 2, 2, 1, 1, 1]])
+</pre></div>
+</div>
+</div>
+</div>
+<p>When we filter <code class="docutils literal notranslate"><span class="pre">small_square</span></code> using this kernel, we get some strange results:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># (Probably) not what we want...</span>
+<span class="n">almost_gaussian_filtered_camera</span> <span class="o">=</span> <span class="n">ndi</span><span class="o">.</span><span class="n">correlate</span><span class="p">(</span><span class="n">camera</span><span class="p">,</span>
+                                                <span class="n">weights</span><span class="o">=</span><span class="n">almost_gaussian_kernel</span><span class="p">)</span>
+                                                     
+<span class="n">plt</span><span class="o">.</span><span class="n">matshow</span><span class="p">(</span><span class="n">almost_gaussian_filtered_camera</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/5d063e9383c775e936ec0ccee8999276f9591b27727be6fe70ab2260e3263e2c.png" src="_images/5d063e9383c775e936ec0ccee8999276f9591b27727be6fe70ab2260e3263e2c.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">show_attributes</span><span class="p">(</span><span class="n">almost_gaussian_filtered_camera</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Type: &lt;class &#39;numpy.ndarray&#39;&gt;
+dtype: uint8
+Shape: (512, 512)
+Max Pixel Value: 255
+Min Pixel Value: 0
+</pre></div>
+</div>
+</div>
+</div>
+<p>This may be a pretty cool effect, but it is not smoothing the image, as a Gaussian filter would do.</p>
+<p>With a small modification to the kernel, however, we can get the following Gaussian-like smoothing on <code class="docutils literal notranslate"><span class="pre">pixelated_camera</span></code>:</p>
+<p><img alt="" src="_images/krazy_kernel_target_image.png" /></p>
+<p>Try to adjust the <code class="docutils literal notranslate"><span class="pre">almost_gaussian_kernel</span></code> to obtain this target image. <strong>DO NOT</strong> recreate the kernel array and “manually” modify the original numbers. Use <code class="docutils literal notranslate"><span class="pre">numpy</span></code>, <code class="docutils literal notranslate"><span class="pre">scipy</span></code> or <code class="docutils literal notranslate"><span class="pre">skimage</span></code> operations to do what you need.</p>
+<p><em>Hint</em>: you may want to investigate the <code class="docutils literal notranslate"><span class="pre">.sum()</span></code> of all of the kernels we have used hitherto…</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># YOUR CODE HERE</span>
+<span class="n">other_gaussian_kernel</span> <span class="o">=</span> <span class="o">...</span>
+<span class="n">other_gaussian_filtered_small_square</span> <span class="o">=</span> <span class="o">...</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>SOLUTION - scale the kernel to sum to 1. Multiply by the reciprocal of the sum of the kernel:</p>
+<p><img alt="" src="_images/almost_gaussian_solution.png" /></p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># SOLUTION - scale the kernel to sum to 1</span>
+<span class="n">almost_gaussian_filtered_camera</span> <span class="o">=</span> <span class="n">ndi</span><span class="o">.</span><span class="n">correlate</span><span class="p">(</span><span class="n">camera</span><span class="p">,</span>
+                                               <span class="n">weights</span><span class="o">=</span><span class="mi">1</span><span class="o">/</span><span class="n">almost_gaussian_kernel</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span> <span class="o">*</span> <span class="n">almost_gaussian_kernel</span><span class="p">)</span>
+                                                     
+<span class="n">plt</span><span class="o">.</span><span class="n">matshow</span><span class="p">(</span><span class="n">almost_gaussian_filtered_camera</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/11bf094a3245e80a5b489676ed12f3e294d882009e0b1e198f3413e0a5f081cc.png" src="_images/11bf094a3245e80a5b489676ed12f3e294d882009e0b1e198f3413e0a5f081cc.png" />
+</div>
+</div>
+</section>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="median-filter">
+<h1>Median filter<a class="headerlink" href="#median-filter" title="Link to this heading">#</a></h1>
+<section id="add-here-show-median-within-a-few-kernels-but-also-mention-it-cannot-be-done-via-convolution">
+<h2>Add here: show median within a few kernels - but also mention it cannot be done via convolution<a class="headerlink" href="#add-here-show-median-within-a-few-kernels-but-also-mention-it-cannot-be-done-via-convolution" title="Link to this heading">#</a></h2>
+<p>The median filter uses the same process of “walking” through the image with a kernel. However, instead of taking the mean of the kernel, takes the median value. The median filter is especially useful for removing noise from images, while preserving the “edges” in the image. We will demonstrate this with the <code class="docutils literal notranslate"><span class="pre">brick</span></code> image from <code class="docutils literal notranslate"><span class="pre">ski.data</span></code>:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Load in the `brick` image.</span>
+<span class="n">brick</span> <span class="o">=</span> <span class="n">ski</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">brick</span><span class="p">()</span>
+<span class="n">show_attributes</span><span class="p">(</span><span class="n">brick</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">brick</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Type: &lt;class &#39;numpy.ndarray&#39;&gt;
+dtype: uint8
+Shape: (512, 512)
+Max Pixel Value: 207
+Min Pixel Value: 63
+</pre></div>
+</div>
+<img alt="_images/577b458e684d311b67acaca94a05b0f5a6344efb4c4384f53ce442360530e8d0.png" src="_images/577b458e684d311b67acaca94a05b0f5a6344efb4c4384f53ce442360530e8d0.png" />
+</div>
+</div>
+<p>We can easily implement a median filter using <code class="docutils literal notranslate"><span class="pre">ski.filters.median()</span></code>, again we supply a <code class="docutils literal notranslate"><span class="pre">footprint</span></code> argument to determine the kernel. We will also filter <code class="docutils literal notranslate"><span class="pre">brick</span></code> using a mean filter, with the same size kernel as the median filter:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Apply a median filter.</span>
+<span class="n">median_filtered_brick</span> <span class="o">=</span> <span class="n">ski</span><span class="o">.</span><span class="n">filters</span><span class="o">.</span><span class="n">median</span><span class="p">(</span><span class="n">brick</span><span class="p">,</span> 
+                                           <span class="n">footprint</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">((</span><span class="mi">9</span><span class="p">,</span><span class="mi">9</span><span class="p">)))</span>
+
+<span class="n">mean_filtered_brick</span> <span class="o">=</span> <span class="n">ski</span><span class="o">.</span><span class="n">filters</span><span class="o">.</span><span class="n">rank</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">brick</span><span class="p">,</span> 
+                                            <span class="n">footprint</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">((</span><span class="mi">9</span><span class="p">,</span><span class="mi">9</span><span class="p">)))</span>
+<span class="c1"># Plot both image to compare</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">14</span><span class="p">,</span> <span class="mi">4</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Original Image&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">brick</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Median Filtered&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">median_filtered_brick</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Mean Filtered&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">mean_filtered_brick</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/fb014a1a5751215c59831c56a73d0c057af5f3dbae0b519198703111b5ac6ebf.png" src="_images/fb014a1a5751215c59831c56a73d0c057af5f3dbae0b519198703111b5ac6ebf.png" />
+</div>
+</div>
+<p>You can see that the edges in the images (transitions between pixels of very different intensities - in this case between the dark bricks and the lighter mortar lines) are less smoothed by the median filter than by the mean filter. This is considered a desirable property of the median filter.</p>
+</section>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="edge-filtering">
+<h1>Edge filtering<a class="headerlink" href="#edge-filtering" title="Link to this heading">#</a></h1>
+<section id="link-back-to-np-diff-exercise-from-processing-page-e-g-as-very-simple-edge-detector">
+<h2>Link back to <code class="docutils literal notranslate"><span class="pre">np.diff()</span></code> exercise from processing page (e.g. as very simple edge detector)<a class="headerlink" href="#link-back-to-np-diff-exercise-from-processing-page-e-g-as-very-simple-edge-detector" title="Link to this heading">#</a></h2>
+<p>In image processing and computer vision, an edge is a rapid change in intensity between pixels - e.g. there is a high <em>gradient</em> of change between the pixel values.</p>
+<p>We can construct a kernel which will detect these intensity changes in the vertical (Y) direction:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># from: https://scikit-image.org/skimage-tutorials/lectures/1_image_filters.html</span>
+<span class="n">vertical_edge_detection_kernel</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">],</span>
+                                           <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span>
+                                           <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">]])</span>
+
+<span class="n">vertical_edge_detection_kernel</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([[-1, -1, -1],
+       [ 0,  0,  0],
+       [ 1,  1,  1]])
+</pre></div>
+</div>
+</div>
+</div>
+<p>Here we make an image array with very clear vertical edges - one edge is at the top of the white square, the other is at the bottom of the white square:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">edgy</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span>
+                  <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span>
+                  <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span>
+                  <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span>
+                  <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span>
+                  <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span>
+                  <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span>
+                  <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span>
+                  <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span>
+                  <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span>
+                  <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]])</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">edgy</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/cdf53020dcfdc78e9662fba13c70cafb697b8eb02f9947ea3709d17c3675f97b.png" src="_images/cdf53020dcfdc78e9662fba13c70cafb697b8eb02f9947ea3709d17c3675f97b.png" />
+</div>
+</div>
+<p>Convolving with our vertial edge detection kernel finds the vertical edges:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">edgy_vertical</span> <span class="o">=</span> <span class="n">ndi</span><span class="o">.</span><span class="n">correlate</span><span class="p">(</span><span class="n">edgy</span><span class="p">,</span>
+                              <span class="n">vertical_edge_detection_kernel</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">edgy_vertical</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/e6c21e05ace90de65330fe2e779cc9baa4143197d7babc8082aaad07f87fed49.png" src="_images/e6c21e05ace90de65330fe2e779cc9baa4143197d7babc8082aaad07f87fed49.png" />
+</div>
+</div>
+<p>Let’s think about what has happened here at the level of the individual pixels. Three kernel locations from the top of the array are represented below:</p>
+<p><img alt="" src="_images/vertical_edge_detection_1.png" /></p>
+<p>You can see that, for a binary image, the vertical kernel convolution essential “counts” the number of 0-to-1 vertical changes in the kernel location.</p>
+<p>Conversely, when the kernel hits the 1-to-0 vertical changes at the bottom of the array, we get a similar count but of negative numbers:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">edgy_vertical</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([[ 0,  0,  0,  0,  0,  0,  0,  0,  0,  0],
+       [ 0,  1,  2,  3,  3,  3,  3,  2,  1,  0],
+       [ 0,  1,  2,  3,  3,  3,  3,  2,  1,  0],
+       [ 0,  0,  0,  0,  0,  0,  0,  0,  0,  0],
+       [ 0,  0,  0,  0,  0,  0,  0,  0,  0,  0],
+       [ 0,  0,  0,  0,  0,  0,  0,  0,  0,  0],
+       [ 0,  0,  0,  0,  0,  0,  0,  0,  0,  0],
+       [ 0,  0,  0,  0,  0,  0,  0,  0,  0,  0],
+       [ 0, -1, -2, -3, -3, -3, -3, -2, -1,  0],
+       [ 0, -1, -2, -3, -3, -3, -3, -2, -1,  0],
+       [ 0,  0,  0,  0,  0,  0,  0,  0,  0,  0]])
+</pre></div>
+</div>
+</div>
+</div>
+<p>We can “flip” our edge detection kernel to look for big changes in gradient in the horizontal (X) direction:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># from: https://scikit-image.org/skimage-tutorials/lectures/1_image_filters.html</span>
+<span class="n">horizontal_edge_detection_kernel</span> <span class="o">=</span> <span class="n">vertical_edge_detection_kernel</span><span class="o">.</span><span class="n">T</span>
+
+<span class="n">horizontal_edge_detection_kernel</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([[-1,  0,  1],
+       [-1,  0,  1],
+       [-1,  0,  1]])
+</pre></div>
+</div>
+</div>
+</div>
+<p>Now when applied to our <code class="docutils literal notranslate"><span class="pre">edgy</span></code> image array, it detects the changes in the horizontal direction (at the side edges of the square):</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># The original square.</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">edgy</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/cdf53020dcfdc78e9662fba13c70cafb697b8eb02f9947ea3709d17c3675f97b.png" src="_images/cdf53020dcfdc78e9662fba13c70cafb697b8eb02f9947ea3709d17c3675f97b.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">edgy_horizontal</span> <span class="o">=</span> <span class="n">ndi</span><span class="o">.</span><span class="n">correlate</span><span class="p">(</span><span class="n">edgy</span><span class="p">,</span>
+                                <span class="n">horizontal_edge_detection_kernel</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">edgy_horizontal</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/bd43608e5fe66a87cf3e0d0720cb43e6a25abba038758631691bf551ec0c3f91.png" src="_images/bd43608e5fe66a87cf3e0d0720cb43e6a25abba038758631691bf551ec0c3f91.png" />
+</div>
+</div>
+<p>Applied to more complex images, this can have some pretty cool effects:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">coffee_grey</span> <span class="o">=</span> <span class="n">ski</span><span class="o">.</span><span class="n">color</span><span class="o">.</span><span class="n">rgb2gray</span><span class="p">(</span><span class="n">ski</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">coffee</span><span class="p">())</span>
+
+<span class="c1"># Plot the original image.</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">coffee_grey</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/90b5afdb041923a15b345e35e0d7b51eb4a0a11b62e0aa27556e76d8e3d24d31.png" src="_images/90b5afdb041923a15b345e35e0d7b51eb4a0a11b62e0aa27556e76d8e3d24d31.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">gradient_vertical_coffee_grey</span> <span class="o">=</span> <span class="n">ndi</span><span class="o">.</span><span class="n">correlate</span><span class="p">(</span><span class="n">coffee_grey</span><span class="p">,</span>
+                                              <span class="n">vertical_edge_detection_kernel</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">gradient_vertical_coffee_grey</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/5a4907f7e49950877864e5ffc5efe3b060e301db1a3ef6d269ec5d45fbcdc437.png" src="_images/5a4907f7e49950877864e5ffc5efe3b060e301db1a3ef6d269ec5d45fbcdc437.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">gradient_horizontal_coffee_grey</span> <span class="o">=</span> <span class="n">ndi</span><span class="o">.</span><span class="n">correlate</span><span class="p">(</span><span class="n">coffee_grey</span><span class="p">,</span>
+                                               <span class="n">horizontal_edge_detection_kernel</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">gradient_horizontal_coffee_grey</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/58beff1ffc45148629c1cd6c78c8d0dbfb3c352247e5030eb2b3e16b9d5471ff.png" src="_images/58beff1ffc45148629c1cd6c78c8d0dbfb3c352247e5030eb2b3e16b9d5471ff.png" />
+</div>
+</div>
+<p>We can combine these two edge detection filters together to search for edges in both directions, by calculating the <a class="reference external" href="https://www.kaggle.com/code/melisgokalp/edge-detection-example">Euclidean distance</a> between the arrays that result from searching for edges in either direction (horizontal (<span class="math notranslate nohighlight">\(G_{x}\)</span>) or vertical (<span class="math notranslate nohighlight">\(G_{y}\)</span>)):</p>
+<p><span class="math notranslate nohighlight">\(  d   = \sqrt {\left( G_{x}^2 + G_{y}^2\right) }  \)</span></p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">edgy_horizontal_vertical_stack</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">stack</span><span class="p">([</span><span class="n">edgy_horizontal</span><span class="p">,</span> <span class="n">edgy_vertical</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">edgy_horizontal_vertical_stack</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">edgy_horizontal_vertical_stack</span><span class="p">)</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">edgy_horizontal_vertical_stack</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/84c84be108a733b9c4465bcdb393bb6136644e8a0a40cbc00a03fdcc940e161d.png" src="_images/84c84be108a733b9c4465bcdb393bb6136644e8a0a40cbc00a03fdcc940e161d.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Search for both types of edge (with `edgy`).</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">edgy_horizontal</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="n">edgy_vertical</span><span class="o">**</span><span class="mi">2</span><span class="p">));</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/e02e9b227d8876fe5c230c343666d7616c3d4b2b8d9b791facd80410f8357fde.png" src="_images/e02e9b227d8876fe5c230c343666d7616c3d4b2b8d9b791facd80410f8357fde.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Search for both types of edge (with `coffee_grey`).</span>
+
+<span class="n">coffee_horizontal_vertical_stack</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">stack</span><span class="p">([</span><span class="n">gradient_horizontal_coffee_grey</span><span class="p">,</span> <span class="n">gradient_vertical_coffee_grey</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">coffee_horizontal_vertical_stack</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">coffee_horizontal_vertical_stack</span><span class="p">)</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">coffee_horizontal_vertical_stack</span><span class="p">);</span>
+<span class="c1">#plt.imshow(np.sqrt(gradient_horizontal_coffee_grey**2 + gradient_vertical_coffee_grey**2));</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/df8dae74fc258c2c3e7efecb7b26c75426571ff8f8bdd4127563c37a9fb83064.png" src="_images/df8dae74fc258c2c3e7efecb7b26c75426571ff8f8bdd4127563c37a9fb83064.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Plot all the `edgy` images together.</span>
+<span class="n">both_edgy</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">edgy_horizontal</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="n">edgy_vertical</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">16</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Original&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">edgy</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Vertical Edge Gradients&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">edgy_vertical</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Horizontal Edge Gradients&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">edgy_horizontal</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">4</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Both Combined&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">both_edgy</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/2efdd177de0ae0b6935011cfdfcd783f51b65e5e89595c5a0872a006005bd77f.png" src="_images/2efdd177de0ae0b6935011cfdfcd783f51b65e5e89595c5a0872a006005bd77f.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Plot all the `coffee_grey` images together.</span>
+<span class="n">both_coffee</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">gradient_horizontal_coffee_grey</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="n">gradient_vertical_coffee_grey</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">16</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Original&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">coffee_grey</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Vertical Edge Gradients&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">gradient_vertical_coffee_grey</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Horizontal Edge Gradients&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">gradient_horizontal_coffee_grey</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">4</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Both Combined&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">both_coffee</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/9d2153dd61cffcbfbf8f12323063649c94b752bde2b6409eed80c6a3bb3a6bb4.png" src="_images/9d2153dd61cffcbfbf8f12323063649c94b752bde2b6409eed80c6a3bb3a6bb4.png" />
+</div>
+</div>
+</section>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="sobel-and-roberts-filters">
+<h1>Sobel and Roberts filters<a class="headerlink" href="#sobel-and-roberts-filters" title="Link to this heading">#</a></h1>
+<p>The Sobel and Roberts filters are other edge detection algorithms that also combine horizontal and vertical edge detection filters.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># adapted from skimage docs</span>
+<span class="n">edge_roberts</span> <span class="o">=</span> <span class="n">ski</span><span class="o">.</span><span class="n">filters</span><span class="o">.</span><span class="n">roberts</span><span class="p">(</span><span class="n">edgy</span><span class="p">)</span>
+<span class="n">edge_sobel</span> <span class="o">=</span> <span class="n">ski</span><span class="o">.</span><span class="n">filters</span><span class="o">.</span><span class="n">sobel</span><span class="p">(</span><span class="n">edgy</span><span class="p">)</span>
+
+<span class="n">camera</span> <span class="o">=</span> <span class="n">ski</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">camera</span><span class="p">()</span>
+<span class="n">camera_roberts</span> <span class="o">=</span> <span class="n">ski</span><span class="o">.</span><span class="n">filters</span><span class="o">.</span><span class="n">roberts</span><span class="p">(</span><span class="n">camera</span><span class="p">)</span>
+<span class="n">camera_sobel</span> <span class="o">=</span> <span class="n">ski</span><span class="o">.</span><span class="n">filters</span><span class="o">.</span><span class="n">sobel</span><span class="p">(</span><span class="n">camera</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span> <span class="mi">12</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">edge_roberts</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Roberts Edge Detection&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">edge_sobel</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Sobel Edge Detection&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">camera_roberts</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Roberts Edge Detection&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">4</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">camera_sobel</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Sobel Edge Detection&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">axis</span><span class="p">(</span><span class="s1">&#39;off&#39;</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/2b9e567b48c30f1983d6f850326aeef7fa77a38859f0e9438878ef4289b26185.png" src="_images/2b9e567b48c30f1983d6f850326aeef7fa77a38859f0e9438878ef4289b26185.png" />
+</div>
+</div>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="non-local-filters">
+<h1>Non-local filters<a class="headerlink" href="#non-local-filters" title="Link to this heading">#</a></h1>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">camera_equalized</span> <span class="o">=</span> <span class="n">ski</span><span class="o">.</span><span class="n">exposure</span><span class="o">.</span><span class="n">equalize_hist</span><span class="p">(</span><span class="n">camera</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">10</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">camera</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">camera_equalized</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/46776ef636b7a52dd32f6e8e51fc151cb116bf23d1dc42555dbf9455494017c8.png" src="_images/46776ef636b7a52dd32f6e8e51fc151cb116bf23d1dc42555dbf9455494017c8.png" />
+</div>
+</div>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="summary">
+<h1>Summary<a class="headerlink" href="#summary" title="Link to this heading">#</a></h1>
+<p>This page has showed how to use convolution kernels to filter images, using <code class="docutils literal notranslate"><span class="pre">numpy</span></code>, <code class="docutils literal notranslate"><span class="pre">scipy</span></code> and <code class="docutils literal notranslate"><span class="pre">skimage</span></code>.</p>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./."
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Image filtering II</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#to-do-here-sharpening-blurring">TO DO HERE: SHARPENING, BLURRING</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#gaussian-filter">Gaussian filter</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#from-meeting-move-this-to-before-median-filter">From meeting: move this to before median filter…</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#from-meeting-show-plt-surface-of-the-kernel-then-wireframe">From meeting: show plt.surface of the kernel then wireframe</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#from-meeting-show-this-as-a-surface-also">From meeting: show this as a surface also</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#gaussian-filters-in-skimage">Gaussian filters in <code class="docutils literal notranslate"><span class="pre">skimage</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#from-meeting-move-this-exercise-to-later-becuase-the-explanation-involves-a-discussion-of-integer-overflow-maybe-show-them-the-scaling-then-the-exercise-purpose-is-to-use-astype-float-on-the-original-array-to-avoid-overflow-have-a-hint-about-255-1-and-the-effect-on-the-image-also-discuss-whether-kernels-need-to-sum-to-1-yes-if-we-want-to-preserve-the-scaling-of-the-image-e-g-if-it-sums-to-100-all-the-pixel-values-will-be-times-100-etc">From meeting: move this exercise to later, becuase the explanation involves a discussion of integer overflow. Maybe show them the scaling, then the exercise purpose is to use <code class="docutils literal notranslate"><span class="pre">astype(float)</span></code> on the original array to avoid overflow. Have a hint about “255 + 1” and the effect on the image. Also discuss whether kernels need to sum to 1 (yes, if we want to preserve the scaling of the image e.g. if it sums to 100, all the pixel values will be times 100 etc.).</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#median-filter">Median filter</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#add-here-show-median-within-a-few-kernels-but-also-mention-it-cannot-be-done-via-convolution">Add here: show median within a few kernels - but also mention it cannot be done via convolution</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#edge-filtering">Edge filtering</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#link-back-to-np-diff-exercise-from-processing-page-e-g-as-very-simple-edge-detector">Link back to <code class="docutils literal notranslate"><span class="pre">np.diff()</span></code> exercise from processing page (e.g. as very simple edge detector)</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#sobel-and-roberts-filters">Sobel and Roberts filters</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#non-local-filters">Non-local filters</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#summary">Summary</a></li>
+</ul>
+
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Peter Rush, Matthew Brett
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2025.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

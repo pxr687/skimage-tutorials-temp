@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>What is an image? - Images as NumPy arrays &#8212; My Jupyter Book</title>
+    <title>What is an image? - Images as NumPy arrays &#8212; Scikit-image via NumPy and SciPy</title>
   
   
   
@@ -32,8 +32,9 @@
     <link rel="stylesheet" type="text/css" href="_static/styles/sphinx-book-theme.css?v=eba8b062" />
     <link rel="stylesheet" type="text/css" href="_static/togglebutton.css?v=13237357" />
     <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
-    <link rel="stylesheet" type="text/css" href="_static/mystnb.8ecb98da25f57f5357bf6f572d296f466b2cfe2517ffebfabe82451661e28f02.css" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.8ecb98da25f57f5357bf6f572d296f466b2cfe2517ffebfabe82451661e28f02.css?v=6644e6bb" />
     <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="_static/exercise.css" />
     <link rel="stylesheet" type="text/css" href="_static/sphinx-design.min.css?v=95c83b7e" />
   
   <!-- Pre-loaded scripts that we'll load fully later -->
@@ -58,6 +59,7 @@
     <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
     <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
     <script>DOCUMENTATION_OPTIONS.pagename = '0_images_as_numpy_arrays';</script>
+    <link rel="canonical" href="https://pxr687.github.io/skimage-tutorials/0_images_as_numpy_arrays.html" />
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="What about colour?" href="1_colour_images_as_numpy_arrays.html" />
@@ -148,8 +150,14 @@
   
   
   
+    
+    
+      
+    
+    
+    <img src="_static/colourwheel.png" class="logo__image only-light" alt="Scikit-image via NumPy and SciPy - Home"/>
+    <script>document.write(`<img src="_static/colourwheel.png" class="logo__image only-dark" alt="Scikit-image via NumPy and SciPy - Home"/>`);</script>
   
-    <p class="title logo__title">My Jupyter Book</p>
   
 </a></div>
         <div class="sidebar-primary-item">
@@ -165,14 +173,6 @@
  </script></div>
         <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
     <div class="bd-toc-item navbar-nav active">
-        
-        <ul class="nav bd-sidenav bd-sidenav__home-link">
-            <li class="toctree-l1">
-                <a class="reference internal" href="index.html">
-                    Scikit-image via NumPy and SciPy
-                </a>
-            </li>
-        </ul>
         <p aria-level="2" class="caption" role="heading"><span class="caption-text">Scikit-image via NumPy and SciPy</span></p>
 <ul class="current nav bd-sidenav">
 <li class="toctree-l1 current active"><a class="current reference internal" href="#">What is an image? - Images as NumPy arrays</a></li>
@@ -190,6 +190,24 @@
 
 
 
+
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="3_skimage_processing_from_numpy_and_scipy.html">(Sci-kit) Image processing via NumPy and SciPy</a></li>
+
+
+
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="4_filters.html">Image filtering I</a></li>
 
 
 
@@ -251,6 +269,70 @@
 
 
 
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/pxr687/skimage-tutorials-temp" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/pxr687/skimage-tutorials-temp/edit/main/0_images_as_numpy_arrays.Rmd" target="_blank"
+   class="btn btn-sm btn-source-edit-button dropdown-item"
+   title="Suggest edit"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-pencil-alt"></i>
+  </span>
+<span class="btn__text-container">Suggest edit</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/pxr687/skimage-tutorials-temp/issues/new?title=Issue%20on%20page%20%2F0_images_as_numpy_arrays.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
 <div class="dropdown dropdown-download-buttons">
   <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
     <i class="fas fa-download"></i>
@@ -259,7 +341,7 @@
       
       
       
-      <li><a href="_sources/0_images_as_numpy_arrays.ipynb" target="_blank"
+      <li><a href="_sources/0_images_as_numpy_arrays.Rmd" target="_blank"
    class="btn btn-sm btn-download-source-button dropdown-item"
    title="Download source file"
    data-bs-placement="left" data-bs-toggle="tooltip"
@@ -269,7 +351,7 @@
 <span class="btn__icon-container">
   <i class="fas fa-file"></i>
   </span>
-<span class="btn__text-container">.ipynb</span>
+<span class="btn__text-container">.Rmd</span>
 </a>
 </li>
       
@@ -510,7 +592,7 @@ document.write(`
 <p>When we <em>display</em>, <em>visualise</em> or <em>render</em> an array image, our computer interprets our <em>array pixels</em> and then shows them as <em>display pixels</em>. <em>Display</em>, <em>visualise</em> and <em>render</em> are synonyms here for the process of taking an image (in the technical sense of an two-dimensional array) and showing it as graphically, as an image in the intuitive sense of a picture we can view, using a visualisation tool like Matplotlib.</p>
 <p>Astute readers might reasonably say “hang on! If <em>display pixels</em> are tiny dots on my screen, then the image from <code class="docutils literal notranslate"><span class="pre">plt.matshow()</span></code> looks bigger than four pixels”. This is correct. Matplotlib is drawing an image with many more pixels on your display screen than the array has values. Our image array contains 4 <em>array pixels</em>, but if Matplotlib displayed it with just 4 <em>display pixels</em>, the resulting visualisation would be tiny and impossible to view on whatever device you are reading this tutorial on.</p>
 <p>Thus, when our small (or <em>low-resolution</em>) image array is displayed/visualised on your screen by something like <code class="docutils literal notranslate"><span class="pre">plt.matshow()</span></code> the image array may be shown using a different, larger number of <em>display pixels</em> to the number of <em>array pixels</em> contained in the image array. What Matplotlib is doing here, behind the scenes, is something called <em>image interpolation</em>. This is defined as <a class="reference external" href="https://www.sciencedirect.com/topics/computer-science/image-interpolation#:~:text=Image%20interpolation%20is%20a%20technique,without%20degrading%20the%20visual%20quality.">“a technique by which a low-resolution image can be scaled up to a high-resolution image without degrading the visual quality”</a>.</p>
-<p>How does Matplotlib know what to show in the new, upscaled display pixels? It uses the original array pixels as a guide, to estimate what should go in the new display pixels, to give a good, albeit upscaled, representation of the information in the original image array. We will <a class="reference internal" href="#3_skimage_processing_from_numpy_and_scipy"><span class="xref myst">go into more detail about this later in this tutorial series</span></a>.</p>
+<p>How does Matplotlib know what to show in the new, upscaled display pixels? It uses the original array pixels as a guide, to estimate what should go in the new display pixels, to give a good, albeit upscaled, representation of the information in the original image array. We will <a class="reference internal" href="3_skimage_processing_from_numpy_and_scipy.html"><span class="doc std std-doc">go into more detail about this later in this tutorial series</span></a>.</p>
 <p>To give a glimpse of what has happened behind the scenes we will save the <em>displayed image</em> to a new <code class="docutils literal notranslate"><span class="pre">.png</span></code> file, using <code class="docutils literal notranslate"><span class="pre">plt.savefig()</span></code>. We have saved the file in the following path in the directory this notebook is in: <code class="docutils literal notranslate"><span class="pre">images/two_D_ones_and_zeros_from_plot.png</span></code>.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -976,6 +1058,10 @@ document.write(`
 </div>
 </div>
 <p>These same princples apply to images of any complexity, including those produced by complex scanners like <a class="reference external" href="https://en.wikipedia.org/wiki/Functional_neuroimaging">functional brain imaging</a> devices.</p>
+<div class="exercise dropdown admonition" id="you-are-an-artist">
+
+<p class="admonition-title"><span class="caption-number">Exercise 1 </span></p>
+<section id="exercise-content">
 <p>Now over to you to create some <a class="reference external" href="https://en.wikipedia.org/wiki/Computer_art">computer art</a>. Your job is to recreate the (slightly terrifying) image in the output of the cell below, <strong>using only a Numpy array and <code class="docutils literal notranslate"><span class="pre">plt.matshow()</span></code>.</strong> Run the cell to show the image.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -1001,6 +1087,12 @@ document.write(`
 </div>
 </div>
 </div>
+</section>
+</div>
+<div class="solution dropdown admonition" id="0_images_as_numpy_arrays-solution-1">
+
+<p class="admonition-title">Solution to<a class="reference internal" href="#you-are-an-artist"> Exercise 1</a></p>
+<section id="solution-content">
 <p>You only need an array of 1’s and 0’s to create this image. From looking at the numbers on the axes of the plot in the output of the cell above, you can see that “eyes” need to begin on the 3rd row, and the corners of the mouth need to begin on the 6th row, and so on. Likewise the column locations can be read from the vertical axis. Here is the array which will exactly recreate the image:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -1058,6 +1150,8 @@ document.write(`
 </pre></div>
 </div>
 </div>
+</div>
+</section>
 </div>
 </section>
 <section class="tex2jax_ignore mathjax_ignore" id="summary">
@@ -1166,7 +1260,7 @@ document.write(`
   <div class="footer-item">
     
 <p class="component-author">
-By The Jupyter Book community
+By Peter Rush, Matthew Brett
 </p>
 
   </div>
@@ -1176,7 +1270,7 @@ By The Jupyter Book community
 
   <p class="copyright">
     
-      © Copyright 2023.
+      © Copyright 2025.
       <br/>
     
   </p>

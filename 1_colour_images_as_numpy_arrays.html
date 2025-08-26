@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>What about colour? &#8212; My Jupyter Book</title>
+    <title>What about colour? &#8212; Scikit-image via NumPy and SciPy</title>
   
   
   
@@ -32,8 +32,9 @@
     <link rel="stylesheet" type="text/css" href="_static/styles/sphinx-book-theme.css?v=eba8b062" />
     <link rel="stylesheet" type="text/css" href="_static/togglebutton.css?v=13237357" />
     <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
-    <link rel="stylesheet" type="text/css" href="_static/mystnb.8ecb98da25f57f5357bf6f572d296f466b2cfe2517ffebfabe82451661e28f02.css" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.8ecb98da25f57f5357bf6f572d296f466b2cfe2517ffebfabe82451661e28f02.css?v=6644e6bb" />
     <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="_static/exercise.css" />
     <link rel="stylesheet" type="text/css" href="_static/sphinx-design.min.css?v=95c83b7e" />
   
   <!-- Pre-loaded scripts that we'll load fully later -->
@@ -60,6 +61,7 @@
     <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
     <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <script>DOCUMENTATION_OPTIONS.pagename = '1_colour_images_as_numpy_arrays';</script>
+    <link rel="canonical" href="https://pxr687.github.io/skimage-tutorials/1_colour_images_as_numpy_arrays.html" />
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="Introducing Scikit-image" href="2_skimage_intro.html" />
@@ -150,8 +152,14 @@
   
   
   
+    
+    
+      
+    
+    
+    <img src="_static/colourwheel.png" class="logo__image only-light" alt="Scikit-image via NumPy and SciPy - Home"/>
+    <script>document.write(`<img src="_static/colourwheel.png" class="logo__image only-dark" alt="Scikit-image via NumPy and SciPy - Home"/>`);</script>
   
-    <p class="title logo__title">My Jupyter Book</p>
   
 </a></div>
         <div class="sidebar-primary-item">
@@ -167,14 +175,6 @@
  </script></div>
         <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
     <div class="bd-toc-item navbar-nav active">
-        
-        <ul class="nav bd-sidenav bd-sidenav__home-link">
-            <li class="toctree-l1">
-                <a class="reference internal" href="index.html">
-                    Scikit-image via NumPy and SciPy
-                </a>
-            </li>
-        </ul>
         <p aria-level="2" class="caption" role="heading"><span class="caption-text">Scikit-image via NumPy and SciPy</span></p>
 <ul class="current nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="0_images_as_numpy_arrays.html">What is an image? - Images as NumPy arrays</a></li>
@@ -192,6 +192,24 @@
 
 
 
+
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="3_skimage_processing_from_numpy_and_scipy.html">(Sci-kit) Image processing via NumPy and SciPy</a></li>
+
+
+
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="4_filters.html">Image filtering I</a></li>
 
 
 
@@ -253,6 +271,70 @@
 
 
 
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/pxr687/skimage-tutorials-temp" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/pxr687/skimage-tutorials-temp/edit/main/1_colour_images_as_numpy_arrays.Rmd" target="_blank"
+   class="btn btn-sm btn-source-edit-button dropdown-item"
+   title="Suggest edit"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-pencil-alt"></i>
+  </span>
+<span class="btn__text-container">Suggest edit</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/pxr687/skimage-tutorials-temp/issues/new?title=Issue%20on%20page%20%2F1_colour_images_as_numpy_arrays.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
 <div class="dropdown dropdown-download-buttons">
   <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
     <i class="fas fa-download"></i>
@@ -261,7 +343,7 @@
       
       
       
-      <li><a href="_sources/1_colour_images_as_numpy_arrays.ipynb" target="_blank"
+      <li><a href="_sources/1_colour_images_as_numpy_arrays.Rmd" target="_blank"
    class="btn btn-sm btn-download-source-button dropdown-item"
    title="Download source file"
    data-bs-placement="left" data-bs-toggle="tooltip"
@@ -271,7 +353,7 @@
 <span class="btn__icon-container">
   <i class="fas fa-file"></i>
   </span>
-<span class="btn__text-container">.ipynb</span>
+<span class="btn__text-container">.Rmd</span>
 </a>
 </li>
       
@@ -1082,9 +1164,9 @@ Our 3-D stacked array is of the right shape:</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>X1 = 0.72
-X2 = 0.58
-X3 = 0.25
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>X1 = 0.84
+X2 = 0.13
+X3 = 0.78
 </pre></div>
 </div>
 </div>
@@ -1114,12 +1196,12 @@ X3 = 0.25
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Red (X1) = 0.4
-Green (X2) = 0.65
-Blue (X3) = 0.87
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Red (X1) = 0.43
+Green (X2) = 0.33
+Blue (X3) = 0.82
 </pre></div>
 </div>
-<img alt="_images/3a1d1508fdefd144b0cbd4be9e7885ae85429cb81e5865550f2277950de8d616.png" src="_images/3a1d1508fdefd144b0cbd4be9e7885ae85429cb81e5865550f2277950de8d616.png" />
+<img alt="_images/1b5aeadb3921d3ee2db52fee191ca6d8413501aad7f11a846b918772a1f131f1.png" src="_images/1b5aeadb3921d3ee2db52fee191ca6d8413501aad7f11a846b918772a1f131f1.png" />
 </div>
 </div>
 <p>So, each two-dimensional display image has a “hidden” three-dimensional array behind it. Each slice of the third dimension is a colour channel. The mix of values at a given element in each colour channel determins the colour of that pixel in the rendered image.</p>
@@ -1135,7 +1217,7 @@ Blue (X3) = 0.87
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/3459f1e0b637f8eb9a5457ed16629b0c332f5e4a1339453a997b2bf14938e061.png" src="_images/3459f1e0b637f8eb9a5457ed16629b0c332f5e4a1339453a997b2bf14938e061.png" />
+<img alt="_images/05653a648239485571816550adb131d650009a385b94ad70a40ea1873ae07a0b.png" src="_images/05653a648239485571816550adb131d650009a385b94ad70a40ea1873ae07a0b.png" />
 </div>
 </div>
 <p>We have now completed our perilous expedition into the third dimension… We have seen that we can use 3-D arrays to encode <em>true colour</em> information e.g. where the image array itself contains colour information for each pixel, and where we are <em>not</em> just pseudocolouring greyscale information using <code class="docutils literal notranslate"><span class="pre">viridis</span></code>…</p>
@@ -1330,6 +1412,10 @@ Min Pixel Value: 0
 <img alt="_images/9bea863298662798dfd8805b3e1b6dd347615d6f709ac06138bb0736d6c06c7b.png" src="_images/9bea863298662798dfd8805b3e1b6dd347615d6f709ac06138bb0736d6c06c7b.png" />
 </div>
 </div>
+<div class="exercise dropdown admonition" id="true-blue">
+
+<p class="admonition-title"><span class="caption-number">Exercise 2 </span></p>
+<section id="exercise-content">
 <p>Now over to you for some NumPy-fuelled colour wizardry. Your job is take our binary <code class="docutils literal notranslate"><span class="pre">two_D_ones_and_zeros</span></code> array and to use numerical and/or NumPy operations <strong>only</strong> to manipulate the image so that it looks as follows, when displayed with <code class="docutils literal notranslate"><span class="pre">plt.matshow()</span></code>:</p>
 <p><img alt="" src="_images/all_blue.png" /></p>
 <p>An array called <code class="docutils literal notranslate"><span class="pre">all_blue</span></code> contains your raw materials…</p>
@@ -1341,6 +1427,12 @@ Min Pixel Value: 0
 </div>
 </div>
 </div>
+</section>
+</div>
+<div class="solution dropdown admonition" id="1_colour_images_as_numpy_arrays-solution-1">
+
+<p class="admonition-title">Solution to<a class="reference internal" href="#true-blue"> Exercise 2</a></p>
+<section id="solution-content">
 <p>The solution here is to <code class="docutils literal notranslate"><span class="pre">np.stack</span></code> a new three-channel array, and  to use some simple NumPy indexing to “turn off” the Red and Green colour channels (e.g. set the pixel values in each slice to 0), and “max out” the Blue colour channel (e.g. set pixel values in the third slice to 1):</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -1368,6 +1460,12 @@ Min Pixel Value: 0
 <img alt="_images/ca755f2d58860dfaea76e3ed1e198df8224d3d1b1fdc202c618b07d78eee1db5.png" src="_images/ca755f2d58860dfaea76e3ed1e198df8224d3d1b1fdc202c618b07d78eee1db5.png" />
 </div>
 </div>
+</section>
+</div>
+<div class="exercise dropdown admonition" id="blood-smile">
+
+<p class="admonition-title"><span class="caption-number">Exercise 3 </span></p>
+<section id="exercise-content">
 <p>Time for some more horrifying computer art. Your task now is to modify the <code class="docutils literal notranslate"><span class="pre">smiley</span></code> image from earlier, using only numerical and/or NumPy operations, to make a “blood smiley”.</p>
 <p>The new “blood smiley” should have a black background, and a red face, meaning that Matplotlib will render it as:</p>
 <p><img alt="" src="_images/blood_smile.png" /></p>
@@ -1394,6 +1492,12 @@ Min Pixel Value: 0
 </div>
 </div>
 </div>
+</section>
+</div>
+<div class="solution dropdown admonition" id="1_colour_images_as_numpy_arrays-solution-3">
+
+<p class="admonition-title">Solution to<a class="reference internal" href="#blood-smile"> Exercise 3</a></p>
+<section id="solution-content">
 <p>The solution here is simple. The background in the image is already black, meaning that for those pixels, the array pixels values are already 0. When we <code class="docutils literal notranslate"><span class="pre">np.stack()</span></code> the array into 3-D, we just need to set the 1 values (corresponding to the “face” pixels) to 1 the Red channel only. To acheive this, we set all pixels in the Green and Blue channels to be 0.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -1410,6 +1514,12 @@ Min Pixel Value: 0
 <img alt="_images/bd1cf2fbd41a4f8a1a9b3087e1f85fb4121c882d733806dfc8003a236398b6b6.png" src="_images/bd1cf2fbd41a4f8a1a9b3087e1f85fb4121c882d733806dfc8003a236398b6b6.png" />
 </div>
 </div>
+</section>
+</div>
+<div class="exercise dropdown admonition" id="inverted-blood-smile">
+
+<p class="admonition-title"><span class="caption-number">Exercise 4 </span></p>
+<section id="exercise-content">
 <p>When we “invert” the colour of an image this means we reverse the intensity values. So the highest values become the lowest, and the lowest values become the highest.</p>
 <p>Your job is to figure out, again using only numerical or NumPy operations on the <code class="docutils literal notranslate"><span class="pre">smiley</span></code> image, to produce this final result:</p>
 <p><img alt="" src="_images/inverted_blood_smiley.png" /></p>
@@ -1421,6 +1531,12 @@ Min Pixel Value: 0
 </div>
 </div>
 </div>
+</section>
+</div>
+<div class="solution dropdown admonition" id="1_colour_images_as_numpy_arrays-solution-5">
+
+<p class="admonition-title">Solution to<a class="reference internal" href="#inverted-blood-smile"> Exercise 4</a></p>
+<section id="solution-content">
 <p>Because <code class="docutils literal notranslate"><span class="pre">smiley</span></code> is a binary array, we can invert the values with a simple numerical operation (subtracting 1 so 0 becomes -1, and 1 becomes 0, then adding 1 to the result so -1 becomes 0 and zero becomes 1).</p>
 <p>This inverts our image array:</p>
 <div class="cell docutils container">
@@ -1466,6 +1582,12 @@ Min Pixel Value: 0
 <img alt="_images/a9c005f22ad0d2f83242745a38f37b6f4f2a370ac63af943147efdab7b9b459b.png" src="_images/a9c005f22ad0d2f83242745a38f37b6f4f2a370ac63af943147efdab7b9b459b.png" />
 </div>
 </div>
+</section>
+</div>
+<div class="exercise dropdown admonition" id="colourless-caffeine">
+
+<p class="admonition-title"><span class="caption-number">Exercise 5 </span></p>
+<section id="exercise-content">
 <p>Ok, that was all scary. Now we need a coffee to relax. Your next task is to take the <code class="docutils literal notranslate"><span class="pre">coffee</span></code> image and use only numerical or NumPy operations to convert it to a single-channel (e.g. monochrome image).</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -1475,6 +1597,12 @@ Min Pixel Value: 0
 </div>
 </div>
 </div>
+</section>
+</div>
+<div class="solution dropdown admonition" id="1_colour_images_as_numpy_arrays-solution-7">
+
+<p class="admonition-title">Solution to<a class="reference internal" href="#colourless-caffeine"> Exercise 5</a></p>
+<section id="solution-content">
 <p>There are several ways to do this. One way is to use the <code class="docutils literal notranslate"><span class="pre">.mean()</span></code> method of the <code class="docutils literal notranslate"><span class="pre">coffee</span></code> NumPy array, setting <code class="docutils literal notranslate"><span class="pre">axis=2</span></code> to average across the colour channels in the third dimension.</p>
 <p>The resulting output is 2-D, and therefore single-channel/monochrome:</p>
 <div class="cell docutils container">
@@ -1519,6 +1647,12 @@ Min Pixel Value: 0
 </div>
 </div>
 <p>…we will allow any slice however, as they are all greyscale.</p>
+</section>
+</div>
+<div class="exercise dropdown admonition" id="corrupted-camera">
+
+<p class="admonition-title"><span class="caption-number">Exercise 6 </span></p>
+<section id="exercise-content">
 <p>In image processing “signal” can very roughly be thought of as a meaningful visual representation of something in pixel values. Conversely, noise can be thought of as meaningless randomness in pixel values.</p>
 <p>Your job now, like an aging memory card or broken file system, is to corrupt the <code class="docutils literal notranslate"><span class="pre">camera</span></code> image with some noisy pixels.</p>
 <p>Here is the original image:</p>
@@ -1550,6 +1684,12 @@ Min Pixel Value: 0
 </div>
 </div>
 </div>
+</section>
+</div>
+<div class="solution dropdown admonition" id="1_colour_images_as_numpy_arrays-solution-9">
+
+<p class="admonition-title">Solution to<a class="reference internal" href="#corrupted-camera"> Exercise 6</a></p>
+<section id="solution-content">
 <p>The way we did this was by stacking <code class="docutils literal notranslate"><span class="pre">camera</span></code> into a 3-D array. We then used NumPy indexing to isolate a region around the cameraman’s face in the green colour channel (second slice). We used the <code class="docutils literal notranslate"><span class="pre">np.random.permutation()</span></code> function to shuffle (e.g. randomize) the pixel values in this region:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -1564,8 +1704,10 @@ Min Pixel Value: 0
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/00d46740a3c4eac3c55ccfe1ac5e0570b5d49d13efc71ef162d155672e9a23a1.png" src="_images/00d46740a3c4eac3c55ccfe1ac5e0570b5d49d13efc71ef162d155672e9a23a1.png" />
+<img alt="_images/48099fdbec01e72cb194b0366ec6bd2d1ce5ac9f3149888698af13e45808f495.png" src="_images/48099fdbec01e72cb194b0366ec6bd2d1ce5ac9f3149888698af13e45808f495.png" />
 </div>
+</div>
+</section>
 </div>
 </section>
 <section class="tex2jax_ignore mathjax_ignore" id="more-actually-complex-images">
@@ -1707,7 +1849,7 @@ Min Pixel Value: 0
   <div class="footer-item">
     
 <p class="component-author">
-By The Jupyter Book community
+By Peter Rush, Matthew Brett
 </p>
 
   </div>
@@ -1717,7 +1859,7 @@ By The Jupyter Book community
 
   <p class="copyright">
     
-      © Copyright 2023.
+      © Copyright 2025.
       <br/>
     
   </p>

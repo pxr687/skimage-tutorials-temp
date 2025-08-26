@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>Morphology &#8212; My Jupyter Book</title>
+    <title>Morphology &#8212; Scikit-image via NumPy and SciPy</title>
   
   
   
@@ -32,8 +32,9 @@
     <link rel="stylesheet" type="text/css" href="_static/styles/sphinx-book-theme.css?v=eba8b062" />
     <link rel="stylesheet" type="text/css" href="_static/togglebutton.css?v=13237357" />
     <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
-    <link rel="stylesheet" type="text/css" href="_static/mystnb.8ecb98da25f57f5357bf6f572d296f466b2cfe2517ffebfabe82451661e28f02.css" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.8ecb98da25f57f5357bf6f572d296f466b2cfe2517ffebfabe82451661e28f02.css?v=6644e6bb" />
     <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="_static/exercise.css" />
     <link rel="stylesheet" type="text/css" href="_static/sphinx-design.min.css?v=95c83b7e" />
   
   <!-- Pre-loaded scripts that we'll load fully later -->
@@ -58,9 +59,10 @@
     <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
     <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
     <script>DOCUMENTATION_OPTIONS.pagename = '6_morphology';</script>
+    <link rel="canonical" href="https://pxr687.github.io/skimage-tutorials/6_morphology.html" />
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="prev" title="Introducing Scikit-image" href="2_skimage_intro.html" />
+    <link rel="prev" title="Image filtering I" href="4_filters.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   </head>
@@ -147,8 +149,14 @@
   
   
   
+    
+    
+      
+    
+    
+    <img src="_static/colourwheel.png" class="logo__image only-light" alt="Scikit-image via NumPy and SciPy - Home"/>
+    <script>document.write(`<img src="_static/colourwheel.png" class="logo__image only-dark" alt="Scikit-image via NumPy and SciPy - Home"/>`);</script>
   
-    <p class="title logo__title">My Jupyter Book</p>
   
 </a></div>
         <div class="sidebar-primary-item">
@@ -164,14 +172,6 @@
  </script></div>
         <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
     <div class="bd-toc-item navbar-nav active">
-        
-        <ul class="nav bd-sidenav bd-sidenav__home-link">
-            <li class="toctree-l1">
-                <a class="reference internal" href="index.html">
-                    Scikit-image via NumPy and SciPy
-                </a>
-            </li>
-        </ul>
         <p aria-level="2" class="caption" role="heading"><span class="caption-text">Scikit-image via NumPy and SciPy</span></p>
 <ul class="current nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="0_images_as_numpy_arrays.html">What is an image? - Images as NumPy arrays</a></li>
@@ -189,6 +189,24 @@
 
 
 
+
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="3_skimage_processing_from_numpy_and_scipy.html">(Sci-kit) Image processing via NumPy and SciPy</a></li>
+
+
+
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="4_filters.html">Image filtering I</a></li>
 
 
 
@@ -250,6 +268,70 @@
 
 
 
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/pxr687/skimage-tutorials-temp" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/pxr687/skimage-tutorials-temp/edit/main/6_morphology.Rmd" target="_blank"
+   class="btn btn-sm btn-source-edit-button dropdown-item"
+   title="Suggest edit"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-pencil-alt"></i>
+  </span>
+<span class="btn__text-container">Suggest edit</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/pxr687/skimage-tutorials-temp/issues/new?title=Issue%20on%20page%20%2F6_morphology.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
 <div class="dropdown dropdown-download-buttons">
   <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
     <i class="fas fa-download"></i>
@@ -258,7 +340,7 @@
       
       
       
-      <li><a href="_sources/6_morphology.ipynb" target="_blank"
+      <li><a href="_sources/6_morphology.Rmd" target="_blank"
    class="btn btn-sm btn-download-source-button dropdown-item"
    title="Download source file"
    data-bs-placement="left" data-bs-toggle="tooltip"
@@ -268,7 +350,7 @@
 <span class="btn__icon-container">
   <i class="fas fa-file"></i>
   </span>
-<span class="btn__text-container">.ipynb</span>
+<span class="btn__text-container">.Rmd</span>
 </a>
 </li>
       
@@ -375,7 +457,7 @@ document.write(`
   <section class="tex2jax_ignore mathjax_ignore" id="morphology">
 <h1>Morphology<a class="headerlink" href="#morphology" title="Link to this heading">#</a></h1>
 <p><a class="reference external" href="https://en.wikipedia.org/wiki/Mathematical_morphology">Morphology</a> is the mathematical study of shapes and has numerous applications in image processing. As such, Scikit-image has a dedicated module (<code class="docutils literal notranslate"><span class="pre">ski.morphology</span></code>) for associated functions.</p>
-<p>We already encountered structuring elements - (of which kernels are one type) - on <a class="reference internal" href="#4_filters"><span class="xref myst">earlier</span></a> <a class="reference internal" href="#5_filters_2"><span class="xref myst">pages</span></a>. A structuring element is a grid of a certain shape - you can think of it as a “template” - which is used to define the “neighbourhood” of pixels which an image processing operation affects. A (3, 3) structuring element is a square which affects 9 pixels - we might alter the image by centering this structuring element over every pixel, and replacing each pixel with the mean of the other pixels in it’s “neighbourhood”:</p>
+<p>We already encountered structuring elements - (of which kernels are one type) - on <a class="reference internal" href="4_filters.html"><span class="doc std std-doc">earlier</span></a> <a class="reference internal" href="5_filters_2.html"><span class="doc std std-doc">pages</span></a>. A structuring element is a grid of a certain shape - you can think of it as a “template” - which is used to define the “neighbourhood” of pixels which an image processing operation affects. A (3, 3) structuring element is a square which affects 9 pixels - we might alter the image by centering this structuring element over every pixel, and replacing each pixel with the mean of the other pixels in it’s “neighbourhood”:</p>
 <p><img alt="" src="_images/kernel_general.png" /></p>
 <p>We have seen structuring elements applied during filtering operations, courtesy of the <code class="docutils literal notranslate"><span class="pre">ski.filters</span></code> module. Morphological operations also make use of structuring elements, though in morphological operations, structuring elements are binary (contain only 0s and 1s). Morphological operations differ from the filtering operations we have seen previously because they are specifically <a class="reference external" href="https://www.cs.auckland.ac.nz/courses/compsci773s1c/lectures/ImageProcessing-html/topic4.htm">related to the shape (…or, well, <em>morphology</em>) of features with in the image</a>. This contrasts with operations like <a class="reference internal" href="#5_filters"><span class="xref myst">mean filtering</span></a> which “spread” pixel values around within a neighbourhood, rather than identifying and altering features with a specific shape/morphology.</p>
 </section>
@@ -731,7 +813,7 @@ Min Pixel Value: 0
 </div>
 </div>
 </div>
-<p>Scary, especially as a binary image, but not quite as scary as the <code class="docutils literal notranslate"><span class="pre">smiley</span></code> image we <a class="reference download internal" download="" href="_downloads/305a6a0f8c7765c66079f752aebf6875/0_images_as_numpy_arrays.Rmd"><span class="xref download myst">made</span></a> that still haunts our dreams.</p>
+<p>Scary, especially as a binary image, but not quite as scary as the <code class="docutils literal notranslate"><span class="pre">smiley</span></code> image we <a class="reference internal" href="0_images_as_numpy_arrays.html"><span class="std std-doc">made</span></a> that still haunts our dreams.</p>
 <p>True to form, eroding this image using the <code class="docutils literal notranslate"><span class="pre">diamond</span></code> structuring element increases the size of dark regions:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -867,6 +949,10 @@ Min Pixel Value: 0
 </div>
 </div>
 <p>Changing the shape or size of the structuring element (likely) changes the number of “matches”, and therefore the degree and location of changes to the bright/dark regions, for both erosion and dilation. We are essentially looking for features of a certain shape (the shape of our structuring element) in the image, and then dilating/eroding on the basis of the number of matches/clashes.</p>
+<div class="exercise dropdown admonition" id="block-xeno">
+
+<p class="admonition-title"><span class="caption-number">Exercise 22 </span></p>
+<section id="exercise-content">
 <p>Try to recreate the following image by processing <code class="docutils literal notranslate"><span class="pre">xenomorph</span></code>, using only <code class="docutils literal notranslate"><span class="pre">skimage</span></code> morphological operations, as well as operations from the other tutorials, from <code class="docutils literal notranslate"><span class="pre">numpy</span></code>, <code class="docutils literal notranslate"><span class="pre">scipy</span></code> and <code class="docutils literal notranslate"><span class="pre">skimage</span></code>:</p>
 <p><img alt="" src="_images/xeno_ex_1.png" /></p>
 <p>Look at the shape, the <em>morphology</em> of the features in the image - what shape and size structuring element do you think you need? Do you think you need dilation or erosion?</p>
@@ -880,6 +966,12 @@ Min Pixel Value: 0
 </div>
 </div>
 </div>
+</section>
+</div>
+<div class="solution dropdown admonition" id="6_morphology-solution-1">
+
+<p class="admonition-title">Solution to<a class="reference internal" href="#block-xeno"> Exercise 22</a></p>
+<section id="solution-content">
 <p>We promised earlier that the <code class="docutils literal notranslate"><span class="pre">diamond</span></code> structuring element would get more diamond-like when it is larger. To complete this exercise, you need <code class="docutils literal notranslate"><span class="pre">big_diamond</span></code> with <code class="docutils literal notranslate"><span class="pre">radius</span> <span class="pre">=</span> <span class="pre">30</span></code>:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -919,6 +1011,8 @@ Min Pixel Value: 0
 <div class="cell_output docutils container">
 <img alt="_images/c85a6f9d599effce427ece5da80a415f1f58612806b5e5475dbe4a7c35ab3630.png" src="_images/c85a6f9d599effce427ece5da80a415f1f58612806b5e5475dbe4a7c35ab3630.png" />
 </div>
+</div>
+</section>
 </div>
 </section>
 <section class="tex2jax_ignore mathjax_ignore" id="skeletonize">
@@ -1022,12 +1116,12 @@ Min Pixel Value: False
                   
 <div class="prev-next-area">
     <a class="left-prev"
-       href="2_skimage_intro.html"
+       href="4_filters.html"
        title="previous page">
       <i class="fa-solid fa-angle-left"></i>
       <div class="prev-next-info">
         <p class="prev-next-subtitle">previous</p>
-        <p class="prev-next-title">Introducing Scikit-image</p>
+        <p class="prev-next-title">Image filtering I</p>
       </div>
     </a>
 </div>
@@ -1069,7 +1163,7 @@ Min Pixel Value: False
   <div class="footer-item">
     
 <p class="component-author">
-By The Jupyter Book community
+By Peter Rush, Matthew Brett
 </p>
 
   </div>
@@ -1079,7 +1173,7 @@ By The Jupyter Book community
 
   <p class="copyright">
     
-      © Copyright 2023.
+      © Copyright 2025.
       <br/>
     
   </p>
