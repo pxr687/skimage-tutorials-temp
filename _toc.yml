@@ -9,3 +9,4 @@ parts:
       - file: 3_skimage_processing_from_numpy_and_scipy
       - file: 4_filters
       - file: 6_morphology
+      
