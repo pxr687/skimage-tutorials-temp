@@ -182,6 +182,7 @@
 
 
 
+
 <li class="toctree-l1"><a class="reference internal" href="1_colour_images_as_numpy_arrays.html">What about colour?</a></li>
 
 
@@ -453,7 +454,11 @@ document.write(`
                 <ul class="visible nav section-nav flex-column">
 <li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">What is an image? - Images as NumPy arrays</a></li>
 <li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#the-simplest-images">The simplest images</a></li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#pixels-pixel-coordinates-and-interpolation">Pixels, pixel coordinates and interpolation</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#pixels-pixel-coordinates-and-interpolation">Pixels, pixel coordinates and interpolation</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#more-on-array-pixels-vs-display-pixels">More on array pixels vs display pixels</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#shades-of-grey-and-colourmaps">Shades of grey and colourmaps</a></li>
 <li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#slightly-more-complex-images">(Slightly) more complex images</a></li>
 <li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#even-more-complex-images">Even more complex images</a></li>
 <li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#summary">Summary</a></li>
@@ -646,12 +651,10 @@ document.write(`
 </div>
 </div>
 <p>You can see that the image we have saved and loaded back has a <code class="docutils literal notranslate"><span class="pre">shape</span></code> of <code class="docutils literal notranslate"><span class="pre">(480,</span> <span class="pre">480)</span></code>. This is much larger than our original <code class="docutils literal notranslate"><span class="pre">(4,</span> <span class="pre">4)</span></code> image array. We displayed our original 2-by-2 <em>array image</em> (<code class="docutils literal notranslate"><span class="pre">two_D_ones_and_zeros</span></code>) using Matplotlib, creating a <em>display image</em>. It is this display image that we saved using <code class="docutils literal notranslate"><span class="pre">plt.savefig()</span></code> as <code class="docutils literal notranslate"><span class="pre">.png</span></code> file. Because it was upscaled for the purposes of display, the display image contains many more pixels than the original <code class="docutils literal notranslate"><span class="pre">two_d_ones_and_zeros</span></code> array.</p>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
-<p><strong>More on array pixels vs display pixels</strong></p>
+<section id="more-on-array-pixels-vs-display-pixels">
+<h2>More on array pixels vs display pixels<a class="headerlink" href="#more-on-array-pixels-vs-display-pixels" title="Link to this heading">#</a></h2>
 <p>We have used <code class="docutils literal notranslate"><span class="pre">plt.matshow()</span></code> so far on this page. Perhaps more commonly, you will see another Matplotlib function used to visualise/display/render image arrays. This more commonly seen function is called <code class="docutils literal notranslate"><span class="pre">plt.imshow()</span></code> (for <code class="docutils literal notranslate"><span class="pre">im</span></code>age <code class="docutils literal notranslate"><span class="pre">show</span></code>). It is a more general purpose function than <code class="docutils literal notranslate"><span class="pre">plt.matshow()</span></code> and can be used to display a wider variety of image arrays. See the documentation for each function <a class="reference external" href="https://matplotlib.org/stable/api/_as_gen/matplotlib.pyplot.matshow.html">here</a> and <a class="reference external" href="https://matplotlib.org/stable/api/_as_gen/matplotlib.pyplot.imshow.html">here</a>.</p>
 <p>Using the (more common) <code class="docutils literal notranslate"><span class="pre">plt.imshow()</span></code> can lead to some different and potentially slightly confusing default axis tick labels, for very small (e.g. low-resolution) image arrays:</p>
-</div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Visualize our array with `plt.imshow()`</span>
@@ -678,11 +681,12 @@ document.write(`
 </div>
 </div>
 <p>For the rest of this tutorial, for small arrays we will use <code class="docutils literal notranslate"><span class="pre">plt.matshow()</span></code>, for very small arrays, to keep the axes labels more intuitively interpretable.</p>
-<div class="docutils">
-<h1 class="rubric" id="shades-of-grey-and-colourmaps">Shades of grey and colourmaps</h1>
+</section>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="shades-of-grey-and-colourmaps">
+<h1>Shades of grey and colourmaps<a class="headerlink" href="#shades-of-grey-and-colourmaps" title="Link to this heading">#</a></h1>
 <p>Why does our image array display in vibrant purple and yellow, you may ask? This is because both <code class="docutils literal notranslate"><span class="pre">plt.matshow()</span></code> - and it’s cousin <code class="docutils literal notranslate"><span class="pre">plt.imshow()</span></code> - have a default <em>colourmap</em>. This is a mapping between the numbers in the array, and the colours that the plot will depict each number with when the array is visualised. The default colourmap is called <a class="reference external" href="https://matplotlib.org/3.5.3/api/_as_gen/matplotlib.pyplot.viridis.html"><code class="docutils literal notranslate"><span class="pre">viridis</span></code></a>. This default colourmap maps low array pixel values to purple, and high array pixel values to yellow.</p>
 <p>We can adjust the colour by changing the <code class="docutils literal notranslate"><span class="pre">cmap</span></code> argument of <code class="docutils literal notranslate"><span class="pre">plt.matshow()</span></code> - for instance, we can change the plot to visualise the array using a greyscale map:</p>
-</div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Show the array, change the colourmap.</span>
@@ -1253,7 +1257,11 @@ document.write(`
     <ul class="visible nav section-nav flex-column">
 <li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">What is an image? - Images as NumPy arrays</a></li>
 <li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#the-simplest-images">The simplest images</a></li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#pixels-pixel-coordinates-and-interpolation">Pixels, pixel coordinates and interpolation</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#pixels-pixel-coordinates-and-interpolation">Pixels, pixel coordinates and interpolation</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#more-on-array-pixels-vs-display-pixels">More on array pixels vs display pixels</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#shades-of-grey-and-colourmaps">Shades of grey and colourmaps</a></li>
 <li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#slightly-more-complex-images">(Slightly) more complex images</a></li>
 <li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#even-more-complex-images">Even more complex images</a></li>
 <li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#summary">Summary</a></li>

@@ -149,9 +149,7 @@ from_file.shape
 You can see that the image we have saved and loaded back has a `shape` of `(480, 480)`. This is much larger than our original `(4, 4)` image array. We displayed our original 2-by-2 *array image* (`two_D_ones_and_zeros`) using Matplotlib, creating a *display image*. It is this display image that we saved using `plt.savefig()` as `.png` file. Because it was upscaled for the purposes of display, the display image contains many more pixels than the original `two_d_ones_and_zeros` array.
 
 
-::: {note}
-
-**More on array pixels vs display pixels**
+## More on array pixels vs display pixels
 
 We have used `plt.matshow()` so far on this page. Perhaps more commonly, you will see another Matplotlib function used to visualise/display/render image arrays. This more commonly seen function is called `plt.imshow()` (for `im`age `show`). It is a more general purpose function than `plt.matshow()` and can be used to display a wider variety of image arrays. See the documentation for each function [here](https://matplotlib.org/stable/api/_as_gen/matplotlib.pyplot.matshow.html) and [here](https://matplotlib.org/stable/api/_as_gen/matplotlib.pyplot.imshow.html).
 
@@ -173,8 +171,6 @@ plt.matshow(two_D_ones_and_zeros);
 ```
 
 For the rest of this tutorial, for small arrays we will use `plt.matshow()`, for very small arrays, to keep the axes labels more intuitively interpretable.
-
-:::
 
 # Shades of grey and colourmaps
 
