@@ -447,7 +447,7 @@ document.write(`
 <li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#small-image-arrays-big-image-arrays">Small image arrays, big image arrays</a></li>
 <li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#colourspaces">Colourspaces</a></li>
 <li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#colourspaces-2-transparency-in-the-3rd-dimension">Colourspaces 2: transparency in the 3rd dimension</a></li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#not-all-3-d-images-are-in-colour-other-image-representations">Not all 3-D images are in colour: other image representations</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#not-all-3-d-images-are-in-colour">Not all 3-D images are in colour…</a></li>
 <li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#summary">Summary</a></li>
 <li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#references">References</a></li>
 </ul>
@@ -464,11 +464,11 @@ document.write(`
                   
   <section class="tex2jax_ignore mathjax_ignore" id="introducing-scikit-image">
 <h1>Introducing Scikit-image<a class="headerlink" href="#introducing-scikit-image" title="Link to this heading">#</a></h1>
-<p>Previously, we <a class="reference internal" href="0_images_as_numpy_arrays.html"><span class="doc std std-doc">have</span></a> <a class="reference internal" href="1_colour_images_as_numpy_arrays.html"><span class="doc std std-doc">explored</span></a> how images can be represented as NumPy arrays. <a class="reference external" href="https://scikit-image.org">Scikit-image</a> (<code class="docutils literal notranslate"><span class="pre">skimage</span></code>) is a powerful image prcoessing package which is built in a large part from NumPy and SciPy, and uses NumPy arrays as its fundamental image representations. This page will show some foundational aspects of <code class="docutils literal notranslate"><span class="pre">skimage</span></code>, focusing on its coherence with the NumPy image array concepts we saw on the last two pages.</p>
+<p><a class="reference external" href="https://scikit-image.org">Scikit-image</a> (<code class="docutils literal notranslate"><span class="pre">skimage</span></code>) is a powerful image prcoessing package which is built in a large part from NumPy and SciPy, and uses NumPy arrays as its fundamental image representations. This page will show some foundational aspects of <code class="docutils literal notranslate"><span class="pre">skimage</span></code>, focusing on its coherence with the NumPy image array concepts we saw on the last two pages.</p>
 </section>
 <section class="tex2jax_ignore mathjax_ignore" id="images-are-arrays-arrays-are-images">
 <h1>Images are arrays, arrays are images<a class="headerlink" href="#images-are-arrays-arrays-are-images" title="Link to this heading">#</a></h1>
-<p>As we saw earlier, the technical definition of an image is <em>an (at least) two-dimensional array</em>. We know that each element of an image array (an “array pixel”) contains information about the grey-level or colour of that element. Perhaps obviously, these fundamental principles apply equally to Scikit-image, given that it represents images as NumPy arrays. The table below outlines how images are represented in <code class="docutils literal notranslate"><span class="pre">skimage</span></code> - you’ll notice it is identical to the principles we have seen for representing images in NumPy:</p>
+<p>As we have seen, the technical definition of an image is <em>an (at least) two-dimensional array</em>. We know that each element of an image array (an “array pixel”) contains information about the grey-level or colour of that element. Perhaps obviously, these fundamental principles apply equally to Scikit-image, given that it represents images as NumPy arrays. The table below outlines how images are represented in <code class="docutils literal notranslate"><span class="pre">skimage</span></code> - you’ll notice it is identical to the principles we have seen for representing images in NumPy:</p>
 <div class="pst-scrollable-table-container"><table class="table">
 <thead>
 <tr class="row-odd"><th class="head text-left"><p></p></th>
@@ -507,7 +507,7 @@ document.write(`
 </div>
 </div>
 </div>
-<p>We can use some simple NumPy functions and the familiar array indexing syntax to create an image array:</p>
+<p>We can use some simple NumPy functions and the familiar array indexing syntax to create our familiar, exceedingly artistic, image array:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Create an image array.</span>
@@ -585,8 +585,7 @@ Min Pixel Value: 0.0
 </div>
 </div>
 </div>
-<p>Remember our <a class="reference internal" href="0_images_as_numpy_arrays.html"><span class="std std-doc">maxim</span></a> that “image-processing involves operations which change the values inside the image array and therefore change the corresponding visual image”? Because Scikit-image represents images as NumPy arrays, <em>the majority of Scikit-image functions take NumPy <code class="docutils literal notranslate"><span class="pre">ndarray</span></code>s as arguments.</em></p>
-<p>For instance, the <code class="docutils literal notranslate"><span class="pre">rgb2gray()</span></code> function from the <code class="docutils literal notranslate"><span class="pre">ski.color</span></code> module can take a multi-channel array, and convert it to a single channel, greyscale image. We will show this with the <code class="docutils literal notranslate"><span class="pre">red_squares</span></code> array from above:</p>
+<p>Because Scikit-image represents images as NumPy arrays, <em>the majority of Scikit-image functions take NumPy <code class="docutils literal notranslate"><span class="pre">ndarray</span></code>s as arguments.</em> For instance, the <code class="docutils literal notranslate"><span class="pre">rgb2gray()</span></code> function from the <code class="docutils literal notranslate"><span class="pre">ski.color</span></code> module can take a multi-channel array, and convert it to a single channel, greyscale image. We will show this with the <code class="docutils literal notranslate"><span class="pre">red_squares</span></code> array from above:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Show the original `red_squares` array</span>
@@ -628,7 +627,7 @@ Min Pixel Value: 0.0
 </div>
 </div>
 <p>Most Scikit-image functions work like  this - they take a NumPy array as input, do something to the array pixel values, then return an altered image array. As we mentioned above, under the hood <code class="docutils literal notranslate"><span class="pre">skimage</span></code> is often using NumPy and SciPy functions to do the image manipulation, something we will explore in more detail on the <a class="reference internal" href="3_skimage_processing_from_numpy_and_scipy.html"><span class="doc std std-doc">next page</span></a>.</p>
-<p>You may ask why the maximum pixel values are now 0.21, rather than 1? This is because of the <a class="reference external" href="https://stackoverflow.com/questions/596216/formula-to-determine-perceived-brightness-of-rgb-color">formula</a> that <code class="docutils literal notranslate"><span class="pre">rgb2gray()</span></code> uses to do the conversion; we will also show this in detail in the <em>Colourspaces</em> section later in this page.</p>
+<p>You may ask why the maximum pixel values are now 0.21, rather than 1? This is because of the <a class="reference external" href="https://stackoverflow.com/questions/596216/formula-to-determine-perceived-brightness-of-rgb-color">formula</a> that <code class="docutils literal notranslate"><span class="pre">rgb2gray()</span></code> uses to do the conversion. We will show this in detail in the <em>Colourspaces</em> section later in this tutorial.</p>
 </section>
 <section class="tex2jax_ignore mathjax_ignore" id="scikit-image-ships-with-built-in-images">
 <h1>Scikit-image ships with built-in images<a class="headerlink" href="#scikit-image-ships-with-built-in-images" title="Link to this heading">#</a></h1>
@@ -792,13 +791,15 @@ Min Pixel Value: 0
 <img alt="_images/99daf28147268335f0a504588d559ad3f7a7e219ed1f87fc364e3c64324bfaa9.png" src="_images/99daf28147268335f0a504588d559ad3f7a7e219ed1f87fc364e3c64324bfaa9.png" />
 </div>
 </div>
-<p>When we explore different image processing operations, using smaller arrays often makes it easier to understand what a given processing operation is doing to individual pixels. However, in larger, more complex arrays, it is often easier to appreciate the “global” effect of an image processing operation on the perceived visual image. As such, we will use a variety of simple arrays (like <code class="docutils literal notranslate"><span class="pre">squares</span></code>) and a variety of more complex images from <code class="docutils literal notranslate"><span class="pre">skimage.data</span></code> to show the effect of different <code class="docutils literal notranslate"><span class="pre">skimage</span></code> manipulations, as well as their constituent <code class="docutils literal notranslate"><span class="pre">numpy</span></code> and <code class="docutils literal notranslate"><span class="pre">scipy</span></code> operations.</p>
+<p>Remember our <a class="reference internal" href="0_images_as_numpy_arrays.html"><span class="std std-doc">maxim</span></a> that “image-processing is just the application of operations which change the values inside an image array, and therefore change the corresponding visual image”?</p>
+<p>When we explore different image processing operations, using smaller arrays often makes it easier to understand what a given processing operation is doing to individual array pixels. However, in larger, more complex arrays, it is often easier to appreciate the “global” visual/perceptual effect of an image processing operation.</p>
+<p>As such, we will use a variety of simple arrays (like <code class="docutils literal notranslate"><span class="pre">squares</span></code>) along with a variety of more complex images from <code class="docutils literal notranslate"><span class="pre">skimage.data</span></code>, like <code class="docutils literal notranslate"><span class="pre">coffee</span></code>, to show the effect of different <code class="docutils literal notranslate"><span class="pre">skimage</span></code> manipulations, as well as their constituent <code class="docutils literal notranslate"><span class="pre">numpy</span></code> and <code class="docutils literal notranslate"><span class="pre">scipy</span></code> operations.</p>
 </section>
 <section class="tex2jax_ignore mathjax_ignore" id="input-output-and-dtypes-in-skimage">
 <h1>Input/output and <code class="docutils literal notranslate"><span class="pre">dtype</span></code>s in <code class="docutils literal notranslate"><span class="pre">skimage</span></code><a class="headerlink" href="#input-output-and-dtypes-in-skimage" title="Link to this heading">#</a></h1>
-<p>Before manipulating and prcoessing images, we will need to load them into memory. After we are finished with our high concept digital art, we will want to save our creations. To help us with this, input and output (e.g. loading and saving image files) is handled by the <code class="docutils literal notranslate"><span class="pre">skimage.io</span></code> module.</p>
-<p>We have already met this module on <a class="reference internal" href="0_images_as_numpy_arrays.html"><span class="std std-doc">earlier pages</span></a> but we will discuss some of its finer details here. <code class="docutils literal notranslate"><span class="pre">skimage</span></code> supports multiple image <code class="docutils literal notranslate"><span class="pre">dtypes</span></code> (e.g. the types of numbers within the image array), and loading and saving files often requires close attention to, or even conversion of, the image <code class="docutils literal notranslate"><span class="pre">dtype</span></code>, as we will see shortly.</p>
-<p>For npw, let’s use <code class="docutils literal notranslate"><span class="pre">ski.io.imread()</span></code> to load a <code class="docutils literal notranslate"><span class="pre">.png</span></code> of the terrifying smile we hand-crafted in the earlier tutorials:</p>
+<p>Before manipulating and processing images, we will need to load them into memory. After we are finished with our high concept digital art, we will want to save our creations. To help us with this, input and output (e.g. loading and saving image files) is handled by the <code class="docutils literal notranslate"><span class="pre">skimage.io</span></code> module.</p>
+<p>We have already met this module on <a class="reference internal" href="0_images_as_numpy_arrays.html"><span class="std std-doc">earlier pages</span></a> but we will discuss some of its finer details here. <code class="docutils literal notranslate"><span class="pre">skimage</span></code> supports multiple image <code class="docutils literal notranslate"><span class="pre">dtypes</span></code> (e.g. the types of numbers within the image array), and loading and saving files can require close attention to, or even conversion of, the image <code class="docutils literal notranslate"><span class="pre">dtype</span></code>, as we will see shortly.</p>
+<p>For now, let’s use <code class="docutils literal notranslate"><span class="pre">ski.io.imread()</span></code> to load a <code class="docutils literal notranslate"><span class="pre">.png</span></code> of the terrifying smile we hand-crafted in the earlier tutorials:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Read in an image file.</span>
@@ -848,7 +849,7 @@ Min Pixel Value: 0.0
 </div>
 </div>
 <p>No less terrifying than when we first saw it…</p>
-<p>Because NumPy arrays are the foundational image representations used by <code class="docutils literal notranslate"><span class="pre">skimage</span></code>, <code class="docutils literal notranslate"><span class="pre">ski.io.imread()</span></code> loads image files as NumPy arrays by default. This is not the case with some other python image libraries (like <code class="docutils literal notranslate"><span class="pre">Image</span></code>) which have their own native image representations.</p>
+<p>Note that <code class="docutils literal notranslate"><span class="pre">ski.io.imread()</span></code> loads image files as NumPy arrays by default. This is not the case with some other python image libraries (like <code class="docutils literal notranslate"><span class="pre">Image</span></code>) which have their own native image representations.</p>
 <p>Now, a lot of <code class="docutils literal notranslate"><span class="pre">skimage</span></code> functions serve specific purposes - like improving the quality or clarity of an image. Others are just there to look cool. The <code class="docutils literal notranslate"><span class="pre">ski.transform.swirl()</span></code> function falls into the latter category. According to the <a class="reference external" href="https://scikit-image.org/docs/0.25.x/auto_examples/transform/plot_swirl.html">documentation</a>, this function performs a non-linear deformation creating a whirlpool effect. Because <code class="docutils literal notranslate"><span class="pre">skimage</span></code> has loaded <code class="docutils literal notranslate"><span class="pre">smiley.png</span></code> as a NumPy array, we can pass the image straight to the <code class="docutils literal notranslate"><span class="pre">swirl</span></code> function:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -893,8 +894,8 @@ Min Pixel Value: 0.0
 <img alt="_images/a85316ad85c3dfbbb85b6f21f6f20fa464eb0f3fe517b8a4511544c485b4c77a.png" src="_images/a85316ad85c3dfbbb85b6f21f6f20fa464eb0f3fe517b8a4511544c485b4c77a.png" />
 </div>
 </div>
-<p><code class="docutils literal notranslate"><span class="pre">smiley</span></code> only gets more terrifying with each manipulation, it seems…What <code class="docutils literal notranslate"><span class="pre">swirl</span></code> has done here is, well, swirled the pixels around a central point, resulting in this crooked, wonky smile.</p>
-<p>Now, if we want to save our terrifying creation, we can use <code class="docutils literal notranslate"><span class="pre">ski.io.imsave()</span></code> to save images…</p>
+<p><code class="docutils literal notranslate"><span class="pre">smiley</span></code> only gets more terrifying with each manipulation, it seems…</p>
+<p>What <code class="docutils literal notranslate"><span class="pre">swirl</span></code> has done here is, well, swirled the pixels around a central point, resulting in this crooked, wonky smile. Now, if we want to save our terrifying creation, we can use <code class="docutils literal notranslate"><span class="pre">ski.io.imsave()</span></code> to save images…</p>
 <div class="cell tag_raises-exception docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># OUCH!</span>
@@ -1013,7 +1014,7 @@ Min Pixel Value: 0.0
 </div>
 <p>As we have already seen, <code class="docutils literal notranslate"><span class="pre">skimage</span></code> <a class="reference external" href="https://scikit-image.org/docs/0.25.x/user_guide/data_types.html">supports the following <code class="docutils literal notranslate"><span class="pre">dtypes</span></code></a>:</p>
 <p><img alt="" src="_images/dtypes_skimage.png" /></p>
-<p>The error above occurred because we are trying to save our image to the <code class="docutils literal notranslate"><span class="pre">.png</span></code> format, which does not support the <code class="docutils literal notranslate"><span class="pre">float64</span></code> <code class="docutils literal notranslate"><span class="pre">dtype</span></code>. Issues like these are common, and as such <code class="docutils literal notranslate"><span class="pre">skimage</span></code> has a variety of functions to address them.</p>
+<p>The error above occurred because we are trying to save our image to the <code class="docutils literal notranslate"><span class="pre">.png</span></code> file format, which does not support the <code class="docutils literal notranslate"><span class="pre">float64</span></code> <code class="docutils literal notranslate"><span class="pre">dtype</span></code>. Issues like these are common, and as such <code class="docutils literal notranslate"><span class="pre">skimage</span></code> has a variety of functions to address them.</p>
 <p>In this case, we can convert our image array from <code class="docutils literal notranslate"><span class="pre">float64</span></code> to <code class="docutils literal notranslate"><span class="pre">uint8</span></code> using the <code class="docutils literal notranslate"><span class="pre">ski.util.img_as_ubyte()</span></code> function:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -1082,10 +1083,30 @@ Min Pixel Value: 0
 </div>
 </div>
 <p>Issues with <code class="docutils literal notranslate"><span class="pre">dtype</span></code> can be a source of errors, so it is important to be aware of what <code class="docutils literal notranslate"><span class="pre">dtype</span></code> your image arrays are using. Fortunately, as we have seen, to help remedy or avoid such errors, <code class="docutils literal notranslate"><span class="pre">skimage</span></code> makes it easy to convert between <code class="docutils literal notranslate"><span class="pre">dtypes</span></code>, where such errors do occur.</p>
+<p><em>Note</em>: you should prefer the <code class="docutils literal notranslate"><span class="pre">ski.util</span></code> <code class="docutils literal notranslate"><span class="pre">dtype</span></code> conversion functions to using the NumPy <code class="docutils literal notranslate"><span class="pre">ndarray.astype()</span></code> method. This is because the <code class="docutils literal notranslate"><span class="pre">skimage</span></code> functions will respect the min/max pixel intensity value conventions shown in the table above, where <code class="docutils literal notranslate"><span class="pre">.astype()</span></code> may not. Here is a list of the <code class="docutils literal notranslate"><span class="pre">skimage</span></code> conversion functions - you will need them!:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Show the `skimage` `dtype` conversion functions.</span>
+<span class="p">[</span><span class="n">func</span> <span class="k">for</span> <span class="n">func</span> <span class="ow">in</span> <span class="nb">dir</span><span class="p">(</span><span class="n">ski</span><span class="o">.</span><span class="n">util</span><span class="p">)</span> <span class="k">if</span> <span class="n">func</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s1">&#39;img&#39;</span><span class="p">)]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[&#39;img_as_bool&#39;,
+ &#39;img_as_float&#39;,
+ &#39;img_as_float32&#39;,
+ &#39;img_as_float64&#39;,
+ &#39;img_as_int&#39;,
+ &#39;img_as_ubyte&#39;,
+ &#39;img_as_uint&#39;]
+</pre></div>
+</div>
+</div>
+</div>
 </section>
 <section class="tex2jax_ignore mathjax_ignore" id="small-image-arrays-big-image-arrays">
 <h1>Small image arrays, big image arrays<a class="headerlink" href="#small-image-arrays-big-image-arrays" title="Link to this heading">#</a></h1>
-<p>Before we move on, a note on <code class="docutils literal notranslate"><span class="pre">swirl</span></code> - we said earlier that it is easier to understand a manipulation at the array pixel-level using a small (low-resolution) array, but easier to appreciate its global effect on a larger (high-resolution) image array. We saw the effect of <code class="docutils literal notranslate"><span class="pre">swirl</span></code> on <code class="docutils literal notranslate"><span class="pre">smiley_swirled</span></code>, but the nature of the visual effect can be seen more clearly when we apply it to <code class="docutils literal notranslate"><span class="pre">coffee</span></code>:</p>
+<p>Before we move on, a note on <code class="docutils literal notranslate"><span class="pre">swirl</span></code> - we said earlier that it is easier to understand a manipulation at the array pixel-level using a small (low-resolution) array, but easier to appreciate its global visual effect on a larger (high-resolution) image. We saw the effect of <code class="docutils literal notranslate"><span class="pre">swirl</span></code> on <code class="docutils literal notranslate"><span class="pre">smiley_swirled</span></code>, but the nature of the visual effect can be seen more clearly when we apply it to <code class="docutils literal notranslate"><span class="pre">coffee</span></code>:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># `swirl` the coffee image</span>
@@ -1105,7 +1126,7 @@ Min Pixel Value: 0
 <section id="exercise-content">
 <p>Now investigate the use of <code class="docutils literal notranslate"><span class="pre">ski.util.random_noise()</span></code> to add extra noise to an image. Remember that in the context of image processing, noise is <em>randomness</em>. Here is the original <code class="docutils literal notranslate"><span class="pre">camera</span></code> image from <code class="docutils literal notranslate"><span class="pre">ski.data</span></code>:</p>
 <p><img alt="" src="_images/camera_plot.png" /></p>
-<p>Try to recreate something like the image below, by adding noise to the image with <code class="docutils literal notranslate"><span class="pre">ski.util.random_noise()</span></code>. Like most <code class="docutils literal notranslate"><span class="pre">skimage</span></code> functions, <code class="docutils literal notranslate"><span class="pre">random_noise()</span></code> takes a NumPy image array as an argument, and adds random quantities to the array pixel values. You will need to adjust an optional argument, see if you can work out which argument it is by reading the <a class="reference external" href="https://scikit-image.org/docs/0.25.x/api/skimage.util.html#skimage.util.random_noise">documentation</a>.</p>
+<p>Try to recreate something like the image below, by adding noise to the image with <code class="docutils literal notranslate"><span class="pre">ski.util.random_noise()</span></code>. Like most <code class="docutils literal notranslate"><span class="pre">skimage</span></code> functions, <code class="docutils literal notranslate"><span class="pre">random_noise()</span></code> takes a NumPy image array as an argument, and adds random quantities to the array pixel values. To match the target image below, you will need to adjust an optional argument, see if you can work out which argument it is by reading the <a class="reference external" href="https://scikit-image.org/docs/0.25.x/api/skimage.util.html#skimage.util.random_noise">documentation</a>.</p>
 <p><img alt="" src="_images/noisy_camera.png" /></p>
 <p>Make sure you pay attention to the <em>colour</em> of the noise…</p>
 <p>Your new image should have the following attributes:</p>
@@ -1129,20 +1150,20 @@ Min Pixel Value: 0.0
 
 <p class="admonition-title">Solution to<a class="reference internal" href="#noisy-camera"> Exercise 7</a></p>
 <section id="solution-content">
-<p>The solution here is to <code class="docutils literal notranslate"><span class="pre">np.stack()</span></code> the <code class="docutils literal notranslate"><span class="pre">camera</span></code> image, to introduce colour channels. We then pass our 3-D arrau to <code class="docutils literal notranslate"><span class="pre">ski.util.random_noise()</span></code>, manipulating the <code class="docutils literal notranslate"><span class="pre">var</span></code> argument to control the “level” of the noise. Specifically, <code class="docutils literal notranslate"><span class="pre">var</span></code> will control the range of the changes (e.g. higher <code class="docutils literal notranslate"><span class="pre">var</span></code> means bigger absolute random values can potentially be added/subtracted from each pixel:</p>
+<p>The solution here is to <code class="docutils literal notranslate"><span class="pre">np.stack()</span></code> the <code class="docutils literal notranslate"><span class="pre">camera</span></code> image, to introduce colour channels. We then pass our 3-D array to <code class="docutils literal notranslate"><span class="pre">ski.util.random_noise()</span></code>, manipulating the <code class="docutils literal notranslate"><span class="pre">var</span></code> argument to control the “level” of the noise. Specifically, <code class="docutils literal notranslate"><span class="pre">var</span></code> will control the range of the changes. Higher values of <code class="docutils literal notranslate"><span class="pre">var</span></code> means bigger absolute random values can potentially be added/subtracted from each pixel:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution.</span>
 <span class="n">camera</span> <span class="o">=</span> <span class="n">ski</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">camera</span><span class="p">()</span>
 
 <span class="c1"># Stack to 3-D.</span>
-<span class="n">camera_3d</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">stack</span><span class="p">([</span><span class="n">camera</span><span class="p">,</span> 
-                      <span class="n">camera</span><span class="p">,</span>
-                      <span class="n">camera</span><span class="p">],</span> 
-                      <span class="n">axis</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">camera_with_noise</span>  <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">stack</span><span class="p">([</span><span class="n">camera</span><span class="p">,</span> 
+                               <span class="n">camera</span><span class="p">,</span>
+                               <span class="n">camera</span><span class="p">],</span> 
+                               <span class="n">axis</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
 
 <span class="c1"># Add noisy to every colour channel.</span>
-<span class="n">camera_with_noise</span> <span class="o">=</span> <span class="n">ski</span><span class="o">.</span><span class="n">util</span><span class="o">.</span><span class="n">random_noise</span><span class="p">(</span><span class="n">camera_3d</span><span class="p">,</span>
+<span class="n">camera_with_noise</span> <span class="o">=</span> <span class="n">ski</span><span class="o">.</span><span class="n">util</span><span class="o">.</span><span class="n">random_noise</span><span class="p">(</span><span class="n">camera_with_noise</span><span class="p">,</span>
                                           <span class="n">var</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
 <span class="c1"># Show the result.</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">camera_with_noise</span><span class="p">)</span>
@@ -1158,7 +1179,7 @@ Max Pixel Value: 1.0
 Min Pixel Value: 0.0
 </pre></div>
 </div>
-<img alt="_images/4894f4f5066a3d21eb88878b1dc645f2dcf686ca445e14aa8f6f3f49d567d8ab.png" src="_images/4894f4f5066a3d21eb88878b1dc645f2dcf686ca445e14aa8f6f3f49d567d8ab.png" />
+<img alt="_images/aadc65c8f9ec452cee19710f784526907686665ce035c45a1cbcc196c0901445.png" src="_images/aadc65c8f9ec452cee19710f784526907686665ce035c45a1cbcc196c0901445.png" />
 </div>
 </div>
 </section>
@@ -1166,7 +1187,7 @@ Min Pixel Value: 0.0
 </section>
 <section class="tex2jax_ignore mathjax_ignore" id="colourspaces">
 <h1>Colourspaces<a class="headerlink" href="#colourspaces" title="Link to this heading">#</a></h1>
-<p>So far we have looked at monochrome, single-channel image arrays and three-channel RBG colour image arrays. We can use the <code class="docutils literal notranslate"><span class="pre">shape</span></code> conventions from NumPy to think about these image types. Single channel images have a <code class="docutils literal notranslate"><span class="pre">shape</span></code> of <code class="docutils literal notranslate"><span class="pre">(n,</span> <span class="pre">m)</span></code> where <code class="docutils literal notranslate"><span class="pre">n</span></code> is the number of rows and <code class="docutils literal notranslate"><span class="pre">m</span></code> is the number of columns. RGB images have a shape of <code class="docutils literal notranslate"><span class="pre">(n,</span> <span class="pre">m,</span> <span class="pre">3)</span></code>, so <code class="docutils literal notranslate"><span class="pre">n</span></code> rows, <code class="docutils literal notranslate"><span class="pre">m</span></code> columns and <code class="docutils literal notranslate"><span class="pre">3</span></code> slices (the colour channels).</p>
+<p>So far we have looked primarily at binary/monochrome single-channel image arrays and three-channel RGB colour image arrays. We can use the <code class="docutils literal notranslate"><span class="pre">shape</span></code> conventions from NumPy to think about these image types. Single channel images have a <code class="docutils literal notranslate"><span class="pre">shape</span></code> of <code class="docutils literal notranslate"><span class="pre">(n,</span> <span class="pre">m)</span></code> where <code class="docutils literal notranslate"><span class="pre">n</span></code> is the number of rows and <code class="docutils literal notranslate"><span class="pre">m</span></code> is the number of columns. RGB images have a shape of <code class="docutils literal notranslate"><span class="pre">(n,</span> <span class="pre">m,</span> <span class="pre">3)</span></code>, so <code class="docutils literal notranslate"><span class="pre">n</span></code> rows, <code class="docutils literal notranslate"><span class="pre">m</span></code> columns and <code class="docutils literal notranslate"><span class="pre">3</span></code> slices (the colour channels).</p>
 <p>RGB is the default, but colour images of shape <code class="docutils literal notranslate"><span class="pre">(n,</span> <span class="pre">m,</span> <span class="pre">3)</span></code> can use different representations of colour to the RGB method we have seen. We call these different colour representation formats <em>colourspaces</em>. <code class="docutils literal notranslate"><span class="pre">skimage</span></code> supports many of them, and contains many functions for converting image arrays between colourspaces. These functions are contained in the <code class="docutils literal notranslate"><span class="pre">ski.color</span></code> module:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -1247,7 +1268,8 @@ Min Pixel Value: 0.0
 <p>Let’s load in the <code class="docutils literal notranslate"><span class="pre">cat</span></code> image from <code class="docutils literal notranslate"><span class="pre">ski.data</span></code>, to look at a different colourspace:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">cat</span> <span class="o">=</span> <span class="n">ski</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">cat</span><span class="p">()</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Load the image and show it.</span>
+<span class="n">cat</span> <span class="o">=</span> <span class="n">ski</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">cat</span><span class="p">()</span>
 <span class="n">show_attributes</span><span class="p">(</span><span class="n">cat</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">cat</span><span class="p">);</span>
 </pre></div>
@@ -1264,7 +1286,7 @@ Min Pixel Value: 0
 <img alt="_images/2a123916cdd6cc195c70345655c48bea133bb62ef7e9f500df9f5240a6d23b19.png" src="_images/2a123916cdd6cc195c70345655c48bea133bb62ef7e9f500df9f5240a6d23b19.png" />
 </div>
 </div>
-<p>On the <a class="reference internal" href="1_colour_images_as_numpy_arrays.html"><span class="doc std std-doc">previous page</span></a> we manually converted colour images to greyscale, using NumPy operations. As we saw earlier on this page, functions from the <code class="docutils literal notranslate"><span class="pre">ski.color</span></code> module, like <code class="docutils literal notranslate"><span class="pre">ski.color.rgb2gray()</span></code>, can do this more elegantly, with less code:</p>
+<p>On the <a class="reference internal" href="1_colour_images_as_numpy_arrays.html"><span class="doc std std-doc">previous page</span></a> we manually converted colour images to greyscale, using NumPy operations. As we saw earlier on the present page, functions from the <code class="docutils literal notranslate"><span class="pre">ski.color</span></code> module, like <code class="docutils literal notranslate"><span class="pre">ski.color.rgb2gray()</span></code>, can do this more elegantly, with less code:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># From RGB to greyscale.</span>
@@ -1285,12 +1307,12 @@ Min Pixel Value: 0.02
 <img alt="_images/f409bd81ece6dcb86eaa5d6384b6c7167c507a68bf2ddfbe674c56f732ca5f9b.png" src="_images/f409bd81ece6dcb86eaa5d6384b6c7167c507a68bf2ddfbe674c56f732ca5f9b.png" />
 </div>
 </div>
-<p>This greyscale conversion is achieved by calculating the luminance of the image via a weighted average of the information in each colour channel:</p>
+<p>This greyscale conversion is achieved by calculating the luminance of the image via a weighted sum of the information in each colour channel:</p>
 <div class="math notranslate nohighlight">
 \[
 Y = 0.2126R + 0.7152G + 0.0722B
 \]</div>
-<p>This has the effect of removing the colour channels, via a weighted summation, so the output array is 2-D. Why do we use these specific numbers? You could go and knock the door of your physicist friend to ask (don’t worry, they’ll be in…), or you can see <a class="reference external" href="https://stackoverflow.com/questions/596216/formula-to-determine-perceived-brightness-of-rgb-color">this page</a> for a detailed explanation of where the weights come from.</p>
+<p>This has the effect of removing the colour channels, so the output array is 2-D. Why do we use these specific numbers? You could go and knock the door of your physicist friend to ask (don’t worry, they’ll be in…), or you can see <a class="reference external" href="https://stackoverflow.com/questions/596216/formula-to-determine-perceived-brightness-of-rgb-color">this page</a> for a detailed explanation of where the weights come from.</p>
 <div class="exercise dropdown admonition" id="no-colour-cat">
 
 <p class="admonition-title"><span class="caption-number">Exercise 8 </span></p>
@@ -1396,7 +1418,8 @@ Min Pixel Value: 0.0
 <img alt="_images/7b6ba53bbc195c8363a56aceb5ebdce7a83c2f353e92735124cb88cc173847b4.png" src="_images/7b6ba53bbc195c8363a56aceb5ebdce7a83c2f353e92735124cb88cc173847b4.png" />
 </div>
 </div>
-<p>Psychedelic! Let’s extract the channels with some array indexing operations. Each channel is 2-D, and therefore will render as a greyscale image when displayed with Matplotlib:</p>
+<p>Psychedelic! Maybe this is how cats look, from the perspective of other cats (e.g. from within their “<a class="reference external" href="https://en.wikipedia.org/wiki/Umwelt">umwelt</a>”), but this is sadly probably not the case…</p>
+<p>Let’s extract the individual channels with some array indexing operations. Each channel is 2-D, and therefore will render as a greyscale image when displayed with Matplotlib:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Extract the HSV channels.</span>
@@ -1428,11 +1451,12 @@ Min Pixel Value: 0.0
 </section>
 <section class="tex2jax_ignore mathjax_ignore" id="colourspaces-2-transparency-in-the-3rd-dimension">
 <h1>Colourspaces 2: transparency in the 3rd dimension<a class="headerlink" href="#colourspaces-2-transparency-in-the-3rd-dimension" title="Link to this heading">#</a></h1>
-<p>Now, other colourspaces involve arrays of different array <code class="docutils literal notranslate"><span class="pre">shape</span></code>s. For instance, some image arrays are <code class="docutils literal notranslate"><span class="pre">(n,</span> <span class="pre">m,</span> <span class="pre">4)</span></code> in <code class="docutils literal notranslate"><span class="pre">shape</span></code> - so that’s <code class="docutils literal notranslate"><span class="pre">n</span></code> rows, <code class="docutils literal notranslate"><span class="pre">m</span></code> columns and <code class="docutils literal notranslate"><span class="pre">4</span></code> slices in the third dimension.</p>
+<p>Now, other colourspaces involve arrays of different <code class="docutils literal notranslate"><span class="pre">shape</span></code>s. For instance, some image arrays are <code class="docutils literal notranslate"><span class="pre">(n,</span> <span class="pre">m,</span> <span class="pre">4)</span></code> - so that’s <code class="docutils literal notranslate"><span class="pre">n</span></code> rows, <code class="docutils literal notranslate"><span class="pre">m</span></code> columns and <code class="docutils literal notranslate"><span class="pre">4</span></code> slices in the third dimension.</p>
 <p>Let’s see what that extra slice does, using our tried and true <code class="docutils literal notranslate"><span class="pre">squares</span></code> image array:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">matshow</span><span class="p">(</span><span class="n">squares</span><span class="p">);</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Show the array.</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">matshow</span><span class="p">(</span><span class="n">squares</span><span class="p">);</span>
 </pre></div>
 </div>
 </div>
@@ -1463,11 +1487,7 @@ Min Pixel Value: 0.0
 <p>Let’s set it lower:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">four_channel_stack</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">stack</span><span class="p">([</span><span class="n">squares</span><span class="p">,</span> 
-                               <span class="n">squares</span> <span class="o">*</span> <span class="mi">0</span><span class="p">,</span>
-                               <span class="n">squares</span> <span class="o">*</span> <span class="mi">0</span><span class="p">,</span>
-                               <span class="n">squares</span> <span class="o">*</span> <span class="mf">0.25</span><span class="p">],</span> <span class="c1"># Set the nonzero values on the 4th slice in the                                                  </span>
-                               <span class="n">axis</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>      <span class="c1"># to equal 25.</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">four_channel_stack</span><span class="p">[:,</span> <span class="p">:,</span> <span class="mi">3</span><span class="p">]</span> <span class="o">=</span> <span class="n">four_channel_stack</span><span class="p">[:,</span> <span class="p">:,</span> <span class="mi">3</span><span class="p">]</span> <span class="o">*</span> <span class="mf">0.25</span>     <span class="c1"># Fourth slice nonzero values to equal .25</span>
 
 <span class="n">plt</span><span class="o">.</span><span class="n">matshow</span><span class="p">(</span><span class="n">four_channel_stack</span><span class="p">);</span>
 </pre></div>
@@ -1494,12 +1514,22 @@ Min Pixel Value: 0.0
 <img alt="_images/57fe88a4fbe098c961d5b2aec38d80e2876a63e3b252f7cb99610fc58017d71f.png" src="_images/57fe88a4fbe098c961d5b2aec38d80e2876a63e3b252f7cb99610fc58017d71f.png" />
 </div>
 </div>
-<p>Pretty ghostly…</p>
+<p>Pretty ghostly…maybe <em>this</em> is how cats look to one another…</p>
 <div class="exercise dropdown admonition" id="shoegaze">
 
 <p class="admonition-title"><span class="caption-number">Exercise 9 </span></p>
 <section id="exercise-content">
-<p>Your task now, is to manipulate <code class="docutils literal notranslate"><span class="pre">camera</span></code> to make it look like this image, using whatever <code class="docutils literal notranslate"><span class="pre">numpy</span></code>, <code class="docutils literal notranslate"><span class="pre">skimage</span></code> and numerical operations you need:</p>
+<p>Your task now, is to manipulate <code class="docutils literal notranslate"><span class="pre">camera</span></code> to make it look like the target image below. Use whatever <code class="docutils literal notranslate"><span class="pre">numpy</span></code>, <code class="docutils literal notranslate"><span class="pre">skimage</span></code> and numerical operations you need, based on what you have seen on this page and the previous pages. Here is the original <code class="docutils literal notranslate"><span class="pre">camera</span></code> image:</p>
+<p><img alt="" src="_images/camera_plot.png" /></p>
+<p>The original image has the following attributes:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>Type: &lt;class &#39;numpy.ndarray&#39;&gt;
+dtype: uint8
+Shape: (512, 512)
+Max Pixel Value: 255
+Min Pixel Value: 0
+</pre></div>
+</div>
+<p>Here is your target image:</p>
 <p><img alt="" src="_images/shoegaze.png" /></p>
 <p>Your final image array should have the following attributes:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>Type: &lt;class &#39;numpy.ndarray&#39;&gt;
@@ -1509,10 +1539,17 @@ Max Pixel Value: 1.0
 Min Pixel Value: 0.0
 </pre></div>
 </div>
-<p><em>Hint 1:</em> look at the colour of the target image, as well as the <code class="docutils literal notranslate"><span class="pre">four_channel_stack_cat</span></code> image above, to help you think about what operations you need here. Run the fuction <code class="docutils literal notranslate"><span class="pre">hint_camera()</span></code> for some additional help.</p>
+<p>Here are some things to pay attention to, in the target image, to help you think about what operations you need here:</p>
+<ul class="simple">
+<li><p>the <code class="docutils literal notranslate"><span class="pre">shape</span></code> of the target image.</p></li>
+<li><p>the colour of the target image in different regions.</p></li>
+<li><p>the <code class="docutils literal notranslate"><span class="pre">dtype</span></code> of the target image.</p></li>
+</ul>
+<p><em>Hint 1:</em> run the fuction <code class="docutils literal notranslate"><span class="pre">hint_camera()</span></code> for some additional help if you get stuck.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># YOUR CODE HERE</span>
+<span class="n">camera</span> <span class="o">=</span> <span class="n">ski</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">camera</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
@@ -1526,7 +1563,7 @@ Min Pixel Value: 0.0
 <p>There are several steps here - this was not an easy task! First, we need to convert our image to the <code class="docutils literal notranslate"><span class="pre">float64</span></code>. We need the <code class="docutils literal notranslate"><span class="pre">ski.util.img_as_float()</span></code> function to do this. If you tried to use the NumPy <code class="docutils literal notranslate"><span class="pre">.astype(float)</span></code> method, you will have encountered a thorny error (more on this below).</p>
 <p>If you look at the target image, you will notice that it has a green-ish tone, but no so green as we would get if the other colour channels were “switched off”. As such, you can get the correct effect by reducing the impact of the red and blue channels, by halving their values.</p>
 <p>The left hand side of the image has variance in <em>transparency</em> - pixels where the image is darker are <em>more transparent</em>. This is becuase, in the target image, the alpha channel is a copy of the original 2-D image.</p>
-<p>The distinction between the left hand side and right hand side of the image is that in the right hand side, the transparency channel values are all uniform, though less than maximum opacity, giving a hazy effect. This can be achieved by NumPy array indexing, and setting values in the alpha channel in the right hand side of the image to all equal 0.5.</p>
+<p>The distinction between the left hand side and right hand side of the image is that in the right hand side, the transparency channel values are all uniform, though less than maximum opacity, giving a hazy effect. This can be achieved by NumPy array indexing, and setting values in the alpha channel in the right hand side of the image to all equal 0.5:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution.</span>
@@ -1619,15 +1656,14 @@ Min Pixel Value: 0.0
 <img alt="_images/fd74ebe5de3d3822dc1b402508b186cafc6d5f373231af7317a38f7b67491822.png" src="_images/fd74ebe5de3d3822dc1b402508b186cafc6d5f373231af7317a38f7b67491822.png" />
 </div>
 </div>
-<p>Matplotlib complains that the maximum values (255.0) violate the required 0 to 1 range of <code class="docutils literal notranslate"><span class="pre">float64</span></code> images. It tries to clip the data to the valid range, but with horrible visual results.</p>
-<p>Always use <code class="docutils literal notranslate"><span class="pre">skimage</span></code> conversion functions, to ensure the proper pixel intensity range for the current <code class="docutils literal notranslate"><span class="pre">dtype</span></code>, to avoid these sorts of errors…</p>
+<p>Matplotlib complains that the maximum values (255.0) violate the required 0 to 1 range of <code class="docutils literal notranslate"><span class="pre">float64</span></code> images. It tries to clip the data to the valid range, but with horrible visual results. Always use <code class="docutils literal notranslate"><span class="pre">skimage</span></code> conversion functions, to ensure the proper pixel intensity range for the current <code class="docutils literal notranslate"><span class="pre">dtype</span></code>, to avoid these sorts of errors…</p>
 </section>
 </div>
 </section>
-<section class="tex2jax_ignore mathjax_ignore" id="not-all-3-d-images-are-in-colour-other-image-representations">
-<h1>Not all 3-D images are in colour: other image representations<a class="headerlink" href="#not-all-3-d-images-are-in-colour-other-image-representations" title="Link to this heading">#</a></h1>
-<p>It is important to note that not all 3-D images contain colour information. What sort of images might these be? Typically, they are images obtained during <a class="reference external" href="https://en.wikipedia.org/wiki/Medical_imaging">medical imaging</a> scans, like brain imaging. The “slices” in the third dimension are now literally slices of a 3-D object (like a brain, chest, arm or leg!) rather than colour channels.</p>
-<p>To show this, below we use <code class="docutils literal notranslate"><span class="pre">ski.io.imread()</span></code> to load in an image in this format. The image is an X-ray of the head of a desert <a class="reference external" href="https://github.com/neurolabusc/niivue-images/tree/main">iguana</a>.</p>
+<section class="tex2jax_ignore mathjax_ignore" id="not-all-3-d-images-are-in-colour">
+<h1>Not all 3-D images are in colour…<a class="headerlink" href="#not-all-3-d-images-are-in-colour" title="Link to this heading">#</a></h1>
+<p>We noted <a class="reference internal" href="1_colour_images_as_numpy_arrays.html"><span class="doc std std-doc">earlier</span></a> that it is important to know that not all 3-D images contain colour information. What sort of images are these? Typically, they are images obtained during <a class="reference external" href="https://en.wikipedia.org/wiki/Medical_imaging">medical imaging</a> scans, like brain imaging. The “slices” in the third dimension, for these images, are literally slices of a 3-D object (like a brain, chest, arm or leg!) rather than colour channels.</p>
+<p>To show this, below we use <code class="docutils literal notranslate"><span class="pre">ski.io.imread()</span></code> to load in an image in one of these formats. The image is an X-ray of the head of a desert <a class="reference external" href="https://github.com/neurolabusc/niivue-images/tree/main">iguana</a>.</p>
 <p><em>Note:</em> here we are loading in a <code class="docutils literal notranslate"><span class="pre">.png</span></code> image, this is a highly atypical format to store medical images, but we use it just for illustration of a 3-D image that does not contain colour, using a familiar image format… The original image file, in the more standard <a class="reference external" href="https://brainder.org/2012/09/23/the-nifti-file-format">Nifti format</a>, is <a class="reference external" href="https://github.com/neurolabusc/niivue-images/blob/main/Iguana.nii.gz">here</a>.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -1673,16 +1709,12 @@ Min Pixel Value: 0
 <p>On this page we have seen that:</p>
 <ul class="simple">
 <li><p><code class="docutils literal notranslate"><span class="pre">skimage</span></code> represents images as NumPy arrays.</p></li>
-</ul>
-<ul class="simple">
 <li><p>Most <code class="docutils literal notranslate"><span class="pre">skimage</span></code> functions take NumPy arrays as arguments.</p></li>
-</ul>
-<ul class="simple">
 <li><p>The <code class="docutils literal notranslate"><span class="pre">ski.io</span></code> module handles input and output (e.g. reading and saving image files).</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">skimage</span></code> supports multiple <code class="docutils literal notranslate"><span class="pre">dtypes</span></code> in image arrays, and contains convenience functions for converting between <code class="docutils literal notranslate"><span class="pre">dtypes</span></code>.</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">skimage</span></code> supports multiple colourspaces which use different colour representations to the default RGB colourspace.</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">skimage</span></code> supports both three-channel colour image arrays with shape <code class="docutils literal notranslate"><span class="pre">(n,</span> <span class="pre">m,</span> <span class="pre">3)</span></code> and four-channel colour image arrays with shape <code class="docutils literal notranslate"><span class="pre">(n,</span> <span class="pre">m,</span> <span class="pre">4)</span></code>, where an extra channel codes for transparency/opacity.</p></li>
-<li><p>Some 3-D images are volumetric, and do not contain colour channels, despite having a third dimension.</p></li>
+<li><p>Some 3-D images are volumetric, and do not contain colour channels, despite having a third dimension. <code class="docutils literal notranslate"><span class="pre">skimage</span></code> supports these image formats as well.</p></li>
 </ul>
 <p>On the <a class="reference internal" href="3_skimage_processing_from_numpy_and_scipy.html"><span class="doc std std-doc">next page</span></a> we will look at how image processing can be performed using NumPy, SciPy and Scikit-image.</p>
 </section>
@@ -1765,7 +1797,7 @@ Min Pixel Value: 0
 <li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#small-image-arrays-big-image-arrays">Small image arrays, big image arrays</a></li>
 <li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#colourspaces">Colourspaces</a></li>
 <li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#colourspaces-2-transparency-in-the-3rd-dimension">Colourspaces 2: transparency in the 3rd dimension</a></li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#not-all-3-d-images-are-in-colour-other-image-representations">Not all 3-D images are in colour: other image representations</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#not-all-3-d-images-are-in-colour">Not all 3-D images are in colour…</a></li>
 <li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#summary">Summary</a></li>
 <li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#references">References</a></li>
 </ul>
