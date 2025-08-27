@@ -208,6 +208,10 @@
 
 
 
+
+
+
+
 <li class="toctree-l1"><a class="reference internal" href="4_filters.html">Image filtering I</a></li>
 
 
@@ -443,7 +447,7 @@ document.write(`
 <li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#erosion">Erosion</a></li>
 <li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#dilation">Dilation</a></li>
 <li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#morphology-using-more-complex-images">Morphology using more complex images</a></li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#skeletonize">Skeletonize</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#skeletonizing-an-image">Skeletonizing an image</a></li>
 <li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#summary">Summary</a></li>
 <li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#references">References</a></li>
 </ul>
@@ -461,13 +465,16 @@ document.write(`
   <section class="tex2jax_ignore mathjax_ignore" id="morphology">
 <h1>Morphology<a class="headerlink" href="#morphology" title="Link to this heading">#</a></h1>
 <p><a class="reference external" href="https://en.wikipedia.org/wiki/Mathematical_morphology">Morphology</a> is the mathematical study of shapes and has numerous applications in image processing. As such, Scikit-image has a dedicated module (<code class="docutils literal notranslate"><span class="pre">ski.morphology</span></code>) for associated functions.</p>
-<p>We already encountered structuring elements - (of which kernels are one type) - on <a class="reference internal" href="4_filters.html"><span class="doc std std-doc">earlier</span></a> <a class="reference internal" href="5_filters_2.html"><span class="doc std std-doc">pages</span></a>. A structuring element is a grid of a certain shape - you can think of it as a “template” - which is used to define the “neighbourhood” of pixels which an image processing operation affects. A (3, 3) structuring element is a square which affects 9 pixels - we might alter the image by centering this structuring element over every pixel, and replacing each pixel with the mean of the other pixels in it’s “neighbourhood”:</p>
+<p>We already encountered structuring elements - (of which kernels are one type) - on <a class="reference internal" href="4_filters.html"><span class="doc std std-doc">earlier</span></a> <a class="reference internal" href="5_filters_2.html"><span class="doc std std-doc">pages</span></a>. A structuring element is a grid of a certain shape - you can think of it as a “template” - which is used to define the “neighbourhood” of pixels which an image processing operation affects.</p>
+<p>A (3, 3) structuring element can be applied as a square which affects 9 pixels - we might alter the image by centering this structuring element over every pixel, and replacing each pixel with the mean of the other pixels in it’s “neighbourhood”, for instance:</p>
 <p><img alt="" src="_images/kernel_general.png" /></p>
-<p>We have seen structuring elements applied during filtering operations, courtesy of the <code class="docutils literal notranslate"><span class="pre">ski.filters</span></code> module. Morphological operations also make use of structuring elements, though in morphological operations, structuring elements are binary (contain only 0s and 1s). Morphological operations differ from the filtering operations we have seen previously because they are specifically <a class="reference external" href="https://www.cs.auckland.ac.nz/courses/compsci773s1c/lectures/ImageProcessing-html/topic4.htm">related to the shape (…or, well, <em>morphology</em>) of features with in the image</a>. This contrasts with operations like <a class="reference internal" href="#5_filters"><span class="xref myst">mean filtering</span></a> which “spread” pixel values around within a neighbourhood, rather than identifying and altering features with a specific shape/morphology.</p>
+<p>We have seen structuring elements applied during filtering operations, courtesy of the <code class="docutils literal notranslate"><span class="pre">ski.filters</span></code> module. Morphological operations also make use of structuring elements, though in morphological operations, structuring elements are binary (contain only 0s and 1s).</p>
+<p>Morphological operations differ from the filtering operations we have seen previously because they are specifically related to the shape (…or, well, <a class="reference external" href="https://www.cs.auckland.ac.nz/courses/compsci773s1c/lectures/ImageProcessing-html/topic4.htm"><em>morphology</em></a>) of features with in the image. This contrasts with operations like <a class="reference internal" href="#5_filters"><span class="xref myst">mean filtering</span></a> which “spread” pixel values around within a neighbourhood, rather than identifying and altering features with a specific shape/morphology.</p>
 </section>
 <section class="tex2jax_ignore mathjax_ignore" id="structuring-elements">
 <h1>Structuring elements<a class="headerlink" href="#structuring-elements" title="Link to this heading">#</a></h1>
-<p>Because morphological operations are part of image processing, then involve the modification of array pixel values, which is <a class="reference internal" href="#3_skimage_processing_from_numpy_and_scipy."><span class="xref myst">all image processing is</span></a>. In morphological operations, the structural element will alter pixel values <em>depending upon the match between the shape of the structural element and the shape of the pixels in the “neighbourhood” of the structural element</em>. E.g. with the “neighbourhood” being the pixels currently under the structural element. The structural element, typically, is centered once on every pixel in an image, and this central pixel is modified (or not) depending upon the match betweent the shape of the structural element and the shape depicted by the pixels in that neighbourhood.</p>
+<p>Because morphological operations are part of image processing, they involve the modification of array pixel values, which is <a class="reference internal" href="#3_skimage_processing_from_numpy_and_scipy."><span class="xref myst">all image processing is</span></a>. In morphological operations, the structural element will alter pixel values <em>depending upon the match between the shape of the structural element and the shape of the pixels in the “neighbourhood” of the structural element</em>.</p>
+<p>The structural element, typically, is centered once on every pixel in an image, and this central pixel is modified (or not) depending upon the match betweent the shape of the structural element and the shape depicted by the pixels in that neighbourhood.</p>
 <p>Let’s make ourselves a simple binary image, so we can clearly see the effect of the foundational morphological operations:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -511,7 +518,6 @@ document.write(`
 <img alt="_images/ff1933eb7fcd703d8ed50e82de48436eb43bce21ecece3225df045de64e1996a.png" src="_images/ff1933eb7fcd703d8ed50e82de48436eb43bce21ecece3225df045de64e1996a.png" />
 </div>
 </div>
-<p>We already used <code class="docutils literal notranslate"><span class="pre">ski.morphology.disk()</span></code> on on the <a class="reference internal" href="#5_filters"><span class="xref myst">filters</span></a> page, to modfiy the kernel shape of a mean filter.</p>
 <p>Let’s get fancy and ostentacious now, and invest in some diamonds, by which we mean let’s use <code class="docutils literal notranslate"><span class="pre">ski.morphology.diamond()</span></code> to construct a structuring element:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -533,7 +539,7 @@ document.write(`
 <img alt="_images/106a749627bb31bb8b9011eb26c8af95d0efdf84447afe12f85c8afdd306c985.png" src="_images/106a749627bb31bb8b9011eb26c8af95d0efdf84447afe12f85c8afdd306c985.png" />
 </div>
 </div>
-<p>Using <code class="docutils literal notranslate"><span class="pre">ski.morphology.diamond(radius=1)</span></code> gives us a diamond shaped structuring element of <code class="docutils literal notranslate"><span class="pre">shape</span></code> (3, 3) (we’d say “cross” but “diamond” is the canonical term as it will look more diamond-like (diamond-y?) when set to a bigger shape…) :</p>
+<p>Using <code class="docutils literal notranslate"><span class="pre">ski.morphology.diamond(radius=1)</span></code> gives us a diamond shaped structuring element of <code class="docutils literal notranslate"><span class="pre">shape</span></code> (3, 3). We’d call it a “cross” but “diamond” is the canonical term… be assured that it will look more diamond-like (diamond-y?) when set to a bigger <code class="docutils literal notranslate"><span class="pre">radius</span></code>…:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">diamond</span><span class="o">.</span><span class="n">shape</span>
@@ -551,7 +557,7 @@ document.write(`
 <h1>Erosion<a class="headerlink" href="#erosion" title="Link to this heading">#</a></h1>
 <p>The fundamental operations of morphological image processing are <em>erosion</em> and <em>dilation</em>. These affect bright and dark regions in an image. We will consider erosion first.</p>
 <p>Much like when bad behaviour spreads through a social group, erosion will lower a given pixels value down to lowest value within its neighbourhood - which is to say the lowest pixel value under the structuring element. The structuring element is centered on a pixel, and it is this central pixel that is altered and set to the lowest value in the neighbourhood. However, it will only perform this lowering <em>if the pixels in the neighbourhood do not match the shape of the structuring element</em>, else it will leave the central pixel unchanged.</p>
-<p>As mentioned above, a full morphological operation involves centering the structuring element on <em>every pixel in the image</em>, so every pixel gets altered by the other pixels in its neighbourhood. Like most (efficient) processes in computing, the operation is done in parallel (at the same time to all pixels in the images, rather than sequentially).</p>
+<p>As mentioned above, a full morphological operation involves centering the structuring element on <em>every pixel in the image</em>, so every pixel gets assessed for alteration with reference to the other pixels in its neighbourhood. Like most (efficient) processes in computing, the operation is done in parallel (at the same time to all pixels in the images, rather than sequentially).</p>
 <p>We can erode our binary square using <code class="docutils literal notranslate"><span class="pre">ski.morphology.erosion()</span></code>, we use the <code class="docutils literal notranslate"><span class="pre">footprint</span></code> argument to specify our structuring element:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -631,7 +637,7 @@ document.write(`
 </div>
 <p>What happened here? Well, again a “match” only occurs for two pixels in the image, the pixels at the center of each white square. This illustration below shows what happened:</p>
 <p><img alt="" src="_images/hit_n_miss_with_text_2.png" /></p>
-<p>All other “neighbourhoods” did not match the structuring element, and so the values in the neighbourhood were lowered to 0, 0 being the lowest value in each neighbourhood.</p>
+<p>All other “neighbourhoods” did not match the structuring element, and so the values in the neighbourhood were lowered to 0, 0 being the lowest value in each neighbourhood. This has the effect, if a non-matching pixel has the value of 1, of setting it to 0. If a non-matching pixel has a value of 0, it also gets set to 0, but it was already 0, so there is no appreciable change.</p>
 <p>Let’s alter our image array slightly, to see how this affects the erosion operation with our <code class="docutils literal notranslate"><span class="pre">diamond</span></code> structuring element. We will place a black array pixel inside the right hand white square:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -723,10 +729,10 @@ document.write(`
 <img alt="_images/a3823fd359aba76c6345b5735ec8d8d9e707134ddcce1fc8601ab007003c7b0a.png" src="_images/a3823fd359aba76c6345b5735ec8d8d9e707134ddcce1fc8601ab007003c7b0a.png" />
 </div>
 </div>
-<p>Ok, so no some of the “clashes” have resulted in <em>more</em> white pixels in the image. The illustration below shows this for three pixels, two “clashes” and the one “match”:</p>
+<p>Ok, so now some of the “clashes” have resulted in <em>more</em> white pixels in the image. The illustration below shows this for three pixels, two “clashes” and the one “match”:</p>
 <p><img alt="" src="_images/hit_n_miss_dilation.png" /></p>
 <p>What do you think will happen if we dilate the <code class="docutils literal notranslate"><span class="pre">square_the_circle</span></code> array image shown below, using the <code class="docutils literal notranslate"><span class="pre">diamond</span></code> structuring element?</p>
-<p>Try to predict before checking.</p>
+<p>Try to predict before checking:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Show the array.</span>
@@ -772,7 +778,7 @@ document.write(`
 </section>
 <section class="tex2jax_ignore mathjax_ignore" id="morphology-using-more-complex-images">
 <h1>Morphology using more complex images<a class="headerlink" href="#morphology-using-more-complex-images" title="Link to this heading">#</a></h1>
-<p>Let’s apply some of this to more complex images. Fittingly, we will use a terrifying picture of a <a class="reference external" href="https://en.wikipedia.org/wiki/Xenomorph">Xenomorph</a>, which at the time of writing Wikipedia defines as “a fictional endoparasitoid extraterrestrial species that serves as the main antagonist of the Alien and Alien vs. Predator franchises”.</p>
+<p>Let’s apply some of this to more complex images. Fittingly, we will use a terrifying picture of a <a class="reference external" href="https://en.wikipedia.org/wiki/Xenomorph">Xenomorph</a>, which at the time of writing Wikipedia defines as “a fictional endoparasitoid extraterrestrial species that serves as the main antagonist of the Alien and Alien vs. Predator franchises”. Yikes.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Image from: https://static1.srcdn.com/wordpress/wp-content/uploads/2019/07/Xenomorph-from-the-Alien-franchise.jpg</span>
@@ -879,7 +885,7 @@ Min Pixel Value: 0
 <img alt="_images/f0b6da3cbd163d2c3a259990d02361a57cd6273d16edb607ad2a86365488a09b.png" src="_images/f0b6da3cbd163d2c3a259990d02361a57cd6273d16edb607ad2a86365488a09b.png" />
 </div>
 </div>
-<p>Applied to the xenomorph image, this has some radical results:</p>
+<p>Applied to the <code class="docutils literal notranslate"><span class="pre">xenomorph</span></code> image in an erosion operation, this has some radical results:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">xeno_binary_ero_rad_6_diamond</span> <span class="o">=</span> <span class="n">ski</span><span class="o">.</span><span class="n">morphology</span><span class="o">.</span><span class="n">erosion</span><span class="p">(</span><span class="n">xenomorph</span><span class="p">,</span> 
@@ -892,7 +898,7 @@ Min Pixel Value: 0
 <img alt="_images/01a061042ae39fe8644e90b8f2f458497bdf0a7aa550ecdd7919841dcd5aca27.png" src="_images/01a061042ae39fe8644e90b8f2f458497bdf0a7aa550ecdd7919841dcd5aca27.png" />
 </div>
 </div>
-<p>There are less “matches” between the large structuring element and pixel neighbourhoods in the image. Thus, the darker regions have expanded substantially more than when we used a smaller <code class="docutils literal notranslate"><span class="pre">diamond</span></code>, which gave more “matches”.</p>
+<p>There are less “matches” between the large structuring element and pixel neighbourhoods in the image - this leaves less central pixels unchanged, than for a smalller structuring element of the same shape. Thus, because in erorison we are <em>lowering</em> central pixel values in the event of a “clash”, the darker regions have expanded substantially more than when we used a smaller <code class="docutils literal notranslate"><span class="pre">diamond</span></code>, which gave more “matches”.</p>
 <p>Dilation, again has the opposite effect of increasing brighter regions, in the event of “clashes”:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -907,7 +913,7 @@ Min Pixel Value: 0
 <img alt="_images/8f29cadd5d321a70dc7d0a4cd710a18cb03b20257899c91f932d3de5a6dbdccc.png" src="_images/8f29cadd5d321a70dc7d0a4cd710a18cb03b20257899c91f932d3de5a6dbdccc.png" />
 </div>
 </div>
-<p>We can also change the shape of the struturing element - here we create a rectangle of <code class="docutils literal notranslate"><span class="pre">shape</span></code> (3, 3):</p>
+<p>We can also change the shape of the structuring element - here we create a rectangle of <code class="docutils literal notranslate"><span class="pre">shape</span></code> (3, 3):</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># A square structuring element.</span>
@@ -938,7 +944,7 @@ Min Pixel Value: 0
 <img alt="_images/58c5177491265bead3c91bf477b5089aa3f99eeecc7916a12998269cd046b079.png" src="_images/58c5177491265bead3c91bf477b5089aa3f99eeecc7916a12998269cd046b079.png" />
 </div>
 </div>
-<p>Dilation with this new structuring element once more enlarges brighter regions, with horrific results:</p>
+<p>Dilation with this new structuring element once more enlarges brighter regions, again with horrific results:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Dilate the xenomorph, with the new structuring element.</span>
@@ -1019,8 +1025,8 @@ Min Pixel Value: 0
 </section>
 </div>
 </section>
-<section class="tex2jax_ignore mathjax_ignore" id="skeletonize">
-<h1>Skeletonize<a class="headerlink" href="#skeletonize" title="Link to this heading">#</a></h1>
+<section class="tex2jax_ignore mathjax_ignore" id="skeletonizing-an-image">
+<h1>Skeletonizing an image<a class="headerlink" href="#skeletonizing-an-image" title="Link to this heading">#</a></h1>
 <p>In keeping with the horror theme of the <code class="docutils literal notranslate"><span class="pre">xenomorph</span></code> image, and the legacy of the <a class="reference internal" href="#3_skimage_processing_from_numpy_and_scipy."><span class="xref myst"><code class="docutils literal notranslate"><span class="pre">smiley</span></code></span></a> array, let’s look at the <code class="docutils literal notranslate"><span class="pre">ski.morpholoy.skeletonize()</span></code> function.</p>
 <p>This takes a binary image and finds its “skeleton” - e.g. the centerline of shapes in the image, and marks it out with a <a class="reference external" href="https://scikit-image.org/docs/0.25.x/auto_examples/applications/plot_morphology.html#skeletonize">single pixel-wide set of lines</a>:</p>
 <div class="cell docutils container">
@@ -1149,7 +1155,7 @@ Min Pixel Value: False
 <li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#erosion">Erosion</a></li>
 <li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#dilation">Dilation</a></li>
 <li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#morphology-using-more-complex-images">Morphology using more complex images</a></li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#skeletonize">Skeletonize</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#skeletonizing-an-image">Skeletonizing an image</a></li>
 <li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#summary">Summary</a></li>
 <li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#references">References</a></li>
 </ul>

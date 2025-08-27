@@ -211,7 +211,13 @@
 
 
 
+
+
+
+
 <li class="toctree-l1"><a class="reference internal" href="4_filters.html">Image filtering I</a></li>
+
+
 
 
 
@@ -440,25 +446,17 @@ document.write(`
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
 <li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">(Sci-kit) Image processing, via NumPy and SciPy</a></li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#resizing-an-image">Resizing an image</a><ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#resizing-an-image-with-skimage">Resizing an image with <code class="docutils literal notranslate"><span class="pre">skimage</span></code></a></li>
-</ul>
-</li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#rotation">Rotation</a><ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#rotating-an-image-with-skimage">Rotating an image with <code class="docutils literal notranslate"><span class="pre">skimage</span></code></a></li>
-</ul>
-</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#resizing-an-image">Resizing an image</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#resizing-an-image-with-skimage">Resizing an image with <code class="docutils literal notranslate"><span class="pre">skimage</span></code></a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#rotation">Rotation</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#rotating-an-image-with-skimage">Rotating an image with <code class="docutils literal notranslate"><span class="pre">skimage</span></code></a></li>
 <li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#cropping">Cropping</a></li>
 <li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#masks">Masks</a></li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#inverting-image-colours">Inverting image colours</a><ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#inverting-colours-with-skimage">Inverting colours with <code class="docutils literal notranslate"><span class="pre">skimage</span></code></a></li>
-</ul>
-</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#inverting-image-colours">Inverting image colours</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#inverting-colours-with-skimage">Inverting colours with <code class="docutils literal notranslate"><span class="pre">skimage</span></code></a></li>
 <li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#greyscale-to-binary-conversion">Greyscale to binary conversion</a></li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#colour-to-greyscale-conversion">Colour to greyscale conversion</a><ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#colour-to-greyscale-conversion-with-skimage">Colour to greyscale conversion with <code class="docutils literal notranslate"><span class="pre">skimage</span></code></a></li>
-</ul>
-</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#colour-to-greyscale-conversion">Colour to greyscale conversion</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#colour-to-greyscale-conversion-with-skimage">Colour to greyscale conversion with <code class="docutils literal notranslate"><span class="pre">skimage</span></code></a></li>
 <li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#summary">Summary</a></li>
 <li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#references">References</a></li>
 </ul>
@@ -970,8 +968,9 @@ After:
 </div>
 </section>
 </div>
-<section id="resizing-an-image-with-skimage">
-<h2>Resizing an image with <code class="docutils literal notranslate"><span class="pre">skimage</span></code><a class="headerlink" href="#resizing-an-image-with-skimage" title="Link to this heading">#</a></h2>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="resizing-an-image-with-skimage">
+<h1>Resizing an image with <code class="docutils literal notranslate"><span class="pre">skimage</span></code><a class="headerlink" href="#resizing-an-image-with-skimage" title="Link to this heading">#</a></h1>
 <p>The <code class="docutils literal notranslate"><span class="pre">ski.transform</span></code> module contains a function called <code class="docutils literal notranslate"><span class="pre">resize</span></code>. It is probably easy to guess what <code class="docutils literal notranslate"><span class="pre">ski.transform.resize()</span></code> does. It takes an input image and changes its size (obviously!). Because all computer images are at least 2-D arrays, this involves changing the dimensionality of the image. Let’s demonstrate this with the following image array:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -1091,7 +1090,6 @@ Min Pixel Value: 0.0
 </div>
 </div>
 <p>This seems much closer to what we want when we <code class="docutils literal notranslate"><span class="pre">resize</span></code> the image. However, the results of image processing are highly context dependent, and there may be images for which the default interpolation setting works better…</p>
-</section>
 </section>
 <section class="tex2jax_ignore mathjax_ignore" id="rotation">
 <h1>Rotation<a class="headerlink" href="#rotation" title="Link to this heading">#</a></h1>
@@ -1332,8 +1330,9 @@ Min Pixel Value: -0.1
 <img alt="_images/edf71d261be9ae5b6f1592490829920935948069eb3ca277cd7f6f2262c0bb20.png" src="_images/edf71d261be9ae5b6f1592490829920935948069eb3ca277cd7f6f2262c0bb20.png" />
 </div>
 </div>
-<section id="rotating-an-image-with-skimage">
-<h2>Rotating an image with <code class="docutils literal notranslate"><span class="pre">skimage</span></code><a class="headerlink" href="#rotating-an-image-with-skimage" title="Link to this heading">#</a></h2>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="rotating-an-image-with-skimage">
+<h1>Rotating an image with <code class="docutils literal notranslate"><span class="pre">skimage</span></code><a class="headerlink" href="#rotating-an-image-with-skimage" title="Link to this heading">#</a></h1>
 <p>Let’s now look now at how rotating image arrays is handled in <code class="docutils literal notranslate"><span class="pre">skimage</span></code>. Image rotation, which we saw above using <code class="docutils literal notranslate"><span class="pre">np.rot90</span></code> and <code class="docutils literal notranslate"><span class="pre">scipy.ndimage.rotate()</span></code> can be achieved using the straightforwardly named <code class="docutils literal notranslate"><span class="pre">ski.transform.rotate()</span></code>, and the syntax works identically to <code class="docutils literal notranslate"><span class="pre">scipy.ndimage.rotate()</span></code>. All this rotating has left us thirsty and caffeine-deprived, so let’s get some <code class="docutils literal notranslate"><span class="pre">coffee</span></code>:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -1750,7 +1749,6 @@ Min Pixel Value: 0.0
 <p>We will leave it to you to use this image as a logo for your “Pixel Cat” <a class="reference external" href="https://en.wikipedia.org/wiki/Meme_coin">meme coin</a>.</p>
 </section>
 </div>
-</section>
 </section>
 <section class="tex2jax_ignore mathjax_ignore" id="cropping">
 <h1>Cropping<a class="headerlink" href="#cropping" title="Link to this heading">#</a></h1>
@@ -2238,8 +2236,9 @@ Min Pixel Value: 0
 <img alt="_images/2370bd1e13fa90470a9f2d11eae3c20b96a4e156f6d223d7799cfd7fd23470d1.png" src="_images/2370bd1e13fa90470a9f2d11eae3c20b96a4e156f6d223d7799cfd7fd23470d1.png" />
 </div>
 </div>
-<section id="inverting-colours-with-skimage">
-<h2>Inverting colours with <code class="docutils literal notranslate"><span class="pre">skimage</span></code><a class="headerlink" href="#inverting-colours-with-skimage" title="Link to this heading">#</a></h2>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="inverting-colours-with-skimage">
+<h1>Inverting colours with <code class="docutils literal notranslate"><span class="pre">skimage</span></code><a class="headerlink" href="#inverting-colours-with-skimage" title="Link to this heading">#</a></h1>
 <p><code class="docutils literal notranslate"><span class="pre">ski.util.invert()</span></code> handles colour inversion, we simply pass it a colour NumPy image array and voilà!:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -2456,7 +2455,6 @@ Min Pixel Value: 0
 </div>
 </section>
 </div>
-</section>
 </section>
 <section class="tex2jax_ignore mathjax_ignore" id="greyscale-to-binary-conversion">
 <h1>Greyscale to binary conversion<a class="headerlink" href="#greyscale-to-binary-conversion" title="Link to this heading">#</a></h1>
@@ -2712,8 +2710,9 @@ Min Pixel Value: 0
 </div>
 </section>
 </div>
-<section id="colour-to-greyscale-conversion-with-skimage">
-<h2>Colour to greyscale conversion with <code class="docutils literal notranslate"><span class="pre">skimage</span></code><a class="headerlink" href="#colour-to-greyscale-conversion-with-skimage" title="Link to this heading">#</a></h2>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="colour-to-greyscale-conversion-with-skimage">
+<h1>Colour to greyscale conversion with <code class="docutils literal notranslate"><span class="pre">skimage</span></code><a class="headerlink" href="#colour-to-greyscale-conversion-with-skimage" title="Link to this heading">#</a></h1>
 <p>As always, the <code class="docutils literal notranslate"><span class="pre">ski.color</span></code> module has us covered here with the <code class="docutils literal notranslate"><span class="pre">rgb2gray()</span></code> function. We simply pass it the colour array that we want to convert to greyscale, without the direct need for the luminance formula:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -2735,7 +2734,6 @@ Min Pixel Value: 0.0
 <img alt="_images/321eb4537b588f9bd999dfd942958273c9af2ba0de7a70cc692f4c6de45034ce.png" src="_images/321eb4537b588f9bd999dfd942958273c9af2ba0de7a70cc692f4c6de45034ce.png" />
 </div>
 </div>
-</section>
 </section>
 <section class="tex2jax_ignore mathjax_ignore" id="summary">
 <h1>Summary<a class="headerlink" href="#summary" title="Link to this heading">#</a></h1>
@@ -2814,25 +2812,17 @@ Min Pixel Value: 0.0
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
 <li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">(Sci-kit) Image processing, via NumPy and SciPy</a></li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#resizing-an-image">Resizing an image</a><ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#resizing-an-image-with-skimage">Resizing an image with <code class="docutils literal notranslate"><span class="pre">skimage</span></code></a></li>
-</ul>
-</li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#rotation">Rotation</a><ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#rotating-an-image-with-skimage">Rotating an image with <code class="docutils literal notranslate"><span class="pre">skimage</span></code></a></li>
-</ul>
-</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#resizing-an-image">Resizing an image</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#resizing-an-image-with-skimage">Resizing an image with <code class="docutils literal notranslate"><span class="pre">skimage</span></code></a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#rotation">Rotation</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#rotating-an-image-with-skimage">Rotating an image with <code class="docutils literal notranslate"><span class="pre">skimage</span></code></a></li>
 <li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#cropping">Cropping</a></li>
 <li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#masks">Masks</a></li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#inverting-image-colours">Inverting image colours</a><ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#inverting-colours-with-skimage">Inverting colours with <code class="docutils literal notranslate"><span class="pre">skimage</span></code></a></li>
-</ul>
-</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#inverting-image-colours">Inverting image colours</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#inverting-colours-with-skimage">Inverting colours with <code class="docutils literal notranslate"><span class="pre">skimage</span></code></a></li>
 <li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#greyscale-to-binary-conversion">Greyscale to binary conversion</a></li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#colour-to-greyscale-conversion">Colour to greyscale conversion</a><ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#colour-to-greyscale-conversion-with-skimage">Colour to greyscale conversion with <code class="docutils literal notranslate"><span class="pre">skimage</span></code></a></li>
-</ul>
-</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#colour-to-greyscale-conversion">Colour to greyscale conversion</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#colour-to-greyscale-conversion-with-skimage">Colour to greyscale conversion with <code class="docutils literal notranslate"><span class="pre">skimage</span></code></a></li>
 <li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#summary">Summary</a></li>
 <li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#references">References</a></li>
 </ul>

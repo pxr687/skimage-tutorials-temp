@@ -15,17 +15,23 @@ jupyter:
 
 # Morphology
 
-[Morphology](https://en.wikipedia.org/wiki/Mathematical_morphology) is the mathematical study of shapes and has numerous applications in image processing. As such, Scikit-image has a dedicated module (`ski.morphology`) for associated functions.
+[Morphology](https://en.wikipedia.org/wiki/Mathematical_morphology) is the mathematical study of shapes and has numerous applications in image processing. As such, Scikit-image has a dedicated module (`ski.morphology`) for associated functions. 
 
-We already encountered structuring elements - (of which kernels are one type) - on [earlier](4_filters) [pages](5_filters_2). A structuring element is a grid of a certain shape - you can think of it as a "template" - which is used to define the "neighbourhood" of pixels which an image processing operation affects. A (3, 3) structuring element is a square which affects 9 pixels - we might alter the image by centering this structuring element over every pixel, and replacing each pixel with the mean of the other pixels in it's "neighbourhood":
+We already encountered structuring elements - (of which kernels are one type) - on [earlier](4_filters) [pages](5_filters_2). A structuring element is a grid of a certain shape - you can think of it as a "template" - which is used to define the "neighbourhood" of pixels which an image processing operation affects. 
+
+A (3, 3) structuring element can be applied as a square which affects 9 pixels - we might alter the image by centering this structuring element over every pixel, and replacing each pixel with the mean of the other pixels in it's "neighbourhood", for instance:
 
 ![](images/kernel_general.png)
 
-We have seen structuring elements applied during filtering operations, courtesy of the `ski.filters` module. Morphological operations also make use of structuring elements, though in morphological operations, structuring elements are binary (contain only 0s and 1s). Morphological operations differ from the filtering operations we have seen previously because they are specifically [related to the shape (...or, well, *morphology*) of features with in the image](https://www.cs.auckland.ac.nz/courses/compsci773s1c/lectures/ImageProcessing-html/topic4.htm). This contrasts with operations like [mean filtering](5_filters) which "spread" pixel values around within a neighbourhood, rather than identifying and altering features with a specific shape/morphology.
+We have seen structuring elements applied during filtering operations, courtesy of the `ski.filters` module. Morphological operations also make use of structuring elements, though in morphological operations, structuring elements are binary (contain only 0s and 1s). 
+
+Morphological operations differ from the filtering operations we have seen previously because they are specifically related to the shape (...or, well, [*morphology*](https://www.cs.auckland.ac.nz/courses/compsci773s1c/lectures/ImageProcessing-html/topic4.htm)) of features with in the image. This contrasts with operations like [mean filtering](5_filters) which "spread" pixel values around within a neighbourhood, rather than identifying and altering features with a specific shape/morphology.
 
 # Structuring elements
 
-Because morphological operations are part of image processing, then involve the modification of array pixel values, which is [all image processing is](3_skimage_processing_from_numpy_and_scipy.). In morphological operations, the structural element will alter pixel values *depending upon the match between the shape of the structural element and the shape of the pixels in the "neighbourhood" of the structural element*. E.g. with the "neighbourhood" being the pixels currently under the structural element. The structural element, typically, is centered once on every pixel in an image, and this central pixel is modified (or not) depending upon the match betweent the shape of the structural element and the shape depicted by the pixels in that neighbourhood.
+Because morphological operations are part of image processing, they involve the modification of array pixel values, which is [all image processing is](3_skimage_processing_from_numpy_and_scipy.). In morphological operations, the structural element will alter pixel values *depending upon the match between the shape of the structural element and the shape of the pixels in the "neighbourhood" of the structural element*.
+
+The structural element, typically, is centered once on every pixel in an image, and this central pixel is modified (or not) depending upon the match betweent the shape of the structural element and the shape depicted by the pixels in that neighbourhood.
 
 Let's make ourselves a simple binary image, so we can clearly see the effect of the foundational morphological operations:
 
@@ -65,8 +71,6 @@ square = np.array([[0, 0, 0, 0, 0, 0, 0],
 plt.imshow(square);
 ```
 
-We already used `ski.morphology.disk()` on on the [filters](5_filters) page, to modfiy the kernel shape of a mean filter. 
-
 Let's get fancy and ostentacious now, and invest in some diamonds, by which we mean let's use `ski.morphology.diamond()` to construct a structuring element:
 
 ```{python}
@@ -78,7 +82,7 @@ print(diamond)
 plt.matshow(diamond);
 ```
 
-Using `ski.morphology.diamond(radius=1)` gives us a diamond shaped structuring element of `shape` (3, 3) (we'd say "cross" but "diamond" is the canonical term as it will look more diamond-like (diamond-y?) when set to a bigger shape...) :
+Using `ski.morphology.diamond(radius=1)` gives us a diamond shaped structuring element of `shape` (3, 3). We'd call it a "cross" but "diamond" is the canonical term... be assured that it will look more diamond-like (diamond-y?) when set to a bigger `radius`...:
 
 ```{python}
 diamond.shape
@@ -90,7 +94,7 @@ The fundamental operations of morphological image processing are *erosion* and *
 
 Much like when bad behaviour spreads through a social group, erosion will lower a given pixels value down to lowest value within its neighbourhood - which is to say the lowest pixel value under the structuring element. The structuring element is centered on a pixel, and it is this central pixel that is altered and set to the lowest value in the neighbourhood. However, it will only perform this lowering *if the pixels in the neighbourhood do not match the shape of the structuring element*, else it will leave the central pixel unchanged.
 
-As mentioned above, a full morphological operation involves centering the structuring element on *every pixel in the image*, so every pixel gets altered by the other pixels in its neighbourhood. Like most (efficient) processes in computing, the operation is done in parallel (at the same time to all pixels in the images, rather than sequentially). 
+As mentioned above, a full morphological operation involves centering the structuring element on *every pixel in the image*, so every pixel gets assessed for alteration with reference to the other pixels in its neighbourhood. Like most (efficient) processes in computing, the operation is done in parallel (at the same time to all pixels in the images, rather than sequentially). 
 
 We can erode our binary square using `ski.morphology.erosion()`, we use the `footprint` argument to specify our structuring element:
 
@@ -142,7 +146,7 @@ What happened here? Well, again a "match" only occurs for two pixels in the imag
 ![](images/hit_n_miss_with_text_2.png)
 
 
-All other "neighbourhoods" did not match the structuring element, and so the values in the neighbourhood were lowered to 0, 0 being the lowest value in each neighbourhood.
+All other "neighbourhoods" did not match the structuring element, and so the values in the neighbourhood were lowered to 0, 0 being the lowest value in each neighbourhood. This has the effect, if a non-matching pixel has the value of 1, of setting it to 0. If a non-matching pixel has a value of 0, it also gets set to 0, but it was already 0, so there is no appreciable change.
 
 Let's alter our image array slightly, to see how this affects the erosion operation with our `diamond` structuring element. We will place a black array pixel inside the right hand white square:
 
@@ -203,14 +207,14 @@ print(dilated_square)
 plt.imshow(dilated_square);
 ```
 
-Ok, so no some of the "clashes" have resulted in *more* white pixels in the image. The illustration below shows this for three pixels, two "clashes" and the one "match":
+Ok, so now some of the "clashes" have resulted in *more* white pixels in the image. The illustration below shows this for three pixels, two "clashes" and the one "match":
 
 ![](images/hit_n_miss_dilation.png)
 
 
 What do you think will happen if we dilate the `square_the_circle` array image shown below, using the `diamond` structuring element?
 
-Try to predict before checking.
+Try to predict before checking:
 
 ```{python}
 # Show the array.
@@ -247,7 +251,7 @@ So, [remember](https://scikit-image.org/docs/0.25.x/auto_examples/applications/p
 
 # Morphology using more complex images
 
-Let's apply some of this to more complex images. Fittingly, we will use a terrifying picture of a [Xenomorph](https://en.wikipedia.org/wiki/Xenomorph), which at the time of writing Wikipedia defines as "a fictional endoparasitoid extraterrestrial species that serves as the main antagonist of the Alien and Alien vs. Predator franchises".
+Let's apply some of this to more complex images. Fittingly, we will use a terrifying picture of a [Xenomorph](https://en.wikipedia.org/wiki/Xenomorph), which at the time of writing Wikipedia defines as "a fictional endoparasitoid extraterrestrial species that serves as the main antagonist of the Alien and Alien vs. Predator franchises". Yikes.
 
 ```{python}
 # Image from: https://static1.srcdn.com/wordpress/wp-content/uploads/2019/07/Xenomorph-from-the-Alien-franchise.jpg
@@ -299,7 +303,7 @@ print(diamond_6)
 plt.imshow(diamond_6);
 ```
 
-Applied to the xenomorph image, this has some radical results:
+Applied to the `xenomorph` image in an erosion operation, this has some radical results:
 
 ```{python}
 xeno_binary_ero_rad_6_diamond = ski.morphology.erosion(xenomorph, 
@@ -307,7 +311,7 @@ xeno_binary_ero_rad_6_diamond = ski.morphology.erosion(xenomorph,
 show_both(xenomorph, xeno_binary_ero_rad_6_diamond, "Eroded \n(13, 13) Diamond SE");
 ```
 
-There are less "matches" between the large structuring element and pixel neighbourhoods in the image. Thus, the darker regions have expanded substantially more than when we used a smaller `diamond`, which gave more "matches".
+There are less "matches" between the large structuring element and pixel neighbourhoods in the image - this leaves less central pixels unchanged, than for a smalller structuring element of the same shape. Thus, because in erorison we are *lowering* central pixel values in the event of a "clash", the darker regions have expanded substantially more than when we used a smaller `diamond`, which gave more "matches".
 
 Dilation, again has the opposite effect of increasing brighter regions, in the event of "clashes":
 
@@ -318,7 +322,7 @@ xeno_binary_dilate_rad_6_diamond = ski.morphology.dilation(xenomorph,
 show_both(xenomorph, xeno_binary_dilate_rad_6_diamond, "Dilated \n(13, 13) Diamond SE");
 ```
 
-We can also change the shape of the struturing element - here we create a rectangle of `shape` (3, 3):
+We can also change the shape of the structuring element - here we create a rectangle of `shape` (3, 3):
 
 ```{python}
 # A square structuring element.
@@ -335,7 +339,7 @@ xeno_binary_ero_square = ski.morphology.erosion(xenomorph,
 show_both(xenomorph, xeno_binary_ero_square, "Eroded \n(3,3) Square SE");
 ```
 
-Dilation with this new structuring element once more enlarges brighter regions, with horrific results:
+Dilation with this new structuring element once more enlarges brighter regions, again with horrific results:
 
 ```{python}
 # Dilate the xenomorph, with the new structuring element.
@@ -402,7 +406,7 @@ plt.imshow(inverted_xeno_big_diamond);
 :::
 
 
-# Skeletonize
+# Skeletonizing an image
 
 In keeping with the horror theme of the `xenomorph` image, and the legacy of the [`smiley`](3_skimage_processing_from_numpy_and_scipy.) array, let's look at the `ski.morpholoy.skeletonize()` function. 
 
