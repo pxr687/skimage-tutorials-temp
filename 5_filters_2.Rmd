@@ -479,7 +479,7 @@ plt.matshow(almost_gaussian_filtered_camera_solution_2);
 :::
 
 
-# Edge filtering 
+# Edge detection filtering 
 
 We saw a simple [edge filter](3_skimage_processing_from_numpy_and_scipy) in one of the exercises on an earlier page. In image processing and computer vision, an edge is a rapid change in intensity between pixels - e.g. there is a high *gradient* of change between the pixel values. We can construct a [kernel](https://www.geeksforgeeks.org/deep-learning/types-of-convolution-kernels) which will detect such intensity changes in the vertical ($y$) direction, and thus will detect horizontal edges. That may sound paradoxical, but *horizontal* edges have *vertical* gradients:
 
@@ -689,7 +689,7 @@ plt.title("Both Combined")
 plt.imshow(coffee_vertical_horizontal_stack);
 ```
 
-# Sobel filtering
+# Sobel edge detection filtering
 
 A similiar edge detection filter is the Sobel filter, which uses the [following](https://www.geeksforgeeks.org/deep-learning/types-of-convolution-kernels/) [kernels](https://nrsyed.com/2018/02/18/edge-detection-in-images-how-to-derive-the-sobel-operator):
 
