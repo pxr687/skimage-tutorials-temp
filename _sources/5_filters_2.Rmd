@@ -49,7 +49,7 @@ Use gaussian from here: https://sbme-tutorials.github.io/2018/cv/notes/4_week4.h
 
 [Gaussian filtering](https://en.wikipedia.org/wiki/Gaussian_filter) is another method of filtering, which can produce interesting results different to both mean filter and median filter. 
 
-We will discuss why it is called "Gaussian" shortly, for now, have a look at the fancy kernel below **From meeting**: for now let's use "gaussian" very loosely, let's have a look at a gaussian, for the moment all we will take from it is that at the centre it has high values, thenthe values fall off at other sides. [Explain that the kernal below is Gaussian-like].
+We will discuss why it is called "Gaussian" shortly, for now, have a look at the fancy kernel below **From meeting**: for now let's use "gaussian" very loosely, let's have a look at a gaussian, for the moment all we will take from it is that at the center it has high values, thenthe values fall off at other sides. [Explain that the kernal below is Gaussian-like].
 
 - Start in 1d, show 1D gaussian
 
@@ -63,7 +63,7 @@ small_gaussian_kernel = 1/16 * np.array([[1, 2, 1],
 small_gaussian_kernel
 ```
 
-Imagine this kernel plotted in 3D. It is in the `shape` of `(3, 3)`. Imagine that the "floor" of the 3D plot is a 3-by-3 grid, with the integer index labels plotted on the x and y-axis. Imagine further that we plot the values in the kernel in the vertical direction, on the z-axis. Such a plot is shown below. A red wireframe connects the space in between each kernel value, to make the pattern between the individual elements clearer. The kernel values themselves are shown as dark blue text. The axis ticks show the integer index location of the kernel values.
+Imagine this kernel plotted in 3D. It is in the `shape` of `(3, 3)`. Imagine that the "floor" of the 3D plot is a 3-by-3 grid, with the integer index labels plotted on the $x$ and $y$-axis. Imagine further that we plot the values in the kernel in the vertical direction, on the z-axis. Such a plot is shown below. A red wireframe connects the space in between each kernel value, to make the pattern between the individual elements clearer. The kernel values themselves are shown as dark blue text. The axis ticks show the integer index location of the kernel values.
 
 ### From meeting: show plt.surface of the kernel then wireframe
 
@@ -90,7 +90,7 @@ for i in np.arange(small_gaussian_kernel.shape[0]):
 
 Add something about: https://en.wikipedia.org/wiki/Crimson_Peak
 
-Essentially, if we filter using this kernel, we "walk" this kernel through the image, with the top of the "red mountain" centred on a given pixel. The central pixel value is then replaced with an average of the pixels in the neighbourhood, but *the other pixels in the neighbourhood are weighted by the height of the red wireframe for that kernel value*. E.g. kernel elements which fall under higher points on the "mountain" will exert more influence on the weighted average, and pixels falling under lower points will exert a weaker influence.
+Essentially, if we filter using this kernel, we "walk" this kernel through the image, with the top of the "red mountain" centered on a given pixel. The central pixel value is then replaced with an average of the pixels in the neighbourhood, but *the other pixels in the neighbourhood are weighted by the height of the red wireframe for that kernel value*. E.g. kernel elements which fall under higher points on the "mountain" will exert more influence on the weighted average, and pixels falling under lower points will exert a weaker influence.
 
 Let's use this kernel to filter our `random_i` image:
 
@@ -115,7 +115,7 @@ plt.title('Gaussian-like Filter \n(3, 3) Kernel')
 plt.imshow(small_gaussian_filtered_small_square);
 ```
 
-Blurry! So to recap, we have averaged with a 3-by-3 pixel neightbourhood, replacing the central value of the kernel with a weighted average of all the pixel values in the neighbourhood. The weights are larger for pixels closer to the central value (e.g. closer to the centre of the "red mountain" on the plot above).
+Blurry! So to recap, we have averaged with a 3-by-3 pixel neightbourhood, replacing the central value of the kernel with a weighted average of all the pixel values in the neighbourhood. The weights are larger for pixels closer to the central value (e.g. closer to the center of the "red mountain" on the plot above).
 
 This type of filtering is called *Gaussian filtering* because the kernel element values are from, or in the case of `fancy_kernel` approximates a Gaussian function. This is the function for the familiar [normal distribution](https://en.wikipedia.org/wiki/Normal_distribution). The plot of the kernel above, with the "red mountain" may not look much like the normal distribution to you at the moment, but bear with us.
 
@@ -160,11 +160,11 @@ Both our `(3, 3)` kernel above, and the larger kernel we just plotted, are calle
 
 ![](images/gaussian_kernel_2.png)
 
-When comparing to the `big_gaussian_kernel`, you can see that the pattern in the numbers is the same. The biggest value occurs in the centre of the array, the smallest values are in the corners of the array. For the bigger Gaussian kernel, it is apparent that kernel values *closer* to the centre are larger, the values get smaller the further we get from the central pixel:
+When comparing to the `big_gaussian_kernel`, you can see that the pattern in the numbers is the same. The biggest value occurs in the center of the array, the smallest values are in the corners of the array. For the bigger Gaussian kernel, it is apparent that kernel values *closer* to the center are larger, the values get smaller the further we get from the central pixel:
 
 ![](images/big_gaussian_kernel.png)
 
-Essentially, if we filter using this kernel, we "walk" the gaussian kernel through the image, with the top of the "mountain" centred on a given pixel. The central pixel value is then replaced with an average of the pixels in the neighbourhood, though these are weighted by how close they are to the central pixel e.g. by how close they fall to the centre of the gaussian surface we showed above. Pixels closer to the central pixel will exert more influence, pixels further away will exert a weaker influence.
+Essentially, if we filter using this kernel, we "walk" the gaussian kernel through the image, with the top of the "mountain" centered on a given pixel. The central pixel value is then replaced with an average of the pixels in the neighbourhood, though these are weighted by how close they are to the central pixel e.g. by how close they fall to the center of the gaussian surface we showed above. Pixels closer to the central pixel will exert more influence, pixels further away will exert a weaker influence.
 
 Let's convolve `big_gaussian_kernel` with the `camera` image, using `ndi.correlate()`, as we used for the mean filter:
 
@@ -267,7 +267,7 @@ ex krazy-kernel
 
 ## From meeting: move this exercise to later, becuase the explanation involves a discussion of integer overflow. Maybe show them the scaling, then the exercise purpose is to use `astype(float)` on the original array to avoid overflow. Have a hint about "255 + 1" and the effect on the image. Also discuss whether kernels need to sum to 1 (yes, if we want to preserve the scaling of the image e.g. if it sums to 100, all the pixel values will be times 100 etc.).
 
-Here is another kernel which follows a Gaussian-like pattern (e.g. pixels closer to the centre are weighted more heavily):
+Here is another kernel which follows a Gaussian-like pattern (e.g. pixels closer to the center are weighted more heavily):
 
 ![](images/almost_gaussian.png)
 

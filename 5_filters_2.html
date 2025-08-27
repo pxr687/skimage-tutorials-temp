@@ -188,6 +188,8 @@
 
 
 
+
+
 <li class="toctree-l1"><a class="reference internal" href="2_skimage_intro.html">Introducing Scikit-image</a></li>
 
 
@@ -199,7 +201,7 @@
 
 
 
-<li class="toctree-l1"><a class="reference internal" href="3_skimage_processing_from_numpy_and_scipy.html">(Sci-kit) Image processing via NumPy and SciPy</a></li>
+<li class="toctree-l1"><a class="reference internal" href="3_skimage_processing_from_numpy_and_scipy.html">(Sci-kit) Image processing, via NumPy and SciPy</a></li>
 
 
 
@@ -210,6 +212,8 @@
 
 
 <li class="toctree-l1"><a class="reference internal" href="4_filters.html">Image filtering I</a></li>
+
+
 
 
 
@@ -514,7 +518,7 @@ document.write(`
 <p>Use gaussian from here: <a class="reference external" href="https://sbme-tutorials.github.io/2018/cv/notes/4_week4.html">https://sbme-tutorials.github.io/2018/cv/notes/4_week4.html</a></p>
 <p>[Highlight that it is built from NumPy and SciPy - wrapper for <code class="docutils literal notranslate"><span class="pre">scipy.ndimage.gaussian_filter</span></code>?]</p>
 <p><a class="reference external" href="https://en.wikipedia.org/wiki/Gaussian_filter">Gaussian filtering</a> is another method of filtering, which can produce interesting results different to both mean filter and median filter.</p>
-<p>We will discuss why it is called “Gaussian” shortly, for now, have a look at the fancy kernel below <strong>From meeting</strong>: for now let’s use “gaussian” very loosely, let’s have a look at a gaussian, for the moment all we will take from it is that at the centre it has high values, thenthe values fall off at other sides. [Explain that the kernal below is Gaussian-like].</p>
+<p>We will discuss why it is called “Gaussian” shortly, for now, have a look at the fancy kernel below <strong>From meeting</strong>: for now let’s use “gaussian” very loosely, let’s have a look at a gaussian, for the moment all we will take from it is that at the center it has high values, thenthe values fall off at other sides. [Explain that the kernal below is Gaussian-like].</p>
 <ul class="simple">
 <li><p>Start in 1d, show 1D gaussian</p></li>
 <li><p>Show 2-D gaussian</p></li>
@@ -537,7 +541,7 @@ document.write(`
 </div>
 </div>
 </div>
-<p>Imagine this kernel plotted in 3D. It is in the <code class="docutils literal notranslate"><span class="pre">shape</span></code> of <code class="docutils literal notranslate"><span class="pre">(3,</span> <span class="pre">3)</span></code>. Imagine that the “floor” of the 3D plot is a 3-by-3 grid, with the integer index labels plotted on the x and y-axis. Imagine further that we plot the values in the kernel in the vertical direction, on the z-axis. Such a plot is shown below. A red wireframe connects the space in between each kernel value, to make the pattern between the individual elements clearer. The kernel values themselves are shown as dark blue text. The axis ticks show the integer index location of the kernel values.</p>
+<p>Imagine this kernel plotted in 3D. It is in the <code class="docutils literal notranslate"><span class="pre">shape</span></code> of <code class="docutils literal notranslate"><span class="pre">(3,</span> <span class="pre">3)</span></code>. Imagine that the “floor” of the 3D plot is a 3-by-3 grid, with the integer index labels plotted on the <span class="math notranslate nohighlight">\(x\)</span> and <span class="math notranslate nohighlight">\(y\)</span>-axis. Imagine further that we plot the values in the kernel in the vertical direction, on the z-axis. Such a plot is shown below. A red wireframe connects the space in between each kernel value, to make the pattern between the individual elements clearer. The kernel values themselves are shown as dark blue text. The axis ticks show the integer index location of the kernel values.</p>
 </section>
 <section id="from-meeting-show-plt-surface-of-the-kernel-then-wireframe">
 <h2>From meeting: show plt.surface of the kernel then wireframe<a class="headerlink" href="#from-meeting-show-plt-surface-of-the-kernel-then-wireframe" title="Link to this heading">#</a></h2>
@@ -569,7 +573,7 @@ document.write(`
 </div>
 </div>
 <p>Add something about: <a class="reference external" href="https://en.wikipedia.org/wiki/Crimson_Peak">https://en.wikipedia.org/wiki/Crimson_Peak</a></p>
-<p>Essentially, if we filter using this kernel, we “walk” this kernel through the image, with the top of the “red mountain” centred on a given pixel. The central pixel value is then replaced with an average of the pixels in the neighbourhood, but <em>the other pixels in the neighbourhood are weighted by the height of the red wireframe for that kernel value</em>. E.g. kernel elements which fall under higher points on the “mountain” will exert more influence on the weighted average, and pixels falling under lower points will exert a weaker influence.</p>
+<p>Essentially, if we filter using this kernel, we “walk” this kernel through the image, with the top of the “red mountain” centered on a given pixel. The central pixel value is then replaced with an average of the pixels in the neighbourhood, but <em>the other pixels in the neighbourhood are weighted by the height of the red wireframe for that kernel value</em>. E.g. kernel elements which fall under higher points on the “mountain” will exert more influence on the weighted average, and pixels falling under lower points will exert a weaker influence.</p>
 <p>Let’s use this kernel to filter our <code class="docutils literal notranslate"><span class="pre">random_i</span></code> image:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -626,7 +630,7 @@ document.write(`
 <img alt="_images/569172f0c90a0490a7a8b95a72f62148c47a42ea5303311f5aeb36a7dc519649.png" src="_images/569172f0c90a0490a7a8b95a72f62148c47a42ea5303311f5aeb36a7dc519649.png" />
 </div>
 </div>
-<p>Blurry! So to recap, we have averaged with a 3-by-3 pixel neightbourhood, replacing the central value of the kernel with a weighted average of all the pixel values in the neighbourhood. The weights are larger for pixels closer to the central value (e.g. closer to the centre of the “red mountain” on the plot above).</p>
+<p>Blurry! So to recap, we have averaged with a 3-by-3 pixel neightbourhood, replacing the central value of the kernel with a weighted average of all the pixel values in the neighbourhood. The weights are larger for pixels closer to the central value (e.g. closer to the center of the “red mountain” on the plot above).</p>
 <p>This type of filtering is called <em>Gaussian filtering</em> because the kernel element values are from, or in the case of <code class="docutils literal notranslate"><span class="pre">fancy_kernel</span></code> approximates a Gaussian function. This is the function for the familiar <a class="reference external" href="https://en.wikipedia.org/wiki/Normal_distribution">normal distribution</a>. The plot of the kernel above, with the “red mountain” may not look much like the normal distribution to you at the moment, but bear with us.</p>
 <p>To see the Gaussian nature of this operation, let’s take a look at another, larger kernel below - it has <code class="docutils literal notranslate"><span class="pre">shape</span></code> <code class="docutils literal notranslate"><span class="pre">(9,</span> <span class="pre">9)</span></code>:</p>
 <div class="cell docutils container">
@@ -687,9 +691,9 @@ document.write(`
 <p>Ah, that’s better, you may recognise this as a 2-D <a class="reference external" href="https://en.wikipedia.org/wiki/Normal_distribution">gaussian distribution</a>. For the <code class="docutils literal notranslate"><span class="pre">small_gaussian_kernel</span></code> it appeared more “spiky” as we have less points. In this bigger <code class="docutils literal notranslate"><span class="pre">(9,</span> <span class="pre">9)</span></code> kernel, we can more see a smoother, more obviously Gaussian “mountain”.</p>
 <p>Both our <code class="docutils literal notranslate"><span class="pre">(3,</span> <span class="pre">3)</span></code> kernel above, and the larger kernel we just plotted, are called a <a class="reference external" href="https://www.geeksforgeeks.org/deep-learning/types-of-convolution-kernels">gaussian blur kernels</a>. Let’s look at the <code class="docutils literal notranslate"><span class="pre">small_gaussian_kernel</span></code>:</p>
 <p><img alt="" src="_images/gaussian_kernel_2.png" /></p>
-<p>When comparing to the <code class="docutils literal notranslate"><span class="pre">big_gaussian_kernel</span></code>, you can see that the pattern in the numbers is the same. The biggest value occurs in the centre of the array, the smallest values are in the corners of the array. For the bigger Gaussian kernel, it is apparent that kernel values <em>closer</em> to the centre are larger, the values get smaller the further we get from the central pixel:</p>
+<p>When comparing to the <code class="docutils literal notranslate"><span class="pre">big_gaussian_kernel</span></code>, you can see that the pattern in the numbers is the same. The biggest value occurs in the center of the array, the smallest values are in the corners of the array. For the bigger Gaussian kernel, it is apparent that kernel values <em>closer</em> to the center are larger, the values get smaller the further we get from the central pixel:</p>
 <p><img alt="" src="_images/big_gaussian_kernel.png" /></p>
-<p>Essentially, if we filter using this kernel, we “walk” the gaussian kernel through the image, with the top of the “mountain” centred on a given pixel. The central pixel value is then replaced with an average of the pixels in the neighbourhood, though these are weighted by how close they are to the central pixel e.g. by how close they fall to the centre of the gaussian surface we showed above. Pixels closer to the central pixel will exert more influence, pixels further away will exert a weaker influence.</p>
+<p>Essentially, if we filter using this kernel, we “walk” the gaussian kernel through the image, with the top of the “mountain” centered on a given pixel. The central pixel value is then replaced with an average of the pixels in the neighbourhood, though these are weighted by how close they are to the central pixel e.g. by how close they fall to the center of the gaussian surface we showed above. Pixels closer to the central pixel will exert more influence, pixels further away will exert a weaker influence.</p>
 <p>Let’s convolve <code class="docutils literal notranslate"><span class="pre">big_gaussian_kernel</span></code> with the <code class="docutils literal notranslate"><span class="pre">camera</span></code> image, using <code class="docutils literal notranslate"><span class="pre">ndi.correlate()</span></code>, as we used for the mean filter:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -821,7 +825,7 @@ Min Pixel Value: 0
 </section>
 <section id="from-meeting-move-this-exercise-to-later-becuase-the-explanation-involves-a-discussion-of-integer-overflow-maybe-show-them-the-scaling-then-the-exercise-purpose-is-to-use-astype-float-on-the-original-array-to-avoid-overflow-have-a-hint-about-255-1-and-the-effect-on-the-image-also-discuss-whether-kernels-need-to-sum-to-1-yes-if-we-want-to-preserve-the-scaling-of-the-image-e-g-if-it-sums-to-100-all-the-pixel-values-will-be-times-100-etc">
 <h2>From meeting: move this exercise to later, becuase the explanation involves a discussion of integer overflow. Maybe show them the scaling, then the exercise purpose is to use <code class="docutils literal notranslate"><span class="pre">astype(float)</span></code> on the original array to avoid overflow. Have a hint about “255 + 1” and the effect on the image. Also discuss whether kernels need to sum to 1 (yes, if we want to preserve the scaling of the image e.g. if it sums to 100, all the pixel values will be times 100 etc.).<a class="headerlink" href="#from-meeting-move-this-exercise-to-later-becuase-the-explanation-involves-a-discussion-of-integer-overflow-maybe-show-them-the-scaling-then-the-exercise-purpose-is-to-use-astype-float-on-the-original-array-to-avoid-overflow-have-a-hint-about-255-1-and-the-effect-on-the-image-also-discuss-whether-kernels-need-to-sum-to-1-yes-if-we-want-to-preserve-the-scaling-of-the-image-e-g-if-it-sums-to-100-all-the-pixel-values-will-be-times-100-etc" title="Link to this heading">#</a></h2>
-<p>Here is another kernel which follows a Gaussian-like pattern (e.g. pixels closer to the centre are weighted more heavily):</p>
+<p>Here is another kernel which follows a Gaussian-like pattern (e.g. pixels closer to the center are weighted more heavily):</p>
 <p><img alt="" src="_images/almost_gaussian.png" /></p>
 <p>It is defined as a variable in the cell below:</p>
 <div class="cell docutils container">

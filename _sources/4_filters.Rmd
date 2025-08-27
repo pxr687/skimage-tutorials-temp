@@ -5,6 +5,7 @@ A common operation we will want to perform on images is *filtering*. This is whe
 Here we will look at some important filtering techniques: threshold filtering and mean filtering. We will show how they work at the pixel-level, using `numpy` and `scipy`, and then we will show how to implement them in `skimage`.
 
 ```{python}
+# Library imports.
 import numpy as np
 import matplotlib.pyplot as plt
 import scipy.ndimage as ndi
@@ -16,16 +17,17 @@ plt.rcParams['image.cmap'] = 'gray'
 # Set NumPy precision to 2 decimal places
 np.set_printoptions(precision=2)
 
-#  Custom functions for illustrations, and to quickly report image attributes.
+#  Custom functions for illustrations, hints, and to quickly report image attributes.
 from noise_illustration import generate_image, original_image
 from gaussian_illustration import make_gaussian_kernel
 from show_attributes import show_attributes
+from hints import hint_strange_coffee
 ```
 
 
 # What is signal? What is noise?
 
-Imagine I want to send you a picture message. Let's use "the signal" as the name for the message before I send it to you. The signal, before transmission, has a clear meaning I am confident you will be able to interpret. However, imagine that I am sending you the message via an unreliable medium, a messaging system that is prone to corrupting messages when transmitting them. 
+Imagine that I want to send you a picture message. Let's use "the signal" as the name for the message before I send it to you. Before transmission, the signal has a clear meaning which I am confident you will be able to interpret. However, imagine that I am sending you the message via an unreliable medium; a messaging system that is prone to corrupting messages when transmitting them.
 
 When I send you the message, there is a decent chance that unwanted randomness will be added to the image file, because of technical problems with the transmission medium. This might result in an image which contains so much randomness that it is hard to discern the original signal. 
 
@@ -40,18 +42,28 @@ plt.imshow(noisy);
 
 Any idea what it is? Maybe you can determine what signal is in there. We trust that it is at least somewhat ambiguous, to most readers.
 
-We saw simple threshold filtering on an [earlier page](3_skimage_processing_from_numpy_and_scipy). This is where we select a threshold value, and binarize the image using that value. So a given pixel becomes `True` if a pixel is more intense than the threshold, and `False` if it is lower. 
+We saw simple threshold filtering on an [earlier page](3_skimage_processing_from_numpy_and_scipy). This is where we select a threshold value, and binarize the image using that value. So a given pixel becomes `True` if a pixel is more intense than the threshold, and `False` if it is lower (or vice versa, depending on the comparison operator). 
 
-The aim here is typically to split the pixels into distinct classes, based on their intensity values. We can use the `ndarray` `.ravel()` method to view a historgram of the pixel intensities, in order to find a threshold that might be useful to use in a filter:
+The aim here is typically to split the pixels into distinct classes, based on their intensity values. We can use the `ndarray` `.ravel()` method to view a historgram of the pixel intensities, in order to find a threshold that might be useful to use in a filter. The `.ravel()` method "flattens" the image array to 1-D, so that it can be displayed as a histogram:
 
 ```{python}
-# Show a histogram of the pixel intensity values.
+# The `shape` of the original `noisy` image.
+noisy.shape
+```
+
+```{python}
+# Flatten to 1-D with the `.ravel()` method.
+noisy.ravel().shape
+```
+
+```{python}
+# Show a histogram of the pixel intensity values, from the "flattened" `noisy` array.
 plt.hist(noisy.ravel(), bins=12)
 plt.xlabel('Pixel Intensity Value')
 plt.ylabel('Pixel Count');
 ```
 
-Ok, so it looks like the distribution is trimodal. The message is in the `float64` `dtype`, using intensities ranging from -1 to 1. Let's set a threshold filter for each dip, in between the three peaks, so we'll try once with a threshold of -0.50, and once with a threshold of 0.25:
+Ok, so it looks like the distribution is trimodal. The message is in the `float64` `dtype`, using intensities ranging from -1 to 1. Let's set a threshold filter for each dip, in between the three peaks, so we'll try once with a threshold of -0.50, and once with a threshold of 0.25. These threshold values are shown as vertical lines on the plot below:
 
 ```{python}
 # Show a histogram of the pixel intensity values, with some thresholds.
@@ -63,7 +75,7 @@ plt.xlabel('Pixel Intensity Value')
 plt.ylabel('Pixel Count');
 ```
 
-The filters are created, using the `>` comparison operator, in the two cells below:
+The filters are created, using the `>` comparison operator, in the next two cells:
 
 ```{python}
 # The first simple, Boolean threshold filter.
@@ -140,16 +152,16 @@ print(random_i)
 plt.imshow(random_i);
 ```
 
-As we saw above, it is simple to create a Boolean filter, using the `<` comparison operator:
+As we saw above, it is simple to create a Boolean filter, using the `>` comparison operator:
 
 ```{python}
 # Create a Boolean array using a comparison operator.
-random_i_thresholded = random_i < 5
+random_i_thresholded = random_i > 5
 print(random_i_thresholded)
 plt.matshow(random_i_thresholded);
 ```
 
-This filters *out* pixels *above* the threshold value (5), by setting them to 0/`False`. Different threshold values will allow more or less pixels to "survive" the filtering operation:
+This filters *out* pixels *below* the threshold value (5), by setting them to 0/`False`. Different threshold values will allow more or less pixels to "survive" the filtering operation:
 
 ```{python}
 # A sole survivor!
@@ -181,9 +193,9 @@ plt.xlabel('Pixel Intensity Value')
 plt.ylabel('Pixel Count');
 ```
 
-The "bins" are the intervals along the x-axis in which pixel intensity values are counted (to determine the height of the blue "hills" in the histogram above, for a given interval). It is important, when thresholding, to choose a sensible number of bins. Too few or too many and we will miss important information, because we are cramming way too many or too few pixels into each interval, respectively. 
+The "bins" are the intervals along the $x$-axis in which pixel intensity values are counted to determine the height of the blue "hills" in the histogram above, within a given interval. It is important, when thresholding, to choose a sensible number of bins. Too few or too many and we will miss important information, because we are cramming way too many or too few pixels into each interval, respectively. 
 
-The plot below shows the `camera` pixel intensities, with too few and too many bins. The bin intervals are indicated with vertical red lines. The height on the histogram, for a given bin, is determined by the Pixel Count falling with the range of intensities contained between each pair of red lines:
+The plot below shows the `camera` pixel intensities, with too few and too many bins. The bin intervals starts and ends are indicated with vertical red lines. The height on the histogram, for a given bin, is determined by the `Pixel Count` falling with the range of intensities for that bin:
 
 ```{python}
 # Some plot formatting parameters (to show the bins).
@@ -216,7 +228,7 @@ for val in histogram[1]:
     plt.plot(val, 0, marker=marker, color = "red", markersize=markersize);
 ```
 
-128 bins gives us a good middle ground, where we can see patterns in the distribution easily. Using the sensible number of bins, the distribution is clearly tri-modal, with a clear dip/separation around between 50 and 100-ish, and another just before 200-ish:
+128 bins gives us a good middle ground, where we can see patterns in the distribution easily, without losing information or overemphasising unrepresentative values. Using the sensible number of bins, the distribution is clearly tri-modal, with a clear dip/separation around between 50 and 100-ish, and another just before 200-ish. This locations are indicated on the plot with vertical lines:
 
 ```{python}
 # Show some "by eye" thresholds.
@@ -227,10 +239,10 @@ plt.xlabel('Pixel Intensity Value')
 plt.ylabel('Pixel Count');
 ```
 
-Let's make a "by eye" crude threshold value and apply a threshold filter. Remember, we are trying to separate the pixels into distinct classes:
+Let's use these "by eye" crude threshold values and apply a threshold filter using them. Remember, we are trying to separate the pixels into distinct classes:
 
 ```{python}
-# Define a threshold.
+# Define a threshold, "by eye".
 crude_threshold = 80
 ```
 
@@ -253,7 +265,7 @@ plt.imshow(camera > crude_threshold);
 Stylish! Someone should put that on a t-shirt...
 
 
-## Threshold filters in `skimage`
+# Threshold filters in `skimage`
 
 `skimage` contains many threshold filters, the cell below uses the `dir()` function to show the available selection:
 
@@ -262,9 +274,11 @@ Stylish! Someone should put that on a t-shirt...
 [fil for fil in dir(ski.filters) if fil.startswith('threshold')]
 ```
 
-These filters typically, when passed an image array, typically find a threshold value automatically - e.g. at value at which to binarize the image (`True` if a pixel is above the threshold, `False` if a pixel is below the value etc.). The threshold value aims to maximize the separation between pixel classes, and the different functions use different algorithms to identify this.
+These filters typically, when passed an image array, find a threshold value automatically - e.g. at value at which to binarize the image to split the pixels into distinct classes. These distinct pixel classes often correspond to distinct *features* or *regions* in the image (cameraman vs field, foreground vs background etc.). The threshold value search performed by the `ski.filter.threshold*` functions aims to maximize the separation between pixel classes, and the different available functions use different algorithms to identify the "best" threshold value(s).
 
-One simple method, similar to the method we just used manually above, is the [Otsu method](https://en.wikipedia.org/wiki/Otsu%27s_method). This aims to divide pixels into two distinct classes:
+One simple method, similar to the "look at the histogram" method we just used above, is the [Otsu method](https://en.wikipedia.org/wiki/Otsu%27s_method). This aims to divide pixels into two distinct classes, by mathematically analysing a histogram of the pixel intensities. Below we use the `ski.filters.threshold_otsu()` function to recommend a threshold value, to segment our image into two pixel classes.
+
+By specifying the `nbins` argument, we We get `.threshold_otsu()` to analyse a histogram which has the same number of bins as the one we were using above:
 
 ```{python}
 # Pass our `camera` array to the `threshold_otsu()` function.
@@ -275,15 +289,18 @@ otsu_thresh = ski.filters.threshold_otsu(camera,
 otsu_thresh
 ```
 
+We show the `otsu_thesh`old as a vertical line on the histogram:
+
 ```{python}
 # Plot the pixel intensities, and the Otsu threshold.
 plt.hist(camera.ravel(), bins=n_bins);
-plt.axvline(otsu_thresh, color='red')
+plt.axvline(otsu_thresh, color='red', label='Otsu Threshold')
 plt.xlabel('Pixel Intensity Value')
-plt.ylabel('Pixel Count');
+plt.ylabel('Pixel Count')
+plt.legend();
 ```
 
-You can see that the method finds a threshold is pretty close to the one we chose "by eye" earlier on the page. Let's apply the Otsu filter:
+You can see that the method finds a threshold is pretty close to the one we chose "by eye" earlier on the page. Let's apply the Otsu filter, simply by using `camera < otsu_thresh`:
 
 ```{python}
 # Filter in the image using the Otsu threshold.
@@ -306,19 +323,22 @@ plt.title('Otsu filtered')
 plt.subplots_adjust();
 ```
 
-How does the Otsu threshold filter work? Conceptually, the Otsu method involves splitting the histogram into two parts, lots of times, and comparing different splits. The histogram, for each split, is split at one of the bin intervals. The aim is to find which bin interval gives a split which yields two classes of pixels which are maximally different from one another (sometimes, hopefully, this corresponds to pixels forming the background of the image vs pixels forming the forground of the image).
+If you look at the filtered image (on the right hand side of the plot), it seems to have achieved pretty good foreground/background segmentation...
 
-Since the Otsu method relies on some the "mechanics" of histograms, so let's "deconstruct" the histogram in he center of the plot above, to see how the method proceeds. To do this, we can use the `np.histogram()` function. We give it a flattened 1-D image array (e.g. flattened with `.ravel()`), and we give it a number of bins to use. Again, we will use the sensible value of 128 bins.
+How does the Otsu threshold filter work? Conceptually, the Otsu method involves splitting the histogram into two parts, lots of times, and comparing different splits for how well they separate pixels into two classes, based on a specific numeric metric. The histogram, for each split, is split at the center one of the bin intervals. The aim is to find which bin interval center gives a split which yields two classes of pixels which are maximally different from one another, by the aforementioned numeric metric. Sometimes, hopefully, this corresponds to pixels forming the background of the image vs pixels forming the forground of the image.
 
-`np.histogram()` will return two arrays. The first is the pixel count within each bin, so in this case we will get 128 individual numbers, each is the count for the pixels within that bin. We will call this array `counts`. These numbers determine the height of the histogram at the center of each bin.
+Since the Otsu method relies on some the "mechanics" of histograms, so let's "deconstruct" the histogram in the center of the plot above, to see how the method proceeds. To do this, we can use the `np.histogram()` function. We give it a flattened 1-D image array (e.g. flattened with `.ravel()`), and we tell it a number of bins to use. Again, we will use the sensible value of 128 bins. (*Note*: you could also use `ski.exposure.histogram()` here, for similar results). 
 
-The second array returned by `np.histogram()` contains the start point of each bin (e.g. each x-axis interval within which we count the Pixel Count). We will call this array `edges`.
+`np.histogram()` will return two arrays. The first is the pixel count within each bin, so in this case we will get 128 individual numbers, because there are 128 bins. We will call this array `counts`. These `counts` determine the height of the histogram over each bin. The first `count` is for the first bin, the second `count` is for the second bin, and so on, as we move along the $x$-axis from left to right.
+
+The second array returned by `np.histogram()` contains the start point of each bin (e.g. each $x$-axis interval within which we get the `Pixel Count`). We will call this array `edges`.
 
 The size of each array will vary, based on the number of bins we ask NumPy to use to make the histogram:
 
 ```{python}
 # Get `counts` and `edges`.
-counts, edges = np.histogram(camera.ravel(), bins=n_bins)
+counts, edges = np.histogram(camera.ravel(), 
+                             bins=n_bins)
 ```
 
 ```{python}
@@ -333,7 +353,7 @@ edges
 
 Look at the first two values in the `edges` array, they form the interval for the first bin. So the first bin interval runs between 0 and 1.99, the second interval runs between the next two values of 1.99 and 3.98 and so on.
 
-Each value in `counts` is the number of pixel intensity values in `camera` which fall within the corresponding interval. Let's check this is correct by Boolean indexing `camera` to see how many pixels fall within the first interval (0 to 1.99):
+Each value in `counts` is the count of pixel intensity values in `camera` which fall within the corresponding interval. Let's check this is correct by Boolean indexing `camera` to see how many pixels fall within the first interval (0 to 1.99):
 
 ```{python}
 # For the first bin interval.
@@ -343,15 +363,18 @@ camera[(camera >= 0) & (camera <= 1.99)]
 Sure enough there are two pixels in the interval, which corresponds to the first value in the `counts` array:
 
 ```{python}
+# The first value in the `counts` array.
 counts[0]
 ```
 
 The second interval (e.g. the next two `edges` values) runs between 1.99 and 3.98. The second value of the `counts` array is 628, so there should be 628 pixels within this interval:
 
 ```{python}
-# Second value in `counts`.
+# The second value in `counts`.
 counts[1]
 ```
+
+Let's manually get the pixels in `camera` which fall in this second bin interval:
 
 ```{python}
 # For the second bin interval.
@@ -383,7 +406,7 @@ edges[:-1]
 edges[1:]
 ```
 
-To get the bin center points, we just take the average of each pair:
+Check the numbers in these two arrays against the image above (of the bin intervals) to verify they are correct. To get the bin center points, we just take the average of each pair:
 
 ```{python}
 # Get the center of each bin.
@@ -392,7 +415,7 @@ bin_centers = (edges[1:] + edges[:-1]) / 2
 bin_centers
 ```
 
-You'll see that if we plot our bin centers (x-axis) and our counts (y-axis) we get something very much resembling the `camera` histogram, with 128 bins. Below the original `camera` histogram is shown on the left, and the plot of the `bin_centers` and `counts` arrays is shown on the right:
+You'll see that if we plot our bin centers ($x$-axis) and our counts ($y$-axis) we get something very much resembling the `camera` histogram, with 128 bins. Below the original `camera` histogram is shown on the left, and the plot of the `bin_centers` and `counts` arrays is shown on the right:
 
 ```{python}
 # Generate a plot.
@@ -419,8 +442,8 @@ bin_centers[49]
 ```{python}
 # A function to visualise different threshold values.
 def plot_bins_with_threshold(threshold_bin_number, legend=True, axis=True):
-    plt.plot(bin_centers[:threshold_bin_number], counts[:threshold_bin_number], color='red', marker='X', label='Left Side')
-    plt.plot(bin_centers[threshold_bin_number:], counts[threshold_bin_number:], color='green', marker='X', label='Left Side')
+    plt.plot(bin_centers[:threshold_bin_number], counts[:threshold_bin_number], color='red', marker='X', label='Left Side Histogram')
+    plt.plot(bin_centers[threshold_bin_number:], counts[threshold_bin_number:], color='green', marker='X', label='Right Side Histogram')
     plt.axvline(bin_centers[threshold_bin_number], color='black', label='Threshold')
     plt.xlabel('Bin Centers')
     plt.ylabel('Pixel Count')
@@ -437,7 +460,7 @@ plot_bins_with_threshold(49)
 
 We now effectively have two histograms, the red one (below the 50th bin center; below a pixel intensity value of 98.6), and the green one (above the 50th bin center; above a pixel intensity value of 98.6).
 
-We can choose any bin center for the threshold, in fact, the Otsu filtering process will compare all possible thresholds/splits. Multiple different splits are visualised below:
+We can choose any bin center for the threshold, in fact, the Otsu filtering process will compare all possible thresholds/splits, comparing all of the bin centers. Multiple different splits are visualised below:
 
 ```{python}
 # Visualise multiple thresholds.
@@ -448,7 +471,11 @@ for i, threshold_bin_num in enumerate(np.linspace(10, len(bin_centers)-20, num=n
     plot_bins_with_threshold(threshold_bin_num, legend=False, axis=False)
 ```
 
-Once we have "split" the histogram, we calculate the mean of to the values in the left-hand histogram, and the mean of the values in the right-hand histogram (e.g. either side of the split). Then we calculate the sum of squared deviations (`ssd`) for each side of the histogram, each around its respective mean. This gives a metric of how "spread out" the values in each histogram are, around each mean.
+Once we have "split" the histogram, we calculate the mean of the pixel intensity values in the left-hand histogram, and the mean of the pixel intensity values in the right-hand histogram (e.g. either side of the split). 
+
+Then we calculate the sum of squared deviations (`ssd`) for each side of the histogram, each around its respective mean. This gives a metric of how "spread out" the values in each histogram are, around each mean.
+
+*It is this `ssd` metric which can allow us to select the "best" threshold; for giving distinct pixel classes...* 
 
 The cell below defines a function which calculates the sum of the squared deviations, for a given histogram:
 
@@ -485,11 +512,10 @@ def plot_thresh_mean_and_spread(threshold_bin_num, show_total_SSD=False, legend=
     plot_bins_with_threshold(threshold_bin_num, legend=legend)
     
     # Histogram 1
-    hist_number = 1
     color='red'
     mean_1, ssd_1, n_1 = ssd(counts[:threshold_bin_num], bin_centers[:threshold_bin_num])
     std_1 = np.sqrt(ssd_1/n_1)/2
-    plt.axvline(mean_1, color='dark'+color, label=f'Mean and Spread (Histogram {hist_number})')
+    plt.axvline(mean_1, color='dark'+color, label=f'Mean and Spread (Left Histogram)')
     plt.hlines(10, mean_1 - 1.96 * std_1, mean_1 + 1.96 * std_1, color='dark'+color)
     
     # Histogram 2
@@ -497,7 +523,7 @@ def plot_thresh_mean_and_spread(threshold_bin_num, show_total_SSD=False, legend=
     color='green'
     mean_2, ssd_2, n_2 = ssd(counts[threshold_bin_num:], bin_centers[threshold_bin_num:])
     std_2 = np.sqrt(ssd_2/n_2)/2
-    plt.axvline(mean_2, color='dark'+color, label=f'Mean and Spread (Histogram {hist_number})')
+    plt.axvline(mean_2, color='dark'+color, label=f'Mean and Spread (Right Histogram)')
     plt.hlines(10, mean_2 - 1.96 * std_2, mean_2 + 1.96 * std_2, color='dark'+color)
     
     if show_total_SSD == True:
@@ -509,7 +535,7 @@ plot_thresh_mean_and_spread(49)
 plt.legend(bbox_to_anchor=(1, 1));
 ```
 
-Different threshold values change the mean, as well as the spread (`ssd`) of each histogram (pay attentioned to the width of the spread around each mean):
+Different threshold values change the mean, as well as the spread (`ssd`) of each histogram. For each different split visualised below, pay attention to the width of the spread around each mean (e.g. the horizontal lines coming off the vertical line for each mean). This will let you see how the different splits influence the mean and the `ssd` of each histogram, when we compare the left histogram vs right histogram, for a given split:
 
 ```{python}
 # Visualise multiple thresholds.
@@ -523,9 +549,9 @@ for i, threshold_bin_num in enumerate(np.linspace(10, len(bin_centers)-20, num=n
         plt.legend(bbox_to_anchor=(1, 1));
 ```
 
-In Otsu's method, we want to find the threshold value which gives the *minimum total `ssd`* e.g. the smallest value of the combined spread when we add together the `ssd` values for each histogram.
+In Otsu's method, we want to find the threshold value which gives the *minimum total `ssd`* e.g. the smallest value of the combined spread when we add together the `ssd` values for each histogram. This value corresponds to the *maximum between pixel class variance*, when comparing each side of the histogram. 
 
-This value corresponds to the *maximum of the between class variance between each side of the histogram*. This means that it finds two classes of pixels that are most different from each other, compared to other classes we could choose, based on different threshold values.
+In other words, the threshold value which gives the lowest combined `ssd` identifies two classes of pixels that are most different from each other, compared to other classes/splits we could choose, according the metrics that the Otsu method cares about.
 
 You can think of it as finding a threshold which groups pixels such that the means of the groups are very different, and also that the pixel values in each side of the "split" are clustered closely around their respective mean, giving them a big separation from pixels in the other class.
 
@@ -559,31 +585,36 @@ n_bins
 
 ```{python}
 # Get the Otsu threshold from `skimage`.
-ski.filters.threshold_otsu(camera, nbins=n_bins)
+ski.filters.threshold_otsu(camera,
+                           nbins=n_bins)
 ```
 
-Here is the graph showing the Otsu threshold, the total `ssd` is shown in the title of the plot:
+Here is the graph showing the Otsu threshold, the total `ssd` is shown, in scientific notation, in the title of the plot:
 
 ```{python}
 plot_thresh_mean_and_spread(otsu_bin, show_total_SSD=True)
 ```
 
-This is an order of magnitude smaller than for some possible other threshold values, e.g. we show a different threshold below, which has a much larger total `ssd`:
+This is an order of magnitude smaller than for some possible other threshold values, e.g. we show a different threshold below, which has a much larger total `ssd`, again, the total `ssd` is shown in the title of the plot:
 
 ```{python}
+# A much worse split.
 plot_thresh_mean_and_spread(10, show_total_SSD=True)
 ```
 
-Compare the spreads on each plot (the horizontal lines around the mean of each histogram). You can see that the spreads are much smaller for the Otsu threshold, than for the other (much worse!) threshold. The other threshold, because it has much worse between pixel-class variance than the Otsu threshold, gives much worse image segmentation, in terms of separating foreground from background:
+Compare the spreads on each plot by looking at the horizontal lines around the mean of each histogram. You can see that the spreads are much smaller for the Otsu threshold, than for the other (much worse!) threshold. The other threshold, because it has much worse between pixel-class variance than the Otsu threshold, gives much worse image segmentation, in terms of separating foreground from background:
 
 ```{python}
+# A bad segmentation, from the worse threshold value...
 plt.imshow(camera < bin_centers[10]);
 ```
 
-The `ssd`s for multiple different thresholds are shown in the plot titles below; `camera` filtered to the same threshold is shown to the right of the histogram plot:
+Admittedly that is quite a cool visual effect, but it is poor segmentation performance. 
+
+The `ssd`s for multiple different thresholds are shown in the title of each plot below; the `camera` image filtered to the same threshold is shown to the right of each histogram plot:
 
 ```{python}
-# Visualise multiple thresholds.
+# Visualise multiple thresholds, as well as filtering `camera` using those thresholds.
 n_threshold_plots = 6
 plt.figure(figsize=(24, 24))
 thresholds=[10, 10, 60, 60, 120, 120]
@@ -593,10 +624,14 @@ for i in np.arange(n_threshold_plots):
         plot_thresh_mean_and_spread(thresholds[i], show_total_SSD=True, legend=False)
     else:
         plt.imshow(camera < bin_centers[thresholds[i]])
-        plt.title(f"Threshold Pixel Intensity: {bin_centers[thresholds[i]].round(2)}");
+        plt.title(f"Threshold Pixel Intensity: {bin_centers[thresholds[i]].round(2)}")
+plt.subplots_adjust()
+plt.tight_layout();
 ```
 
-Remember: Otsu's method finds the threshold which gives us the smallest *sum of the `ssd` values for each histogram*. This corresponds to the *maximum variance between the two histograms* e.g. it finds the most distinct two classes of pixels that we can divide the image into:
+Remember: Otsu's method finds the threshold which gives us the smallest *sum of the `ssd` values*, with one value from each histogram. This corresponds to the *maximum variance between the two histograms* e.g. it finds the most distinct two classes of pixels that we can divide the image into, based on this metric.
+
+Compare the segmentation of the "best" Otsu threshold (shown below) to the poorer-performing thresholds shown on the right of the plot above:
 
 ```{python}
 # Show a plot of the whole Otsu filtering process.
@@ -621,12 +656,13 @@ Your task now is to split `camera` into *three distinct pixel classes*, using th
 
 ![](images/camera_3_regions.png)
 
-Roughly, in the target image, the sky has white pixels, the ground has grey pixels and the cameraman has black pixels. Your final image should contain only the following `np.unique()` values:
+Roughly, in the target image, the sky has white pixels, the ground has grey pixels and the cameraman's body has black pixels. Your final image should contain only the following `np.unique()` values:
 
 ```
 array([0, 1, 2])
 ```
-You can use a "by eye" method to decide your thresholds, from inspecting a histogram of `camera`. Or you can investigate using the `skimage` Otsu filter for more than two pixel classes...
+
+You can use a "by eye" method to decide your thresholds, from inspecting a histogram of `camera`. Or you can investigate using the `skimage` Otsu filter to get thresholds for more than two pixel classes...
 
 ```{python}
 # YOUR CODE HERE
@@ -741,13 +777,13 @@ plt.imshow(cam3_regions_hack);
 :::
 
 
-# A crude mean filter - kernels and pixel neighbourhoods
+# Kernels and pixel neighbourhoods
 
 In the section above we have filtered images based on a single value (e.g. a threshold). Other filters work differently. They work by adjusting a given pixel's value *based on the value of other pixels in the array*, such that each pixel can be subject to a different change in its value, depending of the value of other pixels. The mean filter is one such filter that works this way.
 
-The mean filter is a *local filter*. This entails that it alters a given pixels value based on the values of other pixels in the surrounding "neighborhood". The size and shape of the "neighborhood" are up to the user. We can refer to the neighborhood as a "kernel", "footprint" or "structuring element". As we will see later, Sci-kit image favours the term "footprint". For now, we will use the terms "kernel" and "neighborhood" to refer to some set of pixels that surround a given pixel.
+The mean filter is a *local filter*. This entails that it alters a given pixels value based on the values of other pixels in the surrounding "neighborhood". The `size` and `shape` of the "neighborhood" are up to the user. We can refer to the neighborhood as a "kernel", "footprint" or "structuring element". As we will see later, Sci-kit image favours the term "footprint". For now, we will use the terms "kernel" and "neighborhood" interchangably to refer to some set of pixels that surround a given pixel.
 
-The mean filter, as the name suggests, *averages* the pixel values within a kernel. To see this in action, let's build a simple mean filter to filter our `random_i` image array:
+The mean filter, as the name suggests, *averages* the pixel values within a kernel/neighbourhood. To see this in action, let's build a simple mean filter to filter our `random_i` image array:
 
 ```{python}
 # Show the `random_i` array.
@@ -755,7 +791,7 @@ print(random_i)
 plt.imshow(random_i);
 ```
 
-Let's use some indexing to go for a walk through the neighbourhoods (kernels) in this array. We will treat each `(3,3)` set of pixels as a separate neighbourhood. For now, we only walk through the neighborhoods at the "top" of the array. We will start our "walk" in the top left corner of the array, so that each 3-by-3 slice is centred on a pixel in the second row of the image:
+Let's use some indexing to go for a walk through the neighbourhoods (kernels) in this array. We will treat each `(3,3)` set of pixels as a separate neighbourhood. For now, we only walk through the neighborhoods at the "top" of the array. We will start our "walk" in the top left corner of the array, so that each 3-by-3 slice is centered on a pixel in the second row of the image:
 
 ```{python}
 # The first neighbourhood.
@@ -803,19 +839,19 @@ This is how the mean filter operates:
 
 * We define our kernel (e.g. our pixel neighborhood size and shape).
 
-* We centre our kernel on a pixel.
+* We center our kernel on a pixel.
 
 * We then replace the value of the central pixel with the mean of the pixels in the neighborhood.
 
-The illustrations above only show the kernel proceeding through the pixels at the "top" of the array. In reality, filtering operations are applied every pixel in the image. You can think of this as the kernel "walking" through the entire array, being centred on one pixel at a time.
+The illustrations above only show the kernel proceeding through the pixels at the "top" of the array. In reality, filtering operations are applied every pixel in the image. You can think of this as the kernel "walking" through the entire array, being centered on one pixel at a time.
 
-Astute readers might ask "what happens near the edges of the array? If we centre our kernel on a pixel in the last column or row, won't part of the kernel 'fall off' the edge of the array?'":
+Astute readers might ask "what happens near the edges of the array? If we center our kernel on a pixel in the last column or row, won't part of the kernel 'fall off' the edge of the array?'":
 
 ![](images/kernel_hit_the_edge.png)
 
 Indeed, we need a strategy for this. There are actually many options for how a kernel should behave at the edges of an image array - we could "pad" the kernel elements that fall outside of the image with 0 values, for instance. Or we could duplicate values from the pixels at the edge of the array, to fill in kernel elements that fall outside of the array.
 
-**For now we will not worry about the edges, we just use the kernel only where it "fits" within the array.** In effect, this just ignores pixels near the edges of the image. Presently, most of these pixels at the edges of the image are 0, and there is some distance between the "i" and the image edges, so ignoring the pixels near the edge will not affect the "i" shape too much itself. The image below illustrates this, for a generic array:
+**For now we will not worry about the edges, we just use the kernel only where it "fits" within the array.** In effect, this just ignores pixels near the edges of the image. Presently, most of these pixels at the edges of the image are 0, and there is some distance between the "i" and the image edges, so ignoring the pixels near the edge will not affect the "i" shape too much itself. The image below illustrates this concept, for a generic array:
 
 ![](images/kernel_general.png)
 
@@ -905,6 +941,11 @@ Min Pixel Value: -1.0
 # YOUR CODE HERE
 def three_by_three_negative_sum_kernel():
     ...
+
+# Load in the `coins` image.
+coins = ski.data.coins()
+show_attributes(coins)
+plt.imshow(coins);
 ```
 
 ::: {exercise-end}
@@ -944,10 +985,10 @@ def three_by_three_negative_sum_kernel_solution(image):
     return ski.exposure.rescale_intensity(filtered_image, out_range="float64") # Rescale to ensure legal pixel values.
 ```
 
-Here we load in the `brick` image, to which to apply our new filter:
+Here we load in the `coins` image, to which to apply our new filter:
 
 ```{python}
-# Load in and show the `brick` image.
+# Load in and show the `coins` image.
 coins_solution = ski.data.coins()
 plt.imshow(coins_solution);
 ```
@@ -960,7 +1001,7 @@ neg_sum_filter_coins = three_by_three_negative_sum_kernel_solution(coins_solutio
 plt.imshow(neg_sum_filter_coins);
 ```
 
-Here are the attributes of the filtered image:
+Here are the attributes of the somewhat ghostly, filtered image:
 
 ```{python}
 show_attributes(neg_sum_filter_coins)
@@ -1052,7 +1093,7 @@ plt.title('Mean Filtered')
 plt.imshow(mean_filtered_random_i_via_sp);
 ```
 
-The result is very similar to that obtained by our crude mean filter, only now it has been applied to *every* array pixel, where our crude filter simply ignored pixels at the edge of the image.
+The result is very similar to that obtained by our crude mean filter, only now it has been applied to *every* array pixel, where our crude filter simply ignored pixels at the edge of the image:
 
 ```{python}
 # Show the result from our crude mean filter
@@ -1064,15 +1105,13 @@ These two arrays are shown below side-by-side, and more nicely rendered, for eas
 
 ![](images/two_mean_filters.png)
 
-You can see that the values differ only near the top and bottom edges of the image.
-
-
-Let's define a function so that we can apply the mean filter to any image, using the proper `scipy.ndimage.correlate()` machinery:
+You can see that the values differ only near the top and bottom edges of the image. Let's define a function so that we can apply the mean filter to any image, using the proper `scipy.ndimage.correlate()` machinery, so we no longer ignore edge pixels (poor pixels!):
 
 ```{python}
 def mean_filter(image_array, kernel_shape):
-    kernel_size = np.prod(kernel_shape)
-    mean_kernel = np.full(kernel_shape, 1/kernel_size)
+    kernel_size = np.prod(kernel_shape) # Get the kernel size (n).
+    mean_kernel = np.full(kernel_shape, # Make the mean kernel in the desired shape... 
+                          1/kernel_size)# ...each each element in the mean kernel is 1/n.
     return ndi.correlate(image_array, 
                         mean_kernel,
                         output=float)
@@ -1140,9 +1179,11 @@ for i in np.arange(3, n_plots):
     plt.title(f'Mean Filtered\nKernel =({i+(i*3)},{i+(i*3)})')
     plt.imshow(mean_filter(noisy_coffee_grey, kernel_shape))
     plt.axis('off')
+plt.subplots_adjust()
+plt.tight_layout();
 ```
 
-As with many filtering operations, the effect of altering aspects of the filtering process (like a threshold value or kernel size), is very context dependent. It make take many iterations before finding a "sweet spot", and where the sweet spot is may be somewhat subjective.
+As with many filtering operations, the effect of altering aspects of the filtering process (like a threshold value or kernel size), is very context dependent. It may take many iterations before finding a "sweet spot", and where the sweet spot is may be somewhat subjective.
 
 
 ::: {exercise-start}
@@ -1158,8 +1199,6 @@ For a given pixel value, when the value is multiplied by it's corresponding kern
 
 Write your function so that it can be used with kernels of different `shape`s, so you can work out what kernel `shape` you need to recreate the target image, by trial and error.
 
-You may also need to adjust the sign of the elements in the kernel, to get the same result as the target image.
-
 Your final image should have the following attributes (again, you may need to `rescale_intensity()` or take other steps to avoid illegal pixel values, for the `dtype`):
 
 ```
@@ -1172,6 +1211,16 @@ Min Pixel Value: -49
 
 **DO *NOT* COPY THE `mean_filter()` FUNCTION FROM ABOVE AND MODIFY IT** - try to write a function from scratch, thinking carefully about what you need to do.
 
+*Hint:* run the `hint_strange_coffee()` function for additional help.
+
+```{python}
+# YOUR CODE HERE
+strange_coffee = coffee_grey.copy()
+
+# Show `strange_coffee`.
+plt.imshow(strange_coffee)
+show_attributes(strange_coffee)
+```
 
 ::: {exercise-end}
 :::
@@ -1219,7 +1268,7 @@ This is quite a strange kernel to apply! But it shows us how easy it is to achie
 :::
 
 
-## Mean filtering with `skimage`
+# Mean filtering with `skimage`
 
 We can implement a mean filter using the `ski.filters.rank.mean()` function. `skimage` prefers the term `footprint` to "kernel", but the meaning is the same. We supply a small matrix with which to "walk" through the image, centring the kernel on every pixel, and modifying that central pixel's value based on the values of the other pixels in it's neighbourhood, with the size and shape of the neighbourhood being defined by the kernel (`footprint`). 
 
@@ -1253,7 +1302,7 @@ This page has showed how to perform threshold filtering and mean filtering, usin
 
 # References
 
-3.3.5 onward from: https://lectures.scientific-python.org/packages/scikit-image/index.html
+Based on 3.3.5 onward from: https://lectures.scientific-python.org/packages/scikit-image/index.html
 
 Based on: https://scikit-image.org/skimage-tutorials/lectures/1_image_filters.html
 
