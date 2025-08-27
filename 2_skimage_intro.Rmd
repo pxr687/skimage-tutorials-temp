@@ -718,4 +718,4 @@ Based on: https://lectures.scientific-python.org/packages/scikit-image/index.htm
 
 Based on: https://github.com/scikit-image/skimage-tutorials/blob/main/lectures/
 
-Based on: https://jni.github.io/i2k-skimage-napari/lectures/1_image_filters.html
+Reference: https://jni.github.io/i2k-skimage-napari/lectures/1_image_filters.html
