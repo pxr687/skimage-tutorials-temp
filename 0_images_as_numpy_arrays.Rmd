@@ -280,7 +280,7 @@ You now understand the fundamentals of the computer representation of images! Be
 
 * We know that an image (in the technical sense) is a numeric array of at least two dimensions - often but not necessarily containing information about, or depicting, something in the world.
 
-* We know that the number at each element of the array tells a computer what pixel intensity (e.g. grey-level) to show at that array pixel location. These pixel intensities determine the colour of the corresponding display pixels in the rendered image, in accordance with the `colormap` we use for plotting.
+* We know that the number at each element of the array tells a computer what pixel intensity (e.g. grey-level) to show at that array pixel location. These pixel intensities determine the colour of the corresponding display pixels in the rendered image. In the arrays we have seen, colour is determined in accordance with the `colormap` we use for plotting.
 
 * We know what happens when an image array contains fewer pixels than the rendered image e.g. using interpolation, the image will be upscaled to be displayed using more *display pixels* than there are *array pixels* in the original image array.
 
@@ -489,7 +489,7 @@ On this page we have examined the fundamental components of computer images:
 
 * For small/low-resolution arrays, the values in the array will be displayed on more pixels than there are values in the array.
 
-* The number at each location in an image array determines the pixel intensity (grey-level) in a 2-D array.
+* The number at each location in an image array determines the pixel intensity (grey-level) in a 2-D array. We have seen that different `colormap`s can display this information using different colour gradients.
 
 * These principles apply both to very simple and very complex images.
 

@@ -16,10 +16,10 @@ jupyter:
 # What about colour? 
 
 
-All of the arrays we have encountered [so far](0_images_as_numpy_arrays) contain just one value at each array pixel location. This page will look at image arrays with more complex shapes, and show how this can encode colour information, giving us beautiful colour images, like this one:
+All of the arrays we have encountered [so far](0_images_as_numpy_arrays) contain just one value at each array pixel location. This page will look at image arrays with more complex shapes, and show how this can encode colour information, giving us beautiful colour images, that create deep aesthetic experiences, like this one:
 
 ![](images/xenomorph.png)
-(Image from [here.](https://static1.srcdn.com/wordpress/wp-content/uploads/2019/07/Xenomorph-from-the-Alien-franchise.jpg))
+(Image from [here](https://static1.srcdn.com/wordpress/wp-content/uploads/2019/07/Xenomorph-from-the-Alien-franchise.jpg)).
 
 First, some library imports:
 
@@ -76,7 +76,7 @@ plt.colorbar();
 two_D_ones_and_zeros.dtype
 ```
 
-Conversely, the array `two_D_other_integers` contains different integer values. Note that, though the *numbers* themselves are integers, they are represented ny NumPy as `float64` values:
+Conversely, the array `two_D_other_integers` contains different integer values. Note that, though these *numbers* themselves are integers, they are represented by NumPy as `float64` values:
 
 ```{python}
 # Another image from earlier.
@@ -87,11 +87,11 @@ plt.colorbar();
 
 The first image - with black and white squares only, no grey - is a *binary image*. This is an image where each array pixel contains only one of two values. In this case the two values are 0 or 1, with 0 corresponding to black pixels and 1 corresponding to white pixels.
 
-The second image - black, white and grey squares - is a *monochrome image*. This image contains more than two unique values; it has black pixels (lowest pixel values, 0), white pixels (highest pixel values, 1), and grey pixels (intermediate pixel values, > 0 but < 1).
+The second image - black, white and grey squares - is a *monochrome image*. This image contains more than two unique values. It has black pixels (the lowest pixel values, 0); white pixels (the highest pixel values, 1); and grey pixels (intermediate pixel values, > 0 but < 1).
 
-**This is important:** for two-dimensional arrays like these each array pixel has a *single number* in the image array. Because of this, we can refer to both of these arrays as *single-channel image arrays*. Each individual array pixel value determines the *intensity* of that pixel, e.g. the brightness or darkness of that pixel. 
+**This is important:** for two-dimensional arrays like these each array pixel is just a *single number*. Because of this, we can refer to both of these arrays as *single-channel image arrays*. Each individual array pixel value determines the *intensity* of that pixel, e.g. the brightness or darkness of that pixel. 
 
-Each colourmap (`viridis` and `gray`) maps each single-valued pixel intensity to a gradient of colours/shades. This is a black-grey-white gradient for the `gray` colourmap and a purple-yellow gradient for the `viridis` colourmap. Technically speaking, for single-channel image arrays, the intensity values only convey black-white-gray information - the `viridis` colourmap merely *translates* this black-grey-white information into a coloured presentation for the purposes of display. 
+As we saw on the [last page](0_images_as_numpy_arrays), a colourmap (e.g. `viridis` or `gray`) maps  each single-valued pixel intensity to a gradient of colours/shades. This is a black-grey-white gradient for the `gray` colourmap and a purple-yellow gradient for the `viridis` colourmap. Technically speaking, for single-channel image arrays, the intensity values only convey black-white-gray information - the `viridis` colourmap merely *translates* this black-grey-white information into a coloured presentation for the purposes of display. 
 
 What `viridis` is doing is called [*pseudo-colouring*](https://www.spiedigitallibrary.org/conference-proceedings-of-spie/0048/0000/Digital-Image-Processing-With-Pseudo-Color/10.1117/12.954071.short) - it is mapping black-grey-white information to display colours. The plot below show's both arrays, with both colourmaps, for comparison:
 
@@ -126,7 +126,7 @@ plt.colorbar()
 plt.tight_layout();
 ```
 
-We can say then, that the plots on the bottom row are *displayed using pseudo-colour*. The original image arrays only contain black-white-grey information in the pixel intensity values; they do not contain *true colour* information. **This will be true of any two-dimensional image array**, and both of these image arrays are two-dimensional:
+We can say then, that the plots on the bottom row are *displayed using pseudo-colour*. The original image arrays only contain black-white-grey information in their pixel intensity values; they do not contain *true colour* information. **This will be true of any two-dimensional image array**, and both of these image arrays are two-dimensional:
 
 ```{python}
 # Show the dimensionality of our binary image array.
@@ -138,7 +138,7 @@ two_D_ones_and_zeros.shape
 two_D_other_integers.shape
 ```
 
-An image which has what we will call *true colour* contains information **in each array pixel about more than just *intensity* - it also contains information about *colour*.**  So, to hammer this point home: greyscale and binary images displayed with the `viridis` colourmap do not contain true colour information in their array pixel values. Instead Matplotlib is *displaying* binary and greyscale information using colours. To introduce true colour into the image, we need a spooky third dimension... 
+An image which has what we will call *true colour* contains information in each array pixel about more than just *intensity* - it also contains information about *colour*. So, to hammer this point home: greyscale and binary images displayed with the `viridis` colourmap do not contain true colour information in their array pixel values. Instead Matplotlib is *displaying* binary and greyscale information using colours. To introduce true colour into the image, we need a spooky third dimension... 
 
 # True Colour in 3D
 
@@ -255,7 +255,7 @@ So far we have visualised these slices using a similar graphic to depicting an i
 
 ![](images/three_slice_nums_only_annotated.png)
 
-Remember, the actual numbers in each "slice" are of the `float64` `dtype` and so contain (empty) decimal places. However, we will show the numbers just as 0 or 1, to keep the image uncluttered. Above we said we wanted to introduce a third dimension to introduce "true" colour information into the image. Well, now we have three dimensions surely plotting our image will render a vibrantly coloured picture?
+Remember, the actual numbers in each "slice" are of the `float64` `dtype` and so contain (empty) decimal places. However, we will show the numbers just as 0 or 1, to keep the image uncluttered. Above we said we wanted to introduce a third dimension to introduce "true" colour information into the image. Well, now we have three dimensions surely plotting our image will render a vibrantly coloured picture?:
 
 ```{python}
 # Ooof...not what we wanted...
@@ -266,7 +266,7 @@ Ok, that is not what we wanted - nothing has changed! Interestingly though, the 
 
 ![](images/three_slice_all_1s.png)
 
-What happens if we set every element, in every slice, to equal 0? To do this, first we create a 4-pixel array containing only 0's:
+What happens if we set every element, in every slice, to equal 0? To do this, first we create a 2-D, 4-pixel array containing only 0's:
 
 ```{python}
 # Create a 4-pixel array containing only 0's.
@@ -286,7 +286,7 @@ three_D_zeros = np.stack([two_D_zeros,
 three_D_zeros
 ```
 
-We can visualise this array as:
+We can visualise this new 3-D array as:
 
 ![](images/three_slice_zeros.png)
 
@@ -404,6 +404,7 @@ Alterations to the second slice in the third dimension control the amount of gre
 For completeness, let's change only the *third slice* in the third dimension:
 
 ```{python}
+# Put 1 values in the third slice only.
 three_D_stack_array_altered_third = np.stack([two_D_zeros,
                                               two_D_zeros, 
                                               two_D_ones_and_zeros ], # LOOK HERE!
@@ -454,7 +455,7 @@ As we have seen, the first slice is the red channel, the second slice is the gre
 
 ![](images/colour_channels_all.png)
 
-Now, the way we have setup each 3-D array *is* mixing the colour channels, only by setting two of the slices to contain only 0's, we are essentially "switching off" that colour channel in the final mix (e.g. in the image displayed by Matplotlib). Other colours can be created using different blends of these primary colours (red, green, blue). For `float64` image data, you can think of 0 as meaning 0% and 1 as meaning 100%, 0.5 meaning 50% and so on. So a 1 in the red slice means 100% red is mixed in for that pixel, with the percentages from the other colour channels.
+Now, the way we have setup each 3-D array *is* mixing the colour channels, but because we have set two of the slices to contain only 0's, we are essentially "switching off" those colour channel in the final mix (e.g. in the image displayed by Matplotlib). Other colours can be created using different blends of these primary colours (red, green, blue). For `float64` image data, you can think of 0 as meaning 0% and 1 as meaning 100%, 0.5 meaning 50% and so on. So a 1 in the red slice means 100% red is mixed in for that pixel, along with the percentages from the other colour channels (which in the arrays above, are 0's).
 
 We can see this by choosing intensity values randomly for each colour channel. The function `np.random.uniform()` can supply us with three random decimal numbers between 0 and 1. Run the cell below a few times if you are using this tutorial interactively, to see the random draw a few times:
 
@@ -465,15 +466,13 @@ X1, X2, X3 = np.random.uniform(size=3).round(2)
 print(f"X1 = {X1}\nX2 = {X2}\nX3 = {X3}")
 ```
 
-We will use the `X1` value from this random draw to set nonzero diagonal values in the red colour channel (e.g. in the *first* slice of the stack).
+We will use the `X1` value from this random draw to set nonzero diagonal values in the *red* colour channel (e.g. in the *first* slice of the stack).
 
-We will use the `X2` value from this random draw to set nonzero diagonal values in the green colour channel (e.g. in the *second* slice of the stack).
+We will use the `X2` value from this random draw to set nonzero diagonal values in the *green* colour channel (e.g. in the *second* slice of the stack).
 
-We will use the `X3` value from this random draw to set nonzero diagonal values in  the blue colour channel (e.g. in the *third* slice of the stack).
+We will use the `X3` value from this random draw to set nonzero diagonal values in  the *blue* colour channel (e.g. in the *third* slice of the stack).
 
-We will then view the resulting display image.
-
-Again, if you are using this tutorial interactively, run the cell a few times to see multiple random mixes across the colour channels:
+We will then view the resulting display image. Again, if you are using this tutorial interactively, run the cell a few times to see multiple random mixes across the colour channels:
 
 ```{python}
 # Get three random integers between 0 and 255
@@ -492,7 +491,7 @@ three_D_stack_array_altered_blend= np.stack([two_D_ones_and_zeros * X1,
 plt.matshow(three_D_stack_array_altered_blend);
 ```
 
-So, each two-dimensional display image has a "hidden" three-dimensional array behind it. Each slice of the third dimension is a colour channel. The mix of values at a given element in each colour channel determins the colour of that pixel in the rendered image.
+So, each two-dimensional display image has a "hidden" three-dimensional array behind it. Each slice of the third dimension is a colour channel. The mix of values at a given element in each colour channel determins the colour of that pixel in the rendered image. You may want to view this image in a new browser window, to see more clearly the exact mixes of the colour channels, which are shown above each square on the right hand side of the image:
 
 ![](images/three_slice_algebraic_multi.png)
 
@@ -505,9 +504,9 @@ from random_colours import random_colour_array
 random_colour_array(8, 8)
 ```
 
-We have now completed our perilous expedition into the third dimension... We have seen that we can use 3-D arrays to encode *true colour* information e.g. where the image array itself contains colour information for each pixel, and where we are *not* just pseudocolouring greyscale information using `viridis`...
+We have now completed our perilous expedition into the third dimension... We have seen that we can use 3-D arrays to encode *true colour* information. This means that the image array itself contains colour information for each pixel, where we are *not* just pseudocolouring greyscale information using `viridis` or another colourmap...
 
-Let's investigate with a real colour image. We will introduce Scikit-image (`skimage`) in more detail on the [next page](2_skimage_intro), but for now we will again use the straightforwardly named `imread()` function to load an image from a file:
+Let's explore a colour image of a real object. We will introduce Scikit-image (`skimage`) in more detail on the [next page](2_skimage_intro), but for now we will again use the straightforwardly named `imread()` function to load an image from a file:
 
 ```{python}
 # Import the input/output module from skimage.
@@ -550,7 +549,7 @@ Looks great! Though at the time of writing one of the authors is on their third 
 
 # Pixels and `dtype`
 
-Why is the highest pixel value in the `coffee` image the bizarrely specific integer value of 255? We will talk more about image data types [later](2_skimage_intro), but other values/`dtypes` would work here also, though they will affect which numbers represent the highest and lowest pixel values are. Here are some options:
+Why is the highest pixel value in the `coffee` image the bizarrely specific integer value of 255? We will talk more about image data types [later](2_skimage_intro), but other values/`dtypes` would work here as well. For the two `dtype`s we have seen, the conventions are:
 
 0 - 1: where 0 is the least intense, 1 is the most intense (`float64`).
 
@@ -569,7 +568,7 @@ from random_colours import plot_int_float
 plot_int_float();
 ```
 
-Ok, now we have clarified the mystical 255 pixel value, let's use a for loop to extract each colour channel of `coffee` image. What do you think Matplotlib will show when we visualise each 2-D slice separately?
+Ok, now we have clarified the mystical 255 pixel value, let's use a for loop to extract each colour channel of `coffee` image. What do you think Matplotlib will show when we visualise each 2-D slice of the 3-D image separately?
 
 ```{python}
 # The name of each colour channel.
@@ -592,7 +591,7 @@ for i in np.arange(len(RGB_chan_names)):
 
 Now we are viewing each slice/colour channel separately, we are again visualising 2-D arrays - you can see the `.shape` of each slice below each image. 
 
-The image from each colour channel, when visualised separately, is now essentially a single-channel image, and so Matplotlib is rendering it in greyscale. As we know, we could also use the `viridis` colourmap to pseudocolour the greyscale information for the images for the purposes of the display (though in this instance, this results in some slightly queasy-looking images):
+The image from each colour channel, when visualised separately, is now essentially a single-channel image, and so Matplotlib is rendering it in greyscale. As we know, we could also use the `viridis` colourmap to pseudocolour the greyscale information in the images for the purposes of the display. Though in this instance, `viridis` results in some slightly queasy-looking images:
 
 ```{python}
 # Pseudo-colour with `viridis`.
@@ -626,8 +625,13 @@ Now over to you for some NumPy-fuelled colour wizardry. Your job is take our bin
 An array called `all_blue` contains your raw materials...
 
 ```{python}
+# Show `two_D_ones_and_zeros`.
+two_D_ones_and_zeros
+```
+
+```{python}
 # YOUR CODE HERE
-all_blue = ...
+all_blue = two_D_ones_and_zeros.copy()
 ```
 
 ::: {exercise-end}
@@ -637,7 +641,7 @@ all_blue = ...
 :class: dropdown
 :::
 
-The solution here is to `np.stack` a new three-channel array, and  to use some simple NumPy indexing to "turn off" the Red and Green colour channels (e.g. set the pixel values in each slice to 0), and "max out" the Blue colour channel (e.g. set pixel values in the third slice to 1):
+The solution here is to `np.stack` a new three-channel array, and then to use some simple NumPy indexing to adjust the colour of the image. You can "turn off" the Red and Green colour channels by setting the pixel values in the first and second slice to 0. You can then "max out" the Blue colour channel by setting *all* of the pixel values in the third slice to 1:
 
 ```{python}
 # Copy the original array.
@@ -668,15 +672,15 @@ plt.matshow(all_blue_solution);
 :class: dropdown
 :::
 
-Time for some more horrifying computer art. Your task now is to modify the `smiley` image from earlier, using only numerical and/or NumPy operations, to make a "blood smiley".
-
-The new "blood smiley" should have a black background, and a red face, meaning that Matplotlib will render it as:
+Time for some more horrifying computer art. Your task now is to modify the `smiley` image from earlier, using only numerical and/or NumPy operations, to make a "blood smiley". The new "blood smiley" should have a black background, and a red face, meaning that Matplotlib will render it as:
 
 ![](images/blood_smile.png)
 
+Once more, your raw ingredients are in the cell below:
+
 ```{python}
 # YOUR CODE HERE
-smiley
+blood_smiley = smiley.copy()
 ```
 
 ::: {exercise-end}
@@ -687,9 +691,10 @@ smiley
 :class: dropdown
 :::
 
-The solution here is simple. The background in the image is already black, meaning that for those pixels, the array pixels values are already 0. When we `np.stack()` the array into 3-D, we just need to set the 1 values (corresponding to the "face" pixels) to 1 the Red channel only. To acheive this, we set all pixels in the Green and Blue channels to be 0.
+The solution here is simple. The background in the image is already black, meaning that for those pixels, the array pixels values are already 0. When we `np.stack()` the array into 3-D, we just need to set the 1 values, corresponding to the "face" pixels, to be 1's the Red channel only, and 0's in the other slices:
 
 ```{python}
+# Horrific!
 smiley_red_solution = np.stack([smiley * 1, 
                                 smiley * 0,
                                 smiley * 0], 
@@ -707,15 +712,15 @@ plt.imshow(smiley_red_solution);
 :class: dropdown
 :::
 
-When we "invert" the colour of an image this means we reverse the intensity values. So the highest values become the lowest, and the lowest values become the highest.
+When we "invert" the colour of an image this means we reverse the intensity values. So the highest values become the lowest, and the lowest values become the highest. 
 
-Your job is to figure out, again using only numerical or NumPy operations on the `smiley` image, to produce this final result:
+Your job is to figure out how, again using only numerical or NumPy operations on the `smiley` image, to produce this final result:
 
 ![](images/inverted_blood_smiley.png)
 
 ```{python}
 # YOUR CODE HERE
-inverted_smiley = smiley.copy()
+inverted_blood_smiley = smiley.copy()
 ```
 
 ::: {exercise-end}
@@ -725,27 +730,27 @@ inverted_smiley = smiley.copy()
 :class: dropdown
 :::
 
-Because `smiley` is a binary array, we can invert the values with a simple numerical operation (subtracting 1 so 0 becomes -1, and 1 becomes 0, then adding 1 to the result so -1 becomes 0 and zero becomes 1).
+Because `smiley` is a binary array, we can invert the values with a simple numerical operation: subtracting 1 from the array so 0 becomes -1, and 1 becomes 0. Then by adding 1 to the result, -1 becomes 0 and zero becomes 1, we "invert" the original values.
 
-This inverts our image array:
+Below is the solution to invert `smiley`:
 
 ```{python}
 # Step 1 - invert the original array
-inverted_smiley_solution = smiley * -1 + 1
-print(inverted_smiley_solution)
-plt.imshow(inverted_smiley_solution);
+inverted_blood_smiley_solution = (smiley * -1) + 1
+print(inverted_blood_smiley_solution)
+plt.imshow(inverted_blood_smiley_solution);
 ```
 
-We can then stack the inverted array and "turn off" the green and blue channels (by multiplying their pixel values by 0), and "max out" the red channel by multiple its array pixel values by 255:
+We can then stack the inverted array and "turn off" the green and blue channels by multiplying their pixel values by 0:
 
 ```{python}
 # Step 2 - add the colour channels
-inverted_smiley_solution = np.stack([inverted_smiley_solution * 1, 
-                                     inverted_smiley_solution * 0,
-                                     inverted_smiley_solution * 0], 
+inverted_blood_smiley_solution = np.stack([inverted_blood_smiley_solution, 
+                                     inverted_blood_smiley_solution * 0,
+                                     inverted_blood_smiley_solution * 0], 
                                      axis=2)
 
-plt.imshow(inverted_smiley_solution);
+plt.imshow(inverted_blood_smiley_solution);
 ```
 
 ::: {solution-end}
@@ -757,7 +762,9 @@ plt.imshow(inverted_smiley_solution);
 :class: dropdown
 :::
 
-Ok, that was all scary. Now we need a coffee to relax. Your next task is to take the `coffee` image and use only numerical or NumPy operations to convert it to a single-channel (e.g. monochrome image).
+Ok, that was all scary. Now we need a coffee to relax (is coffee relaxing?!). 
+
+Your next task is to take the `coffee` image and use only numerical or NumPy operations to convert it to a single-channel (e.g. monochrome image):
 
 ```{python}
 # YOUR CODE HERE
@@ -800,7 +807,7 @@ colourless_coffee_solution = coffee.copy()[:, :, 2]
 plt.imshow(colourless_coffee_solution);
 ```
 
-...we will allow any slice however, as they are all greyscale.
+...we will allow any slice as the correct solution, however, as they are all greyscale.
 
 
 ::: {solution-end}
@@ -812,9 +819,9 @@ plt.imshow(colourless_coffee_solution);
 :class: dropdown
 :::
 
-In image processing "signal" can very roughly be thought of as a meaningful visual representation of something in pixel values. Conversely, noise can be thought of as meaningless randomness in pixel values. 
+In image processing "signal" can very roughly be thought of as a meaningful visual representation of something, in pixel values. Conversely, noise can be thought of as meaningless randomness in pixel values. 
 
-Your job now, like an aging memory card or broken file system, is to corrupt the `camera` image with some noisy pixels.
+Your job now, like an aging memory card or broken file system, is to corrupt the `camera` image below with some noisy pixels.
 
 Here is the original image:
 
@@ -823,6 +830,16 @@ Here is the original image:
 You should use NumPy and numerical operations only, to create the following image:
 
 ![](images/corrupted_camera.png)
+
+Your final image should have the following attributes:
+
+```
+Type: <class 'numpy.ndarray'>
+dtype: uint8
+Shape: (512, 512, 3)
+Max Pixel Value: 255
+Min Pixel Value: 0
+```
 
 *Hint 1*: this sort of noise is *random*, you can think about functions in the `np.random` module which might be of use here...
 
@@ -838,6 +855,7 @@ camera = io.imread("images/camera.png")
 show_attributes(camera)
 
 # YOUR CODE HERE
+noisy_camera = ...
 ```
 
 ::: {exercise-end}
@@ -851,12 +869,12 @@ The way we did this was by stacking `camera` into a 3-D array. We then used NumP
 
 ```{python}
 # Solution.
-camera_3d = np.stack([camera, 
-                      camera,
-                      camera], 
-                      axis=2)
-camera_3d[100:200, 190:260, 1] = np.random.permutation(camera_3d[100:200, 190:260, 1])
-plt.imshow(camera_3d);
+noisy_camera_solution = np.stack([camera, 
+                                  camera,
+                                  camera], 
+                                  axis=2)
+noisy_camera_solution[100:200, 190:260, 1] = np.random.permutation(noisy_camera_solution[100:200, 190:260, 1])
+plt.imshow(noisy_camera_solution);
 ```
 
 ::: {solution-end}
@@ -865,9 +883,9 @@ plt.imshow(camera_3d);
 
 # More (actually) complex images
 
-So far we have looked at simple images (2-D binary and greyscale low-resolution image arrays, like `smiley`), or colour images with three colour channels (like `coffee`). However, the principles we have seen extend to more complex images, like the image arrays generated by [brain imaging](https://en.wikipedia.org/wiki/Neuroimaging), for instance.
+So far we have looked at simple images - 2-D binary and greyscale low-resolution image arrays, like `smiley` - or more complex colour images with three colour channels (like `coffee`). However, the principles we have seen extend to even more complex images, like the image arrays generated by [brain imaging](https://en.wikipedia.org/wiki/Neuroimaging), for instance.
 
-Here is an image of one "slice" of one of the authors brains, which was captured by an [magnetic resonance imaging](https://en.wikipedia.org/wiki/Magnetic_resonance_imaging) scanner:
+Here is an image of one "slice" of one of the authors brains, which was captured by a [magnetic resonance imaging](https://en.wikipedia.org/wiki/Magnetic_resonance_imaging) scanner:
 
 ```{python}
 # One author's own brain (a 2-D slice).
@@ -876,24 +894,24 @@ brain = io.imread("images/pxr_brain.png")
 plt.imshow(brain);
 ```
 
-The physics of magnetic resonance imaging are very complex, but the image arrays that it produces, as with our very simple low-resolution arrays, are nothing but arrays of numbers:
+The physics of magnetic resonance imaging are very complicated, but the image arrays that it produces, as with our very simple low-resolution arrays, are nothing but arrays of numbers:
 
 ```{python}
 # Show the attributes of the brain image.
 show_attributes(brain)
 ```
 
-This is actually a relatively simple brain image, others can be 4-D (also containing *time* information). However, all of these can still be represented as NumPy arrays, with varying dimensionalities and min/max pixel value conventions.
+Note that this image is 2-D, and it is actually a relatively simple brain image. Other brain images can also contain *time* information - e.g. an image of the brain through time, as it responds to different stimuli. Such images are actually 4-D, with an extra dimension for temporal information. However, all of these images can still be represented as NumPy arrays, with varying dimensionalities and various min/max pixel value conventions. Importantly, these higher-dimensional images do not always contain colour information - the way we have seen above is just one way of using higher-dimensional image arrays, to encode colour. We will investigate this topic more on the [next page](2_skimage_intro).
 
 # Summary
 
-On this page we have seen how colour is represented in NumPy array images:
+On this page we have seen how colour can be represented in NumPy array images:
 
 * Images are (at least) two-dimensional arrays of numbers. Multiple `dtype`s in image arrays are supported by Sci-kit image.
 
-* The number at each location in an image array determines the grey-level (in a 2-D array) or colour (in a 3-D array) of that location when the image is displayed. For 3-D colour arrays the number in each slice/channel is summed to determine the colour in the 2-D displayed image.
+* We have seen images where the number at each array pixel location determines the grey-level (in a 2-D array) or colour (in a 3-D array) of that location when the image is displayed. For 3-D colour arrays the number in each slice/channel is summed to determine the colour in the 2-D displayed image.
 
-* These principles apply both to very simple and very complex images.
+* These methods of colour encoding can apply to both to very simple and very complex images. Some types of image (e.g. brain images) use higher-dimensionality to encode information other than colour (e.g. time).
 
 On the [next page](2_skimage_intro) we will formally introduce Scikit-image, which uses NumPy image arrays as its fundamental representation of images.
 
@@ -904,8 +922,8 @@ Adapted from: https://lectures.scientific-python.org/advanced/image_processing
 
 Adapted from: https://lectures.scientific-python.org/packages/scikit-image/index.html 
 
-**Reference**: inspiration from Nipraxis also re: arrays/images.
+Reference: inspiration from Nipraxis also re: arrays/images.
 
-**Reference**: inspiration from `skimage` tutorials
+Reference: inspiration from `skimage` tutorials
 
-**Reference**: https://bic-berkeley.github.io/psych-214-fall-2016/arrays_and_images.html
+Reference: https://bic-berkeley.github.io/psych-214-fall-2016/arrays_and_images.html
