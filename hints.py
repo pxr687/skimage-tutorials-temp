@@ -25,3 +25,7 @@ a guide...""")
 def hint_strange_coffee():
 		    print("""You may need to adjust the *sign* of the kernel elements, 
 to achieve the desired result...""")
+
+def hint_krazy_kernel():
+	print("""Think about "255 + 1", and what effect this might have on an image.
+	   """)
