@@ -159,6 +159,13 @@ big_gaussian_kernel = make_gaussian_kernel(9)
 
 big_gaussian_kernel.round(2)
 ```
+```{python}
+from jupyprint import jupyprint
+str_kern = big_gaussian_kernel.round(2).astype('str')
+str_kern[str_kern == "0.0"] = "0"
+jupyprint(str_kern, strings_in_typefont=False, quote_strings=False)
+```
+
 Can you see any pattern in the arrangement of the numbers? Where are the high numbers, where are the low numbers? The `big_gaussian_kernel` NumPy array is shown below, in prettier form, to aid your ruminations:
 
 ![](images/big_gaussian_kernel_array.png)

@@ -184,6 +184,7 @@
 
 
 
+
 <li class="toctree-l1"><a class="reference internal" href="1_colour_images_as_numpy_arrays.html">What about colour?</a></li>
 
 
@@ -516,7 +517,7 @@ document.write(`
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/6bd3913b374c2b54f7f8dd157ceae03fa924230a1b4441a6d2a44d1860d31c49.png" src="_images/6bd3913b374c2b54f7f8dd157ceae03fa924230a1b4441a6d2a44d1860d31c49.png" />
+<img alt="_images/52f6241c26ce70ba3dfa0f7847313e993e96c65e5f2ec5b7e6820d6eb94cae09.png" src="_images/52f6241c26ce70ba3dfa0f7847313e993e96c65e5f2ec5b7e6820d6eb94cae09.png" />
 </div>
 </div>
 <p>This is the well-known normal distribution, which is sometimes described as having a “bell-shape”. We will talk in more detail further down the page about why the Gaussian filter has its name. For now, take a look at this fancy <a class="reference external" href="https://www.geeksforgeeks.org/deep-learning/types-of-convolution-kernels">kernel</a>:</p>
@@ -711,6 +712,19 @@ document.write(`
        [0.  , 0.  , 0.  , 0.  , 0.  , 0.  , 0.  , 0.  , 0.  ]])
 </pre></div>
 </div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">jupyprint</span><span class="w"> </span><span class="kn">import</span> <span class="n">jupyprint</span>
+<span class="n">str_kern</span> <span class="o">=</span> <span class="n">big_gaussian_kernel</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s1">&#39;str&#39;</span><span class="p">)</span>
+<span class="n">str_kern</span><span class="p">[</span><span class="n">str_kern</span> <span class="o">==</span> <span class="s2">&quot;0.0&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;0&quot;</span>
+<span class="n">jupyprint</span><span class="p">(</span><span class="n">str_kern</span><span class="p">,</span> <span class="n">strings_in_typefont</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">quote_strings</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<p>$\begin{bmatrix}{} \text{0} &amp; \text{0} &amp; \text{0} &amp; \text{0} &amp; \text{0} &amp; \text{0} &amp; \text{0} &amp; \text{0} &amp; \text{0} \ \text{0} &amp; \text{0} &amp; \text{0} &amp; \text{0.01} &amp; \text{0.01} &amp; \text{0.01} &amp; \text{0} &amp; \text{0} &amp; \text{0} \ \text{0} &amp; \text{0} &amp; \text{0.01} &amp; \text{0.02} &amp; \text{0.03} &amp; \text{0.02} &amp; \text{0.01} &amp; \text{0} &amp; \text{0} \ \text{0} &amp; \text{0.01} &amp; \text{0.02} &amp; \text{0.05} &amp; \text{0.07} &amp; \text{0.05} &amp; \text{0.02} &amp; \text{0.01} &amp; \text{0} \ \text{0} &amp; \text{0.01} &amp; \text{0.03} &amp; \text{0.07} &amp; \text{0.09} &amp; \text{0.07} &amp; \text{0.03} &amp; \text{0.01} &amp; \text{0} \ \text{0} &amp; \text{0.01} &amp; \text{0.02} &amp; \text{0.05} &amp; \text{0.07} &amp; \text{0.05} &amp; \text{0.02} &amp; \text{0.01} &amp; \text{0} \ \text{0} &amp; \text{0} &amp; \text{0.01} &amp; \text{0.02} &amp; \text{0.03} &amp; \text{0.02} &amp; \text{0.01} &amp; \text{0} &amp; \text{0} \ \text{0} &amp; \text{0} &amp; \text{0} &amp; \text{0.01} &amp; \text{0.01} &amp; \text{0.01} &amp; \text{0} &amp; \text{0} &amp; \text{0} \ \text{0} &amp; \text{0} &amp; \text{0} &amp; \text{0} &amp; \text{0} &amp; \text{0} &amp; \text{0} &amp; \text{0} &amp; \text{0} \ \end{bmatrix}$</p>
 </div>
 </div>
 <p>Can you see any pattern in the arrangement of the numbers? Where are the high numbers, where are the low numbers? The <code class="docutils literal notranslate"><span class="pre">big_gaussian_kernel</span></code> NumPy array is shown below, in prettier form, to aid your ruminations:</p>
