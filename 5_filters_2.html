@@ -456,8 +456,8 @@ document.write(`
 <li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Image filtering II</a></li>
 <li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#gaussian-filtering">Gaussian filtering</a></li>
 <li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#gaussian-filters-in-skimage">Gaussian filters in <code class="docutils literal notranslate"><span class="pre">skimage</span></code></a></li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#edge-filtering">Edge filtering</a></li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#sobel-filtering">Sobel filtering</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#edge-detection-filtering">Edge detection filtering</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#sobel-edge-detection-filtering">Sobel edge detection filtering</a></li>
 <li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#edge-detection-filters-in-skimage">Edge detection filters in <code class="docutils literal notranslate"><span class="pre">skimage</span></code></a></li>
 <li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#summary">Summary</a></li>
 <li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#references">References</a></li>
@@ -1189,8 +1189,8 @@ Min Pixel Value: 0
 </section>
 </div>
 </section>
-<section class="tex2jax_ignore mathjax_ignore" id="edge-filtering">
-<h1>Edge filtering<a class="headerlink" href="#edge-filtering" title="Link to this heading">#</a></h1>
+<section class="tex2jax_ignore mathjax_ignore" id="edge-detection-filtering">
+<h1>Edge detection filtering<a class="headerlink" href="#edge-detection-filtering" title="Link to this heading">#</a></h1>
 <p>We saw a simple <a class="reference internal" href="3_skimage_processing_from_numpy_and_scipy.html"><span class="doc std std-doc">edge filter</span></a> in one of the exercises on an earlier page. In image processing and computer vision, an edge is a rapid change in intensity between pixels - e.g. there is a high <em>gradient</em> of change between the pixel values. We can construct a <a class="reference external" href="https://www.geeksforgeeks.org/deep-learning/types-of-convolution-kernels">kernel</a> which will detect such intensity changes in the vertical (<span class="math notranslate nohighlight">\(y\)</span>) direction, and thus will detect horizontal edges. That may sound paradoxical, but <em>horizontal</em> edges have <em>vertical</em> gradients:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -1507,8 +1507,8 @@ Min Pixel Value: -32768
 </div>
 </div>
 </section>
-<section class="tex2jax_ignore mathjax_ignore" id="sobel-filtering">
-<h1>Sobel filtering<a class="headerlink" href="#sobel-filtering" title="Link to this heading">#</a></h1>
+<section class="tex2jax_ignore mathjax_ignore" id="sobel-edge-detection-filtering">
+<h1>Sobel edge detection filtering<a class="headerlink" href="#sobel-edge-detection-filtering" title="Link to this heading">#</a></h1>
 <p>A similiar edge detection filter is the Sobel filter, which uses the <a class="reference external" href="https://www.geeksforgeeks.org/deep-learning/types-of-convolution-kernels/">following</a> <a class="reference external" href="https://nrsyed.com/2018/02/18/edge-detection-in-images-how-to-derive-the-sobel-operator">kernels</a>:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -1767,8 +1767,8 @@ Min Pixel Value: -32768
 <li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Image filtering II</a></li>
 <li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#gaussian-filtering">Gaussian filtering</a></li>
 <li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#gaussian-filters-in-skimage">Gaussian filters in <code class="docutils literal notranslate"><span class="pre">skimage</span></code></a></li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#edge-filtering">Edge filtering</a></li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#sobel-filtering">Sobel filtering</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#edge-detection-filtering">Edge detection filtering</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#sobel-edge-detection-filtering">Sobel edge detection filtering</a></li>
 <li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#edge-detection-filters-in-skimage">Edge detection filters in <code class="docutils literal notranslate"><span class="pre">skimage</span></code></a></li>
 <li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#summary">Summary</a></li>
 <li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#references">References</a></li>
