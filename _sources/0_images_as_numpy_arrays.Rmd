@@ -384,6 +384,7 @@ Let's take a look:
 plt.imshow(flipped_array);
 ```
 
+<!-- #region -->
 We hope you'll agree that the image now better represents the exclamation mark symbol ("!") than the English letter "i". This change was achieved through altering the location of the numbers in the image array. 
 
 Applying changes such as these to the numbers in the array is the fundamental mechanism of *image processing* - which can be defined as:
@@ -392,9 +393,11 @@ Applying changes such as these to the numbers in the array is the fundamental me
 
 So, remember this maxim: *"image processing" is when we do something which changes the numbers inside the image array, and therefore changes the corresponding visual image*. Such image processing operations are carried out by popular software, including that used to edit images for various social media platforms. They are also carried out in a scientific context in fields like medical imaging, where they are applied to the image arrays we get from CT scans and MRI scans, for example.
 
-# Simple images, complex images
 
-The principles seen above apply both to the very small, low-resolution images we looked at, but also to more complex images. The cell below loads in a picture of a Xenomorph (a creature from the [Alien film franchise](https://en.wikipedia.org/wiki/Alien_(franchise))). The image is show via `plt.imshow()`:
+# Even more complex images
+
+All of the principles we have seen apply both to the very small, low-resolution images we looked at above, and also to more complex images. The cell below loads in a picture of a Xenomorph (a creature from the [Alien film franchise](https://en.wikipedia.org/wiki/Alien_(franchise))). The image is show via `plt.imshow()`:
+<!-- #endregion -->
 
 ```{python}
 # Load in and `imshow` the image, with a colourbar.
