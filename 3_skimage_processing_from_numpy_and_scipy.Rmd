@@ -280,7 +280,7 @@ plt.imshow(vertical_gradients);
 :::
 
 
-## Resizing an image with `skimage`
+# Resizing an image with `skimage`
 
 The `ski.transform` module contains a function called `resize`. It is probably easy to guess what `ski.transform.resize()` does. It takes an input image and changes its size (obviously!). Because all computer images are at least 2-D arrays, this involves changing the dimensionality of the image. Let's demonstrate this with the following image array:
 
@@ -474,7 +474,7 @@ for i, i_2 in enumerate(np.arange(361, step=45)):
     plt.yticks([])
 ```
 
-## Rotating an image with `skimage`
+# Rotating an image with `skimage`
 
 Let's now look now at how rotating image arrays is handled in `skimage`. Image rotation, which we saw above using `np.rot90` and `scipy.ndimage.rotate()` can be achieved using the straightforwardly named `ski.transform.rotate()`, and the syntax works identically to `scipy.ndimage.rotate()`. All this rotating has left us thirsty and caffeine-deprived, so let's get some `coffee`:
 
@@ -1007,7 +1007,7 @@ for i in np.arange(3):
 plt.imshow(inverted_colourwheel);
 ```
 
-## Inverting colours with `skimage`
+# Inverting colours with `skimage`
 
 `ski.util.invert()` handles colour inversion, we simply pass it a colour NumPy image array and voilà!:
 
@@ -1328,7 +1328,7 @@ plt.imshow(grey_wheel);
 :::
 
 
-## Colour to greyscale conversion with `skimage`
+# Colour to greyscale conversion with `skimage`
 
 As always, the `ski.color` module has us covered here with the `rgb2gray()` function. We simply pass it the colour array that we want to convert to greyscale, without the direct need for the luminance formula:
 
