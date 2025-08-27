@@ -21,3 +21,7 @@ def hint_cryptic_camera():
 	    print("""In a somewhat revolutionary spirit, this exercise can be solved
 by changing the order of power, using the circular mask we showed you above as
 a guide...""")
+
+def hint_strange_coffee():
+		    print("""You may need to adjust the *sign* of the kernel elements, 
+to achieve the desired result...""")

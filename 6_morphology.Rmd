@@ -25,7 +25,7 @@ We have seen structuring elements applied during filtering operations, courtesy 
 
 # Structuring elements
 
-Because morphological operations are part of image processing, then involve the modification of array pixel values, which is [all image processing is](3_skimage_processing_from_numpy_and_scipy.). In morphological operations, the structural element will alter pixel values *depending upon the match between the shape of the structural element and the shape of the pixels in the "neighbourhood" of the structural element*. E.g. with the "neighbourhood" being the pixels currently under the structural element. The structural element, typically, is centred once on every pixel in an image, and this central pixel is modified (or not) depending upon the match betweent the shape of the structural element and the shape depicted by the pixels in that neighbourhood.
+Because morphological operations are part of image processing, then involve the modification of array pixel values, which is [all image processing is](3_skimage_processing_from_numpy_and_scipy.). In morphological operations, the structural element will alter pixel values *depending upon the match between the shape of the structural element and the shape of the pixels in the "neighbourhood" of the structural element*. E.g. with the "neighbourhood" being the pixels currently under the structural element. The structural element, typically, is centered once on every pixel in an image, and this central pixel is modified (or not) depending upon the match betweent the shape of the structural element and the shape depicted by the pixels in that neighbourhood.
 
 Let's make ourselves a simple binary image, so we can clearly see the effect of the foundational morphological operations:
 
@@ -88,7 +88,7 @@ diamond.shape
 
 The fundamental operations of morphological image processing are *erosion* and *dilation*. These affect bright and dark regions in an image. We will consider erosion first.
 
-Much like when bad behaviour spreads through a social group, erosion will lower a given pixels value down to lowest value within its neighbourhood - which is to say the lowest pixel value under the structuring element. The structuring element is centred on a pixel, and it is this central pixel that is altered and set to the lowest value in the neighbourhood. However, it will only perform this lowering *if the pixels in the neighbourhood do not match the shape of the structuring element*, else it will leave the central pixel unchanged.
+Much like when bad behaviour spreads through a social group, erosion will lower a given pixels value down to lowest value within its neighbourhood - which is to say the lowest pixel value under the structuring element. The structuring element is centered on a pixel, and it is this central pixel that is altered and set to the lowest value in the neighbourhood. However, it will only perform this lowering *if the pixels in the neighbourhood do not match the shape of the structuring element*, else it will leave the central pixel unchanged.
 
 As mentioned above, a full morphological operation involves centering the structuring element on *every pixel in the image*, so every pixel gets altered by the other pixels in its neighbourhood. Like most (efficient) processes in computing, the operation is done in parallel (at the same time to all pixels in the images, rather than sequentially). 
 
@@ -137,7 +137,7 @@ eroded_two_squares
 plt.imshow(eroded_two_squares);
 ```
 
-What happened here? Well, again a "match" only occurs for two pixels in the image, the pixels at the centre of each white square. This illustration below shows what happened:
+What happened here? Well, again a "match" only occurs for two pixels in the image, the pixels at the center of each white square. This illustration below shows what happened:
 
 ![](images/hit_n_miss_with_text_2.png)
 
@@ -160,7 +160,7 @@ square_the_circle = np.array([[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
 plt.imshow(square_the_circle);
 ```
 
-Before looking at the output of the cell below, try to think carefully about how you think this will affect the erosion operation, using the (3, 3) `diamond` structuring element. Picture what will happen on the black pixel in the centre of the right-hand square.
+Before looking at the output of the cell below, try to think carefully about how you think this will affect the erosion operation, using the (3, 3) `diamond` structuring element. Picture what will happen on the black pixel in the center of the right-hand square.
 
 Scroll down to the output of the cell below to see if your prediction was correct:
 
@@ -406,7 +406,7 @@ plt.imshow(inverted_xeno_big_diamond);
 
 In keeping with the horror theme of the `xenomorph` image, and the legacy of the [`smiley`](3_skimage_processing_from_numpy_and_scipy.) array, let's look at the `ski.morpholoy.skeletonize()` function. 
 
-This takes a binary image and finds its "skeleton" - e.g. the centreline of shapes in the image, and marks it out with a [single pixel-wide set of lines](https://scikit-image.org/docs/0.25.x/auto_examples/applications/plot_morphology.html#skeletonize):
+This takes a binary image and finds its "skeleton" - e.g. the centerline of shapes in the image, and marks it out with a [single pixel-wide set of lines](https://scikit-image.org/docs/0.25.x/auto_examples/applications/plot_morphology.html#skeletonize):
 
 ```{python}
 # Skeletonize the xenomorph (skeletonomorph?)
@@ -445,4 +445,4 @@ On this page we have looked at fundamental morphological operations in `skimage`
 
 Based on: https://scikit-image.org/skimage-tutorials/lectures/3_morphological_operations.html
 
-Also based on: (https://biapol.github.io/Image-data-science-with-Python-and-Napari-EPFL2022/day2d_image_segmentation/03_Morphological_operations.html)
+Based on on: https://biapol.github.io/Image-data-science-with-Python-and-Napari-EPFL2022/day2d_image_segmentation/03_Morphological_operations.html
