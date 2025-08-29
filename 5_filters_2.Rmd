@@ -1,6 +1,6 @@
 # Image filtering II
 
-On the previous filtering page we looked at single and multi-value threshold filtering, as well as at filtering via convolutional kernels. This page will explore additional, foundational types of filters which use convolutional kernels, implementing them first with NumPy and SciPy, and then with Scikit-image.
+On the previous filtering page we looked at single and multi-value threshold filtering, as well as at filtering via convolutional kernels. This page will explore additional foundational filters which use convolutional kernels, implementing them first with NumPy and SciPy, and then with Scikit-image.
 
 ```{python}
 # Library imports.
@@ -97,7 +97,7 @@ If you prefer, you can view the NumPy array kernel with prettier graphics below:
 
 ![](images/gaussian_kernel_2.png)
 
-Just as final comparison between the kernel NumPy array and the plot, here is the "red mountain" viewed from directly above, with the NumPy array kernel, in its pretty form, shown to its right hand side:
+Just as final comparison between the  NumPy array kernel and the plot, here is the "red mountain" viewed from directly above, with the NumPy array kernel, in pretty graphics, shown to the right hand side of the plot:
 
 ![](images/sky_gauss.png)
 
@@ -120,7 +120,7 @@ Essentially, if we filter using this kernel, we "walk" this kernel through the i
 
 So array pixels which fall under higher points of the kernel's "red mountain" will exert more influence on the weighted average, and pixels falling under lower points will exert a weaker influence. The central pixel, laying under the crimson peak, will exert the most influence on the weighted average.
 
-Let's use this kernel to filter the following small image:
+Let's use this kernel to filter the following image array:
 
 ```{python}
 # Make a small image array.
@@ -149,7 +149,7 @@ plt.imshow(gaussian_like_filtered_small_square);
 
 Blurry! So to recap, we have averaged within a 3-by-3 pixel neightbourhood, replacing the central pixel value with a weighted average of all the pixel values in the neighbourhood. The weights are larger for pixels closer to the central value of the kernel (e.g. closer to the center of the "crimson peak" on the plot above).
 
-This type of filtering is called *Gaussian filtering* because the kernel element values are from, or in the case of `gaussian_like_kernel`, approximate a 2-D Gaussian function. This is the function for the familiar [normal distribution](https://en.wikipedia.org/wiki/Normal_distribution) in two dimensions. The plot of the kernel above, with the "red mountain" may not look much like the normal distribution to you at the moment, but bear with us.
+This type of filtering is called *Gaussian filtering* because the kernel element values approximate a [Gaussian (e.g. normal) distribution](https://en.wikipedia.org/wiki/Normal_distribution). The plot of the kernel above, with the "red mountain" may not look much like the normal distribution to you at the moment, but bear with us.
 
 To see the Gaussian nature of this filtering operation, let's take a look at another, larger kernel below - it has `shape` `(9, 9)`:
 
@@ -170,13 +170,13 @@ We will also plot this kernel in 3-D, as with the last kernel. Again, the intege
 kernel_plot(big_gaussian_kernel, text=False)
 ```
 
-Again, if you prefer, we can view the kernel as a wireframe plot, which we show in the cell below. It looks messy when the kernel element values (blue text) are shown on the plot, but we show them for easy comparison to the `big_gaussian_kernel` NumPy array. We show the NumPy view of the array again, above the plot. If you are running interactively, you can set `text = False` in the plotting function and re-run the cell, to switch the blue numbers off, if you wish:
+Again, if you prefer, we can view the kernel as a wireframe plot, which we show in the cell below. We first show the NumPy view of the array again, above the plot. The plot looks messy when the kernel element values (blue text) are also shown, but we show them for easy comparison to the `big_gaussian_kernel` NumPy array. If you are running interactively, you can set `text = False` in the plotting function and re-run the cell, to switch the blue numbers off, if you wish:
 
 ```{python}
 # Compare the NumPy array to the plot.
 print("\n`big_gaussian_kernel` NumPy view:\n\n",big_gaussian_kernel.round(2))
 kernel_plot(big_gaussian_kernel, surface=False)
-plt.title('`big_gaussian_kernel` \nCrimson Peak View:');
+plt.title('`big_gaussian_kernel` \nRed Mountain View:');
 ```
 
 Again, to make the relationship between the NumPy array and the graph as clear as possible, here is the "red mountain" viewed from directly above, with the `big_gaussian_kernel` array shown to its right:
@@ -184,7 +184,7 @@ Again, to make the relationship between the NumPy array and the graph as clear a
 ![](images/sky_gauss_2.png)
 
 
-You  may (or may not) recognise the "red mountain" - when we plot the `big_gaussian_kernel` - as a multi-dimensional [Gaussian distribution](https://en.wikipedia.org/wiki/Normal_distribution). Here is the a prototypical multi-dimensional Gaussian:
+You  may (or may not) recognise the "red mountain" - when we plot the `big_gaussian_kernel` - as a multi-dimensional [Gaussian distribution](https://en.wikipedia.org/wiki/Normal_distribution). Here is a prototypical multi-dimensional Gaussian:
 
 ![](images/2_D_gaussian.png)
 (Image from [here](https://stats.stackexchange.com/questions/102632/plot-two-dimensional-gaussian-density-function-in-matlab)).
@@ -221,10 +221,10 @@ plt.subplot(1, 3, 1)
 plt.title('Original')
 plt.matshow(small_square, fignum=0)
 plt.subplot(1, 3, 2)
-plt.title('Gaussian filter \n(3, 3) Kernel')
+plt.title('Gaussian filter \n(3, 3) kernel')
 plt.matshow(gaussian_like_filtered_small_square, fignum=0);
 plt.subplot(1, 3, 3)
-plt.title('Gaussian filter \n(9, 9) Kernel')
+plt.title('Gaussian filter \n(9, 9) kernel')
 plt.matshow(big_gaussian_filtered_small_square, fignum=0);
 ```
 
@@ -237,8 +237,8 @@ Below, we make a pixelated version of `camera`:
 ```{python}
 # Pixelate the `camera` image.
 camera = ski.data.camera()
-pixelated_camera = ski.transform.rescale(camera, 0.2) # Rescale to 20% of original size.
-plt.imshow(pixelated_camera);
+pixelated_camera = ski.transform.rescale(camera, 0.2) # Rescale to 20% of original size, this
+plt.imshow(pixelated_camera);                         # induces pixelation.
 ```
 
 Below, we filter with separately with `gaussian_like_kernel` and `big_gaussian_kernel`:
@@ -295,9 +295,9 @@ Different sigma values will introduce a blurrier effect, because for higher `sig
 
 ```{python}
 # Plot with different `sigma` values.
-plt.figure(figsize=(14, 3))
-for i, sigma in enumerate(np.arange(2, 12, 2)):
-    plt.subplot(1, 5, i+1)
+plt.figure(figsize=(14, 6))
+for i, sigma in enumerate(np.arange(2, 14, 2)):
+    plt.subplot(2, 3, i+1)
     plt.imshow(ski.filters.gaussian(cat, 
                                     sigma=sigma))
 
@@ -478,6 +478,165 @@ plt.matshow(almost_gaussian_filtered_camera_solution_2);
 ::: {solution-end}
 :::
 
+
+# Image sharpening (vis `scipy` and `skimage`)
+
+Gaussian filtering is a nice visual effect by itself, but filters (like the Gaussian filter) which blur an image can also, somewhat paradoxically, be used to *sharpen* an image. *Sharpening* is the opposite of blurring, it makes images clearer, with the features and edges more defined.
+
+How can we sharpen an image with a Gaussian *blur* filter, we hear you ask? We will demonstrate below. Sharpening is easiest to appreciate if we start with a slightly blurry image. In the cell below, we create a `blurry_cat` image by applying a Gaussian filter, we use a low `sigma` value, to keep the blur only slight:
+
+```{python}
+# Add a little blur.
+blurry_cat = ski.filters.gaussian(ski.data.cat(), 
+                                  sigma=1)
+plt.imshow(blurry_cat);
+```
+
+A simple way to sharpen the image is via the [following procedure](https://blog.demofox.org/2022/02/26/image-sharpening-convolution-kernels):
+
+$ \text{sharpened_image = original_image + (original_image – blurred_image)} $
+
+Theoretically, $\text{(original_image – blurred_image)}$ contains sharpened details of the image, because it results from subtracting out a version of the image which is much blurrier than the original, giving us the *difference* between the original image and the blurry image. This effect is easiest to appreciate visually:
+
+```{python}
+# Gaussian filter the image we wish to sharpen.
+gaussian_filter_cat = ski.filters.gaussian(blurry_cat, 4)
+
+# Perform the sharpening.
+sharpened = blurry_cat + (blurry_cat - gaussian_filter_cat)
+
+# Rescale to legal pixel ranges.
+sharpened = ski.exposure.rescale_intensity(sharpened, out_range=(0, 1))
+
+# Show the result.
+plt.figure(figsize=(16, 6))
+plt.subplot(1,3,1)
+plt.title('Original')
+plt.imshow(blurry_cat)
+plt.subplot(1,3,2)
+plt.title('Blurred')
+plt.imshow(gaussian_filter_cat)
+plt.subplot(1,3,3)
+plt.title('Sharpened')
+plt.imshow(sharpened)
+plt.tight_layout();
+```
+
+You can see that the sharpened image, as intended, has better clarity than the original. We can also use a specliazed [sharpening kernel](https://www.geeksforgeeks.org/deep-learning/types-of-convolution-kernels/#3-sharpening-kernel) to achieve the same effect:
+
+![](images/sharpening_kernel.png)
+
+We show this kernel in 3D below (it does look pretty sharp!):
+
+```{python}
+sharpening_kernel = np.array([[0, -1 , 0],
+                              [-1, 5, -1],
+                              [0, -1,  0]])
+print(sharpening_kernel)
+kernel_plot(sharpening_kernel)
+```
+
+This kernel works by [emphasising differences between adjacent pixels](https://setosa.io/ev/image-kernels/#:~:text=The%20sharpen%20kernel%20emphasizes%20differences,differences%20in%20adjacent%20pixel%20values.). Essentially, the more different that a pixel is from its surrounding pixels, the bigger value it will get in the sharpened image. We show this below. First, we create an array containing only 1s:
+
+```{python}
+# A boring array.
+no_diff = np.ones((6, 6))
+no_diff
+```
+
+Convolving this array with the `sharpening_kernel` will yield the same array, as there are no differences in the input.
+
+```{python}
+ndi.correlate(no_diff, weights=sharpening_kernel)
+```
+
+Conversely, the array below contains a repeating pattern of 2's and 3's in the first three rows, so the differences between pixel neighbourhoods in the early rows are fairly consistent. 
+
+In the last three rows, the same pattern is repeated, only now the 3's are negative, increasing the difference between the pixels in each neighbourhood:
+
+```{python}
+diffs = np.array([[2, 3, 2, 3, 2, 3],
+                  [3, 2, 3, 2, 3, 2],
+                  [2, 3, 2, 3, 2, 3],
+                  [2, -3, 2, -3, 2, -3],
+                  [-3, 2, -3, 2, -3, 2],
+                  [2, -3, 2, -3, 2, -3]])
+diffs
+```
+
+Convolving with the `sharpening_kernel` results in a larger number of larger absolute values in the bottom three rows, amplifying the differences between the pixels, such that larger differences become even larger thanks to the sharpening operation:
+
+```{python}
+# Larger differences in later rows, where there is greater variance in the pixel intensities.
+sharp_diffs = ndi.correlate(diffs, weights=sharpening_kernel)
+print(sharp_diffs)
+```
+
+Let's apply the `sharpening_kernel` to the `blurry_cat` image array. As this array is a 3D colour image, we first `np.stack()` our `sharpening_kernel` into 3D:
+
+```{python}
+# Stack to 3D.
+sharpening_kernel = np.stack([sharpening_kernel,
+                              sharpening_kernel,
+                              sharpening_kernel],
+                              axis=2)
+
+# Sharpen `blurry_cat`.
+sharpen_cat = ndi.correlate(blurry_cat,
+                           weights=sharpening_kernel)
+
+# Rescale to avoid illegal an pixel range.
+sharpen_cat = ski.exposure.rescale_intensity(sharpen_cat, out_range=(0, 1))
+
+# Show the result.
+plt.figure(figsize=(16, 6))
+plt.subplot(1,2,1)
+plt.title('Original')
+plt.imshow(blurry_cat)
+plt.subplot(1,2,2)
+plt.title('Sharpened')
+plt.imshow(sharpen_cat)
+plt.tight_layout();
+```
+
+Sci-kit image (unsurprisingly) also has filters to sharpen images. The `ski.filters.unsharp_mask()` filter is one such filter,  and it uses a similar approach to the one we used above,  when we sharpened an image using a Gaussian filter. `ski.filters.unsharp_mask()` uses the following approach:
+
+$ \text{sharpened_image = original_image + scaling_amount * (original_image - blurred_image)} $
+
+...where "scaling_amount" is a single value which amplifies the sharpened details. Here is the result on `blurry_cat`, using the default parameters:
+
+```{python}
+# Sharpen `blurry_cat`.
+sharpen_cat = ski.filters.unsharp_mask(blurry_cat)
+
+# Show the result.
+plt.figure(figsize=(16, 6))
+plt.subplot(1,2,1)
+plt.title('Original')
+plt.imshow(blurry_cat)
+plt.subplot(1,2,2)
+plt.title('Sharpened \n(with `ski.filters.unsharp_mask()`)')
+plt.imshow(sharpen_cat)
+plt.tight_layout();
+```
+
+Changing the `amount` parameter will intensify the sharpening effect:
+
+```{python}
+# Sharpen `blurry_cat`.
+sharpen_cat = ski.filters.unsharp_mask(blurry_cat,
+                                       amount=3)
+
+# Show the result.
+plt.figure(figsize=(16, 6))
+plt.subplot(1,2,1)
+plt.title('Original')
+plt.imshow(blurry_cat)
+plt.subplot(1,2,2)
+plt.title('Sharpened \n(with `ski.filters.unsharp_mask(amount=3)`)')
+plt.imshow(sharpen_cat)
+plt.tight_layout();
+```
 
 # Edge detection filtering 
 
@@ -773,7 +932,7 @@ Remember the first edge detection kernels that we used above?:
 
 ![](images/edge_dector_kernels.png)
 
-These kernels are are used by `ski.filters.prewitt()` edge detection filter, which we implement in the cell below, on the `edgy` array:
+[Similar](https://scikit-image.org/docs/0.25.x/api/skimage.filters.html#skimage.filters.prewitt_h) [kernels](https://scikit-image.org/docs/0.25.x/api/skimage.filters.html#skimage.filters.prewitt_v) [are are used by](https://en.wikipedia.org/wiki/Prewitt_operator) `ski.filters.prewitt()` edge detection filter, which we implement in the cell below, on the `edgy` array:
 
 ```{python}
 # Prewhitt filtering.
