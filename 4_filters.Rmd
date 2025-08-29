@@ -835,6 +835,13 @@ plt.imshow(cam3_regions_hack);
 :::
 
 
+**NOTE - introduce this via emphasizing Skimage compatibility with scientific python ecosystem e.g. integrated with Matplotlib**
+
+```{python}
+ski.filters.try_all_threshold(camera, verbose=False, figsize=(16, 16))
+plt.tight_layout();
+```
+
 # Kernels and pixel neighbourhoods
 
 In the section above we have filtered images based on a single value (e.g. a threshold). Other filters work differently. They work by adjusting a given pixel's value *based on the value of other pixels in the array*, such that each pixel can be subject to a different change in its value, depending of the value of other pixels. The mean filter is one such filter that works this way.
