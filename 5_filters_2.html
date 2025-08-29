@@ -32,9 +32,9 @@
     <link rel="stylesheet" type="text/css" href="_static/styles/sphinx-book-theme.css?v=eba8b062" />
     <link rel="stylesheet" type="text/css" href="_static/togglebutton.css?v=13237357" />
     <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
-    <link rel="stylesheet" type="text/css" href="_static/mystnb.8ecb98da25f57f5357bf6f572d296f466b2cfe2517ffebfabe82451661e28f02.css?v=6644e6bb" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.8ecb98da25f57f5357bf6f572d296f466b2cfe2517ffebfabe82451661e28f02.css" />
     <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css?v=4fa983c6" />
-    <link rel="stylesheet" type="text/css" href="_static/exercise.css?v=982b99e0" />
+    <link rel="stylesheet" type="text/css" href="_static/exercise.css" />
     <link rel="stylesheet" type="text/css" href="_static/sphinx-design.min.css?v=95c83b7e" />
   
   <!-- Pre-loaded scripts that we'll load fully later -->
@@ -226,7 +226,9 @@
 
 
 
+
 <li class="toctree-l1 current active"><a class="current reference internal" href="#">Image filtering II</a></li>
+
 
 
 
@@ -457,6 +459,7 @@ document.write(`
 <li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Image filtering II</a></li>
 <li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#gaussian-filtering">Gaussian filtering</a></li>
 <li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#gaussian-filters-in-skimage">Gaussian filters in <code class="docutils literal notranslate"><span class="pre">skimage</span></code></a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#image-sharpening-vis-scipy-and-skimage">Image sharpening (vis <code class="docutils literal notranslate"><span class="pre">scipy</span></code> and <code class="docutils literal notranslate"><span class="pre">skimage</span></code>)</a></li>
 <li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#edge-detection-filtering">Edge detection filtering</a></li>
 <li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#sobel-edge-detection-filtering">Sobel edge detection filtering</a></li>
 <li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#edge-detection-filters-in-skimage">Edge detection filters in <code class="docutils literal notranslate"><span class="pre">skimage</span></code></a></li>
@@ -476,7 +479,7 @@ document.write(`
                   
   <section class="tex2jax_ignore mathjax_ignore" id="image-filtering-ii">
 <h1>Image filtering II<a class="headerlink" href="#image-filtering-ii" title="Link to this heading">#</a></h1>
-<p>On the previous filtering page we looked at single and multi-value threshold filtering, as well as at filtering via convolutional kernels. This page will explore additional, foundational types of filters which use convolutional kernels, implementing them first with NumPy and SciPy, and then with Scikit-image.</p>
+<p>On the previous filtering page we looked at single and multi-value threshold filtering, as well as at filtering via convolutional kernels. This page will explore additional foundational filters which use convolutional kernels, implementing them first with NumPy and SciPy, and then with Scikit-image.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Library imports.</span>
@@ -517,7 +520,7 @@ document.write(`
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/6bd3913b374c2b54f7f8dd157ceae03fa924230a1b4441a6d2a44d1860d31c49.png" src="_images/6bd3913b374c2b54f7f8dd157ceae03fa924230a1b4441a6d2a44d1860d31c49.png" />
+<img alt="_images/6d0bdc85db6df37b03450affccb26457bd55fdc4e99f3cbb562306cc532abd20.png" src="_images/6d0bdc85db6df37b03450affccb26457bd55fdc4e99f3cbb562306cc532abd20.png" />
 </div>
 </div>
 <p>This is the well-known normal distribution, which is sometimes described as having a “bell-shape”. We will talk in more detail further down the page about why the Gaussian filter has its name. For now, take a look at this fancy <a class="reference external" href="https://www.geeksforgeeks.org/deep-learning/types-of-convolution-kernels">kernel</a>:</p>
@@ -599,7 +602,7 @@ document.write(`
 </div>
 <p>If you prefer, you can view the NumPy array kernel with prettier graphics below:</p>
 <p><img alt="" src="_images/gaussian_kernel_2.png" /></p>
-<p>Just as final comparison between the kernel NumPy array and the plot, here is the “red mountain” viewed from directly above, with the NumPy array kernel, in its pretty form, shown to its right hand side:</p>
+<p>Just as final comparison between the  NumPy array kernel and the plot, here is the “red mountain” viewed from directly above, with the NumPy array kernel, in pretty graphics, shown to the right hand side of the plot:</p>
 <p><img alt="" src="_images/sky_gauss.png" /></p>
 <p>Remember that the kernel has only 9 values (shown as blue text on the plot), so there are no values in between the array values. If you prefer, we can visualise the kernel using a wireframe, to make it clearer that there are no values in between the kernal elements (e.g. in between the points where there is blue text):</p>
 <div class="cell docutils container">
@@ -629,7 +632,7 @@ document.write(`
 </div>
 <p>Essentially, if we filter using this kernel, we “walk” this kernel through the image, with the top of the “crimson peak” centered on a given pixel. The central pixel value is then replaced with an average of the pixels in the neighbourhood, but the contribution of the other pixels in the neighbourhood to the averge is <em>weighted by the height of the “red mountain” at that pixel</em>.</p>
 <p>So array pixels which fall under higher points of the kernel’s “red mountain” will exert more influence on the weighted average, and pixels falling under lower points will exert a weaker influence. The central pixel, laying under the crimson peak, will exert the most influence on the weighted average.</p>
-<p>Let’s use this kernel to filter the following small image:</p>
+<p>Let’s use this kernel to filter the following image array:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Make a small image array.</span>
@@ -689,7 +692,7 @@ document.write(`
 </div>
 </div>
 <p>Blurry! So to recap, we have averaged within a 3-by-3 pixel neightbourhood, replacing the central pixel value with a weighted average of all the pixel values in the neighbourhood. The weights are larger for pixels closer to the central value of the kernel (e.g. closer to the center of the “crimson peak” on the plot above).</p>
-<p>This type of filtering is called <em>Gaussian filtering</em> because the kernel element values are from, or in the case of <code class="docutils literal notranslate"><span class="pre">gaussian_like_kernel</span></code>, approximate a 2-D Gaussian function. This is the function for the familiar <a class="reference external" href="https://en.wikipedia.org/wiki/Normal_distribution">normal distribution</a> in two dimensions. The plot of the kernel above, with the “red mountain” may not look much like the normal distribution to you at the moment, but bear with us.</p>
+<p>This type of filtering is called <em>Gaussian filtering</em> because the kernel element values approximate a <a class="reference external" href="https://en.wikipedia.org/wiki/Normal_distribution">Gaussian (e.g. normal) distribution</a>. The plot of the kernel above, with the “red mountain” may not look much like the normal distribution to you at the moment, but bear with us.</p>
 <p>To see the Gaussian nature of this filtering operation, let’s take a look at another, larger kernel below - it has <code class="docutils literal notranslate"><span class="pre">shape</span></code> <code class="docutils literal notranslate"><span class="pre">(9,</span> <span class="pre">9)</span></code>:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -728,13 +731,13 @@ document.write(`
 <img alt="_images/408c33239534128e677c6cb75deb5c8d246d607894d9a14e25123c5eb2e6f52c.png" src="_images/408c33239534128e677c6cb75deb5c8d246d607894d9a14e25123c5eb2e6f52c.png" />
 </div>
 </div>
-<p>Again, if you prefer, we can view the kernel as a wireframe plot, which we show in the cell below. It looks messy when the kernel element values (blue text) are shown on the plot, but we show them for easy comparison to the <code class="docutils literal notranslate"><span class="pre">big_gaussian_kernel</span></code> NumPy array. We show the NumPy view of the array again, above the plot. If you are running interactively, you can set <code class="docutils literal notranslate"><span class="pre">text</span> <span class="pre">=</span> <span class="pre">False</span></code> in the plotting function and re-run the cell, to switch the blue numbers off, if you wish:</p>
+<p>Again, if you prefer, we can view the kernel as a wireframe plot, which we show in the cell below. We first show the NumPy view of the array again, above the plot. The plot looks messy when the kernel element values (blue text) are also shown, but we show them for easy comparison to the <code class="docutils literal notranslate"><span class="pre">big_gaussian_kernel</span></code> NumPy array. If you are running interactively, you can set <code class="docutils literal notranslate"><span class="pre">text</span> <span class="pre">=</span> <span class="pre">False</span></code> in the plotting function and re-run the cell, to switch the blue numbers off, if you wish:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Compare the NumPy array to the plot.</span>
 <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">`big_gaussian_kernel` NumPy view:</span><span class="se">\n\n</span><span class="s2">&quot;</span><span class="p">,</span><span class="n">big_gaussian_kernel</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="mi">2</span><span class="p">))</span>
 <span class="n">kernel_plot</span><span class="p">(</span><span class="n">big_gaussian_kernel</span><span class="p">,</span> <span class="n">surface</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;`big_gaussian_kernel` </span><span class="se">\n</span><span class="s1">Crimson Peak View:&#39;</span><span class="p">);</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;`big_gaussian_kernel` </span><span class="se">\n</span><span class="s1">Red Mountain View:&#39;</span><span class="p">);</span>
 </pre></div>
 </div>
 </div>
@@ -752,12 +755,12 @@ document.write(`
  [0.   0.   0.   0.   0.   0.   0.   0.   0.  ]]
 </pre></div>
 </div>
-<img alt="_images/e9e1ac26f2a862c5f519227486d52a100f7e9e9df201d02c15c58feb56950f58.png" src="_images/e9e1ac26f2a862c5f519227486d52a100f7e9e9df201d02c15c58feb56950f58.png" />
+<img alt="_images/9318f319a054895af82bf44fff6b20a7eff01d03218c17d1d36fbcc140fe8df9.png" src="_images/9318f319a054895af82bf44fff6b20a7eff01d03218c17d1d36fbcc140fe8df9.png" />
 </div>
 </div>
 <p>Again, to make the relationship between the NumPy array and the graph as clear as possible, here is the “red mountain” viewed from directly above, with the <code class="docutils literal notranslate"><span class="pre">big_gaussian_kernel</span></code> array shown to its right:</p>
 <p><img alt="" src="_images/sky_gauss_2.png" /></p>
-<p>You  may (or may not) recognise the “red mountain” - when we plot the <code class="docutils literal notranslate"><span class="pre">big_gaussian_kernel</span></code> - as a multi-dimensional <a class="reference external" href="https://en.wikipedia.org/wiki/Normal_distribution">Gaussian distribution</a>. Here is the a prototypical multi-dimensional Gaussian:</p>
+<p>You  may (or may not) recognise the “red mountain” - when we plot the <code class="docutils literal notranslate"><span class="pre">big_gaussian_kernel</span></code> - as a multi-dimensional <a class="reference external" href="https://en.wikipedia.org/wiki/Normal_distribution">Gaussian distribution</a>. Here is a prototypical multi-dimensional Gaussian:</p>
 <p><img alt="" src="_images/2_D_gaussian.png" />
 (Image from <a class="reference external" href="https://stats.stackexchange.com/questions/102632/plot-two-dimensional-gaussian-density-function-in-matlab">here</a>).</p>
 <p>Here is the plot of <code class="docutils literal notranslate"><span class="pre">big_gaussian_kernel</span></code> again, for comparison to the perfect Gaussian shown in the image above:</p>
@@ -791,16 +794,16 @@ document.write(`
 <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Original&#39;</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">matshow</span><span class="p">(</span><span class="n">small_square</span><span class="p">,</span> <span class="n">fignum</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Gaussian filter </span><span class="se">\n</span><span class="s1">(3, 3) Kernel&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Gaussian filter </span><span class="se">\n</span><span class="s1">(3, 3) kernel&#39;</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">matshow</span><span class="p">(</span><span class="n">gaussian_like_filtered_small_square</span><span class="p">,</span> <span class="n">fignum</span><span class="o">=</span><span class="mi">0</span><span class="p">);</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Gaussian filter </span><span class="se">\n</span><span class="s1">(9, 9) Kernel&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Gaussian filter </span><span class="se">\n</span><span class="s1">(9, 9) kernel&#39;</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">matshow</span><span class="p">(</span><span class="n">big_gaussian_filtered_small_square</span><span class="p">,</span> <span class="n">fignum</span><span class="o">=</span><span class="mi">0</span><span class="p">);</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/e02f20f06c964cfde41c0c120db05d008108d2dd4a1315143a5f6fa1ab53e0de.png" src="_images/e02f20f06c964cfde41c0c120db05d008108d2dd4a1315143a5f6fa1ab53e0de.png" />
+<img alt="_images/813e75860d940fba0a7e4b2b8e5519840acde6624ccb666cf4f4593c845b3ece.png" src="_images/813e75860d940fba0a7e4b2b8e5519840acde6624ccb666cf4f4593c845b3ece.png" />
 </div>
 </div>
 <p>It is apparent that the larger kernel has “spread” the intensity of higher-valued pixels further than the small kernel. This makes sense, because it is averaging across bigger pixel neighbourhoods.</p>
@@ -810,8 +813,8 @@ document.write(`
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Pixelate the `camera` image.</span>
 <span class="n">camera</span> <span class="o">=</span> <span class="n">ski</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">camera</span><span class="p">()</span>
-<span class="n">pixelated_camera</span> <span class="o">=</span> <span class="n">ski</span><span class="o">.</span><span class="n">transform</span><span class="o">.</span><span class="n">rescale</span><span class="p">(</span><span class="n">camera</span><span class="p">,</span> <span class="mf">0.2</span><span class="p">)</span> <span class="c1"># Rescale to 20% of original size.</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">pixelated_camera</span><span class="p">);</span>
+<span class="n">pixelated_camera</span> <span class="o">=</span> <span class="n">ski</span><span class="o">.</span><span class="n">transform</span><span class="o">.</span><span class="n">rescale</span><span class="p">(</span><span class="n">camera</span><span class="p">,</span> <span class="mf">0.2</span><span class="p">)</span> <span class="c1"># Rescale to 20% of original size, this</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">pixelated_camera</span><span class="p">);</span>                         <span class="c1"># induces pixelation.</span>
 </pre></div>
 </div>
 </div>
@@ -892,9 +895,9 @@ Min Pixel Value: 0
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Plot with different `sigma` values.</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">14</span><span class="p">,</span> <span class="mi">3</span><span class="p">))</span>
-<span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">sigma</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">12</span><span class="p">,</span> <span class="mi">2</span><span class="p">)):</span>
-    <span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">14</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
+<span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">sigma</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">14</span><span class="p">,</span> <span class="mi">2</span><span class="p">)):</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span>
     <span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">ski</span><span class="o">.</span><span class="n">filters</span><span class="o">.</span><span class="n">gaussian</span><span class="p">(</span><span class="n">cat</span><span class="p">,</span> 
                                     <span class="n">sigma</span><span class="o">=</span><span class="n">sigma</span><span class="p">))</span>
 
@@ -907,7 +910,7 @@ Min Pixel Value: 0
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/7ee67f20dfdb8f6529ee459dbb141d14e20a72c342a605f51ef0793958d98644.png" src="_images/7ee67f20dfdb8f6529ee459dbb141d14e20a72c342a605f51ef0793958d98644.png" />
+<img alt="_images/179d1de5b7907cb0cef2fd96480da3eff9bad5b4f104d8cb3a0aeba8b43df3c9.png" src="_images/179d1de5b7907cb0cef2fd96480da3eff9bad5b4f104d8cb3a0aeba8b43df3c9.png" />
 </div>
 </div>
 <div class="exercise dropdown admonition" id="krazy-kernel">
@@ -1188,6 +1191,241 @@ Min Pixel Value: 0
 </div>
 </div>
 </section>
+</div>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="image-sharpening-vis-scipy-and-skimage">
+<h1>Image sharpening (vis <code class="docutils literal notranslate"><span class="pre">scipy</span></code> and <code class="docutils literal notranslate"><span class="pre">skimage</span></code>)<a class="headerlink" href="#image-sharpening-vis-scipy-and-skimage" title="Link to this heading">#</a></h1>
+<p>Gaussian filtering is a nice visual effect by itself, but filters (like the Gaussian filter) which blur an image can also, somewhat paradoxically, be used to <em>sharpen</em> an image. <em>Sharpening</em> is the opposite of blurring, it makes images clearer, with the features and edges more defined.</p>
+<p>How can we sharpen an image with a Gaussian <em>blur</em> filter, we hear you ask? We will demonstrate below. Sharpening is easiest to appreciate if we start with a slightly blurry image. In the cell below, we create a <code class="docutils literal notranslate"><span class="pre">blurry_cat</span></code> image by applying a Gaussian filter, we use a low <code class="docutils literal notranslate"><span class="pre">sigma</span></code> value, to keep the blur only slight:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Add a little blur.</span>
+<span class="n">blurry_cat</span> <span class="o">=</span> <span class="n">ski</span><span class="o">.</span><span class="n">filters</span><span class="o">.</span><span class="n">gaussian</span><span class="p">(</span><span class="n">ski</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">cat</span><span class="p">(),</span> 
+                                  <span class="n">sigma</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">blurry_cat</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/86f479346c25cc9dd575d5eee7a4b7c8c00966478ba661c860c047eee360d4f8.png" src="_images/86f479346c25cc9dd575d5eee7a4b7c8c00966478ba661c860c047eee360d4f8.png" />
+</div>
+</div>
+<p>A simple way to sharpen the image is via the <a class="reference external" href="https://blog.demofox.org/2022/02/26/image-sharpening-convolution-kernels">following procedure</a>:</p>
+<p><span class="math notranslate nohighlight">\( \text{sharpened_image = original_image + (original_image – blurred_image)} \)</span></p>
+<p>Theoretically, <span class="math notranslate nohighlight">\(\text{(original_image – blurred_image)}\)</span> contains sharpened details of the image, because it results from subtracting out a version of the image which is much blurrier than the original, giving us the <em>difference</em> between the original image and the blurry image. This effect is easiest to appreciate visually:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Gaussian filter the image we wish to sharpen.</span>
+<span class="n">gaussian_filter_cat</span> <span class="o">=</span> <span class="n">ski</span><span class="o">.</span><span class="n">filters</span><span class="o">.</span><span class="n">gaussian</span><span class="p">(</span><span class="n">blurry_cat</span><span class="p">,</span> <span class="mi">4</span><span class="p">)</span>
+
+<span class="c1"># Perform the sharpening.</span>
+<span class="n">sharpened</span> <span class="o">=</span> <span class="n">blurry_cat</span> <span class="o">+</span> <span class="p">(</span><span class="n">blurry_cat</span> <span class="o">-</span> <span class="n">gaussian_filter_cat</span><span class="p">)</span>
+
+<span class="c1"># Rescale to legal pixel ranges.</span>
+<span class="n">sharpened</span> <span class="o">=</span> <span class="n">ski</span><span class="o">.</span><span class="n">exposure</span><span class="o">.</span><span class="n">rescale_intensity</span><span class="p">(</span><span class="n">sharpened</span><span class="p">,</span> <span class="n">out_range</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>
+
+<span class="c1"># Show the result.</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">16</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Original&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">blurry_cat</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Blurred&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">gaussian_filter_cat</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">3</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Sharpened&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">sharpened</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">();</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/a31b6e354f107fa321433decf392dbf442850d31a5507cd224b621cad125f865.png" src="_images/a31b6e354f107fa321433decf392dbf442850d31a5507cd224b621cad125f865.png" />
+</div>
+</div>
+<p>You can see that the sharpened image, as intended, has better clarity than the original. We can also use a specliazed <a class="reference external" href="https://www.geeksforgeeks.org/deep-learning/types-of-convolution-kernels/#3-sharpening-kernel">sharpening kernel</a> to achieve the same effect:</p>
+<p><img alt="" src="_images/sharpening_kernel.png" /></p>
+<p>We show this kernel in 3D below (it does look pretty sharp!):</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sharpening_kernel</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">0</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span> <span class="p">,</span> <span class="mi">0</span><span class="p">],</span>
+                              <span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">],</span>
+                              <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span>  <span class="mi">0</span><span class="p">]])</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">sharpening_kernel</span><span class="p">)</span>
+<span class="n">kernel_plot</span><span class="p">(</span><span class="n">sharpening_kernel</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[[ 0 -1  0]
+ [-1  5 -1]
+ [ 0 -1  0]]
+</pre></div>
+</div>
+<img alt="_images/81205a6035274776e2886806763b886335bbd164b71d3f3b68efe8ac9116bb99.png" src="_images/81205a6035274776e2886806763b886335bbd164b71d3f3b68efe8ac9116bb99.png" />
+</div>
+</div>
+<p>This kernel works by <a class="reference external" href="https://setosa.io/ev/image-kernels/#:~:text=The%20sharpen%20kernel%20emphasizes%20differences,differences%20in%20adjacent%20pixel%20values.">emphasising differences between adjacent pixels</a>. Essentially, the more different that a pixel is from its surrounding pixels, the bigger value it will get in the sharpened image. We show this below. First, we create an array containing only 1s:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># A boring array.</span>
+<span class="n">no_diff</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">((</span><span class="mi">6</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
+<span class="n">no_diff</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([[1., 1., 1., 1., 1., 1.],
+       [1., 1., 1., 1., 1., 1.],
+       [1., 1., 1., 1., 1., 1.],
+       [1., 1., 1., 1., 1., 1.],
+       [1., 1., 1., 1., 1., 1.],
+       [1., 1., 1., 1., 1., 1.]])
+</pre></div>
+</div>
+</div>
+</div>
+<p>Convolving this array with the <code class="docutils literal notranslate"><span class="pre">sharpening_kernel</span></code> will yield the same array, as there are no differences in the input.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">ndi</span><span class="o">.</span><span class="n">correlate</span><span class="p">(</span><span class="n">no_diff</span><span class="p">,</span> <span class="n">weights</span><span class="o">=</span><span class="n">sharpening_kernel</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([[1., 1., 1., 1., 1., 1.],
+       [1., 1., 1., 1., 1., 1.],
+       [1., 1., 1., 1., 1., 1.],
+       [1., 1., 1., 1., 1., 1.],
+       [1., 1., 1., 1., 1., 1.],
+       [1., 1., 1., 1., 1., 1.]])
+</pre></div>
+</div>
+</div>
+</div>
+<p>Conversely, the array below contains a repeating pattern of 2’s and 3’s in the first three rows, so the differences between pixel neighbourhoods in the early rows are fairly consistent.</p>
+<p>In the last three rows, the same pattern is repeated, only now the 3’s are negative, increasing the difference between the pixels in each neighbourhood:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">diffs</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">],</span>
+                  <span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span>
+                  <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">],</span>
+                  <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="o">-</span><span class="mi">3</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="o">-</span><span class="mi">3</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="o">-</span><span class="mi">3</span><span class="p">],</span>
+                  <span class="p">[</span><span class="o">-</span><span class="mi">3</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="o">-</span><span class="mi">3</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="o">-</span><span class="mi">3</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span>
+                  <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="o">-</span><span class="mi">3</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="o">-</span><span class="mi">3</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="o">-</span><span class="mi">3</span><span class="p">]])</span>
+<span class="n">diffs</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([[ 2,  3,  2,  3,  2,  3],
+       [ 3,  2,  3,  2,  3,  2],
+       [ 2,  3,  2,  3,  2,  3],
+       [ 2, -3,  2, -3,  2, -3],
+       [-3,  2, -3,  2, -3,  2],
+       [ 2, -3,  2, -3,  2, -3]])
+</pre></div>
+</div>
+</div>
+</div>
+<p>Convolving with the <code class="docutils literal notranslate"><span class="pre">sharpening_kernel</span></code> results in a larger number of larger absolute values in the bottom three rows, amplifying the differences between the pixels, such that larger differences become even larger thanks to the sharpening operation:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Larger differences in later rows, where there is greater variance in the pixel intensities.</span>
+<span class="n">sharp_diffs</span> <span class="o">=</span> <span class="n">ndi</span><span class="o">.</span><span class="n">correlate</span><span class="p">(</span><span class="n">diffs</span><span class="p">,</span> <span class="n">weights</span><span class="o">=</span><span class="n">sharpening_kernel</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">sharp_diffs</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[[  0   6  -1   6  -1   5]
+ [  6  -2   7  -2   7  -1]
+ [  0  12  -1  12  -1  11]
+ [ 12 -24  17 -24  17 -19]
+ [-18  22 -23  22 -23  17]
+ [ 12 -18  17 -18  17 -13]]
+</pre></div>
+</div>
+</div>
+</div>
+<p>Let’s apply the <code class="docutils literal notranslate"><span class="pre">sharpening_kernel</span></code> to the <code class="docutils literal notranslate"><span class="pre">blurry_cat</span></code> image array. As this array is a 3D colour image, we first <code class="docutils literal notranslate"><span class="pre">np.stack()</span></code> our <code class="docutils literal notranslate"><span class="pre">sharpening_kernel</span></code> into 3D:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Stack to 3D.</span>
+<span class="n">sharpening_kernel</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">stack</span><span class="p">([</span><span class="n">sharpening_kernel</span><span class="p">,</span>
+                              <span class="n">sharpening_kernel</span><span class="p">,</span>
+                              <span class="n">sharpening_kernel</span><span class="p">],</span>
+                              <span class="n">axis</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+
+<span class="c1"># Sharpen `blurry_cat`.</span>
+<span class="n">sharpen_cat</span> <span class="o">=</span> <span class="n">ndi</span><span class="o">.</span><span class="n">correlate</span><span class="p">(</span><span class="n">blurry_cat</span><span class="p">,</span>
+                           <span class="n">weights</span><span class="o">=</span><span class="n">sharpening_kernel</span><span class="p">)</span>
+
+<span class="c1"># Rescale to avoid illegal an pixel range.</span>
+<span class="n">sharpen_cat</span> <span class="o">=</span> <span class="n">ski</span><span class="o">.</span><span class="n">exposure</span><span class="o">.</span><span class="n">rescale_intensity</span><span class="p">(</span><span class="n">sharpen_cat</span><span class="p">,</span> <span class="n">out_range</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>
+
+<span class="c1"># Show the result.</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">16</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Original&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">blurry_cat</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Sharpened&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">sharpen_cat</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">();</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/6a17d35794c72bc3e7620efabe3cbcfaadd3880d99d9d846a1fbf31c51580001.png" src="_images/6a17d35794c72bc3e7620efabe3cbcfaadd3880d99d9d846a1fbf31c51580001.png" />
+</div>
+</div>
+<p>Sci-kit image (unsurprisingly) also has filters to sharpen images. The <code class="docutils literal notranslate"><span class="pre">ski.filters.unsharp_mask()</span></code> filter is one such filter,  and it uses a similar approach to the one we used above,  when we sharpened an image using a Gaussian filter. <code class="docutils literal notranslate"><span class="pre">ski.filters.unsharp_mask()</span></code> uses the following approach:</p>
+<p><span class="math notranslate nohighlight">\( \text{sharpened_image = original_image + scaling_amount * (original_image - blurred_image)} \)</span></p>
+<p>…where “scaling_amount” is a single value which amplifies the sharpened details. Here is the result on <code class="docutils literal notranslate"><span class="pre">blurry_cat</span></code>, using the default parameters:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Sharpen `blurry_cat`.</span>
+<span class="n">sharpen_cat</span> <span class="o">=</span> <span class="n">ski</span><span class="o">.</span><span class="n">filters</span><span class="o">.</span><span class="n">unsharp_mask</span><span class="p">(</span><span class="n">blurry_cat</span><span class="p">)</span>
+
+<span class="c1"># Show the result.</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">16</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Original&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">blurry_cat</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Sharpened </span><span class="se">\n</span><span class="s1">(with `ski.filters.unsharp_mask()`)&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">sharpen_cat</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">();</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/6e168b21badfc2b1ac931d916d08c1075e928768a6e99eb09401b9a2f22081d8.png" src="_images/6e168b21badfc2b1ac931d916d08c1075e928768a6e99eb09401b9a2f22081d8.png" />
+</div>
+</div>
+<p>Changing the <code class="docutils literal notranslate"><span class="pre">amount</span></code> parameter will intensify the sharpening effect:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Sharpen `blurry_cat`.</span>
+<span class="n">sharpen_cat</span> <span class="o">=</span> <span class="n">ski</span><span class="o">.</span><span class="n">filters</span><span class="o">.</span><span class="n">unsharp_mask</span><span class="p">(</span><span class="n">blurry_cat</span><span class="p">,</span>
+                                       <span class="n">amount</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+
+<span class="c1"># Show the result.</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">16</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Original&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">blurry_cat</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Sharpened </span><span class="se">\n</span><span class="s1">(with `ski.filters.unsharp_mask(amount=3)`)&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">sharpen_cat</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">();</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/dc9856f4ce2dcbca0082917f1d2e3ce37e716b13ad731bb0e46432e470258ae8.png" src="_images/dc9856f4ce2dcbca0082917f1d2e3ce37e716b13ad731bb0e46432e470258ae8.png" />
+</div>
 </div>
 </section>
 <section class="tex2jax_ignore mathjax_ignore" id="edge-detection-filtering">
@@ -1622,7 +1860,7 @@ Min Pixel Value: -32768
 <p><code class="docutils literal notranslate"><span class="pre">skimage</span></code> contains a variety of edge detection filters, and makes it a breeze to implement them. You know the drill now, just pass <code class="docutils literal notranslate"><span class="pre">skimage</span></code> your NumPy image array and pray the <code class="docutils literal notranslate"><span class="pre">dtype</span></code>s are all in order (we kid, but also not…).</p>
 <p>Remember the first edge detection kernels that we used above?:</p>
 <p><img alt="" src="_images/edge_dector_kernels.png" /></p>
-<p>These kernels are are used by <code class="docutils literal notranslate"><span class="pre">ski.filters.prewitt()</span></code> edge detection filter, which we implement in the cell below, on the <code class="docutils literal notranslate"><span class="pre">edgy</span></code> array:</p>
+<p><a class="reference external" href="https://scikit-image.org/docs/0.25.x/api/skimage.filters.html#skimage.filters.prewitt_h">Similar</a> <a class="reference external" href="https://scikit-image.org/docs/0.25.x/api/skimage.filters.html#skimage.filters.prewitt_v">kernels</a> <a class="reference external" href="https://en.wikipedia.org/wiki/Prewitt_operator">are are used by</a> <code class="docutils literal notranslate"><span class="pre">ski.filters.prewitt()</span></code> edge detection filter, which we implement in the cell below, on the <code class="docutils literal notranslate"><span class="pre">edgy</span></code> array:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Prewhitt filtering.</span>
@@ -1768,6 +2006,7 @@ Min Pixel Value: -32768
 <li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Image filtering II</a></li>
 <li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#gaussian-filtering">Gaussian filtering</a></li>
 <li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#gaussian-filters-in-skimage">Gaussian filters in <code class="docutils literal notranslate"><span class="pre">skimage</span></code></a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#image-sharpening-vis-scipy-and-skimage">Image sharpening (vis <code class="docutils literal notranslate"><span class="pre">scipy</span></code> and <code class="docutils literal notranslate"><span class="pre">skimage</span></code>)</a></li>
 <li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#edge-detection-filtering">Edge detection filtering</a></li>
 <li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#sobel-edge-detection-filtering">Sobel edge detection filtering</a></li>
 <li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#edge-detection-filters-in-skimage">Edge detection filters in <code class="docutils literal notranslate"><span class="pre">skimage</span></code></a></li>

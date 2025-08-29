@@ -32,9 +32,9 @@
     <link rel="stylesheet" type="text/css" href="_static/styles/sphinx-book-theme.css?v=eba8b062" />
     <link rel="stylesheet" type="text/css" href="_static/togglebutton.css?v=13237357" />
     <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
-    <link rel="stylesheet" type="text/css" href="_static/mystnb.8ecb98da25f57f5357bf6f572d296f466b2cfe2517ffebfabe82451661e28f02.css?v=6644e6bb" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.8ecb98da25f57f5357bf6f572d296f466b2cfe2517ffebfabe82451661e28f02.css" />
     <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css?v=4fa983c6" />
-    <link rel="stylesheet" type="text/css" href="_static/exercise.css?v=982b99e0" />
+    <link rel="stylesheet" type="text/css" href="_static/exercise.css" />
     <link rel="stylesheet" type="text/css" href="_static/sphinx-design.min.css?v=95c83b7e" />
   
   <!-- Pre-loaded scripts that we'll load fully later -->
@@ -184,6 +184,7 @@
 
 
 
+
 <li class="toctree-l1 current active"><a class="current reference internal" href="#">What about colour?</a></li>
 
 
@@ -201,7 +202,11 @@
 
 
 
-<li class="toctree-l1"><a class="reference internal" href="3_skimage_processing_from_numpy_and_scipy.html">(Sci-kit) Image processing via NumPy and SciPy</a></li>
+<li class="toctree-l1"><a class="reference internal" href="3_skimage_processing_from_numpy_and_scipy.html">(Sci-kit) Image processing, via NumPy and SciPy</a></li>
+
+
+
+
 
 
 
@@ -219,7 +224,19 @@
 
 
 
-<li class="toctree-l1"><a class="reference internal" href="6_morphology.html">Morphology</a></li>
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="5_filters_2.html">Image filtering II</a></li>
+
+
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="7_morphology.html">Morphology</a></li>
 
 
 
@@ -1177,9 +1194,9 @@ Our 3-D stacked array is of the right shape:</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>X1 = 0.96
-X2 = 0.55
-X3 = 0.55
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>X1 = 0.76
+X2 = 0.84
+X3 = 0.85
 </pre></div>
 </div>
 </div>
@@ -1208,12 +1225,12 @@ X3 = 0.55
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Red (X1) = 0.41
-Green (X2) = 0.41
-Blue (X3) = 0.89
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Red (X1) = 0.75
+Green (X2) = 0.46
+Blue (X3) = 0.16
 </pre></div>
 </div>
-<img alt="_images/3a3a9568ae5711682a0030d97105aa49584f45785cb96d60a5537bc4c1d27f8b.png" src="_images/3a3a9568ae5711682a0030d97105aa49584f45785cb96d60a5537bc4c1d27f8b.png" />
+<img alt="_images/234c44c4c26488ddcb5e335336a3831cc606941a94c7e25bcde7d9f0cdf3a31f.png" src="_images/234c44c4c26488ddcb5e335336a3831cc606941a94c7e25bcde7d9f0cdf3a31f.png" />
 </div>
 </div>
 <p>So, each two-dimensional display image has a “hidden” three-dimensional array behind it. Each slice of the third dimension is a colour channel. The mix of values at a given element in each colour channel determins the colour of that pixel in the rendered image. You may want to view this image in a new browser window, to see more clearly the exact mixes of the colour channels, which are shown above each square on the right hand side of the image:</p>
@@ -1229,7 +1246,7 @@ Blue (X3) = 0.89
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/0595c3f99231f1063f46c63b5f3b4248fa90f03aefd0e596e3ac7bf0b832c2a8.png" src="_images/0595c3f99231f1063f46c63b5f3b4248fa90f03aefd0e596e3ac7bf0b832c2a8.png" />
+<img alt="_images/2725fe12f92ec8842ad29090056d0f5924bc7b0f142ec65c07b8d89eb371d44f.png" src="_images/2725fe12f92ec8842ad29090056d0f5924bc7b0f142ec65c07b8d89eb371d44f.png" />
 </div>
 </div>
 <p>We have now completed our perilous expedition into the third dimension… We have seen that we can use 3-D arrays to encode <em>true colour</em> information. This means that the image array itself contains colour information for each pixel, where we are <em>not</em> just pseudocolouring greyscale information using <code class="docutils literal notranslate"><span class="pre">viridis</span></code> or another colourmap…</p>
@@ -1730,7 +1747,7 @@ Min Pixel Value: 0
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/28875730cf00fba1a9bf2134ccf3eea13cb17edbf7ce467e098d203d12dc5e64.png" src="_images/28875730cf00fba1a9bf2134ccf3eea13cb17edbf7ce467e098d203d12dc5e64.png" />
+<img alt="_images/1db8ee4bbb3c7eba0b4ef9dfac6a502ecf4bee850ee5d1dbe2ba954c46a832c3.png" src="_images/1db8ee4bbb3c7eba0b4ef9dfac6a502ecf4bee850ee5d1dbe2ba954c46a832c3.png" />
 </div>
 </div>
 </section>

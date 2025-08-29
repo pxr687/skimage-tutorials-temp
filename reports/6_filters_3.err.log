@@ -36,38 +36,22 @@ Traceback (most recent call last):
     raise CellExecutionError.from_cell_and_msg(cell, exec_reply_content)
 nbclient.exceptions.CellExecutionError: An error occurred while executing the following cell:
 ------------------
-# adapted from skimage docs
-edge_roberts = ski.filters.roberts(edgy)
-edge_sobel = ski.filters.sobel(edgy)
+camera_equalized = ski.exposure.equalize_hist(camera)
 
-camera = ski.data.camera()
-camera_roberts = ski.filters.roberts(camera)
-camera_sobel = ski.filters.sobel(camera)
-
-plt.figure(figsize=(12, 12))
-plt.subplot(2, 2, 1)
-plt.imshow(edge_roberts)
-plt.title('Roberts Edge Detection')
-plt.subplot(2, 2, 2)
-plt.imshow(edge_sobel)
-plt.title('Sobel Edge Detection')
-plt.subplot(2, 2, 3)
-plt.imshow(camera_roberts)
-plt.title('Roberts Edge Detection')
-plt.subplot(2, 2, 4)
-plt.imshow(camera_sobel)
-plt.title('Sobel Edge Detection')
-plt.axis('off');
+plt.figure(figsize=(10, 10))
+plt.subplot(1, 2, 1)
+plt.imshow(camera)
+plt.subplot(1, 2, 2)
+plt.imshow(camera_equalized);
 ------------------
 
 
 [31m---------------------------------------------------------------------------[39m
 [31mNameError[39m                                 Traceback (most recent call last)
-[36mCell[39m[36m [39m[32mIn[4][39m[32m, line 2[39m
-[32m      1[39m [38;5;66;03m# adapted from skimage docs[39;00m
-[32m----> [39m[32m2[39m edge_roberts = ski.filters.roberts([43medgy[49m)
-[32m      3[39m edge_sobel = ski.filters.sobel(edgy)
-[32m      5[39m camera = ski.data.camera()
+[36mCell[39m[36m [39m[32mIn[4][39m[32m, line 1[39m
+[32m----> [39m[32m1[39m camera_equalized = ski.exposure.equalize_hist([43mcamera[49m)
+[32m      3[39m plt.figure(figsize=([32m10[39m, [32m10[39m))
+[32m      4[39m plt.subplot([32m1[39m, [32m2[39m, [32m1[39m)
 
-[31mNameError[39m: name 'edgy' is not defined
+[31mNameError[39m: name 'camera' is not defined
 

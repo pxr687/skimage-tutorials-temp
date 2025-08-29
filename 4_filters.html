@@ -32,9 +32,9 @@
     <link rel="stylesheet" type="text/css" href="_static/styles/sphinx-book-theme.css?v=eba8b062" />
     <link rel="stylesheet" type="text/css" href="_static/togglebutton.css?v=13237357" />
     <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
-    <link rel="stylesheet" type="text/css" href="_static/mystnb.8ecb98da25f57f5357bf6f572d296f466b2cfe2517ffebfabe82451661e28f02.css?v=6644e6bb" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.8ecb98da25f57f5357bf6f572d296f466b2cfe2517ffebfabe82451661e28f02.css" />
     <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css?v=4fa983c6" />
-    <link rel="stylesheet" type="text/css" href="_static/exercise.css?v=982b99e0" />
+    <link rel="stylesheet" type="text/css" href="_static/exercise.css" />
     <link rel="stylesheet" type="text/css" href="_static/sphinx-design.min.css?v=95c83b7e" />
   
   <!-- Pre-loaded scripts that we'll load fully later -->
@@ -64,7 +64,7 @@
     <link rel="canonical" href="https://pxr687.github.io/skimage-tutorials-temp/4_filters.html" />
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="Morphology" href="6_morphology.html" />
+    <link rel="next" title="Image filtering II" href="5_filters_2.html" />
     <link rel="prev" title="(Sci-kit) Image processing, via NumPy and SciPy" href="3_skimage_processing_from_numpy_and_scipy.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
@@ -184,6 +184,7 @@
 
 
 
+
 <li class="toctree-l1"><a class="reference internal" href="1_colour_images_as_numpy_arrays.html">What about colour?</a></li>
 
 
@@ -211,6 +212,10 @@
 
 
 
+
+
+
+
 <li class="toctree-l1 current active"><a class="current reference internal" href="#">Image filtering I</a></li>
 
 
@@ -221,7 +226,17 @@
 
 
 
-<li class="toctree-l1"><a class="reference internal" href="6_morphology.html">Morphology</a></li>
+
+<li class="toctree-l1"><a class="reference internal" href="5_filters_2.html">Image filtering II</a></li>
+
+
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="7_morphology.html">Morphology</a></li>
 
 
 
@@ -449,6 +464,7 @@ document.write(`
 <li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#kernels-and-pixel-neighbourhoods">Kernels and pixel neighbourhoods</a></li>
 <li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#convolution">Convolution</a></li>
 <li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#mean-filtering-with-skimage">Mean filtering with <code class="docutils literal notranslate"><span class="pre">skimage</span></code></a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#filtering-3d-images">Filtering 3D images</a></li>
 <li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#summary">Summary</a></li>
 <li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#references">References</a></li>
 </ul>
@@ -483,7 +499,6 @@ document.write(`
 
 <span class="c1">#  Custom functions for illustrations, hints, and to quickly report image attributes.</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">noise_illustration</span><span class="w"> </span><span class="kn">import</span> <span class="n">generate_image</span><span class="p">,</span> <span class="n">original_image</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">gaussian_illustration</span><span class="w"> </span><span class="kn">import</span> <span class="n">make_gaussian_kernel</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">show_attributes</span><span class="w"> </span><span class="kn">import</span> <span class="n">show_attributes</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">hints</span><span class="w"> </span><span class="kn">import</span> <span class="n">hint_strange_coffee</span>
 </pre></div>
@@ -2304,7 +2319,7 @@ Mean filter via SciPy `correlate`:
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/5a8806ac7e068bce4aa92e0f2963b420580da9f8951c4d342e3224aa5ef54618.png" src="_images/5a8806ac7e068bce4aa92e0f2963b420580da9f8951c4d342e3224aa5ef54618.png" />
+<img alt="_images/54dde2d818f8f035f2238f75145c4552d87078e05e154408da9583809fca4878.png" src="_images/54dde2d818f8f035f2238f75145c4552d87078e05e154408da9583809fca4878.png" />
 </div>
 </div>
 <p>The mean filter can remove some of the noise, restoring the clarity of the image:</p>
@@ -2329,7 +2344,7 @@ Mean filter via SciPy `correlate`:
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/65f49ea68d4ddfc8dec99211a2ce88a2424ca5e82c4ecd94122e03162151482d.png" src="_images/65f49ea68d4ddfc8dec99211a2ce88a2424ca5e82c4ecd94122e03162151482d.png" />
+<img alt="_images/307c08cf5e27073ecb85d9fc9c4b63b9a37ee3255f3c158c8887cdc6958072f6.png" src="_images/307c08cf5e27073ecb85d9fc9c4b63b9a37ee3255f3c158c8887cdc6958072f6.png" />
 </div>
 </div>
 <p>We can see that the image is clearer, the noise has been reduced and some of the signal has been restored.</p>
@@ -2359,7 +2374,7 @@ Mean filter via SciPy `correlate`:
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/627301afe67664d7d5e629abe3219328d0d010b68e3b4d75a2a268f78ccd823d.png" src="_images/627301afe67664d7d5e629abe3219328d0d010b68e3b4d75a2a268f78ccd823d.png" />
+<img alt="_images/effd061eff617b787e42efd856b9ffdb2e59dd807ae5a0b02e77394680951208.png" src="_images/effd061eff617b787e42efd856b9ffdb2e59dd807ae5a0b02e77394680951208.png" />
 </div>
 </div>
 <p>As with many filtering operations, the effect of altering aspects of the filtering process (like a threshold value or kernel size), is very context dependent. It may take many iterations before finding a “sweet spot”, and where the sweet spot is may be somewhat subjective.</p>
@@ -2512,6 +2527,146 @@ Min Pixel Value: -49
 </div>
 </div>
 </section>
+<section class="tex2jax_ignore mathjax_ignore" id="filtering-3d-images">
+<h1>Filtering 3D images<a class="headerlink" href="#filtering-3d-images" title="Link to this heading">#</a></h1>
+<p>We can filter a 3D colour image just by convolving our filtering kernel with each colour channel separately. Let’s load a 3D image:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Load in and show an image.</span>
+<span class="n">astronaut</span> <span class="o">=</span> <span class="n">ski</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">astronaut</span><span class="p">()</span>
+<span class="n">show_attributes</span><span class="p">(</span><span class="n">astronaut</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">astronaut</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Type: &lt;class &#39;numpy.ndarray&#39;&gt;
+dtype: uint8
+Shape: (512, 512, 3)
+Max Pixel Value: 255
+Min Pixel Value: 0
+</pre></div>
+</div>
+<img alt="_images/a755c145eece046bbf07270ba6c018131abde162a1e4514514907b84d2d9887a.png" src="_images/a755c145eece046bbf07270ba6c018131abde162a1e4514514907b84d2d9887a.png" />
+</div>
+</div>
+<p>If we try to filter this image with our (3, 3) <code class="docutils literal notranslate"><span class="pre">mean_kernel</span></code> we will get an error:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Oh dear.</span>
+<span class="n">astronaut_mean_filtered</span> <span class="o">=</span> <span class="n">ndi</span><span class="o">.</span><span class="n">correlate</span><span class="p">(</span><span class="n">astronaut</span><span class="p">,</span> 
+                                        <span class="n">weights</span><span class="o">=</span><span class="n">mean_kernel</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
+<span class="ne">RuntimeError</span><span class="g g-Whitespace">                              </span>Traceback (most recent call last)
+<span class="n">Cell</span> <span class="n">In</span><span class="p">[</span><span class="mi">93</span><span class="p">],</span> <span class="n">line</span> <span class="mi">2</span>
+<span class="g g-Whitespace">      </span><span class="mi">1</span> <span class="c1"># Oh dear.</span>
+<span class="ne">----&gt; </span><span class="mi">2</span> <span class="n">astronaut_mean_filtered</span> <span class="o">=</span> <span class="n">ndi</span><span class="o">.</span><span class="n">correlate</span><span class="p">(</span><span class="n">astronaut</span><span class="p">,</span> 
+<span class="g g-Whitespace">      </span><span class="mi">3</span>                                         <span class="n">weights</span><span class="o">=</span><span class="n">mean_kernel</span><span class="p">)</span>
+
+<span class="nn">File ~\AppData\Local\Programs\Python\Python313\Lib\site-packages\scipy\ndimage\_filters.py:1373,</span> in <span class="ni">correlate</span><span class="nt">(input, weights, output, mode, cval, origin, axes)</span>
+<span class="g g-Whitespace">   </span><span class="mi">1307</span> <span class="nd">@_ni_docstrings</span><span class="o">.</span><span class="n">docfiller</span>
+<span class="g g-Whitespace">   </span><span class="mi">1308</span> <span class="k">def</span><span class="w"> </span><span class="nf">correlate</span><span class="p">(</span><span class="nb">input</span><span class="p">,</span> <span class="n">weights</span><span class="p">,</span> <span class="n">output</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s1">&#39;reflect&#39;</span><span class="p">,</span> <span class="n">cval</span><span class="o">=</span><span class="mf">0.0</span><span class="p">,</span>
+<span class="g g-Whitespace">   </span><span class="mi">1309</span>               <span class="n">origin</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">axes</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<span class="g g-Whitespace">   </span><span class="mi">1310</span><span class="w">     </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="g g-Whitespace">   </span><span class="mi">1311</span><span class="sd">     Multidimensional correlation.</span>
+<span class="g g-Whitespace">   </span><span class="mi">1312</span><span class="sd"> </span>
+<span class="sd">   (...)   1371 </span>
+<span class="g g-Whitespace">   </span><span class="mi">1372</span><span class="sd">     &quot;&quot;&quot;</span>
+<span class="ne">-&gt; </span><span class="mi">1373</span>     <span class="k">return</span> <span class="n">_correlate_or_convolve</span><span class="p">(</span><span class="nb">input</span><span class="p">,</span> <span class="n">weights</span><span class="p">,</span> <span class="n">output</span><span class="p">,</span> <span class="n">mode</span><span class="p">,</span> <span class="n">cval</span><span class="p">,</span>
+<span class="g g-Whitespace">   </span><span class="mi">1374</span>                                   <span class="n">origin</span><span class="p">,</span> <span class="kc">False</span><span class="p">,</span> <span class="n">axes</span><span class="p">)</span>
+
+<span class="nn">File ~\AppData\Local\Programs\Python\Python313\Lib\site-packages\scipy\ndimage\_filters.py:1275,</span> in <span class="ni">_correlate_or_convolve</span><span class="nt">(input, weights, output, mode, cval, origin, convolution, axes)</span>
+<span class="g g-Whitespace">   </span><span class="mi">1273</span> <span class="n">wshape</span> <span class="o">=</span> <span class="p">[</span><span class="n">ii</span> <span class="k">for</span> <span class="n">ii</span> <span class="ow">in</span> <span class="n">weights</span><span class="o">.</span><span class="n">shape</span> <span class="k">if</span> <span class="n">ii</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">]</span>
+<span class="g g-Whitespace">   </span><span class="mi">1274</span> <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">wshape</span><span class="p">)</span> <span class="o">!=</span> <span class="nb">input</span><span class="o">.</span><span class="n">ndim</span><span class="p">:</span>
+<span class="ne">-&gt; </span><span class="mi">1275</span>     <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;weights.ndim (</span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">wshape</span><span class="p">)</span><span class="si">}</span><span class="s2">) must match &quot;</span>
+<span class="g g-Whitespace">   </span><span class="mi">1276</span>                        <span class="sa">f</span><span class="s2">&quot;len(axes) (</span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">axes</span><span class="p">)</span><span class="si">}</span><span class="s2">)&quot;</span><span class="p">)</span>
+<span class="g g-Whitespace">   </span><span class="mi">1277</span> <span class="k">if</span> <span class="n">convolution</span><span class="p">:</span>
+<span class="g g-Whitespace">   </span><span class="mi">1278</span>     <span class="n">weights</span> <span class="o">=</span> <span class="n">weights</span><span class="p">[</span><span class="nb">tuple</span><span class="p">([</span><span class="nb">slice</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">)]</span> <span class="o">*</span> <span class="n">weights</span><span class="o">.</span><span class="n">ndim</span><span class="p">)]</span>
+
+<span class="ne">RuntimeError</span>: weights.ndim (2) must match len(axes) (3)
+</pre></div>
+</div>
+</div>
+</div>
+<p>As you can see, the error results from using a 2D kernel to filter a 3D image. A simple solution to this is just to apply the filter to each colour channel separately. This is done in the cell below, using a for loop to filter each channel, storing the channels separately in a dictionary, and then <code class="docutils literal notranslate"><span class="pre">np.stacking()</span></code> the individually filtered channels back into a 3D image:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># A dictionary to store the individually filtered channels.</span>
+<span class="n">filtered_channels</span> <span class="o">=</span> <span class="p">{}</span>
+
+<span class="c1"># Loop through and filter each channel individually, store</span>
+<span class="c1"># the results in the dictionary.</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">astronaut</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">2</span><span class="p">]):</span>
+    <span class="n">current_filtered_channel</span> <span class="o">=</span> <span class="n">ndi</span><span class="o">.</span><span class="n">correlate</span><span class="p">(</span><span class="n">astronaut</span><span class="p">[:,</span> <span class="p">:,</span> <span class="n">i</span><span class="p">],</span>
+                                             <span class="n">weights</span><span class="o">=</span><span class="n">mean_kernel</span><span class="p">)</span>
+    <span class="n">filtered_channels</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">current_filtered_channel</span>
+
+<span class="c1"># Stack back to 3D.</span>
+<span class="n">astronaut_mean_filtered</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">stack</span><span class="p">([</span><span class="n">filtered_channels</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span>
+                                    <span class="n">filtered_channels</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span>
+                                    <span class="n">filtered_channels</span><span class="p">[</span><span class="mi">2</span><span class="p">]],</span> 
+                                   <span class="n">axis</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+
+<span class="c1"># Show the result.</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Original&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">astronaut</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Mean Filtered </span><span class="se">\n</span><span class="s2"> (3, 3) kernel&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">astronaut_mean_filtered</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">();</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Scikit-image will handle this more efficiently, using a 3D kernel. Below we adjust our <code class="docutils literal notranslate"><span class="pre">footprint_9_by_9</span></code> kernel by <code class="docutils literal notranslate"><span class="pre">np.stack()</span></code>-ing it into 3D:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># The original kernel we used for 2D mean filtering, in `skimage`.</span>
+<span class="n">footprint_9_by_9</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Stack to 3D.</span>
+<span class="n">footprint_9_by_9_3D</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">stack</span><span class="p">([</span><span class="n">footprint_9_by_9</span><span class="p">,</span>
+                                <span class="n">footprint_9_by_9</span><span class="p">,</span>
+                                <span class="n">footprint_9_by_9</span><span class="p">],</span>
+                                <span class="n">axis</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+
+<span class="n">footprint_9_by_9_3D</span><span class="o">.</span><span class="n">shape</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Mean filter the colour image, with `skimage`.</span>
+<span class="n">astronaut_mean_filtered_ski</span> <span class="o">=</span> <span class="n">ski</span><span class="o">.</span><span class="n">filters</span><span class="o">.</span><span class="n">rank</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">astronaut</span><span class="p">,</span>
+                                             <span class="n">footprint</span><span class="o">=</span><span class="n">footprint_9_by_9_3D</span><span class="p">)</span>
+
+<span class="c1"># Show the result.</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Original&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">astronaut</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Mean Filtered (via Scikit-image)</span><span class="se">\n</span><span class="s2"> (9, 9) kernel&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">astronaut_mean_filtered_ski</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">();</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>We got a blurrier output image via <code class="docutils literal notranslate"><span class="pre">skimage</span></code> here, than in the manural convolution using <code class="docutils literal notranslate"><span class="pre">ndi.correlate()</span></code> because we used a larger kernel for the <code class="docutils literal notranslate"><span class="pre">skimage</span></code> filtering, and so are averaging over larger pixel neighbourhoods.</p>
+</section>
 <section class="tex2jax_ignore mathjax_ignore" id="summary">
 <h1>Summary<a class="headerlink" href="#summary" title="Link to this heading">#</a></h1>
 <p>This page has showed how to perform threshold filtering and mean filtering, using <code class="docutils literal notranslate"><span class="pre">numpy</span></code>, <code class="docutils literal notranslate"><span class="pre">scipy</span></code> and <code class="docutils literal notranslate"><span class="pre">skimage</span></code>.</p>
@@ -2569,11 +2724,11 @@ Min Pixel Value: -49
       </div>
     </a>
     <a class="right-next"
-       href="6_morphology.html"
+       href="5_filters_2.html"
        title="next page">
       <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">Morphology</p>
+        <p class="prev-next-title">Image filtering II</p>
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>
@@ -2601,6 +2756,7 @@ Min Pixel Value: -49
 <li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#kernels-and-pixel-neighbourhoods">Kernels and pixel neighbourhoods</a></li>
 <li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#convolution">Convolution</a></li>
 <li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#mean-filtering-with-skimage">Mean filtering with <code class="docutils literal notranslate"><span class="pre">skimage</span></code></a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#filtering-3d-images">Filtering 3D images</a></li>
 <li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#summary">Summary</a></li>
 <li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#references">References</a></li>
 </ul>

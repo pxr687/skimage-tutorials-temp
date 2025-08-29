@@ -19,7 +19,6 @@ np.set_printoptions(precision=2)
 
 #  Custom functions for illustrations, hints, and to quickly report image attributes.
 from noise_illustration import generate_image, original_image
-from gaussian_illustration import make_gaussian_kernel
 from show_attributes import show_attributes
 from hints import hint_strange_coffee
 ```
@@ -1295,6 +1294,91 @@ plt.subplot(1, 2, 2)
 plt.title('Mean filtered\n(9,9) kernel')
 plt.imshow(mean_filtered_camera);
 ```
+
+# Filtering 3D images
+
+We can filter a 3D colour image just by convolving our filtering kernel with each colour channel separately. Let's load a 3D image:
+
+```{python}
+# Load in and show an image.
+astronaut = ski.data.astronaut()
+show_attributes(astronaut)
+plt.imshow(astronaut);
+```
+
+If we try to filter this image with our (3, 3) `mean_kernel` we will get an error:
+
+```{python}
+# Oh dear.
+astronaut_mean_filtered = ndi.correlate(astronaut, 
+                                        weights=mean_kernel)
+```
+
+As you can see, the error results from using a 2D kernel to filter a 3D image. A simple solution to this is just to apply the filter to each colour channel separately. This is done in the cell below, using a for loop to filter each channel, storing the channels separately in a dictionary, and then `np.stacking()` the individually filtered channels back into a 3D image:
+
+```{python}
+# A dictionary to store the individually filtered channels.
+filtered_channels = {}
+
+# Loop through and filter each channel individually, store
+# the results in the dictionary.
+for i in np.arange(astronaut.shape[2]):
+    current_filtered_channel = ndi.correlate(astronaut[:, :, i],
+                                             weights=mean_kernel)
+    filtered_channels[i] = current_filtered_channel
+
+# Stack back to 3D.
+astronaut_mean_filtered = np.stack([filtered_channels[0],
+                                    filtered_channels[1],
+                                    filtered_channels[2]], 
+                                   axis=2)
+
+# Show the result.
+plt.figure(figsize=(12, 6))
+plt.subplot(1,2,1)
+plt.title("Original")
+plt.imshow(astronaut)
+plt.subplot(1,2,2)
+plt.title("Mean Filtered \n (3, 3) kernel")
+plt.imshow(astronaut_mean_filtered)
+plt.tight_layout();
+```
+
+Scikit-image will handle this more efficiently, using a 3D kernel. Below we adjust our `footprint_9_by_9` kernel by `np.stack()`-ing it into 3D:
+
+```{python}
+# The original kernel we used for 2D mean filtering, in `skimage`.
+footprint_9_by_9
+```
+
+```{python}
+# Stack to 3D.
+footprint_9_by_9_3D = np.stack([footprint_9_by_9,
+                                footprint_9_by_9,
+                                footprint_9_by_9],
+                                axis=2)
+
+footprint_9_by_9_3D.shape
+```
+
+```{python}
+# Mean filter the colour image, with `skimage`.
+astronaut_mean_filtered_ski = ski.filters.rank.mean(astronaut,
+                                             footprint=footprint_9_by_9_3D)
+
+# Show the result.
+plt.figure(figsize=(12, 6))
+plt.subplot(1,2,1)
+plt.title("Original")
+plt.imshow(astronaut)
+plt.subplot(1,2,2)
+plt.title("Mean Filtered (via Scikit-image)\n (9, 9) kernel")
+plt.imshow(astronaut_mean_filtered_ski)
+plt.tight_layout();
+```
+
+We got a blurrier output image via `skimage` here, than in the manural convolution using `ndi.correlate()` because we used a larger kernel for the `skimage` filtering, and so are averaging over larger pixel neighbourhoods.
+
 
 # Summary
 
