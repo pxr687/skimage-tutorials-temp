@@ -601,7 +601,7 @@ plt.tight_layout();
 
 Sci-kit image (unsurprisingly) also has filters to sharpen images. The `ski.filters.unsharp_mask()` filter is one such filter,  and it uses a similar approach to the one we used above,  when we sharpened an image using a Gaussian filter. `ski.filters.unsharp_mask()` uses the following approach:
 
-$ \text{sharpened_image = original_image + scaling_amount * (original_image - blurred_image)} $
+$ \text{sharpened_img = original_img + scaling_amount * (original_img - blurred_img)} $
 
 ...where "scaling_amount" is a single value which amplifies the sharpened details. Here is the result on `blurry_cat`, using the default parameters:
 
