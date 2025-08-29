@@ -1,5 +1,7 @@
 # Image filtering I
 
+**NOTE: add  try_all_threshold plotting function **
+
 A common operation we will want to perform on images is *filtering*. This is where we modify all of the pixels in an image according to a certain rule or algorithm, often based on other pixel values within the "local neighbourhood" of a given pixel. Filtering techniques can be used to remove noise from an image, or to achieve specific visual effects, amongst other purposes.
 
 Here we will look at some important filtering techniques: threshold filtering and mean filtering. We will show how they work at the pixel-level, using `numpy` and `scipy`, and then we will show how to implement them in `skimage`.
@@ -431,7 +433,12 @@ plt.ylabel('Pixel Count')
 plt.title('Bin centers vs pixel counts');
 ```
 
+<!-- #region -->
 To implement the Otsu filter, we "split" the histogram into two sides, at a given bin center. We can think of this as creating two separate histograms. Here is a visualisation of splitting at the 50th bin center (which is centered on the pixel intensity value of 98.6):
+
+
+**NOTE: change threshold line to dashed line**
+<!-- #endregion -->
 
 ```{python}
 # The 50th bin center value.
@@ -513,17 +520,17 @@ def plot_thresh_mean_and_spread(threshold_bin_num, show_total_SSD=False, legend=
     # Histogram 1
     color='red'
     mean_1, ssd_1, n_1 = ssd(counts[:threshold_bin_num], bin_centers[:threshold_bin_num])
-    std_1 = np.sqrt(ssd_1/n_1)/2
+    std_1 = np.sqrt(ssd_1/n_1)
     plt.axvline(mean_1, color='dark'+color, label=f'Mean and Spread (Left Histogram)')
-    plt.hlines(10, mean_1 - 1.96 * std_1, mean_1 + 1.96 * std_1, color='dark'+color)
+    plt.hlines(10, mean_1 - std_1, mean_1 + std_1, color='dark'+color)
     
     # Histogram 2
     hist_number = 2
     color='green'
     mean_2, ssd_2, n_2 = ssd(counts[threshold_bin_num:], bin_centers[threshold_bin_num:])
-    std_2 = np.sqrt(ssd_2/n_2)/2
+    std_2 = np.sqrt(ssd_2/n_2)
     plt.axvline(mean_2, color='dark'+color, label=f'Mean and Spread (Right Histogram)')
-    plt.hlines(10, mean_2 - 1.96 * std_2, mean_2 + 1.96 * std_2, color='dark'+color)
+    plt.hlines(10, mean_2 - std_2, mean_2 + std_2, color='dark'+color)
     
     if show_total_SSD == True:
         total_SSD = ssd_1 + ssd_2
@@ -552,7 +559,9 @@ In Otsu's method, we want to find the threshold value which gives the *minimum t
 
 In other words, the threshold value which gives the lowest combined `ssd` identifies two classes of pixels that are most different from each other, compared to other classes/splits we could choose, according the metrics that the Otsu method cares about.
 
-You can think of it as finding a threshold which groups pixels such that the means of the groups are very different, and also that the pixel values in each side of the "split" are clustered closely around their respective mean, giving them a big separation from pixels in the other class.
+You can think of it as finding a threshold which groups pixels such that the means of the groups are very different, and also that the pixel values in each side of the "split" are clustered closely around their respective mean, giving them a big separation from pixels in the other class. 
+
+**NOTE: Amend to: As you can see, the OTSU calculation finds a threshold such that the pixel values on each side of the threshold are clustered closely around their respective means.  In fact, it turns out this calculation also has the effect that …**
 
 The cell below will find the threshold which gives the minimum combined `ssd`:
 
@@ -646,7 +655,7 @@ plt.title('Otsu filtered')
 plt.subplots_adjust();
 ```
 
-To recap, [Otsu’s method](http://ieeexplore.ieee.org/stamp/stamp.jsp?arnumber=4310076) proceeds like this:
+To recap, [Otsu’s method](http://ieeexplore.ieee.org/stamp/stamp.jsp?arnumber=4310076) proceeds like [this](https://textbook.nipraxis.org/otsu_threshold.html):
 
 * create the 1D histogram of image values, where the histogram has $L$ bins.
   The histogram is $L$ bin counts $\vec{c} = [c_1, c_2, ... c_L]$, where $c_i$
@@ -663,18 +672,23 @@ To recap, [Otsu’s method](http://ieeexplore.ieee.org/stamp/stamp.jsp?arnumber=
   histogram:
 
   $$
+  \begin{align}
   n_k^{left} = \sum_{i=1}^{k} c_i \\
   \mu_k^{left} = \frac{1}{n_k^{left}} \sum_{i=1}^{k} c_i v_i \\
   n_k^{right} = \sum_{i={k+1}}^{L} c_i \\
   \mu_k^{right} = \frac{1}{n_k^{right}} \sum_{i={k+1}}^{L} c_i v_i
+  \end{align}
   $$
 
 * calculate the sum of squared deviations from the left and right means:
 
   $$
+
+  \begin{align}
   \mathrm{SSD}_k^{left} = \sum_{i=1}^{k} c_i (v_i - \mu_k^{left}) \\
   \mathrm{SSD}_k^{right} = \sum_{i={k+1}}^{L} c_i (v_i - \mu_k^{right}) \\
   \mathrm{SSD}_k^{total} = SSD_k^{left} + SSD_k^{right}
+  \end{align}
   $$
 
 * find the bin number $k$ that minimizes $\mathrm{SSD}_k^{total}$:
@@ -1311,12 +1325,16 @@ This is quite a strange kernel to apply! But it shows us how easy it is to achie
 ::: {solution-end}
 :::
 
-
+<!-- #region -->
 # Mean filtering with `skimage`
 
 We can implement a mean filter using the `ski.filters.rank.mean()` function. `skimage` prefers the term `footprint` to "kernel", but the meaning is the same. We supply a small matrix with which to "walk" through the image, centring the kernel on every pixel, and modifying that central pixel's value based on the values of the other pixels in it's neighbourhood, with the size and shape of the neighbourhood being defined by the kernel (`footprint`). 
 
 Inspecting the `skimage` documentation will reveal that the format expected for the `footprint` should be ["the [pixel] neighborhood expressed as an ndarray of 1’s and 0’s."](https://scikit-image.org/docs/0.25.x/api/skimage.filters.rank.html#skimage.filters.rank.mean). We will uses `np.ones()` to generate an array in this format. We use a `(9,9`) kernel to acheive a stronger visual effect:
+
+
+** NOTE FROM MEETING: show separate channels operation, then show using 3D kernel **
+<!-- #endregion -->
 
 ```{python}
 # A "footprint" (eg. kernel) to pass to `skimage`.
@@ -1409,7 +1427,7 @@ footprint_9_by_9_3D.shape
 ```{python}
 # Mean filter the colour image, with `skimage`.
 astronaut_mean_filtered_ski = ski.filters.rank.mean(astronaut,
-                                             footprint=footprint_9_by_9_3D)
+                                                    footprint=footprint_9_by_9_3D)
 
 # Show the result.
 plt.figure(figsize=(12, 6))
@@ -1422,7 +1440,7 @@ plt.imshow(astronaut_mean_filtered_ski)
 plt.tight_layout();
 ```
 
-We got a blurrier output image via `skimage` here, than in the manural convolution using `ndi.correlate()` because we used a larger kernel for the `skimage` filtering, and so are averaging over larger pixel neighbourhoods.
+We got a blurrier output image via `skimage` here, than in the manual convolution using `ndi.correlate()` because we used a larger kernel for the `skimage` filtering, and so are averaging over larger pixel neighbourhoods.
 
 
 # Summary

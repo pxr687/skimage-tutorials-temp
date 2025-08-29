@@ -16,15 +16,18 @@ plt.rcParams['image.cmap'] = 'gray'
 # Set NumPy precision to 2 decimal places
 np.set_printoptions(precision=2)
 
-#  Custom functions for illustrations, and to quickly report image attributes.
+#  Custom functions/variables for illustrations, to quickly report image attributes, and for exercises.
 from gaussian_illustration import make_gaussian_kernel
 from show_attributes import show_attributes
+from hints import secret_val
 from hints import hint_krazy_kernel
 ```
 
 # Gaussian filtering
 
 An important kernel-based filter with, let's be honest, a pretty cool name is the *Gaussian filter*. You may recognise the name from the famous [Gaussian distribution](https://en.wikipedia.org/wiki/Normal_distribution), which we plot below:
+
+** Note from meeting: Plot as curve not as histogram scipy.stats.normal **
 
 ```{python}
 # Plot a normal/Gaussian distribution.
@@ -186,6 +189,8 @@ Again, to make the relationship between the NumPy array and the graph as clear a
 
 You  may (or may not) recognise the "red mountain" - when we plot the `big_gaussian_kernel` - as a multi-dimensional [Gaussian distribution](https://en.wikipedia.org/wiki/Normal_distribution). Here is a prototypical multi-dimensional Gaussian:
 
+**NOTE FROM MEETING: replace this with python code**
+
 ![](images/2_D_gaussian.png)
 (Image from [here](https://stats.stackexchange.com/questions/102632/plot-two-dimensional-gaussian-density-function-in-matlab)).
 
@@ -312,6 +317,8 @@ plt.tight_layout();
 :label: krazy-kernel
 :class: dropdown
 :::
+
+**NOTE FROM MEETING**: show conversion to float and how it prevents the strange image, then use the scaling factor as the solution (prevents overflow) "instead of modifying the image, can you modify the kernel to preven the overflow" - then ask them to think/write an explanation of the overflow.
 
 Here is another kernel which follows a Gaussian-like pattern (e.g. pixels closer to the center are weighted more heavily):
 
@@ -479,6 +486,112 @@ plt.matshow(almost_gaussian_filtered_camera_solution_2);
 :::
 
 
+::: {exercise-start}
+:label: DIY-gauss
+:class: dropdown
+:::
+
+Below is the formula for generating a 2D Guassian distribution, and therefore for generating a 2D Gaussian kernel.
+
+$ \Large \text{Gaussian}(x, y) = \frac{1}{\sqrt{2 \pi \sigma^2}} e^{- \frac{x^2 + y2^2}{2\sigma^2}} $
+
+Your task is to define a function in the cell below which implements this Gaussian formula. Your function should take two 2-D arrays ($x$ and $y$), and a `sigma` ($\sigma$) value, as arguments. Figure out what needs to be in each input argument to produce the following `target_kernel`:
+
+```{python}
+# Show the target kernel.
+target_kernel = np.array([[0.  , 0.  , 0.  , 0.  , 0.  , 0.  , 0.  ],
+                          [0.  , 0.  , 0.01, 0.02, 0.01, 0.  , 0.  ],
+                          [0.  , 0.01, 0.06, 0.1 , 0.06, 0.01, 0.  ],
+                          [0.  , 0.02, 0.1 , 0.16, 0.1 , 0.02, 0.  ],
+                          [0.  , 0.01, 0.06, 0.1 , 0.06, 0.01, 0.  ],
+                          [0.  , 0.  , 0.01, 0.02, 0.01, 0.  , 0.  ],
+                          [0.  , 0.  , 0.  , 0.  , 0.  , 0.  , 0.  ]])
+
+# Plot and show the target kernel.
+kernel_plot(target_kernel);
+
+target_kernel
+```
+
+To help narrow things down, we have put some scaffolding code in the cell below, which shows how to generate the 2D `x` and `y` arrays with `np.meshgrid()`. The code is currently commented out, you will need to uncomment it, and modify it so it can be used to produce the `target_kernel`.
+
+*Hint*: the values you need, for your `x` and `y` arrays, and your `sigma` value, are all positive or negative integers smaller than 5.
+
+*Hint 2*: you should also think about the sum of all the values in the `target_kernel`.
+
+*Note*: there is a cell two cells below which can "mark" your work - it will test whether your function produces a kernel identical to the `target_kernel`. Once you have written your function, uncomment the marking code and run it. If you have done everything correctly, it will run with no error. If not, you will get a nasty-looking error (but keep going!).
+
+```{python}
+# YOUR CODE HERE
+
+# The input vectors for your function.
+#x_lin = np.arange(...)
+#y_lin = x_lin.copy()
+#x, y = np.meshgrid(x_lin,
+                   #y_lin)
+
+# Your function.
+def DIY_gauss(x, y, sigma):
+    ...
+```
+
+```{python}
+# MARK YOUR ANSWER HERE
+# If the code below runs with no error, you have written the function correctly...
+# You will need to un-comment the code first (obvivously!).
+
+# UNCOMMENT THE LINE BELOW AND RUN THE CODE
+# assert all(DIY_gauss_solution(x, y, sigma=secret_val()).round(2) == target_kernel.round(2).round(2))
+```
+
+::: {exercise-end}
+:::
+
+::: {solution-start} krazy-kernel
+:class: dropdown
+:::
+
+The function, with the correct input arguments is below. You need to use `np.arange(-3, 4)` for the inputs to `np.meshgrid()` - the resulting 2D `x_solution` and `y_solution` arrays are printed out under the cell. A `sigma` of 1 will generate the target.
+
+An important step here is `gauss = 1/gauss.sum() * gauss` which ensures that the kernel elements sum to 1. This makes sure that the average pixel intensity of an image stays the same as the original image, when we filter the image with this kernel (this is called a *normalizing the kernel*). If we skip this step, we may well create problems with illegal (too large!) pixel intensity values, or otherwise will be changing the intensities in a way that is not part of the typical Gaussian blur procedure...
+
+```{python}
+def DIY_gauss_solution(i, j, sigma):
+
+    # Implement the function.
+    gauss = 1/np.sqrt(2 * np.pi * sigma**2) * np.exp(- (i**2 + j**2) /(2 * sigma**2))
+
+    # Scale the kernel so it sums to 1.
+    gauss = 1/gauss.sum() * gauss
+    return gauss
+
+# Generate the input arrays.
+x_lin_solution = np.arange(-3, 4)
+y_lin_solution = x_lin.copy()
+x_solution, y_solution = np.meshgrid(x_lin_solution,
+                                     y_lin_solution)
+
+print(f"x =\n {x} \n \ny =\n {y}")
+
+print(f"\nGaussian kernel (same as `target_kernel`) =\n {DIY_gauss_solution(x_solution, y_solution, 1).round(2)}\n")
+
+# Is it all the same as the `target_kernel`?
+print("Same as the target?:")
+DIY_gauss_solution(x_solution, y_solution, 1).round(2) == target_kernel.round(2)
+```
+
+```{python}
+xenomorph = ski.io.imread("images/xenomorph.png", as_gray=True) < np.median(ski.io.imread("images/xenomorph.png", as_gray=True))
+target_image_solution = ndi.correlate(xenomorph, 
+                                      weights=DIY_gauss_solution(x_solution, y_solution, 10))
+
+plt.imshow(target_image_solution);
+```
+
+::: {solution-end}
+:::
+
+
 # Image sharpening (vis `scipy` and `skimage`)
 
 Gaussian filtering is a nice visual effect by itself, but filters (like the Gaussian filter) which blur an image can also, somewhat paradoxically, be used to *sharpen* an image. *Sharpening* is the opposite of blurring, it makes images clearer, with the features and edges more defined.
@@ -494,7 +607,9 @@ plt.imshow(blurry_cat);
 
 A simple way to sharpen the image is via the [following procedure](https://blog.demofox.org/2022/02/26/image-sharpening-convolution-kernels):
 
-$ \text{sharpened_image = original_image + (original_image – blurred_image)} $
+$$
+\text{sharpened_image} = \text{original_image} + (\text{original_image} – \text{blurred_image})
+$$
 
 Theoretically, $\text{(original_image – blurred_image)}$ contains sharpened details of the image, because it results from subtracting out a version of the image which is much blurrier than the original, giving us the *difference* between the original image and the blurry image. This effect is easiest to appreciate visually:
 
@@ -522,6 +637,8 @@ plt.imshow(sharpened)
 plt.tight_layout();
 ```
 
+**NOTE FROM MEETING: show this in 1D first, take the middle row of the kernel.**
+
 You can see that the sharpened image, as intended, has better clarity than the original. We can also use a specliazed [sharpening kernel](https://www.geeksforgeeks.org/deep-learning/types-of-convolution-kernels/#3-sharpening-kernel) to achieve the same effect:
 
 ![](images/sharpening_kernel.png)
@@ -547,7 +664,8 @@ no_diff
 Convolving this array with the `sharpening_kernel` will yield the same array, as there are no differences in the input.
 
 ```{python}
-ndi.correlate(no_diff, weights=sharpening_kernel)
+ndi.correlate(no_diff, 
+              weights=sharpening_kernel)
 ```
 
 Conversely, the array below contains a repeating pattern of 2's and 3's in the first three rows, so the differences between pixel neighbourhoods in the early rows are fairly consistent. 
@@ -568,7 +686,8 @@ Convolving with the `sharpening_kernel` results in a larger number of larger abs
 
 ```{python}
 # Larger differences in later rows, where there is greater variance in the pixel intensities.
-sharp_diffs = ndi.correlate(diffs, weights=sharpening_kernel)
+sharp_diffs = ndi.correlate(diffs, 
+                            weights=sharpening_kernel)
 print(sharp_diffs)
 ```
 

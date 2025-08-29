@@ -1,3 +1,5 @@
+import numpy as np
+
 def hint_corrupted_camera():
 	print("""You may want to `permute` some values.""")
 
@@ -29,3 +31,6 @@ to achieve the desired result...""")
 def hint_krazy_kernel():
 	print("""Think about "255 + 1", and what effect this might have on an image.
 	   """)
+	
+def secret_val():
+	return 1 - np.sqrt(np.exp(np.log(3 + 4 * 2 + 1 ** -1 - 11))**2) + (3-2)
