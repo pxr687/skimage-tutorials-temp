@@ -646,6 +646,51 @@ plt.title('Otsu filtered')
 plt.subplots_adjust();
 ```
 
+To recap, [Otsu’s method](http://ieeexplore.ieee.org/stamp/stamp.jsp?arnumber=4310076) proceeds like this:
+
+* create the 1D histogram of image values, where the histogram has $L$ bins.
+  The histogram is $L$ bin counts $\vec{c} = [c_1, c_2, ... c_L]$, where $c_i$
+  is the number of values falling in bin $i$.  The histogram has bin centers
+  $\vec{v} = [v_1, v_2, ..., v_L]$, where $v_i$ is the image value
+  corresponding to the center of bin $i$;
+
+* for every bin number $k \in [1, 2, 3, ..., L-1]$, divide the histogram at
+  that bin to form a *left histogram* and a *right histogram*, where the left
+  histogram has counts, centers $[c_1, ... c_k], [v_1, ... v_k]$, and the
+  right histogram has counts, centers $[c_{k+1} ... c_L], [v_{k+1} .. v_L]$;
+
+* calculate the mean corresponding to the values in the left and right
+  histogram:
+
+  $$
+  n_k^{left} = \sum_{i=1}^{k} c_i \\
+  \mu_k^{left} = \frac{1}{n_k^{left}} \sum_{i=1}^{k} c_i v_i \\
+  n_k^{right} = \sum_{i={k+1}}^{L} c_i \\
+  \mu_k^{right} = \frac{1}{n_k^{right}} \sum_{i={k+1}}^{L} c_i v_i
+  $$
+
+* calculate the sum of squared deviations from the left and right means:
+
+  $$
+  \mathrm{SSD}_k^{left} = \sum_{i=1}^{k} c_i (v_i - \mu_k^{left}) \\
+  \mathrm{SSD}_k^{right} = \sum_{i={k+1}}^{L} c_i (v_i - \mu_k^{right}) \\
+  \mathrm{SSD}_k^{total} = SSD_k^{left} + SSD_k^{right}
+  $$
+
+* find the bin number $k$ that minimizes $\mathrm{SSD}_k^{total}$:
+
+  $$
+  z = \mathrm{argmin}_k \mathrm{SSD}_k^{total}
+  $$
+
+* the binarizing threshold for the image is the value corresponding to this
+  bin $z$:
+
+  $$
+  t = v_z
+  $$
+
+
 ::: {exercise-start}
 :label: triple-cam
 :class: dropdown
@@ -1308,7 +1353,7 @@ plt.imshow(astronaut);
 
 If we try to filter this image with our (3, 3) `mean_kernel` we will get an error:
 
-```{python tags=c("raises-exception")}
+```{python}
 # Oh dear.
 astronaut_mean_filtered = ndi.correlate(astronaut, 
                                         weights=mean_kernel)

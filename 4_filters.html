@@ -1580,6 +1580,49 @@ Otsu threshold: 102.59765625
 <img alt="_images/0ab2a5b32d88dc388915a0d529e5eb5813f3c9f38859c5ba53fce278fefb727d.png" src="_images/0ab2a5b32d88dc388915a0d529e5eb5813f3c9f38859c5ba53fce278fefb727d.png" />
 </div>
 </div>
+<p>To recap, <a class="reference external" href="http://ieeexplore.ieee.org/stamp/stamp.jsp?arnumber=4310076">Otsu’s method</a> proceeds like this:</p>
+<ul>
+<li><p>create the 1D histogram of image values, where the histogram has <span class="math notranslate nohighlight">\(L\)</span> bins.
+The histogram is <span class="math notranslate nohighlight">\(L\)</span> bin counts <span class="math notranslate nohighlight">\(\vec{c} = [c_1, c_2, ... c_L]\)</span>, where <span class="math notranslate nohighlight">\(c_i\)</span>
+is the number of values falling in bin <span class="math notranslate nohighlight">\(i\)</span>.  The histogram has bin centers
+<span class="math notranslate nohighlight">\(\vec{v} = [v_1, v_2, ..., v_L]\)</span>, where <span class="math notranslate nohighlight">\(v_i\)</span> is the image value
+corresponding to the center of bin <span class="math notranslate nohighlight">\(i\)</span>;</p></li>
+<li><p>for every bin number <span class="math notranslate nohighlight">\(k \in [1, 2, 3, ..., L-1]\)</span>, divide the histogram at
+that bin to form a <em>left histogram</em> and a <em>right histogram</em>, where the left
+histogram has counts, centers <span class="math notranslate nohighlight">\([c_1, ... c_k], [v_1, ... v_k]\)</span>, and the
+right histogram has counts, centers <span class="math notranslate nohighlight">\([c_{k+1} ... c_L], [v_{k+1} .. v_L]\)</span>;</p></li>
+<li><p>calculate the mean corresponding to the values in the left and right
+histogram:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+  n_k^{left} = \sum_{i=1}^{k} c_i \\
+  \mu_k^{left} = \frac{1}{n_k^{left}} \sum_{i=1}^{k} c_i v_i \\
+  n_k^{right} = \sum_{i={k+1}}^{L} c_i \\
+  \mu_k^{right} = \frac{1}{n_k^{right}} \sum_{i={k+1}}^{L} c_i v_i
+  \end{split}\]</div>
+</li>
+<li><p>calculate the sum of squared deviations from the left and right means:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+  \mathrm{SSD}_k^{left} = \sum_{i=1}^{k} c_i (v_i - \mu_k^{left}) \\
+  \mathrm{SSD}_k^{right} = \sum_{i={k+1}}^{L} c_i (v_i - \mu_k^{right}) \\
+  \mathrm{SSD}_k^{total} = SSD_k^{left} + SSD_k^{right}
+  \end{split}\]</div>
+</li>
+<li><p>find the bin number <span class="math notranslate nohighlight">\(k\)</span> that minimizes <span class="math notranslate nohighlight">\(\mathrm{SSD}_k^{total}\)</span>:</p>
+<div class="math notranslate nohighlight">
+\[
+  z = \mathrm{argmin}_k \mathrm{SSD}_k^{total}
+  \]</div>
+</li>
+<li><p>the binarizing threshold for the image is the value corresponding to this
+bin <span class="math notranslate nohighlight">\(z\)</span>:</p>
+<div class="math notranslate nohighlight">
+\[
+  t = v_z
+  \]</div>
+</li>
+</ul>
 <div class="exercise dropdown admonition" id="triple-cam">
 
 <p class="admonition-title"><span class="caption-number">Exercise 19 </span></p>
@@ -2258,9 +2301,9 @@ Mean filter:
  [0.   0.   1.44 3.67 3.67 2.22 0.   0.  ]
  [0.   0.   1.11 2.78 2.78 1.67 0.   0.  ]
  [0.   0.   0.   0.   0.   0.   0.   0.  ]]
-
-
-Mean filter via SciPy `correlate`:
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Mean filter via SciPy `correlate`:
 
  [[0.   0.   0.44 1.33 1.33 0.89 0.   0.  ]
  [0.   0.   0.78 2.56 2.56 1.78 0.   0.  ]
@@ -2319,7 +2362,7 @@ Mean filter via SciPy `correlate`:
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/00c2cf73c06e12f846bb6d99852116907f17751be884225d148672ada14283b2.png" src="_images/00c2cf73c06e12f846bb6d99852116907f17751be884225d148672ada14283b2.png" />
+<img alt="_images/4dbc8bf6c98a80b2db3442028a461142fd7e08d445d242c2b37d1e32128f219c.png" src="_images/4dbc8bf6c98a80b2db3442028a461142fd7e08d445d242c2b37d1e32128f219c.png" />
 </div>
 </div>
 <p>The mean filter can remove some of the noise, restoring the clarity of the image:</p>
@@ -2344,7 +2387,7 @@ Mean filter via SciPy `correlate`:
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/4b2a91710ce75216fb31dddd410576ca5dde20d97c5a73098d3a3f431112cd90.png" src="_images/4b2a91710ce75216fb31dddd410576ca5dde20d97c5a73098d3a3f431112cd90.png" />
+<img alt="_images/50350f236bf46869695a425e8779fc419fd39d896071bf5e45e1dc3c80901699.png" src="_images/50350f236bf46869695a425e8779fc419fd39d896071bf5e45e1dc3c80901699.png" />
 </div>
 </div>
 <p>We can see that the image is clearer, the noise has been reduced and some of the signal has been restored.</p>
@@ -2374,7 +2417,7 @@ Mean filter via SciPy `correlate`:
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/e1f8262a01e0965d02a26a5389808dfe0103a04e3478e799f4d36d6150c35d1a.png" src="_images/e1f8262a01e0965d02a26a5389808dfe0103a04e3478e799f4d36d6150c35d1a.png" />
+<img alt="_images/1996d8a886a2065a80e9a179f8fd9b0458f13fe03c469855157a1ee4714bfdcb.png" src="_images/1996d8a886a2065a80e9a179f8fd9b0458f13fe03c469855157a1ee4714bfdcb.png" />
 </div>
 </div>
 <p>As with many filtering operations, the effect of altering aspects of the filtering process (like a threshold value or kernel size), is very context dependent. It may take many iterations before finding a “sweet spot”, and where the sweet spot is may be somewhat subjective.</p>
@@ -2551,7 +2594,7 @@ Min Pixel Value: 0
 </div>
 </div>
 <p>If we try to filter this image with our (3, 3) <code class="docutils literal notranslate"><span class="pre">mean_kernel</span></code> we will get an error:</p>
-<div class="cell tag_raises-exception docutils container">
+<div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Oh dear.</span>
 <span class="n">astronaut_mean_filtered</span> <span class="o">=</span> <span class="n">ndi</span><span class="o">.</span><span class="n">correlate</span><span class="p">(</span><span class="n">astronaut</span><span class="p">,</span> 
@@ -2623,28 +2666,12 @@ Min Pixel Value: 0
 </pre></div>
 </div>
 </div>
-<div class="cell_output docutils container">
-<img alt="_images/a9c2012ec84731771b981cfb5ca38264a90bb0085d70df92a920a1fa0b0eff71.png" src="_images/a9c2012ec84731771b981cfb5ca38264a90bb0085d70df92a920a1fa0b0eff71.png" />
-</div>
 </div>
 <p>Scikit-image will handle this more efficiently, using a 3D kernel. Below we adjust our <code class="docutils literal notranslate"><span class="pre">footprint_9_by_9</span></code> kernel by <code class="docutils literal notranslate"><span class="pre">np.stack()</span></code>-ing it into 3D:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># The original kernel we used for 2D mean filtering, in `skimage`.</span>
 <span class="n">footprint_9_by_9</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([[1., 1., 1., 1., 1., 1., 1., 1., 1.],
-       [1., 1., 1., 1., 1., 1., 1., 1., 1.],
-       [1., 1., 1., 1., 1., 1., 1., 1., 1.],
-       [1., 1., 1., 1., 1., 1., 1., 1., 1.],
-       [1., 1., 1., 1., 1., 1., 1., 1., 1.],
-       [1., 1., 1., 1., 1., 1., 1., 1., 1.],
-       [1., 1., 1., 1., 1., 1., 1., 1., 1.],
-       [1., 1., 1., 1., 1., 1., 1., 1., 1.],
-       [1., 1., 1., 1., 1., 1., 1., 1., 1.]])
 </pre></div>
 </div>
 </div>
@@ -2658,11 +2685,6 @@ Min Pixel Value: 0
                                 <span class="n">axis</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
 
 <span class="n">footprint_9_by_9_3D</span><span class="o">.</span><span class="n">shape</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(9, 9, 3)
 </pre></div>
 </div>
 </div>
@@ -2684,9 +2706,6 @@ Min Pixel Value: 0
 <span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">();</span>
 </pre></div>
 </div>
-</div>
-<div class="cell_output docutils container">
-<img alt="_images/a88aa159233a2716d7bf63745b9ef74379848eed8f074d1acab309ffbb8378ef.png" src="_images/a88aa159233a2716d7bf63745b9ef74379848eed8f074d1acab309ffbb8378ef.png" />
 </div>
 </div>
 <p>We got a blurrier output image via <code class="docutils literal notranslate"><span class="pre">skimage</span></code> here, than in the manural convolution using <code class="docutils literal notranslate"><span class="pre">ndi.correlate()</span></code> because we used a larger kernel for the <code class="docutils literal notranslate"><span class="pre">skimage</span></code> filtering, and so are averaging over larger pixel neighbourhoods.</p>
