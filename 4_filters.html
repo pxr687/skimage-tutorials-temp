@@ -32,9 +32,9 @@
     <link rel="stylesheet" type="text/css" href="_static/styles/sphinx-book-theme.css?v=eba8b062" />
     <link rel="stylesheet" type="text/css" href="_static/togglebutton.css?v=13237357" />
     <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
-    <link rel="stylesheet" type="text/css" href="_static/mystnb.8ecb98da25f57f5357bf6f572d296f466b2cfe2517ffebfabe82451661e28f02.css" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.8ecb98da25f57f5357bf6f572d296f466b2cfe2517ffebfabe82451661e28f02.css?v=6644e6bb" />
     <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css?v=4fa983c6" />
-    <link rel="stylesheet" type="text/css" href="_static/exercise.css" />
+    <link rel="stylesheet" type="text/css" href="_static/exercise.css?v=982b99e0" />
     <link rel="stylesheet" type="text/css" href="_static/sphinx-design.min.css?v=95c83b7e" />
   
   <!-- Pre-loaded scripts that we'll load fully later -->
@@ -2319,7 +2319,7 @@ Mean filter via SciPy `correlate`:
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/54dde2d818f8f035f2238f75145c4552d87078e05e154408da9583809fca4878.png" src="_images/54dde2d818f8f035f2238f75145c4552d87078e05e154408da9583809fca4878.png" />
+<img alt="_images/00c2cf73c06e12f846bb6d99852116907f17751be884225d148672ada14283b2.png" src="_images/00c2cf73c06e12f846bb6d99852116907f17751be884225d148672ada14283b2.png" />
 </div>
 </div>
 <p>The mean filter can remove some of the noise, restoring the clarity of the image:</p>
@@ -2344,7 +2344,7 @@ Mean filter via SciPy `correlate`:
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/307c08cf5e27073ecb85d9fc9c4b63b9a37ee3255f3c158c8887cdc6958072f6.png" src="_images/307c08cf5e27073ecb85d9fc9c4b63b9a37ee3255f3c158c8887cdc6958072f6.png" />
+<img alt="_images/4b2a91710ce75216fb31dddd410576ca5dde20d97c5a73098d3a3f431112cd90.png" src="_images/4b2a91710ce75216fb31dddd410576ca5dde20d97c5a73098d3a3f431112cd90.png" />
 </div>
 </div>
 <p>We can see that the image is clearer, the noise has been reduced and some of the signal has been restored.</p>
@@ -2374,7 +2374,7 @@ Mean filter via SciPy `correlate`:
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/effd061eff617b787e42efd856b9ffdb2e59dd807ae5a0b02e77394680951208.png" src="_images/effd061eff617b787e42efd856b9ffdb2e59dd807ae5a0b02e77394680951208.png" />
+<img alt="_images/e1f8262a01e0965d02a26a5389808dfe0103a04e3478e799f4d36d6150c35d1a.png" src="_images/e1f8262a01e0965d02a26a5389808dfe0103a04e3478e799f4d36d6150c35d1a.png" />
 </div>
 </div>
 <p>As with many filtering operations, the effect of altering aspects of the filtering process (like a threshold value or kernel size), is very context dependent. It may take many iterations before finding a “sweet spot”, and where the sweet spot is may be somewhat subjective.</p>
@@ -2551,7 +2551,7 @@ Min Pixel Value: 0
 </div>
 </div>
 <p>If we try to filter this image with our (3, 3) <code class="docutils literal notranslate"><span class="pre">mean_kernel</span></code> we will get an error:</p>
-<div class="cell docutils container">
+<div class="cell tag_raises-exception docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Oh dear.</span>
 <span class="n">astronaut_mean_filtered</span> <span class="o">=</span> <span class="n">ndi</span><span class="o">.</span><span class="n">correlate</span><span class="p">(</span><span class="n">astronaut</span><span class="p">,</span> 
@@ -2623,12 +2623,28 @@ Min Pixel Value: 0
 </pre></div>
 </div>
 </div>
+<div class="cell_output docutils container">
+<img alt="_images/a9c2012ec84731771b981cfb5ca38264a90bb0085d70df92a920a1fa0b0eff71.png" src="_images/a9c2012ec84731771b981cfb5ca38264a90bb0085d70df92a920a1fa0b0eff71.png" />
+</div>
 </div>
 <p>Scikit-image will handle this more efficiently, using a 3D kernel. Below we adjust our <code class="docutils literal notranslate"><span class="pre">footprint_9_by_9</span></code> kernel by <code class="docutils literal notranslate"><span class="pre">np.stack()</span></code>-ing it into 3D:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># The original kernel we used for 2D mean filtering, in `skimage`.</span>
 <span class="n">footprint_9_by_9</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([[1., 1., 1., 1., 1., 1., 1., 1., 1.],
+       [1., 1., 1., 1., 1., 1., 1., 1., 1.],
+       [1., 1., 1., 1., 1., 1., 1., 1., 1.],
+       [1., 1., 1., 1., 1., 1., 1., 1., 1.],
+       [1., 1., 1., 1., 1., 1., 1., 1., 1.],
+       [1., 1., 1., 1., 1., 1., 1., 1., 1.],
+       [1., 1., 1., 1., 1., 1., 1., 1., 1.],
+       [1., 1., 1., 1., 1., 1., 1., 1., 1.],
+       [1., 1., 1., 1., 1., 1., 1., 1., 1.]])
 </pre></div>
 </div>
 </div>
@@ -2642,6 +2658,11 @@ Min Pixel Value: 0
                                 <span class="n">axis</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
 
 <span class="n">footprint_9_by_9_3D</span><span class="o">.</span><span class="n">shape</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(9, 9, 3)
 </pre></div>
 </div>
 </div>
@@ -2663,6 +2684,9 @@ Min Pixel Value: 0
 <span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">();</span>
 </pre></div>
 </div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/a88aa159233a2716d7bf63745b9ef74379848eed8f074d1acab309ffbb8378ef.png" src="_images/a88aa159233a2716d7bf63745b9ef74379848eed8f074d1acab309ffbb8378ef.png" />
 </div>
 </div>
 <p>We got a blurrier output image via <code class="docutils literal notranslate"><span class="pre">skimage</span></code> here, than in the manural convolution using <code class="docutils literal notranslate"><span class="pre">ndi.correlate()</span></code> because we used a larger kernel for the <code class="docutils literal notranslate"><span class="pre">skimage</span></code> filtering, and so are averaging over larger pixel neighbourhoods.</p>
