@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>Convolutional filtering I - the mean filter &#8212; Scikit-image via NumPy and SciPy</title>
+    <title>Convolution filters I - the mean filter &#8212; Scikit-image via NumPy and SciPy</title>
   
   
   
@@ -32,9 +32,9 @@
     <link rel="stylesheet" type="text/css" href="_static/styles/sphinx-book-theme.css?v=eba8b062" />
     <link rel="stylesheet" type="text/css" href="_static/togglebutton.css?v=13237357" />
     <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
-    <link rel="stylesheet" type="text/css" href="_static/mystnb.8ecb98da25f57f5357bf6f572d296f466b2cfe2517ffebfabe82451661e28f02.css" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.8ecb98da25f57f5357bf6f572d296f466b2cfe2517ffebfabe82451661e28f02.css?v=6644e6bb" />
     <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css?v=4fa983c6" />
-    <link rel="stylesheet" type="text/css" href="_static/exercise.css" />
+    <link rel="stylesheet" type="text/css" href="_static/exercise.css?v=982b99e0" />
     <link rel="stylesheet" type="text/css" href="_static/sphinx-design.min.css?v=95c83b7e" />
   
   <!-- Pre-loaded scripts that we'll load fully later -->
@@ -64,7 +64,7 @@
     <link rel="canonical" href="https://pxr687.github.io/skimage-tutorials-temp/5_mean_filter.html" />
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="Convolutional filtering II - Gaussian blur, sharpening and edge detection" href="6_gaussian_sharpening_edge.html" />
+    <link rel="next" title="Convolution filters II - Gaussian blur, sharpening and edge detection" href="6_gaussian_sharpening_edge.html" />
     <link rel="prev" title="Threshold filtering" href="4_threshold_filters.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
@@ -177,7 +177,7 @@
     <div class="bd-toc-item navbar-nav active">
         <p aria-level="2" class="caption" role="heading"><span class="caption-text">Scikit-image via NumPy and SciPy</span></p>
 <ul class="current nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="0_images_as_numpy_arrays.html">What is an image? - Images as NumPy arrays</a></li>
+<li class="toctree-l1"><a class="reference internal" href="0_images_as_numpy_arrays.html">Images as NumPy arrays</a></li>
 
 
 
@@ -223,13 +223,13 @@
 
 
 
-<li class="toctree-l1 current active"><a class="current reference internal" href="#">Convolutional filtering I - the mean filter</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Convolution filters I - the mean filter</a></li>
 
 
 
 
 
-<li class="toctree-l1"><a class="reference internal" href="6_gaussian_sharpening_edge.html">Convolutional filtering II - Gaussian blur, sharpening and edge detection</a></li>
+<li class="toctree-l1"><a class="reference internal" href="6_gaussian_sharpening_edge.html">Convolution filters II - Gaussian blur, sharpening and edge detection</a></li>
 
 
 
@@ -448,7 +448,7 @@ document.write(`
               
 
 <div id="jb-print-docs-body" class="onlyprint">
-    <h1>Convolutional filtering I - the mean filter</h1>
+    <h1>Convolution filters I - the mean filter</h1>
     <!-- Table of contents -->
     <div id="print-main-content">
         <div id="jb-print-toc">
@@ -458,7 +458,7 @@ document.write(`
             </div>
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Convolutional filtering I - the mean filter</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Convolution filters I - the mean filter</a><ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#kernels-and-pixel-neighbourhoods">Kernels and pixel neighbourhoods</a></li>
 </ul>
 </li>
@@ -479,8 +479,8 @@ document.write(`
 <div id="searchbox"></div>
                 <article class="bd-article">
                   
-  <section class="tex2jax_ignore mathjax_ignore" id="convolutional-filtering-i-the-mean-filter">
-<h1>Convolutional filtering I - the mean filter<a class="headerlink" href="#convolutional-filtering-i-the-mean-filter" title="Link to this heading">#</a></h1>
+  <section class="tex2jax_ignore mathjax_ignore" id="convolution-filters-i-the-mean-filter">
+<h1>Convolution filters I - the mean filter<a class="headerlink" href="#convolution-filters-i-the-mean-filter" title="Link to this heading">#</a></h1>
 <section id="kernels-and-pixel-neighbourhoods">
 <h2>Kernels and pixel neighbourhoods<a class="headerlink" href="#kernels-and-pixel-neighbourhoods" title="Link to this heading">#</a></h2>
 <p>On the last page we filtered images based on a threshold value, or by multiple threshold values. Other filters work differently. They work by adjusting a given pixel’s value <em>based on the value of other pixels in the array</em>, such that each pixel can be subject to a different change in its value, depending of the value of other pixels. The mean filter works in this manner.</p>
@@ -1097,7 +1097,7 @@ Mean filter via SciPy `correlate`:
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/d3be1410d90b5f7ab7ab1c84fcb24a0748e4a4147e981188fce3b2b892fa9bc6.png" src="_images/d3be1410d90b5f7ab7ab1c84fcb24a0748e4a4147e981188fce3b2b892fa9bc6.png" />
+<img alt="_images/f26db082c7a27482a365693cf1f5544c39b02f99b821edda3dc4a3e3ad80adff.png" src="_images/f26db082c7a27482a365693cf1f5544c39b02f99b821edda3dc4a3e3ad80adff.png" />
 </div>
 </div>
 <p>The mean filter can remove some of the noise, restoring the clarity of the image:</p>
@@ -1122,7 +1122,7 @@ Mean filter via SciPy `correlate`:
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/f26dd581d10b76dc970f50cf6fc7982a9cd2c9c654e2ca40e51dab16f9cffdda.png" src="_images/f26dd581d10b76dc970f50cf6fc7982a9cd2c9c654e2ca40e51dab16f9cffdda.png" />
+<img alt="_images/3b15477479f8da1fc681b076e5b7478e25c3cb0cfd5c73ce9c9db290e3251b20.png" src="_images/3b15477479f8da1fc681b076e5b7478e25c3cb0cfd5c73ce9c9db290e3251b20.png" />
 </div>
 </div>
 <p>We can see that the image is clearer, the noise has been reduced and some of the signal has been restored.</p>
@@ -1152,7 +1152,7 @@ Mean filter via SciPy `correlate`:
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/68d1b3919ff45dad578d9ad415a6bee1975aa4dcbb095beab766f653d87bf157.png" src="_images/68d1b3919ff45dad578d9ad415a6bee1975aa4dcbb095beab766f653d87bf157.png" />
+<img alt="_images/11cf2d4bcfd08f2535ad06e2601c1ef42204d8c874b56b5485bae7d8cdba5926.png" src="_images/11cf2d4bcfd08f2535ad06e2601c1ef42204d8c874b56b5485bae7d8cdba5926.png" />
 </div>
 </div>
 <p>As with many filtering operations, the effect of altering aspects of the filtering process (like a threshold value or kernel size), is very context dependent. It may take many iterations before finding a “sweet spot”, and where the sweet spot is may be somewhat subjective.</p>
@@ -1545,7 +1545,7 @@ Min Pixel Value: 0
        title="next page">
       <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">Convolutional filtering II - Gaussian blur, sharpening and edge detection</p>
+        <p class="prev-next-title">Convolution filters II - Gaussian blur, sharpening and edge detection</p>
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>
@@ -1565,7 +1565,7 @@ Min Pixel Value: 0
   </div>
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Convolutional filtering I - the mean filter</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Convolution filters I - the mean filter</a><ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#kernels-and-pixel-neighbourhoods">Kernels and pixel neighbourhoods</a></li>
 </ul>
 </li>

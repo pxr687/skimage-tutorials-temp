@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>Convolutional filtering II - Gaussian blur, sharpening and edge detection &#8212; Scikit-image via NumPy and SciPy</title>
+    <title>Convolution filters II - Gaussian blur, sharpening and edge detection &#8212; Scikit-image via NumPy and SciPy</title>
   
   
   
@@ -65,7 +65,7 @@
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="Morphology" href="8_morphology.html" />
-    <link rel="prev" title="Convolutional filtering I - the mean filter" href="5_mean_filter.html" />
+    <link rel="prev" title="Convolution filters I - the mean filter" href="5_mean_filter.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   </head>
@@ -177,7 +177,7 @@
     <div class="bd-toc-item navbar-nav active">
         <p aria-level="2" class="caption" role="heading"><span class="caption-text">Scikit-image via NumPy and SciPy</span></p>
 <ul class="current nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="0_images_as_numpy_arrays.html">What is an image? - Images as NumPy arrays</a></li>
+<li class="toctree-l1"><a class="reference internal" href="0_images_as_numpy_arrays.html">Images as NumPy arrays</a></li>
 
 
 
@@ -223,13 +223,13 @@
 
 
 
-<li class="toctree-l1"><a class="reference internal" href="5_mean_filter.html">Convolutional filtering I - the mean filter</a></li>
+<li class="toctree-l1"><a class="reference internal" href="5_mean_filter.html">Convolution filters I - the mean filter</a></li>
 
 
 
 
 
-<li class="toctree-l1 current active"><a class="current reference internal" href="#">Convolutional filtering II - Gaussian blur, sharpening and edge detection</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Convolution filters II - Gaussian blur, sharpening and edge detection</a></li>
 
 
 
@@ -448,7 +448,7 @@ document.write(`
               
 
 <div id="jb-print-docs-body" class="onlyprint">
-    <h1>Convolutional filtering II - Gaussian blur, sharpening and edge detection</h1>
+    <h1>Convolution filters II - Gaussian blur, sharpening and edge detection</h1>
     <!-- Table of contents -->
     <div id="print-main-content">
         <div id="jb-print-toc">
@@ -458,7 +458,7 @@ document.write(`
             </div>
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Convolutional filtering II - Gaussian blur, sharpening and edge detection</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Convolution filters II - Gaussian blur, sharpening and edge detection</a></li>
 <li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#gaussian-filtering">Gaussian filtering</a></li>
 <li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#gaussian-filters-in-skimage">Gaussian filters in <code class="docutils literal notranslate"><span class="pre">skimage</span></code></a></li>
 <li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#image-sharpening">Image sharpening</a><ul class="visible nav section-nav flex-column">
@@ -485,8 +485,8 @@ document.write(`
 <div id="searchbox"></div>
                 <article class="bd-article">
                   
-  <section class="tex2jax_ignore mathjax_ignore" id="convolutional-filtering-ii-gaussian-blur-sharpening-and-edge-detection">
-<h1>Convolutional filtering II - Gaussian blur, sharpening and edge detection<a class="headerlink" href="#convolutional-filtering-ii-gaussian-blur-sharpening-and-edge-detection" title="Link to this heading">#</a></h1>
+  <section class="tex2jax_ignore mathjax_ignore" id="convolution-filters-ii-gaussian-blur-sharpening-and-edge-detection">
+<h1>Convolution filters II - Gaussian blur, sharpening and edge detection<a class="headerlink" href="#convolution-filters-ii-gaussian-blur-sharpening-and-edge-detection" title="Link to this heading">#</a></h1>
 <p>This page will explore additional foundational filters which use convolutional kernels, implementing them first with NumPy and SciPy, and then with Scikit-image. As usual, we begin with some imports:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -2266,7 +2266,7 @@ Min Pixel Value: -32768
       <i class="fa-solid fa-angle-left"></i>
       <div class="prev-next-info">
         <p class="prev-next-subtitle">previous</p>
-        <p class="prev-next-title">Convolutional filtering I - the mean filter</p>
+        <p class="prev-next-title">Convolution filters I - the mean filter</p>
       </div>
     </a>
     <a class="right-next"
@@ -2294,7 +2294,7 @@ Min Pixel Value: -32768
   </div>
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Convolutional filtering II - Gaussian blur, sharpening and edge detection</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Convolution filters II - Gaussian blur, sharpening and edge detection</a></li>
 <li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#gaussian-filtering">Gaussian filtering</a></li>
 <li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#gaussian-filters-in-skimage">Gaussian filters in <code class="docutils literal notranslate"><span class="pre">skimage</span></code></a></li>
 <li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#image-sharpening">Image sharpening</a><ul class="visible nav section-nav flex-column">

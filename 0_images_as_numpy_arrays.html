@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>What is an image? - Images as NumPy arrays &#8212; Scikit-image via NumPy and SciPy</title>
+    <title>Images as NumPy arrays &#8212; Scikit-image via NumPy and SciPy</title>
   
   
   
@@ -32,9 +32,9 @@
     <link rel="stylesheet" type="text/css" href="_static/styles/sphinx-book-theme.css?v=eba8b062" />
     <link rel="stylesheet" type="text/css" href="_static/togglebutton.css?v=13237357" />
     <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
-    <link rel="stylesheet" type="text/css" href="_static/mystnb.8ecb98da25f57f5357bf6f572d296f466b2cfe2517ffebfabe82451661e28f02.css" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.8ecb98da25f57f5357bf6f572d296f466b2cfe2517ffebfabe82451661e28f02.css?v=6644e6bb" />
     <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css?v=4fa983c6" />
-    <link rel="stylesheet" type="text/css" href="_static/exercise.css" />
+    <link rel="stylesheet" type="text/css" href="_static/exercise.css?v=982b99e0" />
     <link rel="stylesheet" type="text/css" href="_static/sphinx-design.min.css?v=95c83b7e" />
   
   <!-- Pre-loaded scripts that we'll load fully later -->
@@ -175,7 +175,7 @@
     <div class="bd-toc-item navbar-nav active">
         <p aria-level="2" class="caption" role="heading"><span class="caption-text">Scikit-image via NumPy and SciPy</span></p>
 <ul class="current nav bd-sidenav">
-<li class="toctree-l1 current active"><a class="current reference internal" href="#">What is an image? - Images as NumPy arrays</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Images as NumPy arrays</a></li>
 
 
 
@@ -221,13 +221,13 @@
 
 
 
-<li class="toctree-l1"><a class="reference internal" href="5_mean_filter.html">Convolutional filtering I - the mean filter</a></li>
+<li class="toctree-l1"><a class="reference internal" href="5_mean_filter.html">Convolution filtering I - the mean filter</a></li>
 
 
 
 
 
-<li class="toctree-l1"><a class="reference internal" href="6_gaussian_sharpening_edge.html">Convolutional filtering II - Gaussian blur, sharpening and edge detection</a></li>
+<li class="toctree-l1"><a class="reference internal" href="6_gaussian_sharpening_edge.html">Convolution filtering II - Gaussian blur, sharpening and edge detection</a></li>
 
 
 
@@ -446,7 +446,7 @@ document.write(`
               
 
 <div id="jb-print-docs-body" class="onlyprint">
-    <h1>What is an image? - Images as NumPy arrays</h1>
+    <h1>Images as NumPy arrays</h1>
     <!-- Table of contents -->
     <div id="print-main-content">
         <div id="jb-print-toc">
@@ -456,7 +456,7 @@ document.write(`
             </div>
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">What is an image? - Images as NumPy arrays</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Images as NumPy arrays</a></li>
 <li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#the-simplest-images">The simplest images</a></li>
 <li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#pixels-pixel-coordinates-and-interpolation">Pixels, pixel coordinates and interpolation</a><ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#more-on-array-pixels-vs-display-pixels">More on array pixels vs display pixels</a></li>
@@ -479,8 +479,8 @@ document.write(`
 <div id="searchbox"></div>
                 <article class="bd-article">
                   
-  <section class="tex2jax_ignore mathjax_ignore" id="what-is-an-image-images-as-numpy-arrays">
-<h1>What is an image? - Images as NumPy arrays<a class="headerlink" href="#what-is-an-image-images-as-numpy-arrays" title="Link to this heading">#</a></h1>
+  <section class="tex2jax_ignore mathjax_ignore" id="images-as-numpy-arrays">
+<h1>Images as NumPy arrays<a class="headerlink" href="#images-as-numpy-arrays" title="Link to this heading">#</a></h1>
 <p>This page explores how images can be represented as NumPy arrays. To get started, let’s think about the meaning of the word “image”.  The <em>intuitive meaning</em> is roughly “a picture of something”, or perhaps more broadly a “visual representation of something”. This is the familiar meaning which applies to images we encounter in everyday life, like advertisement posters, paintings, drawings, photographs and so on.</p>
 <p>The <em>technical meaning</em> of image - in scientific computing - is <em>an at least two dimensional array</em>. Depending on your background and familiarity with the topic, this definition may sound more or less strange. We assure you that each meaning is consistent with the other. However, each meaning refers to different, but overlapping, sets of things.</p>
 <p>Imagine an image - in the intuitive sense - printed on a piece of paper. The image has two dimensions, one dimensions runs along the <em>length</em> of the paper and one runs along <em>width</em> of the paper. Now imagine the <em>computer file</em> that was used to print the image onto the paper (e.g. the image file that was sent to a run-of-the-mill printer to produce the printed image). The computer file must contain information which tells the printer what to put where along each dimension of the piece of paper. For instance, should that location contain black, white, grey or a colour? By controlling these things, the information contained in the file will ultimately determine the look of the printed image (e.g. what it is a picture <em>of</em>).</p>
@@ -1258,7 +1258,7 @@ document.write(`
   </div>
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">What is an image? - Images as NumPy arrays</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Images as NumPy arrays</a></li>
 <li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#the-simplest-images">The simplest images</a></li>
 <li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#pixels-pixel-coordinates-and-interpolation">Pixels, pixel coordinates and interpolation</a><ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#more-on-array-pixels-vs-display-pixels">More on array pixels vs display pixels</a></li>

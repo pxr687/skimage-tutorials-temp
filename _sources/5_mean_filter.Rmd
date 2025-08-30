@@ -1,4 +1,4 @@
-# Convolutional filtering I - the mean filter
+# Convolution filters I - the mean filter
 
 ## Kernels and pixel neighbourhoods
 
