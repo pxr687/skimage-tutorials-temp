@@ -6,7 +6,7 @@ jupyter:
       extension: .Rmd
       format_name: rmarkdown
       format_version: '1.2'
-      jupytext_version: 1.17.2
+      jupytext_version: 1.17.3
   kernelspec:
     display_name: Python 3 (ipykernel)
     language: python
@@ -17,11 +17,17 @@ jupyter:
 
 [Morphology](https://en.wikipedia.org/wiki/Mathematical_morphology) is the mathematical study of shapes and has numerous applications in image processing. As such, Scikit-image has a dedicated module (`ski.morphology`) for associated functions. 
 
-We already encountered structuring elements - (of which kernels are one type) - on [earlier](4_filters) [pages](5_filters_2). A structuring element is a grid of a certain shape - you can think of it as a "template" - which is used to define the "neighbourhood" of pixels which an image processing operation affects. 
+We already encountered structuring elements - (of which kernels are one type) - on [earlier](4_threshold_filters) [pages](5_mean_filter). A structuring element is a grid of a certain shape - you can think of it as a "template" - which is used to define the "neighbourhood" of pixels which an image processing operation affects. 
 
 A (3, 3) structuring element can be applied as a square which affects 9 pixels - we might alter the image by centering this structuring element over every pixel, and replacing each pixel with the mean of the other pixels in it's "neighbourhood", for instance:
 
 ![](images/kernel_general.png)
+
+You will also recall that we need a strategy for pixels at the edge of the image, where we center the structuring element on a pixel where part of the structuring element "falls off" the edge of the image:
+
+![](images/kernel_hit_the_edge.png)
+
+Options here including "padding" the empty structuring element locations with a repeated value (like 0), or just duplicating the existing pixels at the edge of the image.
 
 We have seen structuring elements applied during filtering operations, courtesy of the `ski.filters` module. Morphological operations also make use of structuring elements, though in morphological operations, structuring elements are binary (contain only 0s and 1s). 
 

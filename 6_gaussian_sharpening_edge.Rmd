@@ -1,6 +1,6 @@
-# Image filtering II
+# Convolutional filtering II - Gaussian blur, sharpening and edge detection
 
-On the previous filtering page we looked at single and multi-value threshold filtering, as well as at filtering via convolutional kernels. This page will explore additional foundational filters which use convolutional kernels, implementing them first with NumPy and SciPy, and then with Scikit-image.
+This page will explore additional foundational filters which use convolutional kernels, implementing them first with NumPy and SciPy, and then with Scikit-image. As usual, we begin with some imports:
 
 ```{python}
 # Library imports.

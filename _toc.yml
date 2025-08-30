@@ -7,7 +7,8 @@ parts:
       - file: 1_colour_images_as_numpy_arrays
       - file: 2_skimage_intro
       - file: 3_skimage_processing_from_numpy_and_scipy
-      - file: 4_filters
-      - file: 5_filters_2
-      - file: 7_morphology
+      - file: 4_threshold_filters
+      - file: 5_mean_filter
+      - file: 6_gaussian_sharpening_edge
+      - file: 8_morphology
       

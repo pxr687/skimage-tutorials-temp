@@ -6,7 +6,7 @@ jupyter:
       extension: .Rmd
       format_name: rmarkdown
       format_version: '1.2'
-      jupytext_version: 1.17.2
+      jupytext_version: 1.17.3
   kernelspec:
     display_name: Python 3 (ipykernel)
     language: python
@@ -19,9 +19,7 @@ This page explores how images can be represented as NumPy arrays. To get started
 
 The *technical meaning* of image - in scientific computing - is *an at least two dimensional array*. Depending on your background and familiarity with the topic, this definition may sound more or less strange. We assure you that each meaning is consistent with the other. However, each meaning refers to different, but overlapping, sets of things. 
 
-Imagine an image - in the intuitive sense - printed on a piece of paper. The image has two dimensions, one dimensions runs along the *length* of the paper and one runs along *width* of the paper. Now imagine the *computer file* that was used to print the image onto the paper (e.g. the image file that was sent to a run-of-the-mill printer to produce the printed image). 
-
-The computer file must contain information which tells the printer what to put where along each dimension of the piece of paper. For instance, should that location contain black, white, grey or a colour? By controlling these things, the information contained in the file will ultimately determine the look of the printed image (e.g. what it is a picture *of*). 
+Imagine an image - in the intuitive sense - printed on a piece of paper. The image has two dimensions, one dimensions runs along the *length* of the paper and one runs along *width* of the paper. Now imagine the *computer file* that was used to print the image onto the paper (e.g. the image file that was sent to a run-of-the-mill printer to produce the printed image). The computer file must contain information which tells the printer what to put where along each dimension of the piece of paper. For instance, should that location contain black, white, grey or a colour? By controlling these things, the information contained in the file will ultimately determine the look of the printed image (e.g. what it is a picture *of*). 
 
 The file and resulting printed image might depict an object that was not originally created on a computer. The image may be of a hand painting, for example. Things like hand paintings fall under the intuitive meaning of "image", but, until they are represented on a computer, they do not fall under the technical meaning of "image". A hand painting is not an array of numbers, but the computer file which represents it is. The technical meaning of "image" refers to the computer representations of these things (e.g. a scan or photograph of a hand painting), as well as to other inherently digital images like digital photographs, CT sans, MRI scans etc (more on these [later](2_skimage_intro)).
 
