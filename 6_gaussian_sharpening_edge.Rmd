@@ -1,4 +1,4 @@
-# Convolutional filtering II - Gaussian blur, sharpening and edge detection
+# Convolution filtering II - Gaussian blur, sharpening and edge detection
 
 This page will explore additional foundational filters which use convolutional kernels, implementing them first with NumPy and SciPy, and then with Scikit-image. As usual, we begin with some imports:
 
