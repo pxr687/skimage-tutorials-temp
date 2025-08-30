@@ -510,7 +510,7 @@ $ \Large \text{Gaussian}(x, y) = \frac{1}{\sqrt{2 \pi \sigma^2}} e^{- \frac{x^2 
 
 In contrast the formula we saw above for the same distribution, *this formula assumes that both $x$ and $y$ have an equal spread*. Generally we will want this equality of spread, for a Gaussian kernel.
 
-Your task is to define a function in the cell below which implements this revised Gaussian formula. Your function should take two 2-D arrays ($x$ and $y$), and a `sigma` ($\sigma$) value, as arguments. Figure out what needs to be in each input argument to produce the following `target_kernel`:
+Your task is to define a function in the cell below (called `DIY_gauss`) which implements this revised Gaussian formula. Your function should take two 2-D arrays ($x$ and $y$), and a `sigma` ($\sigma$) value, as arguments. Figure out what needs to be in each input argument to produce the following `target_kernel`:
 
 ```{python}
 # Show the target kernel.
@@ -761,21 +761,24 @@ sharp_diffs = ndi.correlate(diffs,
 print(sharp_diffs)
 ```
 
-Let's apply the `sharpening_kernel` to the `blurry_cat` image array. As this array is a 3D colour image, we first `np.stack()` our `sharpening_kernel` into 3D:
+Let's apply the `sharpening_kernel` to the `blurry_cat` image array. As this array is a 3D colour image, we apply the kernel to each colour channel separately:
 
 ```{python}
-# Stack to 3D.
-sharpening_kernel = np.stack([sharpening_kernel,
-                              sharpening_kernel,
-                              sharpening_kernel],
-                              axis=2)
+# Separately sharpen each colour channel of the `blurry_cat` image.
+sharpened_channels = {}
+for i in np.arange(3):
+    sharpened_cat_channel = ndi.correlate(blurry_cat[:, :, i],
+                                          weights=sharpening_kernel)
+    sharpened_channels[i] = sharpened_cat_channel
 
-# Sharpen `blurry_cat`.
-sharpen_cat = ndi.correlate(blurry_cat,
-                           weights=sharpening_kernel)
+# Stack back to 3D.
+sharpened_cat = np.stack([sharpened_channels[0],
+                          sharpened_channels[1],
+                          sharpened_channels[2]],
+                          axis=2)
 
 # Rescale to avoid illegal an pixel range.
-sharpen_cat = ski.exposure.rescale_intensity(sharpen_cat, out_range=(0, 1))
+sharpened_cat = ski.exposure.rescale_intensity(sharpened_cat, out_range=(0, 1))
 
 # Show the result.
 plt.figure(figsize=(16, 6))
@@ -784,7 +787,7 @@ plt.title('Original')
 plt.imshow(blurry_cat)
 plt.subplot(1,2,2)
 plt.title('Sharpened')
-plt.imshow(sharpen_cat)
+plt.imshow(sharpened_cat)
 plt.tight_layout();
 ```
 
@@ -792,11 +795,12 @@ Sci-kit image (unsurprisingly) also has filters to sharpen images. The `ski.filt
 
 $ \text{sharpened_img = original_img + scaling_amount * (original_img - blurred_img)} $
 
-...where "scaling_amount" is a single value which amplifies the sharpened details. Here is the result on `blurry_cat`, using the default parameters:
+...where "scaling_amount" is a single value which amplifies the sharpened details. Here is the result on `blurry_cat`, using the default parameters, aside from `channel_axis`. We set this to 2 to tell the function that this is a colour image, with the colour channels in the third dimension (`axis = 2`). This prevents the sharpening filter from affecting the colour of the image:
 
 ```{python}
 # Sharpen `blurry_cat`.
-sharpen_cat = ski.filters.unsharp_mask(blurry_cat)
+sharpen_cat = ski.filters.unsharp_mask(blurry_cat,
+                                      channel_axis=2)
 
 # Show the result.
 plt.figure(figsize=(16, 6))
@@ -814,7 +818,8 @@ Changing the `amount` parameter will intensify the sharpening effect:
 ```{python}
 # Sharpen `blurry_cat`.
 sharpen_cat = ski.filters.unsharp_mask(blurry_cat,
-                                       amount=3)
+                                       amount=2,
+                                       channel_axis=2)
 
 # Show the result.
 plt.figure(figsize=(16, 6))
@@ -827,15 +832,120 @@ plt.imshow(sharpen_cat)
 plt.tight_layout();
 ```
 
-## Sharpening exercise
+::: {exercise-start}
+:label: stay-sharp
+:class: dropdown
+:::
 
-- add blur to an image using a custom Gaussian kernel (use function from last exercise)
+In keeping with the "sharp" topic, below we load in a picture of a very regal-looking eagle, from `ski.data`:
 
-- make a custom sharpening kernel, do not copy original, but think about what needs to be done
+```{python}
+# Load in and show an image.
+eagle = ski.data.eagle()
+show_attributes(eagle)
+plt.imshow(eagle);
+```
 
-- try to recreate a target (but say that result can be approximate e.g. very hard to work out EXACTLY what is in our kernel...)
+We're feeling vandalistic, and so have ruined this image by adding a boatload of Gaussian blur, in the cell below:
 
-- final step to use `unsharp_mask` in `skimage`
+```{python}
+# Blur the `eagle` image.
+blurry_eagle = ski.filters.gaussian(eagle,
+                                    sigma=5)
+plt.imshow(blurry_eagle);
+```
+
+You mission is the following. Make a custom sharpening kernel to sharpen `blurry_eagle`. You need to modify the kernel, because if we use the original `sharpening_kernel` on `blurry_eagle`, it does not perform well. The image below shows the result of sharpening with the original `sharpening_kernel`:
+
+![](images/not_great_sharp.png)
+
+When making your modifications to the kernel pay attention to the original values in `sharpening_kernel` to decide what values you can use to achieve a similar but stronger effect. Here is the original `sharpening_kernel`, to act as your spiritual guide:
+
+![](images/sharpening_kernel.png)
+
+...think carefully about what you can change to improve the sharpening performance. 
+
+As a final step use `ski.filters.unsharp_mask()` as an alternate method sharpen the `blurry_eagle` image. Use whatever argument settings you need. Compare the result to your custom kernel.
+
+```{python}
+# YOUR CODE HERE
+my_sharpening_kernel = ...
+
+sharp_eagle = ...
+```
+
+::: {exercise-end}
+:::
+
+::: {solution-start} stay-sharp
+:class: dropdown
+:::
+
+We go some pretty good performance from the following kernel:
+
+```{python}
+another_sharpening_kernel = np.array([[ -3, -3, -3],
+                                      [ -3,  25, -3],
+                                      [ -3, -3, -3]])
+```
+
+An important feature to be aware of here, is that the sharpening kernel should sum to 1:
+
+```{python}
+# The sum of the original `sharpening_kernel`.
+sharpening_kernel.sum()
+```
+
+```{python}
+# The sum of the newer, stronger `another_sharpening_kernel`.
+another_sharpening_kernel.sum()
+```
+
+As with Gaussian kernels, this is to ensure that the sharpening filter does not alter the average brightness of the original image. 
+
+The reason our new `another_sharpening_kernel` performs better than the original `sharpening_kernel` is because the central value is higher. To ensure the kernel sums to 1, we therefore must increase the absolute value of the negative kernel elements. These two factors (bigger central value, bigger negative off-centre values) increase the strength of the sharpening effect. 
+
+We use the new kernel to sharpen `blurry_eagle` in the cell below:
+
+```{python}
+# Perform the convolution, to sharpen the image.
+sharpened_eagle_solution = ndi.correlate(blurry_eagle,
+                               weights=another_sharpening_kernel)
+
+# Rescale to avoid illegal an pixel range.
+sharpened_eagle_solution = ski.exposure.rescale_intensity(sharpened_eagle_solution, out_range=(0, 1))
+
+# Show the result.
+plt.figure(figsize=(12, 6))
+plt.subplot(1,2,1)
+plt.title('Blurry')
+plt.imshow(blurry_eagle)
+plt.subplot(1,2,2)
+plt.title('Sharpened')
+plt.imshow(sharpened_eagle_solution)
+plt.tight_layout();
+```
+
+We also got pretty good results from `ski.filters.unsharp_mask()`, setting the `amount` argument to 3 (for a strong sharpening effect):
+
+```{python}
+# Sharpen, via `skimage`.
+sharpened_eagle_solution_from_ski = ski.filters.unsharp_mask(blurry_eagle, 
+                                                             amount=5)
+
+# Show the result.
+plt.figure(figsize=(12, 6))
+plt.subplot(1,2,1)
+plt.title('Blurry')
+plt.imshow(blurry_eagle)
+plt.subplot(1,2,2)
+plt.title('Sharpened (with `skimage`)')
+plt.imshow(sharpened_eagle_solution_from_ski )
+plt.tight_layout();
+```
+
+::: {solution-end}
+:::
 
 
 # Edge detection filtering 
@@ -887,6 +997,8 @@ Let's think about what has happened here at the level of the individual pixels. 
 You can see that, for a binary image, the horizontal kernel convolution essential "counts" the number of 0-to-1 vertical changes in the kernel location, which lets it detect horizontal edges.
 
 Conversely, when the kernel hits the 1-to-0 vertical changes at the bottom of the array, we get a similar count of the 1-to-0 changes, but indicated by a negative value, telling his that the gradient is in the other direction:
+
+![](images/horizontal_edge_detection_2.png)
 
 ```{python}
 # Show the horizontal edge-filtered array.
@@ -1052,6 +1164,9 @@ plt.imshow(coffee_vertical_horizontal_stack);
 
 - try to combine edge detection with some colour manipulation e.g. colouring horizontal and vertical edges differently...
 
+```{python}
+
+```
 
 # Sobel edge detection filtering
 

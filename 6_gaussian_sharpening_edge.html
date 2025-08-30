@@ -461,10 +461,7 @@ document.write(`
 <li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Convolution filters II - Gaussian blur, sharpening and edge detection</a></li>
 <li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#gaussian-filtering">Gaussian filtering</a></li>
 <li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#gaussian-filters-in-skimage">Gaussian filters in <code class="docutils literal notranslate"><span class="pre">skimage</span></code></a></li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#image-sharpening">Image sharpening</a><ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#sharpening-exercise">Sharpening exercise</a></li>
-</ul>
-</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#image-sharpening">Image sharpening</a></li>
 <li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#edge-detection-filtering">Edge detection filtering</a><ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#edge-detection-exercise">Edge detection exercise</a></li>
 </ul>
@@ -1225,7 +1222,7 @@ Min Pixel Value: 0
 <p>Below is another way of writing the formula for generating a 2D Guassian distribution, and therefore for generating a 2D Gaussian kernel.</p>
 <p><span class="math notranslate nohighlight">\( \Large \text{Gaussian}(x, y) = \frac{1}{\sqrt{2 \pi \sigma^2}} e^{- \frac{x^2 + y^2}{2\sigma^2}} \)</span></p>
 <p>In contrast the formula we saw above for the same distribution, <em>this formula assumes that both <span class="math notranslate nohighlight">\(x\)</span> and <span class="math notranslate nohighlight">\(y\)</span> have an equal spread</em>. Generally we will want this equality of spread, for a Gaussian kernel.</p>
-<p>Your task is to define a function in the cell below which implements this revised Gaussian formula. Your function should take two 2-D arrays (<span class="math notranslate nohighlight">\(x\)</span> and <span class="math notranslate nohighlight">\(y\)</span>), and a <code class="docutils literal notranslate"><span class="pre">sigma</span></code> (<span class="math notranslate nohighlight">\(\sigma\)</span>) value, as arguments. Figure out what needs to be in each input argument to produce the following <code class="docutils literal notranslate"><span class="pre">target_kernel</span></code>:</p>
+<p>Your task is to define a function in the cell below (called <code class="docutils literal notranslate"><span class="pre">DIY_gauss</span></code>) which implements this revised Gaussian formula. Your function should take two 2-D arrays (<span class="math notranslate nohighlight">\(x\)</span> and <span class="math notranslate nohighlight">\(y\)</span>), and a <code class="docutils literal notranslate"><span class="pre">sigma</span></code> (<span class="math notranslate nohighlight">\(\sigma\)</span>) value, as arguments. Figure out what needs to be in each input argument to produce the following <code class="docutils literal notranslate"><span class="pre">target_kernel</span></code>:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Show the target kernel.</span>
@@ -1624,21 +1621,24 @@ Same as the target? This array should contain on `True`s if so...:
 </div>
 </div>
 </div>
-<p>Let’s apply the <code class="docutils literal notranslate"><span class="pre">sharpening_kernel</span></code> to the <code class="docutils literal notranslate"><span class="pre">blurry_cat</span></code> image array. As this array is a 3D colour image, we first <code class="docutils literal notranslate"><span class="pre">np.stack()</span></code> our <code class="docutils literal notranslate"><span class="pre">sharpening_kernel</span></code> into 3D:</p>
+<p>Let’s apply the <code class="docutils literal notranslate"><span class="pre">sharpening_kernel</span></code> to the <code class="docutils literal notranslate"><span class="pre">blurry_cat</span></code> image array. As this array is a 3D colour image, we apply the kernel to each colour channel separately:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Stack to 3D.</span>
-<span class="n">sharpening_kernel</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">stack</span><span class="p">([</span><span class="n">sharpening_kernel</span><span class="p">,</span>
-                              <span class="n">sharpening_kernel</span><span class="p">,</span>
-                              <span class="n">sharpening_kernel</span><span class="p">],</span>
-                              <span class="n">axis</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Separately sharpen each colour channel of the `blurry_cat` image.</span>
+<span class="n">sharpened_channels</span> <span class="o">=</span> <span class="p">{}</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">3</span><span class="p">):</span>
+    <span class="n">sharpened_cat_channel</span> <span class="o">=</span> <span class="n">ndi</span><span class="o">.</span><span class="n">correlate</span><span class="p">(</span><span class="n">blurry_cat</span><span class="p">[:,</span> <span class="p">:,</span> <span class="n">i</span><span class="p">],</span>
+                                          <span class="n">weights</span><span class="o">=</span><span class="n">sharpening_kernel</span><span class="p">)</span>
+    <span class="n">sharpened_channels</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">sharpened_cat_channel</span>
 
-<span class="c1"># Sharpen `blurry_cat`.</span>
-<span class="n">sharpen_cat</span> <span class="o">=</span> <span class="n">ndi</span><span class="o">.</span><span class="n">correlate</span><span class="p">(</span><span class="n">blurry_cat</span><span class="p">,</span>
-                           <span class="n">weights</span><span class="o">=</span><span class="n">sharpening_kernel</span><span class="p">)</span>
+<span class="c1"># Stack back to 3D.</span>
+<span class="n">sharpened_cat</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">stack</span><span class="p">([</span><span class="n">sharpened_channels</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span>
+                          <span class="n">sharpened_channels</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span>
+                          <span class="n">sharpened_channels</span><span class="p">[</span><span class="mi">2</span><span class="p">]],</span>
+                          <span class="n">axis</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
 
 <span class="c1"># Rescale to avoid illegal an pixel range.</span>
-<span class="n">sharpen_cat</span> <span class="o">=</span> <span class="n">ski</span><span class="o">.</span><span class="n">exposure</span><span class="o">.</span><span class="n">rescale_intensity</span><span class="p">(</span><span class="n">sharpen_cat</span><span class="p">,</span> <span class="n">out_range</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>
+<span class="n">sharpened_cat</span> <span class="o">=</span> <span class="n">ski</span><span class="o">.</span><span class="n">exposure</span><span class="o">.</span><span class="n">rescale_intensity</span><span class="p">(</span><span class="n">sharpened_cat</span><span class="p">,</span> <span class="n">out_range</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>
 
 <span class="c1"># Show the result.</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">16</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
@@ -1647,22 +1647,23 @@ Same as the target? This array should contain on `True`s if so...:
 <span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">blurry_cat</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Sharpened&#39;</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">sharpen_cat</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">sharpened_cat</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">();</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/6a17d35794c72bc3e7620efabe3cbcfaadd3880d99d9d846a1fbf31c51580001.png" src="_images/6a17d35794c72bc3e7620efabe3cbcfaadd3880d99d9d846a1fbf31c51580001.png" />
+<img alt="_images/49bdbc0788cff7d1ee554c52e739c063985b20e61febcad587aa742167c31cfc.png" src="_images/49bdbc0788cff7d1ee554c52e739c063985b20e61febcad587aa742167c31cfc.png" />
 </div>
 </div>
 <p>Sci-kit image (unsurprisingly) also has filters to sharpen images. The <code class="docutils literal notranslate"><span class="pre">ski.filters.unsharp_mask()</span></code> filter is one such filter,  and it uses a similar approach to the one we used above,  when we sharpened an image using a Gaussian filter. <code class="docutils literal notranslate"><span class="pre">ski.filters.unsharp_mask()</span></code> uses the following approach:</p>
 <p><span class="math notranslate nohighlight">\( \text{sharpened_img = original_img + scaling_amount * (original_img - blurred_img)} \)</span></p>
-<p>…where “scaling_amount” is a single value which amplifies the sharpened details. Here is the result on <code class="docutils literal notranslate"><span class="pre">blurry_cat</span></code>, using the default parameters:</p>
+<p>…where “scaling_amount” is a single value which amplifies the sharpened details. Here is the result on <code class="docutils literal notranslate"><span class="pre">blurry_cat</span></code>, using the default parameters, aside from <code class="docutils literal notranslate"><span class="pre">channel_axis</span></code>. We set this to 2 to tell the function that this is a colour image, with the colour channels in the third dimension (<code class="docutils literal notranslate"><span class="pre">axis</span> <span class="pre">=</span> <span class="pre">2</span></code>). This prevents the sharpening filter from affecting the colour of the image:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Sharpen `blurry_cat`.</span>
-<span class="n">sharpen_cat</span> <span class="o">=</span> <span class="n">ski</span><span class="o">.</span><span class="n">filters</span><span class="o">.</span><span class="n">unsharp_mask</span><span class="p">(</span><span class="n">blurry_cat</span><span class="p">)</span>
+<span class="n">sharpen_cat</span> <span class="o">=</span> <span class="n">ski</span><span class="o">.</span><span class="n">filters</span><span class="o">.</span><span class="n">unsharp_mask</span><span class="p">(</span><span class="n">blurry_cat</span><span class="p">,</span>
+                                      <span class="n">channel_axis</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
 
 <span class="c1"># Show the result.</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">16</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
@@ -1677,7 +1678,7 @@ Same as the target? This array should contain on `True`s if so...:
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/6e168b21badfc2b1ac931d916d08c1075e928768a6e99eb09401b9a2f22081d8.png" src="_images/6e168b21badfc2b1ac931d916d08c1075e928768a6e99eb09401b9a2f22081d8.png" />
+<img alt="_images/0d9a110ae9903d2256bad667410607bac6d2e1db9696180641f88eb93b530de3.png" src="_images/0d9a110ae9903d2256bad667410607bac6d2e1db9696180641f88eb93b530de3.png" />
 </div>
 </div>
 <p>Changing the <code class="docutils literal notranslate"><span class="pre">amount</span></code> parameter will intensify the sharpening effect:</p>
@@ -1685,7 +1686,8 @@ Same as the target? This array should contain on `True`s if so...:
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Sharpen `blurry_cat`.</span>
 <span class="n">sharpen_cat</span> <span class="o">=</span> <span class="n">ski</span><span class="o">.</span><span class="n">filters</span><span class="o">.</span><span class="n">unsharp_mask</span><span class="p">(</span><span class="n">blurry_cat</span><span class="p">,</span>
-                                       <span class="n">amount</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+                                       <span class="n">amount</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span>
+                                       <span class="n">channel_axis</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
 
 <span class="c1"># Show the result.</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">16</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
@@ -1700,18 +1702,160 @@ Same as the target? This array should contain on `True`s if so...:
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/dc9856f4ce2dcbca0082917f1d2e3ce37e716b13ad731bb0e46432e470258ae8.png" src="_images/dc9856f4ce2dcbca0082917f1d2e3ce37e716b13ad731bb0e46432e470258ae8.png" />
+<img alt="_images/9e6e280063410ac41dde482d1347717884d23d0f098966109fa9fcd2c6f90dd4.png" src="_images/9e6e280063410ac41dde482d1347717884d23d0f098966109fa9fcd2c6f90dd4.png" />
 </div>
 </div>
-<section id="sharpening-exercise">
-<h2>Sharpening exercise<a class="headerlink" href="#sharpening-exercise" title="Link to this heading">#</a></h2>
-<ul class="simple">
-<li><p>add blur to an image using a custom Gaussian kernel (use function from last exercise)</p></li>
-<li><p>make a custom sharpening kernel, do not copy original, but think about what needs to be done</p></li>
-<li><p>try to recreate a target (but say that result can be approximate e.g. very hard to work out EXACTLY what is in our kernel…)</p></li>
-<li><p>final step to use <code class="docutils literal notranslate"><span class="pre">unsharp_mask</span></code> in <code class="docutils literal notranslate"><span class="pre">skimage</span></code></p></li>
-</ul>
+<div class="exercise dropdown admonition" id="stay-sharp">
+
+<p class="admonition-title"><span class="caption-number">Exercise 24 </span></p>
+<section id="exercise-content">
+<p>In keeping with the “sharp” topic, below we load in a picture of a very regal-looking eagle, from <code class="docutils literal notranslate"><span class="pre">ski.data</span></code>:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Load in and show an image.</span>
+<span class="n">eagle</span> <span class="o">=</span> <span class="n">ski</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">eagle</span><span class="p">()</span>
+<span class="n">show_attributes</span><span class="p">(</span><span class="n">eagle</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">eagle</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Type: &lt;class &#39;numpy.ndarray&#39;&gt;
+dtype: uint8
+Shape: (2019, 1826)
+Max Pixel Value: 255
+Min Pixel Value: 1
+</pre></div>
+</div>
+<img alt="_images/8c49b746a63adde1c2aa29bbff9a5eaaf495ec7d079d5023a791e0fe25878dbf.png" src="_images/8c49b746a63adde1c2aa29bbff9a5eaaf495ec7d079d5023a791e0fe25878dbf.png" />
+</div>
+</div>
+<p>We’re feeling vandalistic, and so have ruined this image by adding a boatload of Gaussian blur, in the cell below:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Blur the `eagle` image.</span>
+<span class="n">blurry_eagle</span> <span class="o">=</span> <span class="n">ski</span><span class="o">.</span><span class="n">filters</span><span class="o">.</span><span class="n">gaussian</span><span class="p">(</span><span class="n">eagle</span><span class="p">,</span>
+                                    <span class="n">sigma</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">blurry_eagle</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/e25eae7d89f2cb1165f22afaf9963fdc015bd2704d32820b53b66f22a48ce5d5.png" src="_images/e25eae7d89f2cb1165f22afaf9963fdc015bd2704d32820b53b66f22a48ce5d5.png" />
+</div>
+</div>
+<p>You mission is the following. Make a custom sharpening kernel to sharpen <code class="docutils literal notranslate"><span class="pre">blurry_eagle</span></code>. You need to modify the kernel, because if we use the original <code class="docutils literal notranslate"><span class="pre">sharpening_kernel</span></code> on <code class="docutils literal notranslate"><span class="pre">blurry_eagle</span></code>, it does not perform well. The image below shows the result of sharpening with the original <code class="docutils literal notranslate"><span class="pre">sharpening_kernel</span></code>:</p>
+<p><img alt="" src="_images/not_great_sharp.png" /></p>
+<p>When making your modifications to the kernel pay attention to the original values in <code class="docutils literal notranslate"><span class="pre">sharpening_kernel</span></code> to decide what values you can use to achieve a similar but stronger effect. Here is the original <code class="docutils literal notranslate"><span class="pre">sharpening_kernel</span></code>, to act as your spiritual guide:</p>
+<p><img alt="" src="_images/sharpening_kernel.png" /></p>
+<p>…think carefully about what you can change to improve the sharpening performance.</p>
+<p>As a final step use <code class="docutils literal notranslate"><span class="pre">ski.filters.unsharp_mask()</span></code> as an alternate method sharpen the <code class="docutils literal notranslate"><span class="pre">blurry_eagle</span></code> image. Use whatever argument settings you need. Compare the result to your custom kernel.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># YOUR CODE HERE</span>
+<span class="n">my_sharpening_kernel</span> <span class="o">=</span> <span class="o">...</span>
+
+<span class="n">sharp_eagle</span> <span class="o">=</span> <span class="o">...</span>
+</pre></div>
+</div>
+</div>
+</div>
 </section>
+</div>
+<div class="solution dropdown admonition" id="6_gaussian_sharpening_edge-solution-5">
+
+<p class="admonition-title">Solution to<a class="reference internal" href="#stay-sharp"> Exercise 24</a></p>
+<section id="solution-content">
+<p>We go some pretty good performance from the following kernel:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">another_sharpening_kernel</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span> <span class="o">-</span><span class="mi">3</span><span class="p">,</span> <span class="o">-</span><span class="mi">3</span><span class="p">,</span> <span class="o">-</span><span class="mi">3</span><span class="p">],</span>
+                                      <span class="p">[</span> <span class="o">-</span><span class="mi">3</span><span class="p">,</span>  <span class="mi">25</span><span class="p">,</span> <span class="o">-</span><span class="mi">3</span><span class="p">],</span>
+                                      <span class="p">[</span> <span class="o">-</span><span class="mi">3</span><span class="p">,</span> <span class="o">-</span><span class="mi">3</span><span class="p">,</span> <span class="o">-</span><span class="mi">3</span><span class="p">]])</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>An important feature to be aware of here, is that the sharpening kernel should sum to 1:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># The sum of the original `sharpening_kernel`.</span>
+<span class="n">sharpening_kernel</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>np.int64(1)
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># The sum of the newer, stronger `another_sharpening_kernel`.</span>
+<span class="n">another_sharpening_kernel</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>np.int64(1)
+</pre></div>
+</div>
+</div>
+</div>
+<p>As with Gaussian kernels, this is to ensure that the sharpening filter does not alter the average brightness of the original image.</p>
+<p>The reason our new <code class="docutils literal notranslate"><span class="pre">another_sharpening_kernel</span></code> performs better than the original <code class="docutils literal notranslate"><span class="pre">sharpening_kernel</span></code> is because the central value is higher. To ensure the kernel sums to 1, we therefore must increase the absolute value of the negative kernel elements. These two factors (bigger central value, bigger negative off-centre values) increase the strength of the sharpening effect.</p>
+<p>We use the new kernel to sharpen <code class="docutils literal notranslate"><span class="pre">blurry_eagle</span></code> in the cell below:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Perform the convolution, to sharpen the image.</span>
+<span class="n">sharpened_eagle_solution</span> <span class="o">=</span> <span class="n">ndi</span><span class="o">.</span><span class="n">correlate</span><span class="p">(</span><span class="n">blurry_eagle</span><span class="p">,</span>
+                               <span class="n">weights</span><span class="o">=</span><span class="n">another_sharpening_kernel</span><span class="p">)</span>
+
+<span class="c1"># Rescale to avoid illegal an pixel range.</span>
+<span class="n">sharpened_eagle_solution</span> <span class="o">=</span> <span class="n">ski</span><span class="o">.</span><span class="n">exposure</span><span class="o">.</span><span class="n">rescale_intensity</span><span class="p">(</span><span class="n">sharpened_eagle_solution</span><span class="p">,</span> <span class="n">out_range</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>
+
+<span class="c1"># Show the result.</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Blurry&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">blurry_eagle</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Sharpened&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">sharpened_eagle_solution</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">();</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/5a683631ae62c6c53ffac3c4a5f2fbf27ad519e75d2eef4a99d707c90dfa5f59.png" src="_images/5a683631ae62c6c53ffac3c4a5f2fbf27ad519e75d2eef4a99d707c90dfa5f59.png" />
+</div>
+</div>
+<p>We also got pretty good results from <code class="docutils literal notranslate"><span class="pre">ski.filters.unsharp_mask()</span></code>, setting the <code class="docutils literal notranslate"><span class="pre">amount</span></code> argument to 3 (for a strong sharpening effect):</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Sharpen, via `skimage`.</span>
+<span class="n">sharpened_eagle_solution_from_ski</span> <span class="o">=</span> <span class="n">ski</span><span class="o">.</span><span class="n">filters</span><span class="o">.</span><span class="n">unsharp_mask</span><span class="p">(</span><span class="n">blurry_eagle</span><span class="p">,</span> 
+                                                             <span class="n">amount</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
+
+<span class="c1"># Show the result.</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Blurry&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">blurry_eagle</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Sharpened (with `skimage`)&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">sharpened_eagle_solution_from_ski</span> <span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">();</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/3f1347345d1c7183076eeef1f3ce27b80848612e4a730ccc91ecb2542ff6f490.png" src="_images/3f1347345d1c7183076eeef1f3ce27b80848612e4a730ccc91ecb2542ff6f490.png" />
+</div>
+</div>
+</section>
+</div>
 </section>
 <section class="tex2jax_ignore mathjax_ignore" id="edge-detection-filtering">
 <h1>Edge detection filtering<a class="headerlink" href="#edge-detection-filtering" title="Link to this heading">#</a></h1>
@@ -1778,6 +1922,7 @@ Same as the target? This array should contain on `True`s if so...:
 <p><img alt="" src="_images/horizontal_edge_detection_1.png" /></p>
 <p>You can see that, for a binary image, the horizontal kernel convolution essential “counts” the number of 0-to-1 vertical changes in the kernel location, which lets it detect horizontal edges.</p>
 <p>Conversely, when the kernel hits the 1-to-0 vertical changes at the bottom of the array, we get a similar count of the 1-to-0 changes, but indicated by a negative value, telling his that the gradient is in the other direction:</p>
+<p><img alt="" src="_images/horizontal_edge_detection_2.png" /></p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Show the horizontal edge-filtered array.</span>
@@ -2297,10 +2442,7 @@ Min Pixel Value: -32768
 <li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Convolution filters II - Gaussian blur, sharpening and edge detection</a></li>
 <li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#gaussian-filtering">Gaussian filtering</a></li>
 <li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#gaussian-filters-in-skimage">Gaussian filters in <code class="docutils literal notranslate"><span class="pre">skimage</span></code></a></li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#image-sharpening">Image sharpening</a><ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#sharpening-exercise">Sharpening exercise</a></li>
-</ul>
-</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#image-sharpening">Image sharpening</a></li>
 <li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#edge-detection-filtering">Edge detection filtering</a><ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#edge-detection-exercise">Edge detection exercise</a></li>
 </ul>

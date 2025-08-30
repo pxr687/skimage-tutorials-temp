@@ -32,9 +32,9 @@
     <link rel="stylesheet" type="text/css" href="_static/styles/sphinx-book-theme.css?v=eba8b062" />
     <link rel="stylesheet" type="text/css" href="_static/togglebutton.css?v=13237357" />
     <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
-    <link rel="stylesheet" type="text/css" href="_static/mystnb.8ecb98da25f57f5357bf6f572d296f466b2cfe2517ffebfabe82451661e28f02.css" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.8ecb98da25f57f5357bf6f572d296f466b2cfe2517ffebfabe82451661e28f02.css?v=6644e6bb" />
     <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css?v=4fa983c6" />
-    <link rel="stylesheet" type="text/css" href="_static/exercise.css" />
+    <link rel="stylesheet" type="text/css" href="_static/exercise.css?v=982b99e0" />
     <link rel="stylesheet" type="text/css" href="_static/sphinx-design.min.css?v=95c83b7e" />
   
   <!-- Pre-loaded scripts that we'll load fully later -->
@@ -62,7 +62,7 @@
     <link rel="canonical" href="https://pxr687.github.io/skimage-tutorials-temp/8_morphology.html" />
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="prev" title="Convolutional filtering II - Gaussian blur, sharpening and edge detection" href="6_gaussian_sharpening_edge.html" />
+    <link rel="prev" title="Convolution filters II - Gaussian blur, sharpening and edge detection" href="6_gaussian_sharpening_edge.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   </head>
@@ -174,7 +174,7 @@
     <div class="bd-toc-item navbar-nav active">
         <p aria-level="2" class="caption" role="heading"><span class="caption-text">Scikit-image via NumPy and SciPy</span></p>
 <ul class="current nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="0_images_as_numpy_arrays.html">What is an image? - Images as NumPy arrays</a></li>
+<li class="toctree-l1"><a class="reference internal" href="0_images_as_numpy_arrays.html">Images as NumPy arrays</a></li>
 
 
 
@@ -220,13 +220,13 @@
 
 
 
-<li class="toctree-l1"><a class="reference internal" href="5_mean_filter.html">Convolutional filtering I - the mean filter</a></li>
+<li class="toctree-l1"><a class="reference internal" href="5_mean_filter.html">Convolution filters I - the mean filter</a></li>
 
 
 
 
 
-<li class="toctree-l1"><a class="reference internal" href="6_gaussian_sharpening_edge.html">Convolutional filtering II - Gaussian blur, sharpening and edge detection</a></li>
+<li class="toctree-l1"><a class="reference internal" href="6_gaussian_sharpening_edge.html">Convolution filters II - Gaussian blur, sharpening and edge detection</a></li>
 
 
 
@@ -977,7 +977,7 @@ Min Pixel Value: 0
 <p>Changing the shape or size of the structuring element (likely) changes the number of “matches”, and therefore the degree and location of changes to the bright/dark regions, for both erosion and dilation. We are essentially looking for features of a certain shape (the shape of our structuring element) in the image, and then dilating/eroding on the basis of the number of matches/clashes.</p>
 <div class="exercise dropdown admonition" id="block-xeno">
 
-<p class="admonition-title"><span class="caption-number">Exercise 24 </span></p>
+<p class="admonition-title"><span class="caption-number">Exercise 25 </span></p>
 <section id="exercise-content">
 <p>Try to recreate the following image by processing <code class="docutils literal notranslate"><span class="pre">xenomorph</span></code>, using only <code class="docutils literal notranslate"><span class="pre">skimage</span></code> morphological operations, as well as operations from the other tutorials, from <code class="docutils literal notranslate"><span class="pre">numpy</span></code>, <code class="docutils literal notranslate"><span class="pre">scipy</span></code> and <code class="docutils literal notranslate"><span class="pre">skimage</span></code>:</p>
 <p><img alt="" src="_images/xeno_ex_1.png" /></p>
@@ -996,7 +996,7 @@ Min Pixel Value: 0
 </div>
 <div class="solution dropdown admonition" id="8_morphology-solution-1">
 
-<p class="admonition-title">Solution to<a class="reference internal" href="#block-xeno"> Exercise 24</a></p>
+<p class="admonition-title">Solution to<a class="reference internal" href="#block-xeno"> Exercise 25</a></p>
 <section id="solution-content">
 <p>We promised earlier that the <code class="docutils literal notranslate"><span class="pre">diamond</span></code> structuring element would get more diamond-like when it is larger. To complete this exercise, you need <code class="docutils literal notranslate"><span class="pre">big_diamond</span></code> with <code class="docutils literal notranslate"><span class="pre">radius</span> <span class="pre">=</span> <span class="pre">30</span></code>:</p>
 <div class="cell docutils container">
@@ -1147,7 +1147,7 @@ Min Pixel Value: False
       <i class="fa-solid fa-angle-left"></i>
       <div class="prev-next-info">
         <p class="prev-next-subtitle">previous</p>
-        <p class="prev-next-title">Convolutional filtering II - Gaussian blur, sharpening and edge detection</p>
+        <p class="prev-next-title">Convolution filters II - Gaussian blur, sharpening and edge detection</p>
       </div>
     </a>
 </div>
