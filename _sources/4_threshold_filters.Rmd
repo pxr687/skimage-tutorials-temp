@@ -137,7 +137,7 @@ plt.imshow(original_image());
 
 Reducing noise and enhancing image features are both common aims in image filtering. Both processes often require some trial and error with different values for optional arguments that go into the filtering operation, as it did here. We will now turn to some other common methods for threshold filtering, using a variety of other images.
 
-# Threshold Filtering
+# Threshold filtering is just Boolean filtering
 
 As we have seen, threshold filtering invovles modifying pixel values based on a threshold value. Let's investigate other thresholding methods using a greyscale image:
 
@@ -270,7 +270,7 @@ plt.imshow(camera > crude_threshold);
 Stylish! Someone should put that on a t-shirt...
 
 
-# Threshold filters in `skimage`
+# Threshold filters in `skimage` - the Otsu method
 
 `skimage` contains many threshold filters, the cell below uses the `dir()` function to show the available selection:
 

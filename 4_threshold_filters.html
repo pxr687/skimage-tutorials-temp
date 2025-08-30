@@ -32,9 +32,9 @@
     <link rel="stylesheet" type="text/css" href="_static/styles/sphinx-book-theme.css?v=eba8b062" />
     <link rel="stylesheet" type="text/css" href="_static/togglebutton.css?v=13237357" />
     <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
-    <link rel="stylesheet" type="text/css" href="_static/mystnb.8ecb98da25f57f5357bf6f572d296f466b2cfe2517ffebfabe82451661e28f02.css" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.8ecb98da25f57f5357bf6f572d296f466b2cfe2517ffebfabe82451661e28f02.css?v=6644e6bb" />
     <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css?v=4fa983c6" />
-    <link rel="stylesheet" type="text/css" href="_static/exercise.css" />
+    <link rel="stylesheet" type="text/css" href="_static/exercise.css?v=982b99e0" />
     <link rel="stylesheet" type="text/css" href="_static/sphinx-design.min.css?v=95c83b7e" />
   
   <!-- Pre-loaded scripts that we'll load fully later -->
@@ -460,9 +460,9 @@ document.write(`
                 <ul class="visible nav section-nav flex-column">
 <li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Threshold filtering</a></li>
 <li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#what-is-signal-what-is-noise">What is signal? What is noise?</a></li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">Threshold Filtering</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#threshold-filtering-is-just-boolean-filtering">Threshold filtering is just Boolean filtering</a></li>
 <li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#image-segmentation-via-threshold-filtering">Image segmentation via threshold filtering</a></li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#threshold-filters-in-skimage">Threshold filters in <code class="docutils literal notranslate"><span class="pre">skimage</span></code></a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#threshold-filters-in-skimage-the-otsu-method">Threshold filters in <code class="docutils literal notranslate"><span class="pre">skimage</span></code> - the Otsu method</a></li>
 <li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#summary">Summary</a></li>
 <li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#references">References</a></li>
 </ul>
@@ -704,8 +704,8 @@ Min Pixel Value: -0.95
 </div>
 <p>Reducing noise and enhancing image features are both common aims in image filtering. Both processes often require some trial and error with different values for optional arguments that go into the filtering operation, as it did here. We will now turn to some other common methods for threshold filtering, using a variety of other images.</p>
 </section>
-<section class="tex2jax_ignore mathjax_ignore" id="id1">
-<h1>Threshold Filtering<a class="headerlink" href="#id1" title="Link to this heading">#</a></h1>
+<section class="tex2jax_ignore mathjax_ignore" id="threshold-filtering-is-just-boolean-filtering">
+<h1>Threshold filtering is just Boolean filtering<a class="headerlink" href="#threshold-filtering-is-just-boolean-filtering" title="Link to this heading">#</a></h1>
 <p>As we have seen, threshold filtering invovles modifying pixel values based on a threshold value. Let’s investigate other thresholding methods using a greyscale image:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -928,8 +928,8 @@ Min Pixel Value: -0.95
 </div>
 <p>Stylish! Someone should put that on a t-shirt…</p>
 </section>
-<section class="tex2jax_ignore mathjax_ignore" id="threshold-filters-in-skimage">
-<h1>Threshold filters in <code class="docutils literal notranslate"><span class="pre">skimage</span></code><a class="headerlink" href="#threshold-filters-in-skimage" title="Link to this heading">#</a></h1>
+<section class="tex2jax_ignore mathjax_ignore" id="threshold-filters-in-skimage-the-otsu-method">
+<h1>Threshold filters in <code class="docutils literal notranslate"><span class="pre">skimage</span></code> - the Otsu method<a class="headerlink" href="#threshold-filters-in-skimage-the-otsu-method" title="Link to this heading">#</a></h1>
 <p><code class="docutils literal notranslate"><span class="pre">skimage</span></code> contains many threshold filters, the cell below uses the <code class="docutils literal notranslate"><span class="pre">dir()</span></code> function to show the available selection:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -1905,9 +1905,9 @@ bin <span class="math notranslate nohighlight">\(z\)</span>:</p>
     <ul class="visible nav section-nav flex-column">
 <li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Threshold filtering</a></li>
 <li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#what-is-signal-what-is-noise">What is signal? What is noise?</a></li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">Threshold Filtering</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#threshold-filtering-is-just-boolean-filtering">Threshold filtering is just Boolean filtering</a></li>
 <li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#image-segmentation-via-threshold-filtering">Image segmentation via threshold filtering</a></li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#threshold-filters-in-skimage">Threshold filters in <code class="docutils literal notranslate"><span class="pre">skimage</span></code></a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#threshold-filters-in-skimage-the-otsu-method">Threshold filters in <code class="docutils literal notranslate"><span class="pre">skimage</span></code> - the Otsu method</a></li>
 <li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#summary">Summary</a></li>
 <li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#references">References</a></li>
 </ul>
