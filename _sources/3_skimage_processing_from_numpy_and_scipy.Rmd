@@ -1195,7 +1195,7 @@ print(binary_check)
 plt.matshow(binary_check);
 ```
 
-We can also easily acheive this conversion in `skimage` - see the [filtering page](5_filters_2) for more detail. For now, we can use the `ski.filters.threshold_minimum()` function. This supplies us a recommended threshold value to attempt to divide the array pixels into two classes e.g. two classes where the pixels in each class are maximally different from pixels in the other class:
+We can also easily acheive this conversion in `skimage` - see the [filtering page](5_mean_filter) for more detail. For now, we can use the `ski.filters.threshold_minimum()` function. This supplies us a recommended threshold value to attempt to divide the array pixels into two classes e.g. two classes where the pixels in each class are maximally different from pixels in the other class:
 
 ```{python}
 # Get a recommended threshold from `skimage`.
@@ -1341,7 +1341,7 @@ plt.imshow(grey_colourwheel_from_ski);
 
 # Summary
 
-This page has shown how to implement some fundamental image processing operations with NumPy, SciPy and Scikit-image. The next page will delve into [image filtering](5_filters_2).
+This page has shown how to implement some fundamental image processing operations with NumPy, SciPy and Scikit-image. The next page will delve into [image filtering](5_mean_filter).
 
 
 # References

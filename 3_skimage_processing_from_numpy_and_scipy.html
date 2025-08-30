@@ -64,7 +64,7 @@
     <link rel="canonical" href="https://pxr687.github.io/skimage-tutorials-temp/3_skimage_processing_from_numpy_and_scipy.html" />
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="Image filtering I" href="4_filters.html" />
+    <link rel="next" title="Threshold filtering" href="4_threshold_filters.html" />
     <link rel="prev" title="Introducing Scikit-image" href="2_skimage_intro.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
@@ -216,7 +216,20 @@
 
 
 
-<li class="toctree-l1"><a class="reference internal" href="4_filters.html">Image filtering I</a></li>
+<li class="toctree-l1"><a class="reference internal" href="4_threshold_filters.html">Threshold filtering</a></li>
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="5_mean_filter.html">Convolutional filtering I - the mean filter</a></li>
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="6_gaussian_sharpening_edge.html">Convolutional filtering II - Gaussian blur, sharpening and edge detection</a></li>
 
 
 
@@ -225,18 +238,7 @@
 
 
 
-
-
-<li class="toctree-l1"><a class="reference internal" href="5_filters_2.html">Image filtering II</a></li>
-
-
-
-
-
-
-
-
-<li class="toctree-l1"><a class="reference internal" href="7_morphology.html">Morphology</a></li>
+<li class="toctree-l1"><a class="reference internal" href="8_morphology.html">Morphology</a></li>
 
 
 
@@ -836,10 +838,7 @@ Min Pixel Value: 0.0
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Type:
-</pre></div>
-</div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> &lt;class &#39;numpy.ndarray&#39;&gt;
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Type: &lt;class &#39;numpy.ndarray&#39;&gt;
 dtype: float64
 Shape: (15, 8)
 Max Pixel Value: 1.0
@@ -2512,7 +2511,7 @@ Min Pixel Value: 0
 <img alt="_images/14060793564aed3b700df2b9fd766a6f30371982333bb2ed0f0a716ac4d110ff.png" src="_images/14060793564aed3b700df2b9fd766a6f30371982333bb2ed0f0a716ac4d110ff.png" />
 </div>
 </div>
-<p>We can also easily acheive this conversion in <code class="docutils literal notranslate"><span class="pre">skimage</span></code> - see the <a class="reference internal" href="5_filters_2.html"><span class="doc std std-doc">filtering page</span></a> for more detail. For now, we can use the <code class="docutils literal notranslate"><span class="pre">ski.filters.threshold_minimum()</span></code> function. This supplies us a recommended threshold value to attempt to divide the array pixels into two classes e.g. two classes where the pixels in each class are maximally different from pixels in the other class:</p>
+<p>We can also easily acheive this conversion in <code class="docutils literal notranslate"><span class="pre">skimage</span></code> - see the <a class="reference internal" href="5_mean_filter.html"><span class="doc std std-doc">filtering page</span></a> for more detail. For now, we can use the <code class="docutils literal notranslate"><span class="pre">ski.filters.threshold_minimum()</span></code> function. This supplies us a recommended threshold value to attempt to divide the array pixels into two classes e.g. two classes where the pixels in each class are maximally different from pixels in the other class:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Get a recommended threshold from `skimage`.</span>
@@ -2751,7 +2750,7 @@ Min Pixel Value: 0.0
 </section>
 <section class="tex2jax_ignore mathjax_ignore" id="summary">
 <h1>Summary<a class="headerlink" href="#summary" title="Link to this heading">#</a></h1>
-<p>This page has shown how to implement some fundamental image processing operations with NumPy, SciPy and Scikit-image. The next page will delve into <a class="reference internal" href="5_filters_2.html"><span class="doc std std-doc">image filtering</span></a>.</p>
+<p>This page has shown how to implement some fundamental image processing operations with NumPy, SciPy and Scikit-image. The next page will delve into <a class="reference internal" href="5_mean_filter.html"><span class="doc std std-doc">image filtering</span></a>.</p>
 </section>
 <section class="tex2jax_ignore mathjax_ignore" id="references">
 <h1>References<a class="headerlink" href="#references" title="Link to this heading">#</a></h1>
@@ -2801,11 +2800,11 @@ Min Pixel Value: 0.0
       </div>
     </a>
     <a class="right-next"
-       href="4_filters.html"
+       href="4_threshold_filters.html"
        title="next page">
       <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">Image filtering I</p>
+        <p class="prev-next-title">Threshold filtering</p>
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>

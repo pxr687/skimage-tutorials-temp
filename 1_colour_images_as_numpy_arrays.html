@@ -216,7 +216,20 @@
 
 
 
-<li class="toctree-l1"><a class="reference internal" href="4_filters.html">Image filtering I</a></li>
+<li class="toctree-l1"><a class="reference internal" href="4_threshold_filters.html">Threshold filtering</a></li>
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="5_mean_filter.html">Convolutional filtering I - the mean filter</a></li>
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="6_gaussian_sharpening_edge.html">Convolutional filtering II - Gaussian blur, sharpening and edge detection</a></li>
 
 
 
@@ -225,18 +238,7 @@
 
 
 
-
-
-<li class="toctree-l1"><a class="reference internal" href="5_filters_2.html">Image filtering II</a></li>
-
-
-
-
-
-
-
-
-<li class="toctree-l1"><a class="reference internal" href="7_morphology.html">Morphology</a></li>
+<li class="toctree-l1"><a class="reference internal" href="8_morphology.html">Morphology</a></li>
 
 
 
@@ -1194,9 +1196,9 @@ Our 3-D stacked array is of the right shape:</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>X1 = 0.81
-X2 = 0.53
-X3 = 0.76
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>X1 = 0.37
+X2 = 0.87
+X3 = 0.98
 </pre></div>
 </div>
 </div>
@@ -1225,12 +1227,12 @@ X3 = 0.76
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Red (X1) = 0.14
-Green (X2) = 0.08
-Blue (X3) = 0.31
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Red (X1) = 0.04
+Green (X2) = 0.71
+Blue (X3) = 0.53
 </pre></div>
 </div>
-<img alt="_images/bfdabf90f1f170f3b24a4b3af2c47dc886bc0e195ad3f701583474bb1e8d985a.png" src="_images/bfdabf90f1f170f3b24a4b3af2c47dc886bc0e195ad3f701583474bb1e8d985a.png" />
+<img alt="_images/2540c07e3c42bd68caf9a071ca3a31b3734467c4cca680aca77d92e517f3861d.png" src="_images/2540c07e3c42bd68caf9a071ca3a31b3734467c4cca680aca77d92e517f3861d.png" />
 </div>
 </div>
 <p>So, each two-dimensional display image has a “hidden” three-dimensional array behind it. Each slice of the third dimension is a colour channel. The mix of values at a given element in each colour channel determins the colour of that pixel in the rendered image. You may want to view this image in a new browser window, to see more clearly the exact mixes of the colour channels, which are shown above each square on the right hand side of the image:</p>
@@ -1246,7 +1248,7 @@ Blue (X3) = 0.31
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/9852751351c41d231b3978d4ea5c081ab8a45b5995eae390eae0cf1fd11124a5.png" src="_images/9852751351c41d231b3978d4ea5c081ab8a45b5995eae390eae0cf1fd11124a5.png" />
+<img alt="_images/2f8384bc4f284a3a0d4a78146225d5c828bb23df001eb66bdb596056d0b3a1ec.png" src="_images/2f8384bc4f284a3a0d4a78146225d5c828bb23df001eb66bdb596056d0b3a1ec.png" />
 </div>
 </div>
 <p>We have now completed our perilous expedition into the third dimension… We have seen that we can use 3-D arrays to encode <em>true colour</em> information. This means that the image array itself contains colour information for each pixel, where we are <em>not</em> just pseudocolouring greyscale information using <code class="docutils literal notranslate"><span class="pre">viridis</span></code> or another colourmap…</p>
@@ -1747,7 +1749,7 @@ Min Pixel Value: 0
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/bae6f60a44f16e9b4576d5aa8ac0ff25b7a240585611044b6e4e73f526153be9.png" src="_images/bae6f60a44f16e9b4576d5aa8ac0ff25b7a240585611044b6e4e73f526153be9.png" />
+<img alt="_images/a6ebb31fcc875b5ac5409f95095bb481f990600d18f2243c98a69810cc177a23.png" src="_images/a6ebb31fcc875b5ac5409f95095bb481f990600d18f2243c98a69810cc177a23.png" />
 </div>
 </div>
 </section>
