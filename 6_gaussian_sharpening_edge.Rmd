@@ -869,7 +869,7 @@ As a final step use `ski.filters.unsharp_mask()` as an alternate method sharpen 
 
 ```{python}
 # YOUR CODE HERE
-my_sharpening kernel = ...
+my_sharpening_kernel = ...
 
 sharp_eagle = ...
 ```
@@ -997,6 +997,8 @@ Let's think about what has happened here at the level of the individual pixels. 
 You can see that, for a binary image, the horizontal kernel convolution essential "counts" the number of 0-to-1 vertical changes in the kernel location, which lets it detect horizontal edges.
 
 Conversely, when the kernel hits the 1-to-0 vertical changes at the bottom of the array, we get a similar count of the 1-to-0 changes, but indicated by a negative value, telling his that the gradient is in the other direction:
+
+![](images/horizontal_edge_detection_2.png)
 
 ```{python}
 # Show the horizontal edge-filtered array.
@@ -1157,11 +1159,6 @@ plt.subplot(1, 4, 4)
 plt.title("Both Combined")
 plt.imshow(coffee_vertical_horizontal_stack);
 ```
-
-## Edge detection exercise
-
-- try to combine edge detection with some colour manipulation e.g. colouring horizontal and vertical edges differently...
-
 
 # Sobel edge detection filtering
 
