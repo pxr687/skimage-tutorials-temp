@@ -827,6 +827,17 @@ plt.imshow(sharpen_cat)
 plt.tight_layout();
 ```
 
+## Sharpening exercise
+
+- add blur to an image using a custom Gaussian kernel (use function from last exercise)
+
+- make a custom sharpening kernel, do not copy original, but think about what needs to be done
+
+- try to recreate a target (but say that result can be approximate e.g. very hard to work out EXACTLY what is in our kernel...)
+
+- final step to use `unsharp_mask` in `skimage`
+
+
 # Edge detection filtering 
 
 We saw a simple [edge filter](3_skimage_processing_from_numpy_and_scipy) in one of the exercises on an earlier page. In image processing and computer vision, an edge is a rapid change in intensity between pixels - e.g. there is a high *gradient* of change between the pixel values. We can construct a [kernel](https://www.geeksforgeeks.org/deep-learning/types-of-convolution-kernels) which will detect such intensity changes in the vertical ($y$) direction, and thus will detect horizontal edges. That may sound paradoxical, but *horizontal* edges have *vertical* gradients:
@@ -1036,6 +1047,11 @@ plt.subplot(1, 4, 4)
 plt.title("Both Combined")
 plt.imshow(coffee_vertical_horizontal_stack);
 ```
+
+## Edge detection exercise
+
+- try to combine edge detection with some colour manipulation e.g. colouring horizontal and vertical edges differently...
+
 
 # Sobel edge detection filtering
 
