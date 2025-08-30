@@ -1160,14 +1160,6 @@ plt.title("Both Combined")
 plt.imshow(coffee_vertical_horizontal_stack);
 ```
 
-## Edge detection exercise
-
-- try to combine edge detection with some colour manipulation e.g. colouring horizontal and vertical edges differently...
-
-```{python}
-
-```
-
 # Sobel edge detection filtering
 
 A similiar edge detection filter is the Sobel filter, which uses the [following](https://www.geeksforgeeks.org/deep-learning/types-of-convolution-kernels/) [kernels](https://nrsyed.com/2018/02/18/edge-detection-in-images-how-to-derive-the-sobel-operator):
