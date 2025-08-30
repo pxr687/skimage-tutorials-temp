@@ -21,7 +21,7 @@ np.set_printoptions(precision=2)
 from gaussian_illustration import make_gaussian_kernel
 from show_attributes import show_attributes
 from hints import secret_val
-from hints import hint_krazy_kernel
+from hints import hint_krazy_kernel_1, hint_krazy_kernel_2
 ```
 
 # Gaussian filtering
@@ -638,9 +638,9 @@ plt.title('Gaussian Blur with `target_kernel`');
 :::
 
 
-# Image sharpening (vis `scipy` and `skimage`)
+# Image sharpening (via `scipy` and `skimage`)
 
-Gaussian filtering is a nice visual effect by itself, but filters (like the Gaussian filter) which blur an image can also, somewhat paradoxically, be used to *sharpen* an image. *Sharpening* is the opposite of blurring, it makes images clearer, with the features and edges more defined.
+Gaussian filtering is a nice visual effect by itself, but filters like the Gaussian filter)which blur an image can also, somewhat paradoxically, be used to *sharpen* an image. *Sharpening* is the opposite of blurring, it makes images clearer, with the features and edges more defined.
 
 How can we sharpen an image with a Gaussian *blur* filter, we hear you ask? We will demonstrate below. Sharpening is easiest to appreciate if we start with a slightly blurry image. In the cell below, we create a `blurry_cat` image by applying a Gaussian filter, we use a low `sigma` value, to keep the blur only slight:
 
@@ -683,8 +683,6 @@ plt.imshow(sharpened)
 plt.tight_layout();
 ```
 
-**NOTE FROM MEETING: show this in 1D first, take the middle row of the kernel.**
-
 You can see that the sharpened image, as intended, has better clarity than the original. We can also use a specliazed [sharpening kernel](https://www.geeksforgeeks.org/deep-learning/types-of-convolution-kernels/#3-sharpening-kernel) to achieve the same effect:
 
 ![](images/sharpening_kernel.png)
@@ -699,7 +697,33 @@ print(sharpening_kernel)
 kernel_plot(sharpening_kernel)
 ```
 
-This kernel works by [emphasising differences between adjacent pixels](https://setosa.io/ev/image-kernels/#:~:text=The%20sharpen%20kernel%20emphasizes%20differences,differences%20in%20adjacent%20pixel%20values.). Essentially, the more different that a pixel is from its surrounding pixels, the bigger value it will get in the sharpened image. We show this below. First, we create an array containing only 1s:
+This kernel works by [emphasising differences between adjacent pixels](https://setosa.io/ev/image-kernels/#:~:text=The%20sharpen%20kernel%20emphasizes%20differences,differences%20in%20adjacent%20pixel%20values.). Essentially, the more different that a pixel is from its surrounding pixels, the bigger value it will get in the sharpened image. 
+
+To see this in detail, let's take just the middle row of the `sharpening_kernel`:
+
+```{python}
+# Slice out the middle row of the `sharpening_kernel`.
+middle_row_sharp = sharpening_kernel[1, :]
+
+middle_row_sharp
+```
+
+We can convolve this middle row with a 1-D array of numbers, using the same machinery as for larger image arrays:
+
+```{python}
+# An array of numbers.
+my_nums = np.array([0, 1, 2, 100])
+my_nums
+```
+
+We perform the convolution in the cell below:
+
+```{python}
+ndi.correlate(my_nums, 
+              weights=middle_row_sharp)
+```
+
+You can see that bigger differences between adjacent values result in larger absolute numbers in the output array, emphasising the differences. We show this principle again below, using 2D arrays the full `sharpening_kernel`. First, we create a 2D array where there are no differences between the adjacent pixels:
 
 ```{python}
 # A boring array.
