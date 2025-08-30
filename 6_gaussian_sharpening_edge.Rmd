@@ -990,7 +990,7 @@ edgy_horizontal = ndi.correlate(edgy,
 plt.imshow(edgy_horizontal);
 ```
 
-Let's think about what has happened here at the level of the individual pixels. Three kernel locations from the top of the array are represented below:
+Let's think about what has happened here at the level of the individual pixels. Three kernel locations from the top of the array are represented below (once again, you may want to right click on these images and open then in a new tab/window, for easier viewing):
 
 ![](images/horizontal_edge_detection_1.png)
 
