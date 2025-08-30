@@ -990,13 +990,13 @@ edgy_horizontal = ndi.correlate(edgy,
 plt.imshow(edgy_horizontal);
 ```
 
-Let's think about what has happened here at the level of the individual pixels. Three kernel locations from the top of the array are represented below (once again, you may want to right click on these images and open then in a new tab/window, for easier viewing):
+Let's think about what has happened here at the level of the individual pixels. Three kernel locations from the top of the array are represented below (once again, you can right click on these images and open them in a new tab/window, for easier viewing):
 
 ![](images/horizontal_edge_detection_1.png)
 
 You can see that, for a binary image, the horizontal kernel convolution essential "counts" the number of 0-to-1 vertical changes in the kernel location, which lets it detect horizontal edges.
 
-Conversely, when the kernel hits the 1-to-0 vertical changes at the bottom of the array, we get a similar count of the 1-to-0 changes, but indicated by a negative value, telling his that the gradient is in the other direction:
+Conversely, when the kernel hits the 1-to-0 vertical changes at the bottom of the array, we get a similar count of the 1-to-0 changes, but indicated by a negative value, telling us that the gradient is in the other direction:
 
 ![](images/horizontal_edge_detection_2.png)
 
