@@ -638,7 +638,7 @@ plt.title('Gaussian Blur with `target_kernel`');
 :::
 
 
-# Image sharpening (via `scipy` and `skimage`)
+# Image sharpening
 
 Gaussian filtering is a nice visual effect by itself, but filters like the Gaussian filter)which blur an image can also, somewhat paradoxically, be used to *sharpen* an image. *Sharpening* is the opposite of blurring, it makes images clearer, with the features and edges more defined.
 

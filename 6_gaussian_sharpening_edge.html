@@ -32,9 +32,9 @@
     <link rel="stylesheet" type="text/css" href="_static/styles/sphinx-book-theme.css?v=eba8b062" />
     <link rel="stylesheet" type="text/css" href="_static/togglebutton.css?v=13237357" />
     <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
-    <link rel="stylesheet" type="text/css" href="_static/mystnb.8ecb98da25f57f5357bf6f572d296f466b2cfe2517ffebfabe82451661e28f02.css" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.8ecb98da25f57f5357bf6f572d296f466b2cfe2517ffebfabe82451661e28f02.css?v=6644e6bb" />
     <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css?v=4fa983c6" />
-    <link rel="stylesheet" type="text/css" href="_static/exercise.css" />
+    <link rel="stylesheet" type="text/css" href="_static/exercise.css?v=982b99e0" />
     <link rel="stylesheet" type="text/css" href="_static/sphinx-design.min.css?v=95c83b7e" />
   
   <!-- Pre-loaded scripts that we'll load fully later -->
@@ -461,7 +461,7 @@ document.write(`
 <li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Convolutional filtering II - Gaussian blur, sharpening and edge detection</a></li>
 <li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#gaussian-filtering">Gaussian filtering</a></li>
 <li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#gaussian-filters-in-skimage">Gaussian filters in <code class="docutils literal notranslate"><span class="pre">skimage</span></code></a></li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#image-sharpening-via-scipy-and-skimage">Image sharpening (via <code class="docutils literal notranslate"><span class="pre">scipy</span></code> and <code class="docutils literal notranslate"><span class="pre">skimage</span></code>)</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#image-sharpening">Image sharpening</a><ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#sharpening-exercise">Sharpening exercise</a></li>
 </ul>
 </li>
@@ -1418,8 +1418,8 @@ Same as the target? This array should contain on `True`s if so...:
 </section>
 </div>
 </section>
-<section class="tex2jax_ignore mathjax_ignore" id="image-sharpening-via-scipy-and-skimage">
-<h1>Image sharpening (via <code class="docutils literal notranslate"><span class="pre">scipy</span></code> and <code class="docutils literal notranslate"><span class="pre">skimage</span></code>)<a class="headerlink" href="#image-sharpening-via-scipy-and-skimage" title="Link to this heading">#</a></h1>
+<section class="tex2jax_ignore mathjax_ignore" id="image-sharpening">
+<h1>Image sharpening<a class="headerlink" href="#image-sharpening" title="Link to this heading">#</a></h1>
 <p>Gaussian filtering is a nice visual effect by itself, but filters like the Gaussian filter)which blur an image can also, somewhat paradoxically, be used to <em>sharpen</em> an image. <em>Sharpening</em> is the opposite of blurring, it makes images clearer, with the features and edges more defined.</p>
 <p>How can we sharpen an image with a Gaussian <em>blur</em> filter, we hear you ask? We will demonstrate below. Sharpening is easiest to appreciate if we start with a slightly blurry image. In the cell below, we create a <code class="docutils literal notranslate"><span class="pre">blurry_cat</span></code> image by applying a Gaussian filter, we use a low <code class="docutils literal notranslate"><span class="pre">sigma</span></code> value, to keep the blur only slight:</p>
 <div class="cell docutils container">
@@ -2297,7 +2297,7 @@ Min Pixel Value: -32768
 <li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Convolutional filtering II - Gaussian blur, sharpening and edge detection</a></li>
 <li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#gaussian-filtering">Gaussian filtering</a></li>
 <li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#gaussian-filters-in-skimage">Gaussian filters in <code class="docutils literal notranslate"><span class="pre">skimage</span></code></a></li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#image-sharpening-via-scipy-and-skimage">Image sharpening (via <code class="docutils literal notranslate"><span class="pre">scipy</span></code> and <code class="docutils literal notranslate"><span class="pre">skimage</span></code>)</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#image-sharpening">Image sharpening</a><ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#sharpening-exercise">Sharpening exercise</a></li>
 </ul>
 </li>
