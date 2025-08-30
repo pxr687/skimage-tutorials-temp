@@ -77,7 +77,7 @@ for i in np.arange(6):
     print(random_i[i_row_start:i_row_end, i_col_start:i_col_end])
 ```
 
-We can visualise the "walk" we have just taken, with prettier graphics::
+We can visualise the "walk" we have just taken, with prettier graphics - (you may want to right click on these images and open them in a new tab/window, for easier viewing):
 
 ![](images/kernel_1.png)
 
@@ -321,7 +321,7 @@ np.sum(nums * 1/n)
 
 - Replace the central array pixel value in the original image with the single value we just computed.
 
-Because we are using a mean kernel, this operation will, shockingly, return the mean of the kernel. This process is illustrated below for three kernel locations:
+Because we are using a mean kernel, this operation will, shockingly, return the mean of the kernel. This process is illustrated below for three kernel locations - (once more you may want to right click on these images and open them in a new tab/window, for easier viewing):
 
 ![](images/kernel_convolution_three_locs.png)
 

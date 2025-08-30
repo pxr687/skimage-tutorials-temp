@@ -32,9 +32,9 @@
     <link rel="stylesheet" type="text/css" href="_static/styles/sphinx-book-theme.css?v=eba8b062" />
     <link rel="stylesheet" type="text/css" href="_static/togglebutton.css?v=13237357" />
     <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
-    <link rel="stylesheet" type="text/css" href="_static/mystnb.8ecb98da25f57f5357bf6f572d296f466b2cfe2517ffebfabe82451661e28f02.css?v=6644e6bb" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.8ecb98da25f57f5357bf6f572d296f466b2cfe2517ffebfabe82451661e28f02.css" />
     <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css?v=4fa983c6" />
-    <link rel="stylesheet" type="text/css" href="_static/exercise.css?v=982b99e0" />
+    <link rel="stylesheet" type="text/css" href="_static/exercise.css" />
     <link rel="stylesheet" type="text/css" href="_static/sphinx-design.min.css?v=95c83b7e" />
   
   <!-- Pre-loaded scripts that we'll load fully later -->
@@ -645,7 +645,7 @@ random_i[0:3, 5:8]
 </div>
 </div>
 </div>
-<p>We can visualise the “walk” we have just taken, with prettier graphics::</p>
+<p>We can visualise the “walk” we have just taken, with prettier graphics - (you may want to right click on these images and open them in a new tab/window, for easier viewing):</p>
 <p><img alt="" src="_images/kernel_1.png" /></p>
 <p>Now, imagine we take mean within each neighbourhood (kernel) - the mean of each kernel is shown below the image of each indexing operation:</p>
 <p><img alt="" src="_images/kernel_2_mean.png" /></p>
@@ -958,7 +958,7 @@ Min Pixel Value: -1.0
 <li><p>Get the sum of those products (e.g. add them all together to produce a single value).</p></li>
 <li><p>Replace the central array pixel value in the original image with the single value we just computed.</p></li>
 </ul>
-<p>Because we are using a mean kernel, this operation will, shockingly, return the mean of the kernel. This process is illustrated below for three kernel locations:</p>
+<p>Because we are using a mean kernel, this operation will, shockingly, return the mean of the kernel. This process is illustrated below for three kernel locations - (once more you may want to right click on these images and open them in a new tab/window, for easier viewing):</p>
 <p><img alt="" src="_images/kernel_convolution_three_locs.png" /></p>
 <p>Now, let’s apply this kernel convolution to every pixel in the image array:</p>
 <div class="cell docutils container">
@@ -1097,7 +1097,7 @@ Mean filter via SciPy `correlate`:
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/f26db082c7a27482a365693cf1f5544c39b02f99b821edda3dc4a3e3ad80adff.png" src="_images/f26db082c7a27482a365693cf1f5544c39b02f99b821edda3dc4a3e3ad80adff.png" />
+<img alt="_images/d2378ae4eda4d4cd80ad2524128d029f4c6c2397c5873c0dfcfb76859de615d2.png" src="_images/d2378ae4eda4d4cd80ad2524128d029f4c6c2397c5873c0dfcfb76859de615d2.png" />
 </div>
 </div>
 <p>The mean filter can remove some of the noise, restoring the clarity of the image:</p>
@@ -1122,7 +1122,7 @@ Mean filter via SciPy `correlate`:
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/3b15477479f8da1fc681b076e5b7478e25c3cb0cfd5c73ce9c9db290e3251b20.png" src="_images/3b15477479f8da1fc681b076e5b7478e25c3cb0cfd5c73ce9c9db290e3251b20.png" />
+<img alt="_images/e190e71db9bccbd42dc2a29efda8af393ea5413f9592ab78050994b9a1570996.png" src="_images/e190e71db9bccbd42dc2a29efda8af393ea5413f9592ab78050994b9a1570996.png" />
 </div>
 </div>
 <p>We can see that the image is clearer, the noise has been reduced and some of the signal has been restored.</p>
@@ -1152,7 +1152,7 @@ Mean filter via SciPy `correlate`:
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/11cf2d4bcfd08f2535ad06e2601c1ef42204d8c874b56b5485bae7d8cdba5926.png" src="_images/11cf2d4bcfd08f2535ad06e2601c1ef42204d8c874b56b5485bae7d8cdba5926.png" />
+<img alt="_images/51883c908660ee6a0da0bbff298c86f3d77f0e61d2403d1c37342f7805db49bb.png" src="_images/51883c908660ee6a0da0bbff298c86f3d77f0e61d2403d1c37342f7805db49bb.png" />
 </div>
 </div>
 <p>As with many filtering operations, the effect of altering aspects of the filtering process (like a threshold value or kernel size), is very context dependent. It may take many iterations before finding a “sweet spot”, and where the sweet spot is may be somewhat subjective.</p>

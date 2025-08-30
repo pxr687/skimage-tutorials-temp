@@ -65,7 +65,7 @@
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="Introducing Scikit-image" href="2_skimage_intro.html" />
-    <link rel="prev" title="What is an image? - Images as NumPy arrays" href="0_images_as_numpy_arrays.html" />
+    <link rel="prev" title="Images as NumPy arrays" href="0_images_as_numpy_arrays.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   </head>
@@ -177,7 +177,7 @@
     <div class="bd-toc-item navbar-nav active">
         <p aria-level="2" class="caption" role="heading"><span class="caption-text">Scikit-image via NumPy and SciPy</span></p>
 <ul class="current nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="0_images_as_numpy_arrays.html">What is an image? - Images as NumPy arrays</a></li>
+<li class="toctree-l1"><a class="reference internal" href="0_images_as_numpy_arrays.html">Images as NumPy arrays</a></li>
 
 
 
@@ -223,13 +223,13 @@
 
 
 
-<li class="toctree-l1"><a class="reference internal" href="5_mean_filter.html">Convolutional filtering I - the mean filter</a></li>
+<li class="toctree-l1"><a class="reference internal" href="5_mean_filter.html">Convolution filters I - the mean filter</a></li>
 
 
 
 
 
-<li class="toctree-l1"><a class="reference internal" href="6_gaussian_sharpening_edge.html">Convolutional filtering II - Gaussian blur, sharpening and edge detection</a></li>
+<li class="toctree-l1"><a class="reference internal" href="6_gaussian_sharpening_edge.html">Convolution filters II - Gaussian blur, sharpening and edge detection</a></li>
 
 
 
@@ -1196,9 +1196,9 @@ Our 3-D stacked array is of the right shape:</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>X1 = 0.37
-X2 = 0.87
-X3 = 0.98
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>X1 = 0.78
+X2 = 0.71
+X3 = 0.99
 </pre></div>
 </div>
 </div>
@@ -1227,12 +1227,12 @@ X3 = 0.98
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Red (X1) = 0.04
-Green (X2) = 0.71
-Blue (X3) = 0.53
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Red (X1) = 0.64
+Green (X2) = 0.94
+Blue (X3) = 0.38
 </pre></div>
 </div>
-<img alt="_images/2540c07e3c42bd68caf9a071ca3a31b3734467c4cca680aca77d92e517f3861d.png" src="_images/2540c07e3c42bd68caf9a071ca3a31b3734467c4cca680aca77d92e517f3861d.png" />
+<img alt="_images/4d489535c42be9a90596cbdc7597c600ac6959b73fe5a899e7e138b0508a9305.png" src="_images/4d489535c42be9a90596cbdc7597c600ac6959b73fe5a899e7e138b0508a9305.png" />
 </div>
 </div>
 <p>So, each two-dimensional display image has a “hidden” three-dimensional array behind it. Each slice of the third dimension is a colour channel. The mix of values at a given element in each colour channel determins the colour of that pixel in the rendered image. You may want to view this image in a new browser window, to see more clearly the exact mixes of the colour channels, which are shown above each square on the right hand side of the image:</p>
@@ -1248,7 +1248,7 @@ Blue (X3) = 0.53
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/2f8384bc4f284a3a0d4a78146225d5c828bb23df001eb66bdb596056d0b3a1ec.png" src="_images/2f8384bc4f284a3a0d4a78146225d5c828bb23df001eb66bdb596056d0b3a1ec.png" />
+<img alt="_images/a4b1205025294418ab2676096ec1b73c8e06a387feafbfe24f03f940caacae34.png" src="_images/a4b1205025294418ab2676096ec1b73c8e06a387feafbfe24f03f940caacae34.png" />
 </div>
 </div>
 <p>We have now completed our perilous expedition into the third dimension… We have seen that we can use 3-D arrays to encode <em>true colour</em> information. This means that the image array itself contains colour information for each pixel, where we are <em>not</em> just pseudocolouring greyscale information using <code class="docutils literal notranslate"><span class="pre">viridis</span></code> or another colourmap…</p>
@@ -1749,7 +1749,7 @@ Min Pixel Value: 0
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/a6ebb31fcc875b5ac5409f95095bb481f990600d18f2243c98a69810cc177a23.png" src="_images/a6ebb31fcc875b5ac5409f95095bb481f990600d18f2243c98a69810cc177a23.png" />
+<img alt="_images/5b0cdfe9e61959a0f67f21956b5f947dcab011153596c334bdff30e895be9558.png" src="_images/5b0cdfe9e61959a0f67f21956b5f947dcab011153596c334bdff30e895be9558.png" />
 </div>
 </div>
 </section>
@@ -1847,7 +1847,7 @@ Min Pixel Value: 0
       <i class="fa-solid fa-angle-left"></i>
       <div class="prev-next-info">
         <p class="prev-next-subtitle">previous</p>
-        <p class="prev-next-title">What is an image? - Images as NumPy arrays</p>
+        <p class="prev-next-title">Images as NumPy arrays</p>
       </div>
     </a>
     <a class="right-next"

@@ -32,9 +32,9 @@
     <link rel="stylesheet" type="text/css" href="_static/styles/sphinx-book-theme.css?v=eba8b062" />
     <link rel="stylesheet" type="text/css" href="_static/togglebutton.css?v=13237357" />
     <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
-    <link rel="stylesheet" type="text/css" href="_static/mystnb.8ecb98da25f57f5357bf6f572d296f466b2cfe2517ffebfabe82451661e28f02.css?v=6644e6bb" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.8ecb98da25f57f5357bf6f572d296f466b2cfe2517ffebfabe82451661e28f02.css" />
     <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css?v=4fa983c6" />
-    <link rel="stylesheet" type="text/css" href="_static/exercise.css?v=982b99e0" />
+    <link rel="stylesheet" type="text/css" href="_static/exercise.css" />
     <link rel="stylesheet" type="text/css" href="_static/sphinx-design.min.css?v=95c83b7e" />
   
   <!-- Pre-loaded scripts that we'll load fully later -->
@@ -1915,7 +1915,7 @@ Min Pixel Value: 1
 <img alt="_images/e6c21e05ace90de65330fe2e779cc9baa4143197d7babc8082aaad07f87fed49.png" src="_images/e6c21e05ace90de65330fe2e779cc9baa4143197d7babc8082aaad07f87fed49.png" />
 </div>
 </div>
-<p>Let’s think about what has happened here at the level of the individual pixels. Three kernel locations from the top of the array are represented below:</p>
+<p>Let’s think about what has happened here at the level of the individual pixels. Three kernel locations from the top of the array are represented below (once again, you may want to right click on these images and open then in a new tab/window, for easier viewing):</p>
 <p><img alt="" src="_images/horizontal_edge_detection_1.png" /></p>
 <p>You can see that, for a binary image, the horizontal kernel convolution essential “counts” the number of 0-to-1 vertical changes in the kernel location, which lets it detect horizontal edges.</p>
 <p>Conversely, when the kernel hits the 1-to-0 vertical changes at the bottom of the array, we get a similar count of the 1-to-0 changes, but indicated by a negative value, telling his that the gradient is in the other direction:</p>
