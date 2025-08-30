@@ -431,12 +431,7 @@ plt.ylabel('Pixel Count')
 plt.title('Bin centers vs pixel counts');
 ```
 
-<!-- #region -->
-To implement the Otsu filter, we "split" the histogram into two sides, at a given bin center. We can think of this as creating two separate histograms. Here is a visualisation of splitting at the 50th bin center (which is centered on the pixel intensity value of 98.6):
-
-
-**NOTE: change threshold line to dashed line**
-<!-- #endregion -->
+To implement the Otsu filter, we "split" the histogram into two sides, at a given bin center. We can think of this as creating two separate histograms. Here is a visualisation of splitting at the 50th bin center (which is centered on the pixel intensity value of 98.6). The location of the "split" is shown as a thick, dashed line:
 
 ```{python}
 # The 50th bin center value.
@@ -446,9 +441,12 @@ bin_centers[49]
 ```{python}
 # A function to visualise different threshold values.
 def plot_bins_with_threshold(threshold_bin_number, legend=True, axis=True):
-    plt.plot(bin_centers[:threshold_bin_number], counts[:threshold_bin_number], color='red', marker='X', label='Left Side Histogram')
-    plt.plot(bin_centers[threshold_bin_number:], counts[threshold_bin_number:], color='green', marker='X', label='Right Side Histogram')
-    plt.axvline(bin_centers[threshold_bin_number], color='black', label='Threshold')
+    plt.plot(bin_centers[:threshold_bin_number], counts[:threshold_bin_number], color='red',
+             marker='X', label='Left Side Histogram')
+    plt.plot(bin_centers[threshold_bin_number:], counts[threshold_bin_number:], color='green',
+             marker='X', label='Right Side Histogram')
+    plt.axvline(bin_centers[threshold_bin_number], color='black', label='Threshold', 
+                linestyle="--", linewidth=3)
     plt.xlabel('Bin Centers')
     plt.ylabel('Pixel Count')
     plt.title(f'Threshold Pixel Intensity = {bin_centers[threshold_bin_number].round(2)}')
@@ -557,9 +555,7 @@ In Otsu's method, we want to find the threshold value which gives the *minimum t
 
 In other words, the threshold value which gives the lowest combined `ssd` identifies two classes of pixels that are most different from each other, compared to other classes/splits we could choose, according the metrics that the Otsu method cares about.
 
-You can think of it as finding a threshold which groups pixels such that the means of the groups are very different, and also that the pixel values in each side of the "split" are clustered closely around their respective mean, giving them a big separation from pixels in the other class. 
-
-**NOTE: Amend to: As you can see, the OTSU calculation finds a threshold such that the pixel values on each side of the threshold are clustered closely around their respective means.  In fact, it turns out this calculation also has the effect that …**
+You can think of it as finding a threshold which groups pixels such that the pixel values in each side of the "split" are clustered closely around their respective mean. In fact, it turns out minimizing the total `ssd` also has the effect that the *distance* between the means will be large as well giving a big separation between the pixels in each class as a result.
 
 The cell below will find the threshold which gives the minimum combined `ssd`:
 
@@ -833,10 +829,17 @@ plt.imshow(cam3_regions_hack);
 :::
 
 
-**NOTE - introduce this via emphasizing Skimage compatibility with scientific python ecosystem e.g. integrated with Matplotlib**
+A useful trick, when thresholding in `skimage` to try to separate foreground and background, is to use the `ski.filters.try_all_threshold()` to try all the available thresholding methods, and visually inspect the results.
+
+This function is both a filtering function and a plotting function. Behind the scenes it is using Matplotlib to generate the plots. Such is the utility of `skimage` being highly integrate with the rest of the [Scientific Python eco-system](https://scientific-python.org).
+
+We run the function in the cell below. The name of each thresholding method is shown as the title of each plot:
 
 ```{python}
-ski.filters.try_all_threshold(camera, verbose=False, figsize=(16, 16))
+# Try all thresholding methods, and plot the results.
+ski.filters.try_all_threshold(camera,
+                              verbose=False, # Avoid clutter from printouts.
+                              figsize=(16, 16))
 plt.tight_layout();
 ```
 
