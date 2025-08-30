@@ -13,7 +13,7 @@ jupyter:
     name: python3
 ---
 
-# What is an image? - Images as NumPy arrays
+# Images as NumPy arrays
 
 This page explores how images can be represented as NumPy arrays. To get started, let's think about the meaning of the word "image".  The *intuitive meaning* is roughly "a picture of something", or perhaps more broadly a "visual representation of something". This is the familiar meaning which applies to images we encounter in everyday life, like advertisement posters, paintings, drawings, photographs and so on.
 
