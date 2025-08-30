@@ -28,7 +28,11 @@ def hint_strange_coffee():
 		    print("""You may need to adjust the *sign* of the kernel elements, 
 to achieve the desired result...""")
 
-def hint_krazy_kernel():
+def hint_krazy_kernel_1():
+	print("""You may want to investigate the `.sum()` of all of the kernels we
+have used up until now on the page...""")
+
+def hint_krazy_kernel_2():
 	print("""Think about "255 + 1", and what effect this might have on an image.
 	   """)
 	

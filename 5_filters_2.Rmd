@@ -7,6 +7,7 @@ On the previous filtering page we looked at single and multi-value threshold fil
 import numpy as np
 import matplotlib.pyplot as plt
 import scipy.ndimage as ndi
+import scipy.stats as sps
 import skimage as ski
 from mpl_toolkits.mplot3d import Axes3D
 
@@ -27,12 +28,11 @@ from hints import hint_krazy_kernel
 
 An important kernel-based filter with, let's be honest, a pretty cool name is the *Gaussian filter*. You may recognise the name from the famous [Gaussian distribution](https://en.wikipedia.org/wiki/Normal_distribution), which we plot below:
 
-** Note from meeting: Plot as curve not as histogram scipy.stats.normal **
-
 ```{python}
 # Plot a normal/Gaussian distribution.
-plt.hist(np.random.normal(0, 10, 500000), 
-         bins=128)
+x = np.linspace(-4, 4, 10_000)
+y = sps.norm().pdf(x)
+plt.plot(x, y)
 plt.xlabel('X value')
 plt.ylabel('Probability')
 plt.xticks([])
@@ -45,6 +45,7 @@ This is the well-known normal distribution, which is sometimes described as havi
 # A fancy kernel.
 gaussian_like_kernel =  np.array([[0.06, 0.12, 0.06],
                                   [0.12, 0.25, 0.12],
+                                  
                                   [0.06, 0.12, 0.06]])
 gaussian_like_kernel
 ```
@@ -187,12 +188,35 @@ Again, to make the relationship between the NumPy array and the graph as clear a
 ![](images/sky_gauss_2.png)
 
 
-You  may (or may not) recognise the "red mountain" - when we plot the `big_gaussian_kernel` - as a multi-dimensional [Gaussian distribution](https://en.wikipedia.org/wiki/Normal_distribution). Here is a prototypical multi-dimensional Gaussian:
+You  may (or may not) recognise the "red mountain" - when we plot the `big_gaussian_kernel` - as a multivariate [Gaussian distribution](https://en.wikipedia.org/wiki/Gaussian_function). Here is one way of writing the formula for the multivariate Gaussian distribution:
 
-**NOTE FROM MEETING: replace this with python code**
+$
+ \Large p(x, y) = \frac{1}{2 \pi  \sigma_x  \sigma_y}  \
+    e^{-\frac{1}{2} (\frac{(X - \mu_x)^2} {\sigma_x^2} + \frac{(Y - \mu_y)^2} {\sigma_y^2})}
+$
 
-![](images/2_D_gaussian.png)
-(Image from [here](https://stats.stackexchange.com/questions/102632/plot-two-dimensional-gaussian-density-function-in-matlab)).
+Essentially, the function takes the input variables $x$ and $y$, a mean ($\mu$) and standard deviation ($\sigma$; e.g. spread) for each variable, and returns a probability of a particular combination of $x$ and $y$. Here is a plot of a prototypical multivariate Gaussian, where both input variables have a mean of 0, a spread of 1, and are uncorrelated with each other:
+
+```{python}
+# Plot a multivariate Gaussian, where both x and y have a mean of 0 and variance of 1.
+x = np.linspace(-5, 5, 10_00)
+y = np.linspace(-5, 5, 10_00)
+X, Y = np.meshgrid(x,y)
+mu_x = 0
+mu_y = 0
+sigma_x = 1
+sigma_y = 1
+Z = 1/(2 * np.pi * sigma_x * sigma_y) * np.exp(-0.5 * ((X - mu_x)**2 / sigma_x**2 + (Y - mu_y)**2 / sigma_y**2))
+
+# Generate the plot.
+fig = plt.figure(figsize=(8, 8))
+ax = plt.axes(projection='3d')
+ax.plot_surface(X, Y, Z)
+ax.set_xlabel('X')
+ax.set_ylabel('Y')
+ax.set_zlabel('Probability', labelpad=1)
+ax.set_title("Multivariate Gaussian Distribution");
+```
 
 Here is the plot of `big_gaussian_kernel` again, for comparison to the perfect Gaussian shown in the image above:
 
@@ -201,7 +225,7 @@ Here is the plot of `big_gaussian_kernel` again, for comparison to the perfect G
 kernel_plot(big_gaussian_kernel, text = False)
 ```
 
-For the smaller `gaussian_like_kernel` the 3D plot appeared more "spiky" as it has less array elements. In this bigger `(9, 9)` kernel, we can see a smoother, more obviously Gaussian "mountain".
+The "crimson peak" of the `big_gaussian_kernel` is spikier than for the prototypical Gaussian, simply because it is centered on a single pixel (creating the spike at the "crimson peak"). For the smaller `gaussian_like_kernel` the whole 3D plot appeared more "spiky" as it has less array elements. In the bigger `(9, 9)` `big_gaussian_kernel`, we can see a smoother, more obviously Gaussian "mountain", much more visually similar to prototypical multivariate Gaussian distribution.
 
 Both our `(3, 3)` kernel above, and the larger kernel we just plotted, are called [gaussian blur kernels](https://www.geeksforgeeks.org/deep-learning/types-of-convolution-kernels). Let's look at the `gaussian_like_kernel` array again, to compare it to `big_gaussian_kernel` directly:
 
@@ -318,9 +342,7 @@ plt.tight_layout();
 :class: dropdown
 :::
 
-**NOTE FROM MEETING**: show conversion to float and how it prevents the strange image, then use the scaling factor as the solution (prevents overflow) "instead of modifying the image, can you modify the kernel to preven the overflow" - then ask them to think/write an explanation of the overflow.
-
-Here is another kernel which follows a Gaussian-like pattern (e.g. pixels closer to the center are weighted more heavily):
+Here is another kernel which follows a roughly Gaussian-like pattern - e.g. pixels closer to the center are weighted more heavily, pixels towards the sides have less weight. However, it is only somewhat Gaussian-like, and in fact is a very strange kernel, as we will see when we view it on a 3D plot:
 
 ![](images/almost_gaussian.png)
 
@@ -348,10 +370,11 @@ We plot this oddball kernel in 3D, in the cell below:
 kernel_plot(almost_gaussian_kernel)
 ```
 
-It looks like a late 90s games console graphics take on a Gaussian! When we filter the `camera` image using this kernel, we get some strange results. First, we show the original `camera` image:
+It looks like a late 90s games console graphics take on a Gaussian! When we filter the `camera` image using this kernel, we get some strange results. First, we show the original `camera` image, as a starting point:
 
 ```{python}
 # Show the original `camera` image.
+show_attributes(camera)
 plt.imshow(camera);
 ```
 
@@ -361,39 +384,43 @@ Now, we filter with weird kernel:
 # Filter with the oddball kernel. (Probably) not the result we want...
 almost_gaussian_filtered_camera = ndi.correlate(camera,
                                                 weights=almost_gaussian_kernel)
-                                                     
+# Show the attributes and plot the result.
+show_attributes(almost_gaussian_filtered_camera)      
 plt.matshow(almost_gaussian_filtered_camera);
-```
-
-```{python}
-# Here are the attributes of the image which results of the filtering operation above.
-show_attributes(almost_gaussian_filtered_camera)
 ```
 
 This may be a pretty cool effect, but, because the kernel we used looks like the weird cousin of a Gaussian, we would maybe expect this kernel to do something closer to Gaussian smoothing than to totally psych out the image, as it has done here.
 
-With a small modification somewhere in the pipeline, however, we can get the following Gaussian-like smoothing on `camera`, using the oddball `almost_gaussian_kernel`:
+With a small modification to the `dtype`, however, we can get the following Gaussian-like smoothing on `camera`, using the oddball `almost_gaussian_kernel`:
+
+```{python}
+# Convert to `float64` dtype.
+camera_as_float = ski.util.img_as_float64(camera)
+
+# Filter with the oddball kernel, successfully.
+almost_gaussian_filtered_camera = ndi.correlate(camera_as_float,
+                                                weights=almost_gaussian_kernel)
+                                                     
+plt.matshow(almost_gaussian_filtered_camera);
+```
+
+Why did this happen? Take a moment to think about possible explanations. After your pause for thought, your task is to *make adjustments to the kernel **only** to prevent the original psychedelic error from happening*. You should be able to obtain the same smoothed image from the cell above, if you modify the kernel correctly. Just for reference, to save you scrolling, here is the target image again:
 
 ![](images/krazy_kernel_target_image.png)
 
-Try to make the relevant adjustments to obtain this target image. 
+...and here is the psychedelic image that you should avoid:
 
-**DO NOT** recreate the kernel array and "manually" modify the original numbers, by editing them directly in the NumPy array. Use `numpy`, `scipy` or `skimage` functions to do what you need.
+![](images/psych_out.png)
 
-*Hint*: you may want to investigate the `.sum()` of all of the kernels we have used hitherto...
+When you modify the kernel **DO NOT** recreate the kernel array and "manually" modify the original numbers by editing them directly. Use `numpy`, `scipy` or `skimage` functions to alter the kernel to do what you need.
 
-*Hint 2*: there are several ways to solve this, you can follow the previous hint, and you can also think about what might have caused the psychedelic error we see above...
+*Hint*: run the `hint_krazy_kernel_1()` function for a hint about how you could modify the kernel...
 
-*Hint 3*: run the `hint_krazy_kernel()` function for some additional help...
+*Hint 2*: run the `hint_krazy_kernel_2()` function for some additional help regarding the source of the original error...
 
 ```{python}
 # YOUR CODE HERE
 my_new_kernel = almost_gaussian_kernel.copy()
-
-# Load in and show camera.
-camera = ski.data.camera()
-show_attributes(camera)
-plt.imshow(camera);
 ```
 
 
@@ -404,7 +431,7 @@ plt.imshow(camera);
 :class: dropdown
 :::
             
-So, the problem here is *integer overflow*. Filtering `camera` with the `almost_gaussian_kernel` results in numbers that are too big for the `dtype` to handle. Let's remind ourselves of the kernel values:
+So, the problem here is *integer overflow*. Filtering `camera` with the `almost_gaussian_kernel` results in numbers that are too big for the original `uint8` `dtype` to handle. Let's remind ourselves of the kernel values:
 
 ```{python}
 # Show the kernel.
@@ -425,7 +452,7 @@ This value is too large for the `unit8` `dtype` of the original camera image, wh
 camera.dtype
 ```
 
-This is what explains the strange result we saw above.
+This is what explains the strange result we saw above. 
 
 One solution to this is to scale the kernel to sum to 1. In fact, this is [common practice](https://dsp.stackexchange.com/questions/25130/why-should-the-sum-of-masks-kernel-filter-in-image-processing-be-one) with image filtering kernels because it ensures that they do not alter the average intensity values of the images to which they are applied. In this case, however, scaling the kernel so that it sums to 1 will also prevent integer overflow...
 
@@ -468,34 +495,22 @@ plt.matshow(almost_gaussian_filtered_camera);
 ```
 
 
-Another option is to prevent the integer overflow by adjusting the `dtype` of `camera` prior to filtering - we told you `dtype`s are important!
-
-We can use the trusty `ski.util.img_as_float()` function to do this. The filtering operation then proceeds, preventing the integer overflow, and without catastophic psychedelia, to generate the target image:
-
-```{python}
-# Convert `camera` to `float64`.
-camera_as_float = ski.util.img_as_float(camera)
-
-# Filter using the oddball kernel, with no psychedelic results.
-almost_gaussian_filtered_camera_solution_2 = ndi.correlate(camera_as_float,
-                                                weights=almost_gaussian_kernel)                                        
-plt.matshow(almost_gaussian_filtered_camera_solution_2);
-```
-
 ::: {solution-end}
 :::
 
 
 ::: {exercise-start}
-:label: DIY-gauss
+:label: DIY-gaussian
 :class: dropdown
 :::
 
-Below is the formula for generating a 2D Guassian distribution, and therefore for generating a 2D Gaussian kernel.
+Below is another way of writing the formula for generating a 2D Guassian distribution, and therefore for generating a 2D Gaussian kernel.
 
-$ \Large \text{Gaussian}(x, y) = \frac{1}{\sqrt{2 \pi \sigma^2}} e^{- \frac{x^2 + y2^2}{2\sigma^2}} $
+$ \Large \text{Gaussian}(x, y) = \frac{1}{\sqrt{2 \pi \sigma^2}} e^{- \frac{x^2 + y^2}{2\sigma^2}} $
 
-Your task is to define a function in the cell below which implements this Gaussian formula. Your function should take two 2-D arrays ($x$ and $y$), and a `sigma` ($\sigma$) value, as arguments. Figure out what needs to be in each input argument to produce the following `target_kernel`:
+In contrast the formula we saw above for the same distribution, *this formula assumes that both $x$ and $y$ have an equal spread*. Generally we will want this equality of spread, for a Gaussian kernel.
+
+Your task is to define a function in the cell below which implements this revised Gaussian formula. Your function should take two 2-D arrays ($x$ and $y$), and a `sigma` ($\sigma$) value, as arguments. Figure out what needs to be in each input argument to produce the following `target_kernel`:
 
 ```{python}
 # Show the target kernel.
@@ -512,6 +527,18 @@ kernel_plot(target_kernel);
 
 target_kernel
 ```
+
+Once you have successfully generated the `target_kernel` using your function, use it to blur the following image:
+
+```{python}
+# Read in and show the image which you should blur with your new kernel.
+xenomorph = ski.io.imread("images/xenomorph.png", as_gray=True)
+plt.imshow(xenomorph);
+```
+
+You should find the `sigma` value that you need in order to produce the following target image:
+
+![](images/xeno_blur.png)
 
 To help narrow things down, we have put some scaffolding code in the cell below, which shows how to generate the 2D `x` and `y` arrays with `np.meshgrid()`. The code is currently commented out, you will need to uncomment it, and modify it so it can be used to produce the `target_kernel`.
 
@@ -544,16 +571,25 @@ def DIY_gauss(x, y, sigma):
 # assert all(DIY_gauss_solution(x, y, sigma=secret_val()).round(2) == target_kernel.round(2).round(2))
 ```
 
+Do not forget to use your kernel to blur the `xenomorph` image in the cell below:
+
+```{python}
+# Convolve your kernel with the xenomorph image...
+xenomorph_gauss_blurred = ...
+```
+
 ::: {exercise-end}
 :::
 
-::: {solution-start} krazy-kernel
+::: {solution-start} DIY-gaussian
 :class: dropdown
 :::
 
-The function, with the correct input arguments is below. You need to use `np.arange(-3, 4)` for the inputs to `np.meshgrid()` - the resulting 2D `x_solution` and `y_solution` arrays are printed out under the cell. A `sigma` of 1 will generate the target.
+The function you need, with the correct input arguments, is below. You need to use `np.arange(-3, 4)` for the inputs to `np.meshgrid()` - the resulting 2D `x_solution` and `y_solution` arrays are printed out under the cell. A `sigma` of 1 will generate the target kernel.
 
-An important step here is `gauss = 1/gauss.sum() * gauss` which ensures that the kernel elements sum to 1. This makes sure that the average pixel intensity of an image stays the same as the original image, when we filter the image with this kernel (this is called a *normalizing the kernel*). If we skip this step, we may well create problems with illegal (too large!) pixel intensity values, or otherwise will be changing the intensities in a way that is not part of the typical Gaussian blur procedure...
+An important step here is `gauss = 1/gauss.sum() * gauss` which ensures that the kernel elements sum to 1. As we noted in the solution to the last exercise, this step makes sure that the average pixel intensity of an image stays the same as the original image, when we filter the image with this kernel (this is called a *normalizing the kernel*). 
+
+If we skip the normalization step, we may well create problems with illegal (too large!) pixel intensity values, or otherwise will be changing the intensities in a way that is not part of the typical Gaussian blur procedure e.g. we will be altering the average pixel intensity of the whole image, rather than just blurring the pixels...
 
 ```{python}
 def DIY_gauss_solution(i, j, sigma):
@@ -567,25 +603,35 @@ def DIY_gauss_solution(i, j, sigma):
 
 # Generate the input arrays.
 x_lin_solution = np.arange(-3, 4)
-y_lin_solution = x_lin.copy()
+y_lin_solution = x_lin_solution.copy()
 x_solution, y_solution = np.meshgrid(x_lin_solution,
                                      y_lin_solution)
 
-print(f"x =\n {x} \n \ny =\n {y}")
-
+# Print out some reports/results.
+print(f"x =\n {x_solution} \n \ny =\n {y_solution}")
 print(f"\nGaussian kernel (same as `target_kernel`) =\n {DIY_gauss_solution(x_solution, y_solution, 1).round(2)}\n")
-
 # Is it all the same as the `target_kernel`?
-print("Same as the target?:")
+print("Same as the target? This array should contain on `True`s if so...:")
 DIY_gauss_solution(x_solution, y_solution, 1).round(2) == target_kernel.round(2)
 ```
 
-```{python}
-xenomorph = ski.io.imread("images/xenomorph.png", as_gray=True) < np.median(ski.io.imread("images/xenomorph.png", as_gray=True))
-target_image_solution = ndi.correlate(xenomorph, 
-                                      weights=DIY_gauss_solution(x_solution, y_solution, 10))
+To use the `target_kernel` to recreate the target image, you need to hefty sigma value of 10:
 
-plt.imshow(target_image_solution);
+```{python}
+sigma = 10
+
+# Blur the `xenomorph` image, and show beside the original.
+target_image_solution = ndi.correlate(xenomorph, 
+                                      weights=DIY_gauss_solution(x_solution, y_solution, sigma=sigma))
+
+# Show the original image and the blurred image.
+plt.figure(figsize=(14, 5))
+plt.subplot(1, 2, 1)
+plt.title('Original')
+plt.imshow(xenomorph)
+plt.subplot(1, 2, 2)
+plt.imshow(target_image_solution)
+plt.title('Gaussian Blur with `target_kernel`');
 ```
 
 ::: {solution-end}
