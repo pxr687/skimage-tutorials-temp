@@ -1,7 +1,5 @@
 # Image filtering I
 
-**NOTE: add  try_all_threshold plotting function **
-
 A common operation we will want to perform on images is *filtering*. This is where we modify all of the pixels in an image according to a certain rule or algorithm, often based on other pixel values within the "local neighbourhood" of a given pixel. Filtering techniques can be used to remove noise from an image, or to achieve specific visual effects, amongst other purposes.
 
 Here we will look at some important filtering techniques: threshold filtering and mean filtering. We will show how they work at the pixel-level, using `numpy` and `scipy`, and then we will show how to implement them in `skimage`.
@@ -1332,16 +1330,12 @@ This is quite a strange kernel to apply! But it shows us how easy it is to achie
 ::: {solution-end}
 :::
 
-<!-- #region -->
+
 # Mean filtering with `skimage`
 
 We can implement a mean filter using the `ski.filters.rank.mean()` function. `skimage` prefers the term `footprint` to "kernel", but the meaning is the same. We supply a small matrix with which to "walk" through the image, centring the kernel on every pixel, and modifying that central pixel's value based on the values of the other pixels in it's neighbourhood, with the size and shape of the neighbourhood being defined by the kernel (`footprint`). 
 
 Inspecting the `skimage` documentation will reveal that the format expected for the `footprint` should be ["the [pixel] neighborhood expressed as an ndarray of 1’s and 0’s."](https://scikit-image.org/docs/0.25.x/api/skimage.filters.rank.html#skimage.filters.rank.mean). We will uses `np.ones()` to generate an array in this format. We use a `(9,9`) kernel to acheive a stronger visual effect:
-
-
-** NOTE FROM MEETING: show separate channels operation, then show using 3D kernel **
-<!-- #endregion -->
 
 ```{python}
 # A "footprint" (eg. kernel) to pass to `skimage`.
@@ -1414,12 +1408,39 @@ plt.imshow(astronaut_mean_filtered)
 plt.tight_layout();
 ```
 
-Scikit-image will handle this more efficiently, using a 3D kernel. Below we adjust our `footprint_9_by_9` kernel by `np.stack()`-ing it into 3D:
+This is straightforward to do with `skimage` as well; we also use the larger (9, 9) `footprint_9_by_9` kernel:
 
 ```{python}
-# The original kernel we used for 2D mean filtering, in `skimage`.
-footprint_9_by_9
+# A dictionary to store the individually filtered channels.
+filtered_channels = {}
+
+# Loop through and filter each channel individually, store
+# the results in the dictionary.
+for i in np.arange(astronaut.shape[2]):
+    current_filtered_channel = ski.filters.rank.mean(astronaut[:, :, i],   # Use `skimage` for the filtering.
+                                                    footprint=footprint_9_by_9) # Use a larger kernel.
+    filtered_channels[i] = current_filtered_channel
+
+# Stack back to 3D.
+astronaut_mean_filtered = np.stack([filtered_channels[0],
+                                    filtered_channels[1],
+                                    filtered_channels[2]], 
+                                   axis=2)
+
+# Show the result.
+plt.figure(figsize=(12, 6))
+plt.subplot(1,2,1)
+plt.title("Original")
+plt.imshow(astronaut)
+plt.subplot(1,2,2)
+plt.title("Mean Filtered with `ski.filters.rank.mean()` \n (9, 9) kernel")
+plt.imshow(astronaut_mean_filtered)
+plt.tight_layout();
 ```
+
+We got a blurrier output image via `skimage` here, than in the manual convolution using `ndi.correlate()` because we used a larger kernel for the `skimage` filtering, and so are averaging over larger pixel neighbourhoods.
+
+Scikit-image will alos handle this using a 3D kernel. Below we adjust our `footprint_9_by_9` kernel by `np.stack()`-ing it into 3D:
 
 ```{python}
 # Stack to 3D.
@@ -1447,7 +1468,9 @@ plt.imshow(astronaut_mean_filtered_ski)
 plt.tight_layout();
 ```
 
-We got a blurrier output image via `skimage` here, than in the manual convolution using `ndi.correlate()` because we used a larger kernel for the `skimage` filtering, and so are averaging over larger pixel neighbourhoods.
+Pay attention here to the effect on the *colour* of the image. How is it different to filtering the colour channels separately?
+
+You'll notice that the colours have changed substantially. This is because the 3D kernel is leading to averaging across the colour channels, relative to filtering each channel separately. We may want this effect (it is somewhat retro), but if we do not want to affect the colour of the image, then generally filtering the channels separately is the way to go...
 
 
 # Summary
