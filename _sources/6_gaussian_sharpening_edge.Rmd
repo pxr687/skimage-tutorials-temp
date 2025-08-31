@@ -1127,7 +1127,7 @@ plt.imshow(edgy_vertical_horizontal_stack);
 
 The pixel values throughout this edge detection process, on the `edgy` array, are shown on the image below:
 
-![](images/edge_detection_together.png)
+![](images/edge_detection_process.png)
 
 
 Let's do this again, for the images that resulted from filtering `coffee_grey` with our horizontal and vertical edge detection kernels, respectively.
@@ -1272,8 +1272,10 @@ The plot below shows the effect of both filters, side by side:
 coins = ski.data.coins()
 prewitt_coins = ski.filters.prewitt(coins)
 sobel_coins = ski.filters.sobel(coins)
-fig, ax = plt.subplots(2, 3, 
-                       figsize=(12, 8),
+prewitt_coffee = ski.filters.prewitt(coffee_grey)
+sobel_coffee = ski.filters.sobel(coffee_grey)
+fig, ax = plt.subplots(3, 3, 
+                       figsize=(12, 12),
                        constrained_layout=True)
 ax[0, 0].imshow(edgy)
 ax[0, 0].set_title('Original')
@@ -1287,13 +1289,22 @@ ax[0, 2].axis('off')
 ax[1, 0].imshow(coins)
 ax[1, 0].set_title('Original')
 ax[1, 0].axis('off')
-ax[1, 1].imshow(prewitt_coins )
+ax[1, 1].imshow(prewitt_coins)
 ax[1, 1].set_title('Prewitt Edge Filter')
 ax[1, 1].axis('off')
 ax[1, 2].imshow(sobel_coins)
 ax[1, 2].set_title('Sobel Edge Filter')
 ax[1, 2].axis('off')
-plt.show()
+ax[2, 0].imshow(coffee_grey)
+ax[2, 0].set_title('Original')
+ax[2, 0].axis('off')
+ax[2, 1].imshow(prewitt_coffee)
+ax[2, 1].set_title('Prewitt Edge Filter')
+ax[2, 1].axis('off')
+ax[2, 2].imshow(sobel_coffee)
+ax[2, 2].set_title('Sobel Edge Filter')
+ax[2, 2].axis('off')
+plt.show();
 ```
 
 ::: {exercise-start}
