@@ -2361,7 +2361,7 @@ Min Pixel Value: 0.0
 
 <p class="admonition-title"><span class="caption-number">Exercise 25 </span></p>
 <section id="exercise-content">
-<p>You may have noticed that, in the final output images that result from the application of the filters, the edges detected by the methods we used above are two pixels wide. For instance the image below results from filtering <code class="docutils literal notranslate"><span class="pre">edgy</span></code> with the Sobel filter:</p>
+<p>Think about all of the edge detection filter types we have seen above. You may have noticed that, for all of the final output images from each filter, the edges detected are two pixels wide. For instance the image below results from filtering <code class="docutils literal notranslate"><span class="pre">edgy</span></code> with the Sobel filter:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Edgy, filtered with `ski.filters.sobel()`.</span>
@@ -2373,10 +2373,13 @@ Min Pixel Value: 0.0
 <img alt="_images/f399aef53c75e98a95d558240b990b98839f52e5e094b82e15a821f506c57a44.png" src="_images/f399aef53c75e98a95d558240b990b98839f52e5e094b82e15a821f506c57a44.png" />
 </div>
 </div>
-<p>Can you think of the kernels you need such that, in the final image array from the filtering process, the edges are <em>only one pixel wide</em>?</p>
+<p>You can see that both the horizontal edges and the vertical edges are two pixels wide.</p>
+<p>Can you think of the modifications you could make to the edge detection kernels, such that after convolving <code class="docutils literal notranslate"><span class="pre">edgy</span></code> with the kernels, and combining the results into one image, that the edges in the combined image are <em>only one pixel wide</em>?</p>
 <p>Think about what you need to do, and try to recreate this target image:</p>
 <p><img alt="" src="_images/one_edge.png" /></p>
-<p>Please note that you will “pass” this exercise if you make kernels which detect one-pixel wide edges, even if your final image does not exactly match the one above.</p>
+<p>Here are the original edge detection kernels we used, for comparison, to help you think about what modifications you need to recreate the target image:</p>
+<p><img alt="" src="_images/edge_dector_kernels.png" /></p>
+<p>Please note that you will “pass” this exercise if you make kernels which detect one-pixel wide edges, even if your final image does not exactly match the one above. You could modify the Sobel kernels as well, or investigate other edge detection kernel types…</p>
 <p><em>Hint:</em> run the function <code class="docutils literal notranslate"><span class="pre">hint_edgy()</span></code> for some help if you get stuck.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">

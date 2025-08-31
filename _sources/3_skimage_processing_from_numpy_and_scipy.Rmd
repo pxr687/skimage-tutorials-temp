@@ -6,7 +6,7 @@ jupyter:
       extension: .Rmd
       format_name: rmarkdown
       format_version: '1.2'
-      jupytext_version: 1.17.2
+      jupytext_version: 1.17.3
   kernelspec:
     display_name: Python 3 (ipykernel)
     language: python
@@ -755,6 +755,8 @@ show_attributes(cat_solution)
 plt.imshow(cat_solution);
 ```
 
+You'll notice that downsizing the image has seriously downgraded the quality. This makes sense, because the original high-resolution image utilized its many pixels to depict intricate details. After resizing to a lower-resolution, this detail is lost, because now we are trying to show the same image using many few pixels. `skimage` has done some averaging behind the scenes, to work out what should go in the remaining pixels. At least we can still see the image is of a cat...
+
 Now, we can see that the target image requires a rotation, through good judgment, or just trial and error, we can work out that this needs to be 45 degrees. We can also see that the image of the downscaled cat does not "fit" inside the final image. As such, we need to rotate *without resizing* the image. By default, `resize=False` so we can leave it on the default setting:
 
 ```{python}
@@ -1236,7 +1238,7 @@ This "collapses" a 3D colour image into a 2D greyscale image via a weighted sum 
 :class: dropdown
 :::
 
-Here is the original `colourhweel` image:
+Here is the original `colourwheel` image:
 
 ![](images/colourwheel.png)
 

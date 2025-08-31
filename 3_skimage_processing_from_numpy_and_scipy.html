@@ -1737,6 +1737,7 @@ Min Pixel Value: 0.0
 <img alt="_images/0077b6ef0a597b37374b6e65dd50fbfef9d53a35f1909ade03330e6ead35fd0c.png" src="_images/0077b6ef0a597b37374b6e65dd50fbfef9d53a35f1909ade03330e6ead35fd0c.png" />
 </div>
 </div>
+<p>You’ll notice that downsizing the image has seriously downgraded the quality. This makes sense, because the original high-resolution image utilized its many pixels to depict intricate details. After resizing to a lower-resolution, this detail is lost, because now we are trying to show the same image using many few pixels. <code class="docutils literal notranslate"><span class="pre">skimage</span></code> has done some averaging behind the scenes, to work out what should go in the remaining pixels. At least we can still see the image is of a cat…</p>
 <p>Now, we can see that the target image requires a rotation, through good judgment, or just trial and error, we can work out that this needs to be 45 degrees. We can also see that the image of the downscaled cat does not “fit” inside the final image. As such, we need to rotate <em>without resizing</em> the image. By default, <code class="docutils literal notranslate"><span class="pre">resize=False</span></code> so we can leave it on the default setting:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -2574,7 +2575,7 @@ Y = 0.2126R + 0.7152G + 0.0722B
 
 <p class="admonition-title"><span class="caption-number">Exercise 18 </span></p>
 <section id="exercise-content">
-<p>Here is the original <code class="docutils literal notranslate"><span class="pre">colourhweel</span></code> image:</p>
+<p>Here is the original <code class="docutils literal notranslate"><span class="pre">colourwheel</span></code> image:</p>
 <p><img alt="" src="_images/colourwheel.png" /></p>
 <p>It has the following attributes:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>Type: &lt;class &#39;numpy.ndarray&#39;&gt;

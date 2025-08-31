@@ -6,7 +6,7 @@ jupyter:
       extension: .Rmd
       format_name: rmarkdown
       format_version: '1.2'
-      jupytext_version: 1.17.2
+      jupytext_version: 1.17.3
   kernelspec:
     display_name: Python 3 (ipykernel)
     language: python
@@ -788,6 +788,8 @@ colourless_coffee_solution = coffee.mean(axis=2)
 
 plt.imshow(colourless_coffee_solution);
 ```
+
+Any computations (such as summing across the channels) which collapse the 3D colour array into 2D will achieve a similar effect, of converting the image to greyscale. We deem any of these as correct answers, so long as your output image is greyscale...
 
 Another way is just to use NumPy indexing to extract one colour channel slice:
 
