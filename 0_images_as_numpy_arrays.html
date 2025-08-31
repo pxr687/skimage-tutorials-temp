@@ -484,13 +484,14 @@ document.write(`
 <p>This page explores how images can be represented as NumPy arrays. To get started, let’s think about the meaning of the word “image”.  The <em>intuitive meaning</em> is roughly “a picture of something”, or perhaps more broadly a “visual representation of something”. This is the familiar meaning which applies to images we encounter in everyday life, like advertisement posters, paintings, drawings, photographs and so on.</p>
 <p>The <em>technical meaning</em> of image - in scientific computing - is <em>an at least two dimensional array</em>. Depending on your background and familiarity with the topic, this definition may sound more or less strange. We assure you that each meaning is consistent with the other. However, each meaning refers to different, but overlapping, sets of things.</p>
 <p>Imagine an image - in the intuitive sense - printed on a piece of paper. The image has two dimensions, one dimensions runs along the <em>length</em> of the paper and one runs along <em>width</em> of the paper. Now imagine the <em>computer file</em> that was used to print the image onto the paper (e.g. the image file that was sent to a run-of-the-mill printer to produce the printed image). The computer file must contain information which tells the printer what to put where along each dimension of the piece of paper. For instance, should that location contain black, white, grey or a colour? By controlling these things, the information contained in the file will ultimately determine the look of the printed image (e.g. what it is a picture <em>of</em>).</p>
+<p><img alt="" src="_images/printed_paper.png" /></p>
 <p>The file and resulting printed image might depict an object that was not originally created on a computer. The image may be of a hand painting, for example. Things like hand paintings fall under the intuitive meaning of “image”, but, until they are represented on a computer, they do not fall under the technical meaning of “image”. A hand painting is not an array of numbers, but the computer file which represents it is. The technical meaning of “image” refers to the computer representations of these things (e.g. a scan or photograph of a hand painting), as well as to other inherently digital images like digital photographs, CT sans, MRI scans etc (more on these <a class="reference internal" href="2_skimage_intro.html"><span class="doc std std-doc">later</span></a>).</p>
 <p>Normally, we take an image (in the intutive sense) and <em>then</em> represent it on a computer (by photographing or scanning it etc.). This can be referred to as <em>digitizing</em> an image. When digitizing, we take an image in the intuitive sense and convert it to an image in the technical sense, by representing it as an at least two-dimensional array of numbers.</p>
 <p>To get a deep understanding of the computer representation of images, let’s do things the other way around to the normal procedure: let’s create an image, in the technical sense of a two-dimensional array, and then view it as an image, in the intuitive sense, as a visual representation that we can look at as we would any picture.</p>
 </section>
 <section class="tex2jax_ignore mathjax_ignore" id="the-simplest-images">
 <h1>The simplest images<a class="headerlink" href="#the-simplest-images" title="Link to this heading">#</a></h1>
-<p>First, we will import some Python libraries.</p>
+<p>First, we will import some Python libraries:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Library imports.</span>
@@ -500,7 +501,7 @@ document.write(`
 </div>
 </div>
 </div>
-<p>Let’s create a two-dimensional array using the familiar Numpy syntax. Notice  that we specify the <code class="docutils literal notranslate"><span class="pre">dtype</span></code>. For reasons we will discuss later, when dealing with images it is best to manually control the <code class="docutils literal notranslate"><span class="pre">dtype</span></code> we use, rather than letting NumPy or other libraries decide it for us:</p>
+<p>Let’s create a two-dimensional array using the familiar NumPy syntax. Notice  that we specify the <code class="docutils literal notranslate"><span class="pre">dtype</span></code>. For reasons we will discuss later, when dealing with images it is best to manually control the <code class="docutils literal notranslate"><span class="pre">dtype</span></code> we use, rather than letting NumPy or other libraries decide it for us:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># A two-dimensional numpy array of 1&#39;s and 0&#39;s.</span>
@@ -519,7 +520,7 @@ document.write(`
 </div>
 </div>
 </div>
-<p>Look at the output of the cell above. This is how Numpy shows us the contents of the array. For the rest of these tutorial pages, we will refer to this as the “raw” view of the array e.g. the default view that we see when we inspect the contents of the array without any fancy visualisation.</p>
+<p>Look at the output of the cell above. This is how NumPy shows us the contents of the array. For the rest of these tutorial pages, we will refer to this as the “raw” view of the array e.g. the default view that we see when we inspect the contents of the array without any fancy visualisation.</p>
 <p>This array is small enough that we can easily see it’s dimensionality. If we so wish, we can also use the <code class="docutils literal notranslate"><span class="pre">.shape</span></code> attribute to confirm the dimensions:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -553,7 +554,7 @@ document.write(`
 <p>Each element of the array is shown as a coloured square. The exact colour of the square is determined by the number at the corresponding element of the array. Compare the “raw” array to the plot above - you’ll see that the yellow squares correspond to 1’s in the original array, and the blue squares correspond to 0’s:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Show the array (&quot;raw&quot; Numpy output).</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Show the array (&quot;raw&quot; NumPy output).</span>
 <span class="n">two_D_ones_and_zeros</span>
 </pre></div>
 </div>
@@ -753,7 +754,7 @@ document.write(`
 <p>You can compare this visualisation of the image to the “raw” array output from the cell below. You’ll notice that <em>larger</em> numbers are represented with <em>lighter</em> squares, and <em>smaller</em> numbers are represented with <em>darker</em> sqaures. When we are using <code class="docutils literal notranslate"><span class="pre">float64</span></code> data, as we are here, you can think of each pixel value (0, 1 or in between) as speciying the grey-level as a percentage - with 1 being 100%, 0 being 0%, 0.5 being 50% and so on:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Show the new array (from the Numpy output).</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Show the new array (from the NumPy output).</span>
 <span class="n">two_D_other_numbers</span>
 </pre></div>
 </div>
@@ -990,7 +991,7 @@ document.write(`
 </div>
 </div>
 <p>We hope you agree that this image is a pretty good representation of the English letter “i”. We now have an image which represents a <em>symbol</em> e.g. as opposed to representing a visual scene or object. For any image, which is to say on any array of at least two dimensions, we can do something called <em>image manipulation</em>. This might sound like we are deceiving someone about our appearance or character, but in fact what it means is that we <em>do something which changes the numbers inside the array, and therefore changes the corresponding visual image</em>.</p>
-<p>Let’s use the helpfully named Numpy function <a class="reference external" href="https://numpy.org/doc/2.1/reference/generated/numpy.flip.html"><code class="docutils literal notranslate"><span class="pre">np.flip()</span></code></a>. This function, by default, will “flip” an array along the rows. Somehwat biblically, the first row will become the last row, and the last row will become the first row. Let’s apply this function to our present image, and inspect the corresponding “raw” output:</p>
+<p>Let’s use the helpfully named NumPy function <a class="reference external" href="https://numpy.org/doc/2.1/reference/generated/numpy.flip.html"><code class="docutils literal notranslate"><span class="pre">np.flip()</span></code></a>. This function, by default, will “flip” an array along the rows. Somehwat biblically, the first row will become the last row, and the last row will become the first row. Let’s apply this function to our present image, and inspect the corresponding “raw” output:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Flip the array.</span>
@@ -1056,7 +1057,7 @@ document.write(`
 <img alt="_images/bd34ff4b351c3add0bd7cb5a31c07e7d237bc3d1415ee4cf9efffab6e355fdb5.png" src="_images/bd34ff4b351c3add0bd7cb5a31c07e7d237bc3d1415ee4cf9efffab6e355fdb5.png" />
 </div>
 </div>
-<p>Scary stuff. This image will seem slightly less intimidating when we see that it is, in fact, nothing by a 2-D NumPy array of pixel intensity values. We promise it cannot hurt you:</p>
+<p>Scary stuff. This image will seem slightly less intimidating when we see that it is, in fact, nothing by a 2D NumPy array of pixel intensity values. We promise it cannot hurt you:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Show the NumPy &quot;raw&quot; view of the `xeno` array</span>
@@ -1180,7 +1181,7 @@ document.write(`
 <ul class="simple">
 <li><p>Images are (at least) two-dimensional arrays of numbers.</p></li>
 <li><p>For small/low-resolution arrays, the values in the array will be displayed on more pixels than there are values in the array.</p></li>
-<li><p>The number at each location in an image array determines the pixel intensity (grey-level) in a 2-D array. We have seen that different <code class="docutils literal notranslate"><span class="pre">colormap</span></code>s can display this information using different colour gradients.</p></li>
+<li><p>The number at each location in an image array determines the pixel intensity (grey-level) in a 2D array. We have seen that different <code class="docutils literal notranslate"><span class="pre">colormap</span></code>s can display this information using different colour gradients.</p></li>
 <li><p>These principles apply both to very simple and very complex images.</p></li>
 </ul>
 <p>On the <a class="reference internal" href="1_colour_images_as_numpy_arrays.html"><span class="doc std std-doc">next page</span></a>, we will look at the representation of colour in NumPy image arrays.</p>

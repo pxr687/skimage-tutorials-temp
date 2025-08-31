@@ -725,7 +725,7 @@ document.write(`
 </div>
 <p>Can you see any pattern in the arrangement of the numbers? Where are the high numbers, where are the low numbers? The <code class="docutils literal notranslate"><span class="pre">big_gaussian_kernel</span></code> NumPy array is shown below, in prettier form, to aid your ruminations:</p>
 <p><img alt="" src="_images/big_gaussian_kernel_array.png" /></p>
-<p>We will also plot this kernel in 3-D, as with the last kernel. Again, the integer index locations of the array form the horizontal (<span class="math notranslate nohighlight">\(x\)</span> and <span class="math notranslate nohighlight">\(y\)</span>) axis values, and the values within the array are plotted on the vertical (<span class="math notranslate nohighlight">\(z\)</span>) axis.</p>
+<p>We will also plot this kernel in 3D, as with the last kernel. Again, the integer index locations of the array form the horizontal (<span class="math notranslate nohighlight">\(x\)</span> and <span class="math notranslate nohighlight">\(y\)</span>) axis values, and the values within the array are plotted on the vertical (<span class="math notranslate nohighlight">\(z\)</span>) axis.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Show the new, bigger gaussian kernel.</span>
@@ -1219,7 +1219,7 @@ Min Pixel Value: 0
 <p>Below is another way of writing the formula for generating a 2D Guassian distribution, and therefore for generating a 2D Gaussian kernel.</p>
 <p><span class="math notranslate nohighlight">\( \Large \text{Gaussian}(x, y) = \frac{1}{\sqrt{2 \pi \sigma^2}} e^{- \frac{x^2 + y^2}{2\sigma^2}} \)</span></p>
 <p>In contrast the formula we saw above for the same distribution, <em>this formula assumes that both <span class="math notranslate nohighlight">\(x\)</span> and <span class="math notranslate nohighlight">\(y\)</span> have an equal spread</em>. Generally we will want this equality of spread, for a Gaussian kernel.</p>
-<p>Your task is to define a function in the cell below (called <code class="docutils literal notranslate"><span class="pre">DIY_gauss</span></code>) which implements this revised Gaussian formula. Your function should take two 2-D arrays (<span class="math notranslate nohighlight">\(x\)</span> and <span class="math notranslate nohighlight">\(y\)</span>), and a <code class="docutils literal notranslate"><span class="pre">sigma</span></code> (<span class="math notranslate nohighlight">\(\sigma\)</span>) value, as arguments. Figure out what needs to be in each input argument to produce the following <code class="docutils literal notranslate"><span class="pre">target_kernel</span></code>:</p>
+<p>Your task is to define a function in the cell below (called <code class="docutils literal notranslate"><span class="pre">DIY_gauss</span></code>) which implements this revised Gaussian formula. Your function should take two 2D arrays (<span class="math notranslate nohighlight">\(x\)</span> and <span class="math notranslate nohighlight">\(y\)</span>), and a <code class="docutils literal notranslate"><span class="pre">sigma</span></code> (<span class="math notranslate nohighlight">\(\sigma\)</span>) value, as arguments. Figure out what needs to be in each input argument to produce the following <code class="docutils literal notranslate"><span class="pre">target_kernel</span></code>:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Show the target kernel.</span>
@@ -2082,17 +2082,17 @@ Min Pixel Value: -32768
 </div>
 <p>A simple way to combine these filters is to:</p>
 <ul class="simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">np.stack()</span></code> them into 3-D…</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">np.stack()</span></code> them into 3D…</p></li>
 <li><p>…then convert pixel values to absolute numbers (e.g. remove the signs)…</p></li>
-<li><p>…and then take to the maximum value across the third dimension (e.g. using <code class="docutils literal notranslate"><span class="pre">.max(axis</span> <span class="pre">=</span> <span class="pre">2)</span></code>). This will resize the array down to 2-D and…</p></li>
+<li><p>…and then take to the maximum value across the third dimension (e.g. using <code class="docutils literal notranslate"><span class="pre">.max(axis</span> <span class="pre">=</span> <span class="pre">2)</span></code>). This will resize the array down to 2D and…</p></li>
 </ul>
 <p>…at the end of this process, only pixels for which an edge was detected in either direction will remain in the resulting image array:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Combine the filters.</span>
 <span class="n">edgy_vertical_horizontal_stack</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">stack</span><span class="p">([</span><span class="n">edgy_vertical</span><span class="p">,</span> <span class="n">edgy_horizontal</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span> <span class="c1"># Stack to 3D, `shape` = (11, 10, 2).</span>
-<span class="n">edgy_vertical_horizontal_stack</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">edgy_vertical_horizontal_stack</span><span class="p">)</span> <span class="c1"># Remove the signs, from all elements in the 3-D array.</span>
-<span class="n">edgy_vertical_horizontal_stack</span> <span class="o">=</span> <span class="n">edgy_vertical_horizontal_stack</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span> <span class="c1"># Reshape to 2-D, leaving only the largest value from</span>
+<span class="n">edgy_vertical_horizontal_stack</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">edgy_vertical_horizontal_stack</span><span class="p">)</span> <span class="c1"># Remove the signs, from all elements in the 3D array.</span>
+<span class="n">edgy_vertical_horizontal_stack</span> <span class="o">=</span> <span class="n">edgy_vertical_horizontal_stack</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span> <span class="c1"># Reshape to 2D, leaving only the largest value from</span>
                                                                             <span class="c1"># either slice in the resulting array.</span>
 <span class="c1"># Show the result.</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">edgy_vertical_horizontal_stack</span><span class="p">);</span>
@@ -2134,9 +2134,9 @@ Min Pixel Value: -32768
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Search for both types of edge (with `coffee_grey`).</span>
 <span class="n">coffee_vertical_horizontal_stack</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">stack</span><span class="p">([</span><span class="n">gradient_vertical_coffee_grey</span><span class="p">,</span> 
                                              <span class="n">gradient_horizontal_coffee_grey</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span> <span class="c1"># Stack to 3D, `shape` = (400, 600, 2).</span>
-<span class="n">coffee_vertical_horizontal_stack</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">coffee_vertical_horizontal_stack</span><span class="p">)</span> <span class="c1"># Remove the signs, from all elements in the 3-D array.</span>
-<span class="n">coffee_vertical_horizontal_stack</span> <span class="o">=</span> <span class="n">coffee_vertical_horizontal_stack</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span><span class="c1"># Reshape to 2-D, leaving only the largest value from</span>
-                                                                               <span class="c1"># from either slice in the resulting 2-D array.</span>
+<span class="n">coffee_vertical_horizontal_stack</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">coffee_vertical_horizontal_stack</span><span class="p">)</span> <span class="c1"># Remove the signs, from all elements in the 3D array.</span>
+<span class="n">coffee_vertical_horizontal_stack</span> <span class="o">=</span> <span class="n">coffee_vertical_horizontal_stack</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span><span class="c1"># Reshape to 2D, leaving only the largest value from</span>
+                                                                               <span class="c1"># from either slice in the resulting 2D array.</span>
 
 <span class="c1"># Show the result.</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">coffee_vertical_horizontal_stack</span><span class="p">);</span>
@@ -2252,8 +2252,8 @@ Min Pixel Value: -32768
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Combine the filters.</span>
 <span class="n">sobel_edgy_vertical_horizontal_stack</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">stack</span><span class="p">([</span><span class="n">sobel_edgy_vertical</span><span class="p">,</span> <span class="n">sobel_edgy_horizontal</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span> <span class="c1"># Stack to 3D, `shape` = (11, 10, 2).</span>
-<span class="n">sobel_edgy_vertical_horizontal_stack</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">sobel_edgy_vertical_horizontal_stack</span><span class="p">)</span> <span class="c1"># Remove the signs, from all elements in the 3-D array.</span>
-<span class="n">sobel_edgy_vertical_horizontal_stack</span> <span class="o">=</span> <span class="n">sobel_edgy_vertical_horizontal_stack</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span> <span class="c1"># Reshape to 2-D, leaving only the largest value from</span>
+<span class="n">sobel_edgy_vertical_horizontal_stack</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">sobel_edgy_vertical_horizontal_stack</span><span class="p">)</span> <span class="c1"># Remove the signs, from all elements in the 3D array.</span>
+<span class="n">sobel_edgy_vertical_horizontal_stack</span> <span class="o">=</span> <span class="n">sobel_edgy_vertical_horizontal_stack</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span> <span class="c1"># Reshape to 2D, leaving only the largest value from</span>
                                                                             <span class="c1"># either slice in the resulting array.</span>
 <span class="c1"># Show the result.</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">sobel_edgy_vertical_horizontal_stack</span><span class="p">);</span>

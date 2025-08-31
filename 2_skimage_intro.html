@@ -466,7 +466,7 @@ document.write(`
 <li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#small-image-arrays-big-image-arrays">Small image arrays, big image arrays</a></li>
 <li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#colourspaces">Colourspaces</a></li>
 <li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#colourspaces-2-transparency-in-the-3rd-dimension">Colourspaces 2: transparency in the 3rd dimension</a></li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#not-all-3-d-images-are-in-colour">Not all 3-D images are in colour…</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#not-all-3d-images-are-in-colour">Not all 3D images are in colour…</a></li>
 <li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#summary">Summary</a></li>
 <li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#references">References</a></li>
 </ul>
@@ -550,7 +550,7 @@ document.write(`
 <img alt="_images/1a552b69d410cf7c4942dcfc6cdee2f83086e428722358481187b8cbee2d983d.png" src="_images/1a552b69d410cf7c4942dcfc6cdee2f83086e428722358481187b8cbee2d983d.png" />
 </div>
 </div>
-<p>You will recall that this array - in virture of being 2-D and having only one numeric value per array pixel - is a single-channel array. This means that it contains only information about pixel intensity (grey-level), and not about colour.</p>
+<p>You will recall that this array - in virture of being 2D and having only one numeric value per array pixel - is a single-channel array. This means that it contains only information about pixel intensity (grey-level), and not about colour.</p>
 <p>To include true colour information, our array must be of at least three-dimensions. A three dimensional colour image array typically has three “slices” in the third dimension. Each element of each slice contains a number between 0 and 1 (for <code class="docutils literal notranslate"><span class="pre">float64</span></code> data), or between 1 and 255 (for <code class="docutils literal notranslate"><span class="pre">uint8</span></code> data). For the standard RGB (Red-Green-Blue) format the number in each element of each slice in the third dimension tells that array pixel what colour to be (e.g. a mix of red, green and blue, across the three slices). Hence these slices, in the third dimension, are called “colour channels”.</p>
 <p><img alt="" src="_images/three_slice_algebraic_multi.png" /></p>
 <p>As we saw previously, we can control the amount of colour in the image by manipulating the each channel in the third dimension:</p>
@@ -591,7 +591,7 @@ Min Pixel Value: 0.0
 <img alt="_images/015b8b709360602cd44fd897cd18710d18ef3035724e49b0417d1f84724483fa.png" src="_images/015b8b709360602cd44fd897cd18710d18ef3035724e49b0417d1f84724483fa.png" />
 </div>
 </div>
-<p>These are the basic aspects of images represented as NumPy arrays. Other ways of representing colour exist and are supported by <code class="docutils literal notranslate"><span class="pre">skimage</span></code>, and indeed, not all 3-D image arrays contain colour information (e.g. structural brain images). We will look at these concepts in later sections, but <code class="docutils literal notranslate"><span class="pre">skimage</span></code> can work with these images as easily as the basic coloured sqaures we have just made - all these images <em>are just NumPy arrays</em> and can be handled just as any NumPy array.</p>
+<p>These are the basic aspects of images represented as NumPy arrays. Other ways of representing colour exist and are supported by <code class="docutils literal notranslate"><span class="pre">skimage</span></code>, and indeed, not all 3D image arrays contain colour information (e.g. structural brain images). We will look at these concepts in later sections, but <code class="docutils literal notranslate"><span class="pre">skimage</span></code> can work with these images as easily as the basic coloured sqaures we have just made - all these images <em>are just NumPy arrays</em> and can be handled just as any NumPy array.</p>
 </section>
 <section class="tex2jax_ignore mathjax_ignore" id="going-ski-ing-arrays-as-arguments">
 <h1>Going <code class="docutils literal notranslate"><span class="pre">ski</span></code>-ing : arrays as arguments<a class="headerlink" href="#going-ski-ing-arrays-as-arguments" title="Link to this heading">#</a></h1>
@@ -1169,13 +1169,13 @@ Min Pixel Value: 0.0
 
 <p class="admonition-title">Solution to<a class="reference internal" href="#noisy-camera"> Exercise 7</a></p>
 <section id="solution-content">
-<p>The solution here is to <code class="docutils literal notranslate"><span class="pre">np.stack()</span></code> the <code class="docutils literal notranslate"><span class="pre">camera</span></code> image, to introduce colour channels. We then pass our 3-D array to <code class="docutils literal notranslate"><span class="pre">ski.util.random_noise()</span></code>, manipulating the <code class="docutils literal notranslate"><span class="pre">var</span></code> argument to control the “level” of the noise. Specifically, <code class="docutils literal notranslate"><span class="pre">var</span></code> will control the range of the changes. Higher values of <code class="docutils literal notranslate"><span class="pre">var</span></code> means bigger absolute random values can potentially be added/subtracted from each pixel:</p>
+<p>The solution here is to <code class="docutils literal notranslate"><span class="pre">np.stack()</span></code> the <code class="docutils literal notranslate"><span class="pre">camera</span></code> image, to introduce colour channels. We then pass our 3D array to <code class="docutils literal notranslate"><span class="pre">ski.util.random_noise()</span></code>, manipulating the <code class="docutils literal notranslate"><span class="pre">var</span></code> argument to control the “level” of the noise. Specifically, <code class="docutils literal notranslate"><span class="pre">var</span></code> will control the range of the changes. Higher values of <code class="docutils literal notranslate"><span class="pre">var</span></code> means bigger absolute random values can potentially be added/subtracted from each pixel:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution.</span>
 <span class="n">camera</span> <span class="o">=</span> <span class="n">ski</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">camera</span><span class="p">()</span>
 
-<span class="c1"># Stack to 3-D.</span>
+<span class="c1"># Stack to 3D.</span>
 <span class="n">camera_with_noise</span>  <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">stack</span><span class="p">([</span><span class="n">camera</span><span class="p">,</span> 
                                <span class="n">camera</span><span class="p">,</span>
                                <span class="n">camera</span><span class="p">],</span> 
@@ -1198,7 +1198,7 @@ Max Pixel Value: 1.0
 Min Pixel Value: 0.0
 </pre></div>
 </div>
-<img alt="_images/502e91c9fd2f0497d5f7f0e87a486f00b02e57bc4b5e4117f08c59ef7ef6bd86.png" src="_images/502e91c9fd2f0497d5f7f0e87a486f00b02e57bc4b5e4117f08c59ef7ef6bd86.png" />
+<img alt="_images/a595f6319c56fd14994365491b92eaba9bfc3d665bb14c3b29210c19d0873b09.png" src="_images/a595f6319c56fd14994365491b92eaba9bfc3d665bb14c3b29210c19d0873b09.png" />
 </div>
 </div>
 </section>
@@ -1331,7 +1331,7 @@ Min Pixel Value: 0.02
 \[
 Y = 0.2126R + 0.7152G + 0.0722B
 \]</div>
-<p>This has the effect of removing the colour channels, so the output array is 2-D. Why do we use these specific numbers? You could go and knock the door of your physicist friend to ask (don’t worry, they’ll be in…), or you can see <a class="reference external" href="https://stackoverflow.com/questions/596216/formula-to-determine-perceived-brightness-of-rgb-color">this page</a> for a detailed explanation of where the weights come from.</p>
+<p>This has the effect of removing the colour channels, so the output array is 2D. Why do we use these specific numbers? You could go and knock the door of your physicist friend to ask (don’t worry, they’ll be in…), or you can see <a class="reference external" href="https://stackoverflow.com/questions/596216/formula-to-determine-perceived-brightness-of-rgb-color">this page</a> for a detailed explanation of where the weights come from.</p>
 <div class="exercise dropdown admonition" id="no-colour-cat">
 
 <p class="admonition-title"><span class="caption-number">Exercise 8 </span></p>
@@ -1430,7 +1430,9 @@ Min Pixel Value: 0.0
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Type: &lt;class &#39;numpy.ndarray&#39;&gt;
 dtype: float64
 Shape: (300, 451, 3)
-Max Pixel Value: 1.0
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Max Pixel Value: 1.0
 Min Pixel Value: 0.0
 </pre></div>
 </div>
@@ -1438,7 +1440,7 @@ Min Pixel Value: 0.0
 </div>
 </div>
 <p>Psychedelic! Maybe this is how cats look, from the perspective of other cats (e.g. from within their “<a class="reference external" href="https://en.wikipedia.org/wiki/Umwelt">umwelt</a>”), but this is sadly probably not the case…</p>
-<p>Let’s extract the individual channels with some array indexing operations. Each channel is 2-D, and therefore will render as a greyscale image when displayed with Matplotlib:</p>
+<p>Let’s extract the individual channels with some array indexing operations. Each channel is 2D, and therefore will render as a greyscale image when displayed with Matplotlib:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Extract the HSV channels.</span>
@@ -1581,7 +1583,7 @@ Min Pixel Value: 0.0
 <section id="solution-content">
 <p>There are several steps here - this was not an easy task! First, we need to convert our image to the <code class="docutils literal notranslate"><span class="pre">float64</span></code>. We need the <code class="docutils literal notranslate"><span class="pre">ski.util.img_as_float()</span></code> function to do this. If you tried to use the NumPy <code class="docutils literal notranslate"><span class="pre">.astype(float)</span></code> method, you will have encountered a thorny error (more on this below).</p>
 <p>If you look at the target image, you will notice that it has a green-ish tone, but no so green as we would get if the other colour channels were “switched off”. As such, you can get the correct effect by reducing the impact of the red and blue channels, by halving their values.</p>
-<p>The left hand side of the image has variance in <em>transparency</em> - pixels where the image is darker are <em>more transparent</em>. This is becuase, in the target image, the alpha channel is a copy of the original 2-D image.</p>
+<p>The left hand side of the image has variance in <em>transparency</em> - pixels where the image is darker are <em>more transparent</em>. This is becuase, in the target image, the alpha channel is a copy of the original 2D image.</p>
 <p>The distinction between the left hand side and right hand side of the image is that in the right hand side, the transparency channel values are all uniform, though less than maximum opacity, giving a hazy effect. This can be achieved by NumPy array indexing, and setting values in the alpha channel in the right hand side of the image to all equal 0.5:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -1591,7 +1593,7 @@ Min Pixel Value: 0.0
 <span class="n">camera_as_float</span> <span class="o">=</span> <span class="n">ski</span><span class="o">.</span><span class="n">util</span><span class="o">.</span><span class="n">img_as_float</span><span class="p">(</span><span class="n">camera</span><span class="p">)</span>
 
 <span class="c1"># Create a 4-D stack. Halve the values in the Red and Blue channels.</span>
-<span class="c1"># Duplicate the 2-D image to get the alpha channel.</span>
+<span class="c1"># Duplicate the 2D image to get the alpha channel.</span>
 <span class="n">camera_4D</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">stack</span><span class="p">([</span><span class="n">camera_as_float</span> <span class="o">*</span> <span class="mf">0.5</span><span class="p">,</span>
                       <span class="n">camera_as_float</span><span class="p">,</span>
                       <span class="n">camera_as_float</span> <span class="o">*</span> <span class="mf">0.5</span><span class="p">,</span>
@@ -1679,11 +1681,11 @@ Min Pixel Value: 0.0
 </section>
 </div>
 </section>
-<section class="tex2jax_ignore mathjax_ignore" id="not-all-3-d-images-are-in-colour">
-<h1>Not all 3-D images are in colour…<a class="headerlink" href="#not-all-3-d-images-are-in-colour" title="Link to this heading">#</a></h1>
-<p>We noted <a class="reference internal" href="1_colour_images_as_numpy_arrays.html"><span class="doc std std-doc">earlier</span></a> that it is important to know that not all 3-D images contain colour information. What sort of images are these? Typically, they are images obtained during <a class="reference external" href="https://en.wikipedia.org/wiki/Medical_imaging">medical imaging</a> scans, like brain imaging. The “slices” in the third dimension, for these images, are literally slices of a 3-D object (like a brain, chest, arm or leg!) rather than colour channels.</p>
+<section class="tex2jax_ignore mathjax_ignore" id="not-all-3d-images-are-in-colour">
+<h1>Not all 3D images are in colour…<a class="headerlink" href="#not-all-3d-images-are-in-colour" title="Link to this heading">#</a></h1>
+<p>We noted <a class="reference internal" href="1_colour_images_as_numpy_arrays.html"><span class="doc std std-doc">earlier</span></a> that it is important to know that not all 3D images contain colour information. What sort of images are these? Typically, they are images obtained during <a class="reference external" href="https://en.wikipedia.org/wiki/Medical_imaging">medical imaging</a> scans, like brain imaging. The “slices” in the third dimension, for these images, are literally slices of a 3D object (like a brain, chest, arm or leg!) rather than colour channels.</p>
 <p>To show this, below we use <code class="docutils literal notranslate"><span class="pre">ski.io.imread()</span></code> to load in an image in one of these formats. The image is an X-ray of the head of a desert <a class="reference external" href="https://github.com/neurolabusc/niivue-images/tree/main">iguana</a>.</p>
-<p><em>Note:</em> here we are loading in a <code class="docutils literal notranslate"><span class="pre">.png</span></code> image, this is a highly atypical format to store medical images, but we use it just for illustration of a 3-D image that does not contain colour, using a familiar image format… The original image file, in the more standard <a class="reference external" href="https://brainder.org/2012/09/23/the-nifti-file-format">Nifti format</a>, is <a class="reference external" href="https://github.com/neurolabusc/niivue-images/blob/main/Iguana.nii.gz">here</a>.</p>
+<p><em>Note:</em> here we are loading in a <code class="docutils literal notranslate"><span class="pre">.png</span></code> image, this is a highly atypical format to store medical images, but we use it just for illustration of a 3D image that does not contain colour, using a familiar image format… The original image file, in the more standard <a class="reference external" href="https://brainder.org/2012/09/23/the-nifti-file-format">Nifti format</a>, is <a class="reference external" href="https://github.com/neurolabusc/niivue-images/blob/main/Iguana.nii.gz">here</a>.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Read in the `iguana` image, show its attributes.</span>
@@ -1720,7 +1722,7 @@ Min Pixel Value: 0
 </div>
 </div>
 <p>You can see that we are walking through the iguana’s head, in the vertical direction.</p>
-<p>Becuase this image file contains information about a literal 3-D object (e.g. an iguana’s head), we can refer to it as a <em>volumetric</em> image. In such images, the third dimension contains <em>spatial information</em>, and not <em>colour information</em>.</p>
+<p>Becuase this image file contains information about a literal 3D object (e.g. an iguana’s head), we can refer to it as a <em>volumetric</em> image. In such images, the third dimension contains <em>spatial information</em>, and not <em>colour information</em>.</p>
 <p>Both <code class="docutils literal notranslate"><span class="pre">skimage</span></code> and <code class="docutils literal notranslate"><span class="pre">matplotlib</span></code> know the slices in the third dimension are not colour channels becuase there are many too many slices to function as colour channels, so it is asssumed that the image is volumetric.</p>
 </section>
 <section class="tex2jax_ignore mathjax_ignore" id="summary">
@@ -1733,7 +1735,7 @@ Min Pixel Value: 0
 <li><p><code class="docutils literal notranslate"><span class="pre">skimage</span></code> supports multiple <code class="docutils literal notranslate"><span class="pre">dtypes</span></code> in image arrays, and contains convenience functions for converting between <code class="docutils literal notranslate"><span class="pre">dtypes</span></code>.</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">skimage</span></code> supports multiple colourspaces which use different colour representations to the default RGB colourspace.</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">skimage</span></code> supports both three-channel colour image arrays with shape <code class="docutils literal notranslate"><span class="pre">(n,</span> <span class="pre">m,</span> <span class="pre">3)</span></code> and four-channel colour image arrays with shape <code class="docutils literal notranslate"><span class="pre">(n,</span> <span class="pre">m,</span> <span class="pre">4)</span></code>, where an extra channel codes for transparency/opacity.</p></li>
-<li><p>Some 3-D images are volumetric, and do not contain colour channels, despite having a third dimension. <code class="docutils literal notranslate"><span class="pre">skimage</span></code> supports these image formats as well.</p></li>
+<li><p>Some 3D images are volumetric, and do not contain colour channels, despite having a third dimension. <code class="docutils literal notranslate"><span class="pre">skimage</span></code> supports these image formats as well.</p></li>
 </ul>
 <p>On the <a class="reference internal" href="3_skimage_processing_from_numpy_and_scipy.html"><span class="doc std std-doc">next page</span></a> we will look at how image processing can be performed using NumPy, SciPy and Scikit-image.</p>
 </section>
@@ -1816,7 +1818,7 @@ Min Pixel Value: 0
 <li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#small-image-arrays-big-image-arrays">Small image arrays, big image arrays</a></li>
 <li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#colourspaces">Colourspaces</a></li>
 <li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#colourspaces-2-transparency-in-the-3rd-dimension">Colourspaces 2: transparency in the 3rd dimension</a></li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#not-all-3-d-images-are-in-colour">Not all 3-D images are in colour…</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#not-all-3d-images-are-in-colour">Not all 3D images are in colour…</a></li>
 <li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#summary">Summary</a></li>
 <li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#references">References</a></li>
 </ul>

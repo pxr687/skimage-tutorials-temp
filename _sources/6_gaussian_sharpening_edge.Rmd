@@ -167,7 +167,7 @@ Can you see any pattern in the arrangement of the numbers? Where are the high nu
 
 ![](images/big_gaussian_kernel_array.png)
 
-We will also plot this kernel in 3-D, as with the last kernel. Again, the integer index locations of the array form the horizontal ($x$ and $y$) axis values, and the values within the array are plotted on the vertical ($z$) axis. 
+We will also plot this kernel in 3D, as with the last kernel. Again, the integer index locations of the array form the horizontal ($x$ and $y$) axis values, and the values within the array are plotted on the vertical ($z$) axis. 
 
 ```{python}
 # Show the new, bigger gaussian kernel.
@@ -510,7 +510,7 @@ $ \Large \text{Gaussian}(x, y) = \frac{1}{\sqrt{2 \pi \sigma^2}} e^{- \frac{x^2 
 
 In contrast the formula we saw above for the same distribution, *this formula assumes that both $x$ and $y$ have an equal spread*. Generally we will want this equality of spread, for a Gaussian kernel.
 
-Your task is to define a function in the cell below (called `DIY_gauss`) which implements this revised Gaussian formula. Your function should take two 2-D arrays ($x$ and $y$), and a `sigma` ($\sigma$) value, as arguments. Figure out what needs to be in each input argument to produce the following `target_kernel`:
+Your task is to define a function in the cell below (called `DIY_gauss`) which implements this revised Gaussian formula. Your function should take two 2D arrays ($x$ and $y$), and a `sigma` ($\sigma$) value, as arguments. Figure out what needs to be in each input argument to produce the following `target_kernel`:
 
 ```{python}
 # Show the target kernel.
@@ -1087,19 +1087,19 @@ plt.title('Vertical Edges');
 
 A simple way to combine these filters is to:
 
-- `np.stack()` them into 3-D...
+- `np.stack()` them into 3D...
 
 - ...then convert pixel values to absolute numbers (e.g. remove the signs)...
 
-- ...and then take to the maximum value across the third dimension (e.g. using `.max(axis = 2)`). This will resize the array down to 2-D and...
+- ...and then take to the maximum value across the third dimension (e.g. using `.max(axis = 2)`). This will resize the array down to 2D and...
 
 ...at the end of this process, only pixels for which an edge was detected in either direction will remain in the resulting image array:
 
 ```{python}
 # Combine the filters.
 edgy_vertical_horizontal_stack = np.stack([edgy_vertical, edgy_horizontal], axis=2) # Stack to 3D, `shape` = (11, 10, 2).
-edgy_vertical_horizontal_stack = np.abs(edgy_vertical_horizontal_stack) # Remove the signs, from all elements in the 3-D array.
-edgy_vertical_horizontal_stack = edgy_vertical_horizontal_stack.max(axis=2) # Reshape to 2-D, leaving only the largest value from
+edgy_vertical_horizontal_stack = np.abs(edgy_vertical_horizontal_stack) # Remove the signs, from all elements in the 3D array.
+edgy_vertical_horizontal_stack = edgy_vertical_horizontal_stack.max(axis=2) # Reshape to 2D, leaving only the largest value from
                                                                             # either slice in the resulting array.
 # Show the result.
 plt.imshow(edgy_vertical_horizontal_stack);
@@ -1131,9 +1131,9 @@ Let's do this again, for the images that resulted from filtering `coffee_grey` w
 # Search for both types of edge (with `coffee_grey`).
 coffee_vertical_horizontal_stack = np.stack([gradient_vertical_coffee_grey, 
                                              gradient_horizontal_coffee_grey], axis=2) # Stack to 3D, `shape` = (400, 600, 2).
-coffee_vertical_horizontal_stack = np.abs(coffee_vertical_horizontal_stack) # Remove the signs, from all elements in the 3-D array.
-coffee_vertical_horizontal_stack = coffee_vertical_horizontal_stack.max(axis=2)# Reshape to 2-D, leaving only the largest value from
-                                                                               # from either slice in the resulting 2-D array.
+coffee_vertical_horizontal_stack = np.abs(coffee_vertical_horizontal_stack) # Remove the signs, from all elements in the 3D array.
+coffee_vertical_horizontal_stack = coffee_vertical_horizontal_stack.max(axis=2)# Reshape to 2D, leaving only the largest value from
+                                                                               # from either slice in the resulting 2D array.
 
 # Show the result.
 plt.imshow(coffee_vertical_horizontal_stack);
@@ -1212,8 +1212,8 @@ We can combine each edge-filtered image using the method we saw above, taking th
 ```{python}
 # Combine the filters.
 sobel_edgy_vertical_horizontal_stack = np.stack([sobel_edgy_vertical, sobel_edgy_horizontal], axis=2) # Stack to 3D, `shape` = (11, 10, 2).
-sobel_edgy_vertical_horizontal_stack = np.abs(sobel_edgy_vertical_horizontal_stack) # Remove the signs, from all elements in the 3-D array.
-sobel_edgy_vertical_horizontal_stack = sobel_edgy_vertical_horizontal_stack.max(axis=2) # Reshape to 2-D, leaving only the largest value from
+sobel_edgy_vertical_horizontal_stack = np.abs(sobel_edgy_vertical_horizontal_stack) # Remove the signs, from all elements in the 3D array.
+sobel_edgy_vertical_horizontal_stack = sobel_edgy_vertical_horizontal_stack.max(axis=2) # Reshape to 2D, leaving only the largest value from
                                                                             # either slice in the resulting array.
 # Show the result.
 plt.imshow(sobel_edgy_vertical_horizontal_stack);

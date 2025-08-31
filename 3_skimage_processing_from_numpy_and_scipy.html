@@ -486,7 +486,7 @@ document.write(`
                   
   <section class="tex2jax_ignore mathjax_ignore" id="sci-kit-image-processing-via-numpy-and-scipy">
 <h1>(Sci-kit) Image processing, via NumPy and SciPy<a class="headerlink" href="#sci-kit-image-processing-via-numpy-and-scipy" title="Link to this heading">#</a></h1>
-<p>This page will explore foundational image processing techniques, as operations on the values in a NumPy image array. First, we will explore how to acheive specific effects using NumPy and SciPy. We will demonstrate what these operations are doing to an image at the level of the array pixels. After that, we will show how more sophisticated extensions of these techniques can be implemented with Scikit-image, focusing on how it is often the same NumPy and Scipy operations that Sci-kit image is using “under the hood”.</p>
+<p>This page will explore foundational image processing techniques, as operations on the values in a NumPy image array. First, we will explore how to acheive specific effects using NumPy and SciPy. We will demonstrate what these operations are doing to an image at the level of the array pixels. After that, we will show how more sophisticated extensions of these techniques can be implemented with Scikit-image, focusing on how it is often the same NumPy and SciPy operations that Sci-kit image is using “under the hood”.</p>
 <p>Remember that <em>image processing is when we do something which changes the numbers inside an image array, and therefore changes the corresponding visual image</em>? Well, in fact, all that even the fanciest image processing software is doing is just changing the pixel values inside image arrays, in various ways. This is true for image processing software with a graphical user interface, like <a class="reference external" href="https://www.adobe.com/th_en/products/photoshop">Adobe Photoshop</a>, as well as for code-based image processing software like Scikit-image.</p>
 <p>Let’s again build a simple image array, and look at how we can use NumPy alone to achieve some pretty radical changes to the original image. We will then look at the specific purposes that such changes are used for, with more complex images.</p>
 <p>First, we create our image array:</p>
@@ -984,7 +984,7 @@ After:
 </section>
 <section class="tex2jax_ignore mathjax_ignore" id="resizing-an-image-with-skimage">
 <h1>Resizing an image with <code class="docutils literal notranslate"><span class="pre">skimage</span></code><a class="headerlink" href="#resizing-an-image-with-skimage" title="Link to this heading">#</a></h1>
-<p>The <code class="docutils literal notranslate"><span class="pre">ski.transform</span></code> module contains a function called <code class="docutils literal notranslate"><span class="pre">resize</span></code>. It is probably easy to guess what <code class="docutils literal notranslate"><span class="pre">ski.transform.resize()</span></code> does. It takes an input image and changes its size (obviously!). Because all computer images are at least 2-D arrays, this involves changing the dimensionality of the image. Let’s demonstrate this with the following image array:</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">ski.transform</span></code> module contains a function called <code class="docutils literal notranslate"><span class="pre">resize</span></code>. It is probably easy to guess what <code class="docutils literal notranslate"><span class="pre">ski.transform.resize()</span></code> does. It takes an input image and changes its size (obviously!). Because all computer images are at least 2D arrays, this involves changing the dimensionality of the image. Let’s demonstrate this with the following image array:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Create an image array.</span>
@@ -1435,7 +1435,7 @@ Min Pixel Value: 0
 </div>
 <p>We can see that the cameraman is facing a different direction in each image (taking a photo of the bottom of the image for the <code class="docutils literal notranslate"><span class="pre">.T</span></code> method, and taking a photo of the top of the image for a 90 degree rotation via <code class="docutils literal notranslate"><span class="pre">skimage</span></code>).</p>
 <p>The difference here is that transposing an image switches the rows and columns, such that the first row becomes the first column etc. Conversely, <code class="docutils literal notranslate"><span class="pre">skimage.transform.rotate()</span></code> pivots the pixels around a central point. Essentially, transposing gives a <em>mirroring effect</em> which is different from a rotation.</p>
-<p>Pay attention to the location of the spoon in the <code class="docutils literal notranslate"><span class="pre">coffee</span></code> image. First, we <code class="docutils literal notranslate"><span class="pre">ski.transform.rotate()</span></code> it by 90 degrees. Then, we show it <code class="docutils literal notranslate"><span class="pre">.transpose</span></code>d, switching the rows and columns. As <code class="docutils literal notranslate"><span class="pre">coffee</span></code> is a 3-D image, the <code class="docutils literal notranslate"><span class="pre">.T</span></code> method will produce an error, because the colour channels will be moved into the wrong dimension - to avoid this we use the <code class="docutils literal notranslate"><span class="pre">.transpose</span></code> method, to keep the colour channels in third dimension, whilst switching the rows and columns:</p>
+<p>Pay attention to the location of the spoon in the <code class="docutils literal notranslate"><span class="pre">coffee</span></code> image. First, we <code class="docutils literal notranslate"><span class="pre">ski.transform.rotate()</span></code> it by 90 degrees. Then, we show it <code class="docutils literal notranslate"><span class="pre">.transpose</span></code>d, switching the rows and columns. As <code class="docutils literal notranslate"><span class="pre">coffee</span></code> is a 3D image, the <code class="docutils literal notranslate"><span class="pre">.T</span></code> method will produce an error, because the colour channels will be moved into the wrong dimension - to avoid this we use the <code class="docutils literal notranslate"><span class="pre">.transpose</span></code> method, to keep the colour channels in third dimension, whilst switching the rows and columns:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># The `shape` of the original `coffee` image.</span>
@@ -1545,7 +1545,7 @@ Min Pixel Value: 0
 <p class="admonition-title">Solution to<a class="reference internal" href="#look-at-me"> Exercise 12</a></p>
 <section id="solution-content">
 <p>Here we need a transpose operation, followed by a rotation, followed by a concatenation.</p>
-<p>That is a mouthful, let’s break it down. First we transpose the <code class="docutils literal notranslate"><span class="pre">camera</span></code> array, we can use <code class="docutils literal notranslate"><span class="pre">.T</span></code> here rather than <code class="docutils literal notranslate"><span class="pre">.transpose</span></code> as we are dealing with a 2-D greyscale image:</p>
+<p>That is a mouthful, let’s break it down. First we transpose the <code class="docutils literal notranslate"><span class="pre">camera</span></code> array, we can use <code class="docutils literal notranslate"><span class="pre">.T</span></code> here rather than <code class="docutils literal notranslate"><span class="pre">.transpose</span></code> as we are dealing with a 2D greyscale image:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Transpose `camera`.</span>
@@ -1913,7 +1913,7 @@ Min Pixel Value: 0.0
 <img alt="_images/7ddae6566b3fbd8b9fe8a9b6a354930eaf301e110fdd7319f1f37a9809230d76.png" src="_images/7ddae6566b3fbd8b9fe8a9b6a354930eaf301e110fdd7319f1f37a9809230d76.png" />
 </div>
 </div>
-<p>First we, extract the <code class="docutils literal notranslate"><span class="pre">shape</span></code> of the image, and store each element as a separate variable. In this case, the image is 2-D (e.g. single-channel, monochrome) and so we extract the number of rows and the number of columns:</p>
+<p>First we, extract the <code class="docutils literal notranslate"><span class="pre">shape</span></code> of the image, and store each element as a separate variable. In this case, the image is 2D (e.g. single-channel, monochrome) and so we extract the number of rows and the number of columns:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Unpack and store the number of rows and number of columns.</span>
@@ -1930,7 +1930,7 @@ Min Pixel Value: 0.0
 </div>
 </div>
 </div>
-<p>Then we can these elements (579 and 867) via <code class="docutils literal notranslate"><span class="pre">np.orgid()</span></code> to create one array with 579 rows, and 1 column, and another array with 1 row and 867 columns. These elements can be used to make a 2-D mask, in a specific shape:</p>
+<p>Then we can these elements (579 and 867) via <code class="docutils literal notranslate"><span class="pre">np.orgid()</span></code> to create one array with 579 rows, and 1 column, and another array with 1 row and 867 columns. These elements can be used to make a 2D mask, in a specific shape:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Create a grid, based on the image `shape`.</span>
@@ -2047,7 +2047,7 @@ Min Pixel Value: 0.0
 </div>
 </div>
 </div>
-<p>We can then use a geometric formula to generate a 2-D grid of a specific shape, as in the cell below:</p>
+<p>We can then use a geometric formula to generate a 2D grid of a specific shape, as in the cell below:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Create a circulat mask.</span>
@@ -2550,7 +2550,7 @@ Min Pixel Value: False
 </section>
 <section class="tex2jax_ignore mathjax_ignore" id="colour-to-greyscale-conversion">
 <h1>Colour to greyscale conversion<a class="headerlink" href="#colour-to-greyscale-conversion" title="Link to this heading">#</a></h1>
-<p>To downgrade a colour image to greyscale we can use a brute force method of taking the mean of the three colour channels, to produce a 2-D monochrome image array:</p>
+<p>To downgrade a colour image to greyscale we can use a brute force method of taking the mean of the three colour channels, to produce a 2D monochrome image array:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">grey_wheel</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">colourwheel</span><span class="p">,</span> 
@@ -2569,7 +2569,7 @@ Min Pixel Value: False
 \[
 Y = 0.2126R + 0.7152G + 0.0722B
 \]</div>
-<p>This “collapses” a 3-D colour image into a 2-D greyscale image via a weighted sum of the channels.</p>
+<p>This “collapses” a 3D colour image into a 2D greyscale image via a weighted sum of the channels.</p>
 <div class="exercise dropdown admonition" id="grey-wheel">
 
 <p class="admonition-title"><span class="caption-number">Exercise 18 </span></p>
