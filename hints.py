@@ -38,3 +38,6 @@ def hint_krazy_kernel_2():
 	
 def secret_val():
 	return 1 - np.sqrt(np.exp(np.log(3 + 4 * 2 + 1 ** -1 - 11))**2) + (3-2)
+
+def hint_edgy():
+	print("You may want to think about the size of the kernel here...")
