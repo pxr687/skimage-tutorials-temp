@@ -1058,7 +1058,24 @@ Mean filter via SciPy `correlate`:
 </div>
 <p>These two arrays are shown below side-by-side, and more nicely rendered, for easier comparison:</p>
 <p><img alt="" src="_images/two_mean_filters.png" /></p>
-<p>You can see that the values differ only near the top and bottom edges of the image. Let’s define a function so that we can apply the mean filter to any image, using the proper <code class="docutils literal notranslate"><span class="pre">scipy.ndimage.correlate()</span></code> machinery, so we no longer ignore edge pixels (poor pixels!):</p>
+<p>You can see that the values differ only near the top and bottom edges of the image. <code class="docutils literal notranslate"><span class="pre">ndi.correlate()</span></code> offers several options for dealing with pixels at the edge of the array (e.g. those pixels for which the kernel “falls off” the edge of the image). Here are the options, from the <a class="reference external" href="https://docs.scipy.org/doc/scipy/reference/generated/scipy.ndimage.correlate.html">documentation</a>, we can choose an option by specifying the <code class="docutils literal notranslate"><span class="pre">mode</span></code> argument to <code class="docutils literal notranslate"><span class="pre">ndi.correlate</span></code> (e.g. <code class="docutils literal notranslate"><span class="pre">mode</span> <span class="pre">=</span> <span class="pre">'constant'</span></code> etc.):</p>
+<blockquote>
+<div><p><strong>mode</strong> : <em>{‘reflect’, ‘constant’, ‘nearest’, ‘mirror’, ‘wrap’}, optional</em></p>
+<p>The <code class="docutils literal notranslate"><span class="pre">mode</span></code> parameter determines how the input array is extended beyond its boundaries. Default is <code class="docutils literal notranslate"><span class="pre">'reflect'</span></code>. Behavior for each valid value is as follows:</p>
+<ul class="simple">
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">reflect</span></code></strong> <em>(d c b a | a b c d | d c b a)</em><br />
+The input is extended by reflecting about the edge of the last pixel. This mode is also sometimes referred to as half-sample symmetric.</p></li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">constant</span></code></strong> <em>(k k k k | a b c d | k k k k)</em><br />
+The input is extended by filling all values beyond the edge with the same constant value, defined by the <code class="docutils literal notranslate"><span class="pre">cval</span></code> parameter.</p></li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">nearest</span></code></strong> <em>(a a a a | a b c d | d d d d)</em><br />
+The input is extended by replicating the last pixel.</p></li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">mirror</span></code></strong> <em>(d c b | a b c d | c b a)</em><br />
+The input is extended by reflecting about the center of the last pixel. This mode is also sometimes referred to as whole-sample symmetric.</p></li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">wrap</span></code></strong> <em>(a b c d | a b c d | a b c d)</em><br />
+The input is extended by wrapping around to the opposite edge.</p></li>
+</ul>
+</div></blockquote>
+<p>Let’s define a function so that we can apply the mean filter to any image, using the proper <code class="docutils literal notranslate"><span class="pre">scipy.ndimage.correlate()</span></code> machinery, so we no longer ignore edge pixels (poor pixels!):</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">mean_filter</span><span class="p">(</span><span class="n">image_array</span><span class="p">,</span> <span class="n">kernel_shape</span><span class="p">):</span>
@@ -1099,7 +1116,7 @@ Mean filter via SciPy `correlate`:
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/896590b006c0aaa33ad2aa43583f7a30adf89c9ac5cd53d9a4ec3a4e9b1edff0.png" src="_images/896590b006c0aaa33ad2aa43583f7a30adf89c9ac5cd53d9a4ec3a4e9b1edff0.png" />
+<img alt="_images/ea5dcfbedef6cbf873b9cd7e63f7aaa976e39ce2513647ad924535ecce6634de.png" src="_images/ea5dcfbedef6cbf873b9cd7e63f7aaa976e39ce2513647ad924535ecce6634de.png" />
 </div>
 </div>
 <p>The mean filter can remove some of the noise, restoring the clarity of the image:</p>
@@ -1124,7 +1141,7 @@ Mean filter via SciPy `correlate`:
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/9dd787f9c3e527bdf6b2827ae6e680b95f19ebfbb444bd9b03c06713805e4f9f.png" src="_images/9dd787f9c3e527bdf6b2827ae6e680b95f19ebfbb444bd9b03c06713805e4f9f.png" />
+<img alt="_images/42cc9dbc9b57eb19526a597a6a4201da5414d935c299a1a6dcce790e89e207da.png" src="_images/42cc9dbc9b57eb19526a597a6a4201da5414d935c299a1a6dcce790e89e207da.png" />
 </div>
 </div>
 <p>We can see that the image is clearer, the noise has been reduced and some of the signal has been restored.</p>
@@ -1154,7 +1171,7 @@ Mean filter via SciPy `correlate`:
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/e03eb95937c6a249c939ce73bca474d27a9058d597af723c8ff280f61efd1c07.png" src="_images/e03eb95937c6a249c939ce73bca474d27a9058d597af723c8ff280f61efd1c07.png" />
+<img alt="_images/4e23f17d8c28666b3ea252a4b52ed15bfbad90c1643e3fcd32ee564d4cb02cec.png" src="_images/4e23f17d8c28666b3ea252a4b52ed15bfbad90c1643e3fcd32ee564d4cb02cec.png" />
 </div>
 </div>
 <p>As with many filtering operations, the effect of altering aspects of the filtering process (like a threshold value or kernel size), is very context dependent. It may take many iterations before finding a “sweet spot”, and where the sweet spot is may be somewhat subjective.</p>
