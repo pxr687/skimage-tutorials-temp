@@ -21,6 +21,8 @@ The *technical meaning* of image - in scientific computing - is *an at least two
 
 Imagine an image - in the intuitive sense - printed on a piece of paper. The image has two dimensions, one dimensions runs along the *length* of the paper and one runs along *width* of the paper. Now imagine the *computer file* that was used to print the image onto the paper (e.g. the image file that was sent to a run-of-the-mill printer to produce the printed image). The computer file must contain information which tells the printer what to put where along each dimension of the piece of paper. For instance, should that location contain black, white, grey or a colour? By controlling these things, the information contained in the file will ultimately determine the look of the printed image (e.g. what it is a picture *of*). 
 
+![](images/printed_paper.png)
+
 The file and resulting printed image might depict an object that was not originally created on a computer. The image may be of a hand painting, for example. Things like hand paintings fall under the intuitive meaning of "image", but, until they are represented on a computer, they do not fall under the technical meaning of "image". A hand painting is not an array of numbers, but the computer file which represents it is. The technical meaning of "image" refers to the computer representations of these things (e.g. a scan or photograph of a hand painting), as well as to other inherently digital images like digital photographs, CT sans, MRI scans etc (more on these [later](2_skimage_intro)).
 
 Normally, we take an image (in the intutive sense) and *then* represent it on a computer (by photographing or scanning it etc.). This can be referred to as *digitizing* an image. When digitizing, we take an image in the intuitive sense and convert it to an image in the technical sense, by representing it as an at least two-dimensional array of numbers. 
@@ -29,7 +31,7 @@ To get a deep understanding of the computer representation of images, let's do t
 
 # The simplest images
 
-First, we will import some Python libraries. 
+First, we will import some Python libraries:
 
 ```{python}
 # Library imports.
@@ -37,7 +39,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 ```
 
-Let's create a two-dimensional array using the familiar Numpy syntax. Notice  that we specify the `dtype`. For reasons we will discuss later, when dealing with images it is best to manually control the `dtype` we use, rather than letting NumPy or other libraries decide it for us:
+Let's create a two-dimensional array using the familiar NumPy syntax. Notice  that we specify the `dtype`. For reasons we will discuss later, when dealing with images it is best to manually control the `dtype` we use, rather than letting NumPy or other libraries decide it for us:
 
 ```{python}
 # A two-dimensional numpy array of 1's and 0's.
@@ -48,7 +50,7 @@ two_D_ones_and_zeros = np.array([[1, 0,],
 two_D_ones_and_zeros
 ```
 
-Look at the output of the cell above. This is how Numpy shows us the contents of the array. For the rest of these tutorial pages, we will refer to this as the "raw" view of the array e.g. the default view that we see when we inspect the contents of the array without any fancy visualisation.
+Look at the output of the cell above. This is how NumPy shows us the contents of the array. For the rest of these tutorial pages, we will refer to this as the "raw" view of the array e.g. the default view that we see when we inspect the contents of the array without any fancy visualisation.
 
 This array is small enough that we can easily see it's dimensionality. If we so wish, we can also use the `.shape` attribute to confirm the dimensions:
 
@@ -74,7 +76,7 @@ Well, now it certainly is an image in the intuitive sense, albeit a strange one!
 Each element of the array is shown as a coloured square. The exact colour of the square is determined by the number at the corresponding element of the array. Compare the "raw" array to the plot above - you'll see that the yellow squares correspond to 1's in the original array, and the blue squares correspond to 0's:
 
 ```{python}
-# Show the array ("raw" Numpy output).
+# Show the array ("raw" NumPy output).
 two_D_ones_and_zeros
 ```
 
@@ -215,7 +217,7 @@ plt.matshow(two_D_other_numbers,
 You can compare this visualisation of the image to the "raw" array output from the cell below. You'll notice that *larger* numbers are represented with *lighter* squares, and *smaller* numbers are represented with *darker* sqaures. When we are using `float64` data, as we are here, you can think of each pixel value (0, 1 or in between) as speciying the grey-level as a percentage - with 1 being 100%, 0 being 0%, 0.5 being 50% and so on:
 
 ```{python}
-# Show the new array (from the Numpy output).
+# Show the new array (from the NumPy output).
 two_D_other_numbers
 ```
 
@@ -359,7 +361,7 @@ plt.imshow(what_is_it);
 
 We hope you agree that this image is a pretty good representation of the English letter "i". We now have an image which represents a *symbol* e.g. as opposed to representing a visual scene or object. For any image, which is to say on any array of at least two dimensions, we can do something called *image manipulation*. This might sound like we are deceiving someone about our appearance or character, but in fact what it means is that we *do something which changes the numbers inside the array, and therefore changes the corresponding visual image*.
 
-Let's use the helpfully named Numpy function [`np.flip()`](https://numpy.org/doc/2.1/reference/generated/numpy.flip.html). This function, by default, will "flip" an array along the rows. Somehwat biblically, the first row will become the last row, and the last row will become the first row. Let's apply this function to our present image, and inspect the corresponding "raw" output:
+Let's use the helpfully named NumPy function [`np.flip()`](https://numpy.org/doc/2.1/reference/generated/numpy.flip.html). This function, by default, will "flip" an array along the rows. Somehwat biblically, the first row will become the last row, and the last row will become the first row. Let's apply this function to our present image, and inspect the corresponding "raw" output:
 
 ```{python}
 # Flip the array.
@@ -401,7 +403,7 @@ plt.imshow(xeno)
 plt.colorbar();
 ```
 
-Scary stuff. This image will seem slightly less intimidating when we see that it is, in fact, nothing by a 2-D NumPy array of pixel intensity values. We promise it cannot hurt you:
+Scary stuff. This image will seem slightly less intimidating when we see that it is, in fact, nothing by a 2D NumPy array of pixel intensity values. We promise it cannot hurt you:
 
 ```{python}
 # Show the NumPy "raw" view of the `xeno` array
@@ -486,7 +488,7 @@ On this page we have examined the fundamental components of computer images:
 
 * For small/low-resolution arrays, the values in the array will be displayed on more pixels than there are values in the array.
 
-* The number at each location in an image array determines the pixel intensity (grey-level) in a 2-D array. We have seen that different `colormap`s can display this information using different colour gradients.
+* The number at each location in an image array determines the pixel intensity (grey-level) in a 2D array. We have seen that different `colormap`s can display this information using different colour gradients.
 
 * These principles apply both to very simple and very complex images.
 

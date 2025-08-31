@@ -59,7 +59,7 @@ print(squares)
 plt.matshow(squares);
 ```
 
-You will recall that this array - in virture of being 2-D and having only one numeric value per array pixel - is a single-channel array. This means that it contains only information about pixel intensity (grey-level), and not about colour. 
+You will recall that this array - in virture of being 2D and having only one numeric value per array pixel - is a single-channel array. This means that it contains only information about pixel intensity (grey-level), and not about colour. 
 
 To include true colour information, our array must be of at least three-dimensions. A three dimensional colour image array typically has three "slices" in the third dimension. Each element of each slice contains a number between 0 and 1 (for `float64` data), or between 1 and 255 (for `uint8` data). For the standard RGB (Red-Green-Blue) format the number in each element of each slice in the third dimension tells that array pixel what colour to be (e.g. a mix of red, green and blue, across the three slices). Hence these slices, in the third dimension, are called "colour channels". 
 
@@ -86,7 +86,7 @@ from random_colours import plot_int_float
 plot_int_float();
 ```
 
-These are the basic aspects of images represented as NumPy arrays. Other ways of representing colour exist and are supported by `skimage`, and indeed, not all 3-D image arrays contain colour information (e.g. structural brain images). We will look at these concepts in later sections, but `skimage` can work with these images as easily as the basic coloured sqaures we have just made - all these images *are just NumPy arrays* and can be handled just as any NumPy array.  
+These are the basic aspects of images represented as NumPy arrays. Other ways of representing colour exist and are supported by `skimage`, and indeed, not all 3D image arrays contain colour information (e.g. structural brain images). We will look at these concepts in later sections, but `skimage` can work with these images as easily as the basic coloured sqaures we have just made - all these images *are just NumPy arrays* and can be handled just as any NumPy array.  
 
 # Going `ski`-ing : arrays as arguments
 
@@ -331,13 +331,13 @@ Min Pixel Value: 0.0
 :class: dropdown
 :::
 
-The solution here is to `np.stack()` the `camera` image, to introduce colour channels. We then pass our 3-D array to `ski.util.random_noise()`, manipulating the `var` argument to control the "level" of the noise. Specifically, `var` will control the range of the changes. Higher values of `var` means bigger absolute random values can potentially be added/subtracted from each pixel:
+The solution here is to `np.stack()` the `camera` image, to introduce colour channels. We then pass our 3D array to `ski.util.random_noise()`, manipulating the `var` argument to control the "level" of the noise. Specifically, `var` will control the range of the changes. Higher values of `var` means bigger absolute random values can potentially be added/subtracted from each pixel:
 
 ```{python}
 # Solution.
 camera = ski.data.camera()
 
-# Stack to 3-D.
+# Stack to 3D.
 camera_with_noise  = np.stack([camera, 
                                camera,
                                camera], 
@@ -389,7 +389,7 @@ $$
 Y = 0.2126R + 0.7152G + 0.0722B
 $$
 
-This has the effect of removing the colour channels, so the output array is 2-D. Why do we use these specific numbers? You could go and knock the door of your physicist friend to ask (don't worry, they'll be in...), or you can see [this page](https://stackoverflow.com/questions/596216/formula-to-determine-perceived-brightness-of-rgb-color) for a detailed explanation of where the weights come from.
+This has the effect of removing the colour channels, so the output array is 2D. Why do we use these specific numbers? You could go and knock the door of your physicist friend to ask (don't worry, they'll be in...), or you can see [this page](https://stackoverflow.com/questions/596216/formula-to-determine-perceived-brightness-of-rgb-color) for a detailed explanation of where the weights come from.
 
 ::: {exercise-start}
 :label: no-colour-cat
@@ -463,7 +463,7 @@ plt.imshow(hsv_cat);
 
 Psychedelic! Maybe this is how cats look, from the perspective of other cats (e.g. from within their "[umwelt](https://en.wikipedia.org/wiki/Umwelt)"), but this is sadly probably not the case...
 
-Let's extract the individual channels with some array indexing operations. Each channel is 2-D, and therefore will render as a greyscale image when displayed with Matplotlib:
+Let's extract the individual channels with some array indexing operations. Each channel is 2D, and therefore will render as a greyscale image when displayed with Matplotlib:
 
 ```{python}
 # Extract the HSV channels.
@@ -597,7 +597,7 @@ There are several steps here - this was not an easy task! First, we need to conv
 
 If you look at the target image, you will notice that it has a green-ish tone, but no so green as we would get if the other colour channels were "switched off". As such, you can get the correct effect by reducing the impact of the red and blue channels, by halving their values.
 
-The left hand side of the image has variance in *transparency* - pixels where the image is darker are *more transparent*. This is becuase, in the target image, the alpha channel is a copy of the original 2-D image.
+The left hand side of the image has variance in *transparency* - pixels where the image is darker are *more transparent*. This is becuase, in the target image, the alpha channel is a copy of the original 2D image.
 
 The distinction between the left hand side and right hand side of the image is that in the right hand side, the transparency channel values are all uniform, though less than maximum opacity, giving a hazy effect. This can be achieved by NumPy array indexing, and setting values in the alpha channel in the right hand side of the image to all equal 0.5:
 
@@ -608,7 +608,7 @@ The distinction between the left hand side and right hand side of the image is t
 camera_as_float = ski.util.img_as_float(camera)
 
 # Create a 4-D stack. Halve the values in the Red and Blue channels.
-# Duplicate the 2-D image to get the alpha channel.
+# Duplicate the 2D image to get the alpha channel.
 camera_4D = np.stack([camera_as_float * 0.5,
                       camera_as_float,
                       camera_as_float * 0.5,
@@ -658,13 +658,13 @@ Matplotlib complains that the maximum values (255.0) violate the required 0 to 1
 :::
 
 
-# Not all 3-D images are in colour...
+# Not all 3D images are in colour...
 
-We noted [earlier](1_colour_images_as_numpy_arrays) that it is important to know that not all 3-D images contain colour information. What sort of images are these? Typically, they are images obtained during [medical imaging](https://en.wikipedia.org/wiki/Medical_imaging) scans, like brain imaging. The "slices" in the third dimension, for these images, are literally slices of a 3-D object (like a brain, chest, arm or leg!) rather than colour channels. 
+We noted [earlier](1_colour_images_as_numpy_arrays) that it is important to know that not all 3D images contain colour information. What sort of images are these? Typically, they are images obtained during [medical imaging](https://en.wikipedia.org/wiki/Medical_imaging) scans, like brain imaging. The "slices" in the third dimension, for these images, are literally slices of a 3D object (like a brain, chest, arm or leg!) rather than colour channels. 
 
 To show this, below we use `ski.io.imread()` to load in an image in one of these formats. The image is an X-ray of the head of a desert [iguana](https://github.com/neurolabusc/niivue-images/tree/main).
 
-*Note:* here we are loading in a `.png` image, this is a highly atypical format to store medical images, but we use it just for illustration of a 3-D image that does not contain colour, using a familiar image format... The original image file, in the more standard [Nifti format](https://brainder.org/2012/09/23/the-nifti-file-format), is [here](https://github.com/neurolabusc/niivue-images/blob/main/Iguana.nii.gz).
+*Note:* here we are loading in a `.png` image, this is a highly atypical format to store medical images, but we use it just for illustration of a 3D image that does not contain colour, using a familiar image format... The original image file, in the more standard [Nifti format](https://brainder.org/2012/09/23/the-nifti-file-format), is [here](https://github.com/neurolabusc/niivue-images/blob/main/Iguana.nii.gz).
 
 ```{python}
 # Read in the `iguana` image, show its attributes.
@@ -686,7 +686,7 @@ for count, i in enumerate(np.linspace(10, iguana.shape[2]-1, num=10, dtype=int))
 
 You can see that we are walking through the iguana's head, in the vertical direction.
 
-Becuase this image file contains information about a literal 3-D object (e.g. an iguana's head), we can refer to it as a *volumetric* image. In such images, the third dimension contains *spatial information*, and not *colour information*.
+Becuase this image file contains information about a literal 3D object (e.g. an iguana's head), we can refer to it as a *volumetric* image. In such images, the third dimension contains *spatial information*, and not *colour information*.
 
 Both `skimage` and `matplotlib` know the slices in the third dimension are not colour channels becuase there are many too many slices to function as colour channels, so it is asssumed that the image is volumetric.
 
@@ -707,7 +707,7 @@ On this page we have seen that:
 
 - `skimage` supports both three-channel colour image arrays with shape `(n, m, 3)` and four-channel colour image arrays with shape `(n, m, 4)`, where an extra channel codes for transparency/opacity.
 
-- Some 3-D images are volumetric, and do not contain colour channels, despite having a third dimension. `skimage` supports these image formats as well.
+- Some 3D images are volumetric, and do not contain colour channels, despite having a third dimension. `skimage` supports these image formats as well.
 
 On the [next page](3_skimage_processing_from_numpy_and_scipy) we will look at how image processing can be performed using NumPy, SciPy and Scikit-image.
 
