@@ -999,13 +999,15 @@ Conversely, when the kernel hits the 1-to-0 vertical changes at the bottom of th
 
 ![](images/horizontal_edge_detection_2.png)
 
+The original `edgy` array, and the array resulting from convolution with the `horizontal_edge_detection_kernel` are both shown in "raw" NumPy output below:
+
 ```{python}
 # Show the horizontal edge-filtered array.
 print("Original `edgy` array:\n", edgy)
 print("\nHorizontally edge filtered:\n", edgy_horizontal)
 ```
 
-You can view this, in prettier form, below:
+You can also view these arrays, in prettier form, below:
 
 ![](images/horizontal_edge_matrices.png)
 

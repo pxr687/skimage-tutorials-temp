@@ -1919,6 +1919,7 @@ Min Pixel Value: 1
 <p>You can see that, for a binary image, the horizontal kernel convolution essential “counts” the number of 0-to-1 vertical changes in the kernel location, which lets it detect horizontal edges.</p>
 <p>Conversely, when the kernel hits the 1-to-0 vertical changes at the bottom of the array, we get a similar count of the 1-to-0 changes, but indicated by a negative value, telling us that the gradient is in the other direction:</p>
 <p><img alt="" src="_images/horizontal_edge_detection_2.png" /></p>
+<p>The original <code class="docutils literal notranslate"><span class="pre">edgy</span></code> array, and the array resulting from convolution with the <code class="docutils literal notranslate"><span class="pre">horizontal_edge_detection_kernel</span></code> are both shown in “raw” NumPy output below:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Show the horizontal edge-filtered array.</span>
@@ -1957,7 +1958,7 @@ Horizontally edge filtered:
 </div>
 </div>
 </div>
-<p>You can view this, in prettier form, below:</p>
+<p>You can also view these arrays, in prettier form, below:</p>
 <p><img alt="" src="_images/horizontal_edge_matrices.png" /></p>
 <p>We can “flip” our edge detection <a class="reference external" href="https://www.geeksforgeeks.org/deep-learning/types-of-convolution-kernels">kernel</a> to look for big changes in gradient in the <em>horizontal</em> (<span class="math notranslate nohighlight">\(x\)</span>) direction, which will find <em>vertical</em> edges:</p>
 <div class="cell docutils container">
