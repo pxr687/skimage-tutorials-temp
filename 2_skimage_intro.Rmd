@@ -188,7 +188,7 @@ show_attributes(smiley_from_file)
 
 No less terrifying than when we first saw it...
 
-Note that `ski.io.imread()` loads image files as NumPy arrays by default. This is not the case with some other python image libraries (like `Image`) which have their own native image representations.
+Note that `ski.io.imread()` loads image files as NumPy arrays by default. This is not the case with some other python image libraries (like [`pillow`](https://pillow.readthedocs.io/en/stable/reference/Image.html)) which have their own native image representations.
 
 Now, a lot of `skimage` functions serve specific purposes - like improving the quality or clarity of an image. Others are just there to look cool. The `ski.transform.swirl()` function falls into the latter category. According to the [documentation](https://scikit-image.org/docs/0.25.x/auto_examples/transform/plot_swirl.html), this function performs a non-linear deformation creating a whirlpool effect. Because `skimage` has loaded `smiley.png` as a NumPy array, we can pass the image straight to the `swirl` function:
 
@@ -273,7 +273,7 @@ ski.io.imsave("images/smiley_swirled.jpg", # Path to save image to.
 
 Issues with `dtype` can be a source of errors, so it is important to be aware of what `dtype` your image arrays are using. Fortunately, as we have seen, to help remedy or avoid such errors, `skimage` makes it easy to convert between `dtypes`, where such errors do occur.
 
-*Note*: you should prefer the `ski.util` `dtype` conversion functions to using the NumPy `ndarray.astype()` method. This is because the `skimage` functions will respect the min/max pixel intensity value conventions shown in the table above, where `.astype()` may not. Here is a list of the `skimage` conversion functions - you will need them!:
+*Note*: you should prefer the the `ski.util` conversion functions to using the NumPy `ndarray.astype()` method, when altering image `dtype`s. This is because the `skimage` functions will respect the min/max pixel intensity value conventions shown in the table above, where `.astype()` may not. Here is a list of the `skimage` conversion functions - you will need them!:
 
 ```{python}
 # Show the `skimage` `dtype` conversion functions.
