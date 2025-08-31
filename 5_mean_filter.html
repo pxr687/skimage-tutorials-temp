@@ -1116,7 +1116,7 @@ The input is extended by wrapping around to the opposite edge.</p></li>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/28530379de4b9b8f3cda554a0a20f04e059c3c0dd0c373c7fd6fa10aee631833.png" src="_images/28530379de4b9b8f3cda554a0a20f04e059c3c0dd0c373c7fd6fa10aee631833.png" />
+<img alt="_images/cae5f97d1de551f768e1bf191c0844b1775928dd2aa7da19efaed89786b42dbd.png" src="_images/cae5f97d1de551f768e1bf191c0844b1775928dd2aa7da19efaed89786b42dbd.png" />
 </div>
 </div>
 <p>The mean filter can remove some of the noise, restoring the clarity of the image:</p>
@@ -1141,7 +1141,7 @@ The input is extended by wrapping around to the opposite edge.</p></li>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/70c0be834e581b709f1a59480387931707c450b7bac7e0fb87e12af1b8926e2d.png" src="_images/70c0be834e581b709f1a59480387931707c450b7bac7e0fb87e12af1b8926e2d.png" />
+<img alt="_images/6c8d78705195387b3def63b105f65370b739d4dc0716c8df797210688df600d5.png" src="_images/6c8d78705195387b3def63b105f65370b739d4dc0716c8df797210688df600d5.png" />
 </div>
 </div>
 <p>We can see that the image is clearer, the noise has been reduced and some of the signal has been restored.</p>
@@ -1162,7 +1162,7 @@ The input is extended by wrapping around to the opposite edge.</p></li>
 <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="nb">int</span><span class="p">(</span><span class="n">n_cols</span><span class="o">*</span><span class="mi">2</span><span class="p">)</span><span class="o">+</span><span class="mi">1</span><span class="p">):</span>
     <span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="n">n_cols</span><span class="p">,</span> <span class="n">i</span><span class="p">)</span>
     <span class="n">kernel_shape</span> <span class="o">=</span> <span class="p">(</span><span class="n">i</span><span class="o">+</span><span class="p">(</span><span class="n">i</span><span class="o">*</span><span class="mi">3</span><span class="p">),</span> <span class="n">i</span><span class="o">+</span><span class="p">(</span><span class="n">i</span><span class="o">*</span><span class="mi">3</span><span class="p">))</span>
-    <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Mean Filtered</span><span class="se">\n</span><span class="s1">Kernel =(</span><span class="si">{</span><span class="n">i</span><span class="o">+</span><span class="p">(</span><span class="n">i</span><span class="o">*</span><span class="mi">3</span><span class="p">)</span><span class="si">}</span><span class="s1">,</span><span class="si">{</span><span class="n">i</span><span class="o">+</span><span class="p">(</span><span class="n">i</span><span class="o">*</span><span class="mi">3</span><span class="p">)</span><span class="si">}</span><span class="s1">)&#39;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Mean Filtered</span><span class="se">\n</span><span class="s1">Kernel = (</span><span class="si">{</span><span class="n">i</span><span class="o">+</span><span class="p">(</span><span class="n">i</span><span class="o">*</span><span class="mi">3</span><span class="p">)</span><span class="si">}</span><span class="s1">,</span><span class="si">{</span><span class="n">i</span><span class="o">+</span><span class="p">(</span><span class="n">i</span><span class="o">*</span><span class="mi">3</span><span class="p">)</span><span class="si">}</span><span class="s1">)&#39;</span><span class="p">)</span>
     <span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">mean_filter</span><span class="p">(</span><span class="n">noisy_coffee_grey</span><span class="p">,</span> <span class="n">kernel_shape</span><span class="p">))</span>
     <span class="n">plt</span><span class="o">.</span><span class="n">axis</span><span class="p">(</span><span class="s1">&#39;off&#39;</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">subplots_adjust</span><span class="p">()</span>
@@ -1171,7 +1171,7 @@ The input is extended by wrapping around to the opposite edge.</p></li>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/cb83566ccdc3cab6c6f586849f57a8db10593dfd6e1e2e0877a1245914cbbcf1.png" src="_images/cb83566ccdc3cab6c6f586849f57a8db10593dfd6e1e2e0877a1245914cbbcf1.png" />
+<img alt="_images/2826b177deee3c044a38f4396e6d24b8485dad494db35d85934f20e2edeac9a5.png" src="_images/2826b177deee3c044a38f4396e6d24b8485dad494db35d85934f20e2edeac9a5.png" />
 </div>
 </div>
 <p>As with many filtering operations, the effect of altering aspects of the filtering process (like a threshold value or kernel size), is very context dependent. It may take many iterations before finding a “sweet spot”, and where the sweet spot is may be somewhat subjective.</p>

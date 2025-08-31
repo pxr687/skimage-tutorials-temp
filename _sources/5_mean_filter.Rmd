@@ -458,7 +458,7 @@ plt.axis('off')
 for i in np.arange(3, int(n_cols*2)+1):
     plt.subplot(2, n_cols, i)
     kernel_shape = (i+(i*3), i+(i*3))
-    plt.title(f'Mean Filtered\nKernel =({i+(i*3)},{i+(i*3)})')
+    plt.title(f'Mean Filtered\nKernel = ({i+(i*3)},{i+(i*3)})')
     plt.imshow(mean_filter(noisy_coffee_grey, kernel_shape))
     plt.axis('off')
 plt.subplots_adjust()
