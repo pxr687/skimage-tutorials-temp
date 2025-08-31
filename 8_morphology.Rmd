@@ -414,7 +414,7 @@ plt.imshow(inverted_xeno_big_diamond);
 
 # Skeletonizing an image
 
-In keeping with the horror theme of the `xenomorph` image, and the legacy of the [`smiley`](3_skimage_processing_from_numpy_and_scipy.) array, let's look at the `ski.morpholoy.skeletonize()` function. 
+In keeping with the horror theme of the `xenomorph` image, and the legacy of the [`smiley`](0_images_as_numpy_arrays) array, let's look at the `ski.morpholoy.skeletonize()` function. 
 
 This takes a binary image and finds its "skeleton" - e.g. the centerline of shapes in the image, and marks it out with a [single pixel-wide set of lines](https://scikit-image.org/docs/0.25.x/auto_examples/applications/plot_morphology.html#skeletonize):
 
