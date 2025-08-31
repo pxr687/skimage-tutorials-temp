@@ -1043,10 +1043,8 @@ Again, in the resultant image, changes from black to white (0-to-1) end up as wh
 Applied to more complex images, this edge detection can have some pretty cool effects:
 
 ```{python}
-# Load in an image, convert to greyscale, rescale intensity, and `int16`.
+# Load in an image, convert to greyscale.
 coffee_grey = ski.color.rgb2gray(ski.data.coffee())
-coffee_grey = ski.exposure.rescale_intensity(coffee_grey, out_range=(-1, 1))
-coffee_grey = ski.util.img_as_int(coffee_grey)
 
 # Plot the original image.
 plt.imshow(coffee_grey)
@@ -1058,8 +1056,7 @@ First, we detect edges in the horizontal direction:
 ```{python}
 # Filter using the horizontal edge detection kernel.
 gradient_horizontal_coffee_grey = ndi.correlate(coffee_grey,
-                                              horizontal_edge_detection_kernel,
-                                              output="int16")
+                                              horizontal_edge_detection_kernel)
 plt.imshow(gradient_horizontal_coffee_grey);
 ```
 
@@ -1068,8 +1065,7 @@ Then, in the vertical direction:
 ```{python}
 # Filter using the vertical edge detection kernel.
 gradient_vertical_coffee_grey = ndi.correlate(coffee_grey,
-                                               vertical_edge_detection_kernel,
-                                               output="int16")
+                                               vertical_edge_detection_kernel)
 plt.imshow(gradient_vertical_coffee_grey);
 ```
 
@@ -1150,17 +1146,17 @@ We can view all of these steps together, on the plot below:
 
 ```{python}
 # Plot all the `coffee_grey` images together.
-plt.figure(figsize=(16, 6))
-plt.subplot(1, 4, 1)
+plt.figure(figsize=(12,8))
+plt.subplot(2, 2, 1)
 plt.title("Original")
 plt.imshow(coffee_grey)
-plt.subplot(1, 4, 2)
+plt.subplot(2, 2, 2)
 plt.title("Horizontal Edges")
 plt.imshow(gradient_horizontal_coffee_grey)
-plt.subplot(1, 4, 3)
+plt.subplot(2, 2, 3)
 plt.title("Vertical Edges")
 plt.imshow(gradient_vertical_coffee_grey)
-plt.subplot(1, 4, 4)
+plt.subplot(2, 2, 4)
 plt.title("Both Combined")
 plt.imshow(coffee_vertical_horizontal_stack);
 ```
