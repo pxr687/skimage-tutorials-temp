@@ -21,7 +21,7 @@ np.set_printoptions(precision=2)
 from gaussian_illustration import make_gaussian_kernel
 from show_attributes import show_attributes
 from hints import secret_val
-from hints import hint_krazy_kernel_1, hint_krazy_kernel_2
+from hints import hint_krazy_kernel_1, hint_krazy_kernel_2, hint_edgy
 ```
 
 # Gaussian filtering
@@ -44,8 +44,7 @@ This is the well-known normal distribution, which is sometimes described as havi
 ```{python}
 # A fancy kernel.
 gaussian_like_kernel =  np.array([[0.06, 0.12, 0.06],
-                                  [0.12, 0.25, 0.12],
-                                  
+                                  [0.12, 0.25, 0.12],                                  
                                   [0.06, 0.12, 0.06]])
 gaussian_like_kernel
 ```
@@ -657,7 +656,7 @@ $$
 \text{sharpened_image} = \text{original_image} + (\text{original_image} – \text{blurred_image})
 $$
 
-Theoretically, $\text{(original_image – blurred_image)}$ contains sharpened details of the image, because it results from subtracting out a version of the image which is much blurrier than the original, giving us the *difference* between the original image and the blurry image. This effect is easiest to appreciate visually:
+Theoretically speaking, $\text{(original_image – blurred_image)}$ contains *sharpened details* of the image, because it results from subtracting out a version of the image which is much blurrier than the original, giving us the *difference* between the original image and the blurry image. This effect is easiest to appreciate visually:
 
 ```{python}
 # Gaussian filter the image we wish to sharpen.
@@ -950,7 +949,7 @@ plt.tight_layout();
 
 # Edge detection filtering 
 
-We saw a simple [edge filter](3_skimage_processing_from_numpy_and_scipy) in one of the exercises on an earlier page. In image processing and computer vision, an edge is a rapid change in intensity between pixels - e.g. there is a high *gradient* of change between the pixel values. We can construct a [kernel](https://www.geeksforgeeks.org/deep-learning/types-of-convolution-kernels) which will detect such intensity changes in the vertical ($y$) direction, and thus will detect horizontal edges. That may sound paradoxical, but *horizontal* edges have *vertical* gradients:
+We saw a simple [edge detection filter](3_skimage_processing_from_numpy_and_scipy) in one of the exercises on an earlier page. In image processing and computer vision, an edge is a rapid change in intensity between pixels - e.g. there is a high *gradient* of change between the pixel values. We can construct a [kernel](https://www.geeksforgeeks.org/deep-learning/types-of-convolution-kernels) which will detect such intensity changes in the vertical ($y$) direction, and thus will detect horizontal edges. That may sound paradoxical, but *horizontal* edges have *vertical* gradients:
 
 ```{python}
 # A horizontal edge detection kernel.
@@ -1109,7 +1108,6 @@ Pretty cool, here are all the steps, visualised together:
 
 ```{python}
 # Plot all the `edgy` images together.
-both_edgy = np.sqrt(edgy_vertical**2 + edgy_horizontal**2)
 plt.figure(figsize=(16, 6))
 plt.subplot(1, 4, 1)
 plt.title("Original")
@@ -1122,8 +1120,13 @@ plt.title("Vertical Edges")
 plt.imshow(edgy_vertical)
 plt.subplot(1, 4, 4)
 plt.title("Both Combined")
-plt.imshow(both_edgy);
+plt.imshow(edgy_vertical_horizontal_stack);
 ```
+
+The pixel values throughout this edge detection process, on the `edgy` array, are shown on the image below:
+
+![](images/edge_detection_together.png)
+
 
 Let's do this again, for the images that resulted from filtering `coffee_grey` with our horizontal and vertical edge detection kernels, respectively.
 
@@ -1291,9 +1294,96 @@ ax[1, 2].axis('off')
 plt.show()
 ```
 
+::: {exercise-start}
+:label: edgelord
+:class: dropdown
+:::
+
+You may have noticed that, in the final output images that result from the application of the filters, the edges detected by the methods we used above are two pixels wide. For instance the image below results from filtering `edgy` with the Sobel filter:
+
+```{python}
+# Edgy, filtered with `ski.filters.sobel()`.
+plt.imshow(edgy_sobel_ski);
+```
+
+Can you think of the kernels you need such that, in the final image array from the filtering process, the edges are *only one pixel wide*?
+
+Think about what you need to do, and try to recreate this target image:
+
+![](images/one_edge.png)
+
+Please note that you will "pass" this exercise if you make kernels which detect one-pixel wide edges, even if your final image does not exactly match the one above. 
+
+*Hint:* run the function `hint_edgy()` for some help if you get stuck.
+
+```{python}
+# YOUR CODE HERE
+```
+
+::: {exercise-end}
+:::
+
+::: {solution-start} edgelord
+:class: dropdown
+:::
+
+The solution here is to use smaller kernels, so they are searching for pixel intensity gradients in smaller pixel neighbourhoods. We used the following kernels:
+
+```{python}
+# Detect horizontal edges.
+horizontal_2by2_kernel = np.array([[1, 1],
+                                  [-1, -1]])
+horizontal_2by2_kernel
+```
+
+...convolving `edgy` with this kernel yields single-pixel wide horizontal edges:
+
+```{python}
+# Convolve `edgy` with our kernel to find the horizontal edges.
+edgy_horizontal_from_2by2 = ndi.correlate(edgy,
+                                          weights=horizontal_2by2_kernel)
+
+plt.imshow(edgy_horizontal_from_2by2);
+```
+
+Then we used this kernel to find the vertical edges:
+
+```{python}
+vertical_2by2_kernel = np.array([[-1, 1],
+                                 [-1, 1]])
+vertical_2by2_kernel
+```
+
+...convolving with `edgy` gives us:
+
+```{python}
+# Convolve `edgy` with our kernel to find the vertical edges.
+edgy_vertical_from_2by2 = ndi.correlate(edgy,
+                                        weights=vertical_2by2_kernel)
+
+plt.imshow(edgy_vertical_from_2by2);
+```
+
+We then applied the Euclidean distance formula to get the horizontal and vertical edges in one image:
+
+$ \large G_{\text{overall}} = \sqrt{ G_x^2 + G_y^2 } $
+
+As if by magic, we get our one-pixel wide edges, in the final image:
+
+```{python}
+# Both types of edge together, with thanks to Euclid.
+edgy_both_from_2by2_kernel = np.sqrt(edgy_vertical_from_2by2**2 + edgy_horizontal_from_2by2**2)
+
+plt.imshow(edgy_both_from_2by2_kernel );
+```
+
+::: {solution-end}
+:::
+
+
 # Summary
 
-This page has showed how to use various convolution kernels to filter images, using `numpy`, `scipy` and `skimage`. We have seen how changing the convolutional kernel can alter the filtering process to achieve different purposes, like blurring/smoothing and edge detection.
+This page has showed how to use various convolution kernels to filter images, using `numpy`, `scipy` and `skimage`. We have seen how changing the convolutional kernel can alter the filtering process to achieve different aims, like blurring/smoothing and edge detection.
 
 
 # References

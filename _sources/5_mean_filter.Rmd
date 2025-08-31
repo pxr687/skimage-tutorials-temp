@@ -3,11 +3,15 @@
 ## Kernels and pixel neighbourhoods
 
 
-On the last page we filtered images based on a threshold value, or by multiple threshold values. Other filters work differently. They work by adjusting a given pixel's value *based on the value of other pixels in the array*, such that each pixel can be subject to a different change in its value, depending of the value of other pixels. The mean filter works in this manner.
+On the last page we filtered images based on a single threshold value, or based on multiple threshold values. Other filters work differently to this; they work by adjusting a given pixel's value based on the value of other pixels which surround it, in a specified area. The mean filter is one such filter that works in this manner.
 
-The mean filter is a *local filter*. This entails that it alters a given pixels value based on the values of other pixels in the surrounding "neighborhood". The `size` and `shape` of the "neighborhood" are up to the user. We can refer to the neighborhood as a "kernel", "footprint" or "structuring element". As we will see later, Sci-kit image favours the term "footprint". For now, we will use the terms "kernel" and "neighborhood" interchangably to refer to some set of pixels that surround a given pixel.
+The mean filter is a *local filter*, because it alters a given pixel's value based on the values of other pixels in the surrounding "local neighborhood". The image below shows the pixel values in the `smiley` image array that we created on an earlier [page](0_images_as_numpy_arrays). Two possible "local neighbourhoods" are shown for a given pixel, which is highlighted in red. One neighbourhood is 3-by-3, and the other is 5-by-5 - we could use either when using a local filter:
 
-The mean filter, as the name suggests, *averages* the pixel values within a kernel/neighbourhood. To see this in action, let's build a simple mean filter to filter our `random_i` image array. First, we perform some imports:
+![](images/smiley_neighbourhoods.png)
+
+The values within a pixel's local neighbourhood will influence the change that a local filter makes to the central pixel. The `size` and `shape` of the "neighborhood" are up to the user. We can synonomously refer to the neighborhood as a "kernel", "footprint" or "structuring element". As we will see later, Sci-kit image favours the term "footprint". For now, we will use the terms "kernel" and "neighborhood" interchangably to refer to some set of pixels that surround a given pixel.
+
+The mean filter, as the name suggests, *averages* the pixel values within a kernel/neighbourhood. To see this in action, let's build a simple mean filter to filter an image array. First, we perform some imports:
 
 ```{python}
 # Library imports.

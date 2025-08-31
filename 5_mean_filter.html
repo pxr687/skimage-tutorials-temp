@@ -483,9 +483,11 @@ document.write(`
 <h1>Convolution filters I - the mean filter<a class="headerlink" href="#convolution-filters-i-the-mean-filter" title="Link to this heading">#</a></h1>
 <section id="kernels-and-pixel-neighbourhoods">
 <h2>Kernels and pixel neighbourhoods<a class="headerlink" href="#kernels-and-pixel-neighbourhoods" title="Link to this heading">#</a></h2>
-<p>On the last page we filtered images based on a threshold value, or by multiple threshold values. Other filters work differently. They work by adjusting a given pixel’s value <em>based on the value of other pixels in the array</em>, such that each pixel can be subject to a different change in its value, depending of the value of other pixels. The mean filter works in this manner.</p>
-<p>The mean filter is a <em>local filter</em>. This entails that it alters a given pixels value based on the values of other pixels in the surrounding “neighborhood”. The <code class="docutils literal notranslate"><span class="pre">size</span></code> and <code class="docutils literal notranslate"><span class="pre">shape</span></code> of the “neighborhood” are up to the user. We can refer to the neighborhood as a “kernel”, “footprint” or “structuring element”. As we will see later, Sci-kit image favours the term “footprint”. For now, we will use the terms “kernel” and “neighborhood” interchangably to refer to some set of pixels that surround a given pixel.</p>
-<p>The mean filter, as the name suggests, <em>averages</em> the pixel values within a kernel/neighbourhood. To see this in action, let’s build a simple mean filter to filter our <code class="docutils literal notranslate"><span class="pre">random_i</span></code> image array. First, we perform some imports:</p>
+<p>On the last page we filtered images based on a single threshold value, or based on multiple threshold values. Other filters work differently to this; they work by adjusting a given pixel’s value based on the value of other pixels which surround it, in a specified area. The mean filter is one such filter that works in this manner.</p>
+<p>The mean filter is a <em>local filter</em>, because it alters a given pixel’s value based on the values of other pixels in the surrounding “local neighborhood”. The image below shows the pixel values in the <code class="docutils literal notranslate"><span class="pre">smiley</span></code> image array that we created on an earlier <a class="reference internal" href="0_images_as_numpy_arrays.html"><span class="doc std std-doc">page</span></a>. Two possible “local neighbourhoods” are shown for a given pixel, which is highlighted in red. One neighbourhood is 3-by-3, and the other is 5-by-5 - we could use either when using a local filter:</p>
+<p><img alt="" src="_images/smiley_neighbourhoods.png" /></p>
+<p>The values within a pixel’s local neighbourhood will influence the change that a local filter makes to the central pixel. The <code class="docutils literal notranslate"><span class="pre">size</span></code> and <code class="docutils literal notranslate"><span class="pre">shape</span></code> of the “neighborhood” are up to the user. We can synonomously refer to the neighborhood as a “kernel”, “footprint” or “structuring element”. As we will see later, Sci-kit image favours the term “footprint”. For now, we will use the terms “kernel” and “neighborhood” interchangably to refer to some set of pixels that surround a given pixel.</p>
+<p>The mean filter, as the name suggests, <em>averages</em> the pixel values within a kernel/neighbourhood. To see this in action, let’s build a simple mean filter to filter an image array. First, we perform some imports:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Library imports.</span>
@@ -1097,7 +1099,7 @@ Mean filter via SciPy `correlate`:
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/f726d0b06276a5b2bc054168a61978ecefbf69c0c46e19a9ba7ccbac6b3dc126.png" src="_images/f726d0b06276a5b2bc054168a61978ecefbf69c0c46e19a9ba7ccbac6b3dc126.png" />
+<img alt="_images/896590b006c0aaa33ad2aa43583f7a30adf89c9ac5cd53d9a4ec3a4e9b1edff0.png" src="_images/896590b006c0aaa33ad2aa43583f7a30adf89c9ac5cd53d9a4ec3a4e9b1edff0.png" />
 </div>
 </div>
 <p>The mean filter can remove some of the noise, restoring the clarity of the image:</p>
@@ -1122,7 +1124,7 @@ Mean filter via SciPy `correlate`:
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/cd9063b2759ecb6b8a1fbae3e0d3559c7d4e0cdcd247cadeb95736db203fd0be.png" src="_images/cd9063b2759ecb6b8a1fbae3e0d3559c7d4e0cdcd247cadeb95736db203fd0be.png" />
+<img alt="_images/9dd787f9c3e527bdf6b2827ae6e680b95f19ebfbb444bd9b03c06713805e4f9f.png" src="_images/9dd787f9c3e527bdf6b2827ae6e680b95f19ebfbb444bd9b03c06713805e4f9f.png" />
 </div>
 </div>
 <p>We can see that the image is clearer, the noise has been reduced and some of the signal has been restored.</p>
@@ -1152,7 +1154,7 @@ Mean filter via SciPy `correlate`:
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/6f651841f59e1af891326be9ad3a3fa94cdf17500e60f2c4b7347b15148f2402.png" src="_images/6f651841f59e1af891326be9ad3a3fa94cdf17500e60f2c4b7347b15148f2402.png" />
+<img alt="_images/e03eb95937c6a249c939ce73bca474d27a9058d597af723c8ff280f61efd1c07.png" src="_images/e03eb95937c6a249c939ce73bca474d27a9058d597af723c8ff280f61efd1c07.png" />
 </div>
 </div>
 <p>As with many filtering operations, the effect of altering aspects of the filtering process (like a threshold value or kernel size), is very context dependent. It may take many iterations before finding a “sweet spot”, and where the sweet spot is may be somewhat subjective.</p>

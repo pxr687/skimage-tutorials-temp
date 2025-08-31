@@ -977,7 +977,7 @@ Min Pixel Value: 0
 <p>Changing the shape or size of the structuring element (likely) changes the number of “matches”, and therefore the degree and location of changes to the bright/dark regions, for both erosion and dilation. We are essentially looking for features of a certain shape (the shape of our structuring element) in the image, and then dilating/eroding on the basis of the number of matches/clashes.</p>
 <div class="exercise dropdown admonition" id="block-xeno">
 
-<p class="admonition-title"><span class="caption-number">Exercise 25 </span></p>
+<p class="admonition-title"><span class="caption-number">Exercise 26 </span></p>
 <section id="exercise-content">
 <p>Try to recreate the following image by processing <code class="docutils literal notranslate"><span class="pre">xenomorph</span></code>, using only <code class="docutils literal notranslate"><span class="pre">skimage</span></code> morphological operations, as well as operations from the other tutorials, from <code class="docutils literal notranslate"><span class="pre">numpy</span></code>, <code class="docutils literal notranslate"><span class="pre">scipy</span></code> and <code class="docutils literal notranslate"><span class="pre">skimage</span></code>:</p>
 <p><img alt="" src="_images/xeno_ex_1.png" /></p>
@@ -996,7 +996,7 @@ Min Pixel Value: 0
 </div>
 <div class="solution dropdown admonition" id="8_morphology-solution-1">
 
-<p class="admonition-title">Solution to<a class="reference internal" href="#block-xeno"> Exercise 25</a></p>
+<p class="admonition-title">Solution to<a class="reference internal" href="#block-xeno"> Exercise 26</a></p>
 <section id="solution-content">
 <p>We promised earlier that the <code class="docutils literal notranslate"><span class="pre">diamond</span></code> structuring element would get more diamond-like when it is larger. To complete this exercise, you need <code class="docutils literal notranslate"><span class="pre">big_diamond</span></code> with <code class="docutils literal notranslate"><span class="pre">radius</span> <span class="pre">=</span> <span class="pre">30</span></code>:</p>
 <div class="cell docutils container">
