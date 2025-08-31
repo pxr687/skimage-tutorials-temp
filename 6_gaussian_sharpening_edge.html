@@ -2010,10 +2010,8 @@ Now, when applied to our <code class="docutils literal notranslate"><span class=
 <p>Applied to more complex images, this edge detection can have some pretty cool effects:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Load in an image, convert to greyscale, rescale intensity, and `int16`.</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Load in an image, convert to greyscale.</span>
 <span class="n">coffee_grey</span> <span class="o">=</span> <span class="n">ski</span><span class="o">.</span><span class="n">color</span><span class="o">.</span><span class="n">rgb2gray</span><span class="p">(</span><span class="n">ski</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">coffee</span><span class="p">())</span>
-<span class="n">coffee_grey</span> <span class="o">=</span> <span class="n">ski</span><span class="o">.</span><span class="n">exposure</span><span class="o">.</span><span class="n">rescale_intensity</span><span class="p">(</span><span class="n">coffee_grey</span><span class="p">,</span> <span class="n">out_range</span><span class="o">=</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>
-<span class="n">coffee_grey</span> <span class="o">=</span> <span class="n">ski</span><span class="o">.</span><span class="n">util</span><span class="o">.</span><span class="n">img_as_int</span><span class="p">(</span><span class="n">coffee_grey</span><span class="p">)</span>
 
 <span class="c1"># Plot the original image.</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">coffee_grey</span><span class="p">)</span>
@@ -2023,13 +2021,13 @@ Now, when applied to our <code class="docutils literal notranslate"><span class=
 </div>
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Type: &lt;class &#39;numpy.ndarray&#39;&gt;
-dtype: int16
+dtype: float64
 Shape: (400, 600)
-Max Pixel Value: 32767
-Min Pixel Value: -32768
+Max Pixel Value: 1.0
+Min Pixel Value: 0.0
 </pre></div>
 </div>
-<img alt="_images/84cd41aec512e0a2bed031138be0c815f209f68e7f7192d3337e839189cfc82a.png" src="_images/84cd41aec512e0a2bed031138be0c815f209f68e7f7192d3337e839189cfc82a.png" />
+<img alt="_images/90b5afdb041923a15b345e35e0d7b51eb4a0a11b62e0aa27556e76d8e3d24d31.png" src="_images/90b5afdb041923a15b345e35e0d7b51eb4a0a11b62e0aa27556e76d8e3d24d31.png" />
 </div>
 </div>
 <p>First, we detect edges in the horizontal direction:</p>
@@ -2037,14 +2035,13 @@ Min Pixel Value: -32768
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Filter using the horizontal edge detection kernel.</span>
 <span class="n">gradient_horizontal_coffee_grey</span> <span class="o">=</span> <span class="n">ndi</span><span class="o">.</span><span class="n">correlate</span><span class="p">(</span><span class="n">coffee_grey</span><span class="p">,</span>
-                                              <span class="n">horizontal_edge_detection_kernel</span><span class="p">,</span>
-                                              <span class="n">output</span><span class="o">=</span><span class="s2">&quot;int16&quot;</span><span class="p">)</span>
+                                              <span class="n">horizontal_edge_detection_kernel</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">gradient_horizontal_coffee_grey</span><span class="p">);</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/4c850c5f369a598b34d2e95f772ee62a20356329aeedd224a8962f1a2401469f.png" src="_images/4c850c5f369a598b34d2e95f772ee62a20356329aeedd224a8962f1a2401469f.png" />
+<img alt="_images/5a4907f7e49950877864e5ffc5efe3b060e301db1a3ef6d269ec5d45fbcdc437.png" src="_images/5a4907f7e49950877864e5ffc5efe3b060e301db1a3ef6d269ec5d45fbcdc437.png" />
 </div>
 </div>
 <p>Then, in the vertical direction:</p>
@@ -2052,14 +2049,13 @@ Min Pixel Value: -32768
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Filter using the vertical edge detection kernel.</span>
 <span class="n">gradient_vertical_coffee_grey</span> <span class="o">=</span> <span class="n">ndi</span><span class="o">.</span><span class="n">correlate</span><span class="p">(</span><span class="n">coffee_grey</span><span class="p">,</span>
-                                               <span class="n">vertical_edge_detection_kernel</span><span class="p">,</span>
-                                               <span class="n">output</span><span class="o">=</span><span class="s2">&quot;int16&quot;</span><span class="p">)</span>
+                                               <span class="n">vertical_edge_detection_kernel</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">gradient_vertical_coffee_grey</span><span class="p">);</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/f7646f99e1d1a0245c80010d01b62ab44e152bb264810584cd142306f28cfb5b.png" src="_images/f7646f99e1d1a0245c80010d01b62ab44e152bb264810584cd142306f28cfb5b.png" />
+<img alt="_images/58beff1ffc45148629c1cd6c78c8d0dbfb3c352247e5030eb2b3e16b9d5471ff.png" src="_images/58beff1ffc45148629c1cd6c78c8d0dbfb3c352247e5030eb2b3e16b9d5471ff.png" />
 </div>
 </div>
 <p>We can combine these two edge detection filters together to search for edges in both directions. First, lets refreseh our memory of what <code class="docutils literal notranslate"><span class="pre">edgy</span></code> looked like, filtered in both directions separately:</p>
@@ -2145,7 +2141,7 @@ Min Pixel Value: -32768
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/0d8b217103dd56df6a010bc2514f6c16aaca42e56a8c74090cd3769d7c9df7c5.png" src="_images/0d8b217103dd56df6a010bc2514f6c16aaca42e56a8c74090cd3769d7c9df7c5.png" />
+<img alt="_images/df8dae74fc258c2c3e7efecb7b26c75426571ff8f8bdd4127563c37a9fb83064.png" src="_images/df8dae74fc258c2c3e7efecb7b26c75426571ff8f8bdd4127563c37a9fb83064.png" />
 </div>
 </div>
 <p>Edgy indeed…</p>
@@ -2153,24 +2149,24 @@ Min Pixel Value: -32768
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Plot all the `coffee_grey` images together.</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">16</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span><span class="mi">8</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Original&quot;</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">coffee_grey</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Horizontal Edges&quot;</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">gradient_horizontal_coffee_grey</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Vertical Edges&quot;</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">gradient_vertical_coffee_grey</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">4</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">4</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Both Combined&quot;</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">coffee_vertical_horizontal_stack</span><span class="p">);</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/552ac02fa9c7ebf952c4f5be8a78262d7f8bec1149eee7377204926a6c643734.png" src="_images/552ac02fa9c7ebf952c4f5be8a78262d7f8bec1149eee7377204926a6c643734.png" />
+<img alt="_images/3cd7bcc16ce480c5516f171d048baa3d9e3201621924d51272054784fe8d7db2.png" src="_images/3cd7bcc16ce480c5516f171d048baa3d9e3201621924d51272054784fe8d7db2.png" />
 </div>
 </div>
 </section>
@@ -2358,7 +2354,7 @@ Min Pixel Value: -32768
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/97a037634498d227cce55c758346a05ab2ad2749ab05f9af728515fce733a7ff.png" src="_images/97a037634498d227cce55c758346a05ab2ad2749ab05f9af728515fce733a7ff.png" />
+<img alt="_images/6dfec38d20fcbad1d343d2c766a4a3a500f636be7b5c78100489d340682c5e19.png" src="_images/6dfec38d20fcbad1d343d2c766a4a3a500f636be7b5c78100489d340682c5e19.png" />
 </div>
 </div>
 <div class="exercise dropdown admonition" id="edgelord">
