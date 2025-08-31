@@ -1308,20 +1308,26 @@ plt.show();
 :class: dropdown
 :::
 
-You may have noticed that, in the final output images that result from the application of the filters, the edges detected by the methods we used above are two pixels wide. For instance the image below results from filtering `edgy` with the Sobel filter:
+Think about all of the edge detection filter types we have seen above. You may have noticed that, for all of the final output images from each filter, the edges detected are two pixels wide. For instance the image below results from filtering `edgy` with the Sobel filter:
 
 ```{python}
 # Edgy, filtered with `ski.filters.sobel()`.
 plt.imshow(edgy_sobel_ski);
 ```
 
-Can you think of the kernels you need such that, in the final image array from the filtering process, the edges are *only one pixel wide*?
+You can see that both the horizontal edges and the vertical edges are two pixels wide. 
+
+Can you think of the modifications you could make to the edge detection kernels, such that after convolving `edgy` with the kernels, and combining the results into one image, that the edges in the combined image are *only one pixel wide*?
 
 Think about what you need to do, and try to recreate this target image:
 
 ![](images/one_edge.png)
 
-Please note that you will "pass" this exercise if you make kernels which detect one-pixel wide edges, even if your final image does not exactly match the one above. 
+Here are the original edge detection kernels we used, for comparison, to help you think about what modifications you need to recreate the target image:
+
+![](images/edge_dector_kernels.png)
+
+Please note that you will "pass" this exercise if you make kernels which detect one-pixel wide edges, even if your final image does not exactly match the one above. You could modify the Sobel kernels as well, or investigate other edge detection kernel types...
 
 *Hint:* run the function `hint_edgy()` for some help if you get stuck.
 
