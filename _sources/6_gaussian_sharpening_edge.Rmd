@@ -639,7 +639,7 @@ plt.title('Gaussian Blur with `target_kernel`');
 
 # Image sharpening
 
-Gaussian filtering is a nice visual effect by itself, but filters like the Gaussian filter)which blur an image can also, somewhat paradoxically, be used to *sharpen* an image. *Sharpening* is the opposite of blurring, it makes images clearer, with the features and edges more defined.
+Gaussian filtering is a nice visual effect by itself, but filters like the Gaussian filter which blur an image can also, somewhat paradoxically, be used to *sharpen* an image. *Sharpening* is the opposite of blurring, it makes images clearer, with the features and edges more defined.
 
 How can we sharpen an image with a Gaussian *blur* filter, we hear you ask? We will demonstrate below. Sharpening is easiest to appreciate if we start with a slightly blurry image. In the cell below, we create a `blurry_cat` image by applying a Gaussian filter, we use a low `sigma` value, to keep the blur only slight:
 
