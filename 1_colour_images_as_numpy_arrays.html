@@ -32,9 +32,9 @@
     <link rel="stylesheet" type="text/css" href="_static/styles/sphinx-book-theme.css?v=eba8b062" />
     <link rel="stylesheet" type="text/css" href="_static/togglebutton.css?v=13237357" />
     <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
-    <link rel="stylesheet" type="text/css" href="_static/mystnb.8ecb98da25f57f5357bf6f572d296f466b2cfe2517ffebfabe82451661e28f02.css?v=6644e6bb" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.8ecb98da25f57f5357bf6f572d296f466b2cfe2517ffebfabe82451661e28f02.css" />
     <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css?v=4fa983c6" />
-    <link rel="stylesheet" type="text/css" href="_static/exercise.css?v=982b99e0" />
+    <link rel="stylesheet" type="text/css" href="_static/exercise.css" />
     <link rel="stylesheet" type="text/css" href="_static/sphinx-design.min.css?v=95c83b7e" />
   
   <!-- Pre-loaded scripts that we'll load fully later -->
@@ -235,6 +235,10 @@
 
 
 
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="7_median_filter.html">More filters: the median filter</a></li>
 
 
 
@@ -1196,9 +1200,9 @@ Our 3D stacked array is of the right shape:</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>X1 = 0.69
-X2 = 0.58
-X3 = 0.52
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>X1 = 0.35
+X2 = 0.19
+X3 = 0.81
 </pre></div>
 </div>
 </div>
@@ -1227,12 +1231,12 @@ X3 = 0.52
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Red (X1) = 0.43
-Green (X2) = 0.92
-Blue (X3) = 0.61
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Red (X1) = 0.64
+Green (X2) = 0.54
+Blue (X3) = 0.04
 </pre></div>
 </div>
-<img alt="_images/5e4ca72ee03d22da6d74a79c7709f64dcbb0441dfe8009dfbedbda1a90341896.png" src="_images/5e4ca72ee03d22da6d74a79c7709f64dcbb0441dfe8009dfbedbda1a90341896.png" />
+<img alt="_images/d629d6eeea432ec7c2c517c44da77dc60fa93bc8726b235054b1f7cc2eeedb25.png" src="_images/d629d6eeea432ec7c2c517c44da77dc60fa93bc8726b235054b1f7cc2eeedb25.png" />
 </div>
 </div>
 <p>So, each two-dimensional display image has a “hidden” three-dimensional array behind it. Each slice of the third dimension is a colour channel. The mix of values at a given element in each colour channel determins the colour of that pixel in the rendered image. You may want to view this image in a new browser window, to see more clearly the exact mixes of the colour channels, which are shown above each square on the right hand side of the image:</p>
@@ -1248,7 +1252,7 @@ Blue (X3) = 0.61
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/94f7fb04ed7e095c204b83d249dd1f8e7b9a3033d9ab555163d98505604f330f.png" src="_images/94f7fb04ed7e095c204b83d249dd1f8e7b9a3033d9ab555163d98505604f330f.png" />
+<img alt="_images/ab90c176793988b289e59d062f81cad670916991a20341faed33275a6bbaddbe.png" src="_images/ab90c176793988b289e59d062f81cad670916991a20341faed33275a6bbaddbe.png" />
 </div>
 </div>
 <p>We have now completed our perilous expedition into the third dimension… We have seen that we can use 3D arrays to encode <em>true colour</em> information. This means that the image array itself contains colour information for each pixel, where we are <em>not</em> just pseudocolouring greyscale information using <code class="docutils literal notranslate"><span class="pre">viridis</span></code> or another colourmap…</p>
@@ -1750,7 +1754,7 @@ Min Pixel Value: 0
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/ca90d5df620ef19d2f303d33f047e394a636d78457fe08fd5fa4b62b21e34cef.png" src="_images/ca90d5df620ef19d2f303d33f047e394a636d78457fe08fd5fa4b62b21e34cef.png" />
+<img alt="_images/07d05db539103d49cd5ac9e1777c12ddab19f8c42d3d66c7d0ab95d4a1332013.png" src="_images/07d05db539103d49cd5ac9e1777c12ddab19f8c42d3d66c7d0ab95d4a1332013.png" />
 </div>
 </div>
 </section>
