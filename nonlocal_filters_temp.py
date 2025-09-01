@@ -1,0 +1,142 @@
+
+# Non-local filters
+
+Whilst the median filter does not use convolution, it is still a local filter. Other filters use neither convolution nor a local pixel neighbourhood. These filters are called *non-local filters*. They have their name because they perform their filtering based on features of the whole image array, or on specific regions of the image array - such that a given pixel might be modified in accordance with a region of the image which is nowhere near its "local neighbourhood".
+
+One foundational non-local filter is a [*histogram equalisation filter*](https://en.wikipedia.org/wiki/Histogram_equalization). This filter modifies pixels based on the histogram of the entire image. 
+
+We will demonstrate this filter with the `eagle` image from `ski.data`:
+
+```{python}
+# Load in the `eagle` image.
+eagle = ski.data.eagle()
+show_attributes(eagle)
+plt.imshow(eagle);
+```
+
+As we know, we can use the `.ravel()` array method to flatten this 2D image to 1D, and then inspect a histogram of the pixel intensities:
+
+```{python}
+# Flatted to 1D.
+one_D_eagle = eagle.ravel()
+
+# Show a histogram.
+plt.hist(eagle.ravel(), bins=128)
+plt.xlabel('Pixel Intensity')
+plt.ylabel('Pixel Count');
+```
+
+We can deconstruct the histogram into its [counts and bin intervals](4_threshold_filters) using `np.histogram()`:
+
+```{python}
+# Centers and bin intervals, from the histogram of the flattened `eagle` image.
+counts, bin_intervals = np.histogram(one_D_eagle,
+                                     bins=256)
+
+# Calculate the bin centers.
+bin_centers = (bin_intervals[1:] + bin_intervals[:-1]) / 2
+
+print(f"\nCounts:\n {counts}")
+print(f"\nBin centers:\n {centers}")
+```
+
+```{python}
+# Centers and bin intervals, from the histogram of the flattened `eagle` image.
+n_pixels = len(one_D_eagle)
+counts_normed = counts/n_pixels
+
+print(f"\nCounts Normalized sum:\n {counts_normed.sum()}")
+plt.plot(bin_centers, counts_normed)
+plt.xlabel('Pixel Intensity')
+plt.ylabel('Pixel Probability');
+```
+
+To equalise the histogram, meaning we want it to be roughly uniform across the pixel intensities, we calculate the cumulative distribution of the histogram, and we also normalise it:
+
+```{python}
+cdf = centers.cumsum() 
+cdf = 255 * cdf / cdf[-1] # Normalize.
+
+print(cdf.sum())
+
+plt.plot(bin_centers, cdf)
+```
+
+```{python}
+# Adapted from: https://www.janeriksolem.net/histogram-equalization-with-python-and.html
+
+
+equalised_hist = cdf[one_D_eagle]
+
+eagleback_to_2D = equalised_hist.reshape(eagle.shape)
+
+plt.figure(figsize=(12, 6))
+plt.subplot(2, 2, 1)
+plt.imshow(eagle)
+plt.subplot(2, 2, 2)
+plt.hist(eagle.ravel(), bins=128)
+plt.subplot(2, 2, 3)
+plt.imshow(eagleback_to_2D);
+plt.subplot(2, 2, 4)
+plt.hist(eagleback_to_2D.ravel(), bins=40);
+```
+
+```{python}
+plt.figure(figsize=(12, 6))
+plt.subplot(1, 2, 1)
+plt.imshow(eagle)
+plt.subplot(1, 2, 2)
+plt.imshow(eagleback_to_2D);
+
+```
+
+Easy in `skimage`:
+
+```{python}
+eagle = ski.data.eagle()
+eagle_equalized = ski.exposure.equalize_hist(eagle)
+
+plt.figure(figsize=(10, 10))
+plt.subplot(1, 2, 1)
+plt.imshow(eagle)
+plt.subplot(1, 2, 2)
+plt.imshow(eagle_equalized);
+```
+
+```{python}
+plt.figure(figsize=(14, 7))
+plt.subplot(2, 2, 1)
+plt.imshow(eagle)
+plt.subplot(2, 2, 2)
+plt.hist(eagle.ravel(), bins=128)
+plt.subplot(2, 2, 3)
+plt.imshow(eagle_equalized);
+plt.subplot(2, 2, 4)
+plt.hist(eagle_equalized.ravel(), bins=40)
+plt.tight_layout();
+```
+
+# Summary
+
+This page has showed how to use convolution kernels to filter images, using `numpy`, `scipy` and `skimage`.
+
+
+# References
+
+3.3.5 onward from: https://lectures.scientific-python.org/packages/scikit-image/index.html
+
+Based on: https://scikit-image.org/skimage-tutorials/lectures/1_image_filters.html
+
+Histogram equalisation adapted from: https://www.janeriksolem.net/histogram-equalization-with-python-and.html
+
+Reference: https://www.kdnuggets.com/numpy-for-image-processing
+
+Reference: https://setosa.io/ev/image-kernels
+
+Reference: https://wiki.imindlabs.com.au/ds/aml/4_problem_domains/1-image-processing/3_edge_detectors
+
+Reference: https://www.geeksforgeeks.org/deep-learning/types-of-convolution-kernels
+
+Reference: skimage tutorials (check versions), scipy lecture notes
+
+Reference: https://jni.github.io/i2k-skimage-napari/lectures/1_image_filters.html

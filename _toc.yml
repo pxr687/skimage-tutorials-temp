@@ -10,5 +10,6 @@ parts:
       - file: 4_threshold_filters
       - file: 5_mean_filter
       - file: 6_gaussian_sharpening_edge
+      - file: 7_median_filter
       - file: 8_morphology
       

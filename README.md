@@ -10,3 +10,7 @@ Adpated from:
 - Maybe show the between classes variances for the Otsu method (show that it converges on same threshold?)...
   
 - Notes for potential additions to Gaussian filtering section: Use gaussian from here: https://sbme-tutorials.github.io/2018/cv/notes/4_week4.html [Highlight that skimage filter is built from NumPy and SciPy - wrapper for `scipy.ndimage.gaussian_filter`?]
+
+- Non-local filters skeleton is in `nonlocal_filters_temp.py`, this should be the 
+2nd part of the median filtering page (e.g. so non-convolution local filters,
+and non-local filters are on the same page)
