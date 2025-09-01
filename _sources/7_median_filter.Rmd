@@ -1,6 +1,6 @@
 # More filters: the median filter
 
-This page will cover another local filer - the median filter. The median filter differs in important ways from the local filters from [previous](5_mean_filter) pages, because it cannot be implemented through convolution.
+This page will cover another local filer - the median filter. The median filter differs in important ways from the local filters we saw on [previous](5_mean_filter) pages, because it cannot be implemented through convolution.
 
 As normal, we begin with some imports:
 
@@ -24,7 +24,7 @@ from show_attributes import show_attributes
 
 # Median filter
 
-When comparing to the other local filters we have seen, the median filter uses the same process of "walking" through the image with a small array which denotes the "local neighbourhood" of each pixel. In median filtering, you can *loosely* think of this small array as a kernel, but there are some major differences in the calculations, so let's call it the "neighbourhood array" instead. 
+When comparing to the other local filters we have seen, the median filter uses the same process of "walking" through the image with a small array which denfines the "local neighbourhood" of each pixel. In median filtering, you can *loosely* think of this small array as a kernel, but there are some major differences in the calculations, so let's call it the "neighbourhood array" instead. 
 
 Like with the other kernels we have seen, the "neighbourhood array" is centered on every pixel during the filtering operation. The central pixel value is replaced with a number computed from the other values in the local neighbourhood, e.g. the other pixel values under the "neighbourhood array".  However, instead of *convolving* the neighbourhood array and the image, as we would for a mean filter or Gaussian filter etc., the median filter, shockingly, takes the median value of the pixels under the small array. 
 
@@ -82,7 +82,7 @@ np.median(nums)
 
 There is no convolution kernel that can do this - instead we use the "neighbourhood array" to define a pixel neighbourhood, then replace the central value with the median from that neighbourhood, using the sorting and indexing we have seen above. So, the median filter *is* a local filter, because it alters pixel values based on other pixel values in the local neighbourhood. However, it is not a *convolution filter* because it does use the local neighbourhood in a convolution operation, in contrast to other local filters like the mean filter, Gaussian filter etc. 
 
-The median filter is especially useful for removing noise from images, while preserving the "edges" in the image. Let's look at why this is the case, by expanding the `nums` array into a low-resolution image, using `np.tile()` and `.reshape()`.
+The median filter is especially useful for removing noise from images, while preserving the "edges" in the image. You'll recall that the edges are big changes in the gradient of pixel intensities, between nearby pixels (e.g. black-to-white, white-to-black etc). Let's look at why the median filter is "edge preserving", by expanding the `nums` array into a low-resolution image, using `np.tile()` and `.reshape()`.
 
 ```{python}
 # Make `nums` into a image array.
