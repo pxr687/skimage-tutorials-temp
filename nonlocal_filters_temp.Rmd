@@ -1,9 +1,28 @@
+```{python}
+# Library imports.
+import numpy as np
+import matplotlib.pyplot as plt
+import scipy.ndimage as ndi
+import skimage as ski
+from mpl_toolkits.mplot3d import Axes3D
+
+# Set 'gray' as the default colormap
+plt.rcParams['image.cmap'] = 'gray'
+
+# Set NumPy precision to 2 decimal places
+np.set_printoptions(precision=2)
+
+#  A custom function to quickly report image attributes.
+from show_attributes import show_attributes
+```
+
 # Non-local filters
-**WHEN COMPLETED, THIS SHOULD BE THE 2ND HALF OF THE MEDIAN FILTER PAGE**
 
-Whilst the median filter does not use convolution, it is still a local filter. Other filters use neither convolution nor a local pixel neighbourhood. These filters are called *non-local filters*. They have their name because they perform their filtering based on features of the whole image array, or on specific regions of the image array - such that a given pixel might be modified in accordance with a region of the image which is nowhere near its "local neighbourhood".
+Whilst the median filter does not use convolution, it is still a local filter. Other filters use neither convolution nor a local pixel neighbourhood. These filters are called *non-local filters*. They have their name because they filter all of the pixels in an image based on characteristics of a specific region of the image, or based upon characteristics of the entire image. As a result, a non-local filter might modify a given pixel's value in accordance with a region of the image which is nowhere near its "local neighbourhood".
 
-One foundational non-local filter is a [*histogram equalisation filter*](https://en.wikipedia.org/wiki/Histogram_equalization). This filter modifies pixels based on the histogram of the entire image. 
+One foundational non-local filter is a [*histogram equalisation filter*](https://en.wikipedia.org/wiki/Histogram_equalization). This filter modifies pixels based on the histogram of the entire image. Essentially, this process "smoothes out" the histogram into a even "hill", so that there is less variance between the pixel intensities. The image below illustrates this principle:
+
+![](images/hist_equal.png)
 
 We will demonstrate this filter with the `eagle` image from `ski.data`:
 
@@ -26,7 +45,17 @@ plt.xlabel('Pixel Intensity')
 plt.ylabel('Pixel Count');
 ```
 
-We can deconstruct the histogram into its [counts and bin intervals](4_threshold_filters) using `np.histogram()`:
+There are several steps in equalising the histogram:
+
+-
+
+-
+
+-
+
+-
+
+For the X step, we need to normalize the *counts* of the histogram, such that they sum to 1. We can deconstruct the histogram into its [counts and bin intervals](4_threshold_filters) using `np.histogram()`. So each adjacent pair of values in `bin_intervals` tells us the start and end point of that bin, and `counts` contains the number of pixels falling within each bin. We also calculate the center of each bin e.g. the midpoint between the start and end points:
 
 ```{python}
 # Centers and bin intervals, from the histogram of the flattened `eagle` image.
@@ -36,58 +65,101 @@ counts, bin_intervals = np.histogram(one_D_eagle,
 # Calculate the bin centers.
 bin_centers = (bin_intervals[1:] + bin_intervals[:-1]) / 2
 
+# Show the `counts` and `bin_centers`.
 print(f"\nCounts:\n {counts}")
-print(f"\nBin centers:\n {centers}")
+print(f"\nBin centers:\n {bin_centers}")
 ```
+
+We can normalise the `counts` by dividing each individual count by the total number of pixels in the image. Note that we could also do this using the optional `density=True` argument to `np.histogram()`, but we do it manually to show what the actual operations involve:
 
 ```{python}
 # Centers and bin intervals, from the histogram of the flattened `eagle` image.
 n_pixels = len(one_D_eagle)
 counts_normed = counts/n_pixels
-
-print(f"\nCounts Normalized sum:\n {counts_normed.sum()}")
 plt.plot(bin_centers, counts_normed)
 plt.xlabel('Pixel Intensity')
 plt.ylabel('Pixel Probability');
 ```
 
-To equalise the histogram, meaning we want it to be roughly uniform across the pixel intensities, we calculate the cumulative distribution of the histogram, and we also normalise it:
+```{python}
+# Do the `counts` sum to 1?
+print(f"\nCounts Normalized sum:\n {counts_normed.sum()}")
+```
+
+To equalise the histogram, meaning we want it to be roughly uniform across the pixel intensities, first we calculate the cumulative distribution (`cdf`) of the histogram. For each bin, the cumulative distribution adds up the number of pixels that are in that bin and in all of the lower bins (e.g. the bins closer to 0 on the $x$-axis). Essentially it is a running total of the `counts` as we move from left to right across the $x$-axis:
 
 ```{python}
-cdf = centers.cumsum() 
-cdf = 255 * cdf / cdf[-1] # Normalize.
+# Get the cumulative distribution of the pixel intensities.
+cdf = counts.cumsum() 
 
-print(cdf.sum())
+# Show a plot of the cumulative distribution.
+plt.plot(bin_centers, cdf)
+plt.xlabel('Pixel Intensity')
+plt.ylabel('Cumulative Sum');
+```
+
+Because the `cdf` array contains a running count of the pixel intensities, cumulatively across the bins, the value at the final index location in `cdf` is the total number of pixels in the image. The cell below verifies this:
+
+```{python}
+cdf[-1] == n_pixels
+```
+
+We can normalise the running count by dividing by element in `cdf` by the total number of pixels (`n_pixels`). This expresses each count as a proportion of the total number of pixels:
+
+```{python}
+# Normalise `cdf`.
+cdf = cdf / n_pixels 
 
 plt.plot(bin_centers, cdf)
+plt.xlabel('Pixel Intensity')
+plt.ylabel('Cumulative Proportion');
+```
+
+The final value in `cdf` is now 1, indicating that the final bin and all of the lower bins together contain 100% of the pixels in the image:
+
+```{python}
+cdf[-1]
+```
+
+The next step requires some thought, to follow what is going on. We want to "map" the pixel values in the flattend `one_D_eagle` array to the values in the `cdf`. 
+
+We can do this, for the current `eagle` image, by using the `one_D_eagle` pixel intensity values as *indexes* for the `cdf` array. This might seem like a hack, so lets break it down.
+
+
+
+```{python}
+cdf.shape
 ```
 
 ```{python}
-# Adapted from: https://www.janeriksolem.net/histogram-equalization-with-python-and.html
+one_D_eagle.max()
+```
 
-
+```{python}
+# Equalise the histogram of `eagle`.
 equalised_hist = cdf[one_D_eagle]
+```
 
+What this has done is replaced each original pixel intensity value with the corresponding value from the cumulative distribution (`cdf`). This has the effect of, well, equalising the histogram. The original histogram and the equalised histogram, along with the corresponding images, are shown below:
+
+```{python}
+# Reshape to 2D.
 eagleback_to_2D = equalised_hist.reshape(eagle.shape)
 
+# Generate the plot.
 plt.figure(figsize=(12, 6))
 plt.subplot(2, 2, 1)
 plt.imshow(eagle)
+plt.title('Original Image')
 plt.subplot(2, 2, 2)
+plt.title('Original Histogram')
 plt.hist(eagle.ravel(), bins=128)
 plt.subplot(2, 2, 3)
-plt.imshow(eagleback_to_2D);
+plt.imshow(eagleback_to_2D)
+plt.title('Equalised Image')
 plt.subplot(2, 2, 4)
+plt.title('Equalised Histogram')
 plt.hist(eagleback_to_2D.ravel(), bins=40);
-```
-
-```{python}
-plt.figure(figsize=(12, 6))
-plt.subplot(1, 2, 1)
-plt.imshow(eagle)
-plt.subplot(1, 2, 2)
-plt.imshow(eagleback_to_2D);
-
 ```
 
 Easy in `skimage`:
@@ -128,6 +200,8 @@ This page has showed how to use convolution kernels to filter images, using `num
 Based on: https://scikit-image.org/skimage-tutorials/lectures/1_image_filters.html
 
 Histogram equalisation adapted from: https://www.janeriksolem.net/histogram-equalization-with-python-and.html
+
+Histogram equalisation: https://medium.com/jungletronics/histogram-equalization-34149fc299a6
 
 Reference: https://www.kdnuggets.com/numpy-for-image-processing
 
