@@ -1,8 +1,8 @@
 # More filters: the median filter and non-local filters
 
-This page will cover filters which do not use convolution kernels. First, we will look at the median filter. The median filter, like the mean and Gaussian filters, is a local filter. However, the median filter differs in important ways from the local filters we saw on [previous](5_mean_filter) pages, because it cannot be implemented through convolution.
+This page will cover filters which do not use convolution kernels. First, we will look at the median filter, which differs in important ways from the other local filters we saw on [previous](5_mean_filter) pages, because it cannot be implemented through convolution.
 
-After the median filter, we will look at another filter, the histogram equalisation filter, which does not use convolution, and in fact does not use a kernel at all. Because it eschews kernels completely, the histogram equalisation filter is a *non-local* filter. More on this below.
+After the median filter, we will look at another filter, the histogram equalisation filter, which does not use convolution. In fact, histogram equalisation does not use a kernel at all. Because it eschews kernels completely, the histogram equalisation filter is a *non-local* filter. More on this below.
 
 As normal, we begin with some imports:
 
@@ -151,11 +151,28 @@ plt.imshow(nums_median_filtered)
 plt.title('Median Filtered');
 ```
 
-Edges involving a bigger gradient have been preserved, whilst less prominent edges have been merged into more prominent ones.
+Edges involving a bigger gradient have been preserved, whilst less prominent edges have been merged into more prominent ones. We show this, for comparison, alongside a mean filtered version of `nums_img`, filtered using the same size `footprint` ((3, 3)):
 
-In a higher resolution image, this can have the effect of removing noise whilst preserving edges.
+```{python}
+nums_img = ski.util.img_as_ubyte(nums_img) # Avoid `dtype` warning.
+nums_mean_filtered = ski.filters.rank.mean(nums_img,
+                                           footprint=np.ones((3,3)))
+# Show the images.
+plt.figure(figsize=(12, 4))
+plt.subplot(1, 3, 1)
+plt.imshow(nums_img)
+plt.title('Original')
+plt.subplot(1, 3, 2)
+plt.imshow(nums_median_filtered)
+plt.title('Median Filtered')
+plt.subplot(1, 3, 3)
+plt.imshow(nums_mean_filtered)
+plt.title('Mean Filtered');
+```
 
-We will demonstrate the median filter again with the `brick` image from `ski.data`:
+You can see that the median filter gives a better "summary" of the distribution of edges in the original image - the mean filter has spread the edges around more, which makes sense, given that it averages pixels within a kernel. 
+
+In a higher resolution image, the median filter can have the effect of removing noise whilst preserving edges to a greater extent than some other filters. We will demonstrate the median filter again with the `brick` image from `ski.data`:
 
 ```{python}
 # Load in the `brick` image.
@@ -309,7 +326,20 @@ show_attributes(one_D_eagle)
 
 Conveniently here, each pixel intensity value in `one_D_eagle` will work as an index into `cdf`. This allows us to replace each pixel intensity value with its corresponding cumulative proportion. So, if a pixel intensity value $p$ falls in bin $b$, then bin $b$ has a corresponding cumulative proportion in the `cdf` array. We use this "mapped" values as our output image - this has the effect of "smoothing out", or, in fact, "equalising" the histogram, because bins without many pixels in them "inherit" the proportions from lower bins. Again, this is easier to appreciate visually, by viewing the histograms below.
 
-Let's perform the indexing/equalisation, and then inspect the histograms, so this effect becomes apparent:
+Let's perform the indexing/equalisation, and then inspect the histograms, so this effect becomes apparent. We show this mapping first with ten pixel intensity values from `one_D_eagle`:
+
+```{python}
+first_ten_pixels = one_D_eagle[:10]
+first_ten_pixels
+```
+
+...we then show the corresponding cumulative proportions that these values will be mapped to, when we use them as indexes for `cdf`:
+
+```{python}
+cdf[first_ten_pixels]
+```
+
+To perform this mapping for *every* pixel intensity value, we use the following operation:
 
 ```{python}
 # Equalise the histogram of `eagle`, by using the pixel intensity values in `one_D_eagle` (1 - 255)
@@ -339,7 +369,7 @@ plt.title('Equalised Histogram')
 plt.hist(eagleback_to_2D.ravel());
 ```
 
-The equalised histogram now much more closely resembles a [uniform distribution](LINK_HERE) - the notable "peaks and valleys" of the original and been replaced with a uniform block. The effect on the perceived visual image is one of heightened contrast - pay particular attention to the wall behind the noble eagle. Each image, without the histograms, can be viewed below, for easier inspection:
+The equalised histogram now much more closely resembles a [uniform distribution](https://en.wikipedia.org/wiki/Uniform_distribution) - the notable "peaks and valleys" of the original and been replaced with a uniform block. The effect on the perceived visual image is one of heightened contrast - pay particular attention to the wall behind the noble eagle. Each image, without the histograms, can be viewed below, for easier inspection:
 
 ```{python}
 # Generate the plot.
@@ -392,7 +422,7 @@ plt.title('Equalised Histogram (via `skimage`)')
 plt.tight_layout();
 ```
 
-Easy peasy. If you consult the [documentation](LINK_HERE) for `ski.exposure.equalize_hist()`, you notice that by default, it uses 256 bins. In fact, for the `nbins` optional argument, the documentation states that it will be ignored for integer data. This is so the "indexing trick" that we saw above can be performed. 
+Easy peasy. If you consult the [documentation](https://scikit-image.org/docs/0.25.x/api/skimage.exposure.html#skimage.exposure.equalize_hist) for `ski.exposure.equalize_hist()`, you notice that by default, it uses 256 bins. In fact, for the `nbins` optional argument, the documentation states that it will be ignored for integer data. This is so the "indexing trick" that we saw above can be performed. 
 
 It is no problem to use this filter with `float` image data however - the principle is the same pixel intensities get mapped to their corresponding cumulative proportion. Only now this occurs without the neat indexing trick, there is just an intermediate (boring!) step in the mapping. We demonstrate this below with the `coins` image from `ski.data`:
 
