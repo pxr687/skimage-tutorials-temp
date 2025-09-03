@@ -1,0 +1,1346 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="./" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>More filters: the median filter and non-local filters &#8212; Scikit-image via NumPy and SciPy</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+
+  
+  <link href="_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="_static/styles/sphinx-book-theme.css?v=eba8b062" />
+    <link rel="stylesheet" type="text/css" href="_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.8ecb98da25f57f5357bf6f572d296f466b2cfe2517ffebfabe82451661e28f02.css" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="_static/exercise.css" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-design.min.css?v=95c83b7e" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+    <script src="_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="_static/doctools.js?v=9a2dae69"></script>
+    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="_static/copybutton.js?v=f281be69"></script>
+    <script src="_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="_static/togglebutton.js?v=4a39c7ea"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="_static/design-tabs.js?v=f930bc37"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = '7_median_nonlocal_filters';</script>
+    <link rel="canonical" href="https://pxr687.github.io/skimage-tutorials-temp/7_median_nonlocal_filters.html" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Morphology" href="8_morphology.html" />
+    <link rel="prev" title="Convolution filters II - Gaussian blur, sharpening and edge detection" href="6_gaussian_sharpening_edge.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="index.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="_static/colourwheel.png" class="logo__image only-light" alt="Scikit-image via NumPy and SciPy - Home"/>
+    <script>document.write(`<img src="_static/colourwheel.png" class="logo__image only-dark" alt="Scikit-image via NumPy and SciPy - Home"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Scikit-image via NumPy and SciPy</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="0_images_as_numpy_arrays.html">Images as NumPy arrays</a></li>
+
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="1_colour_images_as_numpy_arrays.html">What about colour?</a></li>
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="2_skimage_intro.html">Introducing Scikit-image</a></li>
+
+
+
+
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="3_skimage_processing_from_numpy_and_scipy.html">(Sci-kit) Image processing, via NumPy and SciPy</a></li>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="4_threshold_filters.html">Threshold filtering</a></li>
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="5_mean_filter.html">Convolution filters I - the mean filter</a></li>
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="6_gaussian_sharpening_edge.html">Convolution filters II - Gaussian blur, sharpening and edge detection</a></li>
+
+
+
+
+
+
+
+
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">More filters: the median filter and non-local filters</a></li>
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="8_morphology.html">Morphology</a></li>
+
+
+
+
+
+
+
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/pxr687/skimage-tutorials-temp" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/pxr687/skimage-tutorials-temp/edit/main/7_median_nonlocal_filters.Rmd" target="_blank"
+   class="btn btn-sm btn-source-edit-button dropdown-item"
+   title="Suggest edit"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-pencil-alt"></i>
+  </span>
+<span class="btn__text-container">Suggest edit</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/pxr687/skimage-tutorials-temp/issues/new?title=Issue%20on%20page%20%2F7_median_nonlocal_filters.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="_sources/7_median_nonlocal_filters.Rmd" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.Rmd</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>More filters: the median filter and non-local filters</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">More filters: the median filter and non-local filters</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#local-filtering-without-convolution">Local filtering without convolution</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#edge-preservation">Edge preservation</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#non-local-filters">Non-local filters</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#histogram-equalisation-in-skimage">Histogram equalisation in <code class="docutils literal notranslate"><span class="pre">skimage</span></code></a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#summary">Summary</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#references">References</a></li>
+</ul>
+
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="more-filters-the-median-filter-and-non-local-filters">
+<h1>More filters: the median filter and non-local filters<a class="headerlink" href="#more-filters-the-median-filter-and-non-local-filters" title="Link to this heading">#</a></h1>
+<p>This page will cover filters which do not use convolution kernels. First, we will look at the median filter. The median filter, like the mean and Gaussian filters, is a local filter. However, the median filter differs in important ways from the local filters we saw on <a class="reference internal" href="5_mean_filter.html"><span class="doc std std-doc">previous</span></a> pages, because it cannot be implemented through convolution.</p>
+<p>After the median filter, we will look at another filter, the histogram equalisation filter, which does not use convolution, and in fact does not use a kernel at all. Because it eschews kernels completely, the histogram equalisation filter is a <em>non-local</em> filter. More on this below.</p>
+<p>As normal, we begin with some imports:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Library imports.</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">scipy.ndimage</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">ndi</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">skimage</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">ski</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">mpl_toolkits.mplot3d</span><span class="w"> </span><span class="kn">import</span> <span class="n">Axes3D</span>
+
+<span class="c1"># Set &#39;gray&#39; as the default colormap</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">rcParams</span><span class="p">[</span><span class="s1">&#39;image.cmap&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;gray&#39;</span>
+
+<span class="c1"># Set NumPy precision to 2 decimal places</span>
+<span class="n">np</span><span class="o">.</span><span class="n">set_printoptions</span><span class="p">(</span><span class="n">precision</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+
+<span class="c1">#  A custom function to quickly report image attributes.</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">show_attributes</span><span class="w"> </span><span class="kn">import</span> <span class="n">show_attributes</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="local-filtering-without-convolution">
+<h1>Local filtering without convolution<a class="headerlink" href="#local-filtering-without-convolution" title="Link to this heading">#</a></h1>
+<p>When compared to the other local filters we have seen, the median filter uses the same process of “walking” through the image with a small array which denfines the “local neighbourhood” of each pixel. In median filtering, you can <em>loosely</em> think of this small array as a kernel, but there are some major differences in the calculations, so let’s call it the “neighbourhood array” instead.</p>
+<p>Like with the other kernels we have seen, the “neighbourhood array” is centered on every pixel during the filtering operation. The central pixel value is replaced with a number computed from the other values in the local neighbourhood, e.g. the other pixel values under the “neighbourhood array”.  However, instead of <em>convolving</em> the neighbourhood array and the image, as we would for a mean filter or Gaussian filter etc., the median filter, shockingly, takes the median value of the pixels under the small array.</p>
+<p><img alt="" src="_images/kernel_general.png" /></p>
+<p>There is no convolvable function to calculate the median, and this is why <a class="reference external" href="https://dsp.stackexchange.com/questions/13211/convolution-kernels-for-image-filtering">some people</a> will tell you not to call the “neighbourhood array” a “kernel”, when we are doing median filtering. Calculating the median utilizes ranking and indexing, and cannot be expressed as set of additions, subtractions, mulitiplications, divisions etc, in the way that calculating a mean can, for instance.</p>
+<p>One way to think of this, is that when we write the formula for the mean, we can write it without reference to any Python indexing operations:</p>
+<p><span class="math notranslate nohighlight">\( \large \text{mean} = \frac{\sum X}{n} \)</span></p>
+<p>…we can read that as “to get the mean of a set of numbers (where <span class="math notranslate nohighlight">\(X\)</span> refers all of the numbers), add them up and divide by however many numbers there are (<span class="math notranslate nohighlight">\(n\)</span>)”.</p>
+<p>Conversely for the median we first have to order the numbers from lowest to highest (<span class="math notranslate nohighlight">\(X_{\text{sorted}}\)</span>), and then find the value that is <em>at the central index</em>. So where <span class="math notranslate nohighlight">\(X\)</span> is an array containing all the numbers, if <span class="math notranslate nohighlight">\(n\)</span> is odd:</p>
+<p><span class="math notranslate nohighlight">\( \large \text{median} = X_{\text{sorted}}[\frac{n}{2}]\)</span></p>
+<p>Where the square brackets are a <em>Python</em> indexing operation (we will need a different indexing operation if using a programming language that does not count indexes from 0, or if <span class="math notranslate nohighlight">\(n\)</span> is even…). So for the numbers in the array below:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Some numbers.</span>
+<span class="n">nums</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">10</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">7</span><span class="p">])</span>
+
+<span class="n">nums</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([10,  4,  5,  8,  7])
+</pre></div>
+</div>
+</div>
+</div>
+<p>We get the mean from: <span class="math notranslate nohighlight">\( \large \text{mean} = \frac{\sum x_i...x_n}{n} \)</span></p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Take the sum, divide by n.</span>
+<span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">nums</span><span class="p">)</span><span class="o">/</span><span class="nb">len</span><span class="p">(</span><span class="n">nums</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>np.float64(6.8)
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Compare to the same calculation from NumPy.</span>
+<span class="n">nums</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>np.float64(6.8)
+</pre></div>
+</div>
+</div>
+</div>
+<p>Whereas we get the median from: <span class="math notranslate nohighlight">\( \large \text{median} = X_{\text{sorted}}[\frac{n}{2}]\)</span></p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Get the median.</span>
+<span class="n">sorted_nums</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sort</span><span class="p">(</span><span class="n">nums</span><span class="p">)</span> <span class="c1"># Sort the values, low to high.</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Sorted `nums`: </span><span class="si">{</span><span class="n">sorted_nums</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="n">median</span> <span class="o">=</span> <span class="n">sorted_nums</span><span class="p">[</span><span class="nb">int</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">sorted_nums</span><span class="p">)</span><span class="o">/</span><span class="mi">2</span><span class="p">)]</span> <span class="c1"># Index to get the median.</span>
+
+<span class="c1"># Show the median value.</span>
+<span class="n">median</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Sorted `nums`: [ 4  5  7  8 10]
+</pre></div>
+</div>
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>np.int64(7)
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Compare to NumPy.</span>
+<span class="n">np</span><span class="o">.</span><span class="n">median</span><span class="p">(</span><span class="n">nums</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>np.float64(7.0)
+</pre></div>
+</div>
+</div>
+</div>
+<p>There is no convolution kernel that can do this - instead we use the “neighbourhood array” to define a pixel neighbourhood, then replace the central value with the median from that neighbourhood, using the sorting and indexing we have seen above. So, the median filter <em>is</em> a local filter, because it alters pixel values based on other pixel values in the local neighbourhood. However, it is not a <em>convolution filter</em> because it does use the local neighbourhood in a convolution operation, in contrast to other local filters like the mean filter, Gaussian filter etc.</p>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="edge-preservation">
+<h1>Edge preservation<a class="headerlink" href="#edge-preservation" title="Link to this heading">#</a></h1>
+<p>The median filter is especially useful for removing noise from images, while preserving the “edges” in the image. You’ll recall that the edges are big changes in the gradient of pixel intensities, between nearby pixels (e.g. black-to-white, white-to-black etc). Let’s look at why the median filter is “edge preserving”, by expanding the <code class="docutils literal notranslate"><span class="pre">nums</span></code> array into a low-resolution image, using <code class="docutils literal notranslate"><span class="pre">np.tile()</span></code> and <code class="docutils literal notranslate"><span class="pre">.reshape()</span></code>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Make `nums` into a image array.</span>
+<span class="n">nums_img</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">tile</span><span class="p">(</span><span class="n">nums</span><span class="p">,</span> <span class="n">reps</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">((</span><span class="mi">3</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>
+<span class="n">nums_img</span> 
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([[10,  4,  5,  8,  7],
+       [10,  4,  5,  8,  7],
+       [10,  4,  5,  8,  7]])
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Show as an image.</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">matshow</span><span class="p">(</span><span class="n">nums_img</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/2263f7cf0251116010bb6ad5b3cdaf94ac1c4248a5012efa50fa556a5d119e9a.png" src="_images/2263f7cf0251116010bb6ad5b3cdaf94ac1c4248a5012efa50fa556a5d119e9a.png" />
+</div>
+</div>
+<p>Now, imagine we “walk” a 3-by-3 kernel (sorry, pedants!) through the <code class="docutils literal notranslate"><span class="pre">nums_img</span></code> array, and replace the central pixel of each kernel (sorry again, pedants!) with the median of the pixels under the kernel.</p>
+<p>This process is shown below, for three kernels (OK, pedants, three “local neighbourhoods under a 3-by-3 array very much resembling a kernel”). The central pixel is highlighted in red, and the index of the current local neighbourhood is shown above the pixel values.</p>
+<p>The flattened and sorted values from each local neighbourhood are also shown, along with the median value of the neighbourhood:</p>
+<p><img alt="" src="_images/median_filter.png" /></p>
+<p>We can also show this in “Python space”, using a for loop:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Show some local neighbourhoods of `nums_img` and their medians.</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">3</span><span class="p">):</span>
+    <span class="n">i_row_start</span><span class="p">,</span> <span class="n">i_col_start</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="n">i</span>
+    <span class="n">i_row_end</span><span class="p">,</span> <span class="n">i_col_end</span> <span class="o">=</span> <span class="mi">3</span><span class="p">,</span> <span class="n">i</span><span class="o">+</span><span class="mi">3</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">nums_img[</span><span class="si">{</span><span class="n">i_row_start</span><span class="si">}</span><span class="s2">:</span><span class="si">{</span><span class="n">i_row_end</span><span class="si">}</span><span class="s2">, </span><span class="si">{</span><span class="n">i_col_start</span><span class="si">}</span><span class="s2">:</span><span class="si">{</span><span class="n">i_col_end</span><span class="si">}</span><span class="s2">]&quot;</span><span class="p">)</span>
+    <span class="n">current_selection</span> <span class="o">=</span> <span class="n">nums_img</span><span class="p">[</span><span class="n">i_row_start</span><span class="p">:</span><span class="n">i_row_end</span><span class="p">,</span> <span class="n">i_col_start</span><span class="p">:</span><span class="n">i_col_end</span><span class="p">]</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">current_selection</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Flattened and sorted: </span><span class="si">{</span><span class="n">np</span><span class="o">.</span><span class="n">sort</span><span class="p">(</span><span class="n">current_selection</span><span class="o">.</span><span class="n">ravel</span><span class="p">())</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Median = </span><span class="si">{</span><span class="n">np</span><span class="o">.</span><span class="n">median</span><span class="p">(</span><span class="n">nums_img</span><span class="p">[</span><span class="n">i_row_start</span><span class="p">:</span><span class="n">i_row_end</span><span class="p">,</span><span class="w"> </span><span class="n">i_col_start</span><span class="p">:</span><span class="n">i_col_end</span><span class="p">])</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>nums_img[0:3, 0:3]
+[[10  4  5]
+ [10  4  5]
+ [10  4  5]]
+Flattened and sorted: [ 4  4  4  5  5  5 10 10 10]
+Median = 5.0
+
+nums_img[0:3, 1:4]
+[[4 5 8]
+ [4 5 8]
+ [4 5 8]]
+Flattened and sorted: [4 4 4 5 5 5 8 8 8]
+Median = 5.0
+
+nums_img[0:3, 2:5]
+[[5 8 7]
+ [5 8 7]
+ [5 8 7]]
+Flattened and sorted: [5 5 5 7 7 7 8 8 8]
+Median = 7.0
+</pre></div>
+</div>
+</div>
+</div>
+<p>Because the median is not a function which can be applied via convolution, we cannot apply it using <code class="docutils literal notranslate"><span class="pre">ndi.correlate()</span></code>, as we did with the other <a class="reference internal" href="5_mean_filter.html"><span class="doc std std-doc">local filters</span></a>.</p>
+<p>We can apply it in <code class="docutils literal notranslate"><span class="pre">skimage</span></code> using <code class="docutils literal notranslate"><span class="pre">ski.filters.median()</span></code>. Again,  we supply a <code class="docutils literal notranslate"><span class="pre">footprint</span></code> argument to determine the size of each pixel’s “local neighbourhood”:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Median filter `nums_img`.</span>
+<span class="n">nums_median_filtered</span> <span class="o">=</span> <span class="n">ski</span><span class="o">.</span><span class="n">filters</span><span class="o">.</span><span class="n">median</span><span class="p">(</span><span class="n">nums_img</span><span class="p">,</span> 
+                                          <span class="n">footprint</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">((</span><span class="mi">3</span><span class="p">,</span><span class="mi">3</span><span class="p">)))</span>
+<span class="n">nums_median_filtered</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([[10,  5,  5,  7,  7],
+       [10,  5,  5,  7,  7],
+       [10,  5,  5,  7,  7]])
+</pre></div>
+</div>
+</div>
+</div>
+<p>Compare to the original <code class="docutils literal notranslate"><span class="pre">nums_img</span></code> array below:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">nums_img</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([[10,  4,  5,  8,  7],
+       [10,  4,  5,  8,  7],
+       [10,  4,  5,  8,  7]])
+</pre></div>
+</div>
+</div>
+</div>
+<p>The effect of the “edges” of the image is easier to see graphically:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Show the images.</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">nums_img</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Original&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">nums_median_filtered</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Median Filtered&#39;</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/f9c055dcadc0d8bf19cc83f7355df264f9f56509b0e3fd962874126862a5e9fc.png" src="_images/f9c055dcadc0d8bf19cc83f7355df264f9f56509b0e3fd962874126862a5e9fc.png" />
+</div>
+</div>
+<p>Edges involving a bigger gradient have been preserved, whilst less prominent edges have been merged into more prominent ones.</p>
+<p>In a higher resolution image, this can have the effect of removing noise whilst preserving edges.</p>
+<p>We will demonstrate the median filter again with the <code class="docutils literal notranslate"><span class="pre">brick</span></code> image from <code class="docutils literal notranslate"><span class="pre">ski.data</span></code>:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Load in the `brick` image.</span>
+<span class="n">brick</span> <span class="o">=</span> <span class="n">ski</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">brick</span><span class="p">()</span>
+<span class="n">show_attributes</span><span class="p">(</span><span class="n">brick</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">brick</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Type: &lt;class &#39;numpy.ndarray&#39;&gt;
+dtype: uint8
+Shape: (512, 512)
+Max Pixel Value: 207
+Min Pixel Value: 63
+</pre></div>
+</div>
+<img alt="_images/577b458e684d311b67acaca94a05b0f5a6344efb4c4384f53ce442360530e8d0.png" src="_images/577b458e684d311b67acaca94a05b0f5a6344efb4c4384f53ce442360530e8d0.png" />
+</div>
+</div>
+<p>We will also filter <code class="docutils literal notranslate"><span class="pre">brick</span></code> using a mean filter, with the same size kernel as the median filter:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Apply a median filter.</span>
+<span class="n">median_filtered_brick</span> <span class="o">=</span> <span class="n">ski</span><span class="o">.</span><span class="n">filters</span><span class="o">.</span><span class="n">median</span><span class="p">(</span><span class="n">brick</span><span class="p">,</span> 
+                                           <span class="n">footprint</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">((</span><span class="mi">9</span><span class="p">,</span><span class="mi">9</span><span class="p">)))</span>
+
+<span class="n">mean_filtered_brick</span> <span class="o">=</span> <span class="n">ski</span><span class="o">.</span><span class="n">filters</span><span class="o">.</span><span class="n">rank</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">brick</span><span class="p">,</span> 
+                                            <span class="n">footprint</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">((</span><span class="mi">9</span><span class="p">,</span><span class="mi">9</span><span class="p">)))</span>
+<span class="c1"># Plot both image to compare</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">14</span><span class="p">,</span> <span class="mi">4</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Original Image&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">brick</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Median Filtered&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">median_filtered_brick</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Mean Filtered&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">mean_filtered_brick</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/fb014a1a5751215c59831c56a73d0c057af5f3dbae0b519198703111b5ac6ebf.png" src="_images/fb014a1a5751215c59831c56a73d0c057af5f3dbae0b519198703111b5ac6ebf.png" />
+</div>
+</div>
+<p>You can see that the edges in the images (transitions between pixels of very different intensities - in this case between the dark bricks and the lighter mortar lines) are less smoothed by the median filter than by the mean filter. This is considered a desirable property of the median filter.</p>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="non-local-filters">
+<h1>Non-local filters<a class="headerlink" href="#non-local-filters" title="Link to this heading">#</a></h1>
+<p>Whilst the median filter does not use convolution, it is still a local filter, because it filters pixels based on the values of other pixels in the local neighbourhood. Other filters use neither convolution nor a local pixel neighbourhood. These filters are called <em>non-local filters</em>.</p>
+<p>Non-local filters have their name because they filter all of the pixels in an image based on characteristics of a specific region of the image, or based upon characteristics of the entire image. As a result, a non-local filter might modify a given pixel’s value based on the values of pixels in a region of the image which is nowhere near the “local neighbourhood” of the pixel being modified.</p>
+<p>One foundational non-local filter is a <a class="reference external" href="https://en.wikipedia.org/wiki/Histogram_equalization"><em>histogram equalisation filter</em></a>. This filter modifies pixels based on the histogram of the entire image. Essentially, this process “smoothes out” the histogram into a even “hill”, so that there is less variance between the pixel intensities. The image below illustrates this principle:</p>
+<p><img alt="" src="_images/hist_equal.png" /></p>
+<p>We will demonstrate the histogram equalisation filter with the <code class="docutils literal notranslate"><span class="pre">eagle</span></code> image from <code class="docutils literal notranslate"><span class="pre">ski.data</span></code>:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Load in the `eagle` image.</span>
+<span class="n">eagle</span> <span class="o">=</span> <span class="n">ski</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">eagle</span><span class="p">()</span>
+<span class="n">show_attributes</span><span class="p">(</span><span class="n">eagle</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">eagle</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Type: &lt;class &#39;numpy.ndarray&#39;&gt;
+dtype: uint8
+Shape: (2019, 1826)
+Max Pixel Value: 255
+Min Pixel Value: 1
+</pre></div>
+</div>
+<img alt="_images/8c49b746a63adde1c2aa29bbff9a5eaaf495ec7d079d5023a791e0fe25878dbf.png" src="_images/8c49b746a63adde1c2aa29bbff9a5eaaf495ec7d079d5023a791e0fe25878dbf.png" />
+</div>
+</div>
+<p>Let’s first view the histogram of <code class="docutils literal notranslate"><span class="pre">eagle</span></code>, before we apply the filter. As we know, we can use the <code class="docutils literal notranslate"><span class="pre">.ravel()</span></code> array method to flatten this 2D image to 1D, and then inspect a histogram of the pixel intensities:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Flatted to 1D.</span>
+<span class="n">one_D_eagle</span> <span class="o">=</span> <span class="n">eagle</span><span class="o">.</span><span class="n">ravel</span><span class="p">()</span>
+
+<span class="c1"># Show a histogram.</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">eagle</span><span class="o">.</span><span class="n">ravel</span><span class="p">(),</span> 
+         <span class="n">bins</span><span class="o">=</span><span class="mi">128</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Pixel Intensity&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Pixel Count&#39;</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/ba7c3201a2ac650635dd3b5e199dec4e7915bff65bfdf7ce90e327253c4856ba.png" src="_images/ba7c3201a2ac650635dd3b5e199dec4e7915bff65bfdf7ce90e327253c4856ba.png" />
+</div>
+</div>
+<p>In order to apply the histogram equalisation filter, we first “deconstruct” into separate arrays using <code class="docutils literal notranslate"><span class="pre">np.histogram()</span></code>. This returns two arrays. One array we will call <code class="docutils literal notranslate"><span class="pre">counts</span></code>; this contains the height of the histogram within each <span class="math notranslate nohighlight">\(x\)</span>-axis bin. The second array we will call <code class="docutils literal notranslate"><span class="pre">bin_intervals</span></code>; adjacent values in this array are the start and end points of each <span class="math notranslate nohighlight">\(x\)</span>-axis bin. We use <code class="docutils literal notranslate"><span class="pre">bin_intervals</span></code> to calculate the centerpoint of each bin, by taking the average of the adjacent values.</p>
+<p><em>Note</em>: alternatively we could use <code class="docutils literal notranslate"><span class="pre">ski.exposure.histogram()</span></code>, to the same effect.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Centers and bin intervals, from the histogram of the flattened `eagle` image.</span>
+<span class="n">counts</span><span class="p">,</span> <span class="n">bin_intervals</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">histogram</span><span class="p">(</span><span class="n">one_D_eagle</span><span class="p">,</span>
+                                     <span class="n">bins</span><span class="o">=</span><span class="mi">256</span><span class="p">)</span>
+
+<span class="c1"># Calculate the bin centers.</span>
+<span class="n">bin_centers</span> <span class="o">=</span> <span class="p">(</span><span class="n">bin_intervals</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span> <span class="o">+</span> <span class="n">bin_intervals</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span> <span class="o">/</span> <span class="mi">2</span>
+
+<span class="c1"># Show the `counts` and `bin_centers`.</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Counts:</span><span class="se">\n</span><span class="s2"> </span><span class="si">{</span><span class="n">counts</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Bin centers:</span><span class="se">\n</span><span class="s2"> </span><span class="si">{</span><span class="n">bin_centers</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Counts:
+ [   15  1043  3803  3794  3947  4188  4896  8568 20430 28813 31334 30073
+ 32479 32788 34573 31031 27093 24958 21171 19158 17292 15934 14911 13743
+ 12428 12894 13134 12139 11564 11392 11656 11526 12260 12662 12633 14518
+ 14749 15056 16000 16111 17366 17689 20367 20406 20800 21776 22269 22562
+ 22734 22867 22502 24081 23931 24568 25676 26440 27242 27198 26991 26576
+ 26036 25940 26447 26010 26785 25571 25465 25381 25014 24989 24750 24288
+ 24369 24221 23456 23455 23117 23846 22988 23418 23675 22659 22424 22875
+ 22995 23989 24890 26900 28706 31551 32768 31771 28655 26372 24775 24297
+ 25018 24581 24102 22856 22137 21587 21997 21338 21149 21068 21519 21369
+ 21180 20819 20446 20098 19616 18770 18186 17627 16392 15842 15282 14066
+ 13442 12730 11799 11113 10171  9469  8993     0  8181  7597  7045  6393
+  5980  5540  5258  4733  4464  4244  3997  3763  3688  3636  3547  3470
+  3626  3761  3510  3373  3191  2843  2578  2689  2670  2873  2673  2549
+  2484  2574  2493  2375  2336  2502  2325  2386  2454  2420  2555  2662
+  2447  2357  2443  2458  2607  2603  2585  2754  2852  2855  2884  2932
+  2804  2752  2727  2779  2881  3043  3138  3194  3137  2972  2952  2981
+  3020  3070  3056  3107  3232  3456  3746  3869  4302  4607  4938  5891
+  5986  6004  6359  6820  7832  9182 10684 12756 15987 20194 30541 43369
+ 48839 50582 58332 69319 72665 73282 66447 56525 39541 28719 22021 18822
+ 13779 11236  9769  9417  7775  5592  3467  1043   222   146   116    94
+   113   109    90   119   104   105   126   109    94   122    94    95
+    88   339   244     2]
+
+Bin centers:
+ [  1.5    2.49   3.48   4.47   5.46   6.46   7.45   8.44   9.43  10.43
+  11.42  12.41  13.4   14.39  15.39  16.38  17.37  18.36  19.36  20.35
+  21.34  22.33  23.32  24.32  25.31  26.3   27.29  28.29  29.28  30.27
+  31.26  32.25  33.25  34.24  35.23  36.22  37.21  38.21  39.2   40.19
+  41.18  42.18  43.17  44.16  45.15  46.14  47.14  48.13  49.12  50.11
+  51.11  52.1   53.09  54.08  55.07  56.07  57.06  58.05  59.04  60.04
+  61.03  62.02  63.01  64.    65.    65.99  66.98  67.97  68.96  69.96
+  70.95  71.94  72.93  73.93  74.92  75.91  76.9   77.89  78.89  79.88
+  80.87  81.86  82.86  83.85  84.84  85.83  86.82  87.82  88.81  89.8
+  90.79  91.79  92.78  93.77  94.76  95.75  96.75  97.74  98.73  99.72
+ 100.71 101.71 102.7  103.69 104.68 105.68 106.67 107.66 108.65 109.64
+ 110.64 111.63 112.62 113.61 114.61 115.6  116.59 117.58 118.57 119.57
+ 120.56 121.55 122.54 123.54 124.53 125.52 126.51 127.5  128.5  129.49
+ 130.48 131.47 132.46 133.46 134.45 135.44 136.43 137.43 138.42 139.41
+ 140.4  141.39 142.39 143.38 144.37 145.36 146.36 147.35 148.34 149.33
+ 150.32 151.32 152.31 153.3  154.29 155.29 156.28 157.27 158.26 159.25
+ 160.25 161.24 162.23 163.22 164.21 165.21 166.2  167.19 168.18 169.18
+ 170.17 171.16 172.15 173.14 174.14 175.13 176.12 177.11 178.11 179.1
+ 180.09 181.08 182.07 183.07 184.06 185.05 186.04 187.04 188.03 189.02
+ 190.01 191.   192.   192.99 193.98 194.97 195.96 196.96 197.95 198.94
+ 199.93 200.93 201.92 202.91 203.9  204.89 205.89 206.88 207.87 208.86
+ 209.86 210.85 211.84 212.83 213.82 214.82 215.81 216.8  217.79 218.79
+ 219.78 220.77 221.76 222.75 223.75 224.74 225.73 226.72 227.71 228.71
+ 229.7  230.69 231.68 232.68 233.67 234.66 235.65 236.64 237.64 238.63
+ 239.62 240.61 241.61 242.6  243.59 244.58 245.57 246.57 247.56 248.55
+ 249.54 250.54 251.53 252.52 253.51 254.5 ]
+</pre></div>
+</div>
+</div>
+</div>
+<p>We chose to use 256 bins, for this histogram, for reasons that will become apparent further down the page (remember this!).</p>
+<p>There are several steps in equalising the histogram:</p>
+<ul class="simple">
+<li><p>First, we normalise the histogram, so that the counts sum to 1. We do this by dividing each count by the total number of pixels in the image, which converts each count to a proportion.</p></li>
+<li><p>Then we calculate the <em>cumulative density</em> of the normalised histogram. Basically, this means we add up the proportions as we go along the <span class="math notranslate nohighlight">\(x\)</span>-axis, so each bin indicates the total proportion of pixels up to that point (e.g. pixels in that particular bin, or bins situated lower down the <span class="math notranslate nohighlight">\(x\)</span>-axis).</p></li>
+<li><p>We then “map” each pixel intensity value to its corresponding cumulative proportion. After this “mapping”, we have our equalised histogram.</p></li>
+</ul>
+<p>This may all sound quite abstract, but bear with us. It is easier to follow in code, and is a visually striking effect when we compare the resulting histogram to the original.</p>
+<p>For the first step, we can normalise the <code class="docutils literal notranslate"><span class="pre">counts</span></code> by dividing each individual count by the total number of pixels in the image. Note that we could also do this using the optional <code class="docutils literal notranslate"><span class="pre">density=True</span></code> argument to <code class="docutils literal notranslate"><span class="pre">np.histogram()</span></code>, but we do it manually to show what the actual operations involve:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Centers and bin intervals, from the histogram of the flattened `eagle` image.</span>
+<span class="n">n_pixels</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">one_D_eagle</span><span class="p">)</span> <span class="c1"># Get the total number of pixels.</span>
+<span class="n">counts_normed</span> <span class="o">=</span> <span class="n">counts</span><span class="o">/</span><span class="n">n_pixels</span> <span class="c1"># Normalize by dividing each count by the total number of pixels.</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">bin_centers</span><span class="p">,</span> <span class="n">counts_normed</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Pixel Intensity&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Pixel Probability&#39;</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/e0e8383d2e2b33d70fbfb49455b1fcee9f1be9c4f1d175e0070deae233a099e4.png" src="_images/e0e8383d2e2b33d70fbfb49455b1fcee9f1be9c4f1d175e0070deae233a099e4.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Do the `counts` sum to 1?</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Counts Normalized sum:</span><span class="se">\n</span><span class="s2"> </span><span class="si">{</span><span class="n">counts_normed</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Counts Normalized sum:
+ 1.0
+</pre></div>
+</div>
+</div>
+</div>
+<p>When we equalise the histogram, we want it to be roughly uniform across the pixel intensities. As a tool to perform this “uniformification”, we first we calculate the cumulative distribution (<code class="docutils literal notranslate"><span class="pre">cdf</span></code>) of the histogram. To do this we take cumulative sum of the normalised counts (<code class="docutils literal notranslate"><span class="pre">counts_normed</span></code>). For a given bin, the cumulative sum operation adds up the proportion of pixels that are in that bin and in all of the lower bins (e.g. the bins closer to 0 on the <span class="math notranslate nohighlight">\(x\)</span>-axis). Essentially it is a running total of the <code class="docutils literal notranslate"><span class="pre">counts_normed</span></code> as we move from left to right across the <span class="math notranslate nohighlight">\(x\)</span>-axis:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Get the cumulative distribution of the pixel intensities.</span>
+<span class="n">cdf</span> <span class="o">=</span> <span class="n">counts_normed</span><span class="o">.</span><span class="n">cumsum</span><span class="p">()</span> 
+
+<span class="c1"># Show a plot of the cumulative distribution.</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">bin_centers</span><span class="p">,</span> <span class="n">cdf</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Pixel Intensity&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Cumulative Proportion&#39;</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/d4bcf563567b8423d480909ded00f0a562ae7bd8df0106e4f460a36f6afa7058.png" src="_images/d4bcf563567b8423d480909ded00f0a562ae7bd8df0106e4f460a36f6afa7058.png" />
+</div>
+</div>
+<p>The final value in <code class="docutils literal notranslate"><span class="pre">cdf</span></code> is 1 (or at least damn near close, given precision loss in the calculations). Remember, we are adding up proportions here, so a value of 1 indicates that the final bin and all of the lower bins together contain 100% of the pixels in the image:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">cdf</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>np.float64(0.9999999999999999)
+</pre></div>
+</div>
+</div>
+</div>
+<p>The next step requires some thought, to follow what is going on. We want to “map” the pixel values in the flattend <code class="docutils literal notranslate"><span class="pre">one_D_eagle</span></code> array to the values in the <code class="docutils literal notranslate"><span class="pre">cdf</span></code>. We can do this, for the current <code class="docutils literal notranslate"><span class="pre">eagle</span></code> image, by using the <code class="docutils literal notranslate"><span class="pre">one_D_eagle</span></code> pixel intensity values as <em>indexes</em> for the <code class="docutils literal notranslate"><span class="pre">cdf</span></code> array. This might seem like a hack, so lets break it down.</p>
+<p>Recall that we asked you to remember that we asked <code class="docutils literal notranslate"><span class="pre">np.histogram()</span></code> to give us a histogram with 256 bins? Well, as a result our <code class="docutils literal notranslate"><span class="pre">cdf</span></code> array, which contains the running total of the proportions in a given bin and lower bins, has 256 elements:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Show the `shape` of the `cdf` array.</span>
+<span class="n">cdf</span><span class="o">.</span><span class="n">shape</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(256,)
+</pre></div>
+</div>
+</div>
+</div>
+<p>Because we count from 0, when indexing arrays, the final value in <code class="docutils literal notranslate"><span class="pre">cdf</span></code> is at index location 255:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Show the final value of the `cdf` array, at integer index location 255.</span>
+<span class="n">cdf</span><span class="p">[</span><span class="mi">255</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>np.float64(0.9999999999999999)
+</pre></div>
+</div>
+</div>
+</div>
+<p>Given that <code class="docutils literal notranslate"><span class="pre">one_D_eagle</span></code> is in the <code class="docutils literal notranslate"><span class="pre">uint8</span></code> <code class="docutils literal notranslate"><span class="pre">dtype</span></code>, the maximum value allowed is 255, and the minimum is 1:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Show the `dtype` and `min`/`max` values of `eagle`.</span>
+<span class="n">show_attributes</span><span class="p">(</span><span class="n">one_D_eagle</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Type: &lt;class &#39;numpy.ndarray&#39;&gt;
+dtype: uint8
+Shape: (3686694,)
+Max Pixel Value: 255
+Min Pixel Value: 1
+</pre></div>
+</div>
+</div>
+</div>
+<p>Conveniently here, each pixel intensity value in <code class="docutils literal notranslate"><span class="pre">one_D_eagle</span></code> will work as an index into <code class="docutils literal notranslate"><span class="pre">cdf</span></code>. This allows us to replace each pixel intensity value with its corresponding cumulative proportion. So, if a pixel intensity value <span class="math notranslate nohighlight">\(p\)</span> falls in bin <span class="math notranslate nohighlight">\(b\)</span>, then bin <span class="math notranslate nohighlight">\(b\)</span> has a corresponding cumulative proportion in the <code class="docutils literal notranslate"><span class="pre">cdf</span></code> array. We use this “mapped” values as our output image - this has the effect of “smoothing out”, or, in fact, “equalising” the histogram, because bins without many pixels in them “inherit” the proportions from lower bins. Again, this is easier to appreciate visually, by viewing the histograms below.</p>
+<p>Let’s perform the indexing/equalisation, and then inspect the histograms, so this effect becomes apparent:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Equalise the histogram of `eagle`, by using the pixel intensity values in `one_D_eagle` (1 - 255)</span>
+<span class="c1"># as indexes into the `cdf` array.</span>
+<span class="n">equalised_hist</span> <span class="o">=</span> <span class="n">cdf</span><span class="p">[</span><span class="n">one_D_eagle</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>The original histogram and the equalised histogram, along with the corresponding images, are shown below. We first <code class="docutils literal notranslate"><span class="pre">.reshape()</span></code> the <code class="docutils literal notranslate"><span class="pre">equalised_hist</span></code> back into the shape of the original, non-flattened <code class="docutils literal notranslate"><span class="pre">eagle</span></code> image, thus restoring its status as a 2D image array:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Reshape to 2D.</span>
+<span class="n">eagleback_to_2D</span> <span class="o">=</span> <span class="n">equalised_hist</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">eagle</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+
+<span class="c1"># Generate the plot.</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">14</span><span class="p">,</span> <span class="mi">8</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">eagle</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Original Image&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Original Histogram&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">eagle</span><span class="o">.</span><span class="n">ravel</span><span class="p">(),</span> <span class="n">bins</span><span class="o">=</span><span class="mi">128</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">eagleback_to_2D</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Equalised Image&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">4</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Equalised Histogram&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">eagleback_to_2D</span><span class="o">.</span><span class="n">ravel</span><span class="p">());</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/f837ecd977b74e450cb5e562e97ef8bfcd59ec0fc499f417a22a94411a73a7e9.png" src="_images/f837ecd977b74e450cb5e562e97ef8bfcd59ec0fc499f417a22a94411a73a7e9.png" />
+</div>
+</div>
+<p>The equalised histogram now much more closely resembles a <a class="reference internal" href="#LINK_HERE"><span class="xref myst">uniform distribution</span></a> - the notable “peaks and valleys” of the original and been replaced with a uniform block. The effect on the perceived visual image is one of heightened contrast - pay particular attention to the wall behind the noble eagle. Each image, without the histograms, can be viewed below, for easier inspection:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Generate the plot.</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">14</span><span class="p">,</span> <span class="mi">8</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">eagle</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Original Image&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">eagleback_to_2D</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Equalised Image&#39;</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/cb6e49bc85bab07b1d1fcc95ad7766c0bb85a9f66d89cc23406a74a8f6239f24.png" src="_images/cb6e49bc85bab07b1d1fcc95ad7766c0bb85a9f66d89cc23406a74a8f6239f24.png" />
+</div>
+</div>
+<p>Obviously, this operation has changed the <code class="docutils literal notranslate"><span class="pre">dtype</span></code> of the image because we have replaced values ranging from 1 to 255 with proportions ranging from 0 to 1:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># The `dtype` and `min`/`max` values of the original image.</span>
+<span class="n">show_attributes</span><span class="p">(</span><span class="n">eagle</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Type: &lt;class &#39;numpy.ndarray&#39;&gt;
+dtype: uint8
+Shape: (2019, 1826)
+Max Pixel Value: 255
+Min Pixel Value: 1
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># The `dtype` and `min`/`max` values of the filtered image.</span>
+<span class="n">show_attributes</span><span class="p">(</span><span class="n">equalised_hist</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Type: &lt;class &#39;numpy.ndarray&#39;&gt;
+dtype: float64
+Shape: (3686694,)
+Max Pixel Value: 1.0
+Min Pixel Value: 0.0
+</pre></div>
+</div>
+</div>
+</div>
+<p>This is important to be aware of, but we can easily convert back to the original <code class="docutils literal notranslate"><span class="pre">dtype</span></code> using the relevant function from <code class="docutils literal notranslate"><span class="pre">ski.util</span></code>. Speaking of <code class="docutils literal notranslate"><span class="pre">ski</span></code>, les look at how to apply this filter in <code class="docutils literal notranslate"><span class="pre">skimage</span></code> in the next section…</p>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="histogram-equalisation-in-skimage">
+<h1>Histogram equalisation in <code class="docutils literal notranslate"><span class="pre">skimage</span></code><a class="headerlink" href="#histogram-equalisation-in-skimage" title="Link to this heading">#</a></h1>
+<p>As normal, <code class="docutils literal notranslate"><span class="pre">skimage</span></code> makes it easy to implement this filter, in just a single line of code. We just pass our <code class="docutils literal notranslate"><span class="pre">eagle</span></code> image to the <code class="docutils literal notranslate"><span class="pre">ski.exposure.equalize_hist()</span></code> function, and it will carry out all we saw above, behind the scenes:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Equalise `eagle` using `skimage.</span>
+<span class="n">eagle_equalized_with_ski</span> <span class="o">=</span> <span class="n">ski</span><span class="o">.</span><span class="n">exposure</span><span class="o">.</span><span class="n">equalize_hist</span><span class="p">(</span><span class="n">eagle</span><span class="p">)</span>
+
+<span class="c1"># Generate the plot.</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">14</span><span class="p">,</span> <span class="mi">8</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">eagle</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Original Image&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">eagle</span><span class="o">.</span><span class="n">ravel</span><span class="p">(),</span> <span class="n">bins</span><span class="o">=</span><span class="mi">128</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Original Histogram&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">eagle_equalized_with_ski</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Equalised Image (via `skimage`)&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">4</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">eagle_equalized_with_ski</span><span class="o">.</span><span class="n">ravel</span><span class="p">())</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Equalised Histogram (via `skimage`)&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">();</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/72f497d9f9b3588bbcd77956210f2be492832741928197dcf394fad617b7471b.png" src="_images/72f497d9f9b3588bbcd77956210f2be492832741928197dcf394fad617b7471b.png" />
+</div>
+</div>
+<p>Easy peasy. If you consult the <a class="reference internal" href="#LINK_HERE"><span class="xref myst">documentation</span></a> for <code class="docutils literal notranslate"><span class="pre">ski.exposure.equalize_hist()</span></code>, you notice that by default, it uses 256 bins. In fact, for the <code class="docutils literal notranslate"><span class="pre">nbins</span></code> optional argument, the documentation states that it will be ignored for integer data. This is so the “indexing trick” that we saw above can be performed.</p>
+<p>It is no problem to use this filter with <code class="docutils literal notranslate"><span class="pre">float</span></code> image data however - the principle is the same pixel intensities get mapped to their corresponding cumulative proportion. Only now this occurs without the neat indexing trick, there is just an intermediate (boring!) step in the mapping. We demonstrate this below with the <code class="docutils literal notranslate"><span class="pre">coins</span></code> image from <code class="docutils literal notranslate"><span class="pre">ski.data</span></code>:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Import the `coins` image.</span>
+<span class="n">coins</span> <span class="o">=</span> <span class="n">ski</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">coins</span><span class="p">()</span>
+
+<span class="c1"># Convert to `float64` `dtype`.</span>
+<span class="n">coins_as_float</span> <span class="o">=</span> <span class="n">ski</span><span class="o">.</span><span class="n">util</span><span class="o">.</span><span class="n">img_as_float64</span><span class="p">(</span><span class="n">coins</span><span class="p">)</span>
+
+<span class="c1"># Show the image, the histogram of the image, and the attributes of the image.</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span> <span class="mi">4</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">coins_as_float</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Original Image&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">coins_as_float</span><span class="o">.</span><span class="n">ravel</span><span class="p">())</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Original Histogram&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">();</span>
+<span class="n">show_attributes</span><span class="p">(</span><span class="n">coins_as_float</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Type: &lt;class &#39;numpy.ndarray&#39;&gt;
+dtype: float64
+Shape: (303, 384)
+Max Pixel Value: 0.99
+Min Pixel Value: 0.0
+</pre></div>
+</div>
+<img alt="_images/dafea5b38909fc49a28e5a33ba6ea175e4d1a2533e2bba44ef0972f8b61fc790.png" src="_images/dafea5b38909fc49a28e5a33ba6ea175e4d1a2533e2bba44ef0972f8b61fc790.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Equalise the histogram.</span>
+<span class="n">coins_as_float_equalised_with_ski</span> <span class="o">=</span> <span class="n">ski</span><span class="o">.</span><span class="n">exposure</span><span class="o">.</span><span class="n">equalize_hist</span><span class="p">(</span><span class="n">coins_as_float</span><span class="p">)</span>
+
+<span class="c1"># Show the image, the histogram of the image, and the attributes of the image.</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span> <span class="mi">4</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">coins_as_float_equalised_with_ski</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Equalised Image (via `skimage`)&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">coins_as_float_equalised_with_ski</span><span class="o">.</span><span class="n">ravel</span><span class="p">())</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Equalised Histogram (via `skimage`)&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">();</span>
+<span class="n">show_attributes</span><span class="p">(</span><span class="n">coins_as_float_equalised_with_ski</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Type: &lt;class &#39;numpy.ndarray&#39;&gt;
+dtype: float64
+Shape: (303, 384)
+Max Pixel Value: 1.0
+Min Pixel Value: 0.0
+</pre></div>
+</div>
+<img alt="_images/bcccdef08c74903e00cbd83377e4574e064694aa88717fb079bb4b805f3451b2.png" src="_images/bcccdef08c74903e00cbd83377e4574e064694aa88717fb079bb4b805f3451b2.png" />
+</div>
+</div>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="summary">
+<h1>Summary<a class="headerlink" href="#summary" title="Link to this heading">#</a></h1>
+<p>This page has shown a local filter (the median filter) and a non-local filter (histogram equalisation) which do not use convolution to perform their filtering operations.</p>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="references">
+<h1>References<a class="headerlink" href="#references" title="Link to this heading">#</a></h1>
+<p>3.3.5 onward from: <a class="reference external" href="https://lectures.scientific-python.org/packages/scikit-image/index.html">https://lectures.scientific-python.org/packages/scikit-image/index.html</a></p>
+<p>Based on: <a class="reference external" href="https://scikit-image.org/skimage-tutorials/lectures/1_image_filters.html">https://scikit-image.org/skimage-tutorials/lectures/1_image_filters.html</a></p>
+<p>Histogram equalisation adapted from: <a class="reference external" href="https://www.janeriksolem.net/histogram-equalization-with-python-and.html">https://www.janeriksolem.net/histogram-equalization-with-python-and.html</a></p>
+<p>Histogram equalisation: <a class="reference external" href="https://medium.com/jungletronics/histogram-equalization-34149fc299a6">https://medium.com/jungletronics/histogram-equalization-34149fc299a6</a></p>
+<p>Reference: <a class="reference external" href="https://www.kdnuggets.com/numpy-for-image-processing">https://www.kdnuggets.com/numpy-for-image-processing</a></p>
+<p>Reference: <a class="reference external" href="https://setosa.io/ev/image-kernels">https://setosa.io/ev/image-kernels</a></p>
+<p>Reference: <a class="reference external" href="https://wiki.imindlabs.com.au/ds/aml/4_problem_domains/1-image-processing/3_edge_detectors">https://wiki.imindlabs.com.au/ds/aml/4_problem_domains/1-image-processing/3_edge_detectors</a></p>
+<p>Reference: <a class="reference external" href="https://www.geeksforgeeks.org/deep-learning/types-of-convolution-kernels">https://www.geeksforgeeks.org/deep-learning/types-of-convolution-kernels</a></p>
+<p>Reference: skimage tutorials (check versions), scipy lecture notes</p>
+<p>Reference: <a class="reference external" href="https://jni.github.io/i2k-skimage-napari/lectures/1_image_filters.html">https://jni.github.io/i2k-skimage-napari/lectures/1_image_filters.html</a></p>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./."
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="6_gaussian_sharpening_edge.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Convolution filters II - Gaussian blur, sharpening and edge detection</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="8_morphology.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Morphology</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">More filters: the median filter and non-local filters</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#local-filtering-without-convolution">Local filtering without convolution</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#edge-preservation">Edge preservation</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#non-local-filters">Non-local filters</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#histogram-equalisation-in-skimage">Histogram equalisation in <code class="docutils literal notranslate"><span class="pre">skimage</span></code></a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#summary">Summary</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#references">References</a></li>
+</ul>
+
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Peter Rush, Matthew Brett
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2025.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

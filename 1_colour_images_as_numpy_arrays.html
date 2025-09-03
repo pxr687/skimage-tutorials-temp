@@ -238,7 +238,10 @@
 
 
 
-<li class="toctree-l1"><a class="reference internal" href="7_median_filter.html">More filters: the median filter</a></li>
+<li class="toctree-l1"><a class="reference internal" href="7_median_nonlocal_filters.html">More filters: the median filter and non-local filters</a></li>
+
+
+
 
 
 
@@ -1200,9 +1203,9 @@ Our 3D stacked array is of the right shape:</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>X1 = 0.35
-X2 = 0.19
-X3 = 0.81
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>X1 = 0.41
+X2 = 0.62
+X3 = 0.87
 </pre></div>
 </div>
 </div>
@@ -1231,12 +1234,12 @@ X3 = 0.81
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Red (X1) = 0.64
-Green (X2) = 0.54
-Blue (X3) = 0.04
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Red (X1) = 0.75
+Green (X2) = 0.38
+Blue (X3) = 0.19
 </pre></div>
 </div>
-<img alt="_images/d629d6eeea432ec7c2c517c44da77dc60fa93bc8726b235054b1f7cc2eeedb25.png" src="_images/d629d6eeea432ec7c2c517c44da77dc60fa93bc8726b235054b1f7cc2eeedb25.png" />
+<img alt="_images/541fbe3380135d52654adcd19991476d4284ccd6fa45dba2b3b653c24fff6506.png" src="_images/541fbe3380135d52654adcd19991476d4284ccd6fa45dba2b3b653c24fff6506.png" />
 </div>
 </div>
 <p>So, each two-dimensional display image has a “hidden” three-dimensional array behind it. Each slice of the third dimension is a colour channel. The mix of values at a given element in each colour channel determins the colour of that pixel in the rendered image. You may want to view this image in a new browser window, to see more clearly the exact mixes of the colour channels, which are shown above each square on the right hand side of the image:</p>
@@ -1252,7 +1255,7 @@ Blue (X3) = 0.04
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/ab90c176793988b289e59d062f81cad670916991a20341faed33275a6bbaddbe.png" src="_images/ab90c176793988b289e59d062f81cad670916991a20341faed33275a6bbaddbe.png" />
+<img alt="_images/0988634f229068102a0606e07bc42d46e990b62e9a5afa59180c661c87548246.png" src="_images/0988634f229068102a0606e07bc42d46e990b62e9a5afa59180c661c87548246.png" />
 </div>
 </div>
 <p>We have now completed our perilous expedition into the third dimension… We have seen that we can use 3D arrays to encode <em>true colour</em> information. This means that the image array itself contains colour information for each pixel, where we are <em>not</em> just pseudocolouring greyscale information using <code class="docutils literal notranslate"><span class="pre">viridis</span></code> or another colourmap…</p>
@@ -1754,7 +1757,7 @@ Min Pixel Value: 0
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/07d05db539103d49cd5ac9e1777c12ddab19f8c42d3d66c7d0ab95d4a1332013.png" src="_images/07d05db539103d49cd5ac9e1777c12ddab19f8c42d3d66c7d0ab95d4a1332013.png" />
+<img alt="_images/e4323c6520dac5b7cfe419d6b183bdbfab44f7e174f4f99f6e687365cae5094c.png" src="_images/e4323c6520dac5b7cfe419d6b183bdbfab44f7e174f4f99f6e687365cae5094c.png" />
 </div>
 </div>
 </section>
