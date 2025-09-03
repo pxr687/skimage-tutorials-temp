@@ -32,9 +32,9 @@
     <link rel="stylesheet" type="text/css" href="_static/styles/sphinx-book-theme.css?v=eba8b062" />
     <link rel="stylesheet" type="text/css" href="_static/togglebutton.css?v=13237357" />
     <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
-    <link rel="stylesheet" type="text/css" href="_static/mystnb.8ecb98da25f57f5357bf6f572d296f466b2cfe2517ffebfabe82451661e28f02.css" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.8ecb98da25f57f5357bf6f572d296f466b2cfe2517ffebfabe82451661e28f02.css?v=6644e6bb" />
     <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css?v=4fa983c6" />
-    <link rel="stylesheet" type="text/css" href="_static/exercise.css" />
+    <link rel="stylesheet" type="text/css" href="_static/exercise.css?v=982b99e0" />
     <link rel="stylesheet" type="text/css" href="_static/sphinx-design.min.css?v=95c83b7e" />
   
   <!-- Pre-loaded scripts that we'll load fully later -->
@@ -486,8 +486,8 @@ document.write(`
                   
   <section class="tex2jax_ignore mathjax_ignore" id="more-filters-the-median-filter-and-non-local-filters">
 <h1>More filters: the median filter and non-local filters<a class="headerlink" href="#more-filters-the-median-filter-and-non-local-filters" title="Link to this heading">#</a></h1>
-<p>This page will cover filters which do not use convolution kernels. First, we will look at the median filter. The median filter, like the mean and Gaussian filters, is a local filter. However, the median filter differs in important ways from the local filters we saw on <a class="reference internal" href="5_mean_filter.html"><span class="doc std std-doc">previous</span></a> pages, because it cannot be implemented through convolution.</p>
-<p>After the median filter, we will look at another filter, the histogram equalisation filter, which does not use convolution, and in fact does not use a kernel at all. Because it eschews kernels completely, the histogram equalisation filter is a <em>non-local</em> filter. More on this below.</p>
+<p>This page will cover filters which do not use convolution kernels. First, we will look at the median filter, which differs in important ways from the other local filters we saw on <a class="reference internal" href="5_mean_filter.html"><span class="doc std std-doc">previous</span></a> pages, because it cannot be implemented through convolution.</p>
+<p>After the median filter, we will look at another filter, the histogram equalisation filter, which does not use convolution. In fact, histogram equalisation does not use a kernel at all. Because it eschews kernels completely, the histogram equalisation filter is a <em>non-local</em> filter. More on this below.</p>
 <p>As normal, we begin with some imports:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -727,9 +727,36 @@ Median = 7.0
 <img alt="_images/f9c055dcadc0d8bf19cc83f7355df264f9f56509b0e3fd962874126862a5e9fc.png" src="_images/f9c055dcadc0d8bf19cc83f7355df264f9f56509b0e3fd962874126862a5e9fc.png" />
 </div>
 </div>
-<p>Edges involving a bigger gradient have been preserved, whilst less prominent edges have been merged into more prominent ones.</p>
-<p>In a higher resolution image, this can have the effect of removing noise whilst preserving edges.</p>
-<p>We will demonstrate the median filter again with the <code class="docutils literal notranslate"><span class="pre">brick</span></code> image from <code class="docutils literal notranslate"><span class="pre">ski.data</span></code>:</p>
+<p>Edges involving a bigger gradient have been preserved, whilst less prominent edges have been merged into more prominent ones. We show this, for comparison, alongside a mean filtered version of <code class="docutils literal notranslate"><span class="pre">nums_img</span></code>, filtered using the same size <code class="docutils literal notranslate"><span class="pre">footprint</span></code> ((3, 3)):</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">nums_img</span> <span class="o">=</span> <span class="n">ski</span><span class="o">.</span><span class="n">util</span><span class="o">.</span><span class="n">img_as_ubyte</span><span class="p">(</span><span class="n">nums_img</span><span class="p">)</span> <span class="c1"># Avoid `dtype` warning.</span>
+<span class="n">nums_mean_filtered</span> <span class="o">=</span> <span class="n">ski</span><span class="o">.</span><span class="n">filters</span><span class="o">.</span><span class="n">rank</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">nums_img</span><span class="p">,</span>
+                                           <span class="n">footprint</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">((</span><span class="mi">3</span><span class="p">,</span><span class="mi">3</span><span class="p">)))</span>
+<span class="c1"># Show the images.</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span> <span class="mi">4</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">nums_img</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Original&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">nums_median_filtered</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Median Filtered&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">nums_mean_filtered</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Mean Filtered&#39;</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>C:\Users\rushpz\AppData\Local\Programs\Python\Python313\Lib\site-packages\skimage\util\dtype.py:576: UserWarning: Downcasting int64 to uint8 without scaling because max value 10 fits in uint8
+  return _convert(image, np.uint8, force_copy)
+</pre></div>
+</div>
+<img alt="_images/b2687d5e76c8fd1c349cd463b5139121dfee2887847d59caca2f2e95a1905fcf.png" src="_images/b2687d5e76c8fd1c349cd463b5139121dfee2887847d59caca2f2e95a1905fcf.png" />
+</div>
+</div>
+<p>You can see that the median filter gives a better “summary” of the distribution of edges in the original image - the mean filter has spread the edges around more, which makes sense, given that it averages pixels within a kernel.</p>
+<p>In a higher resolution image, the median filter can have the effect of removing noise whilst preserving edges to a greater extent than some other filters. We will demonstrate the median filter again with the <code class="docutils literal notranslate"><span class="pre">brick</span></code> image from <code class="docutils literal notranslate"><span class="pre">ski.data</span></code>:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Load in the `brick` image.</span>
@@ -1013,7 +1040,34 @@ Min Pixel Value: 1
 </div>
 </div>
 <p>Conveniently here, each pixel intensity value in <code class="docutils literal notranslate"><span class="pre">one_D_eagle</span></code> will work as an index into <code class="docutils literal notranslate"><span class="pre">cdf</span></code>. This allows us to replace each pixel intensity value with its corresponding cumulative proportion. So, if a pixel intensity value <span class="math notranslate nohighlight">\(p\)</span> falls in bin <span class="math notranslate nohighlight">\(b\)</span>, then bin <span class="math notranslate nohighlight">\(b\)</span> has a corresponding cumulative proportion in the <code class="docutils literal notranslate"><span class="pre">cdf</span></code> array. We use this “mapped” values as our output image - this has the effect of “smoothing out”, or, in fact, “equalising” the histogram, because bins without many pixels in them “inherit” the proportions from lower bins. Again, this is easier to appreciate visually, by viewing the histograms below.</p>
-<p>Let’s perform the indexing/equalisation, and then inspect the histograms, so this effect becomes apparent:</p>
+<p>Let’s perform the indexing/equalisation, and then inspect the histograms, so this effect becomes apparent. We show this mapping first with ten pixel intensity values from <code class="docutils literal notranslate"><span class="pre">one_D_eagle</span></code>:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">first_ten_pixels</span> <span class="o">=</span> <span class="n">one_D_eagle</span><span class="p">[:</span><span class="mi">10</span><span class="p">]</span>
+<span class="n">first_ten_pixels</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([18, 17, 17, 17, 16, 16, 17, 17, 16, 15], dtype=uint8)
+</pre></div>
+</div>
+</div>
+</div>
+<p>…we then show the corresponding cumulative proportions that these values will be mapped to, when we use them as indexes for <code class="docutils literal notranslate"><span class="pre">cdf</span></code>:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">cdf</span><span class="p">[</span><span class="n">first_ten_pixels</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([0.09, 0.09, 0.09, 0.09, 0.08, 0.08, 0.09, 0.09, 0.08, 0.07])
+</pre></div>
+</div>
+</div>
+</div>
+<p>To perform this mapping for <em>every</em> pixel intensity value, we use the following operation:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Equalise the histogram of `eagle`, by using the pixel intensity values in `one_D_eagle` (1 - 255)</span>
@@ -1050,7 +1104,7 @@ Min Pixel Value: 1
 <img alt="_images/f837ecd977b74e450cb5e562e97ef8bfcd59ec0fc499f417a22a94411a73a7e9.png" src="_images/f837ecd977b74e450cb5e562e97ef8bfcd59ec0fc499f417a22a94411a73a7e9.png" />
 </div>
 </div>
-<p>The equalised histogram now much more closely resembles a <a class="reference internal" href="#LINK_HERE"><span class="xref myst">uniform distribution</span></a> - the notable “peaks and valleys” of the original and been replaced with a uniform block. The effect on the perceived visual image is one of heightened contrast - pay particular attention to the wall behind the noble eagle. Each image, without the histograms, can be viewed below, for easier inspection:</p>
+<p>The equalised histogram now much more closely resembles a <a class="reference external" href="https://en.wikipedia.org/wiki/Uniform_distribution">uniform distribution</a> - the notable “peaks and valleys” of the original and been replaced with a uniform block. The effect on the perceived visual image is one of heightened contrast - pay particular attention to the wall behind the noble eagle. Each image, without the histograms, can be viewed below, for easier inspection:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Generate the plot.</span>
@@ -1135,7 +1189,7 @@ Min Pixel Value: 0.0
 <img alt="_images/72f497d9f9b3588bbcd77956210f2be492832741928197dcf394fad617b7471b.png" src="_images/72f497d9f9b3588bbcd77956210f2be492832741928197dcf394fad617b7471b.png" />
 </div>
 </div>
-<p>Easy peasy. If you consult the <a class="reference internal" href="#LINK_HERE"><span class="xref myst">documentation</span></a> for <code class="docutils literal notranslate"><span class="pre">ski.exposure.equalize_hist()</span></code>, you notice that by default, it uses 256 bins. In fact, for the <code class="docutils literal notranslate"><span class="pre">nbins</span></code> optional argument, the documentation states that it will be ignored for integer data. This is so the “indexing trick” that we saw above can be performed.</p>
+<p>Easy peasy. If you consult the <a class="reference external" href="https://scikit-image.org/docs/0.25.x/api/skimage.exposure.html#skimage.exposure.equalize_hist">documentation</a> for <code class="docutils literal notranslate"><span class="pre">ski.exposure.equalize_hist()</span></code>, you notice that by default, it uses 256 bins. In fact, for the <code class="docutils literal notranslate"><span class="pre">nbins</span></code> optional argument, the documentation states that it will be ignored for integer data. This is so the “indexing trick” that we saw above can be performed.</p>
 <p>It is no problem to use this filter with <code class="docutils literal notranslate"><span class="pre">float</span></code> image data however - the principle is the same pixel intensities get mapped to their corresponding cumulative proportion. Only now this occurs without the neat indexing trick, there is just an intermediate (boring!) step in the mapping. We demonstrate this below with the <code class="docutils literal notranslate"><span class="pre">coins</span></code> image from <code class="docutils literal notranslate"><span class="pre">ski.data</span></code>:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
