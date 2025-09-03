@@ -32,9 +32,9 @@
     <link rel="stylesheet" type="text/css" href="_static/styles/sphinx-book-theme.css?v=eba8b062" />
     <link rel="stylesheet" type="text/css" href="_static/togglebutton.css?v=13237357" />
     <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
-    <link rel="stylesheet" type="text/css" href="_static/mystnb.8ecb98da25f57f5357bf6f572d296f466b2cfe2517ffebfabe82451661e28f02.css" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.8ecb98da25f57f5357bf6f572d296f466b2cfe2517ffebfabe82451661e28f02.css?v=6644e6bb" />
     <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css?v=4fa983c6" />
-    <link rel="stylesheet" type="text/css" href="_static/exercise.css" />
+    <link rel="stylesheet" type="text/css" href="_static/exercise.css?v=982b99e0" />
     <link rel="stylesheet" type="text/css" href="_static/sphinx-design.min.css?v=95c83b7e" />
   
   <!-- Pre-loaded scripts that we'll load fully later -->
@@ -1443,11 +1443,17 @@ Same as the target? This array should contain on `True`s if so...:
 <p>Theoretically speaking, <span class="math notranslate nohighlight">\(\text{(original_image – blurred_image)}\)</span> contains <em>sharpened details</em> of the image, because it results from subtracting out a version of the image which is much blurrier than the original, giving us the <em>difference</em> between the original image and the blurry image. This effect is easiest to appreciate visually:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Gaussian filter the image we wish to sharpen.</span>
-<span class="n">gaussian_filter_cat</span> <span class="o">=</span> <span class="n">ski</span><span class="o">.</span><span class="n">filters</span><span class="o">.</span><span class="n">gaussian</span><span class="p">(</span><span class="n">blurry_cat</span><span class="p">,</span> <span class="mi">4</span><span class="p">)</span>
-
-<span class="c1"># Perform the sharpening.</span>
-<span class="n">sharpened</span> <span class="o">=</span> <span class="n">blurry_cat</span> <span class="o">+</span> <span class="p">(</span><span class="n">blurry_cat</span> <span class="o">-</span> <span class="n">gaussian_filter_cat</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Perform the sharpening, on each colour channel separately, to avoid altering the colour of the image.</span>
+<span class="n">gaussian_filtered_cats</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="n">sharpened</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">blurry_cat</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">2</span><span class="p">]):</span>
+    <span class="n">gaussian_filtered_cats</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">ski</span><span class="o">.</span><span class="n">filters</span><span class="o">.</span><span class="n">gaussian</span><span class="p">(</span><span class="n">blurry_cat</span><span class="p">[:,</span> <span class="p">:,</span> <span class="n">i</span><span class="p">],</span> <span class="mi">4</span><span class="p">))</span>
+    <span class="n">sharpened</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">blurry_cat</span><span class="p">[:,</span> <span class="p">:,</span> <span class="n">i</span><span class="p">]</span> <span class="o">+</span> <span class="p">(</span><span class="n">blurry_cat</span><span class="p">[:,</span> <span class="p">:,</span> <span class="n">i</span><span class="p">]</span> <span class="o">-</span> <span class="n">gaussian_filtered_cats</span><span class="p">[</span><span class="n">i</span><span class="p">]))</span>
+    
+<span class="c1"># Stack back to 3D.</span>
+<span class="n">sharpened</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">stack</span><span class="p">(</span><span class="n">sharpened</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">gaussian_filter_cat</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">stack</span><span class="p">(</span><span class="n">gaussian_filtered_cats</span><span class="p">,</span> 
+                             <span class="n">axis</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
 
 <span class="c1"># Rescale to legal pixel ranges.</span>
 <span class="n">sharpened</span> <span class="o">=</span> <span class="n">ski</span><span class="o">.</span><span class="n">exposure</span><span class="o">.</span><span class="n">rescale_intensity</span><span class="p">(</span><span class="n">sharpened</span><span class="p">,</span> <span class="n">out_range</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>
@@ -1468,7 +1474,7 @@ Same as the target? This array should contain on `True`s if so...:
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/a31b6e354f107fa321433decf392dbf442850d31a5507cd224b621cad125f865.png" src="_images/a31b6e354f107fa321433decf392dbf442850d31a5507cd224b621cad125f865.png" />
+<img alt="_images/7e5581546c70c74916a04aa040bddc9ea121eba58342ea31756d6a42cf6d1998.png" src="_images/7e5581546c70c74916a04aa040bddc9ea121eba58342ea31756d6a42cf6d1998.png" />
 </div>
 </div>
 <p>You can see that the sharpened image, as intended, has better clarity than the original. We can also use a specliazed <a class="reference external" href="https://www.geeksforgeeks.org/deep-learning/types-of-convolution-kernels/#3-sharpening-kernel">sharpening kernel</a> to achieve the same effect:</p>
