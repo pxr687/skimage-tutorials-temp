@@ -659,11 +659,17 @@ $$
 Theoretically speaking, $\text{(original_image – blurred_image)}$ contains *sharpened details* of the image, because it results from subtracting out a version of the image which is much blurrier than the original, giving us the *difference* between the original image and the blurry image. This effect is easiest to appreciate visually:
 
 ```{python}
-# Gaussian filter the image we wish to sharpen.
-gaussian_filter_cat = ski.filters.gaussian(blurry_cat, 4)
-
-# Perform the sharpening.
-sharpened = blurry_cat + (blurry_cat - gaussian_filter_cat)
+# Perform the sharpening, on each colour channel separately, to avoid altering the colour of the image.
+gaussian_filtered_cats = []
+sharpened = []
+for i in np.arange(blurry_cat.shape[2]):
+    gaussian_filtered_cats.append(ski.filters.gaussian(blurry_cat[:, :, i], 4))
+    sharpened.append(blurry_cat[:, :, i] + (blurry_cat[:, :, i] - gaussian_filtered_cats[i]))
+    
+# Stack back to 3D.
+sharpened = np.stack(sharpened, axis=2)
+gaussian_filter_cat = np.stack(gaussian_filtered_cats, 
+                             axis=2)
 
 # Rescale to legal pixel ranges.
 sharpened = ski.exposure.rescale_intensity(sharpened, out_range=(0, 1))
