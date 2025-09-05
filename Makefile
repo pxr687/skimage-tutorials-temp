@@ -2,6 +2,7 @@ PYTHON ?= python
 PIP_INSTALL_CMD ?= $(PYTHON) -m pip install
 BUILD_DIR=_build/html
 JL_DIR=_build/jl
+OTHER_DIRS=images
 
 html:
 	# Check for ipynb files in source (should all be .Rmd).
@@ -13,7 +14,7 @@ jl:
 	$(PIP_INSTALL_CMD) -r jl-build-requirements.txt
 	rm -rf $(JL_DIR)
 	mkdir $(JL_DIR)
-	cp -r data images $(JL_DIR)
+	cp -r $(OTHER_DIRS) $(JL_DIR)
 	$(PYTHON) _scripts/process_notebooks.py $(JL_DIR)
 	$(PYTHON) -m jupyter lite build \
 		--contents $(JL_DIR) \
