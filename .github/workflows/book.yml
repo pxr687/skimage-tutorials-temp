@@ -1,0 +1,58 @@
+name: build-and-deploy
+
+# Only run this when the main branch changes
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+# This job installs dependencies, build the book, and pushes it to `gh-pages`
+jobs:
+  deploy-book:
+    runs-on: ubuntu-latest
+    # https://github.com/peaceiris/actions-gh-pages?tab=readme-ov-file#%EF%B8%8F-first-deployment-with-github_token
+    permissions:
+      contents: write
+
+    steps:
+
+      - name: Checkout repo and submodules
+        uses: actions/checkout@v4
+        with:
+          submodules: recursive
+      # Install dependencies
+      - name: Set up Python 3.12
+        uses: actions/setup-python@v4
+        with:
+          python-version: 3.12
+
+      - name: Install dependencies
+        run: |
+          pip install -r build_requirements.txt
+
+      - name: Run tests
+        run: |
+          pip install pytest
+          pytest .
+
+      # Build the page
+      - name: Build the book
+        run: |
+          make web
+
+      - uses: actions/upload-artifact@v4
+        if: failure()
+        with:
+          name: error_logs
+          path: ./_build/html/reports
+
+      # Push the book's HTML to github-pages
+      - name: GitHub Pages action
+        if: ${{ github.ref == 'refs/heads/main' }}
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./_build/html
