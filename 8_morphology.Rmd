@@ -35,7 +35,7 @@ Morphological operations differ from the filtering operations we have seen previ
 
 # Structuring elements
 
-Because morphological operations are part of image processing, they involve the modification of array pixel values, which is [all image processing is](3_skimage_processing_from_numpy_and_scipy.). In morphological operations, the structural element will alter pixel values *depending upon the match between the shape of the structural element and the shape of the pixels in the "neighbourhood" of the structural element*.
+Because morphological operations are part of image processing, they involve the modification of array pixel values, which is [all image processing is](3_skimage_processing_from_numpy_and_scipy). In morphological operations, the structural element will alter pixel values *depending upon the match between the shape of the structural element and the shape of the pixels in the "neighbourhood" of the structural element*.
 
 The structural element, typically, is centered once on every pixel in an image, and this central pixel is modified (or not) depending upon the match betweent the shape of the structural element and the shape depicted by the pixels in that neighbourhood.
 
