@@ -12,4 +12,3 @@ parts:
       - file: 6_gaussian_sharpening_edge
       - file: 7_median_nonlocal_filters
       - file: 8_morphology
-      - file: 9_segmentation
