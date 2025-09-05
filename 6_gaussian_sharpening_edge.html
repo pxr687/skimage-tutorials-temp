@@ -555,7 +555,7 @@ document.write(`
 </div>
 </div>
 <p>Imagine this kernel plotted in a 3D space. It is in the <code class="docutils literal notranslate"><span class="pre">shape</span></code> of <code class="docutils literal notranslate"><span class="pre">(3,</span> <span class="pre">3)</span></code>, so imagine that the “floor” of the 3D plot is a 3-by-3 grid, with the integer index labels shown in the horizontal (<span class="math notranslate nohighlight">\(x\)</span> and <span class="math notranslate nohighlight">\(y\)</span>-axis) directions. Imagine further that we plot the kernel element values in the vertical direction, on the <span class="math notranslate nohighlight">\(z\)</span>-axis.</p>
-<p>So on this plot, in the vertical direction, our graph will be highest where the kernel values are highest (e.g. for the centrel element of 0.25), and lowest where the kernel elements are lowest (e.g. in the corners for the values of 0.06).</p>
+<p>So on this plot, in the vertical direction, our graph will be highest where the kernel values are highest (e.g. for the central element of 0.25), and lowest where the kernel elements are lowest (e.g. in the corners for the values of 0.06).</p>
 <p>Such a plot is shown below. A red surface connects the space in between each kernel value, to make the pattern between the individual elements clearer. The kernel values themselves are shown as dark blue text. The axis ticks show the integer index location of the kernel values, in the <code class="docutils literal notranslate"><span class="pre">gaussian_like_kernel</span></code> NumPy array:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -596,7 +596,7 @@ document.write(`
 </div>
 </div>
 <p>Now, it may not be immediately apparent to some readers what this plot has to do with a Gaussian distribution. For now let’s use “Gaussian” very loosely - for the moment all we will take from it is that, like a Gaussian distribution, at the center the kernel has high values, then the values fall off as we get nearer to the sides. Let’s warmly refer to the graph as the “red mountain”.</p>
-<p>The kernel is shown, via the “raw” NumPy output, in the cell below. Compare this to the plot, to make sure you understand the visualisation. Remember that the numbers on each axis are the integer index locations of the NumPy array. And the vertical height of the red surface is the value of the kernel element at each row/column intger index location:</p>
+<p>The kernel is shown, via the “raw” NumPy output, in the cell below. Compare this to the plot, to make sure you understand the visualisation. Remember that the numbers on each axis are the integer index locations of the NumPy array. And the vertical height of the red surface is the value of the kernel element at each row/column integer index location:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Show the kernel again, in NumPy, for comparison to the plot.</span>
@@ -614,9 +614,9 @@ document.write(`
 </div>
 <p>If you prefer, you can view the NumPy array kernel with prettier graphics below:</p>
 <p><img alt="" src="_images/gaussian_kernel_2.png" /></p>
-<p>Just as final comparison between the  NumPy array kernel and the plot, here is the “red mountain” viewed from directly above, with the NumPy array kernel, in pretty graphics, shown to the right hand side of the plot:</p>
+<p>Just as final comparison between the  NumPy array kernel and the plot, here is the “red mountain” viewed from directly above, with the NumPy array kernel, in pretty graphics, shown to the right-hand side of the plot:</p>
 <p><img alt="" src="_images/sky_gauss.png" /></p>
-<p>Remember that the kernel has only 9 values (shown as blue text on the plot), so there are no values in between the array values. If you prefer, we can visualise the kernel using a wireframe, to make it clearer that there are no values in between the kernal elements (e.g. in between the points where there is blue text):</p>
+<p>Remember that the kernel has only 9 values (shown as blue text on the plot), so there are no values in between the array values. If you prefer, we can visualise the kernel using a wireframe, to make it clearer that there are no values in between the kernel elements (e.g. in between the points where there is blue text):</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Plot the fancy kernel.</span>
@@ -1321,8 +1321,8 @@ Min Pixel Value: 0
 <p class="admonition-title">Solution to<a class="reference internal" href="#DIY-gaussian"> Exercise 23</a></p>
 <section id="solution-content">
 <p>The function you need, with the correct input arguments, is below. You need to use <code class="docutils literal notranslate"><span class="pre">np.arange(-3,</span> <span class="pre">4)</span></code> for the inputs to <code class="docutils literal notranslate"><span class="pre">np.meshgrid()</span></code> - the resulting 2D <code class="docutils literal notranslate"><span class="pre">x_solution</span></code> and <code class="docutils literal notranslate"><span class="pre">y_solution</span></code> arrays are printed out under the cell. A <code class="docutils literal notranslate"><span class="pre">sigma</span></code> of 1 will generate the target kernel.</p>
-<p>An important step here is <code class="docutils literal notranslate"><span class="pre">gauss</span> <span class="pre">=</span> <span class="pre">1/gauss.sum()</span> <span class="pre">*</span> <span class="pre">gauss</span></code> which ensures that the kernel elements sum to 1. As we noted in the solution to the last exercise, this step makes sure that the average pixel intensity of an image stays the same as the original image, when we filter the image with this kernel (this is called a <em>normalizing the kernel</em>).</p>
-<p>If we skip the normalization step, we may well create problems with illegal (too large!) pixel intensity values, or otherwise will be changing the intensities in a way that is not part of the typical Gaussian blur procedure e.g. we will be altering the average pixel intensity of the whole image, rather than just blurring the pixels…</p>
+<p>An important step here is <code class="docutils literal notranslate"><span class="pre">gauss</span> <span class="pre">=</span> <span class="pre">1/gauss.sum()</span> <span class="pre">*</span> <span class="pre">gauss</span></code> which ensures that the kernel elements sum to 1. As we noted in the solution to the last exercise, this step makes sure that the average pixel intensity of an image stays the same as the original image, when we filter the image with this kernel (this is called <em>normalising the kernel</em>).</p>
+<p>If we skip the normalisation step, we may well create problems with illegal (too large!) pixel intensity values, or otherwise will be changing the intensities in a way that is not part of the typical Gaussian blur procedure e.g. we will be altering the average pixel intensity of the whole image, rather than just blurring the pixels…</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">DIY_gauss_solution</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">,</span> <span class="n">sigma</span><span class="p">):</span>
@@ -1477,7 +1477,7 @@ Same as the target? This array should contain on `True`s if so...:
 <img alt="_images/7e5581546c70c74916a04aa040bddc9ea121eba58342ea31756d6a42cf6d1998.png" src="_images/7e5581546c70c74916a04aa040bddc9ea121eba58342ea31756d6a42cf6d1998.png" />
 </div>
 </div>
-<p>You can see that the sharpened image, as intended, has better clarity than the original. We can also use a specliazed <a class="reference external" href="https://www.geeksforgeeks.org/deep-learning/types-of-convolution-kernels/#3-sharpening-kernel">sharpening kernel</a> to achieve the same effect:</p>
+<p>You can see that the sharpened image, as intended, has better clarity than the original. We can also use a specialised <a class="reference external" href="https://www.geeksforgeeks.org/deep-learning/types-of-convolution-kernels/#3-sharpening-kernel">sharpening kernel</a> to achieve the same effect:</p>
 <p><img alt="" src="_images/sharpening_kernel.png" /></p>
 <p>We show this kernel in 3D below (it does look pretty sharp!):</p>
 <div class="cell docutils container">
@@ -1499,7 +1499,7 @@ Same as the target? This array should contain on `True`s if so...:
 <img alt="_images/81205a6035274776e2886806763b886335bbd164b71d3f3b68efe8ac9116bb99.png" src="_images/81205a6035274776e2886806763b886335bbd164b71d3f3b68efe8ac9116bb99.png" />
 </div>
 </div>
-<p>This kernel works by <a class="reference external" href="https://setosa.io/ev/image-kernels/#:~:text=The%20sharpen%20kernel%20emphasizes%20differences,differences%20in%20adjacent%20pixel%20values.">emphasising differences between adjacent pixels</a>. Essentially, the more different that a pixel is from its surrounding pixels, the bigger value it will get in the sharpened image.</p>
+<p>This kernel works by <a class="reference external" href="https://setosa.io/ev/image-kernels/#:~:text=The%20sharpen%20kernel%20emphasizes%20differences,differences%20in%20adjacent%20pixel%20values.">emphasising differences between adjacent pixels</a>. Essentially, the more different than a pixel is from its surrounding pixels, the bigger value it will get in the sharpened image.</p>
 <p>To see this in detail, let’s take just the middle row of the <code class="docutils literal notranslate"><span class="pre">sharpening_kernel</span></code>:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -1775,7 +1775,7 @@ Min Pixel Value: 1
 
 <p class="admonition-title">Solution to<a class="reference internal" href="#stay-sharp"> Exercise 24</a></p>
 <section id="solution-content">
-<p>We go some pretty good performance from the following kernel:</p>
+<p>We got some pretty good performance from the following kernel:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">another_sharpening_kernel</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span> <span class="o">-</span><span class="mi">3</span><span class="p">,</span> <span class="o">-</span><span class="mi">3</span><span class="p">,</span> <span class="o">-</span><span class="mi">3</span><span class="p">],</span>
@@ -1813,7 +1813,7 @@ Min Pixel Value: 1
 </div>
 </div>
 <p>As with Gaussian kernels, this is to ensure that the sharpening filter does not alter the average brightness of the original image.</p>
-<p>The reason our new <code class="docutils literal notranslate"><span class="pre">another_sharpening_kernel</span></code> performs better than the original <code class="docutils literal notranslate"><span class="pre">sharpening_kernel</span></code> is because the central value is higher. To ensure the kernel sums to 1, we therefore must increase the absolute value of the negative kernel elements. These two factors (bigger central value, bigger negative off-centre values) increase the strength of the sharpening effect.</p>
+<p>The reason our new <code class="docutils literal notranslate"><span class="pre">another_sharpening_kernel</span></code> performs better than the original <code class="docutils literal notranslate"><span class="pre">sharpening_kernel</span></code> is because the central value is higher. To ensure the kernel sums to 1, we therefore must increase the absolute value of the negative kernel elements. These two factors (bigger central value, bigger negative off-center values) increase the strength of the sharpening effect.</p>
 <p>We use the new kernel to sharpen <code class="docutils literal notranslate"><span class="pre">blurry_eagle</span></code> in the cell below:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">

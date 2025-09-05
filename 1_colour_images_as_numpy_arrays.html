@@ -32,9 +32,9 @@
     <link rel="stylesheet" type="text/css" href="_static/styles/sphinx-book-theme.css?v=eba8b062" />
     <link rel="stylesheet" type="text/css" href="_static/togglebutton.css?v=13237357" />
     <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
-    <link rel="stylesheet" type="text/css" href="_static/mystnb.8ecb98da25f57f5357bf6f572d296f466b2cfe2517ffebfabe82451661e28f02.css" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.8ecb98da25f57f5357bf6f572d296f466b2cfe2517ffebfabe82451661e28f02.css?v=6644e6bb" />
     <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css?v=4fa983c6" />
-    <link rel="stylesheet" type="text/css" href="_static/exercise.css" />
+    <link rel="stylesheet" type="text/css" href="_static/exercise.css?v=982b99e0" />
     <link rel="stylesheet" type="text/css" href="_static/sphinx-design.min.css?v=95c83b7e" />
   
   <!-- Pre-loaded scripts that we'll load fully later -->
@@ -965,7 +965,7 @@ Our 3D stacked array is of the right shape:</p>
 </div>
 <p>More intuitively visualised, our new three dimensional array looks like this:</p>
 <p><img alt="" src="_images/three_slice_red.png" /></p>
-<p>You can see the values of 1 in the top left and bottom right elements of the first slice, all other elements are 0. Once more we can “walk” along the <span class="math notranslate nohighlight">\(z\)</span> dimension, using indexing operations:</p>
+<p>You can see the values of 1 in the top-left and bottom-right elements of the first slice, all other elements are 0. Once more we can “walk” along the <span class="math notranslate nohighlight">\(z\)</span> dimension, using indexing operations:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># First 2D slice of the stack.</span>
@@ -1188,10 +1188,11 @@ Our 3D stacked array is of the right shape:</p>
 <h2>Colour channels<a class="headerlink" href="#colour-channels" title="Link to this heading">#</a></h2>
 <p>What is happening here?</p>
 <p>Recall that we referred to the 2D arrays that we used at the start of this tutorial as <em>single-channel image arrays</em>? The 3D arrays we just created are  <em>three-channel image arrays</em>. This means that each array pixel has three values, one in each slice of the 3D stacks we created. You can think of each slice as being one <em>colour channel</em>. Each colour channel controls the amount of a specific colour in the image, depending on the values of the array pixels in that slice.</p>
-<p>Using these three-channel arrays, when Matplotlib produces the a two-dimensional <em>display image</em> (e.g. the matrix with coloured squares along the diagonal and black squares elsewhere). However, behind this 2D display image there are three slices in the third dimension, each with the same number of rows and columns as the final 2D display image. Each pixel (e.g. each array element) in the display image gets its colour information from a mix of the corresponding elements in each slice in the 3D image array.</p>
+<p>Using these three-channel arrays, when Matplotlib produces a two-dimensional <em>display image</em> (e.g. the matrix with coloured squares along the diagonal and black squares elsewhere). However, behind this 2D display image there are three slices in the third dimension, each with the same number of rows and columns as the final 2D display image. Each pixel (e.g. each array element) in the display image gets its colour information from a mix of the corresponding elements in each slice in the 3D image array.</p>
 <p>As we have seen, the first slice is the red channel, the second slice is the green channel and the third slice is the blue channel. The intensities in each colour channel are <em>mixed</em> to produce the rendered 2D image:</p>
 <p><img alt="" src="_images/colour_channels_all.png" /></p>
-<p>Now, the way we have setup each 3D array <em>is</em> mixing the colour channels, but because we have set two of the slices to contain only 0’s, we are essentially “switching off” those colour channel in the final mix (e.g. in the image displayed by Matplotlib). Other colours can be created using different blends of these primary colours (red, green, blue). For <code class="docutils literal notranslate"><span class="pre">float64</span></code> image data, you can think of 0 as meaning 0% and 1 as meaning 100%, 0.5 meaning 50% and so on. So a 1 in the red slice means 100% red is mixed in for that pixel, along with the percentages from the other colour channels (which in the arrays above, are 0’s).</p>
+<p>Now, despite the visualisations of our array containing only one primary colour, the colour channels are in fact being mixed together. However, because we have set two of the slices to contain only 0’s, we are essentially “switching off” those colour channels in the final mix (e.g. in the image displayed by Matplotlib).</p>
+<p>Other non-primary colours can be created using different blends of the primary colours (red, green, blue) in each slice of the array. For <code class="docutils literal notranslate"><span class="pre">float64</span></code> image data, you can think of 0 as meaning 0% and 1 as meaning 100%, 0.5 meaning 50% and so on. So a 1 in the red slice means 100% red is mixed in for that pixel, along with the percentages from the other colour channels (which in the arrays above, are 0’s).</p>
 <p>We can see this by choosing intensity values randomly for each colour channel. The function <code class="docutils literal notranslate"><span class="pre">np.random.uniform()</span></code> can supply us with three random decimal numbers between 0 and 1. Run the cell below a few times if you are using this tutorial interactively, to see the random draw a few times:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -1242,7 +1243,7 @@ Blue (X3) = 0.19
 <img alt="_images/541fbe3380135d52654adcd19991476d4284ccd6fa45dba2b3b653c24fff6506.png" src="_images/541fbe3380135d52654adcd19991476d4284ccd6fa45dba2b3b653c24fff6506.png" />
 </div>
 </div>
-<p>So, each two-dimensional display image has a “hidden” three-dimensional array behind it. Each slice of the third dimension is a colour channel. The mix of values at a given element in each colour channel determins the colour of that pixel in the rendered image. You may want to view this image in a new browser window, to see more clearly the exact mixes of the colour channels, which are shown above each square on the right hand side of the image:</p>
+<p>So, each two-dimensional display image has a “hidden” three-dimensional array behind it. Each slice of the third dimension is a colour channel. The mix of values at a given element in each colour channel determines the colour of that pixel in the rendered image. You may want to view this image in a new browser window, to see more clearly the exact mixes of the colour channels, which are shown above each square on the right-hand side of the image:</p>
 <p><img alt="" src="_images/three_slice_algebraic_multi.png" /></p>
 <p>You can view lots of random mixes across the colour channels, as a grid of plots, by running the cell below:</p>
 <div class="cell docutils container">
@@ -1358,7 +1359,7 @@ Min Pixel Value: 0
 </div>
 </div>
 </div>
-<p>We can see that this image has three dimensions, with three slices in the third dimension. We are therefore dealing with <em>true colour</em> image with three colour channels. We can also see that the image array represents the most intense pixel values with the number 255, and the least intense values with the number 0, in each colour channel. The <code class="docutils literal notranslate"><span class="pre">dtype</span></code> is <code class="docutils literal notranslate"><span class="pre">uint8</span></code>, in contrast the <code class="docutils literal notranslate"><span class="pre">float64</span></code> <code class="docutils literal notranslate"><span class="pre">dtype</span></code> we have been using in our custom made low-resolution image arrays.</p>
+<p>We can see that this image has three dimensions, with three slices in the third dimension. We are therefore dealing with a <em>true colour</em> image with three colour channels. We can also see that the image array represents the most intense pixel values with the number 255, and the least intense values with the number 0, in each colour channel. The <code class="docutils literal notranslate"><span class="pre">dtype</span></code> is <code class="docutils literal notranslate"><span class="pre">uint8</span></code>, in contrast the <code class="docutils literal notranslate"><span class="pre">float64</span></code> <code class="docutils literal notranslate"><span class="pre">dtype</span></code> we have been using in our custom-made low-resolution image arrays.</p>
 <p>Let’s view the image with <code class="docutils literal notranslate"><span class="pre">imshow()</span></code>:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -1443,7 +1444,7 @@ Min Pixel Value: 0
 <img alt="_images/8e78d7c51d45b6622f252b1062ad7a9e9f4f605531632cc8dd9cb763d221e9fc.png" src="_images/8e78d7c51d45b6622f252b1062ad7a9e9f4f605531632cc8dd9cb763d221e9fc.png" />
 </div>
 </div>
-<p>When we visualise the full 3D array however, then, as we have seen, each slice controls the amount of a specific colour, and the resultant mix gives us our beautiful, full colour image:</p>
+<p>When we visualise the full 3D array however, then, as we have seen, each slice controls the amount of a specific colour, and the resultant mix gives us our beautiful, full-colour image:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">coffee</span><span class="p">);</span>

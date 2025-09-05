@@ -61,11 +61,11 @@ plt.matshow(squares);
 
 You will recall that this array - in virture of being 2D and having only one numeric value per array pixel - is a single-channel array. This means that it contains only information about pixel intensity (grey-level), and not about colour. 
 
-To include true colour information, our array must be of at least three-dimensions. A three dimensional colour image array typically has three "slices" in the third dimension. Each element of each slice contains a number between 0 and 1 (for `float64` data), or between 1 and 255 (for `uint8` data). For the standard RGB (Red-Green-Blue) format the number in each element of each slice in the third dimension tells that array pixel what colour to be (e.g. a mix of red, green and blue, across the three slices). Hence these slices, in the third dimension, are called "colour channels". 
+To include true colour information, our array must be of *at least* three dimensions. A three-dimensional colour image array typically has three "slices" in the third dimension. Each element of each slice contains a number between 0 and 1 (for `float64` data), or between 1 and 255 (for `uint8` data). For the standard RGB (Red-Green-Blue) format the number in each element of each slice in the third dimension tells that array pixel what colour to be (e.g. a mix of red, green and blue, across the three slices). Hence these slices, in the third dimension, are called "colour channels". 
 
 ![](images/three_slice_algebraic_multi.png)
 
-As we saw previously, we can control the amount of colour in the image by manipulating the each channel in the third dimension:
+As we saw previously, we can control the amount of colour in the image by manipulating each channel in the third dimension:
 
 ```{python}
 # Using `np.stack()` to create a multi-channel array.
@@ -77,7 +77,7 @@ show_attributes(red_squares)
 plt.matshow(red_squares);
 ```
 
-We show this principle again below, for each colour channel. The top row of the plot shows the channels for `uint8` data with 255 as the maximum intensity pixel value. The second row of the plot shows each channel for `float64` data, using 1 as the maximum pixel intensity value:
+We show this principle again below, for each colour channel. The top row of the plot shows the channels for `uint8` data with 255 as the maximum pixel intensity value. The second row of the plot shows each channel for `float64` data, using 1 as the maximum pixel intensity value:
 
 ```{python}
 # Use a custom function to plot the maximum intensity values in the diagonals, for `int` and `float` data,
@@ -86,7 +86,7 @@ from random_colours import plot_int_float
 plot_int_float();
 ```
 
-These are the basic aspects of images represented as NumPy arrays. Other ways of representing colour exist and are supported by `skimage`, and indeed, not all 3D image arrays contain colour information (e.g. structural brain images). We will look at these concepts in later sections, but `skimage` can work with these images as easily as the basic coloured sqaures we have just made - all these images *are just NumPy arrays* and can be handled just as any NumPy array.  
+These are the basic aspects of images represented as NumPy arrays. Other ways of representing colour exist and are supported by `skimage`, and indeed, not all 3D image arrays contain colour information (e.g. structural brain images). We will look at these concepts in later sections, but `skimage` can work with these images as easily as the basic coloured squares we have just made - all these images *are just NumPy arrays* and can be handled just as any NumPy array.  
 
 # Going `ski`-ing : arrays as arguments
 
@@ -257,7 +257,7 @@ load_back_in = ski.io.imread("images/smiley_swirled.png")
 plt.imshow(load_back_in);
 ```
 
-We can see that the `dtype` of the freshly save, freshly loaded image is indeed `uint8`:
+We can see that the `dtype` of the freshly saved, freshly loaded image is indeed `uint8`:
 
 ```{python}
 show_attributes(load_back_in)
@@ -273,7 +273,7 @@ ski.io.imsave("images/smiley_swirled.jpg", # Path to save image to.
 
 Issues with `dtype` can be a source of errors, so it is important to be aware of what `dtype` your image arrays are using. Fortunately, as we have seen, to help remedy or avoid such errors, `skimage` makes it easy to convert between `dtypes`, where such errors do occur.
 
-*Note*: you should prefer the the `ski.util` conversion functions to using the NumPy `ndarray.astype()` method, when altering image `dtype`s. This is because the `skimage` functions will respect the min/max pixel intensity value conventions shown in the table above, where `.astype()` may not. Here is a list of the `skimage` conversion functions - you will need them!:
+*Note*: you should prefer the `ski.util` conversion functions to using the NumPy `ndarray.astype()` method, when altering image `dtype`s. This is because the `skimage` functions will respect the min/max pixel intensity value conventions shown in the table above, where `.astype()` may not. Here is a list of the `skimage` conversion functions - you will need them!:
 
 ```{python}
 # Show the `skimage` `dtype` conversion functions.
@@ -389,7 +389,7 @@ $$
 Y = 0.2126R + 0.7152G + 0.0722B
 $$
 
-This has the effect of removing the colour channels, so the output array is 2D. Why do we use these specific numbers? You could go and knock the door of your physicist friend to ask (don't worry, they'll be in...), or you can see [this page](https://stackoverflow.com/questions/596216/formula-to-determine-perceived-brightness-of-rgb-color) for a detailed explanation of where the weights come from.
+This has the effect of removing the colour channels, so the output array is 2D. Why do we use these specific numbers? You could go and knock on the door of your physicist friend to ask (don't worry, they'll be in...), or you can see [this page](https://stackoverflow.com/questions/596216/formula-to-determine-perceived-brightness-of-rgb-color) for a detailed explanation of where the weights come from.
 
 ::: {exercise-start}
 :label: no-colour-cat
@@ -461,7 +461,7 @@ show_attributes(hsv_cat)
 plt.imshow(hsv_cat);
 ```
 
-Psychedelic! Maybe this is how cats look, from the perspective of other cats (e.g. from within their "[umwelt](https://en.wikipedia.org/wiki/Umwelt)"), but this is sadly probably not the case...
+Psychedelic! Maybe this is how cats look, from the perspective of other cats (e.g. from within their "[umwelt](https://en.wikipedia.org/wiki/Umwelt)"), but sadly this is probably not the case...
 
 Let's extract the individual channels with some array indexing operations. Each channel is 2D, and therefore will render as a greyscale image when displayed with Matplotlib:
 
@@ -499,7 +499,7 @@ Let's see what that extra slice does, using our tried and true `squares` image a
 plt.matshow(squares);
 ```
 
-Let's `np.stack()` this image array into 4-D, and set only the 1st and 4th channels to have nonzero values (e.g. so all values in the green and blue channel are 0's):
+Let's `np.stack()` this image array into 4-D, and set only the 1st and 4th channels to have nonzero values (e.g. so all values in the other, green and blue, channels are 0's):
 
 ```{python}
 # Create an array with 4 channels (e.g. 4 slices in the third dimension).
@@ -596,11 +596,11 @@ camera = ski.data.camera()
 
 There are several steps here - this was not an easy task! First, we need to convert our image to the `float64`. We need the `ski.util.img_as_float()` function to do this. If you tried to use the NumPy `.astype(float)` method, you will have encountered a thorny error (more on this below).
 
-If you look at the target image, you will notice that it has a green-ish tone, but no so green as we would get if the other colour channels were "switched off". As such, you can get the correct effect by reducing the impact of the red and blue channels, by halving their values.
+If you look at the target image, you will notice that it has a green-ish tone, but not so green as we would get if the other colour channels were "switched off". As such, you can get the correct effect by reducing the impact of the red and blue channels, by halving their values.
 
-The left hand side of the image has variance in *transparency* - pixels where the image is darker are *more transparent*. This is becuase, in the target image, the alpha channel is a copy of the original 2D image.
+The left-hand side of the image has variance in *transparency* - pixels where the image is darker are *more transparent*. This is because, in the target image, the alpha channel is a copy of the original 2D image.
 
-The distinction between the left hand side and right hand side of the image is that in the right hand side, the transparency channel values are all uniform, though less than maximum opacity, giving a hazy effect. This can be achieved by NumPy array indexing, and setting values in the alpha channel in the right hand side of the image to all equal 0.5:
+The distinction between the left-hand side and right-hand side of the image is that in the right-hand side, the transparency channel values are all uniform, though less than maximum opacity, giving a hazy effect. This can be achieved by NumPy array indexing, and setting values in the alpha channel in the right-hand side of the image to all equal 0.5:
 
 ```{python}
 # Solution.
@@ -687,9 +687,9 @@ for count, i in enumerate(np.linspace(10, iguana.shape[2]-1, num=10, dtype=int))
 
 You can see that we are walking through the iguana's head, in the vertical direction.
 
-Becuase this image file contains information about a literal 3D object (e.g. an iguana's head), we can refer to it as a *volumetric* image. In such images, the third dimension contains *spatial information*, and not *colour information*.
+Because this image file contains information about a literal 3D object (e.g. an iguana's head), we can refer to it as a *volumetric* image. In such images, the third dimension contains *spatial information*, and not *colour information*.
 
-Both `skimage` and `matplotlib` know the slices in the third dimension are not colour channels becuase there are many too many slices to function as colour channels, so it is asssumed that the image is volumetric.
+Both `skimage` and `matplotlib` know the slices in the third dimension are not colour channels because there are many too many slices to function as colour channels, so it is assumed that the image is volumetric.
 
 
 # Summary

@@ -32,9 +32,9 @@
     <link rel="stylesheet" type="text/css" href="_static/styles/sphinx-book-theme.css?v=eba8b062" />
     <link rel="stylesheet" type="text/css" href="_static/togglebutton.css?v=13237357" />
     <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
-    <link rel="stylesheet" type="text/css" href="_static/mystnb.8ecb98da25f57f5357bf6f572d296f466b2cfe2517ffebfabe82451661e28f02.css" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.8ecb98da25f57f5357bf6f572d296f466b2cfe2517ffebfabe82451661e28f02.css?v=6644e6bb" />
     <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css?v=4fa983c6" />
-    <link rel="stylesheet" type="text/css" href="_static/exercise.css" />
+    <link rel="stylesheet" type="text/css" href="_static/exercise.css?v=982b99e0" />
     <link rel="stylesheet" type="text/css" href="_static/sphinx-design.min.css?v=95c83b7e" />
   
   <!-- Pre-loaded scripts that we'll load fully later -->
@@ -713,7 +713,7 @@ Min Pixel Value: -0.95
 </section>
 <section class="tex2jax_ignore mathjax_ignore" id="threshold-filtering-is-just-boolean-filtering">
 <h1>Threshold filtering is just Boolean filtering<a class="headerlink" href="#threshold-filtering-is-just-boolean-filtering" title="Link to this heading">#</a></h1>
-<p>As we have seen, threshold filtering invovles modifying pixel values based on a threshold value. Let’s investigate other thresholding methods using a greyscale image:</p>
+<p>As we have seen, threshold filtering involves modifying pixel values based on a threshold value. Let’s investigate other thresholding methods using a greyscale image:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Create a greyscale image array.</span>
@@ -1025,7 +1025,7 @@ Min Pixel Value: -0.95
 <img alt="_images/837a5b2ff1bb4f02d397f7bfdf9079eb04b0e6d0f6f63f27100c82dedb31ac08.png" src="_images/837a5b2ff1bb4f02d397f7bfdf9079eb04b0e6d0f6f63f27100c82dedb31ac08.png" />
 </div>
 </div>
-<p>If you look at the filtered image (on the right hand side of the plot), it seems to have achieved pretty good foreground/background segmentation…</p>
+<p>If you look at the filtered image (on the right-hand side of the plot), it seems to have achieved pretty good foreground/background segmentation…</p>
 <p>How does the Otsu threshold filter work? Conceptually, the Otsu method involves splitting the histogram into two parts, lots of times, and comparing different splits for how well they separate pixels into two classes, based on a specific numeric metric. The histogram, for each threshold, is split at the center one of the bin intervals.</p>
 <p>The aim is to find which bin interval center gives a split that yields two classes of pixels which are maximally different from one another, by the aforementioned numeric metric. Hopefully this corresponds to pixels forming the background of the image vs pixels forming the forground of the image.</p>
 <p>Since the Otsu method relies on some the “mechanics” of histograms, let’s “deconstruct” the histogram in the center of the plot above, to see how the method works. To perform this deconstruction, we can use the <code class="docutils literal notranslate"><span class="pre">np.histogram()</span></code> function. We give it a flattened 1-D image array (e.g. flattened with the <code class="docutils literal notranslate"><span class="pre">.ravel()</span></code> method), and we tell it a number of bins to use. Again, we will use the sensible value of 128 bins. (<em>Note</em>: you could also use <code class="docutils literal notranslate"><span class="pre">ski.exposure.histogram()</span></code> here, for similar results).</p>
@@ -1384,7 +1384,7 @@ Min Pixel Value: -0.95
 <p>Let’s use this function to calculate the mean and <code class="docutils literal notranslate"><span class="pre">ssd</span></code> of each histogram, when using the 50th bin center as the threshold:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># The mean and SSD for the left hand histogram.</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># The mean and SSD for the left-hand histogram.</span>
 <span class="n">mean_below_50th_bin</span><span class="p">,</span> <span class="n">ssd_below_50th_bin</span><span class="p">,</span> <span class="n">n_below_50th_bin</span>  <span class="o">=</span> <span class="n">ssd</span><span class="p">(</span><span class="n">counts</span><span class="p">[:</span><span class="mi">49</span><span class="p">],</span> <span class="n">bin_centers</span><span class="p">[:</span><span class="mi">49</span><span class="p">])</span>
 <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Mean of histogram below the 50th bin:&quot;</span><span class="p">,</span> <span class="n">mean_below_50th_bin</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="mi">2</span><span class="p">))</span>
 <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;SSD of histogram  below the 50th bin:&quot;</span><span class="p">,</span> <span class="n">ssd_below_50th_bin</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="mi">2</span><span class="p">))</span>
@@ -1400,7 +1400,7 @@ SSD of histogram  below the 50th bin: 27737445.29
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># The mean and SSD for the right hand histogram.</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># The mean and SSD for the right-hand histogram.</span>
 <span class="n">mean_above_50th_bin</span><span class="p">,</span> <span class="n">ssd_above_50th_bin</span><span class="p">,</span> <span class="n">n_above_50th_bin</span> <span class="o">=</span> <span class="n">ssd</span><span class="p">(</span><span class="n">counts</span><span class="p">[</span><span class="mi">49</span><span class="p">:],</span> <span class="n">bin_centers</span><span class="p">[</span><span class="mi">49</span><span class="p">:])</span>
 <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Mean of histogram above the 50th bin:&quot;</span><span class="p">,</span> <span class="n">mean_above_50th_bin</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="mi">2</span><span class="p">))</span>
 <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;SSD of histogram above the 50th bin:&quot;</span><span class="p">,</span> <span class="n">ssd_above_50th_bin</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="mi">2</span><span class="p">))</span>
@@ -1471,7 +1471,7 @@ SSD of histogram above the 50th bin: 174551091.73
 </div>
 <p>In Otsu’s method, we want to find the threshold value which gives the <em>minimum total <code class="docutils literal notranslate"><span class="pre">ssd</span></code></em> - e.g. the smallest value of the combined spread when we add together the <code class="docutils literal notranslate"><span class="pre">ssd</span></code> values for each histogram. This value corresponds to the <em>maximum between pixel class variance</em>, when comparing each side of the histogram.</p>
 <p>In other words, the threshold value which gives the lowest combined <code class="docutils literal notranslate"><span class="pre">ssd</span></code> identifies two classes of pixels that are most different from each other, compared to other classes/splits we could choose, according the metric that the Otsu method cares about (the <code class="docutils literal notranslate"><span class="pre">ssd</span></code>).</p>
-<p>You can think of this as finding a threshold which groups pixels such that the pixel values in each side of the “split” are clustered closely around their respective mean. In fact, it turns out minimizing the total <code class="docutils literal notranslate"><span class="pre">ssd</span></code> also has the effect that the <em>distance</em> between the means will be large as well giving a big separation between the pixels in each class as a result.</p>
+<p>You can think of this as finding a threshold which groups pixels such that the pixel values in each side of the “split” are clustered closely around their respective mean. In fact, it turns out minimizing the total <code class="docutils literal notranslate"><span class="pre">ssd</span></code> also has the effect that the <em>distance</em> between the means will be large, as well as giving a big separation between the pixels in each class as a result.</p>
 <p>The cell below will find the threshold which gives the minimum combined <code class="docutils literal notranslate"><span class="pre">ssd</span></code>:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">

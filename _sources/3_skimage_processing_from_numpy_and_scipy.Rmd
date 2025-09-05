@@ -15,7 +15,7 @@ jupyter:
 
 # (Sci-kit) Image processing, via NumPy and SciPy
 
-This page will explore foundational image processing techniques, as operations on the values in a NumPy image array. First, we will explore how to acheive specific effects using NumPy and SciPy. We will demonstrate what these operations are doing to an image at the level of the array pixels. After that, we will show how more sophisticated extensions of these techniques can be implemented with Scikit-image, focusing on how it is often the same NumPy and SciPy operations that Sci-kit image is using "under the hood".
+This page will explore foundational image processing techniques, as operations on the values in a NumPy image array. First, we will explore how to achieve specific effects using NumPy and SciPy. We will demonstrate what these operations are doing to an image at the level of the array pixels. After that, we will show how more sophisticated extensions of these techniques can be implemented with Scikit-image, focusing on how it is often the same NumPy and SciPy operations that Sci-kit image is using "under the hood".
 
 Remember that *image processing is when we do something which changes the numbers inside an image array, and therefore changes the corresponding visual image*? Well, in fact, all that even the fanciest image processing software is doing is just changing the pixel values inside image arrays, in various ways. This is true for image processing software with a graphical user interface, like [Adobe Photoshop](https://www.adobe.com/th_en/products/photoshop), as well as for code-based image processing software like Scikit-image.
 
@@ -177,7 +177,7 @@ i_exclam = i_img.copy()
 :class: dropdown
 :::
 
-You can do this in one line of code using a combination of `np.concat()`. `np.concat()` will "stick" arrays together, rather than `np.repeat()`-ing the values... 
+You can do this in one line of code by using a combination of `np.concat()`, `np.flip()` and `plt.imshow()`. Notably,`np.concat()` will "stick" arrays together, rather than `np.repeat()`-ing the values... 
 
 Combined with `np.flip()` we can produce the desired result in one line of code:
 
@@ -249,13 +249,13 @@ Why is the background now grey? Well, remember that, for a monochrome image visu
 
 When we subtract along the column, with `np.diff()` the third value is subtracted from the fourth value etc., and so the resulting differences are calculated as:
 
-- `1 - 0 = 1` for 1 values on the left hand side of the original image, and...
+- `1 - 0 = 1` for 1 values on the left-hand side of the original image, and...
 
-- ...`0 - 1 = -1` for 1 values on the right hand side of the original image...
+- ...`0 - 1 = -1` for 1 values on the right-hand side of the original image...
 
 - ...and `1 - 1 = 0` for adjacent 1's; `0 - 0 = 0` for adjacent 0's.
 
-Essentially we are detecting *edges* (big changes in intensity between adjacent pixels) in the horizontal (row) direction:
+Essentially we are detecting *edges* (big changes in intensity between adjacent pixels) in the horizontal direction (e.g. within each row, along the columns):
 
 ```{python}
 # Show before/after applying `np.diff()` to the image array.
@@ -347,7 +347,7 @@ squares_ten_by_ten = ski.transform.resize(squares,
 plt.imshow(squares_ten_by_ten);
 ```
 
-This seems much closer to what we want when we `resize` the image. However, the results of image processing are highly context dependent, and there may be images for which the default interpolation setting works better...
+This seems much closer to what we want when we `resize` the image. However, the results of image processing are highly context-dependent, and there may be images for which the default interpolation setting works better...
 
 
 # Rotation
@@ -535,7 +535,7 @@ We can see that the cameraman is facing a different direction in each image (tak
 
 The difference here is that transposing an image switches the rows and columns, such that the first row becomes the first column etc. Conversely, `skimage.transform.rotate()` pivots the pixels around a central point. Essentially, transposing gives a *mirroring effect* which is different from a rotation.
 
-Pay attention to the location of the spoon in the `coffee` image. First, we `ski.transform.rotate()` it by 90 degrees. Then, we show it `.transpose`d, switching the rows and columns. As `coffee` is a 3D image, the `.T` method will produce an error, because the colour channels will be moved into the wrong dimension - to avoid this we use the `.transpose` method, to keep the colour channels in third dimension, whilst switching the rows and columns:
+Pay attention to the location of the spoon in the `coffee` image. First, we `ski.transform.rotate()` it by 90 degrees. Then, we show it `.transpose`d, switching the rows and columns. As `coffee` is a 3D image, the `.T` method will produce an error, because the colour channels will be moved into the wrong dimension - to avoid this we use the `.transpose` method, to keep the colour channels in the third dimension, whilst switching the rows and columns:
 
 ```{python}
 # The `shape` of the original `coffee` image.
@@ -605,9 +605,9 @@ Max Pixel Value: 255
 Min Pixel Value: 0
 ```
 
-*Hint*: if you did not complete the earlier exerise involving combining two `i_img` arrays, then you may want to investigate NumPy functions for combining arrays together to complete the current exercise...
+*Hint*: if you did not complete the earlier exercise involving combining two `i_img` arrays, then you may want to investigate NumPy functions for combining arrays together to complete the current exercise...
 
-*Caution:* you may run into some errors/odd outcomes because of `dtype`s here...so use the `ski.util` conversion functions if you need to...
+*Caution:* you may run into some errors/odd outcomes because of `dtype`s here... so use the `ski.util` conversion functions if you need to...
 
 ```{python}
 # YOUR CODE HERE
@@ -755,7 +755,7 @@ show_attributes(cat_solution)
 plt.imshow(cat_solution);
 ```
 
-You'll notice that downsizing the image has seriously downgraded the quality. This makes sense, because the original high-resolution image utilized its many pixels to depict intricate details. After resizing to a lower-resolution, this detail is lost, because now we are trying to show the same image using many few pixels. `skimage` has done some averaging behind the scenes, to work out what should go in the remaining pixels. At least we can still see the image is of a cat...
+You'll notice that downsizing the image has seriously downgraded the quality. This makes sense, because the original high-resolution image utilized its many pixels to depict intricate details. After resizing to a lower-resolution, this detail is lost, because now we are trying to show the same image using subtantially fewer pixels. `skimage` has done some averaging behind the scenes, to work out what should go in the remaining pixels. At least we can still see the image is of a cat...
 
 Now, we can see that the target image requires a rotation, through good judgment, or just trial and error, we can work out that this needs to be 45 degrees. We can also see that the image of the downscaled cat does not "fit" inside the final image. As such, we need to rotate *without resizing* the image. By default, `resize=False` so we can leave it on the default setting:
 
@@ -867,7 +867,7 @@ show_attributes(coffee_grey)
 plt.imshow(coffee_grey);
 ```
 
-First we, extract the `shape` of the image, and store each element as a separate variable. In this case, the image is 2D (e.g. single-channel, monochrome) and so we extract the number of rows and the number of columns:
+First, we extract the `shape` of the image, and store each element as a separate variable. In this case, the image is 2D (e.g. single-channel, monochrome) and so we extract the number of rows and the number of columns:
 
 ```{python}
 # Unpack and store the number of rows and number of columns.
@@ -877,7 +877,7 @@ dim_1, dim_2 = coffee_grey.shape
 dim_1, dim_2
 ```
 
-Then we can these elements (579 and 867) via `np.orgid()` to create one array with 579 rows, and 1 column, and another array with 1 row and 867 columns. These elements can be used to make a 2D mask, in a specific shape:
+Then we can use these elements (579 and 867) via `np.orgid()` to create one array with 579 rows, and 1 column, and another array with 1 row and 867 columns. These elements can be used to make a 2D mask, in a specific shape:
 
 ```{python}
 # Create a grid, based on the image `shape`.
@@ -1173,7 +1173,7 @@ plt.imshow(ski.util.invert(cat_purple));
 
 # Greyscale to binary conversion
 
-Greyscale to binary conversion can be acheived using comparison operators (`<`, `>`, `<=`, `>=`, `==`). The resulting Boolean array will always be binary.
+Greyscale to binary conversion can be achieved using comparison operators (`<`, `>`, `<=`, `>=`, `==`). The resulting Boolean array will always be binary.
 
 Let's demonstrate with a greyscale image:
 
@@ -1197,7 +1197,7 @@ print(binary_check)
 plt.matshow(binary_check);
 ```
 
-We can also easily acheive this conversion in `skimage` - see the [filtering page](5_mean_filter) for more detail. For now, we can use the `ski.filters.threshold_minimum()` function. This supplies us a recommended threshold value to attempt to divide the array pixels into two classes e.g. two classes where the pixels in each class are maximally different from pixels in the other class:
+We can also easily achieve this conversion in `skimage` - see the [filtering page](5_mean_filter) for more detail. For now, we can use the `ski.filters.threshold_minimum()` function. This supplies us a recommended threshold value to attempt to divide the array pixels into two classes e.g. two classes where the pixels in each class are maximally different from pixels in the other class:
 
 ```{python}
 # Get a recommended threshold from `skimage`.

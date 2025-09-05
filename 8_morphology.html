@@ -32,9 +32,9 @@
     <link rel="stylesheet" type="text/css" href="_static/styles/sphinx-book-theme.css?v=eba8b062" />
     <link rel="stylesheet" type="text/css" href="_static/togglebutton.css?v=13237357" />
     <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
-    <link rel="stylesheet" type="text/css" href="_static/mystnb.8ecb98da25f57f5357bf6f572d296f466b2cfe2517ffebfabe82451661e28f02.css" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.8ecb98da25f57f5357bf6f572d296f466b2cfe2517ffebfabe82451661e28f02.css?v=6644e6bb" />
     <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css?v=4fa983c6" />
-    <link rel="stylesheet" type="text/css" href="_static/exercise.css" />
+    <link rel="stylesheet" type="text/css" href="_static/exercise.css?v=982b99e0" />
     <link rel="stylesheet" type="text/css" href="_static/sphinx-design.min.css?v=95c83b7e" />
   
   <!-- Pre-loaded scripts that we'll load fully later -->
@@ -486,7 +486,7 @@ document.write(`
 <h1>Morphology<a class="headerlink" href="#morphology" title="Link to this heading">#</a></h1>
 <p><a class="reference external" href="https://en.wikipedia.org/wiki/Mathematical_morphology">Morphology</a> is the mathematical study of shapes and has numerous applications in image processing. As such, Scikit-image has a dedicated module (<code class="docutils literal notranslate"><span class="pre">ski.morphology</span></code>) for associated functions.</p>
 <p>We already encountered structuring elements - (of which kernels are one type) - on <a class="reference internal" href="4_threshold_filters.html"><span class="doc std std-doc">earlier</span></a> <a class="reference internal" href="5_mean_filter.html"><span class="doc std std-doc">pages</span></a>. A structuring element is a grid of a certain shape - you can think of it as a “template” - which is used to define the “neighbourhood” of pixels which an image processing operation affects.</p>
-<p>A (3, 3) structuring element can be applied as a square which affects 9 pixels - we might alter the image by centering this structuring element over every pixel, and replacing each pixel with the mean of the other pixels in it’s “neighbourhood”, for instance:</p>
+<p>A (3, 3) structuring element can be applied as a square which affects 9 pixels - we might alter the image by centering this structuring element over every pixel, and replacing each pixel with the mean of the other pixels in its “neighbourhood”, for instance:</p>
 <p><img alt="" src="_images/kernel_general.png" /></p>
 <p>You will also recall that we need a strategy for pixels at the edge of the image, where we center the structuring element on a pixel where part of the structuring element “falls off” the edge of the image:</p>
 <p><img alt="" src="_images/kernel_hit_the_edge.png" /></p>
@@ -608,7 +608,7 @@ document.write(`
 </div>
 </div>
 <p>What has happened here? We can think of our <code class="docutils literal notranslate"><span class="pre">diamond</span></code> structing element as being a bit like a weird <a class="reference external" href="https://en.wikipedia.org/wiki/Reticle">crosshair/reticle</a> of a gun. In a morphological operation, we “target” the crosshair on a given array pixel. Because we are eroding, the central pixel will be <em>lowered to the value of the lowest pixel in its neighbourhood</em> if the pixels in the neighbourhood do not “match” the shape of the structuring element. This is illustrated below.</p>
-<p>Now, because our <code class="docutils literal notranslate"><span class="pre">sqaure</span></code> array contains only 1s and 0s, central pixels “match” the structuring element if the pixels under the structuring element are 1 where the value sin the structuring element are 1. The image below shows the <code class="docutils literal notranslate"><span class="pre">diamond</span></code> structuring element being applied to three different central pixels. “Matches” between the structuring element and the array pixels are depicted with a green tick; “clashes” between the structuring element and the array pixels are depicted with a red X. “Clashes” occur where the structuring element value is 1 and the array pixel value is 0.</p>
+<p>Now, because our <code class="docutils literal notranslate"><span class="pre">square</span></code> array contains only 1s and 0s, central pixels “match” the structuring element if the pixels under the structuring element are 1 where the values in the structuring element are 1. The image below shows the <code class="docutils literal notranslate"><span class="pre">diamond</span></code> structuring element being applied to three different central pixels. “Matches” between the structuring element and the array pixels are depicted with a green tick; “clashes” between the structuring element and the array pixels are depicted with a red X. “Clashes” occur where the structuring element value is 1 and the array pixel value is 0.</p>
 <p>If a “clash” occurs, then the central pixel gets lowered to the lowest value under the structuring element (0). (We call this, loosely, the central pixel “dying”).</p>
 <p>If a full “match” occurs between the neighbourhood values and the structuring element, then the central pixel is left altered (we say that it “survives”):</p>
 <p><img alt="" src="_images/hit_n_miss_with_text.png" /></p>
@@ -661,7 +661,7 @@ document.write(`
 <p>What happened here? Well, again a “match” only occurs for two pixels in the image, the pixels at the center of each white square. This illustration below shows what happened:</p>
 <p><img alt="" src="_images/hit_n_miss_with_text_2.png" /></p>
 <p>All other “neighbourhoods” did not match the structuring element, and so the values in the neighbourhood were lowered to 0, 0 being the lowest value in each neighbourhood. This has the effect, if a non-matching pixel has the value of 1, of setting it to 0. If a non-matching pixel has a value of 0, it also gets set to 0, but it was already 0, so there is no appreciable change.</p>
-<p>Let’s alter our image array slightly, to see how this affects the erosion operation with our <code class="docutils literal notranslate"><span class="pre">diamond</span></code> structuring element. We will place a black array pixel inside the right hand white square:</p>
+<p>Let’s alter our image array slightly, to see how this affects the erosion operation with our <code class="docutils literal notranslate"><span class="pre">diamond</span></code> structuring element. We will place a black array pixel inside the right-hand white square:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># A modified array.</span>
@@ -921,7 +921,7 @@ Min Pixel Value: 0
 <img alt="_images/01a061042ae39fe8644e90b8f2f458497bdf0a7aa550ecdd7919841dcd5aca27.png" src="_images/01a061042ae39fe8644e90b8f2f458497bdf0a7aa550ecdd7919841dcd5aca27.png" />
 </div>
 </div>
-<p>There are less “matches” between the large structuring element and pixel neighbourhoods in the image - this leaves less central pixels unchanged, than for a smalller structuring element of the same shape. Thus, because in erorison we are <em>lowering</em> central pixel values in the event of a “clash”, the darker regions have expanded substantially more than when we used a smaller <code class="docutils literal notranslate"><span class="pre">diamond</span></code>, which gave more “matches”.</p>
+<p>There are less “matches” between the large structuring element and pixel neighbourhoods in the image - this leaves less central pixels unchanged, than for a smaller structuring element of the same shape. Thus, because in erorison we are <em>lowering</em> central pixel values in the event of a “clash”, the darker regions have expanded substantially more than when we used a smaller <code class="docutils literal notranslate"><span class="pre">diamond</span></code>, which gave more “matches”.</p>
 <p>Dilation, again has the opposite effect of increasing brighter regions, in the event of “clashes”:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">

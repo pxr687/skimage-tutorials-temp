@@ -325,7 +325,7 @@ More intuitively visualised, our new three dimensional array looks like this:
 
 ![](images/three_slice_red.png)
 
-You can see the values of 1 in the top left and bottom right elements of the first slice, all other elements are 0. Once more we can "walk" along the $z$ dimension, using indexing operations:
+You can see the values of 1 in the top-left and bottom-right elements of the first slice, all other elements are 0. Once more we can "walk" along the $z$ dimension, using indexing operations:
 
 ```{python}
 # First 2D slice of the stack.
@@ -449,13 +449,15 @@ What is happening here?
 
 Recall that we referred to the 2D arrays that we used at the start of this tutorial as *single-channel image arrays*? The 3D arrays we just created are  *three-channel image arrays*. This means that each array pixel has three values, one in each slice of the 3D stacks we created. You can think of each slice as being one *colour channel*. Each colour channel controls the amount of a specific colour in the image, depending on the values of the array pixels in that slice.
 
-Using these three-channel arrays, when Matplotlib produces the a two-dimensional *display image* (e.g. the matrix with coloured squares along the diagonal and black squares elsewhere). However, behind this 2D display image there are three slices in the third dimension, each with the same number of rows and columns as the final 2D display image. Each pixel (e.g. each array element) in the display image gets its colour information from a mix of the corresponding elements in each slice in the 3D image array.
+Using these three-channel arrays, when Matplotlib produces a two-dimensional *display image* (e.g. the matrix with coloured squares along the diagonal and black squares elsewhere). However, behind this 2D display image there are three slices in the third dimension, each with the same number of rows and columns as the final 2D display image. Each pixel (e.g. each array element) in the display image gets its colour information from a mix of the corresponding elements in each slice in the 3D image array.
 
 As we have seen, the first slice is the red channel, the second slice is the green channel and the third slice is the blue channel. The intensities in each colour channel are *mixed* to produce the rendered 2D image:
 
 ![](images/colour_channels_all.png)
 
-Now, the way we have setup each 3D array *is* mixing the colour channels, but because we have set two of the slices to contain only 0's, we are essentially "switching off" those colour channel in the final mix (e.g. in the image displayed by Matplotlib). Other colours can be created using different blends of these primary colours (red, green, blue). For `float64` image data, you can think of 0 as meaning 0% and 1 as meaning 100%, 0.5 meaning 50% and so on. So a 1 in the red slice means 100% red is mixed in for that pixel, along with the percentages from the other colour channels (which in the arrays above, are 0's).
+Now, despite the visualisations of our array containing only one primary colour, the colour channels are in fact being mixed together. However, because we have set two of the slices to contain only 0's, we are essentially "switching off" those colour channels in the final mix (e.g. in the image displayed by Matplotlib). 
+
+Other non-primary colours can be created using different blends of the primary colours (red, green, blue) in each slice of the array. For `float64` image data, you can think of 0 as meaning 0% and 1 as meaning 100%, 0.5 meaning 50% and so on. So a 1 in the red slice means 100% red is mixed in for that pixel, along with the percentages from the other colour channels (which in the arrays above, are 0's).
 
 We can see this by choosing intensity values randomly for each colour channel. The function `np.random.uniform()` can supply us with three random decimal numbers between 0 and 1. Run the cell below a few times if you are using this tutorial interactively, to see the random draw a few times:
 
@@ -491,7 +493,7 @@ three_D_stack_array_altered_blend= np.stack([two_D_ones_and_zeros * X1,
 plt.matshow(three_D_stack_array_altered_blend);
 ```
 
-So, each two-dimensional display image has a "hidden" three-dimensional array behind it. Each slice of the third dimension is a colour channel. The mix of values at a given element in each colour channel determins the colour of that pixel in the rendered image. You may want to view this image in a new browser window, to see more clearly the exact mixes of the colour channels, which are shown above each square on the right hand side of the image:
+So, each two-dimensional display image has a "hidden" three-dimensional array behind it. Each slice of the third dimension is a colour channel. The mix of values at a given element in each colour channel determines the colour of that pixel in the rendered image. You may want to view this image in a new browser window, to see more clearly the exact mixes of the colour channels, which are shown above each square on the right-hand side of the image:
 
 ![](images/three_slice_algebraic_multi.png)
 
@@ -536,7 +538,7 @@ def show_attributes(img):
 show_attributes(coffee)
 ```
 
-We can see that this image has three dimensions, with three slices in the third dimension. We are therefore dealing with *true colour* image with three colour channels. We can also see that the image array represents the most intense pixel values with the number 255, and the least intense values with the number 0, in each colour channel. The `dtype` is `uint8`, in contrast the `float64` `dtype` we have been using in our custom made low-resolution image arrays.
+We can see that this image has three dimensions, with three slices in the third dimension. We are therefore dealing with a *true colour* image with three colour channels. We can also see that the image array represents the most intense pixel values with the number 255, and the least intense values with the number 0, in each colour channel. The `dtype` is `uint8`, in contrast the `float64` `dtype` we have been using in our custom-made low-resolution image arrays.
 
 Let's view the image with `imshow()`:
 
@@ -607,7 +609,7 @@ for i in np.arange(len(RGB_chan_names)):
         plt.xlabel(f"\n\nShape: {current_slice.shape}")
 ```
 
-When we visualise the full 3D array however, then, as we have seen, each slice controls the amount of a specific colour, and the resultant mix gives us our beautiful, full colour image:
+When we visualise the full 3D array however, then, as we have seen, each slice controls the amount of a specific colour, and the resultant mix gives us our beautiful, full-colour image:
 
 ```{python}
 plt.imshow(coffee);

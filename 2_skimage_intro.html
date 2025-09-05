@@ -32,9 +32,9 @@
     <link rel="stylesheet" type="text/css" href="_static/styles/sphinx-book-theme.css?v=eba8b062" />
     <link rel="stylesheet" type="text/css" href="_static/togglebutton.css?v=13237357" />
     <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
-    <link rel="stylesheet" type="text/css" href="_static/mystnb.8ecb98da25f57f5357bf6f572d296f466b2cfe2517ffebfabe82451661e28f02.css" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.8ecb98da25f57f5357bf6f572d296f466b2cfe2517ffebfabe82451661e28f02.css?v=6644e6bb" />
     <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css?v=4fa983c6" />
-    <link rel="stylesheet" type="text/css" href="_static/exercise.css" />
+    <link rel="stylesheet" type="text/css" href="_static/exercise.css?v=982b99e0" />
     <link rel="stylesheet" type="text/css" href="_static/sphinx-design.min.css?v=95c83b7e" />
   
   <!-- Pre-loaded scripts that we'll load fully later -->
@@ -558,9 +558,9 @@ document.write(`
 </div>
 </div>
 <p>You will recall that this array - in virture of being 2D and having only one numeric value per array pixel - is a single-channel array. This means that it contains only information about pixel intensity (grey-level), and not about colour.</p>
-<p>To include true colour information, our array must be of at least three-dimensions. A three dimensional colour image array typically has three “slices” in the third dimension. Each element of each slice contains a number between 0 and 1 (for <code class="docutils literal notranslate"><span class="pre">float64</span></code> data), or between 1 and 255 (for <code class="docutils literal notranslate"><span class="pre">uint8</span></code> data). For the standard RGB (Red-Green-Blue) format the number in each element of each slice in the third dimension tells that array pixel what colour to be (e.g. a mix of red, green and blue, across the three slices). Hence these slices, in the third dimension, are called “colour channels”.</p>
+<p>To include true colour information, our array must be of <em>at least</em> three dimensions. A three-dimensional colour image array typically has three “slices” in the third dimension. Each element of each slice contains a number between 0 and 1 (for <code class="docutils literal notranslate"><span class="pre">float64</span></code> data), or between 1 and 255 (for <code class="docutils literal notranslate"><span class="pre">uint8</span></code> data). For the standard RGB (Red-Green-Blue) format the number in each element of each slice in the third dimension tells that array pixel what colour to be (e.g. a mix of red, green and blue, across the three slices). Hence these slices, in the third dimension, are called “colour channels”.</p>
 <p><img alt="" src="_images/three_slice_algebraic_multi.png" /></p>
-<p>As we saw previously, we can control the amount of colour in the image by manipulating the each channel in the third dimension:</p>
+<p>As we saw previously, we can control the amount of colour in the image by manipulating each channel in the third dimension:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Using `np.stack()` to create a multi-channel array.</span>
@@ -584,7 +584,7 @@ Min Pixel Value: 0.0
 <img alt="_images/cbc6c90b7bb148e2a1f3a3df57d9f47bfcafbc5e45acc55a67dbee3d9ae54ad3.png" src="_images/cbc6c90b7bb148e2a1f3a3df57d9f47bfcafbc5e45acc55a67dbee3d9ae54ad3.png" />
 </div>
 </div>
-<p>We show this principle again below, for each colour channel. The top row of the plot shows the channels for <code class="docutils literal notranslate"><span class="pre">uint8</span></code> data with 255 as the maximum intensity pixel value. The second row of the plot shows each channel for <code class="docutils literal notranslate"><span class="pre">float64</span></code> data, using 1 as the maximum pixel intensity value:</p>
+<p>We show this principle again below, for each colour channel. The top row of the plot shows the channels for <code class="docutils literal notranslate"><span class="pre">uint8</span></code> data with 255 as the maximum pixel intensity value. The second row of the plot shows each channel for <code class="docutils literal notranslate"><span class="pre">float64</span></code> data, using 1 as the maximum pixel intensity value:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Use a custom function to plot the maximum intensity values in the diagonals, for `int` and `float` data,</span>
@@ -598,7 +598,7 @@ Min Pixel Value: 0.0
 <img alt="_images/015b8b709360602cd44fd897cd18710d18ef3035724e49b0417d1f84724483fa.png" src="_images/015b8b709360602cd44fd897cd18710d18ef3035724e49b0417d1f84724483fa.png" />
 </div>
 </div>
-<p>These are the basic aspects of images represented as NumPy arrays. Other ways of representing colour exist and are supported by <code class="docutils literal notranslate"><span class="pre">skimage</span></code>, and indeed, not all 3D image arrays contain colour information (e.g. structural brain images). We will look at these concepts in later sections, but <code class="docutils literal notranslate"><span class="pre">skimage</span></code> can work with these images as easily as the basic coloured sqaures we have just made - all these images <em>are just NumPy arrays</em> and can be handled just as any NumPy array.</p>
+<p>These are the basic aspects of images represented as NumPy arrays. Other ways of representing colour exist and are supported by <code class="docutils literal notranslate"><span class="pre">skimage</span></code>, and indeed, not all 3D image arrays contain colour information (e.g. structural brain images). We will look at these concepts in later sections, but <code class="docutils literal notranslate"><span class="pre">skimage</span></code> can work with these images as easily as the basic coloured squares we have just made - all these images <em>are just NumPy arrays</em> and can be handled just as any NumPy array.</p>
 </section>
 <section class="tex2jax_ignore mathjax_ignore" id="going-ski-ing-arrays-as-arguments">
 <h1>Going <code class="docutils literal notranslate"><span class="pre">ski</span></code>-ing : arrays as arguments<a class="headerlink" href="#going-ski-ing-arrays-as-arguments" title="Link to this heading">#</a></h1>
@@ -1081,7 +1081,7 @@ Min Pixel Value: 0.0
 <img alt="_images/eb2cf1dafcf4d437433ecaf242c647771048593ba24b40e5f9cc6e5adedf6d49.png" src="_images/eb2cf1dafcf4d437433ecaf242c647771048593ba24b40e5f9cc6e5adedf6d49.png" />
 </div>
 </div>
-<p>We can see that the <code class="docutils literal notranslate"><span class="pre">dtype</span></code> of the freshly save, freshly loaded image is indeed <code class="docutils literal notranslate"><span class="pre">uint8</span></code>:</p>
+<p>We can see that the <code class="docutils literal notranslate"><span class="pre">dtype</span></code> of the freshly saved, freshly loaded image is indeed <code class="docutils literal notranslate"><span class="pre">uint8</span></code>:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">show_attributes</span><span class="p">(</span><span class="n">load_back_in</span><span class="p">)</span>
@@ -1109,7 +1109,7 @@ Min Pixel Value: 0
 </div>
 </div>
 <p>Issues with <code class="docutils literal notranslate"><span class="pre">dtype</span></code> can be a source of errors, so it is important to be aware of what <code class="docutils literal notranslate"><span class="pre">dtype</span></code> your image arrays are using. Fortunately, as we have seen, to help remedy or avoid such errors, <code class="docutils literal notranslate"><span class="pre">skimage</span></code> makes it easy to convert between <code class="docutils literal notranslate"><span class="pre">dtypes</span></code>, where such errors do occur.</p>
-<p><em>Note</em>: you should prefer the the <code class="docutils literal notranslate"><span class="pre">ski.util</span></code> conversion functions to using the NumPy <code class="docutils literal notranslate"><span class="pre">ndarray.astype()</span></code> method, when altering image <code class="docutils literal notranslate"><span class="pre">dtype</span></code>s. This is because the <code class="docutils literal notranslate"><span class="pre">skimage</span></code> functions will respect the min/max pixel intensity value conventions shown in the table above, where <code class="docutils literal notranslate"><span class="pre">.astype()</span></code> may not. Here is a list of the <code class="docutils literal notranslate"><span class="pre">skimage</span></code> conversion functions - you will need them!:</p>
+<p><em>Note</em>: you should prefer the <code class="docutils literal notranslate"><span class="pre">ski.util</span></code> conversion functions to using the NumPy <code class="docutils literal notranslate"><span class="pre">ndarray.astype()</span></code> method, when altering image <code class="docutils literal notranslate"><span class="pre">dtype</span></code>s. This is because the <code class="docutils literal notranslate"><span class="pre">skimage</span></code> functions will respect the min/max pixel intensity value conventions shown in the table above, where <code class="docutils literal notranslate"><span class="pre">.astype()</span></code> may not. Here is a list of the <code class="docutils literal notranslate"><span class="pre">skimage</span></code> conversion functions - you will need them!:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Show the `skimage` `dtype` conversion functions.</span>
@@ -1338,7 +1338,7 @@ Min Pixel Value: 0.02
 \[
 Y = 0.2126R + 0.7152G + 0.0722B
 \]</div>
-<p>This has the effect of removing the colour channels, so the output array is 2D. Why do we use these specific numbers? You could go and knock the door of your physicist friend to ask (don’t worry, they’ll be in…), or you can see <a class="reference external" href="https://stackoverflow.com/questions/596216/formula-to-determine-perceived-brightness-of-rgb-color">this page</a> for a detailed explanation of where the weights come from.</p>
+<p>This has the effect of removing the colour channels, so the output array is 2D. Why do we use these specific numbers? You could go and knock on the door of your physicist friend to ask (don’t worry, they’ll be in…), or you can see <a class="reference external" href="https://stackoverflow.com/questions/596216/formula-to-determine-perceived-brightness-of-rgb-color">this page</a> for a detailed explanation of where the weights come from.</p>
 <div class="exercise dropdown admonition" id="no-colour-cat">
 
 <p class="admonition-title"><span class="caption-number">Exercise 8 </span></p>
@@ -1444,7 +1444,7 @@ Min Pixel Value: 0.0
 <img alt="_images/7b6ba53bbc195c8363a56aceb5ebdce7a83c2f353e92735124cb88cc173847b4.png" src="_images/7b6ba53bbc195c8363a56aceb5ebdce7a83c2f353e92735124cb88cc173847b4.png" />
 </div>
 </div>
-<p>Psychedelic! Maybe this is how cats look, from the perspective of other cats (e.g. from within their “<a class="reference external" href="https://en.wikipedia.org/wiki/Umwelt">umwelt</a>”), but this is sadly probably not the case…</p>
+<p>Psychedelic! Maybe this is how cats look, from the perspective of other cats (e.g. from within their “<a class="reference external" href="https://en.wikipedia.org/wiki/Umwelt">umwelt</a>”), but sadly this is probably not the case…</p>
 <p>Let’s extract the individual channels with some array indexing operations. Each channel is 2D, and therefore will render as a greyscale image when displayed with Matplotlib:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -1491,7 +1491,7 @@ Min Pixel Value: 0.0
 <img alt="_images/1a552b69d410cf7c4942dcfc6cdee2f83086e428722358481187b8cbee2d983d.png" src="_images/1a552b69d410cf7c4942dcfc6cdee2f83086e428722358481187b8cbee2d983d.png" />
 </div>
 </div>
-<p>Let’s <code class="docutils literal notranslate"><span class="pre">np.stack()</span></code> this image array into 4-D, and set only the 1st and 4th channels to have nonzero values (e.g. so all values in the green and blue channel are 0’s):</p>
+<p>Let’s <code class="docutils literal notranslate"><span class="pre">np.stack()</span></code> this image array into 4-D, and set only the 1st and 4th channels to have nonzero values (e.g. so all values in the other, green and blue, channels are 0’s):</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Create an array with 4 channels (e.g. 4 slices in the third dimension).</span>
@@ -1588,9 +1588,9 @@ Min Pixel Value: 0.0
 <p class="admonition-title">Solution to<a class="reference internal" href="#shoegaze"> Exercise 9</a></p>
 <section id="solution-content">
 <p>There are several steps here - this was not an easy task! First, we need to convert our image to the <code class="docutils literal notranslate"><span class="pre">float64</span></code>. We need the <code class="docutils literal notranslate"><span class="pre">ski.util.img_as_float()</span></code> function to do this. If you tried to use the NumPy <code class="docutils literal notranslate"><span class="pre">.astype(float)</span></code> method, you will have encountered a thorny error (more on this below).</p>
-<p>If you look at the target image, you will notice that it has a green-ish tone, but no so green as we would get if the other colour channels were “switched off”. As such, you can get the correct effect by reducing the impact of the red and blue channels, by halving their values.</p>
-<p>The left hand side of the image has variance in <em>transparency</em> - pixels where the image is darker are <em>more transparent</em>. This is becuase, in the target image, the alpha channel is a copy of the original 2D image.</p>
-<p>The distinction between the left hand side and right hand side of the image is that in the right hand side, the transparency channel values are all uniform, though less than maximum opacity, giving a hazy effect. This can be achieved by NumPy array indexing, and setting values in the alpha channel in the right hand side of the image to all equal 0.5:</p>
+<p>If you look at the target image, you will notice that it has a green-ish tone, but not so green as we would get if the other colour channels were “switched off”. As such, you can get the correct effect by reducing the impact of the red and blue channels, by halving their values.</p>
+<p>The left-hand side of the image has variance in <em>transparency</em> - pixels where the image is darker are <em>more transparent</em>. This is because, in the target image, the alpha channel is a copy of the original 2D image.</p>
+<p>The distinction between the left-hand side and right-hand side of the image is that in the right-hand side, the transparency channel values are all uniform, though less than maximum opacity, giving a hazy effect. This can be achieved by NumPy array indexing, and setting values in the alpha channel in the right-hand side of the image to all equal 0.5:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution.</span>
@@ -1728,8 +1728,8 @@ Min Pixel Value: 0
 </div>
 </div>
 <p>You can see that we are walking through the iguana’s head, in the vertical direction.</p>
-<p>Becuase this image file contains information about a literal 3D object (e.g. an iguana’s head), we can refer to it as a <em>volumetric</em> image. In such images, the third dimension contains <em>spatial information</em>, and not <em>colour information</em>.</p>
-<p>Both <code class="docutils literal notranslate"><span class="pre">skimage</span></code> and <code class="docutils literal notranslate"><span class="pre">matplotlib</span></code> know the slices in the third dimension are not colour channels becuase there are many too many slices to function as colour channels, so it is asssumed that the image is volumetric.</p>
+<p>Because this image file contains information about a literal 3D object (e.g. an iguana’s head), we can refer to it as a <em>volumetric</em> image. In such images, the third dimension contains <em>spatial information</em>, and not <em>colour information</em>.</p>
+<p>Both <code class="docutils literal notranslate"><span class="pre">skimage</span></code> and <code class="docutils literal notranslate"><span class="pre">matplotlib</span></code> know the slices in the third dimension are not colour channels because there are many too many slices to function as colour channels, so it is assumed that the image is volumetric.</p>
 </section>
 <section class="tex2jax_ignore mathjax_ignore" id="summary">
 <h1>Summary<a class="headerlink" href="#summary" title="Link to this heading">#</a></h1>

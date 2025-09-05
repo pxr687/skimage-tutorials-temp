@@ -3,7 +3,7 @@
 ## Kernels and pixel neighbourhoods
 
 
-On the last page we filtered images based on a single threshold value, or based on multiple threshold values. Other filters work differently to this; they work by adjusting a given pixel's value based on the value of other pixels which surround it, in a specified area. The mean filter is one such filter that works in this manner.
+On the last page we filtered images based on a single threshold value, or based on multiple threshold values. Other filters work differently to this: they work by adjusting a given pixel's value based on the value of other pixels which surround it, in a specified area. The mean filter is one such filter that works in this manner.
 
 The mean filter is a *local filter*, because it alters a given pixel's value based on the values of other pixels in the surrounding "local neighborhood". The image below shows the pixel values in the `smiley` image array that we created on an earlier [page](0_images_as_numpy_arrays). Two possible "local neighbourhoods" are shown for a given pixel, which is highlighted in red. One neighbourhood is 3-by-3, and the other is 5-by-5 - we could use either when using a local filter:
 
@@ -49,7 +49,7 @@ print(random_i)
 plt.imshow(random_i);
 ```
 
-Let's use some indexing to go for a walk through the neighbourhoods (kernels) in this array. We will treat each `(3,3)` set of pixels as a separate neighbourhood. For now, we only walk through the neighborhoods at the "top" of the array. We will start our "walk" in the top left corner of the array, so that each 3-by-3 slice is centered on a pixel in the second row of the image:
+Let's use some indexing to go for a walk through the neighbourhoods (kernels) in this array. We will treat each `(3,3)` set of pixels as a separate neighbourhood. For now, we only walk through the neighborhoods at the "top" of the array. We will start our "walk" in the top-left corner of the array, so that each 3-by-3 slice is centered on a pixel in the second row of the image:
 
 ```{python}
 # The first neighbourhood.
@@ -85,7 +85,7 @@ We can visualise the "walk" we have just taken, with prettier graphics - (you ma
 
 ![](images/kernel_1.png)
 
-Now, imagine we take mean within each neighbourhood (kernel) - the mean of each kernel is shown below the image of each indexing operation:
+Now, imagine we calculate the mean within each neighbourhood (kernel) - the mean of each kernel is shown below the image of each indexing operation:
 
 ![](images/kernel_2_mean.png)
 
@@ -175,7 +175,7 @@ For this exercise, you should build a function which filters an image using a 3-
 
 However, your kernel should do something different to the mean kernel we implemented earlier. Your function will do something dark, something illegal (at least by the standards of `skimage` `dtype` conventions)...
 
-It should replace the central pixel value the *negative sum* of the values under the kernel (e.g. add the values under the kernel up, and then make the sum negative). You should apply this to the `coins` image from `ski.data`. Here is the original image:
+It should replace the central pixel value with the *negative sum* of the values under the kernel (e.g. add the values under the kernel up, and then make the sum negative). You should apply this to the `coins` image from `ski.data`. Here is the original image:
 
 ![](images/coins.png)
 
@@ -271,7 +271,7 @@ show_attributes(neg_sum_filter_coins)
 
 # Convolution
 
-In normal practice, filtering operations which use kernels rely on [convolution](https://en.wikipedia.org/wiki/Convolution). In fact, one name for the kernel is "convolution kernel". In image processing, convolution is similar to the process we saw with our crude mean filter - we "walk" a kernal across our whole image, centering it on every pixel, and perform a computation which modifies the central pixel based on the other values in the kernal/neightbourhood.
+In normal practice, filtering operations which use kernels rely on [convolution](https://en.wikipedia.org/wiki/Convolution). In fact, one name for the kernel is "convolution kernel". In image processing, convolution is similar to the process we saw with our crude mean filter - we "walk" a kernel across our whole image, centering it on every pixel, and perform a computation which modifies the central pixel based on the other values in the kernel/neightbourhood.
 
 Let's implement a true mean filter, using convolution. Obviously, we start with our kernel. First, we define its shape:
 
@@ -289,7 +289,7 @@ kernel_size = np.prod(kernel_shape)
 kernel_size
 ```
 
-We can then construct our kernel, using `np.full()` which allows to fill an array with a given value. In this case we will fill it with $\frac{1}{n}$, where $n$ is the number of elements in our kernel (9 kenerl elements - so $\frac{1}{9}$ = 0.11):
+We can then construct our kernel, using `np.full()` which allows us to fill an array with a given value. In this case we will fill it with $\frac{1}{n}$, where $n$ is the number of elements in our kernel (9 kenerl elements - so $\frac{1}{9}$ = 0.11):
 
 ```{python}
 mean_kernel = np.full(shape=kernel_shape, 
@@ -298,7 +298,7 @@ mean_kernel = np.full(shape=kernel_shape,
 mean_kernel
 ```
 
-Our purpose of here is to take the mean of the values under the kernel, so how does a 3-by-3 kernel filled with $\frac{1}{n}$ help us?
+Our purpose here is to take the mean of the values under the kernel, so how does a 3-by-3 kernel filled with $\frac{1}{n}$ help us?
 
 Well, this value can be used to find the mean (duh!)...we'll show this quickly using just four random values:
 
@@ -317,7 +317,7 @@ np.sum(nums * 1/n)
 
 ...the mean! And we can do exactly the same thing with the `mean_kernel` we made above. We can use the `scipy.ndimage.correlate()` function to achieve this with maximum efficiency (relative to the crude method we used above). This function involes ["moving a [...] kernel over [an] image and computing the sum of products at each location"](https://docs.scipy.org/doc/scipy/reference/generated/scipy.ndimage.correlate.html). This means we:
 
-- Centre the kernel on given array pixel in the original image.
+- Center the kernel on given array pixel in the original image.
 
 - Multiply the array pixel values covered by the kernel with the elements in the kernel (in this case every kernel element value is $\frac{1}{9}$).
 
@@ -465,7 +465,7 @@ plt.subplots_adjust()
 plt.tight_layout();
 ```
 
-As with many filtering operations, the effect of altering aspects of the filtering process (like a threshold value or kernel size), is very context dependent. It may take many iterations before finding a "sweet spot", and where the sweet spot is may be somewhat subjective.
+As with many filtering operations, the effect of altering aspects of the filtering process (like a threshold value or kernel size), is very context-dependent. It may take many iterations before finding a "sweet spot", and where the sweet spot is may be somewhat subjective.
 
 
 ::: {exercise-start}
@@ -473,7 +473,7 @@ As with many filtering operations, the effect of altering aspects of the filteri
 :class: dropdown
 :::
 
-The nice thing about applying filtering via convolution kernels is that changing the kernel itself lets us implement a wide variety of functions, even strange ones. In this exercise, and you will write a function called `strange_filter()`. You should apply it to `coffe_grey` to produce the following image:
+The nice thing about applying filtering via convolution kernels is that changing the kernel itself lets us implement a wide variety of functions, even strange ones. In this exercise, you will write a function called `strange_filter()`. You should apply it to `coffe_grey` to produce the following image:
 
 ![](images/coffee_strange_kernel.png)
 
@@ -544,7 +544,7 @@ strange_filter_coffee_other = strange_filter_solution(coffee_grey, (3, 3))
 plt.imshow(strange_filter_coffee_other);
 ```
 
-This is quite a strange kernel to apply! But it shows us how easy it is to achieve some radical filtering effects with some custom kernels...
+This is quite a strange kernel to apply! But it shows us how easy it is to achieve radical filtering effects with some custom kernels...
 
 ::: {solution-end}
 :::
@@ -552,13 +552,13 @@ This is quite a strange kernel to apply! But it shows us how easy it is to achie
 
 # Mean filtering with `skimage`
 
-We can implement a mean filter using the `ski.filters.rank.mean()` function. `skimage` prefers the term `footprint` to "kernel", but the meaning is the same. We supply a small matrix with which to "walk" through the image, centring the kernel on every pixel, and modifying that central pixel's value based on the values of the other pixels in it's neighbourhood, with the size and shape of the neighbourhood being defined by the kernel (`footprint`). 
+We can implement a mean filter using the `ski.filters.rank.mean()` function. `skimage` prefers the term `footprint` to "kernel", but the meaning is the same. We supply a small matrix with which to "walk" through the image, centering the kernel on every pixel, and modifying that central pixel's value based on the values of the other pixels in it's neighbourhood, with the size and shape of the neighbourhood being defined by the kernel (`footprint`). 
 
-Inspecting the `skimage` documentation will reveal that the format expected for the `footprint` should be ["the [pixel] neighborhood expressed as an ndarray of 1’s and 0’s."](https://scikit-image.org/docs/0.25.x/api/skimage.filters.rank.html#skimage.filters.rank.mean). We will uses `np.ones()` to generate an array in this format. We use a `(9,9`) kernel to acheive a stronger visual effect:
+Inspecting the `skimage` documentation will reveal that the format expected for the `footprint` should be ["the [pixel] neighborhood expressed as an ndarray of 1’s and 0’s."](https://scikit-image.org/docs/0.25.x/api/skimage.filters.rank.html#skimage.filters.rank.mean). We will uses `np.ones()` to generate an array in this format. We use a (9, 9) kernel to acheive a stronger visual effect:
 
 ```{python}
 # A "footprint" (eg. kernel) to pass to `skimage`.
-footprint_9_by_9 = np.ones((9,9))
+footprint_9_by_9 = np.ones( (9, 9) )
 
 footprint_9_by_9
 ```
@@ -601,7 +601,7 @@ plt.imshow(astronaut);
 
 If we try to filter this image with our (3, 3) `mean_kernel` we will get an error:
 
-```{python}
+```{python tags=c("raises-exception")}
 # Oh dear.
 astronaut_mean_filtered = ndi.correlate(astronaut, 
                                         weights=mean_kernel)
@@ -667,9 +667,9 @@ plt.imshow(astronaut_mean_filtered)
 plt.tight_layout();
 ```
 
-We got a blurrier output image via `skimage` here, than in the manual convolution using `ndi.correlate()` because we used a larger kernel for the `skimage` filtering, and so are averaging over larger pixel neighbourhoods.
+We got a blurrier output image via `skimage` here, than in the manual convolution using `ndi.correlate()`. This is because we used a larger kernel for the `skimage` filtering, and so are averaging over larger pixel neighbourhoods.
 
-Scikit-image will alos handle this using a 3D kernel. Below we adjust our `footprint_9_by_9` kernel by `np.stack()`-ing it into 3D:
+Scikit-image will also handle this using a 3D kernel. Below we adjust our `footprint_9_by_9` kernel by `np.stack()`-ing it into 3D:
 
 ```{python}
 # Stack to 3D.
@@ -699,7 +699,7 @@ plt.tight_layout();
 
 Pay attention here to the effect on the *colour* of the image. How is it different to filtering the colour channels separately?
 
-You'll notice that the colours have changed substantially. This is because the 3D kernel is leading to averaging across the colour channels, relative to filtering each channel separately. We may want this effect (it is somewhat retro), but if we do not want to affect the colour of the image, then generally filtering the channels separately is the way to go...
+You'll notice that the colours have changed substantially, relative to when we filtered each channel separately. This is because the 3D kernel is averaging across the colour channels. We may want this effect (it is somewhat retro), but if we do not want to affect the colour of the image, then generally filtering the channels separately is the way to go...
 
 
 # Summary

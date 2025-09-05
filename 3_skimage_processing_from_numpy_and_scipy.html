@@ -32,9 +32,9 @@
     <link rel="stylesheet" type="text/css" href="_static/styles/sphinx-book-theme.css?v=eba8b062" />
     <link rel="stylesheet" type="text/css" href="_static/togglebutton.css?v=13237357" />
     <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
-    <link rel="stylesheet" type="text/css" href="_static/mystnb.8ecb98da25f57f5357bf6f572d296f466b2cfe2517ffebfabe82451661e28f02.css" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.8ecb98da25f57f5357bf6f572d296f466b2cfe2517ffebfabe82451661e28f02.css?v=6644e6bb" />
     <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css?v=4fa983c6" />
-    <link rel="stylesheet" type="text/css" href="_static/exercise.css" />
+    <link rel="stylesheet" type="text/css" href="_static/exercise.css?v=982b99e0" />
     <link rel="stylesheet" type="text/css" href="_static/sphinx-design.min.css?v=95c83b7e" />
   
   <!-- Pre-loaded scripts that we'll load fully later -->
@@ -493,7 +493,7 @@ document.write(`
                   
   <section class="tex2jax_ignore mathjax_ignore" id="sci-kit-image-processing-via-numpy-and-scipy">
 <h1>(Sci-kit) Image processing, via NumPy and SciPy<a class="headerlink" href="#sci-kit-image-processing-via-numpy-and-scipy" title="Link to this heading">#</a></h1>
-<p>This page will explore foundational image processing techniques, as operations on the values in a NumPy image array. First, we will explore how to acheive specific effects using NumPy and SciPy. We will demonstrate what these operations are doing to an image at the level of the array pixels. After that, we will show how more sophisticated extensions of these techniques can be implemented with Scikit-image, focusing on how it is often the same NumPy and SciPy operations that Sci-kit image is using “under the hood”.</p>
+<p>This page will explore foundational image processing techniques, as operations on the values in a NumPy image array. First, we will explore how to achieve specific effects using NumPy and SciPy. We will demonstrate what these operations are doing to an image at the level of the array pixels. After that, we will show how more sophisticated extensions of these techniques can be implemented with Scikit-image, focusing on how it is often the same NumPy and SciPy operations that Sci-kit image is using “under the hood”.</p>
 <p>Remember that <em>image processing is when we do something which changes the numbers inside an image array, and therefore changes the corresponding visual image</em>? Well, in fact, all that even the fanciest image processing software is doing is just changing the pixel values inside image arrays, in various ways. This is true for image processing software with a graphical user interface, like <a class="reference external" href="https://www.adobe.com/th_en/products/photoshop">Adobe Photoshop</a>, as well as for code-based image processing software like Scikit-image.</p>
 <p>Let’s again build a simple image array, and look at how we can use NumPy alone to achieve some pretty radical changes to the original image. We will then look at the specific purposes that such changes are used for, with more complex images.</p>
 <p>First, we create our image array:</p>
@@ -817,7 +817,7 @@ Min Pixel Value: 0.0
 
 <p class="admonition-title">Solution to<a class="reference internal" href="#i-!"> Exercise 10</a></p>
 <section id="solution-content">
-<p>You can do this in one line of code using a combination of <code class="docutils literal notranslate"><span class="pre">np.concat()</span></code>. <code class="docutils literal notranslate"><span class="pre">np.concat()</span></code> will “stick” arrays together, rather than <code class="docutils literal notranslate"><span class="pre">np.repeat()</span></code>-ing the values…</p>
+<p>You can do this in one line of code by using a combination of <code class="docutils literal notranslate"><span class="pre">np.concat()</span></code>, <code class="docutils literal notranslate"><span class="pre">np.flip()</span></code> and <code class="docutils literal notranslate"><span class="pre">plt.imshow()</span></code>. Notably,<code class="docutils literal notranslate"><span class="pre">np.concat()</span></code> will “stick” arrays together, rather than <code class="docutils literal notranslate"><span class="pre">np.repeat()</span></code>-ing the values…</p>
 <p>Combined with <code class="docutils literal notranslate"><span class="pre">np.flip()</span></code> we can produce the desired result in one line of code:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -919,11 +919,11 @@ Min Pixel Value: -1.0
 <p>Why is the background now grey? Well, remember that, for a monochrome image visualised with the <code class="docutils literal notranslate"><span class="pre">gray</span></code> colourmap: the most intense (highest value) pixels are white, and the least intense (lowest value) pixels are black, and intermediate values are a shade of grey.</p>
 <p>When we subtract along the column, with <code class="docutils literal notranslate"><span class="pre">np.diff()</span></code> the third value is subtracted from the fourth value etc., and so the resulting differences are calculated as:</p>
 <ul class="simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">1</span> <span class="pre">-</span> <span class="pre">0</span> <span class="pre">=</span> <span class="pre">1</span></code> for 1 values on the left hand side of the original image, and…</p></li>
-<li><p>…<code class="docutils literal notranslate"><span class="pre">0</span> <span class="pre">-</span> <span class="pre">1</span> <span class="pre">=</span> <span class="pre">-1</span></code> for 1 values on the right hand side of the original image…</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">1</span> <span class="pre">-</span> <span class="pre">0</span> <span class="pre">=</span> <span class="pre">1</span></code> for 1 values on the left-hand side of the original image, and…</p></li>
+<li><p>…<code class="docutils literal notranslate"><span class="pre">0</span> <span class="pre">-</span> <span class="pre">1</span> <span class="pre">=</span> <span class="pre">-1</span></code> for 1 values on the right-hand side of the original image…</p></li>
 <li><p>…and <code class="docutils literal notranslate"><span class="pre">1</span> <span class="pre">-</span> <span class="pre">1</span> <span class="pre">=</span> <span class="pre">0</span></code> for adjacent 1’s; <code class="docutils literal notranslate"><span class="pre">0</span> <span class="pre">-</span> <span class="pre">0</span> <span class="pre">=</span> <span class="pre">0</span></code> for adjacent 0’s.</p></li>
 </ul>
-<p>Essentially we are detecting <em>edges</em> (big changes in intensity between adjacent pixels) in the horizontal (row) direction:</p>
+<p>Essentially we are detecting <em>edges</em> (big changes in intensity between adjacent pixels) in the horizontal direction (e.g. within each row, along the columns):</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Show before/after applying `np.diff()` to the image array.</span>
@@ -1109,7 +1109,7 @@ Min Pixel Value: 0.0
 <img alt="_images/8eaa4e19b417121674c7fcde5fa9bc7fbaf109f86a158e36d2950016a2724ab8.png" src="_images/8eaa4e19b417121674c7fcde5fa9bc7fbaf109f86a158e36d2950016a2724ab8.png" />
 </div>
 </div>
-<p>This seems much closer to what we want when we <code class="docutils literal notranslate"><span class="pre">resize</span></code> the image. However, the results of image processing are highly context dependent, and there may be images for which the default interpolation setting works better…</p>
+<p>This seems much closer to what we want when we <code class="docutils literal notranslate"><span class="pre">resize</span></code> the image. However, the results of image processing are highly context-dependent, and there may be images for which the default interpolation setting works better…</p>
 </section>
 <section class="tex2jax_ignore mathjax_ignore" id="rotation">
 <h1>Rotation<a class="headerlink" href="#rotation" title="Link to this heading">#</a></h1>
@@ -1442,7 +1442,7 @@ Min Pixel Value: 0
 </div>
 <p>We can see that the cameraman is facing a different direction in each image (taking a photo of the bottom of the image for the <code class="docutils literal notranslate"><span class="pre">.T</span></code> method, and taking a photo of the top of the image for a 90 degree rotation via <code class="docutils literal notranslate"><span class="pre">skimage</span></code>).</p>
 <p>The difference here is that transposing an image switches the rows and columns, such that the first row becomes the first column etc. Conversely, <code class="docutils literal notranslate"><span class="pre">skimage.transform.rotate()</span></code> pivots the pixels around a central point. Essentially, transposing gives a <em>mirroring effect</em> which is different from a rotation.</p>
-<p>Pay attention to the location of the spoon in the <code class="docutils literal notranslate"><span class="pre">coffee</span></code> image. First, we <code class="docutils literal notranslate"><span class="pre">ski.transform.rotate()</span></code> it by 90 degrees. Then, we show it <code class="docutils literal notranslate"><span class="pre">.transpose</span></code>d, switching the rows and columns. As <code class="docutils literal notranslate"><span class="pre">coffee</span></code> is a 3D image, the <code class="docutils literal notranslate"><span class="pre">.T</span></code> method will produce an error, because the colour channels will be moved into the wrong dimension - to avoid this we use the <code class="docutils literal notranslate"><span class="pre">.transpose</span></code> method, to keep the colour channels in third dimension, whilst switching the rows and columns:</p>
+<p>Pay attention to the location of the spoon in the <code class="docutils literal notranslate"><span class="pre">coffee</span></code> image. First, we <code class="docutils literal notranslate"><span class="pre">ski.transform.rotate()</span></code> it by 90 degrees. Then, we show it <code class="docutils literal notranslate"><span class="pre">.transpose</span></code>d, switching the rows and columns. As <code class="docutils literal notranslate"><span class="pre">coffee</span></code> is a 3D image, the <code class="docutils literal notranslate"><span class="pre">.T</span></code> method will produce an error, because the colour channels will be moved into the wrong dimension - to avoid this we use the <code class="docutils literal notranslate"><span class="pre">.transpose</span></code> method, to keep the colour channels in the third dimension, whilst switching the rows and columns:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># The `shape` of the original `coffee` image.</span>
@@ -1535,8 +1535,8 @@ Max Pixel Value: 255
 Min Pixel Value: 0
 </pre></div>
 </div>
-<p><em>Hint</em>: if you did not complete the earlier exerise involving combining two <code class="docutils literal notranslate"><span class="pre">i_img</span></code> arrays, then you may want to investigate NumPy functions for combining arrays together to complete the current exercise…</p>
-<p><em>Caution:</em> you may run into some errors/odd outcomes because of <code class="docutils literal notranslate"><span class="pre">dtype</span></code>s here…so use the <code class="docutils literal notranslate"><span class="pre">ski.util</span></code> conversion functions if you need to…</p>
+<p><em>Hint</em>: if you did not complete the earlier exercise involving combining two <code class="docutils literal notranslate"><span class="pre">i_img</span></code> arrays, then you may want to investigate NumPy functions for combining arrays together to complete the current exercise…</p>
+<p><em>Caution:</em> you may run into some errors/odd outcomes because of <code class="docutils literal notranslate"><span class="pre">dtype</span></code>s here… so use the <code class="docutils literal notranslate"><span class="pre">ski.util</span></code> conversion functions if you need to…</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># YOUR CODE HERE</span>
@@ -1744,7 +1744,7 @@ Min Pixel Value: 0.0
 <img alt="_images/0077b6ef0a597b37374b6e65dd50fbfef9d53a35f1909ade03330e6ead35fd0c.png" src="_images/0077b6ef0a597b37374b6e65dd50fbfef9d53a35f1909ade03330e6ead35fd0c.png" />
 </div>
 </div>
-<p>You’ll notice that downsizing the image has seriously downgraded the quality. This makes sense, because the original high-resolution image utilized its many pixels to depict intricate details. After resizing to a lower-resolution, this detail is lost, because now we are trying to show the same image using many few pixels. <code class="docutils literal notranslate"><span class="pre">skimage</span></code> has done some averaging behind the scenes, to work out what should go in the remaining pixels. At least we can still see the image is of a cat…</p>
+<p>You’ll notice that downsizing the image has seriously downgraded the quality. This makes sense, because the original high-resolution image utilized its many pixels to depict intricate details. After resizing to a lower-resolution, this detail is lost, because now we are trying to show the same image using subtantially fewer pixels. <code class="docutils literal notranslate"><span class="pre">skimage</span></code> has done some averaging behind the scenes, to work out what should go in the remaining pixels. At least we can still see the image is of a cat…</p>
 <p>Now, we can see that the target image requires a rotation, through good judgment, or just trial and error, we can work out that this needs to be 45 degrees. We can also see that the image of the downscaled cat does not “fit” inside the final image. As such, we need to rotate <em>without resizing</em> the image. By default, <code class="docutils literal notranslate"><span class="pre">resize=False</span></code> so we can leave it on the default setting:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -1921,7 +1921,7 @@ Min Pixel Value: 0.0
 <img alt="_images/7ddae6566b3fbd8b9fe8a9b6a354930eaf301e110fdd7319f1f37a9809230d76.png" src="_images/7ddae6566b3fbd8b9fe8a9b6a354930eaf301e110fdd7319f1f37a9809230d76.png" />
 </div>
 </div>
-<p>First we, extract the <code class="docutils literal notranslate"><span class="pre">shape</span></code> of the image, and store each element as a separate variable. In this case, the image is 2D (e.g. single-channel, monochrome) and so we extract the number of rows and the number of columns:</p>
+<p>First, we extract the <code class="docutils literal notranslate"><span class="pre">shape</span></code> of the image, and store each element as a separate variable. In this case, the image is 2D (e.g. single-channel, monochrome) and so we extract the number of rows and the number of columns:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Unpack and store the number of rows and number of columns.</span>
@@ -1938,7 +1938,7 @@ Min Pixel Value: 0.0
 </div>
 </div>
 </div>
-<p>Then we can these elements (579 and 867) via <code class="docutils literal notranslate"><span class="pre">np.orgid()</span></code> to create one array with 579 rows, and 1 column, and another array with 1 row and 867 columns. These elements can be used to make a 2D mask, in a specific shape:</p>
+<p>Then we can use these elements (579 and 867) via <code class="docutils literal notranslate"><span class="pre">np.orgid()</span></code> to create one array with 579 rows, and 1 column, and another array with 1 row and 867 columns. These elements can be used to make a 2D mask, in a specific shape:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Create a grid, based on the image `shape`.</span>
@@ -2479,7 +2479,7 @@ Min Pixel Value: 0
 </section>
 <section class="tex2jax_ignore mathjax_ignore" id="greyscale-to-binary-conversion">
 <h1>Greyscale to binary conversion<a class="headerlink" href="#greyscale-to-binary-conversion" title="Link to this heading">#</a></h1>
-<p>Greyscale to binary conversion can be acheived using comparison operators (<code class="docutils literal notranslate"><span class="pre">&lt;</span></code>, <code class="docutils literal notranslate"><span class="pre">&gt;</span></code>, <code class="docutils literal notranslate"><span class="pre">&lt;=</span></code>, <code class="docutils literal notranslate"><span class="pre">&gt;=</span></code>, <code class="docutils literal notranslate"><span class="pre">==</span></code>). The resulting Boolean array will always be binary.</p>
+<p>Greyscale to binary conversion can be achieved using comparison operators (<code class="docutils literal notranslate"><span class="pre">&lt;</span></code>, <code class="docutils literal notranslate"><span class="pre">&gt;</span></code>, <code class="docutils literal notranslate"><span class="pre">&lt;=</span></code>, <code class="docutils literal notranslate"><span class="pre">&gt;=</span></code>, <code class="docutils literal notranslate"><span class="pre">==</span></code>). The resulting Boolean array will always be binary.</p>
 <p>Let’s demonstrate with a greyscale image:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -2519,7 +2519,7 @@ Min Pixel Value: 0
 <img alt="_images/14060793564aed3b700df2b9fd766a6f30371982333bb2ed0f0a716ac4d110ff.png" src="_images/14060793564aed3b700df2b9fd766a6f30371982333bb2ed0f0a716ac4d110ff.png" />
 </div>
 </div>
-<p>We can also easily acheive this conversion in <code class="docutils literal notranslate"><span class="pre">skimage</span></code> - see the <a class="reference internal" href="5_mean_filter.html"><span class="doc std std-doc">filtering page</span></a> for more detail. For now, we can use the <code class="docutils literal notranslate"><span class="pre">ski.filters.threshold_minimum()</span></code> function. This supplies us a recommended threshold value to attempt to divide the array pixels into two classes e.g. two classes where the pixels in each class are maximally different from pixels in the other class:</p>
+<p>We can also easily achieve this conversion in <code class="docutils literal notranslate"><span class="pre">skimage</span></code> - see the <a class="reference internal" href="5_mean_filter.html"><span class="doc std std-doc">filtering page</span></a> for more detail. For now, we can use the <code class="docutils literal notranslate"><span class="pre">ski.filters.threshold_minimum()</span></code> function. This supplies us a recommended threshold value to attempt to divide the array pixels into two classes e.g. two classes where the pixels in each class are maximally different from pixels in the other class:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Get a recommended threshold from `skimage`.</span>
