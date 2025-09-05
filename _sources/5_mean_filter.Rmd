@@ -601,7 +601,7 @@ plt.imshow(astronaut);
 
 If we try to filter this image with our (3, 3) `mean_kernel` we will get an error:
 
-```{python tags=c("raises-exception")}
+```{python}
 # Oh dear.
 astronaut_mean_filtered = ndi.correlate(astronaut, 
                                         weights=mean_kernel)
@@ -704,7 +704,7 @@ You'll notice that the colours have changed substantially, relative to when we f
 
 # Summary
 
-This page has showed how to perform mean filtering, using `numpy`, `scipy` and `skimage`. On the next page, we will look at using different convolution kernels to get different filtering effects.
+This page has showed how to perform mean filtering, using `numpy`, `scipy` and `skimage`. On the [next page](6_gaussian_sharpening_edge), we will look at using different convolution kernels to get different filtering effects.
 
 # References
 

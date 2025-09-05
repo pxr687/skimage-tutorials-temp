@@ -1123,7 +1123,7 @@ The input is extended by wrapping around to the opposite edge.</p></li>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/52990c55ce8bd4b276a58d8a145ef52198b00546e4ade2a9bda7d2980bb429a4.png" src="_images/52990c55ce8bd4b276a58d8a145ef52198b00546e4ade2a9bda7d2980bb429a4.png" />
+<img alt="_images/8576e8ba84b46409f7af55871ae590e095b6173666356df96db1e2bfbc3fe5eb.png" src="_images/8576e8ba84b46409f7af55871ae590e095b6173666356df96db1e2bfbc3fe5eb.png" />
 </div>
 </div>
 <p>The mean filter can remove some of the noise, restoring the clarity of the image:</p>
@@ -1148,7 +1148,7 @@ The input is extended by wrapping around to the opposite edge.</p></li>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/870682d35f16af63f15deb96e5f4927b1a338c436a0575e1af1b66ab595bfd3d.png" src="_images/870682d35f16af63f15deb96e5f4927b1a338c436a0575e1af1b66ab595bfd3d.png" />
+<img alt="_images/b8fbff421b270b41819372fad8314d507aa16c909c6987cba27dc28be821c512.png" src="_images/b8fbff421b270b41819372fad8314d507aa16c909c6987cba27dc28be821c512.png" />
 </div>
 </div>
 <p>We can see that the image is clearer, the noise has been reduced and some of the signal has been restored.</p>
@@ -1178,7 +1178,7 @@ The input is extended by wrapping around to the opposite edge.</p></li>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/c2672e40f2b0afad54e5aca0e4825a949a161293b461b27e93af25f487c9f462.png" src="_images/c2672e40f2b0afad54e5aca0e4825a949a161293b461b27e93af25f487c9f462.png" />
+<img alt="_images/c723e6228297fd6569c72484e804fd47a13562738822df248e5246f1908e1d88.png" src="_images/c723e6228297fd6569c72484e804fd47a13562738822df248e5246f1908e1d88.png" />
 </div>
 </div>
 <p>As with many filtering operations, the effect of altering aspects of the filtering process (like a threshold value or kernel size), is very context-dependent. It may take many iterations before finding a “sweet spot”, and where the sweet spot is may be somewhat subjective.</p>
@@ -1369,7 +1369,7 @@ Min Pixel Value: 0
 </div>
 </div>
 <p>If we try to filter this image with our (3, 3) <code class="docutils literal notranslate"><span class="pre">mean_kernel</span></code> we will get an error:</p>
-<div class="cell tag_raises-exception docutils container">
+<div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Oh dear.</span>
 <span class="n">astronaut_mean_filtered</span> <span class="o">=</span> <span class="n">ndi</span><span class="o">.</span><span class="n">correlate</span><span class="p">(</span><span class="n">astronaut</span><span class="p">,</span> 
@@ -1441,9 +1441,6 @@ Min Pixel Value: 0
 </pre></div>
 </div>
 </div>
-<div class="cell_output docutils container">
-<img alt="_images/a9c2012ec84731771b981cfb5ca38264a90bb0085d70df92a920a1fa0b0eff71.png" src="_images/a9c2012ec84731771b981cfb5ca38264a90bb0085d70df92a920a1fa0b0eff71.png" />
-</div>
 </div>
 <p>This is straightforward to do with <code class="docutils literal notranslate"><span class="pre">skimage</span></code> as well; we also use the larger (9, 9) <code class="docutils literal notranslate"><span class="pre">footprint_9_by_9</span></code> kernel:</p>
 <div class="cell docutils container">
@@ -1476,9 +1473,6 @@ Min Pixel Value: 0
 </pre></div>
 </div>
 </div>
-<div class="cell_output docutils container">
-<img alt="_images/38656c6d7d2565dcba9392d3ad56249e626f0d44ce2164478cfdf1c97acf29fa.png" src="_images/38656c6d7d2565dcba9392d3ad56249e626f0d44ce2164478cfdf1c97acf29fa.png" />
-</div>
 </div>
 <p>We got a blurrier output image via <code class="docutils literal notranslate"><span class="pre">skimage</span></code> here, than in the manual convolution using <code class="docutils literal notranslate"><span class="pre">ndi.correlate()</span></code>. This is because we used a larger kernel for the <code class="docutils literal notranslate"><span class="pre">skimage</span></code> filtering, and so are averaging over larger pixel neighbourhoods.</p>
 <p>Scikit-image will also handle this using a 3D kernel. Below we adjust our <code class="docutils literal notranslate"><span class="pre">footprint_9_by_9</span></code> kernel by <code class="docutils literal notranslate"><span class="pre">np.stack()</span></code>-ing it into 3D:</p>
@@ -1491,11 +1485,6 @@ Min Pixel Value: 0
                                 <span class="n">axis</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
 
 <span class="n">footprint_9_by_9_3D</span><span class="o">.</span><span class="n">shape</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(9, 9, 3)
 </pre></div>
 </div>
 </div>
@@ -1518,16 +1507,13 @@ Min Pixel Value: 0
 </pre></div>
 </div>
 </div>
-<div class="cell_output docutils container">
-<img alt="_images/a88aa159233a2716d7bf63745b9ef74379848eed8f074d1acab309ffbb8378ef.png" src="_images/a88aa159233a2716d7bf63745b9ef74379848eed8f074d1acab309ffbb8378ef.png" />
-</div>
 </div>
 <p>Pay attention here to the effect on the <em>colour</em> of the image. How is it different to filtering the colour channels separately?</p>
 <p>You’ll notice that the colours have changed substantially, relative to when we filtered each channel separately. This is because the 3D kernel is averaging across the colour channels. We may want this effect (it is somewhat retro), but if we do not want to affect the colour of the image, then generally filtering the channels separately is the way to go…</p>
 </section>
 <section class="tex2jax_ignore mathjax_ignore" id="summary">
 <h1>Summary<a class="headerlink" href="#summary" title="Link to this heading">#</a></h1>
-<p>This page has showed how to perform mean filtering, using <code class="docutils literal notranslate"><span class="pre">numpy</span></code>, <code class="docutils literal notranslate"><span class="pre">scipy</span></code> and <code class="docutils literal notranslate"><span class="pre">skimage</span></code>. On the next page, we will look at using different convolution kernels to get different filtering effects.</p>
+<p>This page has showed how to perform mean filtering, using <code class="docutils literal notranslate"><span class="pre">numpy</span></code>, <code class="docutils literal notranslate"><span class="pre">scipy</span></code> and <code class="docutils literal notranslate"><span class="pre">skimage</span></code>. On the <a class="reference internal" href="6_gaussian_sharpening_edge.html"><span class="doc std std-doc">next page</span></a>, we will look at using different convolution kernels to get different filtering effects.</p>
 </section>
 <section class="tex2jax_ignore mathjax_ignore" id="references">
 <h1>References<a class="headerlink" href="#references" title="Link to this heading">#</a></h1>

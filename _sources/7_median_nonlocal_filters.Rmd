@@ -463,7 +463,7 @@ show_attributes(coins_as_float_equalised_with_ski)
 
 # Summary
 
-This page has shown a local filter (the median filter) and a non-local filter (histogram equalisation) which do not use convolution to perform their filtering operations.
+This page has shown a local filter (the median filter) and a non-local filter (histogram equalisation) which do not use convolution to perform their filtering operations. On the [next page](8_morphology) we will introduce another method for modifying pixels based on a `footprint`.
 
 
 # References

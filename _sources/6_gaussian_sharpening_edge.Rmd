@@ -1404,7 +1404,7 @@ plt.imshow(edgy_both_from_2by2_kernel );
 
 # Summary
 
-This page has showed how to use various convolution kernels to filter images, using `numpy`, `scipy` and `skimage`. We have seen how changing the convolutional kernel can alter the filtering process to achieve different aims, like blurring/smoothing and edge detection.
+This page has showed how to use various convolution kernels to filter images, using `numpy`, `scipy` and `skimage`. We have seen how changing the convolutional kernel can alter the filtering process to achieve different aims, like blurring/smoothing and edge detection. On the [next page](7_median_nonlocal_filters) we will explore different types of filters, which do not use convolution to implement their filtering effects.
 
 
 # References
