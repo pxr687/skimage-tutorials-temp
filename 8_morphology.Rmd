@@ -154,7 +154,7 @@ What happened here? Well, again a "match" only occurs for two pixels in the imag
 
 All other "neighbourhoods" did not match the structuring element, and so the values in the neighbourhood were lowered to 0, 0 being the lowest value in each neighbourhood. This has the effect, if a non-matching pixel has the value of 1, of setting it to 0. If a non-matching pixel has a value of 0, it also gets set to 0, but it was already 0, so there is no appreciable change.
 
-Let's alter our image array slightly, to see how this affects the erosion operation with our `diamond` structuring element. We will place a black array pixel inside the right hand white square:
+Let's alter our image array slightly, to see how this affects the erosion operation with our `diamond` structuring element. We will place a black array pixel inside the right-hand white square:
 
 ```{python}
 # A modified array.

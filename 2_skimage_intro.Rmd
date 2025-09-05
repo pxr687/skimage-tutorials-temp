@@ -598,9 +598,9 @@ There are several steps here - this was not an easy task! First, we need to conv
 
 If you look at the target image, you will notice that it has a green-ish tone, but not so green as we would get if the other colour channels were "switched off". As such, you can get the correct effect by reducing the impact of the red and blue channels, by halving their values.
 
-The left hand side of the image has variance in *transparency* - pixels where the image is darker are *more transparent*. This is because, in the target image, the alpha channel is a copy of the original 2D image.
+The left-hand side of the image has variance in *transparency* - pixels where the image is darker are *more transparent*. This is because, in the target image, the alpha channel is a copy of the original 2D image.
 
-The distinction between the left-hand side and right-hand side of the image is that in the right-hand side, the transparency channel values are all uniform, though less than maximum opacity, giving a hazy effect. This can be achieved by NumPy array indexing, and setting values in the alpha channel in the right hand side of the image to all equal 0.5:
+The distinction between the left-hand side and right-hand side of the image is that in the right-hand side, the transparency channel values are all uniform, though less than maximum opacity, giving a hazy effect. This can be achieved by NumPy array indexing, and setting values in the alpha channel in the right-hand side of the image to all equal 0.5:
 
 ```{python}
 # Solution.

@@ -100,12 +100,12 @@ If you prefer, you can view the NumPy array kernel with prettier graphics below:
 
 ![](images/gaussian_kernel_2.png)
 
-Just as final comparison between the  NumPy array kernel and the plot, here is the "red mountain" viewed from directly above, with the NumPy array kernel, in pretty graphics, shown to the right hand side of the plot:
+Just as final comparison between the  NumPy array kernel and the plot, here is the "red mountain" viewed from directly above, with the NumPy array kernel, in pretty graphics, shown to the right-hand side of the plot:
 
 ![](images/sky_gauss.png)
 
 
-Remember that the kernel has only 9 values (shown as blue text on the plot), so there are no values in between the array values. If you prefer, we can visualise the kernel using a wireframe, to make it clearer that there are no values in between the kernal elements (e.g. in between the points where there is blue text):
+Remember that the kernel has only 9 values (shown as blue text on the plot), so there are no values in between the array values. If you prefer, we can visualise the kernel using a wireframe, to make it clearer that there are no values in between the kernel elements (e.g. in between the points where there is blue text):
 
 ```{python}
 # Plot the fancy kernel.

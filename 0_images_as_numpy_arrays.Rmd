@@ -87,15 +87,15 @@ We will now create the same visualisation, but will allow Matplotlib to show us 
 plt.matshow(two_D_ones_and_zeros);
 ```
 
-We can see the numbers 0 and 1 on the axes. These numbers refer to the the integer index location of each element. For instance, the element in the top left corner is at row/column coordinate (0, 0), the element in the top right corner is at (0, 1) and so on:
+We can see the numbers 0 and 1 on the axes. These numbers refer to the the integer index location of each element. For instance, the element in the top-left corner is at row/column coordinate (0, 0), the element in the top-right corner is at (0, 1) and so on:
 
 ```{python}
-# Get the element in the top left (0, 0) location
+# Get the element in the top-left (0, 0) location
 two_D_ones_and_zeros[0, 0]
 ```
 
 ```{python}
-# Get the element in the top right (0, 1) location
+# Get the element in the top-right (0, 1) location
 two_D_ones_and_zeros[0, 1]
 ```
 

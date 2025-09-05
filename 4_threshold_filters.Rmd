@@ -501,14 +501,14 @@ def ssd(counts, centers):
 Let's use this function to calculate the mean and `ssd` of each histogram, when using the 50th bin center as the threshold:
 
 ```{python}
-# The mean and SSD for the left hand histogram.
+# The mean and SSD for the left-hand histogram.
 mean_below_50th_bin, ssd_below_50th_bin, n_below_50th_bin  = ssd(counts[:49], bin_centers[:49])
 print("Mean of histogram below the 50th bin:", mean_below_50th_bin.round(2))
 print("SSD of histogram  below the 50th bin:", ssd_below_50th_bin.round(2))
 ```
 
 ```{python}
-# The mean and SSD for the right hand histogram.
+# The mean and SSD for the right-hand histogram.
 mean_above_50th_bin, ssd_above_50th_bin, n_above_50th_bin = ssd(counts[49:], bin_centers[49:])
 print("Mean of histogram above the 50th bin:", mean_above_50th_bin.round(2))
 print("SSD of histogram above the 50th bin:", ssd_above_50th_bin.round(2))
