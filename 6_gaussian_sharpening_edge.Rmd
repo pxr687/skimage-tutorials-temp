@@ -119,7 +119,12 @@ Let's refer to the highest point on this kernel surface as the ["crimson peak"](
 gaussian_like_kernel[1, 1]
 ```
 
-Essentially, if we filter using this kernel, we "walk" this kernel through the image, with the top of the "crimson peak" centered on a given pixel. The central pixel value is then replaced with an average of the pixels in the neighbourhood, but the contribution of the other pixels in the neighbourhood to the averge is *weighted by the height of the "red mountain" at that pixel*. 
+Essentially, if we filter using this kernel, we "walk" this kernel through the
+image, with the top of the "crimson peak" centered on a given pixel. The
+central pixel value is then replaced with an average of the pixels in the
+neighbourhood, but the contribution of the other pixels in the neighbourhood
+to the average is *weighted by the height of the "red mountain" at that
+pixel*.
 
 So array pixels which fall under higher points of the kernel's "red mountain" will exert more influence on the weighted average, and pixels falling under lower points will exert a weaker influence. The central pixel, laying under the crimson peak, will exert the most influence on the weighted average.
 
@@ -150,7 +155,7 @@ plt.title('Gaussian-like Filter \n(3, 3) Kernel')
 plt.imshow(gaussian_like_filtered_small_square);
 ```
 
-Blurry! So to recap, we have averaged within a 3-by-3 pixel neightbourhood, replacing the central pixel value with a weighted average of all the pixel values in the neighbourhood. The weights are larger for pixels closer to the central value of the kernel (e.g. closer to the center of the "crimson peak" on the plot above).
+Blurry! So to recap, we have averaged within a 3-by-3 pixel neighbourhood, replacing the central pixel value with a weighted average of all the pixel values in the neighbourhood. The weights are larger for pixels closer to the central value of the kernel (e.g. closer to the center of the "crimson peak" on the plot above).
 
 This type of filtering is called *Gaussian filtering* because the kernel element values approximate a [Gaussian (e.g. normal) distribution](https://en.wikipedia.org/wiki/Normal_distribution). The plot of the kernel above, with the "red mountain" may not look much like the normal distribution to you at the moment, but bear with us.
 
@@ -503,7 +508,7 @@ plt.matshow(almost_gaussian_filtered_camera);
 :class: dropdown
 :::
 
-Below is another way of writing the formula for generating a 2D Guassian distribution, and therefore for generating a 2D Gaussian kernel.
+Below is another way of writing the formula for generating a 2D Gaussian distribution, and therefore for generating a 2D Gaussian kernel.
 
 $ \Large \text{Gaussian}(x, y) = \frac{1}{\sqrt{2 \pi \sigma^2}} e^{- \frac{x^2 + y^2}{2\sigma^2}} $
 
@@ -1169,7 +1174,7 @@ plt.imshow(coffee_vertical_horizontal_stack);
 
 # Sobel edge detection filtering
 
-A similiar edge detection filter is the Sobel filter, which uses the [following](https://www.geeksforgeeks.org/deep-learning/types-of-convolution-kernels/) [kernels](https://nrsyed.com/2018/02/18/edge-detection-in-images-how-to-derive-the-sobel-operator):
+A similar edge detection filter is the Sobel filter, which uses the [following](https://www.geeksforgeeks.org/deep-learning/types-of-convolution-kernels/) [kernels](https://nrsyed.com/2018/02/18/edge-detection-in-images-how-to-derive-the-sobel-operator):
 
 ```{python}
 # Sobel horizontal edge detection kernel.

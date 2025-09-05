@@ -15,7 +15,7 @@ jupyter:
 
 # Introducing Scikit-image
 
-[Scikit-image](https://scikit-image.org) (`skimage`) is a powerful image prcoessing package which is built in a large part from NumPy and SciPy, and uses NumPy arrays as its fundamental image representations. This page will show some foundational aspects of `skimage`, focusing on its coherence with the NumPy image array concepts we saw on the last two pages.
+[Scikit-image](https://scikit-image.org) (`skimage`) is a powerful image processing package which is built in a large part from NumPy and SciPy, and uses NumPy arrays as its fundamental image representations. This page will show some foundational aspects of `skimage`, focusing on its coherence with the NumPy image array concepts we saw on the last two pages.
 
 # Images are arrays, arrays are images
 
@@ -59,7 +59,7 @@ print(squares)
 plt.matshow(squares);
 ```
 
-You will recall that this array - in virture of being 2D and having only one numeric value per array pixel - is a single-channel array. This means that it contains only information about pixel intensity (grey-level), and not about colour. 
+You will recall that this array - in virtue of being 2D and having only one numeric value per array pixel - is a single-channel array. This means that it contains only information about pixel intensity (grey-level), and not about colour. 
 
 To include true colour information, our array must be of *at least* three dimensions. A three-dimensional colour image array typically has three "slices" in the third dimension. Each element of each slice contains a number between 0 and 1 (for `float64` data), or between 1 and 255 (for `uint8` data). For the standard RGB (Red-Green-Blue) format the number in each element of each slice in the third dimension tells that array pixel what colour to be (e.g. a mix of red, green and blue, across the three slices). Hence these slices, in the third dimension, are called "colour channels". 
 
@@ -436,7 +436,7 @@ However, this leaves our image with an illegal pixel intensity range, given the 
 show_attributes(cat_manual_grey)
 ```
 
-`float64` images, to avoid errors, should have a pixel intensity range betwee 0 and 1 (or -1 to 1, but we digress). Matplotlib knows how to render this image, but the values themselves are technically illegal, and would likely cause errors with subsequent processing operations. We can use `ski.exposure.rescale_intensity()` to ensure our image adheres to the `skimage` conventions:
+`float64` images, to avoid errors, should have a pixel intensity range between 0 and 1 (or -1 to 1, but we digress). Matplotlib knows how to render this image, but the values themselves are technically illegal, and would likely cause errors with subsequent processing operations. We can use `ski.exposure.rescale_intensity()` to ensure our image adheres to the `skimage` conventions:
 
 ```{python}
 # Ensure the correct pixel intensity range.
@@ -580,7 +580,7 @@ Here are some things to pay attention to, in the target image, to help you think
 
 - the `dtype` of the target image.
 
-*Hint 1:* run the fuction `hint_camera()` for some additional help if you get stuck.
+*Hint 1:* run the function `hint_camera()` for some additional help if you get stuck.
 
 ```{python}
 # YOUR CODE HERE

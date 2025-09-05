@@ -42,7 +42,7 @@ Any ideas? Maybe you can determine what signal is in there, but we trust that it
 
 We saw simple threshold filtering on an [earlier page](3_skimage_processing_from_numpy_and_scipy). This is where we select a threshold value, and binarize the image using that value. So a given pixel becomes `True` if a pixel is more intense than the threshold, and `False` if it is lower (or vice versa, depending on the comparison operator). 
 
-The aim here is typically to split the pixels into distinct classes, based on their intensity values. We can use the `ndarray` `.ravel()` method to view a historgram of the pixel intensities, in order to find a threshold that might be useful to use in a filter. The `.ravel()` method "flattens" the image array to 1-D, so that it can be displayed as a histogram:
+The aim here is typically to split the pixels into distinct classes, based on their intensity values. We can use the `ndarray` `.ravel()` method to view a histogram of the pixel intensities, in order to find a threshold that might be useful to use in a filter. The `.ravel()` method "flattens" the image array to 1-D, so that it can be displayed as a histogram:
 
 ```{python}
 # The `shape` of the original `noisy` image.
@@ -332,7 +332,7 @@ If you look at the filtered image (on the right-hand side of the plot), it seems
 
 How does the Otsu threshold filter work? Conceptually, the Otsu method involves splitting the histogram into two parts, lots of times, and comparing different splits for how well they separate pixels into two classes, based on a specific numeric metric. The histogram, for each threshold, is split at the center one of the bin intervals. 
 
-The aim is to find which bin interval center gives a split that yields two classes of pixels which are maximally different from one another, by the aforementioned numeric metric. Hopefully this corresponds to pixels forming the background of the image vs pixels forming the forground of the image.
+The aim is to find which bin interval center gives a split that yields two classes of pixels which are maximally different from one another, by the aforementioned numeric metric. Hopefully this corresponds to pixels forming the background of the image vs pixels forming the foreground of the image.
 
 Since the Otsu method relies on some the "mechanics" of histograms, let's "deconstruct" the histogram in the center of the plot above, to see how the method works. To perform this deconstruction, we can use the `np.histogram()` function. We give it a flattened 1-D image array (e.g. flattened with the `.ravel()` method), and we tell it a number of bins to use. Again, we will use the sensible value of 128 bins. (*Note*: you could also use `ski.exposure.histogram()` here, for similar results). 
 
@@ -733,7 +733,7 @@ You can use a "by eye" method to decide your thresholds, from inspecting a histo
 :class: dropdown
 :::
 
-Inspecting the histogram by eye can get you quite far here. First, we plot the histogram of `camera`. We roughly indentify low frequency regions which separate the modes of the distribution:
+Inspecting the histogram by eye can get you quite far here. First, we plot the histogram of `camera`. We roughly identify low frequency regions which separate the modes of the distribution:
 
 ```{python}
 # Plot the histogram, and estimate, by eye thresholds.
