@@ -139,7 +139,7 @@ Reducing noise and enhancing image features are both common aims in image filter
 
 # Threshold filtering is just Boolean filtering
 
-As we have seen, threshold filtering invovles modifying pixel values based on a threshold value. Let's investigate other thresholding methods using a greyscale image:
+As we have seen, threshold filtering involves modifying pixel values based on a threshold value. Let's investigate other thresholding methods using a greyscale image:
 
 ```{python}
 # Create a greyscale image array.
@@ -328,7 +328,7 @@ plt.title('Otsu filtered')
 plt.subplots_adjust();
 ```
 
-If you look at the filtered image (on the right hand side of the plot), it seems to have achieved pretty good foreground/background segmentation...
+If you look at the filtered image (on the right-hand side of the plot), it seems to have achieved pretty good foreground/background segmentation...
 
 How does the Otsu threshold filter work? Conceptually, the Otsu method involves splitting the histogram into two parts, lots of times, and comparing different splits for how well they separate pixels into two classes, based on a specific numeric metric. The histogram, for each threshold, is split at the center one of the bin intervals. 
 
@@ -563,7 +563,7 @@ In Otsu's method, we want to find the threshold value which gives the *minimum t
 
 In other words, the threshold value which gives the lowest combined `ssd` identifies two classes of pixels that are most different from each other, compared to other classes/splits we could choose, according the metric that the Otsu method cares about (the `ssd`).
 
-You can think of this as finding a threshold which groups pixels such that the pixel values in each side of the "split" are clustered closely around their respective mean. In fact, it turns out minimizing the total `ssd` also has the effect that the *distance* between the means will be large as well giving a big separation between the pixels in each class as a result.
+You can think of this as finding a threshold which groups pixels such that the pixel values in each side of the "split" are clustered closely around their respective mean. In fact, it turns out minimizing the total `ssd` also has the effect that the *distance* between the means will be large, as well as giving a big separation between the pixels in each class as a result.
 
 The cell below will find the threshold which gives the minimum combined `ssd`:
 

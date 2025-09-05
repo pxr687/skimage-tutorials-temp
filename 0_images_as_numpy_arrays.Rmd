@@ -80,7 +80,7 @@ Each element of the array is shown as a coloured square. The exact colour of the
 two_D_ones_and_zeros
 ```
 
-We will now create the same visualization, but will allow Matplotlib to show us the default axis ticks, as we will not use `plt.xticks([])` and `plt.yticks([])` to clear the axes of the plot:
+We will now create the same visualisation, but will allow Matplotlib to show us the default axis ticks, as we will not use `plt.xticks([])` and `plt.yticks([])` to clear the axes of the plot:
 
 ```{python}
 # Show the array via `plt.matshow()`
