@@ -964,7 +964,7 @@ plt.imshow(camera_masked_solution);
 
 # Inverting image colours
 
-We saw *colour inversion* on an [earlier page](0_images_as_numpy_arrays.Rmd). This is where all the pixel values in an image are, shockingly, inverted: high numbers become low numbers and vice versa:
+We saw *colour inversion* on an [earlier page](0_images_as_numpy_arrays). This is where all the pixel values in an image are, shockingly, inverted: high numbers become low numbers and vice versa:
 
 For a binary image, this involves swapping 1s and 0s...
 

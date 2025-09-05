@@ -154,7 +154,7 @@ ruined_coffee[100:300, 200:400, :] = [0, 255, 0]  # [Red channel, Green channel,
 plt.imshow(ruined_coffee);
 ```
 
-Remember our [maxim](0_images_as_numpy_arrays.Rmd.) that "image-processing is just the application of operations which change the values inside an image array, and therefore change the corresponding visual image"? 
+Remember our [maxim](0_images_as_numpy_arrays) that "image-processing is just the application of operations which change the values inside an image array, and therefore change the corresponding visual image"?
 
 When we explore different image processing operations, using smaller arrays often makes it easier to understand what a given processing operation is doing to individual array pixels. However, in larger, more complex arrays, it is often easier to appreciate the "global" visual/perceptual effect of an image processing operation. 
 
@@ -165,7 +165,7 @@ As such, we will use a variety of simple arrays (like `squares`) along with a va
 
 Before manipulating and processing images, we will need to load them into memory. After we are finished with our high concept digital art, we will want to save our creations. To help us with this, input and output (e.g. loading and saving image files) is handled by the `skimage.io` module. 
 
-We have already met this module on [earlier pages](0_images_as_numpy_arrays.Rmd) but we will discuss some of its finer details here. `skimage` supports multiple image `dtypes` (e.g. the types of numbers within the image array), and loading and saving files can require close attention to, or even conversion of, the image `dtype`, as we will see shortly.
+We have already met this module on [earlier pages](0_images_as_numpy_arrays) but we will discuss some of its finer details here. `skimage` supports multiple image `dtypes` (e.g. the types of numbers within the image array), and loading and saving files can require close attention to, or even conversion of, the image `dtype`, as we will see shortly.
 
 For now, let's use `ski.io.imread()` to load a `.png` of the terrifying smile we hand-crafted in the earlier tutorials:
 

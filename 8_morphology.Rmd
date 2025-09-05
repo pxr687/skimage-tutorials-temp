@@ -276,7 +276,7 @@ plt.imshow(xenomorph);
 show_attributes(xenomorph)
 ```
 
-Scary, especially as a binary image, but not quite as scary as the `smiley` image we [made](0_images_as_numpy_arrays.Rmd) that still haunts our dreams. 
+Scary, especially as a binary image, but not quite as scary as the `smiley` image we [made](0_images_as_numpy_arrays) that still haunts our dreams.
 
 True to form, eroding this image using the `diamond` structuring element increases the size of dark regions:
 
