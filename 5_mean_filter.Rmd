@@ -601,10 +601,9 @@ plt.imshow(astronaut);
 
 If we try to filter this image with our (3, 3) `mean_kernel` we will get an error:
 
-```{python}
+```{python tags=c("raises-exception")}
 # Oh dear.
-astronaut_mean_filtered = ndi.correlate(astronaut, 
-                                        weights=mean_kernel)
+astronaut_mean_filtered = ndi.correlate(astronaut, weights=mean_kernel)
 ```
 
 As you can see, the error results from using a 2D kernel to filter a 3D image. A simple solution to this is just to apply the filter to each colour channel separately. This is done in the cell below, using a for loop to filter each channel, storing the channels separately in a dictionary, and then `np.stacking()` the individually filtered channels back into a 3D image:
