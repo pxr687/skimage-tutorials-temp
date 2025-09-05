@@ -601,7 +601,7 @@ plt.imshow(astronaut);
 
 If we try to filter this image with our (3, 3) `mean_kernel` we will get an error:
 
-```{python}
+```{python tags=c("raises-exception")}
 # Oh dear.
 astronaut_mean_filtered = ndi.correlate(astronaut, 
                                         weights=mean_kernel)
