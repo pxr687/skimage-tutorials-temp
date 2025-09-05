@@ -32,9 +32,9 @@
     <link rel="stylesheet" type="text/css" href="_static/styles/sphinx-book-theme.css?v=eba8b062" />
     <link rel="stylesheet" type="text/css" href="_static/togglebutton.css?v=13237357" />
     <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
-    <link rel="stylesheet" type="text/css" href="_static/mystnb.8ecb98da25f57f5357bf6f572d296f466b2cfe2517ffebfabe82451661e28f02.css?v=6644e6bb" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.8ecb98da25f57f5357bf6f572d296f466b2cfe2517ffebfabe82451661e28f02.css" />
     <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css?v=4fa983c6" />
-    <link rel="stylesheet" type="text/css" href="_static/exercise.css?v=982b99e0" />
+    <link rel="stylesheet" type="text/css" href="_static/exercise.css" />
     <link rel="stylesheet" type="text/css" href="_static/sphinx-design.min.css?v=95c83b7e" />
   
   <!-- Pre-loaded scripts that we'll load fully later -->
@@ -62,6 +62,7 @@
     <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <script>DOCUMENTATION_OPTIONS.pagename = '4_threshold_filters';</script>
     <link rel="canonical" href="https://pxr687.github.io/skimage-tutorials-temp/4_threshold_filters.html" />
+    <link rel="icon" href="_static/pandas_numpy.ico"/>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="Convolution filters I - the mean filter" href="5_mean_filter.html" />
@@ -532,12 +533,12 @@ Max Pixel Value: 1.0
 Min Pixel Value: -0.95
 </pre></div>
 </div>
-<img alt="_images/94117ae07f12ab142ff9d3b341c60a7d760349f3f5cf956527683cfe33ae6afb.png" src="_images/94117ae07f12ab142ff9d3b341c60a7d760349f3f5cf956527683cfe33ae6afb.png" />
+<img alt="_images/c88ed98be8ece13e1d3f2a8b13218bc855368e79a28e4c78fa7247edd78611af.png" src="_images/c88ed98be8ece13e1d3f2a8b13218bc855368e79a28e4c78fa7247edd78611af.png" />
 </div>
 </div>
 <p>Any ideas? Maybe you can determine what signal is in there, but we trust that it is at least somewhat ambiguous, to most readers.</p>
 <p>We saw simple threshold filtering on an <a class="reference internal" href="3_skimage_processing_from_numpy_and_scipy.html"><span class="doc std std-doc">earlier page</span></a>. This is where we select a threshold value, and binarize the image using that value. So a given pixel becomes <code class="docutils literal notranslate"><span class="pre">True</span></code> if a pixel is more intense than the threshold, and <code class="docutils literal notranslate"><span class="pre">False</span></code> if it is lower (or vice versa, depending on the comparison operator).</p>
-<p>The aim here is typically to split the pixels into distinct classes, based on their intensity values. We can use the <code class="docutils literal notranslate"><span class="pre">ndarray</span></code> <code class="docutils literal notranslate"><span class="pre">.ravel()</span></code> method to view a historgram of the pixel intensities, in order to find a threshold that might be useful to use in a filter. The <code class="docutils literal notranslate"><span class="pre">.ravel()</span></code> method “flattens” the image array to 1-D, so that it can be displayed as a histogram:</p>
+<p>The aim here is typically to split the pixels into distinct classes, based on their intensity values. We can use the <code class="docutils literal notranslate"><span class="pre">ndarray</span></code> <code class="docutils literal notranslate"><span class="pre">.ravel()</span></code> method to view a histogram of the pixel intensities, in order to find a threshold that might be useful to use in a filter. The <code class="docutils literal notranslate"><span class="pre">.ravel()</span></code> method “flattens” the image array to 1-D, so that it can be displayed as a histogram:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># The `shape` of the original `noisy` image.</span>
@@ -594,7 +595,7 @@ Min Pixel Value: -0.95
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/74c309b118b5c9004cfc78ad9024f67f3b8694f5cb468a039a4f399744f7de49.png" src="_images/74c309b118b5c9004cfc78ad9024f67f3b8694f5cb468a039a4f399744f7de49.png" />
+<img alt="_images/31b1584fb60b7bea965399cb43f6af4b951ed270fa607a36a011cbca89820e45.png" src="_images/31b1584fb60b7bea965399cb43f6af4b951ed270fa607a36a011cbca89820e45.png" />
 </div>
 </div>
 <p>Ok, so it looks like the distribution is trimodal. The message image is in the <code class="docutils literal notranslate"><span class="pre">float64</span></code> <code class="docutils literal notranslate"><span class="pre">dtype</span></code>, using intensities ranging from -1 to 1. Let’s set a threshold filter for each dip, in between the three peaks. So, we’ll try once with a threshold of -0.50, and once with a threshold of 0.25. These threshold values are shown as vertical lines on the plot below:</p>
@@ -611,7 +612,7 @@ Min Pixel Value: -0.95
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/764b4617c7b37a8045a056f6f259d122d439555b843b75af5b05826a95e6f4d3.png" src="_images/764b4617c7b37a8045a056f6f259d122d439555b843b75af5b05826a95e6f4d3.png" />
+<img alt="_images/41810d66f1825698f6dcb5d3972a445e7c2cf11054884a061403ea926450ca01.png" src="_images/41810d66f1825698f6dcb5d3972a445e7c2cf11054884a061403ea926450ca01.png" />
 </div>
 </div>
 <p>The filters are created, using the <code class="docutils literal notranslate"><span class="pre">&gt;</span></code> comparison operator, in the next two cells:</p>
@@ -671,7 +672,7 @@ Min Pixel Value: -0.95
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/a48183f99d0dcc8f34c1e9544952377ffa0572c0adcb0d5a8098eb2dd44d834f.png" src="_images/a48183f99d0dcc8f34c1e9544952377ffa0572c0adcb0d5a8098eb2dd44d834f.png" />
+<img alt="_images/45697572bbe33659d5d693546320ea755b06d0d64b715ae5d00edd8aad71df89.png" src="_images/45697572bbe33659d5d693546320ea755b06d0d64b715ae5d00edd8aad71df89.png" />
 </div>
 </div>
 <p>Ok, so the first image still looks very noisy still, but the second looks like we might be getting somewhere. Maybe you can already guess what the original signal was…</p>
@@ -693,7 +694,7 @@ Min Pixel Value: -0.95
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/a574f15e1f25629184173e9596a9239654723022d16b8851972374c4e9a0a2fe.png" src="_images/a574f15e1f25629184173e9596a9239654723022d16b8851972374c4e9a0a2fe.png" />
+<img alt="_images/4c4a5047c16ea1fe128a5d19034a090aebdf7152c2edfb3b5a2005161603051c.png" src="_images/4c4a5047c16ea1fe128a5d19034a090aebdf7152c2edfb3b5a2005161603051c.png" />
 </div>
 </div>
 <p>We hope you feel suitably greeted! The threshold of 0.18 seems to reveal what signal was originally in this image, before the unwanted random noise was added, by the faulty transmission system.</p>
@@ -706,7 +707,7 @@ Min Pixel Value: -0.95
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/c3bdc4fe3f57a35ca0b41dc98ec0729ffe1ae1cf3eae4e5f2e8da778a4358e0a.png" src="_images/c3bdc4fe3f57a35ca0b41dc98ec0729ffe1ae1cf3eae4e5f2e8da778a4358e0a.png" />
+<img alt="_images/d8098402ba67601f00a5550e4b1a3424c7386e237db0ea7d9d9c4305364682ed.png" src="_images/d8098402ba67601f00a5550e4b1a3424c7386e237db0ea7d9d9c4305364682ed.png" />
 </div>
 </div>
 <p>Reducing noise and enhancing image features are both common aims in image filtering. Both processes often require some trial and error with different values for optional arguments that go into the filtering operation, as it did here. We will now turn to some other common methods for threshold filtering, using a variety of other images.</p>
@@ -745,7 +746,7 @@ Min Pixel Value: -0.95
  [0 0 0 0 0 0 0 0]]
 </pre></div>
 </div>
-<img alt="_images/1152ca9ff91544f0e95d3a57714c45c188bc7a30e93201c9188eb5d12e49343e.png" src="_images/1152ca9ff91544f0e95d3a57714c45c188bc7a30e93201c9188eb5d12e49343e.png" />
+<img alt="_images/b37e797dbc8d5904639b67571cdaca25cfa7262cf4b971c9995410790a05d05e.png" src="_images/b37e797dbc8d5904639b67571cdaca25cfa7262cf4b971c9995410790a05d05e.png" />
 </div>
 </div>
 <p>As we saw above, it is simple to create a Boolean filter, using the <code class="docutils literal notranslate"><span class="pre">&gt;</span></code> comparison operator:</p>
@@ -771,7 +772,7 @@ Min Pixel Value: -0.95
  [False False False False False False False False]]
 </pre></div>
 </div>
-<img alt="_images/b42b2e6772ed014a2096fe13aae7b9053b350d44ed68430d912219e276a230b6.png" src="_images/b42b2e6772ed014a2096fe13aae7b9053b350d44ed68430d912219e276a230b6.png" />
+<img alt="_images/11528c41626ccfac0ab40a1536789d1d9c527fac3428fc19747ae13c7d132143.png" src="_images/11528c41626ccfac0ab40a1536789d1d9c527fac3428fc19747ae13c7d132143.png" />
 </div>
 </div>
 <p>This filters <em>out</em> pixels <em>below</em> the threshold value (5), by setting them to 0/<code class="docutils literal notranslate"><span class="pre">False</span></code>. Different threshold values will allow more or less pixels to “survive” the filtering operation:</p>
@@ -797,7 +798,7 @@ Min Pixel Value: -0.95
  [False False False False False False False False]]
 </pre></div>
 </div>
-<img alt="_images/eb6f6a50eb12333909ba5459a97a3b60683a73d7027b7972a0ed80448e903ea5.png" src="_images/eb6f6a50eb12333909ba5459a97a3b60683a73d7027b7972a0ed80448e903ea5.png" />
+<img alt="_images/3c0586c088d550fdde07a26ae9c5fa5570b663ba42b98c11b1df973263201b18.png" src="_images/3c0586c088d550fdde07a26ae9c5fa5570b663ba42b98c11b1df973263201b18.png" />
 </div>
 </div>
 </section>
@@ -825,7 +826,7 @@ Min Pixel Value: -0.95
  [ 25  25  27 ... 151 152 149]]
 </pre></div>
 </div>
-<img alt="_images/e53f3a3c5fc0ef4d094fb066bd80afdff2b0805a193caae078567661d17d0c3d.png" src="_images/e53f3a3c5fc0ef4d094fb066bd80afdff2b0805a193caae078567661d17d0c3d.png" />
+<img alt="_images/cacd951dc9f247bd60029487dcfcb23017e7dadc0f2736179ebcf107064af426.png" src="_images/cacd951dc9f247bd60029487dcfcb23017e7dadc0f2736179ebcf107064af426.png" />
 </div>
 </div>
 <p>We can again use the NumPy <code class="docutils literal notranslate"><span class="pre">.ravel()</span></code> method of the <code class="docutils literal notranslate"><span class="pre">camera</span></code> array to allow us to view a histogram of the pixel intensities. We set the number of bins (<span class="math notranslate nohighlight">\(x\)</span>-axis intervals) for the histogram to be 128, to keep the plot looking smooth:</p>
@@ -840,7 +841,7 @@ Min Pixel Value: -0.95
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/a4ac39ae9ac022a15e82a08d868278a23a6f5379180d69bec0c2acfa9a097a83.png" src="_images/a4ac39ae9ac022a15e82a08d868278a23a6f5379180d69bec0c2acfa9a097a83.png" />
+<img alt="_images/fcf088e6a0697bf194a11672e8f85bf9c9b37f5a71a8630c6fe25f1e23057198.png" src="_images/fcf088e6a0697bf194a11672e8f85bf9c9b37f5a71a8630c6fe25f1e23057198.png" />
 </div>
 </div>
 <p>The “bins” are the intervals along the <span class="math notranslate nohighlight">\(x\)</span>-axis in which pixel intensity values are counted to determine the height of the blue “hills” in the histogram above, within a given interval. It is important, when thresholding, to choose a sensible number of bins. Too few bins we miss important information, because we are cramming many disparate pixel intensity values into one bin. Too many bins and we clutter our histogram with lots of spikes which occlude the general pattern.</p>
@@ -879,7 +880,7 @@ Min Pixel Value: -0.95
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/af99a57f3aeb547f6e2d9efba408455017829e0c57f848de60fcbd859d962d26.png" src="_images/af99a57f3aeb547f6e2d9efba408455017829e0c57f848de60fcbd859d962d26.png" />
+<img alt="_images/443cdc937b708773b7c6783cc71107906d524b2e3602d0d78acd44235c7fdd75.png" src="_images/443cdc937b708773b7c6783cc71107906d524b2e3602d0d78acd44235c7fdd75.png" />
 </div>
 </div>
 <p>128 bins gives us a good middle ground, where we can see patterns in the distribution easily, without losing information or overemphasising unrepresentative values. Using the sensible number of bins, the distribution is clearly trimodal, with a clear dip/separation around between 50 and 100-ish, and another just before 200-ish. This locations are indicated on the plot with vertical lines:</p>
@@ -895,7 +896,7 @@ Min Pixel Value: -0.95
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/901ac070e617a78fee681a2f5d14c8511086f9e62c5d176eb675fec453253e45.png" src="_images/901ac070e617a78fee681a2f5d14c8511086f9e62c5d176eb675fec453253e45.png" />
+<img alt="_images/68744a82817926110eba520e292183f37feefcd67461ebfab1f87cb7f9c085ee.png" src="_images/68744a82817926110eba520e292183f37feefcd67461ebfab1f87cb7f9c085ee.png" />
 </div>
 </div>
 <p>Let’s use these “by eye” crude threshold values and apply a threshold filter using them. Remember, our aim here is to separate the pixels into distinct classes; these two distinct pixel classes will hopefully correspond to the foreground and background of the image:</p>
@@ -917,7 +918,7 @@ Min Pixel Value: -0.95
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/b835ff6c75a5548764d8b7f8c8f87d4ae96c7b9f7d84a89de061773978ca3fc3.png" src="_images/b835ff6c75a5548764d8b7f8c8f87d4ae96c7b9f7d84a89de061773978ca3fc3.png" />
+<img alt="_images/d37ee1c48ce5c57e3d4ad10d0231fb292769da2f5518d10f4cdb8fa111a96a0a.png" src="_images/d37ee1c48ce5c57e3d4ad10d0231fb292769da2f5518d10f4cdb8fa111a96a0a.png" />
 </div>
 </div>
 <p>That has worked fairly well, as far as it goes, for segmenting the foreground (the cameraman) away from the background (the field and buildings behind the cameraman).</p>
@@ -930,7 +931,7 @@ Min Pixel Value: -0.95
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/3129b852b6217c30661f5c58874cb8672c9824e40f7a6614330c83e7d3977703.png" src="_images/3129b852b6217c30661f5c58874cb8672c9824e40f7a6614330c83e7d3977703.png" />
+<img alt="_images/22dfd476179a7325305a8a5ac86e1a86f8b5dcfa472d7cacd9705e65210d51d5.png" src="_images/22dfd476179a7325305a8a5ac86e1a86f8b5dcfa472d7cacd9705e65210d51d5.png" />
 </div>
 </div>
 <p>Stylish! Someone should put that on a t-shirt…</p>
@@ -994,7 +995,7 @@ Min Pixel Value: -0.95
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/1fd47f0e97f5dee4a6a23dd5439b30742ea79b981fee44b8f3e8b41cc5080afa.png" src="_images/1fd47f0e97f5dee4a6a23dd5439b30742ea79b981fee44b8f3e8b41cc5080afa.png" />
+<img alt="_images/9e8c8a423198f73ae1b4a285364db57f20d8e3cfb88e8b4920fffe173a5a2f4d.png" src="_images/9e8c8a423198f73ae1b4a285364db57f20d8e3cfb88e8b4920fffe173a5a2f4d.png" />
 </div>
 </div>
 <p>You can see that the method finds a threshold is pretty close to the one we chose “by eye” earlier on the page. Let’s apply the Otsu filter, simply by using <code class="docutils literal notranslate"><span class="pre">camera</span> <span class="pre">&lt;</span> <span class="pre">otsu_thresh</span></code>:</p>
@@ -1022,12 +1023,12 @@ Min Pixel Value: -0.95
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/837a5b2ff1bb4f02d397f7bfdf9079eb04b0e6d0f6f63f27100c82dedb31ac08.png" src="_images/837a5b2ff1bb4f02d397f7bfdf9079eb04b0e6d0f6f63f27100c82dedb31ac08.png" />
+<img alt="_images/6890a9cf6f324b4d2b04fa788a85b4695d2c5a4da05a17b40aa2cfd8a22dbc60.png" src="_images/6890a9cf6f324b4d2b04fa788a85b4695d2c5a4da05a17b40aa2cfd8a22dbc60.png" />
 </div>
 </div>
 <p>If you look at the filtered image (on the right-hand side of the plot), it seems to have achieved pretty good foreground/background segmentation…</p>
 <p>How does the Otsu threshold filter work? Conceptually, the Otsu method involves splitting the histogram into two parts, lots of times, and comparing different splits for how well they separate pixels into two classes, based on a specific numeric metric. The histogram, for each threshold, is split at the center one of the bin intervals.</p>
-<p>The aim is to find which bin interval center gives a split that yields two classes of pixels which are maximally different from one another, by the aforementioned numeric metric. Hopefully this corresponds to pixels forming the background of the image vs pixels forming the forground of the image.</p>
+<p>The aim is to find which bin interval center gives a split that yields two classes of pixels which are maximally different from one another, by the aforementioned numeric metric. Hopefully this corresponds to pixels forming the background of the image vs pixels forming the foreground of the image.</p>
 <p>Since the Otsu method relies on some the “mechanics” of histograms, let’s “deconstruct” the histogram in the center of the plot above, to see how the method works. To perform this deconstruction, we can use the <code class="docutils literal notranslate"><span class="pre">np.histogram()</span></code> function. We give it a flattened 1-D image array (e.g. flattened with the <code class="docutils literal notranslate"><span class="pre">.ravel()</span></code> method), and we tell it a number of bins to use. Again, we will use the sensible value of 128 bins. (<em>Note</em>: you could also use <code class="docutils literal notranslate"><span class="pre">ski.exposure.histogram()</span></code> here, for similar results).</p>
 <p><code class="docutils literal notranslate"><span class="pre">np.histogram()</span></code> will return two arrays. The first is the pixel count within each bin, so in this case we will get 128 individual numbers, because there are 128 bins. We will call this array <code class="docutils literal notranslate"><span class="pre">counts</span></code>. These <code class="docutils literal notranslate"><span class="pre">counts</span></code> determine the height of the histogram over each bin. The first <code class="docutils literal notranslate"><span class="pre">count</span></code> is for the first bin, the second <code class="docutils literal notranslate"><span class="pre">count</span></code> is for the second bin, and so on, as we move along the <span class="math notranslate nohighlight">\(x\)</span>-axis from left to right.</p>
 <p>The second array returned by <code class="docutils literal notranslate"><span class="pre">np.histogram()</span></code> contains the start point of each bin (e.g. each <span class="math notranslate nohighlight">\(x\)</span>-axis interval within which we get the <code class="docutils literal notranslate"><span class="pre">Pixel</span> <span class="pre">Count</span></code>). We will call this array <code class="docutils literal notranslate"><span class="pre">edges</span></code>.</p>
@@ -1303,7 +1304,7 @@ Min Pixel Value: -0.95
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/722783152dc9ef887b1aa7c68f82cc6cc4fe1b31bdce7f09d83c5db84be6d2a3.png" src="_images/722783152dc9ef887b1aa7c68f82cc6cc4fe1b31bdce7f09d83c5db84be6d2a3.png" />
+<img alt="_images/06e50a90b80cc9b0af3510a79e552f4d7d3e9e50d4d1e7a8e857929508753b3d.png" src="_images/06e50a90b80cc9b0af3510a79e552f4d7d3e9e50d4d1e7a8e857929508753b3d.png" />
 </div>
 </div>
 <p>To implement the Otsu filter, we “split” the histogram into two sides, at a given bin center. We can think of this as creating two separate histograms. Here is a visualisation of splitting at the 50th bin center (which is centered on the pixel intensity value of 98.6). The location of the “split” is shown as a thick, dashed line:</p>
@@ -1345,7 +1346,7 @@ Min Pixel Value: -0.95
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/0aac73c648b8a8bdb323143d006a5798accbe7fe2ab912ff6f128e7557d45f45.png" src="_images/0aac73c648b8a8bdb323143d006a5798accbe7fe2ab912ff6f128e7557d45f45.png" />
+<img alt="_images/92fd631c6e98539bedbb6b0d94b258efcc54591bf4458932bac291338e265490.png" src="_images/92fd631c6e98539bedbb6b0d94b258efcc54591bf4458932bac291338e265490.png" />
 </div>
 </div>
 <p>We now effectively have two histograms, the red one (below the 50th bin center; below a pixel intensity value of 98.6), and the green one (above the 50th bin center; above a pixel intensity value of 98.6).</p>
@@ -1362,7 +1363,7 @@ Min Pixel Value: -0.95
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/e73079da443465039f109a19e8012c7f4571208cd793a56c9e2f0494a9a5b147.png" src="_images/e73079da443465039f109a19e8012c7f4571208cd793a56c9e2f0494a9a5b147.png" />
+<img alt="_images/31b7914748d12beae97df98d7b6359d5c408ff892ed88e61db3af31d78b15638.png" src="_images/31b7914748d12beae97df98d7b6359d5c408ff892ed88e61db3af31d78b15638.png" />
 </div>
 </div>
 <p>Once we have “split” the histogram, we calculate the mean of the pixel intensity values in the left-hand histogram, and the mean of the pixel intensity values in the right-hand histogram (e.g. either side of the split).</p>
@@ -1447,7 +1448,7 @@ SSD of histogram above the 50th bin: 174551091.73
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/21d1baf4c3bd0b0ecf710f3fbc272c1d89b1541ba69c7f282b12a51bcfed8eaf.png" src="_images/21d1baf4c3bd0b0ecf710f3fbc272c1d89b1541ba69c7f282b12a51bcfed8eaf.png" />
+<img alt="_images/79919bae680a190f2e46baa883854ce54f1b729d181b11d5aebd5c7c1d37a9b5.png" src="_images/79919bae680a190f2e46baa883854ce54f1b729d181b11d5aebd5c7c1d37a9b5.png" />
 </div>
 </div>
 <p>Different threshold values change the mean and the spread (<code class="docutils literal notranslate"><span class="pre">ssd</span></code>) of each histogram. For each different split visualised below, pay attention to the width of the spread around each mean (e.g. the horizontal lines coming off the vertical line for each mean). This will let you see how the different splits influence the mean and the <code class="docutils literal notranslate"><span class="pre">ssd</span></code> of each histogram, when we compare the left histogram vs right histogram, for a given split:</p>
@@ -1466,7 +1467,7 @@ SSD of histogram above the 50th bin: 174551091.73
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/7e9e43b989ad6a031e1205741ce5be07c1bbf1504a1a9ea4dc0a3658a66f94b2.png" src="_images/7e9e43b989ad6a031e1205741ce5be07c1bbf1504a1a9ea4dc0a3658a66f94b2.png" />
+<img alt="_images/7fd38b8953cdba1ac44adec19cbc42eded8ecd9ff5a6191e88505058049a0260.png" src="_images/7fd38b8953cdba1ac44adec19cbc42eded8ecd9ff5a6191e88505058049a0260.png" />
 </div>
 </div>
 <p>In Otsu’s method, we want to find the threshold value which gives the <em>minimum total <code class="docutils literal notranslate"><span class="pre">ssd</span></code></em> - e.g. the smallest value of the combined spread when we add together the <code class="docutils literal notranslate"><span class="pre">ssd</span></code> values for each histogram. This value corresponds to the <em>maximum between pixel class variance</em>, when comparing each side of the histogram.</p>
@@ -1537,7 +1538,7 @@ Otsu threshold: 102.59765625
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/169fb88811beb794d8ceb18316b002db0401066c29b0798e7c8d5e35b4653619.png" src="_images/169fb88811beb794d8ceb18316b002db0401066c29b0798e7c8d5e35b4653619.png" />
+<img alt="_images/3e4f62f923a913f39215cebf66149b406ff8238a265a826fabbab78a7b862f6c.png" src="_images/3e4f62f923a913f39215cebf66149b406ff8238a265a826fabbab78a7b862f6c.png" />
 </div>
 </div>
 <p>The total <code class="docutils literal notranslate"><span class="pre">ssd</span></code> for the optimal Otsu threshold is an order of magnitude smaller than for some possible other threshold values. We show a different, much worse threshold below, which has a considerably larger total <code class="docutils literal notranslate"><span class="pre">ssd</span></code> (again, the total <code class="docutils literal notranslate"><span class="pre">ssd</span></code> is shown in the title of the plot):</p>
@@ -1549,7 +1550,7 @@ Otsu threshold: 102.59765625
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/740cdbd3206a3770b16db7478b56d140dc37352e6e7341880633ab3d96f2a488.png" src="_images/740cdbd3206a3770b16db7478b56d140dc37352e6e7341880633ab3d96f2a488.png" />
+<img alt="_images/63a77c4bb76d8577e35cf20a31900a89ac9578df7edb0e43fb7ce18168256fad.png" src="_images/63a77c4bb76d8577e35cf20a31900a89ac9578df7edb0e43fb7ce18168256fad.png" />
 </div>
 </div>
 <p>Compare the spreads on each plot by looking at the horizontal lines around the mean of each histogram. You can see that the spreads are much smaller for the Otsu threshold, than for the other, suboptimal threshold. The other threshold, because it has much worse between pixel-class variance than the Otsu threshold, gives much worse image segmentation, in terms of separating foreground from background:</p>
@@ -1561,7 +1562,7 @@ Otsu threshold: 102.59765625
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/b73516cee0c7fcafe338bb45e2efa0f670277fde40e6eb029cb089b79a940310.png" src="_images/b73516cee0c7fcafe338bb45e2efa0f670277fde40e6eb029cb089b79a940310.png" />
+<img alt="_images/f3c3cab606b23aa237cbe9b101d502f6de27c3c0c92e2d91598ddd63058f658e.png" src="_images/f3c3cab606b23aa237cbe9b101d502f6de27c3c0c92e2d91598ddd63058f658e.png" />
 </div>
 </div>
 <p>Admittedly that is quite a cool visual effect, but it is poor segmentation performance. The <code class="docutils literal notranslate"><span class="pre">ssd</span></code>s for multiple different thresholds are shown in the title of each plot below; the <code class="docutils literal notranslate"><span class="pre">camera</span></code> image filtered to the same threshold is shown to the right of each histogram plot:</p>
@@ -1584,7 +1585,7 @@ Otsu threshold: 102.59765625
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/4f96943928498c57b35fd015c153196d087780e3a455eb0c65b46608eb64e147.png" src="_images/4f96943928498c57b35fd015c153196d087780e3a455eb0c65b46608eb64e147.png" />
+<img alt="_images/b798abf3d8dba0024df9f615bfe0c683cc40cb4bcd5834854ff45190e21ee786.png" src="_images/b798abf3d8dba0024df9f615bfe0c683cc40cb4bcd5834854ff45190e21ee786.png" />
 </div>
 </div>
 <p>Remember: Otsu’s method finds the threshold which gives us the smallest <em>sum of the <code class="docutils literal notranslate"><span class="pre">ssd</span></code> values</em>, where we sum together the <code class="docutils literal notranslate"><span class="pre">ssd</span></code> value for each histogram. This identifies the two classes of pixels (one class in each histogram) which have the <em>maximum between pixel-class variance</em>, e.g. pixel classes which are optimally distinct from one another, when assessed with the <code class="docutils literal notranslate"><span class="pre">ssd</span></code> metric.</p>
@@ -1606,7 +1607,7 @@ Otsu threshold: 102.59765625
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/16019c0cf2a13df142800644abc735866d84cd76b4bfe041b39278061feab8e4.png" src="_images/16019c0cf2a13df142800644abc735866d84cd76b4bfe041b39278061feab8e4.png" />
+<img alt="_images/869cfd056eda685f42d052b4daa9b285537a86eee2cd7ce51473e9ac51b0b5b5.png" src="_images/869cfd056eda685f42d052b4daa9b285537a86eee2cd7ce51473e9ac51b0b5b5.png" />
 </div>
 </div>
 <p>To recap, <a class="reference external" href="http://ieeexplore.ieee.org/stamp/stamp.jsp?arnumber=4310076">Otsu’s method</a> proceeds like <a class="reference external" href="https://textbook.nipraxis.org/otsu_threshold.html">this</a>:</p>
@@ -1679,7 +1680,7 @@ bin <span class="math notranslate nohighlight">\(z\)</span>:</p>
 
 <p class="admonition-title">Solution to<a class="reference internal" href="#triple-cam"> Exercise 19</a></p>
 <section id="solution-content">
-<p>Inspecting the histogram by eye can get you quite far here. First, we plot the histogram of <code class="docutils literal notranslate"><span class="pre">camera</span></code>. We roughly indentify low frequency regions which separate the modes of the distribution:</p>
+<p>Inspecting the histogram by eye can get you quite far here. First, we plot the histogram of <code class="docutils literal notranslate"><span class="pre">camera</span></code>. We roughly identify low frequency regions which separate the modes of the distribution:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Plot the histogram, and estimate, by eye thresholds.</span>
@@ -1693,7 +1694,7 @@ bin <span class="math notranslate nohighlight">\(z\)</span>:</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/0bf83535ec64b1fd0ec9c3ee7da4ebc4fa8f2b6143f3ccfb0c04fdf998bcaf42.png" src="_images/0bf83535ec64b1fd0ec9c3ee7da4ebc4fa8f2b6143f3ccfb0c04fdf998bcaf42.png" />
+<img alt="_images/8a31a133662db41aed15d65cbef63793e0e307b4ccd2b804ce4b56b0d50bf166.png" src="_images/8a31a133662db41aed15d65cbef63793e0e307b4ccd2b804ce4b56b0d50bf166.png" />
 </div>
 </div>
 <p>We chose 80 and 190, but you could get similar results with other nearby values:</p>
@@ -1732,7 +1733,7 @@ bin <span class="math notranslate nohighlight">\(z\)</span>:</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/3e11416f062c86f48efa6ac02b3e109d4a1d1d19c4bcb9a31addfae1793b0bd7.png" src="_images/3e11416f062c86f48efa6ac02b3e109d4a1d1d19c4bcb9a31addfae1793b0bd7.png" />
+<img alt="_images/b480e43336f347613a58345306f51f1ebcad58e024a0fb6d9d5be127f171c546.png" src="_images/b480e43336f347613a58345306f51f1ebcad58e024a0fb6d9d5be127f171c546.png" />
 </div>
 </div>
 <p>That gets us pretty close to the target image!</p>
@@ -1768,7 +1769,7 @@ bin <span class="math notranslate nohighlight">\(z\)</span>:</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/1c06309ee2feebff082d7df4b35298eb985525731aaf74cc5978dc6dca2c0924.png" src="_images/1c06309ee2feebff082d7df4b35298eb985525731aaf74cc5978dc6dca2c0924.png" />
+<img alt="_images/36c11bcc1f462054b7dbace14feda187c990994b69b5426efb5ecad872aab983.png" src="_images/36c11bcc1f462054b7dbace14feda187c990994b69b5426efb5ecad872aab983.png" />
 </div>
 </div>
 <p>We can use Boolean indexing (as above) to set the pixel values according to the thresholds:</p>
@@ -1792,7 +1793,7 @@ bin <span class="math notranslate nohighlight">\(z\)</span>:</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/50448f50c25f65a94d5f38e8be050b3fdbdc4d7bf39eb6281f3bbd3e7ba084bf.png" src="_images/50448f50c25f65a94d5f38e8be050b3fdbdc4d7bf39eb6281f3bbd3e7ba084bf.png" />
+<img alt="_images/668aab088b6888ee948dafc5a0254cae4ae187964742ae90359b6d3e87c05447.png" src="_images/668aab088b6888ee948dafc5a0254cae4ae187964742ae90359b6d3e87c05447.png" />
 </div>
 </div>
 <p>A more elegant, slightly hacky way, suggested in the <code class="docutils literal notranslate"><span class="pre">skimage</span></code> documentation is to use <code class="docutils literal notranslate"><span class="pre">np.digitize()</span></code>:</p>
@@ -1806,7 +1807,7 @@ bin <span class="math notranslate nohighlight">\(z\)</span>:</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/5d0a0bfd285198bd6b9d3c5498b00ce10597f89b056f857d2b3b23d1f0512365.png" src="_images/5d0a0bfd285198bd6b9d3c5498b00ce10597f89b056f857d2b3b23d1f0512365.png" />
+<img alt="_images/c3be37e1500cfa8798a7c2f6d56fe22f2083ad045605827bfcf8376ecd57bc07.png" src="_images/c3be37e1500cfa8798a7c2f6d56fe22f2083ad045605827bfcf8376ecd57bc07.png" />
 </div>
 </div>
 </section>
@@ -1825,7 +1826,7 @@ bin <span class="math notranslate nohighlight">\(z\)</span>:</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/0f8d08536e67b7b05fb1300be369c56133357fb1ece1207d689e8a5ebe97cbd8.png" src="_images/0f8d08536e67b7b05fb1300be369c56133357fb1ece1207d689e8a5ebe97cbd8.png" />
+<img alt="_images/bce021d36a2f812b795194f8707ed8d0c578f73f1392628664ecf62a5eac1712.png" src="_images/bce021d36a2f812b795194f8707ed8d0c578f73f1392628664ecf62a5eac1712.png" />
 </div>
 </div>
 </section>

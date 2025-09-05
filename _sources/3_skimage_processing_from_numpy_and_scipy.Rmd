@@ -267,7 +267,7 @@ So our highest values are now 1, our lowest values are -1, and our intermediate 
 
 White areas (pixel = 1) indicate a change between pixels in the horizontal direction (moving left-to-right) from black-to-white, in the original image. Black areas (pixel = -1) indicate a change in the horizontal direction from white-to-black. Grey areas indicate no change (pixel = 0).
 
-We can detect big changes (edges) in the *vertical* direction by telling `np.diff()` to operate along the rows, rather than along the colomns:
+We can detect big changes (edges) in the *vertical* direction by telling `np.diff()` to operate along the rows, rather than along the columns:
 
 ```{python}
 vertical_gradients = np.diff(i_img, 
@@ -964,7 +964,7 @@ plt.imshow(camera_masked_solution);
 
 # Inverting image colours
 
-We saw *colour inversion* on an [earlier page](0_images_as_numpy_arrays.Rmd). This is where all the pixel values in an image are, shockingly, inverted: high numbers become low numbers and vice versa:
+We saw *colour inversion* on an [earlier page](0_images_as_numpy_arrays). This is where all the pixel values in an image are, shockingly, inverted: high numbers become low numbers and vice versa:
 
 For a binary image, this involves swapping 1s and 0s...
 
@@ -1286,7 +1286,7 @@ The solution here requires some close attention to `dtype`. To apply the luminan
 ```{python}
 # Solution pt 1.
 
-# Luminance forumula coefficients
+# Luminance formula coefficients
 weights = np.array([0.2126, 0.7152, 0.0722])
 
 # Run the numbers...

@@ -1,5 +1,6 @@
 ---
 jupyter:
+  orphan: true
   jupytext:
     formats: ipynb,Rmd
     text_representation:
@@ -91,7 +92,7 @@ plt.show()
 
 ```
 
-# Watershed and random walker segementation
+# Watershed and random walker segmentation
 
 ```{python}
 import numpy as np

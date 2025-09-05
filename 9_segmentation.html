@@ -60,6 +60,7 @@
     <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
     <script>DOCUMENTATION_OPTIONS.pagename = '9_segmentation';</script>
     <link rel="canonical" href="https://pxr687.github.io/skimage-tutorials-temp/9_segmentation.html" />
+    <link rel="icon" href="_static/pandas_numpy.ico"/>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
@@ -297,6 +298,37 @@
 
 
 
+<div class="dropdown dropdown-launch-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Launch interactive content">
+    <i class="fas fa-rocket"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="interact/lab/index.html?path=9_segmentation.ipynb" target="_blank"
+   class="btn btn-sm dropdown-item"
+   title="Launch via JupyterLite"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  
+    <img alt="JupyterLite logo" src="_static/images/logo_jupyterlite.svg">
+  </span>
+<span class="btn__text-container">JupyterLite</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
 <div class="dropdown dropdown-source-buttons">
   <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
     <i class="fab fa-github"></i>
@@ -469,7 +501,7 @@ document.write(`
 </li>
 <li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#labelling-connected-components">Labelling connected components</a></li>
 <li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#marker-based-methods">Marker based methods</a></li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#watershed-and-random-walker-segementation">Watershed and random walker segementation</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#watershed-and-random-walker-segmentation">Watershed and random walker segmentation</a></li>
 </ul>
 
             </nav>
@@ -519,7 +551,7 @@ document.write(`
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/d39fdcaef057f69ea31d0655fd889580d1ae597b0190a83121e5b7ebad1af45d.png" src="_images/d39fdcaef057f69ea31d0655fd889580d1ae597b0190a83121e5b7ebad1af45d.png" />
+<img alt="_images/dc11b772627d1e290e269a13abd9e8d0641e917965d4a7eae1011ec37d35ecbc.png" src="_images/dc11b772627d1e290e269a13abd9e8d0641e917965d4a7eae1011ec37d35ecbc.png" />
 </div>
 </div>
 </section>
@@ -562,15 +594,15 @@ document.write(`
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/b2ab71224cdb6cfccfa60c6bd2c4eede773936ae83eadcb47a5637d94dce4156.png" src="_images/b2ab71224cdb6cfccfa60c6bd2c4eede773936ae83eadcb47a5637d94dce4156.png" />
+<img alt="_images/265d2c2e708524464fc949e4b3c87338991825663fc311c33a2d01d152d1ff51.png" src="_images/265d2c2e708524464fc949e4b3c87338991825663fc311c33a2d01d152d1ff51.png" />
 </div>
 </div>
 </section>
 <section class="tex2jax_ignore mathjax_ignore" id="marker-based-methods">
 <h1>Marker based methods<a class="headerlink" href="#marker-based-methods" title="Link to this heading">#</a></h1>
 </section>
-<section class="tex2jax_ignore mathjax_ignore" id="watershed-and-random-walker-segementation">
-<h1>Watershed and random walker segementation<a class="headerlink" href="#watershed-and-random-walker-segementation" title="Link to this heading">#</a></h1>
+<section class="tex2jax_ignore mathjax_ignore" id="watershed-and-random-walker-segmentation">
+<h1>Watershed and random walker segmentation<a class="headerlink" href="#watershed-and-random-walker-segmentation" title="Link to this heading">#</a></h1>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
@@ -625,7 +657,7 @@ document.write(`
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/5916b9d7b521368b86b79cbf5521581815ea012e51878854461f314810d1f6a2.png" src="_images/5916b9d7b521368b86b79cbf5521581815ea012e51878854461f314810d1f6a2.png" />
+<img alt="_images/dce34c568f95775226552afebc132a4db74617d4ba5f01fcb2952c2366e5b4b3.png" src="_images/dce34c568f95775226552afebc132a4db74617d4ba5f01fcb2952c2366e5b4b3.png" />
 </div>
 </div>
 </section>
@@ -682,7 +714,7 @@ document.write(`
 </li>
 <li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#labelling-connected-components">Labelling connected components</a></li>
 <li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#marker-based-methods">Marker based methods</a></li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#watershed-and-random-walker-segementation">Watershed and random walker segementation</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#watershed-and-random-walker-segmentation">Watershed and random walker segmentation</a></li>
 </ul>
 
   </nav></div>

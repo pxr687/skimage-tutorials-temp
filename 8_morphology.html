@@ -32,9 +32,9 @@
     <link rel="stylesheet" type="text/css" href="_static/styles/sphinx-book-theme.css?v=eba8b062" />
     <link rel="stylesheet" type="text/css" href="_static/togglebutton.css?v=13237357" />
     <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
-    <link rel="stylesheet" type="text/css" href="_static/mystnb.8ecb98da25f57f5357bf6f572d296f466b2cfe2517ffebfabe82451661e28f02.css?v=6644e6bb" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.8ecb98da25f57f5357bf6f572d296f466b2cfe2517ffebfabe82451661e28f02.css" />
     <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css?v=4fa983c6" />
-    <link rel="stylesheet" type="text/css" href="_static/exercise.css?v=982b99e0" />
+    <link rel="stylesheet" type="text/css" href="_static/exercise.css" />
     <link rel="stylesheet" type="text/css" href="_static/sphinx-design.min.css?v=95c83b7e" />
   
   <!-- Pre-loaded scripts that we'll load fully later -->
@@ -60,6 +60,7 @@
     <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
     <script>DOCUMENTATION_OPTIONS.pagename = '8_morphology';</script>
     <link rel="canonical" href="https://pxr687.github.io/skimage-tutorials-temp/8_morphology.html" />
+    <link rel="icon" href="_static/pandas_numpy.ico"/>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="prev" title="More filters: the median filter and non-local filters" href="7_median_nonlocal_filters.html" />
@@ -296,6 +297,37 @@
 
 
 
+<div class="dropdown dropdown-launch-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Launch interactive content">
+    <i class="fas fa-rocket"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="interact/lab/index.html?path=8_morphology.ipynb" target="_blank"
+   class="btn btn-sm dropdown-item"
+   title="Launch via JupyterLite"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  
+    <img alt="JupyterLite logo" src="_static/images/logo_jupyterlite.svg">
+  </span>
+<span class="btn__text-container">JupyterLite</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
 <div class="dropdown dropdown-source-buttons">
   <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
     <i class="fab fa-github"></i>
@@ -492,12 +524,12 @@ document.write(`
 <p><img alt="" src="_images/kernel_hit_the_edge.png" /></p>
 <p>Options here including “padding” the empty structuring element locations with a repeated value (like 0), or just duplicating the existing pixels at the edge of the image.</p>
 <p>We have seen structuring elements applied during filtering operations, courtesy of the <code class="docutils literal notranslate"><span class="pre">ski.filters</span></code> module. Morphological operations also make use of structuring elements, though in morphological operations, structuring elements are binary (contain only 0s and 1s).</p>
-<p>Morphological operations differ from the filtering operations we have seen previously because they are specifically related to the shape (…or, well, <a class="reference external" href="https://www.cs.auckland.ac.nz/courses/compsci773s1c/lectures/ImageProcessing-html/topic4.htm"><em>morphology</em></a>) of features with in the image. This contrasts with operations like <a class="reference internal" href="#5_filters"><span class="xref myst">mean filtering</span></a> which “spread” pixel values around within a neighbourhood, rather than identifying and altering features with a specific shape/morphology.</p>
+<p>Morphological operations differ from the filtering operations we have seen previously because they are specifically related to the shape (…or, well, <a class="reference external" href="https://www.cs.auckland.ac.nz/courses/compsci773s1c/lectures/ImageProcessing-html/topic4.htm"><em>morphology</em></a>) of features with in the image. This contrasts with operations like <a class="reference internal" href="5_mean_filter.html"><span class="doc std std-doc">mean filtering</span></a> which “spread” pixel values around within a neighbourhood, rather than identifying and altering features with a specific shape/morphology.</p>
 </section>
 <section class="tex2jax_ignore mathjax_ignore" id="structuring-elements">
 <h1>Structuring elements<a class="headerlink" href="#structuring-elements" title="Link to this heading">#</a></h1>
-<p>Because morphological operations are part of image processing, they involve the modification of array pixel values, which is <a class="reference internal" href="#3_skimage_processing_from_numpy_and_scipy."><span class="xref myst">all image processing is</span></a>. In morphological operations, the structural element will alter pixel values <em>depending upon the match between the shape of the structural element and the shape of the pixels in the “neighbourhood” of the structural element</em>.</p>
-<p>The structural element, typically, is centered once on every pixel in an image, and this central pixel is modified (or not) depending upon the match betweent the shape of the structural element and the shape depicted by the pixels in that neighbourhood.</p>
+<p>Because morphological operations are part of image processing, they involve the modification of array pixel values, which is <a class="reference internal" href="3_skimage_processing_from_numpy_and_scipy.html"><span class="doc std std-doc">all image processing is</span></a>. In morphological operations, the structural element will alter pixel values <em>depending upon the match between the shape of the structural element and the shape of the pixels in the “neighbourhood” of the structural element</em>.</p>
+<p>The structural element, typically, is centered once on every pixel in an image, and this central pixel is modified (or not) depending upon the match between the shape of the structural element and the shape depicted by the pixels in that neighbourhood.</p>
 <p>Let’s make ourselves a simple binary image, so we can clearly see the effect of the foundational morphological operations:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -538,7 +570,7 @@ document.write(`
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/ff1933eb7fcd703d8ed50e82de48436eb43bce21ecece3225df045de64e1996a.png" src="_images/ff1933eb7fcd703d8ed50e82de48436eb43bce21ecece3225df045de64e1996a.png" />
+<img alt="_images/60d83522e1a1de3b089d748ed1a58571d8ed4a65b846460f00f7634b4fb31fe5.png" src="_images/60d83522e1a1de3b089d748ed1a58571d8ed4a65b846460f00f7634b4fb31fe5.png" />
 </div>
 </div>
 <p>Let’s get fancy and ostentacious now, and invest in some diamonds, by which we mean let’s use <code class="docutils literal notranslate"><span class="pre">ski.morphology.diamond()</span></code> to construct a structuring element:</p>
@@ -559,7 +591,7 @@ document.write(`
  [0 1 0]]
 </pre></div>
 </div>
-<img alt="_images/106a749627bb31bb8b9011eb26c8af95d0efdf84447afe12f85c8afdd306c985.png" src="_images/106a749627bb31bb8b9011eb26c8af95d0efdf84447afe12f85c8afdd306c985.png" />
+<img alt="_images/a961ffef9299fd16ce11d9f1811963df1117520336c05ccacace8dfee86ce7c8.png" src="_images/a961ffef9299fd16ce11d9f1811963df1117520336c05ccacace8dfee86ce7c8.png" />
 </div>
 </div>
 <p>Using <code class="docutils literal notranslate"><span class="pre">ski.morphology.diamond(radius=1)</span></code> gives us a diamond shaped structuring element of <code class="docutils literal notranslate"><span class="pre">shape</span></code> (3, 3). We’d call it a “cross” but “diamond” is the canonical term… be assured that it will look more diamond-like (diamond-y?) when set to a bigger <code class="docutils literal notranslate"><span class="pre">radius</span></code>…:</p>
@@ -604,7 +636,7 @@ document.write(`
  [0 0 0 0 0 0 0]]
 </pre></div>
 </div>
-<img alt="_images/671220bd26e8ca1d3301f4a8f8a69509496d10e234afd2aedf04cf1380c81e3f.png" src="_images/671220bd26e8ca1d3301f4a8f8a69509496d10e234afd2aedf04cf1380c81e3f.png" />
+<img alt="_images/c8abb90ce9a77a365a90d34d9882643f5e84f0066a72897d66968e4146f9c600.png" src="_images/c8abb90ce9a77a365a90d34d9882643f5e84f0066a72897d66968e4146f9c600.png" />
 </div>
 </div>
 <p>What has happened here? We can think of our <code class="docutils literal notranslate"><span class="pre">diamond</span></code> structing element as being a bit like a weird <a class="reference external" href="https://en.wikipedia.org/wiki/Reticle">crosshair/reticle</a> of a gun. In a morphological operation, we “target” the crosshair on a given array pixel. Because we are eroding, the central pixel will be <em>lowered to the value of the lowest pixel in its neighbourhood</em> if the pixels in the neighbourhood do not “match” the shape of the structuring element. This is illustrated below.</p>
@@ -623,7 +655,7 @@ document.write(`
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/4a23310daaf9033da0f627b391680e0ce087536aca0ab1a8ace31dff0084e17a.png" src="_images/4a23310daaf9033da0f627b391680e0ce087536aca0ab1a8ace31dff0084e17a.png" />
+<img alt="_images/fbbb22b2d685e15cceecf86697df8468926bbbb2edcbb852f5fba952f6b566ad.png" src="_images/fbbb22b2d685e15cceecf86697df8468926bbbb2edcbb852f5fba952f6b566ad.png" />
 </div>
 </div>
 <div class="cell docutils container">
@@ -655,7 +687,7 @@ document.write(`
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/856f8f4a3b4f7734c82fa4c2c0f8fe227bfec72fae31b185e768ef7b12b27a0b.png" src="_images/856f8f4a3b4f7734c82fa4c2c0f8fe227bfec72fae31b185e768ef7b12b27a0b.png" />
+<img alt="_images/0bfa925e4aed4f690907f7d54b4930a493e3d6fb610d78923d15ed355e96b127.png" src="_images/0bfa925e4aed4f690907f7d54b4930a493e3d6fb610d78923d15ed355e96b127.png" />
 </div>
 </div>
 <p>What happened here? Well, again a “match” only occurs for two pixels in the image, the pixels at the center of each white square. This illustration below shows what happened:</p>
@@ -679,7 +711,7 @@ document.write(`
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/b1225ccb9dfc2b9d71a7a74c893a23a93b156de8be7049cc49f00a5364764c2f.png" src="_images/b1225ccb9dfc2b9d71a7a74c893a23a93b156de8be7049cc49f00a5364764c2f.png" />
+<img alt="_images/c861888c20a3adcd1bb5666a622a1e300a54074b9ce3c0a1b8b158f0d3e064eb.png" src="_images/c861888c20a3adcd1bb5666a622a1e300a54074b9ce3c0a1b8b158f0d3e064eb.png" />
 </div>
 </div>
 <p>Before looking at the output of the cell below, try to think carefully about how you think this will affect the erosion operation, using the (3, 3) <code class="docutils literal notranslate"><span class="pre">diamond</span></code> structuring element. Picture what will happen on the black pixel in the center of the right-hand square.</p>
@@ -693,7 +725,7 @@ document.write(`
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/d0cf82d0f9b01094cb8606279bbf577a9ae9ce514d890ee0fac4d532927e9046.png" src="_images/d0cf82d0f9b01094cb8606279bbf577a9ae9ce514d890ee0fac4d532927e9046.png" />
+<img alt="_images/8ce7cf9db472712fef27ea714cfda6a5b93ce03a8e123c14c25949cbee9797e5.png" src="_images/8ce7cf9db472712fef27ea714cfda6a5b93ce03a8e123c14c25949cbee9797e5.png" />
 </div>
 </div>
 <p>Ok, so now the whole right-hand square got taken out. Brutal.</p>
@@ -723,7 +755,7 @@ document.write(`
  [0 0 0 0 0 0 0]]
 </pre></div>
 </div>
-<img alt="_images/ff1933eb7fcd703d8ed50e82de48436eb43bce21ecece3225df045de64e1996a.png" src="_images/ff1933eb7fcd703d8ed50e82de48436eb43bce21ecece3225df045de64e1996a.png" />
+<img alt="_images/60d83522e1a1de3b089d748ed1a58571d8ed4a65b846460f00f7634b4fb31fe5.png" src="_images/60d83522e1a1de3b089d748ed1a58571d8ed4a65b846460f00f7634b4fb31fe5.png" />
 </div>
 </div>
 <p>Now, we use <code class="docutils literal notranslate"><span class="pre">ski.morphology.dilation()</span></code> to dilate the image, again using <code class="docutils literal notranslate"><span class="pre">diamond</span></code> as our structuring element:</p>
@@ -749,7 +781,7 @@ document.write(`
  [0 0 0 0 0 0 0]]
 </pre></div>
 </div>
-<img alt="_images/a3823fd359aba76c6345b5735ec8d8d9e707134ddcce1fc8601ab007003c7b0a.png" src="_images/a3823fd359aba76c6345b5735ec8d8d9e707134ddcce1fc8601ab007003c7b0a.png" />
+<img alt="_images/ceac8b8f707a1607026d5fcfb396086064b1bc6836d878c254c8e731e4d7fa7f.png" src="_images/ceac8b8f707a1607026d5fcfb396086064b1bc6836d878c254c8e731e4d7fa7f.png" />
 </div>
 </div>
 <p>Ok, so now some of the “clashes” have resulted in <em>more</em> white pixels in the image. The illustration below shows this for three pixels, two “clashes” and the one “match”:</p>
@@ -774,7 +806,7 @@ document.write(`
  [0 0 0 0 0 0 0 0 0 0 0 0 0 0]]
 </pre></div>
 </div>
-<img alt="_images/b1225ccb9dfc2b9d71a7a74c893a23a93b156de8be7049cc49f00a5364764c2f.png" src="_images/b1225ccb9dfc2b9d71a7a74c893a23a93b156de8be7049cc49f00a5364764c2f.png" />
+<img alt="_images/c861888c20a3adcd1bb5666a622a1e300a54074b9ce3c0a1b8b158f0d3e064eb.png" src="_images/c861888c20a3adcd1bb5666a622a1e300a54074b9ce3c0a1b8b158f0d3e064eb.png" />
 </div>
 </div>
 <p>Let’s see how good your prediction was:</p>
@@ -788,7 +820,7 @@ document.write(`
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/3e9cec44a3efede7e90a8b301650ed29a99301828a7f722711eb5293a656a36b.png" src="_images/3e9cec44a3efede7e90a8b301650ed29a99301828a7f722711eb5293a656a36b.png" />
+<img alt="_images/fcecbf44082fbc7c0f96a48f97d99132b9b12bf27e119b0c094f0ab3b54b1dff.png" src="_images/fcecbf44082fbc7c0f96a48f97d99132b9b12bf27e119b0c094f0ab3b54b1dff.png" />
 </div>
 </div>
 <p>Why did this happen? The image below explains:</p>
@@ -826,7 +858,7 @@ document.write(`
  [0 0 0 ... 0 0 0]]
 </pre></div>
 </div>
-<img alt="_images/2792930532652973c6b5dae20515fdbb8ef21273a65574133ab94e21d5362f01.png" src="_images/2792930532652973c6b5dae20515fdbb8ef21273a65574133ab94e21d5362f01.png" />
+<img alt="_images/162a05408c9d3f74e2208c75053b92c3850014c28b37b12ed2f8df9950358437.png" src="_images/162a05408c9d3f74e2208c75053b92c3850014c28b37b12ed2f8df9950358437.png" />
 </div>
 </div>
 <div class="cell docutils container">
@@ -846,7 +878,7 @@ Min Pixel Value: 0
 </div>
 </div>
 </div>
-<p>Scary, especially as a binary image, but not quite as scary as the <code class="docutils literal notranslate"><span class="pre">smiley</span></code> image we <a class="reference internal" href="0_images_as_numpy_arrays.html"><span class="std std-doc">made</span></a> that still haunts our dreams.</p>
+<p>Scary, especially as a binary image, but not quite as scary as the <code class="docutils literal notranslate"><span class="pre">smiley</span></code> image we <a class="reference internal" href="0_images_as_numpy_arrays.html"><span class="doc std std-doc">made</span></a> that still haunts our dreams.</p>
 <p>True to form, eroding this image using the <code class="docutils literal notranslate"><span class="pre">diamond</span></code> structuring element increases the size of dark regions:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -860,7 +892,7 @@ Min Pixel Value: 0
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/175b09c571ca2eceb96dc9a29e1564ee91774cc59c39d8fa12bea3fd3baba0c6.png" src="_images/175b09c571ca2eceb96dc9a29e1564ee91774cc59c39d8fa12bea3fd3baba0c6.png" />
+<img alt="_images/a7bd962c71a4619e82023efb3118da673f8812148ada0dc0e616c5bfbfa02cff.png" src="_images/a7bd962c71a4619e82023efb3118da673f8812148ada0dc0e616c5bfbfa02cff.png" />
 </div>
 </div>
 <p>Whilst dilation increases the size of bright regions (creating a truly, truly terrifying image):</p>
@@ -876,7 +908,7 @@ Min Pixel Value: 0
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/467e1e7b2f0947992499e2f50678f725695e5ff2456b0545a76e5def623c10be.png" src="_images/467e1e7b2f0947992499e2f50678f725695e5ff2456b0545a76e5def623c10be.png" />
+<img alt="_images/ab73e657125b7cbd82181f25aaf8349bf4e3f9c4497f6cfd2ef7639711bfd703.png" src="_images/ab73e657125b7cbd82181f25aaf8349bf4e3f9c4497f6cfd2ef7639711bfd703.png" />
 </div>
 </div>
 <p>We can alter the size of the structuring element to change the nature of the effect. The exact change will be heavily dependent on the image array we are processing. Here we create a diamond with <code class="docutils literal notranslate"><span class="pre">radius</span> <span class="pre">=</span> <span class="pre">6</span></code>:</p>
@@ -905,7 +937,7 @@ Min Pixel Value: 0
  [0 0 0 0 0 0 1 0 0 0 0 0 0]]
 </pre></div>
 </div>
-<img alt="_images/f0b6da3cbd163d2c3a259990d02361a57cd6273d16edb607ad2a86365488a09b.png" src="_images/f0b6da3cbd163d2c3a259990d02361a57cd6273d16edb607ad2a86365488a09b.png" />
+<img alt="_images/0ec2f71c9ed4bb4402ad0f79b03ea962b82bc720cda4a0ed3e7dfda07a64b6b9.png" src="_images/0ec2f71c9ed4bb4402ad0f79b03ea962b82bc720cda4a0ed3e7dfda07a64b6b9.png" />
 </div>
 </div>
 <p>Applied to the <code class="docutils literal notranslate"><span class="pre">xenomorph</span></code> image in an erosion operation, this has some radical results:</p>
@@ -918,7 +950,7 @@ Min Pixel Value: 0
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/01a061042ae39fe8644e90b8f2f458497bdf0a7aa550ecdd7919841dcd5aca27.png" src="_images/01a061042ae39fe8644e90b8f2f458497bdf0a7aa550ecdd7919841dcd5aca27.png" />
+<img alt="_images/273b1319f1bcc6791c839813aca1d4625867c252165aa1a1ed105f278c030b6d.png" src="_images/273b1319f1bcc6791c839813aca1d4625867c252165aa1a1ed105f278c030b6d.png" />
 </div>
 </div>
 <p>There are less “matches” between the large structuring element and pixel neighbourhoods in the image - this leaves less central pixels unchanged, than for a smaller structuring element of the same shape. Thus, because in erorison we are <em>lowering</em> central pixel values in the event of a “clash”, the darker regions have expanded substantially more than when we used a smaller <code class="docutils literal notranslate"><span class="pre">diamond</span></code>, which gave more “matches”.</p>
@@ -933,7 +965,7 @@ Min Pixel Value: 0
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/8f29cadd5d321a70dc7d0a4cd710a18cb03b20257899c91f932d3de5a6dbdccc.png" src="_images/8f29cadd5d321a70dc7d0a4cd710a18cb03b20257899c91f932d3de5a6dbdccc.png" />
+<img alt="_images/43a0854a828b637715524bc81ca7c88dd654ab11fb2254315376fae9336715fc.png" src="_images/43a0854a828b637715524bc81ca7c88dd654ab11fb2254315376fae9336715fc.png" />
 </div>
 </div>
 <p>We can also change the shape of the structuring element - here we create a rectangle of <code class="docutils literal notranslate"><span class="pre">shape</span></code> (3, 3):</p>
@@ -953,7 +985,7 @@ Min Pixel Value: 0
 </div>
 </div>
 </div>
-<p>This new structuring element is the same <code class="docutils literal notranslate"><span class="pre">shape</span></code> as the kernels we used on the <a class="reference internal" href="#5_filters"><span class="xref myst">filtering page</span></a>. Below we use it to erode the xenomorph image:</p>
+<p>This new structuring element is the same <code class="docutils literal notranslate"><span class="pre">shape</span></code> as the kernels we used on the <a class="reference internal" href="5_mean_filter.html"><span class="doc std std-doc">filtering page</span></a>. Below we use it to erode the xenomorph image:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Erode the xenomorph (with the square structuring element).</span>
@@ -964,7 +996,7 @@ Min Pixel Value: 0
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/58c5177491265bead3c91bf477b5089aa3f99eeecc7916a12998269cd046b079.png" src="_images/58c5177491265bead3c91bf477b5089aa3f99eeecc7916a12998269cd046b079.png" />
+<img alt="_images/8948ac6ad3249968a0755cfdf0867ff65075e6f5c5fcbde836f8b236d84c097d.png" src="_images/8948ac6ad3249968a0755cfdf0867ff65075e6f5c5fcbde836f8b236d84c097d.png" />
 </div>
 </div>
 <p>Dilation with this new structuring element once more enlarges brighter regions, again with horrific results:</p>
@@ -978,7 +1010,7 @@ Min Pixel Value: 0
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/dae9527b0ad8f7a17bc9b0bbfdcb6dd442d5af16215f8112d0bc153c74030a7c.png" src="_images/dae9527b0ad8f7a17bc9b0bbfdcb6dd442d5af16215f8112d0bc153c74030a7c.png" />
+<img alt="_images/3dc95f0df2e1755823928a0c4881af04d8e949e1ca40b3a311e7a276c880f335.png" src="_images/3dc95f0df2e1755823928a0c4881af04d8e949e1ca40b3a311e7a276c880f335.png" />
 </div>
 </div>
 <p>Changing the shape or size of the structuring element (likely) changes the number of “matches”, and therefore the degree and location of changes to the bright/dark regions, for both erosion and dilation. We are essentially looking for features of a certain shape (the shape of our structuring element) in the image, and then dilating/eroding on the basis of the number of matches/clashes.</p>
@@ -1015,7 +1047,7 @@ Min Pixel Value: 0
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/f204658b2dedd398269d224953c00df9d4fe671151d8d377ce8e2b6246670517.png" src="_images/f204658b2dedd398269d224953c00df9d4fe671151d8d377ce8e2b6246670517.png" />
+<img alt="_images/2ba662ec3ec85805b2944c478b24f6a4174219a0bcde886aafd06f70b527c3f2.png" src="_images/2ba662ec3ec85805b2944c478b24f6a4174219a0bcde886aafd06f70b527c3f2.png" />
 </div>
 </div>
 <p>Dilating with this <code class="docutils literal notranslate"><span class="pre">big_diamond</span></code> will give you the right outline, but the wrong colours:</p>
@@ -1029,7 +1061,7 @@ Min Pixel Value: 0
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/dcd8d887aab6d313378983096ac8f80f6dc18e34352e1519aa3aaa93d025fd8f.png" src="_images/dcd8d887aab6d313378983096ac8f80f6dc18e34352e1519aa3aaa93d025fd8f.png" />
+<img alt="_images/64282d04466398548a0b90a3ebcdc4057f36704054452267f8f63982ca62bb9e.png" src="_images/64282d04466398548a0b90a3ebcdc4057f36704054452267f8f63982ca62bb9e.png" />
 </div>
 </div>
 <p>To get the target image, we need to <code class="docutils literal notranslate"><span class="pre">invert</span></code> the colours:</p>
@@ -1042,7 +1074,7 @@ Min Pixel Value: 0
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/c85a6f9d599effce427ece5da80a415f1f58612806b5e5475dbe4a7c35ab3630.png" src="_images/c85a6f9d599effce427ece5da80a415f1f58612806b5e5475dbe4a7c35ab3630.png" />
+<img alt="_images/7e3e9a5929bd8bfdaf9986358486d732494ef3c6fc000240aa753c782e029a16.png" src="_images/7e3e9a5929bd8bfdaf9986358486d732494ef3c6fc000240aa753c782e029a16.png" />
 </div>
 </div>
 </section>
@@ -1061,7 +1093,7 @@ Min Pixel Value: 0
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/b459c2208f3fb567f22d5483a414e8c54eb0954ca18781a28919e96fbf7789f3.png" src="_images/b459c2208f3fb567f22d5483a414e8c54eb0954ca18781a28919e96fbf7789f3.png" />
+<img alt="_images/e02d77edeb55ee6da2a75f35b9d066d7424fe09fc3c0ddca8ca1014f6736fdb5.png" src="_images/e02d77edeb55ee6da2a75f35b9d066d7424fe09fc3c0ddca8ca1014f6736fdb5.png" />
 </div>
 </div>
 <p>We can also do this with less nightmarish results, to other images, such as the much more friendly <code class="docutils literal notranslate"><span class="pre">horse</span></code> from <code class="docutils literal notranslate"><span class="pre">ski.data</span></code>:</p>
@@ -1074,7 +1106,7 @@ Min Pixel Value: 0
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/44787528c864446d79be9098f0d2307ade4179b4cbda898c94b1712d3c74e47a.png" src="_images/44787528c864446d79be9098f0d2307ade4179b4cbda898c94b1712d3c74e47a.png" />
+<img alt="_images/41e83f35c7e721add62e770be10e6f6e3c5e573d519aee9485eff88f0aa54cca.png" src="_images/41e83f35c7e721add62e770be10e6f6e3c5e573d519aee9485eff88f0aa54cca.png" />
 </div>
 </div>
 <div class="cell docutils container">
@@ -1103,7 +1135,7 @@ Min Pixel Value: False
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/87b226b2571f2301bcb1959214c1a3aff05e9b7fde059cb7fe7d80440d19cfa6.png" src="_images/87b226b2571f2301bcb1959214c1a3aff05e9b7fde059cb7fe7d80440d19cfa6.png" />
+<img alt="_images/febb7f90f53f24389dade57622902a5a172353b0d79bd27a778d47cac82c700e.png" src="_images/febb7f90f53f24389dade57622902a5a172353b0d79bd27a778d47cac82c700e.png" />
 </div>
 </div>
 <p>Ok, maybe that is still quite nightmarish…</p>

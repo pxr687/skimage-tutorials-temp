@@ -32,7 +32,7 @@ Like with the other kernels we have seen, the "neighbourhood array" is centered 
 
 ![](images/kernel_general.png)
 
-There is no convolvable function to calculate the median, and this is why [some people](https://dsp.stackexchange.com/questions/13211/convolution-kernels-for-image-filtering) will tell you not to call the "neighbourhood array" a "kernel", when we are doing median filtering. Calculating the median utilizes ranking and indexing, and cannot be expressed as set of additions, subtractions, mulitiplications, divisions etc, in the way that calculating a mean can, for instance.
+There is no convolvable function to calculate the median, and this is why [some people](https://dsp.stackexchange.com/questions/13211/convolution-kernels-for-image-filtering) will tell you not to call the "neighbourhood array" a "kernel", when we are doing median filtering. Calculating the median utilizes ranking and indexing, and cannot be expressed as set of additions, subtractions, multiplications, divisions etc, in the way that calculating a mean can, for instance.
 
 One way to think of this, is that when we write the formula for the mean, we can write it without reference to any Python indexing operations:
 
@@ -301,7 +301,7 @@ The final value in `cdf` is 1 (or at least damn near close, given precision loss
 cdf[-1]
 ```
 
-The next step requires some thought, to follow what is going on. We want to "map" the pixel values in the flattend `one_D_eagle` array to the values in the `cdf`. We can do this, for the current `eagle` image, by using the `one_D_eagle` pixel intensity values as *indexes* for the `cdf` array. This might seem like a hack, so lets break it down.
+The next step requires some thought, to follow what is going on. We want to "map" the pixel values in the flattened `one_D_eagle` array to the values in the `cdf`. We can do this, for the current `eagle` image, by using the `one_D_eagle` pixel intensity values as *indexes* for the `cdf` array. This might seem like a hack, so lets break it down.
 
 Recall that we asked you to remember that we asked `np.histogram()` to give us a histogram with 256 bins? Well, as a result our `cdf` array, which contains the running total of the proportions in a given bin and lower bins, has 256 elements:
 

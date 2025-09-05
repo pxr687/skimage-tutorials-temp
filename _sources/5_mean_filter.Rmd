@@ -9,7 +9,7 @@ The mean filter is a *local filter*, because it alters a given pixel's value bas
 
 ![](images/smiley_neighbourhoods.png)
 
-The values within a pixel's local neighbourhood will influence the change that a local filter makes to the central pixel. The `size` and `shape` of the "neighborhood" are up to the user. We can synonomously refer to the neighborhood as a "kernel", "footprint" or "structuring element". As we will see later, Sci-kit image favours the term "footprint". For now, we will use the terms "kernel" and "neighborhood" interchangably to refer to some set of pixels that surround a given pixel.
+The values within a pixel's local neighbourhood will influence the change that a local filter makes to the central pixel. The `size` and `shape` of the "neighborhood" are up to the user. We can synonomously refer to the neighborhood as a "kernel", "footprint" or "structuring element". As we will see later, Sci-kit image favours the term "footprint". For now, we will use the terms "kernel" and "neighborhood" interchangeably to refer to some set of pixels that surround a given pixel.
 
 The mean filter, as the name suggests, *averages* the pixel values within a kernel/neighbourhood. To see this in action, let's build a simple mean filter to filter an image array. First, we perform some imports:
 
@@ -271,7 +271,7 @@ show_attributes(neg_sum_filter_coins)
 
 # Convolution
 
-In normal practice, filtering operations which use kernels rely on [convolution](https://en.wikipedia.org/wiki/Convolution). In fact, one name for the kernel is "convolution kernel". In image processing, convolution is similar to the process we saw with our crude mean filter - we "walk" a kernel across our whole image, centering it on every pixel, and perform a computation which modifies the central pixel based on the other values in the kernel/neightbourhood.
+In normal practice, filtering operations which use kernels rely on [convolution](https://en.wikipedia.org/wiki/Convolution). In fact, one name for the kernel is "convolution kernel". In image processing, convolution is similar to the process we saw with our crude mean filter - we "walk" a kernel across our whole image, centering it on every pixel, and perform a computation which modifies the central pixel based on the other values in the kernel/neighbourhood.
 
 Let's implement a true mean filter, using convolution. Obviously, we start with our kernel. First, we define its shape:
 
@@ -289,7 +289,7 @@ kernel_size = np.prod(kernel_shape)
 kernel_size
 ```
 
-We can then construct our kernel, using `np.full()` which allows us to fill an array with a given value. In this case we will fill it with $\frac{1}{n}$, where $n$ is the number of elements in our kernel (9 kenerl elements - so $\frac{1}{9}$ = 0.11):
+We can then construct our kernel, using `np.full()` which allows us to fill an array with a given value. In this case we will fill it with $\frac{1}{n}$, where $n$ is the number of elements in our kernel (9 kernel elements - so $\frac{1}{9}$ = 0.11):
 
 ```{python}
 mean_kernel = np.full(shape=kernel_shape, 
@@ -315,7 +315,7 @@ n = len(nums)
 np.sum(nums * 1/n)
 ```
 
-...the mean! And we can do exactly the same thing with the `mean_kernel` we made above. We can use the `scipy.ndimage.correlate()` function to achieve this with maximum efficiency (relative to the crude method we used above). This function involes ["moving a [...] kernel over [an] image and computing the sum of products at each location"](https://docs.scipy.org/doc/scipy/reference/generated/scipy.ndimage.correlate.html). This means we:
+...the mean! And we can do exactly the same thing with the `mean_kernel` we made above. We can use the `scipy.ndimage.correlate()` function to achieve this with maximum efficiency (relative to the crude method we used above). This function involves ["moving a [...] kernel over [an] image and computing the sum of products at each location"](https://docs.scipy.org/doc/scipy/reference/generated/scipy.ndimage.correlate.html). This means we:
 
 - Center the kernel on given array pixel in the original image.
 
@@ -554,7 +554,7 @@ This is quite a strange kernel to apply! But it shows us how easy it is to achie
 
 We can implement a mean filter using the `ski.filters.rank.mean()` function. `skimage` prefers the term `footprint` to "kernel", but the meaning is the same. We supply a small matrix with which to "walk" through the image, centering the kernel on every pixel, and modifying that central pixel's value based on the values of the other pixels in it's neighbourhood, with the size and shape of the neighbourhood being defined by the kernel (`footprint`). 
 
-Inspecting the `skimage` documentation will reveal that the format expected for the `footprint` should be ["the [pixel] neighborhood expressed as an ndarray of 1’s and 0’s."](https://scikit-image.org/docs/0.25.x/api/skimage.filters.rank.html#skimage.filters.rank.mean). We will uses `np.ones()` to generate an array in this format. We use a (9, 9) kernel to acheive a stronger visual effect:
+Inspecting the `skimage` documentation will reveal that the format expected for the `footprint` should be ["the [pixel] neighborhood expressed as an ndarray of 1’s and 0’s."](https://scikit-image.org/docs/0.25.x/api/skimage.filters.rank.html#skimage.filters.rank.mean). We will uses `np.ones()` to generate an array in this format. We use a (9, 9) kernel to achieve a stronger visual effect:
 
 ```{python}
 # A "footprint" (eg. kernel) to pass to `skimage`.
@@ -601,10 +601,9 @@ plt.imshow(astronaut);
 
 If we try to filter this image with our (3, 3) `mean_kernel` we will get an error:
 
-```{python}
+```{python tags=c("raises-exception")}
 # Oh dear.
-astronaut_mean_filtered = ndi.correlate(astronaut, 
-                                        weights=mean_kernel)
+astronaut_mean_filtered = ndi.correlate(astronaut, weights=mean_kernel)
 ```
 
 As you can see, the error results from using a 2D kernel to filter a 3D image. A simple solution to this is just to apply the filter to each colour channel separately. This is done in the cell below, using a for loop to filter each channel, storing the channels separately in a dictionary, and then `np.stacking()` the individually filtered channels back into a 3D image:

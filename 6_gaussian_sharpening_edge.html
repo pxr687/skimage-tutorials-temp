@@ -32,9 +32,9 @@
     <link rel="stylesheet" type="text/css" href="_static/styles/sphinx-book-theme.css?v=eba8b062" />
     <link rel="stylesheet" type="text/css" href="_static/togglebutton.css?v=13237357" />
     <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
-    <link rel="stylesheet" type="text/css" href="_static/mystnb.8ecb98da25f57f5357bf6f572d296f466b2cfe2517ffebfabe82451661e28f02.css?v=6644e6bb" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.8ecb98da25f57f5357bf6f572d296f466b2cfe2517ffebfabe82451661e28f02.css" />
     <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css?v=4fa983c6" />
-    <link rel="stylesheet" type="text/css" href="_static/exercise.css?v=982b99e0" />
+    <link rel="stylesheet" type="text/css" href="_static/exercise.css" />
     <link rel="stylesheet" type="text/css" href="_static/sphinx-design.min.css?v=95c83b7e" />
   
   <!-- Pre-loaded scripts that we'll load fully later -->
@@ -62,6 +62,7 @@
     <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <script>DOCUMENTATION_OPTIONS.pagename = '6_gaussian_sharpening_edge';</script>
     <link rel="canonical" href="https://pxr687.github.io/skimage-tutorials-temp/6_gaussian_sharpening_edge.html" />
+    <link rel="icon" href="_static/pandas_numpy.ico"/>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="More filters: the median filter and non-local filters" href="7_median_nonlocal_filters.html" />
@@ -532,7 +533,7 @@ document.write(`
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/01f59a030d6d8a6a50ead88096a793cb42dda150edfbbd6504eb9811206909cb.png" src="_images/01f59a030d6d8a6a50ead88096a793cb42dda150edfbbd6504eb9811206909cb.png" />
+<img alt="_images/17f0a3ea9cf20d31f4a84c06799e8c0370a0fefb710c8c04a967f946907eb436.png" src="_images/17f0a3ea9cf20d31f4a84c06799e8c0370a0fefb710c8c04a967f946907eb436.png" />
 </div>
 </div>
 <p>This is the well-known normal distribution, which is sometimes described as having a “bell-shape”. We will talk in more detail further down the page about why the Gaussian filter has its name. For now, take a look at this fancy <a class="reference external" href="https://www.geeksforgeeks.org/deep-learning/types-of-convolution-kernels">kernel</a>:</p>
@@ -592,7 +593,7 @@ document.write(`
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/302e73de44230d35a6e4a97c13df8b8ab1940122aa91e709d9c8cbdffb10c5aa.png" src="_images/302e73de44230d35a6e4a97c13df8b8ab1940122aa91e709d9c8cbdffb10c5aa.png" />
+<img alt="_images/d776868172d042a12d2115ad1a2c8c78f50c751e20acdc84acc8360e829dc816.png" src="_images/d776868172d042a12d2115ad1a2c8c78f50c751e20acdc84acc8360e829dc816.png" />
 </div>
 </div>
 <p>Now, it may not be immediately apparent to some readers what this plot has to do with a Gaussian distribution. For now let’s use “Gaussian” very loosely - for the moment all we will take from it is that, like a Gaussian distribution, at the center the kernel has high values, then the values fall off as we get nearer to the sides. Let’s warmly refer to the graph as the “red mountain”.</p>
@@ -625,7 +626,7 @@ document.write(`
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/b072c8c5b1456b0c66c5733a6ccc53fdb63b78ba2e683518e01550d4a72a1feb.png" src="_images/b072c8c5b1456b0c66c5733a6ccc53fdb63b78ba2e683518e01550d4a72a1feb.png" />
+<img alt="_images/3beb34fe1dd4e2efdd41d42689ae4cdb51d4db1cdb315c852d47bb55ac7b10ea.png" src="_images/3beb34fe1dd4e2efdd41d42689ae4cdb51d4db1cdb315c852d47bb55ac7b10ea.png" />
 </div>
 </div>
 <p>Let’s refer to the highest point on this kernel surface as the <a class="reference external" href="https://en.wikipedia.org/wiki/Crimson_Peak">“crimson peak”</a>. The crimson peak is the central kernel element of 0.25, at row/column integer index location <code class="docutils literal notranslate"><span class="pre">[1,</span> <span class="pre">1]</span></code>:</p>
@@ -642,7 +643,12 @@ document.write(`
 </div>
 </div>
 </div>
-<p>Essentially, if we filter using this kernel, we “walk” this kernel through the image, with the top of the “crimson peak” centered on a given pixel. The central pixel value is then replaced with an average of the pixels in the neighbourhood, but the contribution of the other pixels in the neighbourhood to the averge is <em>weighted by the height of the “red mountain” at that pixel</em>.</p>
+<p>Essentially, if we filter using this kernel, we “walk” this kernel through the
+image, with the top of the “crimson peak” centered on a given pixel. The
+central pixel value is then replaced with an average of the pixels in the
+neighbourhood, but the contribution of the other pixels in the neighbourhood
+to the average is <em>weighted by the height of the “red mountain” at that
+pixel</em>.</p>
 <p>So array pixels which fall under higher points of the kernel’s “red mountain” will exert more influence on the weighted average, and pixels falling under lower points will exert a weaker influence. The central pixel, laying under the crimson peak, will exert the most influence on the weighted average.</p>
 <p>Let’s use this kernel to filter the following image array:</p>
 <div class="cell docutils container">
@@ -678,7 +684,7 @@ document.write(`
  [0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0.]]
 </pre></div>
 </div>
-<img alt="_images/c712c8438d2ee7b33fb5d403933adf9cccabb50261bf47b7e506f3754dff7012.png" src="_images/c712c8438d2ee7b33fb5d403933adf9cccabb50261bf47b7e506f3754dff7012.png" />
+<img alt="_images/d1089d9b04b9ec7e009b0c1d99aaea834a82ffa3db8fa8500a1fe081106fe662.png" src="_images/d1089d9b04b9ec7e009b0c1d99aaea834a82ffa3db8fa8500a1fe081106fe662.png" />
 </div>
 </div>
 <p>We use use <code class="docutils literal notranslate"><span class="pre">scipy.ndimage.correlate()</span></code> to “walk” our kernel over every pixel in the image, multiply each array pixel value under the kernel by the corresponding kernel value, then take the sum of the result to replace the central pixel value:</p>
@@ -700,10 +706,10 @@ document.write(`
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/75cd952391c5c993088f6768590da617573890520a4d189fb07fed2619817360.png" src="_images/75cd952391c5c993088f6768590da617573890520a4d189fb07fed2619817360.png" />
+<img alt="_images/bfcec94e4f1004253d77a23f82ff40a433470484ebaa02513f607b9267e8281f.png" src="_images/bfcec94e4f1004253d77a23f82ff40a433470484ebaa02513f607b9267e8281f.png" />
 </div>
 </div>
-<p>Blurry! So to recap, we have averaged within a 3-by-3 pixel neightbourhood, replacing the central pixel value with a weighted average of all the pixel values in the neighbourhood. The weights are larger for pixels closer to the central value of the kernel (e.g. closer to the center of the “crimson peak” on the plot above).</p>
+<p>Blurry! So to recap, we have averaged within a 3-by-3 pixel neighbourhood, replacing the central pixel value with a weighted average of all the pixel values in the neighbourhood. The weights are larger for pixels closer to the central value of the kernel (e.g. closer to the center of the “crimson peak” on the plot above).</p>
 <p>This type of filtering is called <em>Gaussian filtering</em> because the kernel element values approximate a <a class="reference external" href="https://en.wikipedia.org/wiki/Normal_distribution">Gaussian (e.g. normal) distribution</a>. The plot of the kernel above, with the “red mountain” may not look much like the normal distribution to you at the moment, but bear with us.</p>
 <p>To see the Gaussian nature of this filtering operation, let’s take a look at another, larger kernel below - it has <code class="docutils literal notranslate"><span class="pre">shape</span></code> <code class="docutils literal notranslate"><span class="pre">(9,</span> <span class="pre">9)</span></code>:</p>
 <div class="cell docutils container">
@@ -740,7 +746,7 @@ document.write(`
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/408c33239534128e677c6cb75deb5c8d246d607894d9a14e25123c5eb2e6f52c.png" src="_images/408c33239534128e677c6cb75deb5c8d246d607894d9a14e25123c5eb2e6f52c.png" />
+<img alt="_images/f01e3d47331c2e4cdf72972b843715094833c045ccf45b003a68af0baf889a75.png" src="_images/f01e3d47331c2e4cdf72972b843715094833c045ccf45b003a68af0baf889a75.png" />
 </div>
 </div>
 <p>Again, if you prefer, we can view the kernel as a wireframe plot, which we show in the cell below. We first show the NumPy view of the array again, above the plot. The plot looks messy when the kernel element values (blue text) are also shown, but we show them for easy comparison to the <code class="docutils literal notranslate"><span class="pre">big_gaussian_kernel</span></code> NumPy array. If you are running interactively, you can set <code class="docutils literal notranslate"><span class="pre">text</span> <span class="pre">=</span> <span class="pre">False</span></code> in the plotting function and re-run the cell, to switch the blue numbers off, if you wish:</p>
@@ -767,7 +773,7 @@ document.write(`
  [0.   0.   0.   0.   0.   0.   0.   0.   0.  ]]
 </pre></div>
 </div>
-<img alt="_images/9318f319a054895af82bf44fff6b20a7eff01d03218c17d1d36fbcc140fe8df9.png" src="_images/9318f319a054895af82bf44fff6b20a7eff01d03218c17d1d36fbcc140fe8df9.png" />
+<img alt="_images/b2820c48e8a3ca3e6a0ba0c79ff6e71ac0ade14420bc5654a4f1093333f0b7f2.png" src="_images/b2820c48e8a3ca3e6a0ba0c79ff6e71ac0ade14420bc5654a4f1093333f0b7f2.png" />
 </div>
 </div>
 <p>Again, to make the relationship between the NumPy array and the graph as clear as possible, here is the “red mountain” viewed from directly above, with the <code class="docutils literal notranslate"><span class="pre">big_gaussian_kernel</span></code> array shown to its right:</p>
@@ -802,7 +808,7 @@ document.write(`
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/535463608ce3b7c4fdd50650f2d349788faf083c2a85c51614225168c734f806.png" src="_images/535463608ce3b7c4fdd50650f2d349788faf083c2a85c51614225168c734f806.png" />
+<img alt="_images/393d18e4504737104fef48970ca6ee7c52fc6d17d312fb5e039e00f4b1fa45a8.png" src="_images/393d18e4504737104fef48970ca6ee7c52fc6d17d312fb5e039e00f4b1fa45a8.png" />
 </div>
 </div>
 <p>Here is the plot of <code class="docutils literal notranslate"><span class="pre">big_gaussian_kernel</span></code> again, for comparison to the perfect Gaussian shown in the image above:</p>
@@ -814,7 +820,7 @@ document.write(`
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/408c33239534128e677c6cb75deb5c8d246d607894d9a14e25123c5eb2e6f52c.png" src="_images/408c33239534128e677c6cb75deb5c8d246d607894d9a14e25123c5eb2e6f52c.png" />
+<img alt="_images/f01e3d47331c2e4cdf72972b843715094833c045ccf45b003a68af0baf889a75.png" src="_images/f01e3d47331c2e4cdf72972b843715094833c045ccf45b003a68af0baf889a75.png" />
 </div>
 </div>
 <p>The “crimson peak” of the <code class="docutils literal notranslate"><span class="pre">big_gaussian_kernel</span></code> is spikier than for the prototypical Gaussian, simply because it is centered on a single pixel (creating the spike at the “crimson peak”). For the smaller <code class="docutils literal notranslate"><span class="pre">gaussian_like_kernel</span></code> the whole 3D plot appeared more “spiky” as it has less array elements. In the bigger <code class="docutils literal notranslate"><span class="pre">(9,</span> <span class="pre">9)</span></code> <code class="docutils literal notranslate"><span class="pre">big_gaussian_kernel</span></code>, we can see a smoother, more obviously Gaussian “mountain”, much more visually similar to prototypical multivariate Gaussian distribution.</p>
@@ -845,7 +851,7 @@ document.write(`
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/813e75860d940fba0a7e4b2b8e5519840acde6624ccb666cf4f4593c845b3ece.png" src="_images/813e75860d940fba0a7e4b2b8e5519840acde6624ccb666cf4f4593c845b3ece.png" />
+<img alt="_images/46477bf13e4fa8f2d1f8ffb55c6779dcf2af90833fadb30e28cbc1633568ced2.png" src="_images/46477bf13e4fa8f2d1f8ffb55c6779dcf2af90833fadb30e28cbc1633568ced2.png" />
 </div>
 </div>
 <p>It is apparent that the larger kernel has “spread” the intensity of higher-valued pixels further than the small kernel. This makes sense, because it is averaging across bigger pixel neighbourhoods.</p>
@@ -861,7 +867,7 @@ document.write(`
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/96d650c1d3116141bb8a96d07618bb69a3cab32dfb82c055b7953a4e5b04dccd.png" src="_images/96d650c1d3116141bb8a96d07618bb69a3cab32dfb82c055b7953a4e5b04dccd.png" />
+<img alt="_images/48f1f40c7b40fdd6f559018d3c9381efed6014965bdd88afe219739e713c3016.png" src="_images/48f1f40c7b40fdd6f559018d3c9381efed6014965bdd88afe219739e713c3016.png" />
 </div>
 </div>
 <p>Below, we filter with separately with <code class="docutils literal notranslate"><span class="pre">gaussian_like_kernel</span></code> and <code class="docutils literal notranslate"><span class="pre">big_gaussian_kernel</span></code>:</p>
@@ -890,7 +896,7 @@ document.write(`
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/efdb3e5f61fc6f4d8acaa7f96add2ecbd6b55debf88fa5f44ab643dce81f0032.png" src="_images/efdb3e5f61fc6f4d8acaa7f96add2ecbd6b55debf88fa5f44ab643dce81f0032.png" />
+<img alt="_images/9baab6b0f7bc1d5e0865eb9d6a9ed358f1f59ada4a7b9b2389aaabba18d53501.png" src="_images/9baab6b0f7bc1d5e0865eb9d6a9ed358f1f59ada4a7b9b2389aaabba18d53501.png" />
 </div>
 </div>
 <p>The smoothing effect is clear, with the larger kernel creating a more striking smoothing effect.</p>
@@ -915,7 +921,7 @@ Max Pixel Value: 231
 Min Pixel Value: 0
 </pre></div>
 </div>
-<img alt="_images/2a123916cdd6cc195c70345655c48bea133bb62ef7e9f500df9f5240a6d23b19.png" src="_images/2a123916cdd6cc195c70345655c48bea133bb62ef7e9f500df9f5240a6d23b19.png" />
+<img alt="_images/9343072c03bd7d288a4459b0351fcb3331a024188034940e13653f068fa0b24f.png" src="_images/9343072c03bd7d288a4459b0351fcb3331a024188034940e13653f068fa0b24f.png" />
 </div>
 </div>
 <p><code class="docutils literal notranslate"><span class="pre">ski.filters.gaussian()</span></code> implements the Gaussian filter. We can control the <code class="docutils literal notranslate"><span class="pre">sigma</span></code> parameter, which controls the spread of the Gaussian “mountain” in the kernel. Lower values will reduce the weight of pixel values far from the central pixel, weighting only those close to it highly. Conversely, higher values will give greater weight to pixels further away from the central pixel:</p>
@@ -930,7 +936,7 @@ Min Pixel Value: 0
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/262fe2a3c21195601a6bb86031cf2703c7a440e4266d1c3bf1e75b22b0d96691.png" src="_images/262fe2a3c21195601a6bb86031cf2703c7a440e4266d1c3bf1e75b22b0d96691.png" />
+<img alt="_images/7d8578ed9d7d5ed5c0c4e35860ad74bb7898ddb0fd460d7a7fd697e7e5f9b236.png" src="_images/7d8578ed9d7d5ed5c0c4e35860ad74bb7898ddb0fd460d7a7fd697e7e5f9b236.png" />
 </div>
 </div>
 <p>Different sigma values will introduce a blurrier effect, because for higher <code class="docutils literal notranslate"><span class="pre">sigma</span></code> values, pixels further from the central value within each kernel are exerting more influence in the averaging calculation:</p>
@@ -952,7 +958,7 @@ Min Pixel Value: 0
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/179d1de5b7907cb0cef2fd96480da3eff9bad5b4f104d8cb3a0aeba8b43df3c9.png" src="_images/179d1de5b7907cb0cef2fd96480da3eff9bad5b4f104d8cb3a0aeba8b43df3c9.png" />
+<img alt="_images/b6038f74b3757fb752bad8065867ce0bcb9856ae663f322962bcc6ff59428bbd.png" src="_images/b6038f74b3757fb752bad8065867ce0bcb9856ae663f322962bcc6ff59428bbd.png" />
 </div>
 </div>
 <div class="exercise dropdown admonition" id="krazy-kernel">
@@ -1002,7 +1008,7 @@ Min Pixel Value: 0
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/9b24c0909928eee284379616939c1a747c67bcec34272ca105124c114558d7ee.png" src="_images/9b24c0909928eee284379616939c1a747c67bcec34272ca105124c114558d7ee.png" />
+<img alt="_images/ba6604014f9cf1a17eb684c08f3e7760109485e4575fa2a44ab61601afa8be9e.png" src="_images/ba6604014f9cf1a17eb684c08f3e7760109485e4575fa2a44ab61601afa8be9e.png" />
 </div>
 </div>
 <p>It looks like a late 90s games console graphics take on a Gaussian! When we filter the <code class="docutils literal notranslate"><span class="pre">camera</span></code> image using this kernel, we get some strange results. First, we show the original <code class="docutils literal notranslate"><span class="pre">camera</span></code> image, as a starting point:</p>
@@ -1022,7 +1028,7 @@ Max Pixel Value: 255
 Min Pixel Value: 0
 </pre></div>
 </div>
-<img alt="_images/e53f3a3c5fc0ef4d094fb066bd80afdff2b0805a193caae078567661d17d0c3d.png" src="_images/e53f3a3c5fc0ef4d094fb066bd80afdff2b0805a193caae078567661d17d0c3d.png" />
+<img alt="_images/cacd951dc9f247bd60029487dcfcb23017e7dadc0f2736179ebcf107064af426.png" src="_images/cacd951dc9f247bd60029487dcfcb23017e7dadc0f2736179ebcf107064af426.png" />
 </div>
 </div>
 <p>Now, we filter with weird kernel:</p>
@@ -1045,7 +1051,7 @@ Max Pixel Value: 255
 Min Pixel Value: 0
 </pre></div>
 </div>
-<img alt="_images/5d063e9383c775e936ec0ccee8999276f9591b27727be6fe70ab2260e3263e2c.png" src="_images/5d063e9383c775e936ec0ccee8999276f9591b27727be6fe70ab2260e3263e2c.png" />
+<img alt="_images/a14f77250d03f58c95bee03754d14f598f51fc56d92a7ca817ed60796c8f8015.png" src="_images/a14f77250d03f58c95bee03754d14f598f51fc56d92a7ca817ed60796c8f8015.png" />
 </div>
 </div>
 <p>This may be a pretty cool effect, but, because the kernel we used looks like the weird cousin of a Gaussian, we would maybe expect this kernel to do something closer to Gaussian smoothing than to totally psych out the image, as it has done here.</p>
@@ -1064,7 +1070,7 @@ Min Pixel Value: 0
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/5ad06f0708ce68cb656a515f624dae4e4d2e36bbd0433c0ef12d4773c7eeddcf.png" src="_images/5ad06f0708ce68cb656a515f624dae4e4d2e36bbd0433c0ef12d4773c7eeddcf.png" />
+<img alt="_images/bd6e9363c588b10fed0a892b2b80387b6ad86040d8d8187f32c65e584d1efe6d.png" src="_images/bd6e9363c588b10fed0a892b2b80387b6ad86040d8d8187f32c65e584d1efe6d.png" />
 </div>
 </div>
 <p>Why did this happen? Take a moment to think about possible explanations. After your pause for thought, your task is to <em>make adjustments to the kernel <strong>only</strong> to prevent the original psychedelic error from happening</em>. You should be able to obtain the same smoothed image from the cell above, if you modify the kernel correctly. Just for reference, to save you scrolling, here is the target image again:</p>
@@ -1199,7 +1205,7 @@ Min Pixel Value: 0
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/7478c4951b6e704664b119c80d491646a118e6ca13b172d65ee0b563a896dd2e.png" src="_images/7478c4951b6e704664b119c80d491646a118e6ca13b172d65ee0b563a896dd2e.png" />
+<img alt="_images/abc25490fbfe2e63e83f4db9436127f566dff31fed960d78c592c08fef73682e.png" src="_images/abc25490fbfe2e63e83f4db9436127f566dff31fed960d78c592c08fef73682e.png" />
 </div>
 </div>
 <p>Now, when we use this adjusted kernel to filter <code class="docutils literal notranslate"><span class="pre">camera</span></code>, we get the target image, which is the product of a filtering process much closer to Gaussian smoothing than the original attempt above:</p>
@@ -1213,7 +1219,7 @@ Min Pixel Value: 0
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/11bf094a3245e80a5b489676ed12f3e294d882009e0b1e198f3413e0a5f081cc.png" src="_images/11bf094a3245e80a5b489676ed12f3e294d882009e0b1e198f3413e0a5f081cc.png" />
+<img alt="_images/a9f524d7c319f5fa8e1a22bc1143ba977aaa3c9988183a436974ead3fb71d9f4.png" src="_images/a9f524d7c319f5fa8e1a22bc1143ba977aaa3c9988183a436974ead3fb71d9f4.png" />
 </div>
 </div>
 </section>
@@ -1222,7 +1228,7 @@ Min Pixel Value: 0
 
 <p class="admonition-title"><span class="caption-number">Exercise 23 </span></p>
 <section id="exercise-content">
-<p>Below is another way of writing the formula for generating a 2D Guassian distribution, and therefore for generating a 2D Gaussian kernel.</p>
+<p>Below is another way of writing the formula for generating a 2D Gaussian distribution, and therefore for generating a 2D Gaussian kernel.</p>
 <p><span class="math notranslate nohighlight">\( \Large \text{Gaussian}(x, y) = \frac{1}{\sqrt{2 \pi \sigma^2}} e^{- \frac{x^2 + y^2}{2\sigma^2}} \)</span></p>
 <p>In contrast the formula we saw above for the same distribution, <em>this formula assumes that both <span class="math notranslate nohighlight">\(x\)</span> and <span class="math notranslate nohighlight">\(y\)</span> have an equal spread</em>. Generally we will want this equality of spread, for a Gaussian kernel.</p>
 <p>Your task is to define a function in the cell below (called <code class="docutils literal notranslate"><span class="pre">DIY_gauss</span></code>) which implements this revised Gaussian formula. Your function should take two 2D arrays (<span class="math notranslate nohighlight">\(x\)</span> and <span class="math notranslate nohighlight">\(y\)</span>), and a <code class="docutils literal notranslate"><span class="pre">sigma</span></code> (<span class="math notranslate nohighlight">\(\sigma\)</span>) value, as arguments. Figure out what needs to be in each input argument to produce the following <code class="docutils literal notranslate"><span class="pre">target_kernel</span></code>:</p>
@@ -1254,7 +1260,7 @@ Min Pixel Value: 0
        [0.  , 0.  , 0.  , 0.  , 0.  , 0.  , 0.  ]])
 </pre></div>
 </div>
-<img alt="_images/c210f1d9c54e4245d4b2d19505ad571849d22fa7671e75ece4d08e13a5d69863.png" src="_images/c210f1d9c54e4245d4b2d19505ad571849d22fa7671e75ece4d08e13a5d69863.png" />
+<img alt="_images/f03f04876989b1dff7d72c24807fd17f71914902e051e5828ea1b918b1ac74d7.png" src="_images/f03f04876989b1dff7d72c24807fd17f71914902e051e5828ea1b918b1ac74d7.png" />
 </div>
 </div>
 <p>Once you have successfully generated the <code class="docutils literal notranslate"><span class="pre">target_kernel</span></code> using your function, use it to blur the following image:</p>
@@ -1267,7 +1273,7 @@ Min Pixel Value: 0
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/ff516154d5c6699e7f6e8921ac6311b86405c5469eb32b794b303caf27923a20.png" src="_images/ff516154d5c6699e7f6e8921ac6311b86405c5469eb32b794b303caf27923a20.png" />
+<img alt="_images/fa83c7ad3acef2633ffe21031a1c12771698402dac55e2aee6cb5c499e5b511a.png" src="_images/fa83c7ad3acef2633ffe21031a1c12771698402dac55e2aee6cb5c499e5b511a.png" />
 </div>
 </div>
 <p>You should find the <code class="docutils literal notranslate"><span class="pre">sigma</span></code> value that you need in order to produce the following target image:</p>
@@ -1412,7 +1418,7 @@ Same as the target? This array should contain on `True`s if so...:
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/1c5780e2f40299c8c01d4e55a0328d28ecf2bc13973f37617202d9d6e78bb684.png" src="_images/1c5780e2f40299c8c01d4e55a0328d28ecf2bc13973f37617202d9d6e78bb684.png" />
+<img alt="_images/cd280d5616b011c8d0a96d5649cac888548f3edba31abe0f6c4a4716e4225615.png" src="_images/cd280d5616b011c8d0a96d5649cac888548f3edba31abe0f6c4a4716e4225615.png" />
 </div>
 </div>
 </section>
@@ -1432,7 +1438,7 @@ Same as the target? This array should contain on `True`s if so...:
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/86f479346c25cc9dd575d5eee7a4b7c8c00966478ba661c860c047eee360d4f8.png" src="_images/86f479346c25cc9dd575d5eee7a4b7c8c00966478ba661c860c047eee360d4f8.png" />
+<img alt="_images/869480f4ef8c02bfa05832afea3bdb2befa40a626f1154e1b7e4df5dc4b3b9b0.png" src="_images/869480f4ef8c02bfa05832afea3bdb2befa40a626f1154e1b7e4df5dc4b3b9b0.png" />
 </div>
 </div>
 <p>A simple way to sharpen the image is via the <a class="reference external" href="https://blog.demofox.org/2022/02/26/image-sharpening-convolution-kernels">following procedure</a>:</p>
@@ -1474,7 +1480,7 @@ Same as the target? This array should contain on `True`s if so...:
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/7e5581546c70c74916a04aa040bddc9ea121eba58342ea31756d6a42cf6d1998.png" src="_images/7e5581546c70c74916a04aa040bddc9ea121eba58342ea31756d6a42cf6d1998.png" />
+<img alt="_images/02df0bc3d2cdc92b6d68a9b02d78cc78a43ee02ac01c86e74ea78c9c561fb5e4.png" src="_images/02df0bc3d2cdc92b6d68a9b02d78cc78a43ee02ac01c86e74ea78c9c561fb5e4.png" />
 </div>
 </div>
 <p>You can see that the sharpened image, as intended, has better clarity than the original. We can also use a specialised <a class="reference external" href="https://www.geeksforgeeks.org/deep-learning/types-of-convolution-kernels/#3-sharpening-kernel">sharpening kernel</a> to achieve the same effect:</p>
@@ -1496,7 +1502,7 @@ Same as the target? This array should contain on `True`s if so...:
  [ 0 -1  0]]
 </pre></div>
 </div>
-<img alt="_images/81205a6035274776e2886806763b886335bbd164b71d3f3b68efe8ac9116bb99.png" src="_images/81205a6035274776e2886806763b886335bbd164b71d3f3b68efe8ac9116bb99.png" />
+<img alt="_images/1b5cea489583bc9ff97d75b8249bc752a585723ecedcae745286451a419a065d.png" src="_images/1b5cea489583bc9ff97d75b8249bc752a585723ecedcae745286451a419a065d.png" />
 </div>
 </div>
 <p>This kernel works by <a class="reference external" href="https://setosa.io/ev/image-kernels/#:~:text=The%20sharpen%20kernel%20emphasizes%20differences,differences%20in%20adjacent%20pixel%20values.">emphasising differences between adjacent pixels</a>. Essentially, the more different than a pixel is from its surrounding pixels, the bigger value it will get in the sharpened image.</p>
@@ -1662,7 +1668,7 @@ Same as the target? This array should contain on `True`s if so...:
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/49bdbc0788cff7d1ee554c52e739c063985b20e61febcad587aa742167c31cfc.png" src="_images/49bdbc0788cff7d1ee554c52e739c063985b20e61febcad587aa742167c31cfc.png" />
+<img alt="_images/cddad311c7c10bf2bfa3d6535722d5eeafa6edd0e471e3b4955afd5e9ebfba94.png" src="_images/cddad311c7c10bf2bfa3d6535722d5eeafa6edd0e471e3b4955afd5e9ebfba94.png" />
 </div>
 </div>
 <p>Sci-kit image (unsurprisingly) also has filters to sharpen images. The <code class="docutils literal notranslate"><span class="pre">ski.filters.unsharp_mask()</span></code> filter is one such filter,  and it uses a similar approach to the one we used above,  when we sharpened an image using a Gaussian filter. <code class="docutils literal notranslate"><span class="pre">ski.filters.unsharp_mask()</span></code> uses the following approach:</p>
@@ -1687,7 +1693,7 @@ Same as the target? This array should contain on `True`s if so...:
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/0d9a110ae9903d2256bad667410607bac6d2e1db9696180641f88eb93b530de3.png" src="_images/0d9a110ae9903d2256bad667410607bac6d2e1db9696180641f88eb93b530de3.png" />
+<img alt="_images/3764c0f7074b8a7cb117f1b32a595a4f84a687f34c372a7dbe7a0c466b1d365f.png" src="_images/3764c0f7074b8a7cb117f1b32a595a4f84a687f34c372a7dbe7a0c466b1d365f.png" />
 </div>
 </div>
 <p>Changing the <code class="docutils literal notranslate"><span class="pre">amount</span></code> parameter will intensify the sharpening effect:</p>
@@ -1711,7 +1717,7 @@ Same as the target? This array should contain on `True`s if so...:
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/9e6e280063410ac41dde482d1347717884d23d0f098966109fa9fcd2c6f90dd4.png" src="_images/9e6e280063410ac41dde482d1347717884d23d0f098966109fa9fcd2c6f90dd4.png" />
+<img alt="_images/b1a4ca6934066904cf3862c31c4bd504060b729098ecb918a2cd307f45212f86.png" src="_images/b1a4ca6934066904cf3862c31c4bd504060b729098ecb918a2cd307f45212f86.png" />
 </div>
 </div>
 <div class="exercise dropdown admonition" id="stay-sharp">
@@ -1729,6 +1735,9 @@ Same as the target? This array should contain on `True`s if so...:
 </div>
 </div>
 <div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Downloading file &#39;data/eagle.png&#39; from &#39;https://gitlab.com/scikit-image/data/-/raw/1e4f62ac31ba4553d176d4473a5967ad1b076d62/eagle.png&#39; to &#39;/home/runner/.cache/scikit-image/0.25.2&#39;.
+</pre></div>
+</div>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Type: &lt;class &#39;numpy.ndarray&#39;&gt;
 dtype: uint8
 Shape: (2019, 1826)
@@ -1736,7 +1745,7 @@ Max Pixel Value: 255
 Min Pixel Value: 1
 </pre></div>
 </div>
-<img alt="_images/8c49b746a63adde1c2aa29bbff9a5eaaf495ec7d079d5023a791e0fe25878dbf.png" src="_images/8c49b746a63adde1c2aa29bbff9a5eaaf495ec7d079d5023a791e0fe25878dbf.png" />
+<img alt="_images/4f81e9bee3a7b15b8b60722e31346e14468ae2451d6850aa6c8412c3c3492ba9.png" src="_images/4f81e9bee3a7b15b8b60722e31346e14468ae2451d6850aa6c8412c3c3492ba9.png" />
 </div>
 </div>
 <p>We’re feeling vandalistic, and so have ruined this image by adding a boatload of Gaussian blur, in the cell below:</p>
@@ -1750,7 +1759,7 @@ Min Pixel Value: 1
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/e25eae7d89f2cb1165f22afaf9963fdc015bd2704d32820b53b66f22a48ce5d5.png" src="_images/e25eae7d89f2cb1165f22afaf9963fdc015bd2704d32820b53b66f22a48ce5d5.png" />
+<img alt="_images/f498559b168823a53f624231346a66a67689a4e3d052df8314761123e741422a.png" src="_images/f498559b168823a53f624231346a66a67689a4e3d052df8314761123e741422a.png" />
 </div>
 </div>
 <p>You mission is the following. Make a custom sharpening kernel to sharpen <code class="docutils literal notranslate"><span class="pre">blurry_eagle</span></code>. You need to modify the kernel, because if we use the original <code class="docutils literal notranslate"><span class="pre">sharpening_kernel</span></code> on <code class="docutils literal notranslate"><span class="pre">blurry_eagle</span></code>, it does not perform well. The image below shows the result of sharpening with the original <code class="docutils literal notranslate"><span class="pre">sharpening_kernel</span></code>:</p>
@@ -1837,7 +1846,7 @@ Min Pixel Value: 1
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/5a683631ae62c6c53ffac3c4a5f2fbf27ad519e75d2eef4a99d707c90dfa5f59.png" src="_images/5a683631ae62c6c53ffac3c4a5f2fbf27ad519e75d2eef4a99d707c90dfa5f59.png" />
+<img alt="_images/87d6e26dbbd3dd05d089acf5d0b62c1d0fb3cf7879045024a8d155e553e3c471.png" src="_images/87d6e26dbbd3dd05d089acf5d0b62c1d0fb3cf7879045024a8d155e553e3c471.png" />
 </div>
 </div>
 <p>We also got pretty good results from <code class="docutils literal notranslate"><span class="pre">ski.filters.unsharp_mask()</span></code>, setting the <code class="docutils literal notranslate"><span class="pre">amount</span></code> argument to 3 (for a strong sharpening effect):</p>
@@ -1860,7 +1869,7 @@ Min Pixel Value: 1
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/3f1347345d1c7183076eeef1f3ce27b80848612e4a730ccc91ecb2542ff6f490.png" src="_images/3f1347345d1c7183076eeef1f3ce27b80848612e4a730ccc91ecb2542ff6f490.png" />
+<img alt="_images/b4e05c3345392c1f103f3e7965d32398289cdeed1bf772563a4d7c8920b9b031.png" src="_images/b4e05c3345392c1f103f3e7965d32398289cdeed1bf772563a4d7c8920b9b031.png" />
 </div>
 </div>
 </section>
@@ -1909,7 +1918,7 @@ Min Pixel Value: 1
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/cdf53020dcfdc78e9662fba13c70cafb697b8eb02f9947ea3709d17c3675f97b.png" src="_images/cdf53020dcfdc78e9662fba13c70cafb697b8eb02f9947ea3709d17c3675f97b.png" />
+<img alt="_images/169cf70927ee8622e09299278ac555703387b47248260329a4ed1a17b40a8f93.png" src="_images/169cf70927ee8622e09299278ac555703387b47248260329a4ed1a17b40a8f93.png" />
 </div>
 </div>
 <p>Convolving with our horizontal edge detection kernel finds the horizontal edges. Note again that the change in pixel intensities is in the <em>vertical</em> direction, but the edge itself runs in the <em>horizontal</em> direction:</p>
@@ -1924,7 +1933,7 @@ Min Pixel Value: 1
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/e6c21e05ace90de65330fe2e779cc9baa4143197d7babc8082aaad07f87fed49.png" src="_images/e6c21e05ace90de65330fe2e779cc9baa4143197d7babc8082aaad07f87fed49.png" />
+<img alt="_images/bfde89027b88a6da8bd264e2dfa1fe2abc69bc7bed49668eff322cb2c957ce6f.png" src="_images/bfde89027b88a6da8bd264e2dfa1fe2abc69bc7bed49668eff322cb2c957ce6f.png" />
 </div>
 </div>
 <p>Let’s think about what has happened here at the level of the individual pixels. Three kernel locations from the top of the array are represented below (once again, you can right click on these images and open them in a new tab/window, for easier viewing):</p>
@@ -2001,7 +2010,7 @@ Now, when applied to our <code class="docutils literal notranslate"><span class=
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/cdf53020dcfdc78e9662fba13c70cafb697b8eb02f9947ea3709d17c3675f97b.png" src="_images/cdf53020dcfdc78e9662fba13c70cafb697b8eb02f9947ea3709d17c3675f97b.png" />
+<img alt="_images/169cf70927ee8622e09299278ac555703387b47248260329a4ed1a17b40a8f93.png" src="_images/169cf70927ee8622e09299278ac555703387b47248260329a4ed1a17b40a8f93.png" />
 </div>
 </div>
 <div class="cell docutils container">
@@ -2015,7 +2024,7 @@ Now, when applied to our <code class="docutils literal notranslate"><span class=
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/bd43608e5fe66a87cf3e0d0720cb43e6a25abba038758631691bf551ec0c3f91.png" src="_images/bd43608e5fe66a87cf3e0d0720cb43e6a25abba038758631691bf551ec0c3f91.png" />
+<img alt="_images/0d1436da1d3429fd0f3389b6691eac204f51f738ae7d0a050921cf441b7cdda6.png" src="_images/0d1436da1d3429fd0f3389b6691eac204f51f738ae7d0a050921cf441b7cdda6.png" />
 </div>
 </div>
 <p>Again, in the resultant image, changes from black to white (0-to-1) end up as white pixels (with value 1). Conversely, changes from white to black (1-to-0) end up as black pixels (with value -1). No change ends up as grey (0):</p>
@@ -2040,7 +2049,7 @@ Max Pixel Value: 1.0
 Min Pixel Value: 0.0
 </pre></div>
 </div>
-<img alt="_images/90b5afdb041923a15b345e35e0d7b51eb4a0a11b62e0aa27556e76d8e3d24d31.png" src="_images/90b5afdb041923a15b345e35e0d7b51eb4a0a11b62e0aa27556e76d8e3d24d31.png" />
+<img alt="_images/d3ea4792952123ea57fb7e4ea818335787fb408d5788c86c70be681b53a9ec83.png" src="_images/d3ea4792952123ea57fb7e4ea818335787fb408d5788c86c70be681b53a9ec83.png" />
 </div>
 </div>
 <p>First, we detect edges in the horizontal direction:</p>
@@ -2054,7 +2063,7 @@ Min Pixel Value: 0.0
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/5a4907f7e49950877864e5ffc5efe3b060e301db1a3ef6d269ec5d45fbcdc437.png" src="_images/5a4907f7e49950877864e5ffc5efe3b060e301db1a3ef6d269ec5d45fbcdc437.png" />
+<img alt="_images/250c686c99aebb1badc217baf528745ad7b10db57418edb2d8378ab5e3b0ed06.png" src="_images/250c686c99aebb1badc217baf528745ad7b10db57418edb2d8378ab5e3b0ed06.png" />
 </div>
 </div>
 <p>Then, in the vertical direction:</p>
@@ -2068,7 +2077,7 @@ Min Pixel Value: 0.0
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/58beff1ffc45148629c1cd6c78c8d0dbfb3c352247e5030eb2b3e16b9d5471ff.png" src="_images/58beff1ffc45148629c1cd6c78c8d0dbfb3c352247e5030eb2b3e16b9d5471ff.png" />
+<img alt="_images/a3d9cb4e28bec738f7fcf0698b2b1815a9b8c8ff107303c266a4a06996f4754a.png" src="_images/a3d9cb4e28bec738f7fcf0698b2b1815a9b8c8ff107303c266a4a06996f4754a.png" />
 </div>
 </div>
 <p>We can combine these two edge detection filters together to search for edges in both directions. First, lets refreseh our memory of what <code class="docutils literal notranslate"><span class="pre">edgy</span></code> looked like, filtered in both directions separately:</p>
@@ -2086,7 +2095,7 @@ Min Pixel Value: 0.0
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/5f3e1872792e42cd8bdb975d8849ec647bde19deed35dcf20fe499b060f8fa00.png" src="_images/5f3e1872792e42cd8bdb975d8849ec647bde19deed35dcf20fe499b060f8fa00.png" />
+<img alt="_images/28d82fd675036a6489fc3847b78c59668b0374524c79d7b9d1bb4ba5380ee57f.png" src="_images/28d82fd675036a6489fc3847b78c59668b0374524c79d7b9d1bb4ba5380ee57f.png" />
 </div>
 </div>
 <p>A simple way to combine these filters is to:</p>
@@ -2109,7 +2118,7 @@ Min Pixel Value: 0.0
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/84c84be108a733b9c4465bcdb393bb6136644e8a0a40cbc00a03fdcc940e161d.png" src="_images/84c84be108a733b9c4465bcdb393bb6136644e8a0a40cbc00a03fdcc940e161d.png" />
+<img alt="_images/3db4a0782ccf4854555e74c102b5ec8a062cc29ccb363a86da78975bc951538e.png" src="_images/3db4a0782ccf4854555e74c102b5ec8a062cc29ccb363a86da78975bc951538e.png" />
 </div>
 </div>
 <p>Pretty cool, here are all the steps, visualised together:</p>
@@ -2133,7 +2142,7 @@ Min Pixel Value: 0.0
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/c1bf041866d18487deae45d740f1975dca448d4e62ae72e237b89570923f98fc.png" src="_images/c1bf041866d18487deae45d740f1975dca448d4e62ae72e237b89570923f98fc.png" />
+<img alt="_images/b29fcaefb9811051bf2e91374a1c5ca1d8b92caa7c31aaa45793834c2108fbe4.png" src="_images/b29fcaefb9811051bf2e91374a1c5ca1d8b92caa7c31aaa45793834c2108fbe4.png" />
 </div>
 </div>
 <p>The pixel values throughout this edge detection process, on the <code class="docutils literal notranslate"><span class="pre">edgy</span></code> array, are shown on the image below:</p>
@@ -2154,7 +2163,7 @@ Min Pixel Value: 0.0
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/df8dae74fc258c2c3e7efecb7b26c75426571ff8f8bdd4127563c37a9fb83064.png" src="_images/df8dae74fc258c2c3e7efecb7b26c75426571ff8f8bdd4127563c37a9fb83064.png" />
+<img alt="_images/c3ffe35f1a52a9012f52e8b02827da0ab3b875a28dd1cac4a1416b6b89ac2aa0.png" src="_images/c3ffe35f1a52a9012f52e8b02827da0ab3b875a28dd1cac4a1416b6b89ac2aa0.png" />
 </div>
 </div>
 <p>Edgy indeed…</p>
@@ -2179,13 +2188,13 @@ Min Pixel Value: 0.0
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/3cd7bcc16ce480c5516f171d048baa3d9e3201621924d51272054784fe8d7db2.png" src="_images/3cd7bcc16ce480c5516f171d048baa3d9e3201621924d51272054784fe8d7db2.png" />
+<img alt="_images/07adb70e53e0be03b7b23306669262e5b25bf63f02f46ce016353089fa28b178.png" src="_images/07adb70e53e0be03b7b23306669262e5b25bf63f02f46ce016353089fa28b178.png" />
 </div>
 </div>
 </section>
 <section class="tex2jax_ignore mathjax_ignore" id="sobel-edge-detection-filtering">
 <h1>Sobel edge detection filtering<a class="headerlink" href="#sobel-edge-detection-filtering" title="Link to this heading">#</a></h1>
-<p>A similiar edge detection filter is the Sobel filter, which uses the <a class="reference external" href="https://www.geeksforgeeks.org/deep-learning/types-of-convolution-kernels/">following</a> <a class="reference external" href="https://nrsyed.com/2018/02/18/edge-detection-in-images-how-to-derive-the-sobel-operator">kernels</a>:</p>
+<p>A similar edge detection filter is the Sobel filter, which uses the <a class="reference external" href="https://www.geeksforgeeks.org/deep-learning/types-of-convolution-kernels/">following</a> <a class="reference external" href="https://nrsyed.com/2018/02/18/edge-detection-in-images-how-to-derive-the-sobel-operator">kernels</a>:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Sobel horizontal edge detection kernel.</span>
@@ -2236,7 +2245,7 @@ Min Pixel Value: 0.0
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/f199e438ab0ad1ad37c2234ed36580d1f77b48abdce7f3b8fb44c3773303c6ec.png" src="_images/f199e438ab0ad1ad37c2234ed36580d1f77b48abdce7f3b8fb44c3773303c6ec.png" />
+<img alt="_images/1210158fa995a65f1c52e11e85dc42bfabb866b471268214419999d3894c2821.png" src="_images/1210158fa995a65f1c52e11e85dc42bfabb866b471268214419999d3894c2821.png" />
 </div>
 </div>
 <p>The effect on the individual pixel values is shown below:</p>
@@ -2252,7 +2261,7 @@ Min Pixel Value: 0.0
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/ff6946c93665cbedde62c5bb113877cc86ca16de3c0f778bf24cde1dd89e1e97.png" src="_images/ff6946c93665cbedde62c5bb113877cc86ca16de3c0f778bf24cde1dd89e1e97.png" />
+<img alt="_images/ed8f02449d9f34ce50ae68a86658e1d32182c96178b6c4933f9edd7f30349c8f.png" src="_images/ed8f02449d9f34ce50ae68a86658e1d32182c96178b6c4933f9edd7f30349c8f.png" />
 </div>
 </div>
 <p>Again, you can inspect the effect on the individual pixel values below:</p>
@@ -2271,7 +2280,7 @@ Min Pixel Value: 0.0
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/ba3f67e552bc334505376f675bcacd91fdc9d68698beeef6081bb756d7791026.png" src="_images/ba3f67e552bc334505376f675bcacd91fdc9d68698beeef6081bb756d7791026.png" />
+<img alt="_images/ebbf932f0fcbfc81cb24be61b2e09e73cb3617bf6a974f9d3d0a124273216ee8.png" src="_images/ebbf932f0fcbfc81cb24be61b2e09e73cb3617bf6a974f9d3d0a124273216ee8.png" />
 </div>
 </div>
 <p>The more formal method is to use the following <a class="reference external" href="https://nrsyed.com/2018/02/18/edge-detection-in-images-how-to-derive-the-sobel-operator">formula</a>, where the filtered image containing the <em>vertical edges</em> (e.g. the <em>horizontal</em> gradients) is <span class="math notranslate nohighlight">\(G_x\)</span>, and the the filtered image containing the <em>horizontal edges</em> (e.g. the <em>vertical</em> gradients) is <span class="math notranslate nohighlight">\(G_y\)</span>:</p>
@@ -2286,7 +2295,7 @@ Min Pixel Value: 0.0
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/f399aef53c75e98a95d558240b990b98839f52e5e094b82e15a821f506c57a44.png" src="_images/f399aef53c75e98a95d558240b990b98839f52e5e094b82e15a821f506c57a44.png" />
+<img alt="_images/4cf5821512f7fca1df118597983c01b8ad41664b91b50839110bf33fd63f0a79.png" src="_images/4cf5821512f7fca1df118597983c01b8ad41664b91b50839110bf33fd63f0a79.png" />
 </div>
 </div>
 <p>Below we show the pixel values in this  Sobel-filtered image, with edges in both directions - the numbers in the final array have been rounded to keep it uncluttered:</p>
@@ -2307,7 +2316,7 @@ Min Pixel Value: 0.0
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/e02e9b227d8876fe5c230c343666d7616c3d4b2b8d9b791facd80410f8357fde.png" src="_images/e02e9b227d8876fe5c230c343666d7616c3d4b2b8d9b791facd80410f8357fde.png" />
+<img alt="_images/f679ce32441608cc3f4b50461b2399a2fa39d84a36a1060e162e6da4abcd0efa.png" src="_images/f679ce32441608cc3f4b50461b2399a2fa39d84a36a1060e162e6da4abcd0efa.png" />
 </div>
 </div>
 <p>Here we implement the Sobel filter using <code class="docutils literal notranslate"><span class="pre">skimage</span></code>:</p>
@@ -2320,7 +2329,7 @@ Min Pixel Value: 0.0
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/f399aef53c75e98a95d558240b990b98839f52e5e094b82e15a821f506c57a44.png" src="_images/f399aef53c75e98a95d558240b990b98839f52e5e094b82e15a821f506c57a44.png" />
+<img alt="_images/4cf5821512f7fca1df118597983c01b8ad41664b91b50839110bf33fd63f0a79.png" src="_images/4cf5821512f7fca1df118597983c01b8ad41664b91b50839110bf33fd63f0a79.png" />
 </div>
 </div>
 <p>The plot below shows the effect of both filters, side by side:</p>
@@ -2367,7 +2376,7 @@ Min Pixel Value: 0.0
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/6dfec38d20fcbad1d343d2c766a4a3a500f636be7b5c78100489d340682c5e19.png" src="_images/6dfec38d20fcbad1d343d2c766a4a3a500f636be7b5c78100489d340682c5e19.png" />
+<img alt="_images/59d9a12b7500795e6e1e9344c39ca6ffae716be54985114a994753daaf023d08.png" src="_images/59d9a12b7500795e6e1e9344c39ca6ffae716be54985114a994753daaf023d08.png" />
 </div>
 </div>
 <div class="exercise dropdown admonition" id="edgelord">
@@ -2383,7 +2392,7 @@ Min Pixel Value: 0.0
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/f399aef53c75e98a95d558240b990b98839f52e5e094b82e15a821f506c57a44.png" src="_images/f399aef53c75e98a95d558240b990b98839f52e5e094b82e15a821f506c57a44.png" />
+<img alt="_images/4cf5821512f7fca1df118597983c01b8ad41664b91b50839110bf33fd63f0a79.png" src="_images/4cf5821512f7fca1df118597983c01b8ad41664b91b50839110bf33fd63f0a79.png" />
 </div>
 </div>
 <p>You can see that both the horizontal edges and the vertical edges are two pixels wide.</p>
@@ -2436,7 +2445,7 @@ Min Pixel Value: 0.0
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/80c7e7c961a9a0965799900ce50f0b8358719f595f66f32822cbd266e284ba64.png" src="_images/80c7e7c961a9a0965799900ce50f0b8358719f595f66f32822cbd266e284ba64.png" />
+<img alt="_images/49f65e1b85f510ff678ec36cc9a14121ae206b7eeeff4c3dca5c2a9a7c9181b9.png" src="_images/49f65e1b85f510ff678ec36cc9a14121ae206b7eeeff4c3dca5c2a9a7c9181b9.png" />
 </div>
 </div>
 <p>Then we used this kernel to find the vertical edges:</p>
@@ -2467,7 +2476,7 @@ Min Pixel Value: 0.0
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/33dc7a537bd105171c3f16e77aee19d4078c5cd18d54325adcf7111528a52e21.png" src="_images/33dc7a537bd105171c3f16e77aee19d4078c5cd18d54325adcf7111528a52e21.png" />
+<img alt="_images/478477a90eb55d3ffccc412b91296d3a64c8b75b60bceeb6a25707bfce56e7f9.png" src="_images/478477a90eb55d3ffccc412b91296d3a64c8b75b60bceeb6a25707bfce56e7f9.png" />
 </div>
 </div>
 <p>We then applied the Euclidean distance formula to get the horizontal and vertical edges in one image:</p>
@@ -2483,7 +2492,7 @@ Min Pixel Value: 0.0
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/0ba6238002b7291a3ab44a92e7388a67d77058fc7dc501d6d1ce39aea12ea145.png" src="_images/0ba6238002b7291a3ab44a92e7388a67d77058fc7dc501d6d1ce39aea12ea145.png" />
+<img alt="_images/b449671633717eab8bc884f7fc4926a55d2503bfb45838e202f8026ed334de52.png" src="_images/b449671633717eab8bc884f7fc4926a55d2503bfb45838e202f8026ed334de52.png" />
 </div>
 </div>
 </section>

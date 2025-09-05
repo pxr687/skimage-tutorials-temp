@@ -32,9 +32,9 @@
     <link rel="stylesheet" type="text/css" href="_static/styles/sphinx-book-theme.css?v=eba8b062" />
     <link rel="stylesheet" type="text/css" href="_static/togglebutton.css?v=13237357" />
     <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
-    <link rel="stylesheet" type="text/css" href="_static/mystnb.8ecb98da25f57f5357bf6f572d296f466b2cfe2517ffebfabe82451661e28f02.css?v=6644e6bb" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.8ecb98da25f57f5357bf6f572d296f466b2cfe2517ffebfabe82451661e28f02.css" />
     <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css?v=4fa983c6" />
-    <link rel="stylesheet" type="text/css" href="_static/exercise.css?v=982b99e0" />
+    <link rel="stylesheet" type="text/css" href="_static/exercise.css" />
     <link rel="stylesheet" type="text/css" href="_static/sphinx-design.min.css?v=95c83b7e" />
   
   <!-- Pre-loaded scripts that we'll load fully later -->
@@ -62,6 +62,7 @@
     <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <script>DOCUMENTATION_OPTIONS.pagename = '1_colour_images_as_numpy_arrays';</script>
     <link rel="canonical" href="https://pxr687.github.io/skimage-tutorials-temp/1_colour_images_as_numpy_arrays.html" />
+    <link rel="icon" href="_static/pandas_numpy.ico"/>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="Introducing Scikit-image" href="2_skimage_intro.html" />
@@ -294,6 +295,37 @@
         <div class="header-article-item">
 
 <div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-launch-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Launch interactive content">
+    <i class="fas fa-rocket"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="interact/lab/index.html?path=1_colour_images_as_numpy_arrays.ipynb" target="_blank"
+   class="btn btn-sm dropdown-item"
+   title="Launch via JupyterLite"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  
+    <img alt="JupyterLite logo" src="_static/images/logo_jupyterlite.svg">
+  </span>
+<span class="btn__text-container">JupyterLite</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
 
 
 
@@ -552,7 +584,7 @@ document.write(`
  [0. 1.]]
 </pre></div>
 </div>
-<img alt="_images/2a1270b76ee63901c527e81d9b4211ae5ed3caa9038976f28db9e32adb6fa147.png" src="_images/2a1270b76ee63901c527e81d9b4211ae5ed3caa9038976f28db9e32adb6fa147.png" />
+<img alt="_images/2af4f3af7c62a3f7461027f5894fef6d4dc0b15e3c3d115b128f6aa67cd01738.png" src="_images/2af4f3af7c62a3f7461027f5894fef6d4dc0b15e3c3d115b128f6aa67cd01738.png" />
 </div>
 </div>
 <div class="cell docutils container">
@@ -582,7 +614,7 @@ document.write(`
  [ 5.  3.]]
 </pre></div>
 </div>
-<img alt="_images/ced8e7f6daddd64bd28552ce0df64e911b4306f8dcc45bc5c023a0882e9745f1.png" src="_images/ced8e7f6daddd64bd28552ce0df64e911b4306f8dcc45bc5c023a0882e9745f1.png" />
+<img alt="_images/dfabca9223903c999e9e64a84d31a46533b19c582134d0aadf938f31a4026429.png" src="_images/dfabca9223903c999e9e64a84d31a46533b19c582134d0aadf938f31a4026429.png" />
 </div>
 </div>
 <p>The first image - with black and white squares only, no grey - is a <em>binary image</em>. This is an image where each array pixel contains only one of two values. In this case the two values are 0 or 1, with 0 corresponding to black pixels and 1 corresponding to white pixels.</p>
@@ -624,7 +656,7 @@ document.write(`
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/eccd2e73cd9b17fb4065b6f615c36487cdd60b9ce7529f4452854deb501c9511.png" src="_images/eccd2e73cd9b17fb4065b6f615c36487cdd60b9ce7529f4452854deb501c9511.png" />
+<img alt="_images/9483e7e6b8b336403c32a934698f809bd697411d98aa81bf26f953b3cb4c4f79.png" src="_images/9483e7e6b8b336403c32a934698f809bd697411d98aa81bf26f953b3cb4c4f79.png" />
 </div>
 </div>
 <p>We can say then, that the plots on the bottom row are <em>displayed using pseudo-colour</em>. The original image arrays only contain black-white-grey information in their pixel intensity values; they do not contain <em>true colour</em> information. <strong>This will be true of any two-dimensional image array</strong>, and both of these image arrays are two-dimensional:</p>
@@ -683,7 +715,7 @@ document.write(`
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/1a552b69d410cf7c4942dcfc6cdee2f83086e428722358481187b8cbee2d983d.png" src="_images/1a552b69d410cf7c4942dcfc6cdee2f83086e428722358481187b8cbee2d983d.png" />
+<img alt="_images/84c0a81a3b0e12ebda874a8e09e8dcfa65911a825220a528adb8d86ba2e53cb7.png" src="_images/84c0a81a3b0e12ebda874a8e09e8dcfa65911a825220a528adb8d86ba2e53cb7.png" />
 </div>
 </div>
 <p>Now, picture this array as physical object, like a tray, standing on one side, in physical space:</p>
@@ -854,7 +886,7 @@ Our 3D stacked array is of the right shape:</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/1a552b69d410cf7c4942dcfc6cdee2f83086e428722358481187b8cbee2d983d.png" src="_images/1a552b69d410cf7c4942dcfc6cdee2f83086e428722358481187b8cbee2d983d.png" />
+<img alt="_images/84c0a81a3b0e12ebda874a8e09e8dcfa65911a825220a528adb8d86ba2e53cb7.png" src="_images/84c0a81a3b0e12ebda874a8e09e8dcfa65911a825220a528adb8d86ba2e53cb7.png" />
 </div>
 </div>
 <p>Ok, that is not what we wanted - nothing has changed! Interestingly though, the 3D image array still renders as a 2D display image:</p>
@@ -909,7 +941,7 @@ Our 3D stacked array is of the right shape:</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/7b3bf6ec6733f034d35529723aa390636c37806db78bee8308a4a14eb898699d.png" src="_images/7b3bf6ec6733f034d35529723aa390636c37806db78bee8308a4a14eb898699d.png" />
+<img alt="_images/d368b6164187e98a8982cf0b35d1c7b02b7177cc721fecb06742feef85e07ecf.png" src="_images/d368b6164187e98a8982cf0b35d1c7b02b7177cc721fecb06742feef85e07ecf.png" />
 </div>
 </div>
 <p>Ok, so now we have a fully black 2D display image, from our 3D array which contains only 0’s:</p>
@@ -1016,7 +1048,7 @@ Our 3D stacked array is of the right shape:</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/cbc6c90b7bb148e2a1f3a3df57d9f47bfcafbc5e45acc55a67dbee3d9ae54ad3.png" src="_images/cbc6c90b7bb148e2a1f3a3df57d9f47bfcafbc5e45acc55a67dbee3d9ae54ad3.png" />
+<img alt="_images/73d065dae500961534db22821766c9548d4833c43be838d41fd54da21daa6ec4.png" src="_images/73d065dae500961534db22821766c9548d4833c43be838d41fd54da21daa6ec4.png" />
 </div>
 </div>
 <p>Great! We have now used the third dimension to introduce <em>true colour information</em> into our image array. We can visualise this process using the graphic below:</p>
@@ -1098,7 +1130,7 @@ Our 3D stacked array is of the right shape:</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/28d407c38c12bca9527c77719661235506c1799a0b5faad61563652bab6d8d33.png" src="_images/28d407c38c12bca9527c77719661235506c1799a0b5faad61563652bab6d8d33.png" />
+<img alt="_images/e2a99544faa5806b82a7448d5ab61c16830b40d35f318093950d9b46c63ad309.png" src="_images/e2a99544faa5806b82a7448d5ab61c16830b40d35f318093950d9b46c63ad309.png" />
 </div>
 </div>
 <p>Here we have altered only the second slice, such that only it contains nonzero (1) values. We now see green squares in the display image:</p>
@@ -1179,7 +1211,7 @@ Our 3D stacked array is of the right shape:</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/c1f03a660dbfb74c599f933d3ecb0fcda27d1ca86928a4a28058b29bf342cf4a.png" src="_images/c1f03a660dbfb74c599f933d3ecb0fcda27d1ca86928a4a28058b29bf342cf4a.png" />
+<img alt="_images/0fc6d115718127b45df69c28f1315668382f39006a3f7c6fbfd5a3ceb2ebf5d1.png" src="_images/0fc6d115718127b45df69c28f1315668382f39006a3f7c6fbfd5a3ceb2ebf5d1.png" />
 </div>
 </div>
 <p>So, this has given us:</p>
@@ -1205,8 +1237,8 @@ Our 3D stacked array is of the right shape:</p>
 </div>
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>X1 = 0.41
-X2 = 0.62
-X3 = 0.87
+X2 = 0.19
+X3 = 0.76
 </pre></div>
 </div>
 </div>
@@ -1235,12 +1267,12 @@ X3 = 0.87
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Red (X1) = 0.75
-Green (X2) = 0.38
-Blue (X3) = 0.19
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Red (X1) = 0.11
+Green (X2) = 0.9
+Blue (X3) = 0.38
 </pre></div>
 </div>
-<img alt="_images/541fbe3380135d52654adcd19991476d4284ccd6fa45dba2b3b653c24fff6506.png" src="_images/541fbe3380135d52654adcd19991476d4284ccd6fa45dba2b3b653c24fff6506.png" />
+<img alt="_images/0f28ee5b1aa253ee3dda17c97803bd1022499856f7547f86275799caa3f733c6.png" src="_images/0f28ee5b1aa253ee3dda17c97803bd1022499856f7547f86275799caa3f733c6.png" />
 </div>
 </div>
 <p>So, each two-dimensional display image has a “hidden” three-dimensional array behind it. Each slice of the third dimension is a colour channel. The mix of values at a given element in each colour channel determines the colour of that pixel in the rendered image. You may want to view this image in a new browser window, to see more clearly the exact mixes of the colour channels, which are shown above each square on the right-hand side of the image:</p>
@@ -1256,7 +1288,7 @@ Blue (X3) = 0.19
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/0988634f229068102a0606e07bc42d46e990b62e9a5afa59180c661c87548246.png" src="_images/0988634f229068102a0606e07bc42d46e990b62e9a5afa59180c661c87548246.png" />
+<img alt="_images/620694c8b224d937d74ca74c71b252331f29b44d9434a0c5a71a5373136d61e2.png" src="_images/620694c8b224d937d74ca74c71b252331f29b44d9434a0c5a71a5373136d61e2.png" />
 </div>
 </div>
 <p>We have now completed our perilous expedition into the third dimension… We have seen that we can use 3D arrays to encode <em>true colour</em> information. This means that the image array itself contains colour information for each pixel, where we are <em>not</em> just pseudocolouring greyscale information using <code class="docutils literal notranslate"><span class="pre">viridis</span></code> or another colourmap…</p>
@@ -1369,7 +1401,7 @@ Min Pixel Value: 0
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/9bea863298662798dfd8805b3e1b6dd347615d6f709ac06138bb0736d6c06c7b.png" src="_images/9bea863298662798dfd8805b3e1b6dd347615d6f709ac06138bb0736d6c06c7b.png" />
+<img alt="_images/6a02ed4bfc301cf831532b63197da2f9686df3611b728fe19b4fb818af43f6d8.png" src="_images/6a02ed4bfc301cf831532b63197da2f9686df3611b728fe19b4fb818af43f6d8.png" />
 </div>
 </div>
 <p>Looks great! Though at the time of writing one of the authors is on their third coffee today…</p>
@@ -1393,7 +1425,7 @@ Min Pixel Value: 0
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/015b8b709360602cd44fd897cd18710d18ef3035724e49b0417d1f84724483fa.png" src="_images/015b8b709360602cd44fd897cd18710d18ef3035724e49b0417d1f84724483fa.png" />
+<img alt="_images/8d7a0dfab96a639cac5a1254c9ad8ab6230663f7875068b29f26f19c0d915c5d.png" src="_images/8d7a0dfab96a639cac5a1254c9ad8ab6230663f7875068b29f26f19c0d915c5d.png" />
 </div>
 </div>
 <p>Ok, now we have clarified the mystical 255 pixel value, let’s use a for loop to extract each colour channel of <code class="docutils literal notranslate"><span class="pre">coffee</span></code> image. What do you think Matplotlib will show when we visualise each 2D slice of the 3D image separately?</p>
@@ -1419,7 +1451,7 @@ Min Pixel Value: 0
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/a234b9a9ee62a62cd53d24d6db4a36278e8c762832f995b3c431831afd557bbc.png" src="_images/a234b9a9ee62a62cd53d24d6db4a36278e8c762832f995b3c431831afd557bbc.png" />
+<img alt="_images/bd15431d386a449b60c53579f97e71b134cd6c2ff69282bab7c98ccebe8f0b26.png" src="_images/bd15431d386a449b60c53579f97e71b134cd6c2ff69282bab7c98ccebe8f0b26.png" />
 </div>
 </div>
 <p>Now we are viewing each slice/colour channel separately, we are again visualising 2D arrays - you can see the <code class="docutils literal notranslate"><span class="pre">.shape</span></code> of each slice below each image.</p>
@@ -1441,7 +1473,7 @@ Min Pixel Value: 0
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/8e78d7c51d45b6622f252b1062ad7a9e9f4f605531632cc8dd9cb763d221e9fc.png" src="_images/8e78d7c51d45b6622f252b1062ad7a9e9f4f605531632cc8dd9cb763d221e9fc.png" />
+<img alt="_images/12ff24de708741502d336e153629a06331d60b63e4ce2b15de02f521813cca69.png" src="_images/12ff24de708741502d336e153629a06331d60b63e4ce2b15de02f521813cca69.png" />
 </div>
 </div>
 <p>When we visualise the full 3D array however, then, as we have seen, each slice controls the amount of a specific colour, and the resultant mix gives us our beautiful, full-colour image:</p>
@@ -1452,7 +1484,7 @@ Min Pixel Value: 0
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/9bea863298662798dfd8805b3e1b6dd347615d6f709ac06138bb0736d6c06c7b.png" src="_images/9bea863298662798dfd8805b3e1b6dd347615d6f709ac06138bb0736d6c06c7b.png" />
+<img alt="_images/6a02ed4bfc301cf831532b63197da2f9686df3611b728fe19b4fb818af43f6d8.png" src="_images/6a02ed4bfc301cf831532b63197da2f9686df3611b728fe19b4fb818af43f6d8.png" />
 </div>
 </div>
 <div class="exercise dropdown admonition" id="true-blue">
@@ -1514,7 +1546,7 @@ Min Pixel Value: 0
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/ca755f2d58860dfaea76e3ed1e198df8224d3d1b1fdc202c618b07d78eee1db5.png" src="_images/ca755f2d58860dfaea76e3ed1e198df8224d3d1b1fdc202c618b07d78eee1db5.png" />
+<img alt="_images/6fcc404374916b4fd0b878a93d5156f07f246992c7d60fff77f0651b081b33e7.png" src="_images/6fcc404374916b4fd0b878a93d5156f07f246992c7d60fff77f0651b081b33e7.png" />
 </div>
 </div>
 </section>
@@ -1554,7 +1586,7 @@ Min Pixel Value: 0
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/bd1cf2fbd41a4f8a1a9b3087e1f85fb4121c882d733806dfc8003a236398b6b6.png" src="_images/bd1cf2fbd41a4f8a1a9b3087e1f85fb4121c882d733806dfc8003a236398b6b6.png" />
+<img alt="_images/8d54be2cbf4c23d538ca6d9168858dc095788a1d3e540e6f23140d8d50ad9f7b.png" src="_images/8d54be2cbf4c23d538ca6d9168858dc095788a1d3e540e6f23140d8d50ad9f7b.png" />
 </div>
 </div>
 </section>
@@ -1605,7 +1637,7 @@ Min Pixel Value: 0
  [1. 1. 1. 1. 1. 1. 1. 1.]]
 </pre></div>
 </div>
-<img alt="_images/df02d36b2f9266e588b236ecffba5cb347ef43da9210731ebbc2ef641aedc547.png" src="_images/df02d36b2f9266e588b236ecffba5cb347ef43da9210731ebbc2ef641aedc547.png" />
+<img alt="_images/f9721dfc414258f9029d3d140dab397fcc2135bd08c593271d4acb79862ec8f0.png" src="_images/f9721dfc414258f9029d3d140dab397fcc2135bd08c593271d4acb79862ec8f0.png" />
 </div>
 </div>
 <p>We can then stack the inverted array and “turn off” the green and blue channels by multiplying their pixel values by 0:</p>
@@ -1622,7 +1654,7 @@ Min Pixel Value: 0
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/a9c005f22ad0d2f83242745a38f37b6f4f2a370ac63af943147efdab7b9b459b.png" src="_images/a9c005f22ad0d2f83242745a38f37b6f4f2a370ac63af943147efdab7b9b459b.png" />
+<img alt="_images/982bcb4181eddfad87851cebc6a81b6773d54507cadff58a4899c0c95a045a5b.png" src="_images/982bcb4181eddfad87851cebc6a81b6773d54507cadff58a4899c0c95a045a5b.png" />
 </div>
 </div>
 </section>
@@ -1659,7 +1691,7 @@ Min Pixel Value: 0
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/6697af07b50845bef23125a8c320206623cbc073b01709db6c32db7fc8bfb8a9.png" src="_images/6697af07b50845bef23125a8c320206623cbc073b01709db6c32db7fc8bfb8a9.png" />
+<img alt="_images/0de0794a1d3535c63e270ba29136ff88eb404d96db22c4aac5d691277ed029bb.png" src="_images/0de0794a1d3535c63e270ba29136ff88eb404d96db22c4aac5d691277ed029bb.png" />
 </div>
 </div>
 <p>Any computations (such as summing across the channels) which collapse the 3D colour array into 2D will achieve a similar effect. We deem any of these as correct answers, so long as your output image is greyscale…</p>
@@ -1674,7 +1706,7 @@ Min Pixel Value: 0
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/ca4478dcd352127db2c0d6d4565c3e88a5ceeb77235c02919c43cce23dff878d.png" src="_images/ca4478dcd352127db2c0d6d4565c3e88a5ceeb77235c02919c43cce23dff878d.png" />
+<img alt="_images/bfcc41b5fec9c488139304a6682c5f5f39b5b4d51105983ce60af308dbd0ea62.png" src="_images/bfcc41b5fec9c488139304a6682c5f5f39b5b4d51105983ce60af308dbd0ea62.png" />
 </div>
 </div>
 <p>Because the intensity values are different in each colour channel slice, the slice we choose will change the resulting image:</p>
@@ -1688,7 +1720,7 @@ Min Pixel Value: 0
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/4640c05d99069419ed6ce3f4550cdcd61fbbfa5ddb1e2bf485af8968015063eb.png" src="_images/4640c05d99069419ed6ce3f4550cdcd61fbbfa5ddb1e2bf485af8968015063eb.png" />
+<img alt="_images/ad2800cdc483366c0d862add3de5b1bf5865d9111f2c66b24e5c030b5e09c4c3.png" src="_images/ad2800cdc483366c0d862add3de5b1bf5865d9111f2c66b24e5c030b5e09c4c3.png" />
 </div>
 </div>
 <p>…we will allow any slice as the correct solution, however, as they are all greyscale.</p>
@@ -1758,7 +1790,7 @@ Min Pixel Value: 0
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/e4323c6520dac5b7cfe419d6b183bdbfab44f7e174f4f99f6e687365cae5094c.png" src="_images/e4323c6520dac5b7cfe419d6b183bdbfab44f7e174f4f99f6e687365cae5094c.png" />
+<img alt="_images/399901b3ec98ae7bc4372e8d543dd3907a2fbe6f1384a9af455ab711eb9dca34.png" src="_images/399901b3ec98ae7bc4372e8d543dd3907a2fbe6f1384a9af455ab711eb9dca34.png" />
 </div>
 </div>
 </section>
@@ -1778,7 +1810,7 @@ Min Pixel Value: 0
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/d3ae0f16cfa2b3e1abda88fc5ea5172a007e3b0b5aa62a0b7f3c6db719422f1d.png" src="_images/d3ae0f16cfa2b3e1abda88fc5ea5172a007e3b0b5aa62a0b7f3c6db719422f1d.png" />
+<img alt="_images/10655f6e879666b4517161ace95e665e7badd1a834333b3452d2e1cfb2e2f04f.png" src="_images/10655f6e879666b4517161ace95e665e7badd1a834333b3452d2e1cfb2e2f04f.png" />
 </div>
 </div>
 <p>The physics of magnetic resonance imaging are very complicated, but the image arrays that it produces, as with our very simple low-resolution arrays, are nothing but arrays of numbers:</p>

@@ -32,9 +32,9 @@
     <link rel="stylesheet" type="text/css" href="_static/styles/sphinx-book-theme.css?v=eba8b062" />
     <link rel="stylesheet" type="text/css" href="_static/togglebutton.css?v=13237357" />
     <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
-    <link rel="stylesheet" type="text/css" href="_static/mystnb.8ecb98da25f57f5357bf6f572d296f466b2cfe2517ffebfabe82451661e28f02.css?v=6644e6bb" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.8ecb98da25f57f5357bf6f572d296f466b2cfe2517ffebfabe82451661e28f02.css" />
     <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css?v=4fa983c6" />
-    <link rel="stylesheet" type="text/css" href="_static/exercise.css?v=982b99e0" />
+    <link rel="stylesheet" type="text/css" href="_static/exercise.css" />
     <link rel="stylesheet" type="text/css" href="_static/sphinx-design.min.css?v=95c83b7e" />
   
   <!-- Pre-loaded scripts that we'll load fully later -->
@@ -60,6 +60,7 @@
     <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
     <script>DOCUMENTATION_OPTIONS.pagename = '0_images_as_numpy_arrays';</script>
     <link rel="canonical" href="https://pxr687.github.io/skimage-tutorials-temp/0_images_as_numpy_arrays.html" />
+    <link rel="icon" href="_static/pandas_numpy.ico"/>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="What about colour?" href="1_colour_images_as_numpy_arrays.html" />
@@ -292,6 +293,37 @@
         <div class="header-article-item">
 
 <div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-launch-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Launch interactive content">
+    <i class="fas fa-rocket"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="interact/lab/index.html?path=0_images_as_numpy_arrays.ipynb" target="_blank"
+   class="btn btn-sm dropdown-item"
+   title="Launch via JupyterLite"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  
+    <img alt="JupyterLite logo" src="_static/images/logo_jupyterlite.svg">
+  </span>
+<span class="btn__text-container">JupyterLite</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
 
 
 
@@ -542,7 +574,7 @@ document.write(`
 </div>
 </div>
 </div>
-<p>As you know, the output of the cell above means that the <code class="docutils literal notranslate"><span class="pre">two_d_ones_and_zeros</span></code> array has 2 rows and 2 columns. In virtue of having two dimensions, <em>this array is an image in the technical sense</em>. In fact, we will use the terms “array”, “image” and “image array” interchangably throughout this tutorial series, where we are referring to arrays of two-dimensions or more.</p>
+<p>As you know, the output of the cell above means that the <code class="docutils literal notranslate"><span class="pre">two_d_ones_and_zeros</span></code> array has 2 rows and 2 columns. In virtue of having two dimensions, <em>this array is an image in the technical sense</em>. In fact, we will use the terms “array”, “image” and “image array” interchangeably throughout this tutorial series, where we are referring to arrays of two-dimensions or more.</p>
 <p>You may (understandably) be thinking “that array does not look much like an image…”. This is a reasonable thought. So how can we view our array as an image in the intuitive sense - as a picture we can look at and appreciate with our high society friends at a gallery opening? One way is to use <code class="docutils literal notranslate"><span class="pre">plt.matshow()</span></code>, a function from the <a class="reference external" href="https://matplotlib.org">Matplotlib library</a>. The function name <code class="docutils literal notranslate"><span class="pre">plt.matshow()</span></code> stands for <code class="docutils literal notranslate"><span class="pre">mat</span></code>rix <code class="docutils literal notranslate"><span class="pre">show</span></code>. This function has this name because arrays are a representation of <a class="reference external" href="https://en.wikipedia.org/wiki/Matrix_(mathematics)">matrices</a>. As the name implies, it will display a two-dimensional array graphically.</p>
 <p>Let’s see how our <code class="docutils literal notranslate"><span class="pre">two_D_ones_and_zeros</span></code> looks when we pass it as an argument to <code class="docutils literal notranslate"><span class="pre">plt.matshow()</span></code>. We will use <code class="docutils literal notranslate"><span class="pre">plt.axis()</span></code> to keep the axes clear of numbers for now, to keep things uncluttered:</p>
 <div class="cell docutils container">
@@ -554,7 +586,7 @@ document.write(`
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/214f91998a69f4e5a57504bc42c47333e472733c9eac2d8f32cb169e0b30b2a3.png" src="_images/214f91998a69f4e5a57504bc42c47333e472733c9eac2d8f32cb169e0b30b2a3.png" />
+<img alt="_images/d85bd42ff2d3881ce0b8124613504f173367c0c783528a37ec0f84766329209e.png" src="_images/d85bd42ff2d3881ce0b8124613504f173367c0c783528a37ec0f84766329209e.png" />
 </div>
 </div>
 <p>Well, now it certainly is an image in the intuitive sense, albeit a strange one! Let’s break down what we see here.</p>
@@ -582,7 +614,7 @@ document.write(`
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/cd76bc9397a50fc0e583b70a4ba3c16762ddf04566ed0569678df8b83eb83428.png" src="_images/cd76bc9397a50fc0e583b70a4ba3c16762ddf04566ed0569678df8b83eb83428.png" />
+<img alt="_images/7ec009953172fe2cd5b55fbaed6938816124dbc195c45fb568672e7291011247.png" src="_images/7ec009953172fe2cd5b55fbaed6938816124dbc195c45fb568672e7291011247.png" />
 </div>
 </div>
 <p>We can see the numbers 0 and 1 on the axes. These numbers refer to the the integer index location of each element. For instance, the element in the top-left corner is at row/column coordinate (0, 0), the element in the top-right corner is at (0, 1) and so on:</p>
@@ -635,7 +667,7 @@ document.write(`
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/cd76bc9397a50fc0e583b70a4ba3c16762ddf04566ed0569678df8b83eb83428.png" src="_images/cd76bc9397a50fc0e583b70a4ba3c16762ddf04566ed0569678df8b83eb83428.png" />
+<img alt="_images/7ec009953172fe2cd5b55fbaed6938816124dbc195c45fb568672e7291011247.png" src="_images/7ec009953172fe2cd5b55fbaed6938816124dbc195c45fb568672e7291011247.png" />
 </div>
 </div>
 <p>We will now read this new <code class="docutils literal notranslate"><span class="pre">.png</span></code> image back into this notebook as a NumPy array, to view it’s <code class="docutils literal notranslate"><span class="pre">shape</span></code> attribute.</p>
@@ -674,7 +706,7 @@ document.write(`
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/c04eaa7d8a90b2be720c4952589d81bc890a5663b4bff11b567bf44dded0ab54.png" src="_images/c04eaa7d8a90b2be720c4952589d81bc890a5663b4bff11b567bf44dded0ab54.png" />
+<img alt="_images/dbe2dda97ab89ccfebe83a4612d21f7528f782b09ba4bcca586fa4e69e698488.png" src="_images/dbe2dda97ab89ccfebe83a4612d21f7528f782b09ba4bcca586fa4e69e698488.png" />
 </div>
 </div>
 <p>When using <code class="docutils literal notranslate"><span class="pre">plt.imshow()</span></code> we now see some (possibly strange-seeming) information on the axes. The <code class="docutils literal notranslate"><span class="pre">plt.matshow()</span></code> function, by default shows us the integer index of each element in the array. For the new display output from <code class="docutils literal notranslate"><span class="pre">plt.imshow()</span></code> we see axis tick labels ranging from -0.5 to 1.5.</p>
@@ -688,7 +720,7 @@ document.write(`
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/cd76bc9397a50fc0e583b70a4ba3c16762ddf04566ed0569678df8b83eb83428.png" src="_images/cd76bc9397a50fc0e583b70a4ba3c16762ddf04566ed0569678df8b83eb83428.png" />
+<img alt="_images/7ec009953172fe2cd5b55fbaed6938816124dbc195c45fb568672e7291011247.png" src="_images/7ec009953172fe2cd5b55fbaed6938816124dbc195c45fb568672e7291011247.png" />
 </div>
 </div>
 <p>For the rest of this tutorial, for small arrays we will use <code class="docutils literal notranslate"><span class="pre">plt.matshow()</span></code>, to keep the axes labels more intuitively interpretable.</p>
@@ -707,7 +739,7 @@ document.write(`
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/1a552b69d410cf7c4942dcfc6cdee2f83086e428722358481187b8cbee2d983d.png" src="_images/1a552b69d410cf7c4942dcfc6cdee2f83086e428722358481187b8cbee2d983d.png" />
+<img alt="_images/84c0a81a3b0e12ebda874a8e09e8dcfa65911a825220a528adb8d86ba2e53cb7.png" src="_images/84c0a81a3b0e12ebda874a8e09e8dcfa65911a825220a528adb8d86ba2e53cb7.png" />
 </div>
 </div>
 <p>So far so good. We have hand-crafted an image of something which looks like a very small chessboard. Using the <code class="docutils literal notranslate"><span class="pre">gray</span></code> colourmap, each number in the array is now mapped to a shade between black and white. We can call this the <em>grey-level</em> of each element. This is a technical term, and may seem a bit odd given that the image shows only black or white squares. This helpful image makes things clearer:</p>
@@ -756,10 +788,10 @@ document.write(`
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/74bfa5f7b817f231911f0bd17de59dc220a59cf38ca1a626f7b63b07dbc3147b.png" src="_images/74bfa5f7b817f231911f0bd17de59dc220a59cf38ca1a626f7b63b07dbc3147b.png" />
+<img alt="_images/571f0db0194a6b14e68f1c619ae6784fa22e7f8f926c00c0bb5a7712367bbd3d.png" src="_images/571f0db0194a6b14e68f1c619ae6784fa22e7f8f926c00c0bb5a7712367bbd3d.png" />
 </div>
 </div>
-<p>You can compare this visualisation of the image to the “raw” array output from the cell below. You’ll notice that <em>larger</em> numbers are represented with <em>lighter</em> squares, and <em>smaller</em> numbers are represented with <em>darker</em> squares. When we are using <code class="docutils literal notranslate"><span class="pre">float64</span></code> data, as we are here, you can think of each pixel value (0, 1 or in between) as speciying the grey-level as a percentage - with 1 being 100%, 0 being 0%, 0.5 being 50% and so on:</p>
+<p>You can compare this visualisation of the image to the “raw” array output from the cell below. You’ll notice that <em>larger</em> numbers are represented with <em>lighter</em> squares, and <em>smaller</em> numbers are represented with <em>darker</em> squares. When we are using <code class="docutils literal notranslate"><span class="pre">float64</span></code> data, as we are here, you can think of each pixel value (0, 1 or in between) as specifying the grey-level as a percentage - with 1 being 100%, 0 being 0%, 0.5 being 50% and so on:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Show the new array (from the NumPy output).</span>
@@ -800,7 +832,7 @@ document.write(`
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/74bfa5f7b817f231911f0bd17de59dc220a59cf38ca1a626f7b63b07dbc3147b.png" src="_images/74bfa5f7b817f231911f0bd17de59dc220a59cf38ca1a626f7b63b07dbc3147b.png" />
+<img alt="_images/571f0db0194a6b14e68f1c619ae6784fa22e7f8f926c00c0bb5a7712367bbd3d.png" src="_images/571f0db0194a6b14e68f1c619ae6784fa22e7f8f926c00c0bb5a7712367bbd3d.png" />
 </div>
 </div>
 <p>We can make the colour mapping more explicit and interpretable by using the <a class="reference external" href="https://matplotlib.org/stable/api/_as_gen/matplotlib.pyplot.colorbar.html"><code class="docutils literal notranslate"><span class="pre">plt.colorbar()</span></code></a> function:</p>
@@ -814,7 +846,7 @@ document.write(`
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/bf3246eb953a80846e4da82b81afc90bf185d61932e8c3f070c4e4062e11fccc.png" src="_images/bf3246eb953a80846e4da82b81afc90bf185d61932e8c3f070c4e4062e11fccc.png" />
+<img alt="_images/3109c97e7c068c3e2a2b6d6cba9b4797c45a40580c350eada91519995734b8c0.png" src="_images/3109c97e7c068c3e2a2b6d6cba9b4797c45a40580c350eada91519995734b8c0.png" />
 </div>
 </div>
 <p>The colourbar on the right of the image now shows us which number in the array - which <em>array pixel</em> - is mapped to which shade on the rendered image.</p>
@@ -835,7 +867,7 @@ document.write(`
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/9d5e5416debdff369bae3b6731bcaf145e5fd0170dbde8d2cc9c17b15f5d133b.png" src="_images/9d5e5416debdff369bae3b6731bcaf145e5fd0170dbde8d2cc9c17b15f5d133b.png" />
+<img alt="_images/c7b1dbcc6b4a1c83abfea29e427dfbcb54ba6edb569c55368b8f8a67bfb1078a.png" src="_images/c7b1dbcc6b4a1c83abfea29e427dfbcb54ba6edb569c55368b8f8a67bfb1078a.png" />
 </div>
 </div>
 <p>We will talk more about colour in the <a class="reference internal" href="1_colour_images_as_numpy_arrays.html"><span class="doc std std-doc">next tutorial</span></a>. For now, you can think of these plots as showing the same array pixel information, just using a different colour gradient. The single numeric value in each array pixel location determines <em>pixel intensity</em>. This is the brightness or darkness with which that pixel will be displayed when the image is displayed by something like Matplotlib. The <code class="docutils literal notranslate"><span class="pre">viridis</span></code> colourmap maps these pixel intensities to a gradient of purple-yellow; the <code class="docutils literal notranslate"><span class="pre">gray</span></code> colourmap maps these pixel intensities to a gradient of black-grey-white.</p>
@@ -938,7 +970,7 @@ document.write(`
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/089b565af5960cd8b05196b698fc0f06f28816ee7890828fe7342641bb053e75.png" src="_images/089b565af5960cd8b05196b698fc0f06f28816ee7890828fe7342641bb053e75.png" />
+<img alt="_images/163a4d1f2b715205de61230606758ab08a8fb5b4438ae9290f4e1d65a1c1cd60.png" src="_images/163a4d1f2b715205de61230606758ab08a8fb5b4438ae9290f4e1d65a1c1cd60.png" />
 </div>
 </div>
 <p>As you probably expected, the image is mostly of a uniform colour, aside from the single array pixel location which contains a 1 rather than a 0.</p>
@@ -995,11 +1027,11 @@ document.write(`
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/c984469be27353ce3f55a9caa414996fe1baa5ab32b366f2a581425ee169c2cd.png" src="_images/c984469be27353ce3f55a9caa414996fe1baa5ab32b366f2a581425ee169c2cd.png" />
+<img alt="_images/5212ff95df90e93594a958dea112127b359a07114416efe8d01688e722724a4d.png" src="_images/5212ff95df90e93594a958dea112127b359a07114416efe8d01688e722724a4d.png" />
 </div>
 </div>
 <p>We hope you agree that this image is a pretty good representation of the English letter “i”. We now have an image which represents a <em>symbol</em> e.g. as opposed to representing a visual scene or object. For any image, which is to say on any array of at least two dimensions, we can do something called <em>image manipulation</em>. This might sound like we are deceiving someone about our appearance or character, but in fact what it means is that we <em>do something which changes the numbers inside the array, and therefore changes the corresponding visual image</em>.</p>
-<p>Let’s use the helpfully named NumPy function <a class="reference external" href="https://numpy.org/doc/2.1/reference/generated/numpy.flip.html"><code class="docutils literal notranslate"><span class="pre">np.flip()</span></code></a>. This function, by default, will “flip” an array along the rows. Somehwat biblically, the first row will become the last row, and the last row will become the first row. Let’s apply this function to our present image, and inspect the corresponding “raw” output:</p>
+<p>Let’s use the helpfully named NumPy function <a class="reference external" href="https://numpy.org/doc/2.1/reference/generated/numpy.flip.html"><code class="docutils literal notranslate"><span class="pre">np.flip()</span></code></a>. This function, by default, will “flip” an array along the rows. Somewhat biblically, the first row will become the last row, and the last row will become the first row. Let’s apply this function to our present image, and inspect the corresponding “raw” output:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Flip the array.</span>
@@ -1040,7 +1072,7 @@ document.write(`
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/7f6ea80eadd3656bea17aa121ec9ac0683225d5cc5c7c7b9cea1f6ba9e93f502.png" src="_images/7f6ea80eadd3656bea17aa121ec9ac0683225d5cc5c7c7b9cea1f6ba9e93f502.png" />
+<img alt="_images/f6c5ff3c2d0552224a6d738c5d3d53ee63355519fb47ea66d3fca10d0c075524.png" src="_images/f6c5ff3c2d0552224a6d738c5d3d53ee63355519fb47ea66d3fca10d0c075524.png" />
 </div>
 </div>
 <p>We hope you’ll agree that the image now better represents the exclamation mark symbol (“!”) than the English letter “i”. This change was achieved through altering the location of the numbers in the image array.</p>
@@ -1054,15 +1086,14 @@ document.write(`
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Load in and `imshow` the image, with a colourbar.</span>
-<span class="n">xeno</span> <span class="o">=</span> <span class="n">io</span><span class="o">.</span><span class="n">imread</span><span class="p">(</span><span class="s2">&quot;images/xenomorph.PNG&quot;</span><span class="p">,</span> 
-                 <span class="n">as_gray</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">xeno</span> <span class="o">=</span> <span class="n">io</span><span class="o">.</span><span class="n">imread</span><span class="p">(</span><span class="s2">&quot;images/xenomorph.png&quot;</span><span class="p">,</span> <span class="n">as_gray</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">xeno</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">colorbar</span><span class="p">();</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/bd34ff4b351c3add0bd7cb5a31c07e7d237bc3d1415ee4cf9efffab6e355fdb5.png" src="_images/bd34ff4b351c3add0bd7cb5a31c07e7d237bc3d1415ee4cf9efffab6e355fdb5.png" />
+<img alt="_images/29206e0910a0bd25cf0c0282f72bad01c84d7c3ef553d1afaf3b94ffd7d140cd.png" src="_images/29206e0910a0bd25cf0c0282f72bad01c84d7c3ef553d1afaf3b94ffd7d140cd.png" />
 </div>
 </div>
 <p>Scary stuff. This image will seem slightly less intimidating when we see that it is, in fact, nothing by a 2D NumPy array of pixel intensity values. We promise it cannot hurt you:</p>
@@ -1102,7 +1133,7 @@ document.write(`
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/41fda5efd30413a7d0f9a2fde8ee821c6dfc8d3340f7fa03265232cd94d81b2c.png" src="_images/41fda5efd30413a7d0f9a2fde8ee821c6dfc8d3340f7fa03265232cd94d81b2c.png" />
+<img alt="_images/d4c019c8d6f63a943d8a7ea5c7be3f611bb4807fd9fe5a60ef85412d1a2b91c5.png" src="_images/d4c019c8d6f63a943d8a7ea5c7be3f611bb4807fd9fe5a60ef85412d1a2b91c5.png" />
 </div>
 </div>
 <p>The array you create should have <code class="docutils literal notranslate"><span class="pre">.shape</span></code> of (11, 8) - so 11 rows and 8 columns.</p>
@@ -1145,7 +1176,7 @@ document.write(`
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/c8508a92eeddf20ee1394ded792d4a50ce33f73a731a9a1f0250c3a1e1da3ac4.png" src="_images/c8508a92eeddf20ee1394ded792d4a50ce33f73a731a9a1f0250c3a1e1da3ac4.png" />
+<img alt="_images/9cf2b85b4270ce98f8b766df307b155dd14b7f4c260b850383ddcdc5299283d8.png" src="_images/9cf2b85b4270ce98f8b766df307b155dd14b7f4c260b850383ddcdc5299283d8.png" />
 </div>
 </div>
 <p>Run the cell below to show the exact integer index locations of the 1’s (all other locations should be 0’s).</p>

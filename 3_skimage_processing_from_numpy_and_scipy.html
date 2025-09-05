@@ -32,9 +32,9 @@
     <link rel="stylesheet" type="text/css" href="_static/styles/sphinx-book-theme.css?v=eba8b062" />
     <link rel="stylesheet" type="text/css" href="_static/togglebutton.css?v=13237357" />
     <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
-    <link rel="stylesheet" type="text/css" href="_static/mystnb.8ecb98da25f57f5357bf6f572d296f466b2cfe2517ffebfabe82451661e28f02.css?v=6644e6bb" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.8ecb98da25f57f5357bf6f572d296f466b2cfe2517ffebfabe82451661e28f02.css" />
     <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css?v=4fa983c6" />
-    <link rel="stylesheet" type="text/css" href="_static/exercise.css?v=982b99e0" />
+    <link rel="stylesheet" type="text/css" href="_static/exercise.css" />
     <link rel="stylesheet" type="text/css" href="_static/sphinx-design.min.css?v=95c83b7e" />
   
   <!-- Pre-loaded scripts that we'll load fully later -->
@@ -62,6 +62,7 @@
     <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <script>DOCUMENTATION_OPTIONS.pagename = '3_skimage_processing_from_numpy_and_scipy';</script>
     <link rel="canonical" href="https://pxr687.github.io/skimage-tutorials-temp/3_skimage_processing_from_numpy_and_scipy.html" />
+    <link rel="icon" href="_static/pandas_numpy.ico"/>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="Threshold filtering" href="4_threshold_filters.html" />
@@ -294,6 +295,37 @@
         <div class="header-article-item">
 
 <div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-launch-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Launch interactive content">
+    <i class="fas fa-rocket"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="interact/lab/index.html?path=3_skimage_processing_from_numpy_and_scipy.ipynb" target="_blank"
+   class="btn btn-sm dropdown-item"
+   title="Launch via JupyterLite"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  
+    <img alt="JupyterLite logo" src="_static/images/logo_jupyterlite.svg">
+  </span>
+<span class="btn__text-container">JupyterLite</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
 
 
 
@@ -539,7 +571,7 @@ document.write(`
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/c984469be27353ce3f55a9caa414996fe1baa5ab32b366f2a581425ee169c2cd.png" src="_images/c984469be27353ce3f55a9caa414996fe1baa5ab32b366f2a581425ee169c2cd.png" />
+<img alt="_images/5212ff95df90e93594a958dea112127b359a07114416efe8d01688e722724a4d.png" src="_images/5212ff95df90e93594a958dea112127b359a07114416efe8d01688e722724a4d.png" />
 </div>
 </div>
 <p>We have already encountered the use of <code class="docutils literal notranslate"><span class="pre">np.flip()</span></code> as a tool for rudimentary image manipulation. We use it to, well, flip an image array on its head:</p>
@@ -574,7 +606,7 @@ document.write(`
  [0. 0. 0. 0. 0. 0. 0. 0.]]
 </pre></div>
 </div>
-<img alt="_images/7f6ea80eadd3656bea17aa121ec9ac0683225d5cc5c7c7b9cea1f6ba9e93f502.png" src="_images/7f6ea80eadd3656bea17aa121ec9ac0683225d5cc5c7c7b9cea1f6ba9e93f502.png" />
+<img alt="_images/f6c5ff3c2d0552224a6d738c5d3d53ee63355519fb47ea66d3fca10d0c075524.png" src="_images/f6c5ff3c2d0552224a6d738c5d3d53ee63355519fb47ea66d3fca10d0c075524.png" />
 </div>
 </div>
 </section>
@@ -630,7 +662,7 @@ document.write(`
  [0. 0. 0. 0. 0. 0. 0. 0.]]
 </pre></div>
 </div>
-<img alt="_images/e5c6f89997f9b95c770498c74383c9ae1a9e3ff3693cd0dd73e7378820521128.png" src="_images/e5c6f89997f9b95c770498c74383c9ae1a9e3ff3693cd0dd73e7378820521128.png" />
+<img alt="_images/2ab9ee1e28ffd19b4442eb350cb654ddc0fa519a560f1416199547a0ae3dff8d.png" src="_images/2ab9ee1e28ffd19b4442eb350cb654ddc0fa519a560f1416199547a0ae3dff8d.png" />
 </div>
 </div>
 <p>We can compare the attributes, including the <code class="docutils literal notranslate"><span class="pre">shape</span></code> of each array, using a custom function we defined in the first cell of this notebook:</p>
@@ -698,7 +730,7 @@ Min Pixel Value: 0.0
  [0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0.]]
 </pre></div>
 </div>
-<img alt="_images/c6417c9566cba1d79653d1cf910dbf155bd2d4731e5933e7b733b681aa393a3d.png" src="_images/c6417c9566cba1d79653d1cf910dbf155bd2d4731e5933e7b733b681aa393a3d.png" />
+<img alt="_images/fbbdfd56ab10ab5f3767a9dcd3296c864b10b0998aae38a6bcae36cc2338b528.png" src="_images/fbbdfd56ab10ab5f3767a9dcd3296c864b10b0998aae38a6bcae36cc2338b528.png" />
 </div>
 </div>
 <div class="cell docutils container">
@@ -768,7 +800,7 @@ Min Pixel Value: 0.0
  [0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0.]]
 </pre></div>
 </div>
-<img alt="_images/2fd03e097a86b1794de550975cdad925ccc10a255d2fdfd10771fd5695ddfffd.png" src="_images/2fd03e097a86b1794de550975cdad925ccc10a255d2fdfd10771fd5695ddfffd.png" />
+<img alt="_images/6f75d1bfee3f97812bc8b396b8be5503569a46b4fc80d235af4d1010542807a7.png" src="_images/6f75d1bfee3f97812bc8b396b8be5503569a46b4fc80d235af4d1010542807a7.png" />
 </div>
 </div>
 <div class="cell docutils container">
@@ -827,7 +859,7 @@ Min Pixel Value: 0.0
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/81f30151d4f208077cadfb610aeca7400ed6ca0f72d8d4813899a71a0341b5e1.png" src="_images/81f30151d4f208077cadfb610aeca7400ed6ca0f72d8d4813899a71a0341b5e1.png" />
+<img alt="_images/03c3b9300ffafd2dc7aba77d6e4e7be08e41e4eadde9c9284b888627f3c17a9b.png" src="_images/03c3b9300ffafd2dc7aba77d6e4e7be08e41e4eadde9c9284b888627f3c17a9b.png" />
 </div>
 </div>
 </section>
@@ -852,7 +884,7 @@ Max Pixel Value: 1.0
 Min Pixel Value: 0.0
 </pre></div>
 </div>
-<img alt="_images/c984469be27353ce3f55a9caa414996fe1baa5ab32b366f2a581425ee169c2cd.png" src="_images/c984469be27353ce3f55a9caa414996fe1baa5ab32b366f2a581425ee169c2cd.png" />
+<img alt="_images/5212ff95df90e93594a958dea112127b359a07114416efe8d01688e722724a4d.png" src="_images/5212ff95df90e93594a958dea112127b359a07114416efe8d01688e722724a4d.png" />
 </div>
 </div>
 <p>Now, your task is to find a way, again using only NumPy, to alter the <code class="docutils literal notranslate"><span class="pre">i_img</span></code> array so it becomes this target image:</p>
@@ -913,7 +945,7 @@ Min Pixel Value: -1.0
  [ 0.  0.  0.  0.  0.  0.  0.]]
 </pre></div>
 </div>
-<img alt="_images/6306ecd425186e4090fdb90020727e04e311632f96140cfc83e497c9d285b148.png" src="_images/6306ecd425186e4090fdb90020727e04e311632f96140cfc83e497c9d285b148.png" />
+<img alt="_images/c38d300c061ec33bcd50b9037dc9370ad8d76d571e2dc978a5d8693b3ac6ee6d.png" src="_images/c38d300c061ec33bcd50b9037dc9370ad8d76d571e2dc978a5d8693b3ac6ee6d.png" />
 </div>
 </div>
 <p>Why is the background now grey? Well, remember that, for a monochrome image visualised with the <code class="docutils literal notranslate"><span class="pre">gray</span></code> colourmap: the most intense (highest value) pixels are white, and the least intense (lowest value) pixels are black, and intermediate values are a shade of grey.</p>
@@ -972,7 +1004,7 @@ After:
 </div>
 <p>So our highest values are now 1, our lowest values are -1, and our intermediate values are 0 (e.g. where the difference between elements was calculated from <code class="docutils literal notranslate"><span class="pre">1</span> <span class="pre">-</span> <span class="pre">1</span> <span class="pre">=</span> <span class="pre">0</span></code> or <code class="docutils literal notranslate"><span class="pre">0</span> <span class="pre">-</span> <span class="pre">0</span> <span class="pre">=</span> <span class="pre">0</span></code>, indicating no change in the <em>gradient</em> of pixel intensity). A range from -1 to 1 is still supported in <code class="docutils literal notranslate"><span class="pre">skimage</span></code> for the <code class="docutils literal notranslate"><span class="pre">float64</span></code> <code class="docutils literal notranslate"><span class="pre">dtype</span></code>.</p>
 <p>White areas (pixel = 1) indicate a change between pixels in the horizontal direction (moving left-to-right) from black-to-white, in the original image. Black areas (pixel = -1) indicate a change in the horizontal direction from white-to-black. Grey areas indicate no change (pixel = 0).</p>
-<p>We can detect big changes (edges) in the <em>vertical</em> direction by telling <code class="docutils literal notranslate"><span class="pre">np.diff()</span></code> to operate along the rows, rather than along the colomns:</p>
+<p>We can detect big changes (edges) in the <em>vertical</em> direction by telling <code class="docutils literal notranslate"><span class="pre">np.diff()</span></code> to operate along the rows, rather than along the columns:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">vertical_gradients</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">diff</span><span class="p">(</span><span class="n">i_img</span><span class="p">,</span> 
@@ -983,7 +1015,7 @@ After:
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/2e8f42c3e0d3353bb2c42f2f4699537af4c3e46c9beaa20e77baca90498d7e70.png" src="_images/2e8f42c3e0d3353bb2c42f2f4699537af4c3e46c9beaa20e77baca90498d7e70.png" />
+<img alt="_images/3893b161d80daddcac17b9e01d7746e895e71cd39c5a812400a3c7f5bc540409.png" src="_images/3893b161d80daddcac17b9e01d7746e895e71cd39c5a812400a3c7f5bc540409.png" />
 </div>
 </div>
 </section>
@@ -1012,7 +1044,7 @@ After:
  [0. 1.]]
 </pre></div>
 </div>
-<img alt="_images/1a552b69d410cf7c4942dcfc6cdee2f83086e428722358481187b8cbee2d983d.png" src="_images/1a552b69d410cf7c4942dcfc6cdee2f83086e428722358481187b8cbee2d983d.png" />
+<img alt="_images/84c0a81a3b0e12ebda874a8e09e8dcfa65911a825220a528adb8d86ba2e53cb7.png" src="_images/84c0a81a3b0e12ebda874a8e09e8dcfa65911a825220a528adb8d86ba2e53cb7.png" />
 </div>
 </div>
 <p>What happens if we resize <code class="docutils literal notranslate"><span class="pre">squares</span></code> to (10, 10)? We will use the optional Boolean <code class="docutils literal notranslate"><span class="pre">preserve_range</span></code> argument which ensures the numbers in the output image stay within the range of those we give to the function:</p>
@@ -1068,7 +1100,7 @@ Min Pixel Value: 0.0
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/c2b6cd67612ebada6ea855e7785559e83c61cb51c1ca628c4b6ef2ffba1ca0ba.png" src="_images/c2b6cd67612ebada6ea855e7785559e83c61cb51c1ca628c4b6ef2ffba1ca0ba.png" />
+<img alt="_images/9433cdc516b3a1c56eb003ac62a1a61b9e152e921f27dd4b4afc3ae3742a6fc5.png" src="_images/9433cdc516b3a1c56eb003ac62a1a61b9e152e921f27dd4b4afc3ae3742a6fc5.png" />
 </div>
 </div>
 <p>Well, that is certainly more artistic than the original!</p>
@@ -1106,7 +1138,7 @@ Min Pixel Value: 0.0
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/8eaa4e19b417121674c7fcde5fa9bc7fbaf109f86a158e36d2950016a2724ab8.png" src="_images/8eaa4e19b417121674c7fcde5fa9bc7fbaf109f86a158e36d2950016a2724ab8.png" />
+<img alt="_images/a859fde1e51ec5539342a7d62641a79df1a2987d7195cd5cf14d0695f66f8525.png" src="_images/a859fde1e51ec5539342a7d62641a79df1a2987d7195cd5cf14d0695f66f8525.png" />
 </div>
 </div>
 <p>This seems much closer to what we want when we <code class="docutils literal notranslate"><span class="pre">resize</span></code> the image. However, the results of image processing are highly context-dependent, and there may be images for which the default interpolation setting works better…</p>
@@ -1136,7 +1168,7 @@ Min Pixel Value: 0.0
  [0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0.]]
 </pre></div>
 </div>
-<img alt="_images/f41c2e13cc3cb01c339bc049010d7f721f22e1effffe7481fba166ec9264023a.png" src="_images/f41c2e13cc3cb01c339bc049010d7f721f22e1effffe7481fba166ec9264023a.png" />
+<img alt="_images/1252bb81598d589eb2ae20f6dd87814b440d99cfc2d83a96b077dc65e1439f4e.png" src="_images/1252bb81598d589eb2ae20f6dd87814b440d99cfc2d83a96b077dc65e1439f4e.png" />
 </div>
 </div>
 <p>We can control the number of rotations with the <code class="docutils literal notranslate"><span class="pre">k</span></code> argument:</p>
@@ -1170,7 +1202,7 @@ Min Pixel Value: 0.0
  [0. 0. 0. 0. 0. 0. 0. 0.]]
 </pre></div>
 </div>
-<img alt="_images/7f6ea80eadd3656bea17aa121ec9ac0683225d5cc5c7c7b9cea1f6ba9e93f502.png" src="_images/7f6ea80eadd3656bea17aa121ec9ac0683225d5cc5c7c7b9cea1f6ba9e93f502.png" />
+<img alt="_images/f6c5ff3c2d0552224a6d738c5d3d53ee63355519fb47ea66d3fca10d0c075524.png" src="_images/f6c5ff3c2d0552224a6d738c5d3d53ee63355519fb47ea66d3fca10d0c075524.png" />
 </div>
 </div>
 <p>Again, with NumPy there are many routes to the same destination, and you can see that has achieved (visually) the same result as using <code class="docutils literal notranslate"><span class="pre">np.flip()</span></code> as we saw above. Rotating in increments of 90 degrees will not change the <em>size</em> (e.g. number of pixels) in the array, however it will change the integer index location of the pixel values:</p>
@@ -1190,7 +1222,7 @@ Min Pixel Value: 0.0
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/5d733cb1d226f9b547e58792c14f6721337f973b29109829a68d1f024f993b49.png" src="_images/5d733cb1d226f9b547e58792c14f6721337f973b29109829a68d1f024f993b49.png" />
+<img alt="_images/4810259bd7ad62d1c3fca3026998c3dac616a1ee0bebc2ea6fcd9e1f5ed86ec8.png" src="_images/4810259bd7ad62d1c3fca3026998c3dac616a1ee0bebc2ea6fcd9e1f5ed86ec8.png" />
 </div>
 </div>
 <div class="cell docutils container">
@@ -1227,7 +1259,7 @@ Min Pixel Value: 0.0
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/e8c8729c5670fa24778a7f1851b8c46f75bada19de03095cf8b637b6a86742c4.png" src="_images/e8c8729c5670fa24778a7f1851b8c46f75bada19de03095cf8b637b6a86742c4.png" />
+<img alt="_images/8bd78da5f7407414f5518b2bf49d67612d12a92e5f492282a99013b1ded33449.png" src="_images/8bd78da5f7407414f5518b2bf49d67612d12a92e5f492282a99013b1ded33449.png" />
 </div>
 </div>
 <p>To rotate an image by more flexible increments, we need to bring in SciPy, another foundational component library of Scikit-image. The SciPy function <code class="docutils literal notranslate"><span class="pre">ndimage.rotate()</span></code> offers more flexible rotation. However, rotating by other angles will alter both the <code class="docutils literal notranslate"><span class="pre">shape</span></code> and <code class="docutils literal notranslate"><span class="pre">size</span></code> of the output image:</p>
@@ -1283,7 +1315,7 @@ Min Pixel Value: 0.0
    0.00e+00  0.00e+00  0.00e+00  0.00e+00]]
 </pre></div>
 </div>
-<img alt="_images/33ea237fe128b55d68decb66e23dbd222d6eb4bbcd77bb0d4fb68495dc040f4b.png" src="_images/33ea237fe128b55d68decb66e23dbd222d6eb4bbcd77bb0d4fb68495dc040f4b.png" />
+<img alt="_images/a04154250007c79d540c42f5f1d11535d3dde93d1f904c049d225a207f730c24.png" src="_images/a04154250007c79d540c42f5f1d11535d3dde93d1f904c049d225a207f730c24.png" />
 </div>
 </div>
 <div class="cell docutils container">
@@ -1322,7 +1354,7 @@ Min Pixel Value: -0.1
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/909528dd0413a81c03379c0de7f6139e48cc6715351a4b34c1683b5f69fc6431.png" src="_images/909528dd0413a81c03379c0de7f6139e48cc6715351a4b34c1683b5f69fc6431.png" />
+<img alt="_images/5d47496ff0892cd077df34ad12e243d6dbe1df3e37066846d1ff613be76afd40.png" src="_images/5d47496ff0892cd077df34ad12e243d6dbe1df3e37066846d1ff613be76afd40.png" />
 </div>
 </div>
 <p>By default, the <code class="docutils literal notranslate"><span class="pre">shape</span></code> is altered so that the original array is shown within the output array. SciPy uses interpolation to estimate the values of the pixels it adds, where the <code class="docutils literal notranslate"><span class="pre">shape</span></code> of the output image is larger than the <code class="docutils literal notranslate"><span class="pre">shape</span></code> of the input image.</p>
@@ -1347,7 +1379,7 @@ Min Pixel Value: -0.1
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/edf71d261be9ae5b6f1592490829920935948069eb3ca277cd7f6f2262c0bb20.png" src="_images/edf71d261be9ae5b6f1592490829920935948069eb3ca277cd7f6f2262c0bb20.png" />
+<img alt="_images/b0cbcf485e2332168142fda9931048013ee2f5dd6b2e699054c3d3fa4e9482f0.png" src="_images/b0cbcf485e2332168142fda9931048013ee2f5dd6b2e699054c3d3fa4e9482f0.png" />
 </div>
 </div>
 </section>
@@ -1363,7 +1395,7 @@ Min Pixel Value: -0.1
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/9bea863298662798dfd8805b3e1b6dd347615d6f709ac06138bb0736d6c06c7b.png" src="_images/9bea863298662798dfd8805b3e1b6dd347615d6f709ac06138bb0736d6c06c7b.png" />
+<img alt="_images/6a02ed4bfc301cf831532b63197da2f9686df3611b728fe19b4fb818af43f6d8.png" src="_images/6a02ed4bfc301cf831532b63197da2f9686df3611b728fe19b4fb818af43f6d8.png" />
 </div>
 </div>
 <p>We can achieve easy and flexible rotation with <code class="docutils literal notranslate"><span class="pre">ski.transform.rotate()</span></code>:</p>
@@ -1380,7 +1412,7 @@ Min Pixel Value: -0.1
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/723a2402416bed28226786bc37ae1007c3de1942177d219719c9faa07962078b.png" src="_images/723a2402416bed28226786bc37ae1007c3de1942177d219719c9faa07962078b.png" />
+<img alt="_images/63b287259c5ef84e90f6d41da3d7df43aec0fda791694418d54c3b394e04c1d9.png" src="_images/63b287259c5ef84e90f6d41da3d7df43aec0fda791694418d54c3b394e04c1d9.png" />
 </div>
 </div>
 <p>The cell below plots a variety of rotations, using <code class="docutils literal notranslate"><span class="pre">skimage.transform.rotate()</span></code> to perform each rotation:</p>
@@ -1401,7 +1433,7 @@ Min Pixel Value: -0.1
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/9827fc1aeb490d1ba460cbcbb0dfcadb2e3c49f6f5bb68262351ccc10cd9e21e.png" src="_images/9827fc1aeb490d1ba460cbcbb0dfcadb2e3c49f6f5bb68262351ccc10cd9e21e.png" />
+<img alt="_images/bfbfde5711163d6dce0f1d04752e933b99872c13c5ae01d3b02077f57bd1f1c7.png" src="_images/bfbfde5711163d6dce0f1d04752e933b99872c13c5ae01d3b02077f57bd1f1c7.png" />
 </div>
 </div>
 <p>Specifically for 90 degree rotations, you might be tempted to use a NumPy shortcut, and use the <code class="docutils literal notranslate"><span class="pre">.T</span></code> (transpose) method. This however, will do something different to rotation. The cell below demonstrates the <code class="docutils literal notranslate"><span class="pre">.T</span></code> method, with the <code class="docutils literal notranslate"><span class="pre">camera</span></code> image:</p>
@@ -1423,7 +1455,7 @@ Max Pixel Value: 255
 Min Pixel Value: 0
 </pre></div>
 </div>
-<img alt="_images/8faafeced8c84b07a93ede165a3c0163e1491dd9212a5b1e416c152070812db3.png" src="_images/8faafeced8c84b07a93ede165a3c0163e1491dd9212a5b1e416c152070812db3.png" />
+<img alt="_images/41c63b89fc418d673558ddd480fc327e9e0c19696fc878320b7fa39d4f63ccbc.png" src="_images/41c63b89fc418d673558ddd480fc327e9e0c19696fc878320b7fa39d4f63ccbc.png" />
 </div>
 </div>
 <p>We now show a 90 degree rotation, using <code class="docutils literal notranslate"><span class="pre">ski.transform.rotate()</span></code></p>
@@ -1437,7 +1469,7 @@ Min Pixel Value: 0
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/157d07675ad192d5482a6eae18726f4ed29a0469254f7ab429f059093cf2d7d5.png" src="_images/157d07675ad192d5482a6eae18726f4ed29a0469254f7ab429f059093cf2d7d5.png" />
+<img alt="_images/e295f3cc830d3f70e5edc128c1d9c2e69264987ca6df9bff77f5efae18e5a5b6.png" src="_images/e295f3cc830d3f70e5edc128c1d9c2e69264987ca6df9bff77f5efae18e5a5b6.png" />
 </div>
 </div>
 <p>We can see that the cameraman is facing a different direction in each image (taking a photo of the bottom of the image for the <code class="docutils literal notranslate"><span class="pre">.T</span></code> method, and taking a photo of the top of the image for a 90 degree rotation via <code class="docutils literal notranslate"><span class="pre">skimage</span></code>).</p>
@@ -1489,7 +1521,7 @@ Max Pixel Value: 255
 Min Pixel Value: 0
 </pre></div>
 </div>
-<img alt="_images/b4b18965375a2b1f9560a4805631c00cac0d0b0e8102254896166e7744d7c44c.png" src="_images/b4b18965375a2b1f9560a4805631c00cac0d0b0e8102254896166e7744d7c44c.png" />
+<img alt="_images/d19a5eb3ad6e19703e5b82cb75853cfc1d70c0c350b39dd387484766e2cb7568.png" src="_images/d19a5eb3ad6e19703e5b82cb75853cfc1d70c0c350b39dd387484766e2cb7568.png" />
 </div>
 </div>
 <p>Compare this to a 90 degree rotation via <code class="docutils literal notranslate"><span class="pre">skimage</span></code>, pay attention to the spoon!</p>
@@ -1508,7 +1540,7 @@ Min Pixel Value: 0
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/58631bf7daf38d83a621162eb55acb8f9be04b55b3b1abb4657e772660a3952b.png" src="_images/58631bf7daf38d83a621162eb55acb8f9be04b55b3b1abb4657e772660a3952b.png" />
+<img alt="_images/3699fb73816f8a0fed7d136f8d104ca8fb841959749f4a61f2dfa62bd04db9ca.png" src="_images/3699fb73816f8a0fed7d136f8d104ca8fb841959749f4a61f2dfa62bd04db9ca.png" />
 </div>
 </div>
 <p>Unless you specifically want a mirroring transformation, then use <code class="docutils literal notranslate"><span class="pre">.rotate()</span></code>!</p>
@@ -1563,7 +1595,7 @@ Min Pixel Value: 0
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/b7bc92ccb67773eb04ee5501bb93293d5229a2013b9425d205cd307931972f9c.png" src="_images/b7bc92ccb67773eb04ee5501bb93293d5229a2013b9425d205cd307931972f9c.png" />
+<img alt="_images/0bd0ad94f11b75d4c4178d219c699e485424eb43ea925de4a95e3bf75cd864f3.png" src="_images/0bd0ad94f11b75d4c4178d219c699e485424eb43ea925de4a95e3bf75cd864f3.png" />
 </div>
 </div>
 <p>Now the image is transposed, we have achieved our “mirror” effect. To get this mirrored cameraman to look the other guy in the eye, we now need to rotate the image 270 degrees, for which we use <code class="docutils literal notranslate"><span class="pre">ski.transform.rotate()</span></code>:</p>
@@ -1578,7 +1610,7 @@ Min Pixel Value: 0
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/472eed4e9ec4b1e08b956fc035c015bcceb9c9cc7e07551e298832bdd90b22cc.png" src="_images/472eed4e9ec4b1e08b956fc035c015bcceb9c9cc7e07551e298832bdd90b22cc.png" />
+<img alt="_images/528afc11ff706b82e95072de13e179e6e35b2dc778d46ddce15bb3d8a608ce1e.png" src="_images/528afc11ff706b82e95072de13e179e6e35b2dc778d46ddce15bb3d8a608ce1e.png" />
 </div>
 </div>
 <p>Now, we must combine the images, using <code class="docutils literal notranslate"><span class="pre">np.concat()</span></code>, combining along the columns (<code class="docutils literal notranslate"><span class="pre">axis</span> <span class="pre">=</span> <span class="pre">1</span></code>). First, however, we need to ensure the <code class="docutils literal notranslate"><span class="pre">dtype</span></code>s match! If we don’t we get an unexpected result:</p>
@@ -1591,7 +1623,7 @@ Min Pixel Value: 0
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/2c3767cc284b26e28589b28edd932d017eee339332ddb79b562893cda02270e4.png" src="_images/2c3767cc284b26e28589b28edd932d017eee339332ddb79b562893cda02270e4.png" />
+<img alt="_images/c604819a4a614c83b066409c2fd8225e967a56ffb7519590e66cd2db18f7f5f4.png" src="_images/c604819a4a614c83b066409c2fd8225e967a56ffb7519590e66cd2db18f7f5f4.png" />
 </div>
 </div>
 <p>Oops. This has occurred because <code class="docutils literal notranslate"><span class="pre">ski.transform.rotate()</span></code> has converted the image to the <code class="docutils literal notranslate"><span class="pre">float64</span></code> dtype, whereas the original is <code class="docutils literal notranslate"><span class="pre">uint8</span></code>:</p>
@@ -1642,7 +1674,7 @@ Min Pixel Value: 0.0
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/8f186c6c705b7566b44277f9923f4d900ded7ceebd2062d48a7eb70e041d6c10.png" src="_images/8f186c6c705b7566b44277f9923f4d900ded7ceebd2062d48a7eb70e041d6c10.png" />
+<img alt="_images/3882b89641e2ae33219ce6481f348b5bb68c24b73ebe0c6074b466366447be23.png" src="_images/3882b89641e2ae33219ce6481f348b5bb68c24b73ebe0c6074b466366447be23.png" />
 </div>
 </div>
 <p>If in doubt, check the <code class="docutils literal notranslate"><span class="pre">dtype</span></code>!</p>
@@ -1704,7 +1736,7 @@ Max Pixel Value: 231
 Min Pixel Value: 0
 </pre></div>
 </div>
-<img alt="_images/2a123916cdd6cc195c70345655c48bea133bb62ef7e9f500df9f5240a6d23b19.png" src="_images/2a123916cdd6cc195c70345655c48bea133bb62ef7e9f500df9f5240a6d23b19.png" />
+<img alt="_images/9343072c03bd7d288a4459b0351fcb3331a024188034940e13653f068fa0b24f.png" src="_images/9343072c03bd7d288a4459b0351fcb3331a024188034940e13653f068fa0b24f.png" />
 </div>
 </div>
 <p>Next, to replicate the yellow-y tone of the target image, we “switch off” the blue colour channel (because red + green = yellow):</p>
@@ -1717,7 +1749,7 @@ Min Pixel Value: 0
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/7cf88cc1d9a14c894de63235783b9219f0cc6ace6ac6895425a64c1549a3bb37.png" src="_images/7cf88cc1d9a14c894de63235783b9219f0cc6ace6ac6895425a64c1549a3bb37.png" />
+<img alt="_images/edbe0f40b03ba4b95f1f29138390de6aff815b397481fa1f6adc2db497bffa9f.png" src="_images/edbe0f40b03ba4b95f1f29138390de6aff815b397481fa1f6adc2db497bffa9f.png" />
 </div>
 </div>
 <p>The target image has the <code class="docutils literal notranslate"><span class="pre">.shape</span></code> (30, 30, 3); the original image has the <code class="docutils literal notranslate"><span class="pre">.shape</span></code> (300, 451, 3).</p>
@@ -1741,7 +1773,7 @@ Max Pixel Value: 0.8
 Min Pixel Value: 0.0
 </pre></div>
 </div>
-<img alt="_images/0077b6ef0a597b37374b6e65dd50fbfef9d53a35f1909ade03330e6ead35fd0c.png" src="_images/0077b6ef0a597b37374b6e65dd50fbfef9d53a35f1909ade03330e6ead35fd0c.png" />
+<img alt="_images/8e23629a3ac39ab45f1b4b4e609ae39c23a35030d4f564ddb139b109119a5eca.png" src="_images/8e23629a3ac39ab45f1b4b4e609ae39c23a35030d4f564ddb139b109119a5eca.png" />
 </div>
 </div>
 <p>You’ll notice that downsizing the image has seriously downgraded the quality. This makes sense, because the original high-resolution image utilized its many pixels to depict intricate details. After resizing to a lower-resolution, this detail is lost, because now we are trying to show the same image using subtantially fewer pixels. <code class="docutils literal notranslate"><span class="pre">skimage</span></code> has done some averaging behind the scenes, to work out what should go in the remaining pixels. At least we can still see the image is of a cat…</p>
@@ -1764,7 +1796,7 @@ Max Pixel Value: 0.76
 Min Pixel Value: 0.0
 </pre></div>
 </div>
-<img alt="_images/2292ae95ca481f94fc06e2af5e2c328cef8afabe4e990c0781231e535e2a6f96.png" src="_images/2292ae95ca481f94fc06e2af5e2c328cef8afabe4e990c0781231e535e2a6f96.png" />
+<img alt="_images/739c24bdf1c545bf162cdbc6c2ab212ab5d8cc04afa5e9839cfb0f1c69602902.png" src="_images/739c24bdf1c545bf162cdbc6c2ab212ab5d8cc04afa5e9839cfb0f1c69602902.png" />
 </div>
 </div>
 <p>We will leave it to you to use this image as a logo for your “Pixel Cat” <a class="reference external" href="https://en.wikipedia.org/wiki/Meme_coin">meme coin</a>.</p>
@@ -1803,7 +1835,7 @@ Min Pixel Value: 0.0
  [0. 0. 0. 0.]]
 </pre></div>
 </div>
-<img alt="_images/9912824e3814600642f48898627ad5e4d3188de9f29450409d5c67b06f1814af.png" src="_images/9912824e3814600642f48898627ad5e4d3188de9f29450409d5c67b06f1814af.png" />
+<img alt="_images/728d53fa7fb2fff14a1af8328f7f5c72349be6b6641ab25e96767834cd691050.png" src="_images/728d53fa7fb2fff14a1af8328f7f5c72349be6b6641ab25e96767834cd691050.png" />
 </div>
 </div>
 <p>Likewise along the rows (albeit the number of rows is odd!):</p>
@@ -1814,7 +1846,7 @@ Min Pixel Value: 0.0
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/402cd1fe3f1d9507edf74d5ce9a25b23d7dba1d01e54722678a800be08c0a39d.png" src="_images/402cd1fe3f1d9507edf74d5ce9a25b23d7dba1d01e54722678a800be08c0a39d.png" />
+<img alt="_images/bf12c6549509018f7c3a3bf1c6cf1ec56e57b3b2ff45718e953095031bcaee84.png" src="_images/bf12c6549509018f7c3a3bf1c6cf1ec56e57b3b2ff45718e953095031bcaee84.png" />
 </div>
 </div>
 <div class="exercise dropdown admonition" id="cropped-camera">
@@ -1843,7 +1875,7 @@ Min Pixel Value: 23
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/e53f3a3c5fc0ef4d094fb066bd80afdff2b0805a193caae078567661d17d0c3d.png" src="_images/e53f3a3c5fc0ef4d094fb066bd80afdff2b0805a193caae078567661d17d0c3d.png" />
+<img alt="_images/cacd951dc9f247bd60029487dcfcb23017e7dadc0f2736179ebcf107064af426.png" src="_images/cacd951dc9f247bd60029487dcfcb23017e7dadc0f2736179ebcf107064af426.png" />
 </div>
 </div>
 </section>
@@ -1862,7 +1894,7 @@ Min Pixel Value: 23
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/1e0dc4bf2e595926825978db365fbc7627dbefa06e9591a9683f2617980bf344.png" src="_images/1e0dc4bf2e595926825978db365fbc7627dbefa06e9591a9683f2617980bf344.png" />
+<img alt="_images/5117cf929418efa7656e277f916b435ecca457bf4fb82307f14e8b1a42cdac49.png" src="_images/5117cf929418efa7656e277f916b435ecca457bf4fb82307f14e8b1a42cdac49.png" />
 </div>
 </div>
 <p>The exact indices we used are here:</p>
@@ -1874,7 +1906,7 @@ Min Pixel Value: 23
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/193a7bbb12bf47421f9a867df209f1a7f66bea403f764f4ceb5aa58a0ca3ee50.png" src="_images/193a7bbb12bf47421f9a867df209f1a7f66bea403f764f4ceb5aa58a0ca3ee50.png" />
+<img alt="_images/d0412a840c7347d00adc88289eca3d94b2f50e39bae104422ff2b5e5d11b3176.png" src="_images/d0412a840c7347d00adc88289eca3d94b2f50e39bae104422ff2b5e5d11b3176.png" />
 </div>
 </div>
 <div class="cell docutils container">
@@ -1918,7 +1950,7 @@ Max Pixel Value: 1.0
 Min Pixel Value: 0.0
 </pre></div>
 </div>
-<img alt="_images/7ddae6566b3fbd8b9fe8a9b6a354930eaf301e110fdd7319f1f37a9809230d76.png" src="_images/7ddae6566b3fbd8b9fe8a9b6a354930eaf301e110fdd7319f1f37a9809230d76.png" />
+<img alt="_images/ff9c46bb8edf85e1fd08a2d5b1eda8c18afee2ba46744fd2f2a340895e375fe7.png" src="_images/ff9c46bb8edf85e1fd08a2d5b1eda8c18afee2ba46744fd2f2a340895e375fe7.png" />
 </div>
 </div>
 <p>First, we extract the <code class="docutils literal notranslate"><span class="pre">shape</span></code> of the image, and store each element as a separate variable. In this case, the image is 2D (e.g. single-channel, monochrome) and so we extract the number of rows and the number of columns:</p>
@@ -2073,7 +2105,7 @@ Max Pixel Value: True
 Min Pixel Value: False
 </pre></div>
 </div>
-<img alt="_images/177774128b773de0a355be768475245c20fbc4f0e92675330ce7b94f80a88e33.png" src="_images/177774128b773de0a355be768475245c20fbc4f0e92675330ce7b94f80a88e33.png" />
+<img alt="_images/2c678f8ba7683a1da3addaa28ec9d8c9f3e10257577e35a881083dee52e920ae.png" src="_images/2c678f8ba7683a1da3addaa28ec9d8c9f3e10257577e35a881083dee52e920ae.png" />
 </div>
 </div>
 <p>Once we have our mask - which is just a Boolean array - it is just a matter of Boolean indexing to use it set all the pixel values underneath it to be equal to the same value:</p>
@@ -2088,7 +2120,7 @@ Min Pixel Value: False
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/5368293f9dc23fbedd0ab527b7b1eaac1dbc8aa8048b8a926bf5e540fd2c5317.png" src="_images/5368293f9dc23fbedd0ab527b7b1eaac1dbc8aa8048b8a926bf5e540fd2c5317.png" />
+<img alt="_images/66e75f9f876ae60b36dc3771da579a884e97dfeab3274f3a10218542b8408114.png" src="_images/66e75f9f876ae60b36dc3771da579a884e97dfeab3274f3a10218542b8408114.png" />
 </div>
 </div>
 <div class="exercise dropdown admonition" id="masked-man">
@@ -2118,7 +2150,7 @@ Min Pixel Value: False
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/659f786b8fecf3b1e0699bbe827f1a64af7f189e97d9d048fcca24765aaf6a1e.png" src="_images/659f786b8fecf3b1e0699bbe827f1a64af7f189e97d9d048fcca24765aaf6a1e.png" />
+<img alt="_images/beacbf68aeedd1c20ee015d502d3da055e4f8f349b4402be397c588abc9e520a.png" src="_images/beacbf68aeedd1c20ee015d502d3da055e4f8f349b4402be397c588abc9e520a.png" />
 </div>
 </div>
 <div class="cell docutils container">
@@ -2131,7 +2163,7 @@ Min Pixel Value: False
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/a5859c56fc72622b4c46e8896c9bf427c8f005999243eac948c74eef98c80379.png" src="_images/a5859c56fc72622b4c46e8896c9bf427c8f005999243eac948c74eef98c80379.png" />
+<img alt="_images/07411a9a65eb8cee92ecfd6b3ba00bd09de7f63e1696aba677c311b624f1a061.png" src="_images/07411a9a65eb8cee92ecfd6b3ba00bd09de7f63e1696aba677c311b624f1a061.png" />
 </div>
 </div>
 </section>
@@ -2139,7 +2171,7 @@ Min Pixel Value: False
 </section>
 <section class="tex2jax_ignore mathjax_ignore" id="inverting-image-colours">
 <h1>Inverting image colours<a class="headerlink" href="#inverting-image-colours" title="Link to this heading">#</a></h1>
-<p>We saw <em>colour inversion</em> on an <a class="reference internal" href="0_images_as_numpy_arrays.html"><span class="std std-doc">earlier page</span></a>. This is where all the pixel values in an image are, shockingly, inverted: high numbers become low numbers and vice versa:</p>
+<p>We saw <em>colour inversion</em> on an <a class="reference internal" href="0_images_as_numpy_arrays.html"><span class="doc std std-doc">earlier page</span></a>. This is where all the pixel values in an image are, shockingly, inverted: high numbers become low numbers and vice versa:</p>
 <p>For a binary image, this involves swapping 1s and 0s…</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -2167,7 +2199,7 @@ Min Pixel Value: False
  [0. 0. 0. 0. 0. 0. 0. 0.]]
 </pre></div>
 </div>
-<img alt="_images/c984469be27353ce3f55a9caa414996fe1baa5ab32b366f2a581425ee169c2cd.png" src="_images/c984469be27353ce3f55a9caa414996fe1baa5ab32b366f2a581425ee169c2cd.png" />
+<img alt="_images/5212ff95df90e93594a958dea112127b359a07114416efe8d01688e722724a4d.png" src="_images/5212ff95df90e93594a958dea112127b359a07114416efe8d01688e722724a4d.png" />
 </div>
 </div>
 <p>…which can be accomplished with some simple numeric operations:</p>
@@ -2197,7 +2229,7 @@ Min Pixel Value: False
  [1. 1. 1. 1. 1. 1. 1. 1.]]
 </pre></div>
 </div>
-<img alt="_images/dfb05bbf2897e3aef97dec0d4c0b61bc62f72f6c7ae18d69a31d553a21a08b41.png" src="_images/dfb05bbf2897e3aef97dec0d4c0b61bc62f72f6c7ae18d69a31d553a21a08b41.png" />
+<img alt="_images/989d5c34c034a932a74313027be7f90025b23396870cca8c7d1d82bffd82c912.png" src="_images/989d5c34c034a932a74313027be7f90025b23396870cca8c7d1d82bffd82c912.png" />
 </div>
 </div>
 <p>What about a colour image?</p>
@@ -2218,7 +2250,7 @@ Max Pixel Value: 255
 Min Pixel Value: 0
 </pre></div>
 </div>
-<img alt="_images/5849e68dc4097cee969c481552aa3f869b5878423ffdec602f8852d798090698.png" src="_images/5849e68dc4097cee969c481552aa3f869b5878423ffdec602f8852d798090698.png" />
+<img alt="_images/2cd8f68d6ba4672701be1d24739371a32072aa4f59e0c19e8a0453de37618d01.png" src="_images/2cd8f68d6ba4672701be1d24739371a32072aa4f59e0c19e8a0453de37618d01.png" />
 </div>
 </div>
 <p>The numerical trick that we used with the binary image will not work for a colour image like this, because the pixel values range from 0 to 255. -255 is not allowed within the acceptable range for <code class="docutils literal notranslate"><span class="pre">uint8</span></code> image data and will produce an error!</p>
@@ -2254,7 +2286,7 @@ Min Pixel Value: 0
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/2370bd1e13fa90470a9f2d11eae3c20b96a4e156f6d223d7799cfd7fd23470d1.png" src="_images/2370bd1e13fa90470a9f2d11eae3c20b96a4e156f6d223d7799cfd7fd23470d1.png" />
+<img alt="_images/a4592804b191b2987f06bfa15ae2dd9c13774af776c5f47c7fdc5b2fd2355035.png" src="_images/a4592804b191b2987f06bfa15ae2dd9c13774af776c5f47c7fdc5b2fd2355035.png" />
 </div>
 </div>
 </section>
@@ -2270,7 +2302,7 @@ Min Pixel Value: 0
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/2370bd1e13fa90470a9f2d11eae3c20b96a4e156f6d223d7799cfd7fd23470d1.png" src="_images/2370bd1e13fa90470a9f2d11eae3c20b96a4e156f6d223d7799cfd7fd23470d1.png" />
+<img alt="_images/a4592804b191b2987f06bfa15ae2dd9c13774af776c5f47c7fdc5b2fd2355035.png" src="_images/a4592804b191b2987f06bfa15ae2dd9c13774af776c5f47c7fdc5b2fd2355035.png" />
 </div>
 </div>
 <div class="exercise dropdown admonition" id="inv-brick">
@@ -2367,7 +2399,7 @@ Min Pixel Value: 48
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/62679f5b8d7e013b15fd9e202c49d482f22ac03bd5809e164c9c24e65ca88fc4.png" src="_images/62679f5b8d7e013b15fd9e202c49d482f22ac03bd5809e164c9c24e65ca88fc4.png" />
+<img alt="_images/bd4e45a76e54c4745cf7f2153aa0868e518c0508365168b5dfa19fe7082dd01f.png" src="_images/bd4e45a76e54c4745cf7f2153aa0868e518c0508365168b5dfa19fe7082dd01f.png" />
 </div>
 </div>
 <p>We can invert just the pixel values at these locations, by passing the slices to <code class="docutils literal notranslate"><span class="pre">ski.util.invert()</span></code>:</p>
@@ -2391,7 +2423,7 @@ Max Pixel Value: 207
 Min Pixel Value: 48
 </pre></div>
 </div>
-<img alt="_images/fcf7582e2f3dcaf7764967ff58a44fa3d920f82ad0b9cd09d42d71fcb29dad79.png" src="_images/fcf7582e2f3dcaf7764967ff58a44fa3d920f82ad0b9cd09d42d71fcb29dad79.png" />
+<img alt="_images/b1b644821b13419497bd02e6b5b58250e6df10cce713476cdb3f4f5127c82491.png" src="_images/b1b644821b13419497bd02e6b5b58250e6df10cce713476cdb3f4f5127c82491.png" />
 </div>
 </div>
 </section>
@@ -2427,7 +2459,7 @@ Max Pixel Value: 231
 Min Pixel Value: 0
 </pre></div>
 </div>
-<img alt="_images/2a123916cdd6cc195c70345655c48bea133bb62ef7e9f500df9f5240a6d23b19.png" src="_images/2a123916cdd6cc195c70345655c48bea133bb62ef7e9f500df9f5240a6d23b19.png" />
+<img alt="_images/9343072c03bd7d288a4459b0351fcb3331a024188034940e13653f068fa0b24f.png" src="_images/9343072c03bd7d288a4459b0351fcb3331a024188034940e13653f068fa0b24f.png" />
 </div>
 </div>
 </section>
@@ -2445,7 +2477,7 @@ Min Pixel Value: 0
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/fbe89ee4786a015e38e3010343c9ef925a988de4c920e1490d7ade84c456bc23.png" src="_images/fbe89ee4786a015e38e3010343c9ef925a988de4c920e1490d7ade84c456bc23.png" />
+<img alt="_images/d33edea7935907eefbb195802784a323516559d49f8975f36c09a47f91100d1b.png" src="_images/d33edea7935907eefbb195802784a323516559d49f8975f36c09a47f91100d1b.png" />
 </div>
 </div>
 <p>This looks cool - if anything <em>cooler</em> than the target image - but it is not what we want.</p>
@@ -2459,7 +2491,7 @@ Min Pixel Value: 0
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/fd193c7765ab89b1630cb949a38e3a874de8d34b587bfc9e8662e09351ac6d4d.png" src="_images/fd193c7765ab89b1630cb949a38e3a874de8d34b587bfc9e8662e09351ac6d4d.png" />
+<img alt="_images/21d1e13706119626665949c05a9d205fd7454b2bba229fc8b38b99bec46151b6.png" src="_images/21d1e13706119626665949c05a9d205fd7454b2bba229fc8b38b99bec46151b6.png" />
 </div>
 </div>
 <p>Now, when we invert the purple <code class="docutils literal notranslate"><span class="pre">cat</span></code> image, we get the target image:</p>
@@ -2471,7 +2503,7 @@ Min Pixel Value: 0
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/5600e4dac1666d07bb71df1107002e1091d189796c85ba86cf1ce98a9c479767.png" src="_images/5600e4dac1666d07bb71df1107002e1091d189796c85ba86cf1ce98a9c479767.png" />
+<img alt="_images/93bf1ee140284102e64a9129fece9da1369a6ef0e85b6548d9ca2a98e8d7dc4f.png" src="_images/93bf1ee140284102e64a9129fece9da1369a6ef0e85b6548d9ca2a98e8d7dc4f.png" />
 </div>
 </div>
 </section>
@@ -2497,7 +2529,7 @@ Min Pixel Value: 0
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/5e6c5a7a0528914aab4f8990015b64c50ec922e49a52aea37e574da5a395a5bb.png" src="_images/5e6c5a7a0528914aab4f8990015b64c50ec922e49a52aea37e574da5a395a5bb.png" />
+<img alt="_images/f32fe522f14a2482a7ac0c6cd718ec32cfb93ed92f16e9e5838f948ee0e9cd5d.png" src="_images/f32fe522f14a2482a7ac0c6cd718ec32cfb93ed92f16e9e5838f948ee0e9cd5d.png" />
 </div>
 </div>
 <div class="cell docutils container">
@@ -2516,7 +2548,7 @@ Min Pixel Value: 0
  [False  True False  True]]
 </pre></div>
 </div>
-<img alt="_images/14060793564aed3b700df2b9fd766a6f30371982333bb2ed0f0a716ac4d110ff.png" src="_images/14060793564aed3b700df2b9fd766a6f30371982333bb2ed0f0a716ac4d110ff.png" />
+<img alt="_images/48a279a5bed9c4b7245297f40089a761329f7178e8e6f915b6822d037b002c77.png" src="_images/48a279a5bed9c4b7245297f40089a761329f7178e8e6f915b6822d037b002c77.png" />
 </div>
 </div>
 <p>We can also easily achieve this conversion in <code class="docutils literal notranslate"><span class="pre">skimage</span></code> - see the <a class="reference internal" href="5_mean_filter.html"><span class="doc std std-doc">filtering page</span></a> for more detail. For now, we can use the <code class="docutils literal notranslate"><span class="pre">ski.filters.threshold_minimum()</span></code> function. This supplies us a recommended threshold value to attempt to divide the array pixels into two classes e.g. two classes where the pixels in each class are maximally different from pixels in the other class:</p>
@@ -2552,7 +2584,7 @@ Max Pixel Value: True
 Min Pixel Value: False
 </pre></div>
 </div>
-<img alt="_images/14060793564aed3b700df2b9fd766a6f30371982333bb2ed0f0a716ac4d110ff.png" src="_images/14060793564aed3b700df2b9fd766a6f30371982333bb2ed0f0a716ac4d110ff.png" />
+<img alt="_images/48a279a5bed9c4b7245297f40089a761329f7178e8e6f915b6822d037b002c77.png" src="_images/48a279a5bed9c4b7245297f40089a761329f7178e8e6f915b6822d037b002c77.png" />
 </div>
 </div>
 </section>
@@ -2569,7 +2601,7 @@ Min Pixel Value: False
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/a14d8df5085415435bb27a26ba51caa54d87bcfb8b4f1b95b330f2ba9db82e3c.png" src="_images/a14d8df5085415435bb27a26ba51caa54d87bcfb8b4f1b95b330f2ba9db82e3c.png" />
+<img alt="_images/ec5852eb9e04849454fda35356f8dd35441253ce4763babc54928c9e65b8e1fc.png" src="_images/ec5852eb9e04849454fda35356f8dd35441253ce4763babc54928c9e65b8e1fc.png" />
 </div>
 </div>
 <p>A better option here, that we encountered on the <a class="reference internal" href="2_skimage_intro.html"><span class="doc std std-doc">previous page</span></a>, is to use the <em>luminance formula</em>:</p>
@@ -2622,7 +2654,7 @@ Min Pixel Value: 0
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution pt 1.</span>
 
-<span class="c1"># Luminance forumula coefficients</span>
+<span class="c1"># Luminance formula coefficients</span>
 <span class="n">weights</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">0.2126</span><span class="p">,</span> <span class="mf">0.7152</span><span class="p">,</span> <span class="mf">0.0722</span><span class="p">])</span>
 
 <span class="c1"># Run the numbers...</span>
@@ -2642,7 +2674,7 @@ Max Pixel Value: 255.0
 Min Pixel Value: 0.0
 </pre></div>
 </div>
-<img alt="_images/4a2bb58de9119bde65609cd07d7d369b1fdfe6394dfbfebaa8727bc30bcbf1fa.png" src="_images/4a2bb58de9119bde65609cd07d7d369b1fdfe6394dfbfebaa8727bc30bcbf1fa.png" />
+<img alt="_images/b7696bc223c82601107b37faff5cc2f3766377676686acc1c7ff9a9ca1a587ce.png" src="_images/b7696bc223c82601107b37faff5cc2f3766377676686acc1c7ff9a9ca1a587ce.png" />
 </div>
 </div>
 <p>But this gives us min/max pixel intensity values which are illegal for the <code class="docutils literal notranslate"><span class="pre">float64</span></code> dtype, and will generate an error when we try to convert to <code class="docutils literal notranslate"><span class="pre">uint8</span></code> to match the target image:</p>
@@ -2660,7 +2692,7 @@ Min Pixel Value: 0.0
 <span class="g g-Whitespace">      </span><span class="mi">1</span> <span class="c1"># Ouch!</span>
 <span class="ne">----&gt; </span><span class="mi">2</span> <span class="n">ski</span><span class="o">.</span><span class="n">util</span><span class="o">.</span><span class="n">img_as_ubyte</span><span class="p">(</span><span class="n">grey_wheel</span><span class="p">)</span>
 
-<span class="nn">File ~\AppData\Local\Programs\Python\Python313\Lib\site-packages\skimage\util\dtype.py:576,</span> in <span class="ni">img_as_ubyte</span><span class="nt">(image, force_copy)</span>
+<span class="nn">File /opt/hostedtoolcache/Python/3.12.11/x64/lib/python3.12/site-packages/skimage/util/dtype.py:576,</span> in <span class="ni">img_as_ubyte</span><span class="nt">(image, force_copy)</span>
 <span class="g g-Whitespace">    </span><span class="mi">555</span> <span class="k">def</span><span class="w"> </span><span class="nf">img_as_ubyte</span><span class="p">(</span><span class="n">image</span><span class="p">,</span> <span class="n">force_copy</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
 <span class="g g-Whitespace">    </span><span class="mi">556</span><span class="w">     </span><span class="sd">&quot;&quot;&quot;Convert an image to 8-bit unsigned integer format.</span>
 <span class="g g-Whitespace">    </span><span class="mi">557</span><span class="sd"> </span>
@@ -2669,7 +2701,7 @@ Min Pixel Value: 0.0
 <span class="g g-Whitespace">    </span><span class="mi">575</span><span class="sd">     &quot;&quot;&quot;</span>
 <span class="ne">--&gt; </span><span class="mi">576</span>     <span class="k">return</span> <span class="n">_convert</span><span class="p">(</span><span class="n">image</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">uint8</span><span class="p">,</span> <span class="n">force_copy</span><span class="p">)</span>
 
-<span class="nn">File ~\AppData\Local\Programs\Python\Python313\Lib\site-packages\skimage\util\dtype.py:312,</span> in <span class="ni">_convert</span><span class="nt">(image, dtype, force_copy, uniform)</span>
+<span class="nn">File /opt/hostedtoolcache/Python/3.12.11/x64/lib/python3.12/site-packages/skimage/util/dtype.py:312,</span> in <span class="ni">_convert</span><span class="nt">(image, dtype, force_copy, uniform)</span>
 <span class="g g-Whitespace">    </span><span class="mi">309</span>     <span class="k">return</span> <span class="n">image</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">dtype_out</span><span class="p">)</span>
 <span class="g g-Whitespace">    </span><span class="mi">311</span> <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">min</span><span class="p">(</span><span class="n">image</span><span class="p">)</span> <span class="o">&lt;</span> <span class="o">-</span><span class="mf">1.0</span> <span class="ow">or</span> <span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">image</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mf">1.0</span><span class="p">:</span>
 <span class="ne">--&gt; </span><span class="mi">312</span>     <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Images of type float must be between -1 and 1.&quot;</span><span class="p">)</span>
@@ -2726,7 +2758,7 @@ Max Pixel Value: 255
 Min Pixel Value: 0
 </pre></div>
 </div>
-<img alt="_images/cbfd0722e6c9f6189d9cdcbb71e04daf7de00b625595d3047f07b1b0103d0707.png" src="_images/cbfd0722e6c9f6189d9cdcbb71e04daf7de00b625595d3047f07b1b0103d0707.png" />
+<img alt="_images/fac991e88513d74c1109f10d3ed1c7093b425f5b31d488868d3d5b45d1064fca.png" src="_images/fac991e88513d74c1109f10d3ed1c7093b425f5b31d488868d3d5b45d1064fca.png" />
 </div>
 </div>
 </section>
@@ -2752,7 +2784,7 @@ Max Pixel Value: 1.0
 Min Pixel Value: 0.0
 </pre></div>
 </div>
-<img alt="_images/321eb4537b588f9bd999dfd942958273c9af2ba0de7a70cc692f4c6de45034ce.png" src="_images/321eb4537b588f9bd999dfd942958273c9af2ba0de7a70cc692f4c6de45034ce.png" />
+<img alt="_images/5484edee1d92d4da660261182a29fde8fee11b4013c06e46efd9efe4eac84510.png" src="_images/5484edee1d92d4da660261182a29fde8fee11b4013c06e46efd9efe4eac84510.png" />
 </div>
 </div>
 </section>

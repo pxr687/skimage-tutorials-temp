@@ -59,7 +59,7 @@ This array is small enough that we can easily see it's dimensionality. If we so 
 two_D_ones_and_zeros.shape
 ```
 
-As you know, the output of the cell above means that the `two_d_ones_and_zeros` array has 2 rows and 2 columns. In virtue of having two dimensions, *this array is an image in the technical sense*. In fact, we will use the terms "array", "image" and "image array" interchangably throughout this tutorial series, where we are referring to arrays of two-dimensions or more.
+As you know, the output of the cell above means that the `two_d_ones_and_zeros` array has 2 rows and 2 columns. In virtue of having two dimensions, *this array is an image in the technical sense*. In fact, we will use the terms "array", "image" and "image array" interchangeably throughout this tutorial series, where we are referring to arrays of two-dimensions or more.
 
 You may (understandably) be thinking "that array does not look much like an image...". This is a reasonable thought. So how can we view our array as an image in the intuitive sense - as a picture we can look at and appreciate with our high society friends at a gallery opening? One way is to use `plt.matshow()`, a function from the [Matplotlib library](https://matplotlib.org). The function name `plt.matshow()` stands for `mat`rix `show`. This function has this name because arrays are a representation of [matrices](https://en.wikipedia.org/wiki/Matrix_(mathematics)). As the name implies, it will display a two-dimensional array graphically.
 
@@ -216,7 +216,7 @@ plt.matshow(two_D_other_numbers,
            cmap="gray");
 ```
 
-You can compare this visualisation of the image to the "raw" array output from the cell below. You'll notice that *larger* numbers are represented with *lighter* squares, and *smaller* numbers are represented with *darker* squares. When we are using `float64` data, as we are here, you can think of each pixel value (0, 1 or in between) as speciying the grey-level as a percentage - with 1 being 100%, 0 being 0%, 0.5 being 50% and so on:
+You can compare this visualisation of the image to the "raw" array output from the cell below. You'll notice that *larger* numbers are represented with *lighter* squares, and *smaller* numbers are represented with *darker* squares. When we are using `float64` data, as we are here, you can think of each pixel value (0, 1 or in between) as specifying the grey-level as a percentage - with 1 being 100%, 0 being 0%, 0.5 being 50% and so on:
 
 ```{python}
 # Show the new array (from the NumPy output).
@@ -363,7 +363,7 @@ plt.imshow(what_is_it);
 
 We hope you agree that this image is a pretty good representation of the English letter "i". We now have an image which represents a *symbol* e.g. as opposed to representing a visual scene or object. For any image, which is to say on any array of at least two dimensions, we can do something called *image manipulation*. This might sound like we are deceiving someone about our appearance or character, but in fact what it means is that we *do something which changes the numbers inside the array, and therefore changes the corresponding visual image*.
 
-Let's use the helpfully named NumPy function [`np.flip()`](https://numpy.org/doc/2.1/reference/generated/numpy.flip.html). This function, by default, will "flip" an array along the rows. Somehwat biblically, the first row will become the last row, and the last row will become the first row. Let's apply this function to our present image, and inspect the corresponding "raw" output:
+Let's use the helpfully named NumPy function [`np.flip()`](https://numpy.org/doc/2.1/reference/generated/numpy.flip.html). This function, by default, will "flip" an array along the rows. Somewhat biblically, the first row will become the last row, and the last row will become the first row. Let's apply this function to our present image, and inspect the corresponding "raw" output:
 
 ```{python}
 # Flip the array.
@@ -399,8 +399,7 @@ All of the principles we have seen apply both to the very small, low-resolution 
 
 ```{python}
 # Load in and `imshow` the image, with a colourbar.
-xeno = io.imread("images/xenomorph.PNG", 
-                 as_gray=True)
+xeno = io.imread("images/xenomorph.png", as_gray=True)
 plt.imshow(xeno)
 plt.colorbar();
 ```
