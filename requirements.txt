@@ -1,0 +1,5 @@
+# Requirements for notebooks / Binderhub
+matplotlib
+scipy
+scikit-image
+jupytext
