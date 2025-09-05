@@ -19,7 +19,7 @@ jupyter:
 
 We already encountered structuring elements - (of which kernels are one type) - on [earlier](4_threshold_filters) [pages](5_mean_filter). A structuring element is a grid of a certain shape - you can think of it as a "template" - which is used to define the "neighbourhood" of pixels which an image processing operation affects. 
 
-A (3, 3) structuring element can be applied as a square which affects 9 pixels - we might alter the image by centering this structuring element over every pixel, and replacing each pixel with the mean of the other pixels in it's "neighbourhood", for instance:
+A (3, 3) structuring element can be applied as a square which affects 9 pixels - we might alter the image by centering this structuring element over every pixel, and replacing each pixel with the mean of the other pixels in its "neighbourhood", for instance:
 
 ![](images/kernel_general.png)
 
@@ -116,7 +116,7 @@ plt.imshow(eroded_square);
 
 What has happened here? We can think of our `diamond` structing element as being a bit like a weird [crosshair/reticle](https://en.wikipedia.org/wiki/Reticle) of a gun. In a morphological operation, we "target" the crosshair on a given array pixel. Because we are eroding, the central pixel will be *lowered to the value of the lowest pixel in its neighbourhood* if the pixels in the neighbourhood do not "match" the shape of the structuring element. This is illustrated below. 
 
-Now, because our `sqaure` array contains only 1s and 0s, central pixels "match" the structuring element if the pixels under the structuring element are 1 where the value sin the structuring element are 1. The image below shows the `diamond` structuring element being applied to three different central pixels. "Matches" between the structuring element and the array pixels are depicted with a green tick; "clashes" between the structuring element and the array pixels are depicted with a red X. "Clashes" occur where the structuring element value is 1 and the array pixel value is 0. 
+Now, because our `square` array contains only 1s and 0s, central pixels "match" the structuring element if the pixels under the structuring element are 1 where the values in the structuring element are 1. The image below shows the `diamond` structuring element being applied to three different central pixels. "Matches" between the structuring element and the array pixels are depicted with a green tick; "clashes" between the structuring element and the array pixels are depicted with a red X. "Clashes" occur where the structuring element value is 1 and the array pixel value is 0. 
 
 If a "clash" occurs, then the central pixel gets lowered to the lowest value under the structuring element (0). (We call this, loosely, the central pixel "dying").
 
@@ -317,7 +317,7 @@ xeno_binary_ero_rad_6_diamond = ski.morphology.erosion(xenomorph,
 show_both(xenomorph, xeno_binary_ero_rad_6_diamond, "Eroded \n(13, 13) Diamond SE");
 ```
 
-There are less "matches" between the large structuring element and pixel neighbourhoods in the image - this leaves less central pixels unchanged, than for a smalller structuring element of the same shape. Thus, because in erorison we are *lowering* central pixel values in the event of a "clash", the darker regions have expanded substantially more than when we used a smaller `diamond`, which gave more "matches".
+There are less "matches" between the large structuring element and pixel neighbourhoods in the image - this leaves less central pixels unchanged, than for a smaller structuring element of the same shape. Thus, because in erorison we are *lowering* central pixel values in the event of a "clash", the darker regions have expanded substantially more than when we used a smaller `diamond`, which gave more "matches".
 
 Dilation, again has the opposite effect of increasing brighter regions, in the event of "clashes":
 

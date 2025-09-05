@@ -89,7 +89,7 @@ kernel_plot(gaussian_like_kernel);
 
 Now, it may not be immediately apparent to some readers what this plot has to do with a Gaussian distribution. For now let's use "Gaussian" very loosely - for the moment all we will take from it is that, like a Gaussian distribution, at the center the kernel has high values, then the values fall off as we get nearer to the sides. Let's warmly refer to the graph as the "red mountain".
 
-The kernel is shown, via the "raw" NumPy output, in the cell below. Compare this to the plot, to make sure you understand the visualisation. Remember that the numbers on each axis are the integer index locations of the NumPy array. And the vertical height of the red surface is the value of the kernel element at each row/column intger index location:
+The kernel is shown, via the "raw" NumPy output, in the cell below. Compare this to the plot, to make sure you understand the visualisation. Remember that the numbers on each axis are the integer index locations of the NumPy array. And the vertical height of the red surface is the value of the kernel element at each row/column integer index location:
 
 ```{python}
 # Show the kernel again, in NumPy, for comparison to the plot.
@@ -586,7 +586,7 @@ xenomorph_gauss_blurred = ...
 
 The function you need, with the correct input arguments, is below. You need to use `np.arange(-3, 4)` for the inputs to `np.meshgrid()` - the resulting 2D `x_solution` and `y_solution` arrays are printed out under the cell. A `sigma` of 1 will generate the target kernel.
 
-An important step here is `gauss = 1/gauss.sum() * gauss` which ensures that the kernel elements sum to 1. As we noted in the solution to the last exercise, this step makes sure that the average pixel intensity of an image stays the same as the original image, when we filter the image with this kernel (this is called a *normalising the kernel*). 
+An important step here is `gauss = 1/gauss.sum() * gauss` which ensures that the kernel elements sum to 1. As we noted in the solution to the last exercise, this step makes sure that the average pixel intensity of an image stays the same as the original image, when we filter the image with this kernel (this is called *normalising the kernel*). 
 
 If we skip the normalisation step, we may well create problems with illegal (too large!) pixel intensity values, or otherwise will be changing the intensities in a way that is not part of the typical Gaussian blur procedure e.g. we will be altering the average pixel intensity of the whole image, rather than just blurring the pixels...
 
@@ -688,7 +688,7 @@ plt.imshow(sharpened)
 plt.tight_layout();
 ```
 
-You can see that the sharpened image, as intended, has better clarity than the original. We can also use a specliazed [sharpening kernel](https://www.geeksforgeeks.org/deep-learning/types-of-convolution-kernels/#3-sharpening-kernel) to achieve the same effect:
+You can see that the sharpened image, as intended, has better clarity than the original. We can also use a specialised [sharpening kernel](https://www.geeksforgeeks.org/deep-learning/types-of-convolution-kernels/#3-sharpening-kernel) to achieve the same effect:
 
 ![](images/sharpening_kernel.png)
 
@@ -702,7 +702,7 @@ print(sharpening_kernel)
 kernel_plot(sharpening_kernel)
 ```
 
-This kernel works by [emphasising differences between adjacent pixels](https://setosa.io/ev/image-kernels/#:~:text=The%20sharpen%20kernel%20emphasizes%20differences,differences%20in%20adjacent%20pixel%20values.). Essentially, the more different that a pixel is from its surrounding pixels, the bigger value it will get in the sharpened image. 
+This kernel works by [emphasising differences between adjacent pixels](https://setosa.io/ev/image-kernels/#:~:text=The%20sharpen%20kernel%20emphasizes%20differences,differences%20in%20adjacent%20pixel%20values.). Essentially, the more different than a pixel is from its surrounding pixels, the bigger value it will get in the sharpened image. 
 
 To see this in detail, let's take just the middle row of the `sharpening_kernel`:
 
@@ -886,7 +886,7 @@ sharp_eagle = ...
 :class: dropdown
 :::
 
-We go some pretty good performance from the following kernel:
+We got some pretty good performance from the following kernel:
 
 ```{python}
 another_sharpening_kernel = np.array([[ -3, -3, -3],
@@ -908,7 +908,7 @@ another_sharpening_kernel.sum()
 
 As with Gaussian kernels, this is to ensure that the sharpening filter does not alter the average brightness of the original image. 
 
-The reason our new `another_sharpening_kernel` performs better than the original `sharpening_kernel` is because the central value is higher. To ensure the kernel sums to 1, we therefore must increase the absolute value of the negative kernel elements. These two factors (bigger central value, bigger negative off-centre values) increase the strength of the sharpening effect. 
+The reason our new `another_sharpening_kernel` performs better than the original `sharpening_kernel` is because the central value is higher. To ensure the kernel sums to 1, we therefore must increase the absolute value of the negative kernel elements. These two factors (bigger central value, bigger negative off-center values) increase the strength of the sharpening effect. 
 
 We use the new kernel to sharpen `blurry_eagle` in the cell below:
 

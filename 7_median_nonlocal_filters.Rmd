@@ -99,7 +99,7 @@ nums_img
 plt.matshow(nums_img);
 ```
 
-Now, imagine we "walk" a 3-by-3 kernel (sorry, pedants!) through the `nums_img` array, and replace the central pixel of each kernel (sorry again, pedants!) with the median of the pixels under the kernel.
+Now, imagine we "walk" a 3-by-3 kernel (sorry pedants!) through the `nums_img` array, and replace the central pixel of each kernel (sorry again, pedants!) with the median of the pixels under the kernel.
 
 This process is shown below, for three kernels (OK, pedants, three "local neighbourhoods under a 3-by-3 array very much resembling a kernel"). The central pixel is highlighted in red, and the index of the current local neighbourhood is shown above the pixel values.
 
@@ -283,7 +283,7 @@ plt.ylabel('Pixel Probability');
 print(f"\nCounts Normalized sum:\n {counts_normed.sum()}")
 ```
 
-When we equalise the histogram, we want it to be roughly uniform across the pixel intensities. As a tool to perform this "uniformification", we first we calculate the cumulative distribution (`cdf`) of the histogram. To do this we take cumulative sum of the normalised counts (`counts_normed`). For a given bin, the cumulative sum operation adds up the proportion of pixels that are in that bin and in all of the lower bins (e.g. the bins closer to 0 on the $x$-axis). Essentially it is a running total of the `counts_normed` as we move from left to right across the $x$-axis:
+When we equalise the histogram, we want it to be roughly uniform across the pixel intensities. As a tool to perform this "uniformization", we first we calculate the cumulative distribution (`cdf`) of the histogram. To do this we take cumulative sum of the normalised counts (`counts_normed`). For a given bin, the cumulative sum operation adds up the proportion of pixels that are in that bin and in all of the lower bins (e.g. the bins closer to 0 on the $x$-axis). Essentially it is a running total of the `counts_normed` as we move from left to right across the $x$-axis:
 
 ```{python}
 # Get the cumulative distribution of the pixel intensities.
