@@ -208,14 +208,14 @@ def load_process_nb(nb_path, fmt='myst', url=None):
     nbt2 = _SOL_MARKED.sub(f'\n**See the {page_link} for solution**\n\n', nbt1)
     nbt3 = process_admonitions(nbt2)
     nb = jupytext.reads(nbt3,
-                        fmt={'format_name': 'myst',
+                        fmt={'format_name': fmt,
                              'extension': nb_path.suffix})
     return process_labels(nb)
 
 
 def process_notebooks(config, output_dir,
                       in_nb_suffix='.Rmd',
-                      nb_fmt='myst',
+                      nb_fmt='rmarkdown',
                       kernel_name='python',
                       kernel_dname='Python (Pyodide)',
                       out_nb_suffix='.ipynb'
