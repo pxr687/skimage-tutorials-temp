@@ -399,8 +399,7 @@ All of the principles we have seen apply both to the very small, low-resolution 
 
 ```{python}
 # Load in and `imshow` the image, with a colourbar.
-xeno = io.imread("images/xenomorph.PNG", 
-                 as_gray=True)
+xeno = io.imread("images/xenomorph.png", as_gray=True)
 plt.imshow(xeno)
 plt.colorbar();
 ```
