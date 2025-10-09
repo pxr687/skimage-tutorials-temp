@@ -630,7 +630,7 @@ document.write(`
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/7e64a71707b29fcbc425bdf61c34eac40484b2026359e926d10f44939ab53c7b.png" src="_images/7e64a71707b29fcbc425bdf61c34eac40484b2026359e926d10f44939ab53c7b.png" />
+<img alt="_images/825d1eb2e51ac15ec9ff8fe936be9fd273ba9998e4ad622bacfc46764eeb8c11.png" src="_images/825d1eb2e51ac15ec9ff8fe936be9fd273ba9998e4ad622bacfc46764eeb8c11.png" />
 </div>
 </div>
 <p>Now, imagine we “walk” a 3-by-3 kernel (sorry pedants!) through the <code class="docutils literal notranslate"><span class="pre">nums_img</span></code> array, and replace the central pixel of each kernel (sorry again, pedants!) with the median of the pixels under the kernel.</p>
@@ -725,7 +725,7 @@ Median = 7.0
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/3789d175bfd8cdb71ee7ad665d100a5c22fd231a8286b19416a7a0d850e588c6.png" src="_images/3789d175bfd8cdb71ee7ad665d100a5c22fd231a8286b19416a7a0d850e588c6.png" />
+<img alt="_images/b07fad263136558a17aab4677671ad1a933c76361870ef0205abec403be59819.png" src="_images/b07fad263136558a17aab4677671ad1a933c76361870ef0205abec403be59819.png" />
 </div>
 </div>
 <p>Edges involving a bigger gradient have been preserved, whilst less prominent edges have been merged into more prominent ones. We show this, for comparison, alongside a mean filtered version of <code class="docutils literal notranslate"><span class="pre">nums_img</span></code>, filtered using the same size <code class="docutils literal notranslate"><span class="pre">footprint</span></code> ((3, 3)):</p>
@@ -753,7 +753,7 @@ Median = 7.0
   return _convert(image, np.uint8, force_copy)
 </pre></div>
 </div>
-<img alt="_images/c692ef8eaceddc1bc6442c05cac883e001c1243cfe4718a874271237c2b1030d.png" src="_images/c692ef8eaceddc1bc6442c05cac883e001c1243cfe4718a874271237c2b1030d.png" />
+<img alt="_images/7d6f5b5db3b449abfc3708f29b0d386cf113fc952333056618e865c97a9cd7f7.png" src="_images/7d6f5b5db3b449abfc3708f29b0d386cf113fc952333056618e865c97a9cd7f7.png" />
 </div>
 </div>
 <p>You can see that the median filter gives a better “summary” of the distribution of edges in the original image - the mean filter has spread the edges around more, which makes sense, given that it averages pixels within a kernel.</p>
@@ -775,7 +775,7 @@ Max Pixel Value: 207
 Min Pixel Value: 63
 </pre></div>
 </div>
-<img alt="_images/6affd9abd21792dcb223e37b1705b44760b002fc4666f21e13a44cd00d01c6b0.png" src="_images/6affd9abd21792dcb223e37b1705b44760b002fc4666f21e13a44cd00d01c6b0.png" />
+<img alt="_images/c7b80769183299078e5ab4339df4c51966f28bae48a1f0c68b5bb917cdedb60c.png" src="_images/c7b80769183299078e5ab4339df4c51966f28bae48a1f0c68b5bb917cdedb60c.png" />
 </div>
 </div>
 <p>We will also filter <code class="docutils literal notranslate"><span class="pre">brick</span></code> using a mean filter, with the same size kernel as the median filter:</p>
@@ -802,7 +802,7 @@ Min Pixel Value: 63
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/756cfd42d4915aead72088713e6f0abc6b396f09c0213abf0bdb91f7da4b4dd5.png" src="_images/756cfd42d4915aead72088713e6f0abc6b396f09c0213abf0bdb91f7da4b4dd5.png" />
+<img alt="_images/04f90d3419692c5392a3f82a5e5ece1618400b101417924e107e624d790519d2.png" src="_images/04f90d3419692c5392a3f82a5e5ece1618400b101417924e107e624d790519d2.png" />
 </div>
 </div>
 <p>You can see that the edges in the images (transitions between pixels of very different intensities - in this case between the dark bricks and the lighter mortar lines) are less smoothed by the median filter than by the mean filter. This is considered a desirable property of the median filter.</p>
@@ -831,7 +831,7 @@ Max Pixel Value: 255
 Min Pixel Value: 1
 </pre></div>
 </div>
-<img alt="_images/4f81e9bee3a7b15b8b60722e31346e14468ae2451d6850aa6c8412c3c3492ba9.png" src="_images/4f81e9bee3a7b15b8b60722e31346e14468ae2451d6850aa6c8412c3c3492ba9.png" />
+<img alt="_images/71124bfd18fd879b704ba5d14ac587fcef67a13f528d188ea4635a29f27bbf91.png" src="_images/71124bfd18fd879b704ba5d14ac587fcef67a13f528d188ea4635a29f27bbf91.png" />
 </div>
 </div>
 <p>Let’s first view the histogram of <code class="docutils literal notranslate"><span class="pre">eagle</span></code>, before we apply the filter. As we know, we can use the <code class="docutils literal notranslate"><span class="pre">.ravel()</span></code> array method to flatten this 2D image to 1D, and then inspect a histogram of the pixel intensities:</p>
@@ -849,7 +849,7 @@ Min Pixel Value: 1
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/0605e01f1e34231ef0abc21593baaacabbb9ab056d7de614dbb01ba1b9d30ff5.png" src="_images/0605e01f1e34231ef0abc21593baaacabbb9ab056d7de614dbb01ba1b9d30ff5.png" />
+<img alt="_images/2fcddee4d23b8afedb3ae4ef518516fe5a3b50688ee01ec3dfd6375ca8f71ebc.png" src="_images/2fcddee4d23b8afedb3ae4ef518516fe5a3b50688ee01ec3dfd6375ca8f71ebc.png" />
 </div>
 </div>
 <p>In order to apply the histogram equalisation filter, we first “deconstruct” into separate arrays using <code class="docutils literal notranslate"><span class="pre">np.histogram()</span></code>. This returns two arrays. One array we will call <code class="docutils literal notranslate"><span class="pre">counts</span></code>; this contains the height of the histogram within each <span class="math notranslate nohighlight">\(x\)</span>-axis bin. The second array we will call <code class="docutils literal notranslate"><span class="pre">bin_intervals</span></code>; adjacent values in this array are the start and end points of each <span class="math notranslate nohighlight">\(x\)</span>-axis bin. We use <code class="docutils literal notranslate"><span class="pre">bin_intervals</span></code> to calculate the centerpoint of each bin, by taking the average of the adjacent values.</p>
@@ -946,7 +946,7 @@ Bin centers:
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/18806482e1f667061891d57db19e13953afb1cad25c0ab0a5ce2557ee2a7f2c1.png" src="_images/18806482e1f667061891d57db19e13953afb1cad25c0ab0a5ce2557ee2a7f2c1.png" />
+<img alt="_images/1a75edde8a47aacffb43c9d87631592e0a6c6a0cc090863528cee81edbaa922e.png" src="_images/1a75edde8a47aacffb43c9d87631592e0a6c6a0cc090863528cee81edbaa922e.png" />
 </div>
 </div>
 <div class="cell docutils container">
@@ -977,7 +977,7 @@ Bin centers:
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/2b74cfed354085cac88c7f831cd425fb2776350dc623bd720e9d7bd73c69098f.png" src="_images/2b74cfed354085cac88c7f831cd425fb2776350dc623bd720e9d7bd73c69098f.png" />
+<img alt="_images/2f1e15b9a3d7493d1750cf070c2bd6ef3f9a2363795c6e38fcd65bed8aff0a88.png" src="_images/2f1e15b9a3d7493d1750cf070c2bd6ef3f9a2363795c6e38fcd65bed8aff0a88.png" />
 </div>
 </div>
 <p>The final value in <code class="docutils literal notranslate"><span class="pre">cdf</span></code> is 1 (or at least damn near close, given precision loss in the calculations). Remember, we are adding up proportions here, so a value of 1 indicates that the final bin and all of the lower bins together contain 100% of the pixels in the image:</p>
@@ -1102,7 +1102,7 @@ Min Pixel Value: 1
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/c49870b3176478b1161b1d55b2220dcd39426086e2789797d163beef53127bd4.png" src="_images/c49870b3176478b1161b1d55b2220dcd39426086e2789797d163beef53127bd4.png" />
+<img alt="_images/22b76a7b6f7da26bd3ac522698b072ca4f1105c2a8a0c83221bb853ff1ccb47c.png" src="_images/22b76a7b6f7da26bd3ac522698b072ca4f1105c2a8a0c83221bb853ff1ccb47c.png" />
 </div>
 </div>
 <p>The equalised histogram now much more closely resembles a <a class="reference external" href="https://en.wikipedia.org/wiki/Uniform_distribution">uniform distribution</a> - the notable “peaks and valleys” of the original and been replaced with a uniform block. The effect on the perceived visual image is one of heightened contrast - pay particular attention to the wall behind the noble eagle. Each image, without the histograms, can be viewed below, for easier inspection:</p>
@@ -1120,7 +1120,7 @@ Min Pixel Value: 1
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/6ad861d045d09ef68d8e29abfa1d448c6ccdd8d85a2807ce44b0e639e8ef0e15.png" src="_images/6ad861d045d09ef68d8e29abfa1d448c6ccdd8d85a2807ce44b0e639e8ef0e15.png" />
+<img alt="_images/8a45606b15aa0d5362a298bb6992eaf642a734b87b5de5fe02e8a7dd63462c95.png" src="_images/8a45606b15aa0d5362a298bb6992eaf642a734b87b5de5fe02e8a7dd63462c95.png" />
 </div>
 </div>
 <p>Obviously, this operation has changed the <code class="docutils literal notranslate"><span class="pre">dtype</span></code> of the image because we have replaced values ranging from 1 to 255 with proportions ranging from 0 to 1:</p>
@@ -1187,7 +1187,7 @@ Min Pixel Value: 0.0
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/b3801e4d05b5272e002e10407289d025dc6a9cb3bf5a999fd62d8118a9b1f72b.png" src="_images/b3801e4d05b5272e002e10407289d025dc6a9cb3bf5a999fd62d8118a9b1f72b.png" />
+<img alt="_images/88d583308814a3397a4a67e572287d77b4d727012d58e547bee116b69f328402.png" src="_images/88d583308814a3397a4a67e572287d77b4d727012d58e547bee116b69f328402.png" />
 </div>
 </div>
 <p>Easy peasy. If you consult the <a class="reference external" href="https://scikit-image.org/docs/0.25.x/api/skimage.exposure.html#skimage.exposure.equalize_hist">documentation</a> for <code class="docutils literal notranslate"><span class="pre">ski.exposure.equalize_hist()</span></code>, you notice that by default, it uses 256 bins. In fact, for the <code class="docutils literal notranslate"><span class="pre">nbins</span></code> optional argument, the documentation states that it will be ignored for integer data. This is so the “indexing trick” that we saw above can be performed.</p>
@@ -1221,7 +1221,7 @@ Max Pixel Value: 0.99
 Min Pixel Value: 0.0
 </pre></div>
 </div>
-<img alt="_images/4ca40cf9ec2ce6a7ba0d5d218288381e2c4b8718db854d1b7c70e0ed25092cf2.png" src="_images/4ca40cf9ec2ce6a7ba0d5d218288381e2c4b8718db854d1b7c70e0ed25092cf2.png" />
+<img alt="_images/a1f716121ba3e361f5d1fb684111d5429ef201492cfe3f1ee9678b35b00b9e90.png" src="_images/a1f716121ba3e361f5d1fb684111d5429ef201492cfe3f1ee9678b35b00b9e90.png" />
 </div>
 </div>
 <div class="cell docutils container">
@@ -1250,7 +1250,7 @@ Max Pixel Value: 1.0
 Min Pixel Value: 0.0
 </pre></div>
 </div>
-<img alt="_images/0b1852ec07b7b0f10feb066a0431dab9c130102ee61c34899757ddba93931a09.png" src="_images/0b1852ec07b7b0f10feb066a0431dab9c130102ee61c34899757ddba93931a09.png" />
+<img alt="_images/8a2c473da982da7d269ffca6cdaf22d51196d2218d6028679b7b694f01cc8652.png" src="_images/8a2c473da982da7d269ffca6cdaf22d51196d2218d6028679b7b694f01cc8652.png" />
 </div>
 </div>
 </section>

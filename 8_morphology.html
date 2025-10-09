@@ -570,7 +570,7 @@ document.write(`
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/60d83522e1a1de3b089d748ed1a58571d8ed4a65b846460f00f7634b4fb31fe5.png" src="_images/60d83522e1a1de3b089d748ed1a58571d8ed4a65b846460f00f7634b4fb31fe5.png" />
+<img alt="_images/08d091eeb7bcdcb9326e54f43612811154ae379047d17666e181136d291c131f.png" src="_images/08d091eeb7bcdcb9326e54f43612811154ae379047d17666e181136d291c131f.png" />
 </div>
 </div>
 <p>Let’s get fancy and ostentacious now, and invest in some diamonds, by which we mean let’s use <code class="docutils literal notranslate"><span class="pre">ski.morphology.diamond()</span></code> to construct a structuring element:</p>
@@ -591,7 +591,7 @@ document.write(`
  [0 1 0]]
 </pre></div>
 </div>
-<img alt="_images/a961ffef9299fd16ce11d9f1811963df1117520336c05ccacace8dfee86ce7c8.png" src="_images/a961ffef9299fd16ce11d9f1811963df1117520336c05ccacace8dfee86ce7c8.png" />
+<img alt="_images/820110710d5573bec941b6373e3ccec31b5c1f375ad4f2ce8d1e3ee42edf4c36.png" src="_images/820110710d5573bec941b6373e3ccec31b5c1f375ad4f2ce8d1e3ee42edf4c36.png" />
 </div>
 </div>
 <p>Using <code class="docutils literal notranslate"><span class="pre">ski.morphology.diamond(radius=1)</span></code> gives us a diamond shaped structuring element of <code class="docutils literal notranslate"><span class="pre">shape</span></code> (3, 3). We’d call it a “cross” but “diamond” is the canonical term… be assured that it will look more diamond-like (diamond-y?) when set to a bigger <code class="docutils literal notranslate"><span class="pre">radius</span></code>…:</p>
@@ -636,7 +636,7 @@ document.write(`
  [0 0 0 0 0 0 0]]
 </pre></div>
 </div>
-<img alt="_images/c8abb90ce9a77a365a90d34d9882643f5e84f0066a72897d66968e4146f9c600.png" src="_images/c8abb90ce9a77a365a90d34d9882643f5e84f0066a72897d66968e4146f9c600.png" />
+<img alt="_images/bda0609e9ab49e5814ee3fbfa1bd51fbb9b4c23984918a5c2328052f749118eb.png" src="_images/bda0609e9ab49e5814ee3fbfa1bd51fbb9b4c23984918a5c2328052f749118eb.png" />
 </div>
 </div>
 <p>What has happened here? We can think of our <code class="docutils literal notranslate"><span class="pre">diamond</span></code> structing element as being a bit like a weird <a class="reference external" href="https://en.wikipedia.org/wiki/Reticle">crosshair/reticle</a> of a gun. In a morphological operation, we “target” the crosshair on a given array pixel. Because we are eroding, the central pixel will be <em>lowered to the value of the lowest pixel in its neighbourhood</em> if the pixels in the neighbourhood do not “match” the shape of the structuring element. This is illustrated below.</p>
@@ -655,7 +655,7 @@ document.write(`
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/fbbb22b2d685e15cceecf86697df8468926bbbb2edcbb852f5fba952f6b566ad.png" src="_images/fbbb22b2d685e15cceecf86697df8468926bbbb2edcbb852f5fba952f6b566ad.png" />
+<img alt="_images/40446c1ca7392097ce31275e92f85384c8e432267c1c47303803fbf0f701b785.png" src="_images/40446c1ca7392097ce31275e92f85384c8e432267c1c47303803fbf0f701b785.png" />
 </div>
 </div>
 <div class="cell docutils container">
@@ -687,7 +687,7 @@ document.write(`
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/0bfa925e4aed4f690907f7d54b4930a493e3d6fb610d78923d15ed355e96b127.png" src="_images/0bfa925e4aed4f690907f7d54b4930a493e3d6fb610d78923d15ed355e96b127.png" />
+<img alt="_images/02058f217ac257dbf443c5cf4c4063d4dfc2bc83184347e881635846cef8845b.png" src="_images/02058f217ac257dbf443c5cf4c4063d4dfc2bc83184347e881635846cef8845b.png" />
 </div>
 </div>
 <p>What happened here? Well, again a “match” only occurs for two pixels in the image, the pixels at the center of each white square. This illustration below shows what happened:</p>
@@ -711,7 +711,7 @@ document.write(`
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/c861888c20a3adcd1bb5666a622a1e300a54074b9ce3c0a1b8b158f0d3e064eb.png" src="_images/c861888c20a3adcd1bb5666a622a1e300a54074b9ce3c0a1b8b158f0d3e064eb.png" />
+<img alt="_images/cb3da9d07066f941b8537e46fef3faba77adc205e0cb07607fc1f0ea875e99d5.png" src="_images/cb3da9d07066f941b8537e46fef3faba77adc205e0cb07607fc1f0ea875e99d5.png" />
 </div>
 </div>
 <p>Before looking at the output of the cell below, try to think carefully about how you think this will affect the erosion operation, using the (3, 3) <code class="docutils literal notranslate"><span class="pre">diamond</span></code> structuring element. Picture what will happen on the black pixel in the center of the right-hand square.</p>
@@ -725,7 +725,7 @@ document.write(`
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/8ce7cf9db472712fef27ea714cfda6a5b93ce03a8e123c14c25949cbee9797e5.png" src="_images/8ce7cf9db472712fef27ea714cfda6a5b93ce03a8e123c14c25949cbee9797e5.png" />
+<img alt="_images/b14b88d18e1818136af9b198ac65779eea7a5977c8c936d8a47810783eb65138.png" src="_images/b14b88d18e1818136af9b198ac65779eea7a5977c8c936d8a47810783eb65138.png" />
 </div>
 </div>
 <p>Ok, so now the whole right-hand square got taken out. Brutal.</p>
@@ -755,7 +755,7 @@ document.write(`
  [0 0 0 0 0 0 0]]
 </pre></div>
 </div>
-<img alt="_images/60d83522e1a1de3b089d748ed1a58571d8ed4a65b846460f00f7634b4fb31fe5.png" src="_images/60d83522e1a1de3b089d748ed1a58571d8ed4a65b846460f00f7634b4fb31fe5.png" />
+<img alt="_images/08d091eeb7bcdcb9326e54f43612811154ae379047d17666e181136d291c131f.png" src="_images/08d091eeb7bcdcb9326e54f43612811154ae379047d17666e181136d291c131f.png" />
 </div>
 </div>
 <p>Now, we use <code class="docutils literal notranslate"><span class="pre">ski.morphology.dilation()</span></code> to dilate the image, again using <code class="docutils literal notranslate"><span class="pre">diamond</span></code> as our structuring element:</p>
@@ -781,7 +781,7 @@ document.write(`
  [0 0 0 0 0 0 0]]
 </pre></div>
 </div>
-<img alt="_images/ceac8b8f707a1607026d5fcfb396086064b1bc6836d878c254c8e731e4d7fa7f.png" src="_images/ceac8b8f707a1607026d5fcfb396086064b1bc6836d878c254c8e731e4d7fa7f.png" />
+<img alt="_images/d64494039023a5760c23615d1f9488e04741a88130233bd3e8337e1e530aaf57.png" src="_images/d64494039023a5760c23615d1f9488e04741a88130233bd3e8337e1e530aaf57.png" />
 </div>
 </div>
 <p>Ok, so now some of the “clashes” have resulted in <em>more</em> white pixels in the image. The illustration below shows this for three pixels, two “clashes” and the one “match”:</p>
@@ -806,7 +806,7 @@ document.write(`
  [0 0 0 0 0 0 0 0 0 0 0 0 0 0]]
 </pre></div>
 </div>
-<img alt="_images/c861888c20a3adcd1bb5666a622a1e300a54074b9ce3c0a1b8b158f0d3e064eb.png" src="_images/c861888c20a3adcd1bb5666a622a1e300a54074b9ce3c0a1b8b158f0d3e064eb.png" />
+<img alt="_images/cb3da9d07066f941b8537e46fef3faba77adc205e0cb07607fc1f0ea875e99d5.png" src="_images/cb3da9d07066f941b8537e46fef3faba77adc205e0cb07607fc1f0ea875e99d5.png" />
 </div>
 </div>
 <p>Let’s see how good your prediction was:</p>
@@ -820,7 +820,7 @@ document.write(`
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/fcecbf44082fbc7c0f96a48f97d99132b9b12bf27e119b0c094f0ab3b54b1dff.png" src="_images/fcecbf44082fbc7c0f96a48f97d99132b9b12bf27e119b0c094f0ab3b54b1dff.png" />
+<img alt="_images/9aa041d662dae4168a92d1439f6d5fe6ac2132c74a4d1ffeec727fbfcd147a7f.png" src="_images/9aa041d662dae4168a92d1439f6d5fe6ac2132c74a4d1ffeec727fbfcd147a7f.png" />
 </div>
 </div>
 <p>Why did this happen? The image below explains:</p>
@@ -858,7 +858,7 @@ document.write(`
  [0 0 0 ... 0 0 0]]
 </pre></div>
 </div>
-<img alt="_images/162a05408c9d3f74e2208c75053b92c3850014c28b37b12ed2f8df9950358437.png" src="_images/162a05408c9d3f74e2208c75053b92c3850014c28b37b12ed2f8df9950358437.png" />
+<img alt="_images/76e007dd056a99976275a5dcacb1559f7a5e9a197f2bc7178b11af7c59bbc929.png" src="_images/76e007dd056a99976275a5dcacb1559f7a5e9a197f2bc7178b11af7c59bbc929.png" />
 </div>
 </div>
 <div class="cell docutils container">
@@ -892,7 +892,7 @@ Min Pixel Value: 0
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/a7bd962c71a4619e82023efb3118da673f8812148ada0dc0e616c5bfbfa02cff.png" src="_images/a7bd962c71a4619e82023efb3118da673f8812148ada0dc0e616c5bfbfa02cff.png" />
+<img alt="_images/9821b77bf142bc3aba6b2397a6d40ddff37c59bd64b304e3e78b63b6b6295fa1.png" src="_images/9821b77bf142bc3aba6b2397a6d40ddff37c59bd64b304e3e78b63b6b6295fa1.png" />
 </div>
 </div>
 <p>Whilst dilation increases the size of bright regions (creating a truly, truly terrifying image):</p>
@@ -908,7 +908,7 @@ Min Pixel Value: 0
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/ab73e657125b7cbd82181f25aaf8349bf4e3f9c4497f6cfd2ef7639711bfd703.png" src="_images/ab73e657125b7cbd82181f25aaf8349bf4e3f9c4497f6cfd2ef7639711bfd703.png" />
+<img alt="_images/a3ce338baa43a955b81ffbacbcd78697615f25e9b58b386ed80b970374232d9d.png" src="_images/a3ce338baa43a955b81ffbacbcd78697615f25e9b58b386ed80b970374232d9d.png" />
 </div>
 </div>
 <p>We can alter the size of the structuring element to change the nature of the effect. The exact change will be heavily dependent on the image array we are processing. Here we create a diamond with <code class="docutils literal notranslate"><span class="pre">radius</span> <span class="pre">=</span> <span class="pre">6</span></code>:</p>
@@ -937,7 +937,7 @@ Min Pixel Value: 0
  [0 0 0 0 0 0 1 0 0 0 0 0 0]]
 </pre></div>
 </div>
-<img alt="_images/0ec2f71c9ed4bb4402ad0f79b03ea962b82bc720cda4a0ed3e7dfda07a64b6b9.png" src="_images/0ec2f71c9ed4bb4402ad0f79b03ea962b82bc720cda4a0ed3e7dfda07a64b6b9.png" />
+<img alt="_images/9be3e6344f182130fe13c1872aec51000c3716742108f48607a271a55b0cd768.png" src="_images/9be3e6344f182130fe13c1872aec51000c3716742108f48607a271a55b0cd768.png" />
 </div>
 </div>
 <p>Applied to the <code class="docutils literal notranslate"><span class="pre">xenomorph</span></code> image in an erosion operation, this has some radical results:</p>
@@ -950,7 +950,7 @@ Min Pixel Value: 0
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/273b1319f1bcc6791c839813aca1d4625867c252165aa1a1ed105f278c030b6d.png" src="_images/273b1319f1bcc6791c839813aca1d4625867c252165aa1a1ed105f278c030b6d.png" />
+<img alt="_images/625e7bebd79f18bf68d5137c7d3ff12259cdff198b2e3ef6a18cf313a884768a.png" src="_images/625e7bebd79f18bf68d5137c7d3ff12259cdff198b2e3ef6a18cf313a884768a.png" />
 </div>
 </div>
 <p>There are less “matches” between the large structuring element and pixel neighbourhoods in the image - this leaves less central pixels unchanged, than for a smaller structuring element of the same shape. Thus, because in erorison we are <em>lowering</em> central pixel values in the event of a “clash”, the darker regions have expanded substantially more than when we used a smaller <code class="docutils literal notranslate"><span class="pre">diamond</span></code>, which gave more “matches”.</p>
@@ -965,7 +965,7 @@ Min Pixel Value: 0
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/43a0854a828b637715524bc81ca7c88dd654ab11fb2254315376fae9336715fc.png" src="_images/43a0854a828b637715524bc81ca7c88dd654ab11fb2254315376fae9336715fc.png" />
+<img alt="_images/00e0f457cb3f15f7c75fb3471351ae20b9a9e7b9faf4bba115efbd7d88e921b6.png" src="_images/00e0f457cb3f15f7c75fb3471351ae20b9a9e7b9faf4bba115efbd7d88e921b6.png" />
 </div>
 </div>
 <p>We can also change the shape of the structuring element - here we create a rectangle of <code class="docutils literal notranslate"><span class="pre">shape</span></code> (3, 3):</p>
@@ -996,7 +996,7 @@ Min Pixel Value: 0
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/8948ac6ad3249968a0755cfdf0867ff65075e6f5c5fcbde836f8b236d84c097d.png" src="_images/8948ac6ad3249968a0755cfdf0867ff65075e6f5c5fcbde836f8b236d84c097d.png" />
+<img alt="_images/bf7d5607b5b53d2a4d811e8cde2975496d70b7fd7528cdc77e785c005c0a9bb3.png" src="_images/bf7d5607b5b53d2a4d811e8cde2975496d70b7fd7528cdc77e785c005c0a9bb3.png" />
 </div>
 </div>
 <p>Dilation with this new structuring element once more enlarges brighter regions, again with horrific results:</p>
@@ -1010,7 +1010,7 @@ Min Pixel Value: 0
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/3dc95f0df2e1755823928a0c4881af04d8e949e1ca40b3a311e7a276c880f335.png" src="_images/3dc95f0df2e1755823928a0c4881af04d8e949e1ca40b3a311e7a276c880f335.png" />
+<img alt="_images/9461531c96102892c567e6dbbd9436f2c8974e3e7ceb36583db422f177293fd9.png" src="_images/9461531c96102892c567e6dbbd9436f2c8974e3e7ceb36583db422f177293fd9.png" />
 </div>
 </div>
 <p>Changing the shape or size of the structuring element (likely) changes the number of “matches”, and therefore the degree and location of changes to the bright/dark regions, for both erosion and dilation. We are essentially looking for features of a certain shape (the shape of our structuring element) in the image, and then dilating/eroding on the basis of the number of matches/clashes.</p>
@@ -1047,7 +1047,7 @@ Min Pixel Value: 0
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/2ba662ec3ec85805b2944c478b24f6a4174219a0bcde886aafd06f70b527c3f2.png" src="_images/2ba662ec3ec85805b2944c478b24f6a4174219a0bcde886aafd06f70b527c3f2.png" />
+<img alt="_images/c8941c12d9dbfd54ebc1867c56a5eeca19f18630788976af7b95be242f09870e.png" src="_images/c8941c12d9dbfd54ebc1867c56a5eeca19f18630788976af7b95be242f09870e.png" />
 </div>
 </div>
 <p>Dilating with this <code class="docutils literal notranslate"><span class="pre">big_diamond</span></code> will give you the right outline, but the wrong colours:</p>
@@ -1061,7 +1061,7 @@ Min Pixel Value: 0
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/64282d04466398548a0b90a3ebcdc4057f36704054452267f8f63982ca62bb9e.png" src="_images/64282d04466398548a0b90a3ebcdc4057f36704054452267f8f63982ca62bb9e.png" />
+<img alt="_images/2d765a8a0b13c121f79922994bc0cd08f0d8fff67904903042c895a8aca5d0ff.png" src="_images/2d765a8a0b13c121f79922994bc0cd08f0d8fff67904903042c895a8aca5d0ff.png" />
 </div>
 </div>
 <p>To get the target image, we need to <code class="docutils literal notranslate"><span class="pre">invert</span></code> the colours:</p>
@@ -1074,7 +1074,7 @@ Min Pixel Value: 0
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/7e3e9a5929bd8bfdaf9986358486d732494ef3c6fc000240aa753c782e029a16.png" src="_images/7e3e9a5929bd8bfdaf9986358486d732494ef3c6fc000240aa753c782e029a16.png" />
+<img alt="_images/b57fa716e62200e7031fb9cc620e1e63e1aa001405625ec66da284800a29ff18.png" src="_images/b57fa716e62200e7031fb9cc620e1e63e1aa001405625ec66da284800a29ff18.png" />
 </div>
 </div>
 </section>
@@ -1093,7 +1093,7 @@ Min Pixel Value: 0
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/e02d77edeb55ee6da2a75f35b9d066d7424fe09fc3c0ddca8ca1014f6736fdb5.png" src="_images/e02d77edeb55ee6da2a75f35b9d066d7424fe09fc3c0ddca8ca1014f6736fdb5.png" />
+<img alt="_images/25b8a321f65a40fd5d9be3236ed379a8a144a34bcf7bb2064840ad5c504f89dc.png" src="_images/25b8a321f65a40fd5d9be3236ed379a8a144a34bcf7bb2064840ad5c504f89dc.png" />
 </div>
 </div>
 <p>We can also do this with less nightmarish results, to other images, such as the much more friendly <code class="docutils literal notranslate"><span class="pre">horse</span></code> from <code class="docutils literal notranslate"><span class="pre">ski.data</span></code>:</p>
@@ -1106,7 +1106,7 @@ Min Pixel Value: 0
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/41e83f35c7e721add62e770be10e6f6e3c5e573d519aee9485eff88f0aa54cca.png" src="_images/41e83f35c7e721add62e770be10e6f6e3c5e573d519aee9485eff88f0aa54cca.png" />
+<img alt="_images/844ebfd68073226112a5672b61cc46e920ec5c4a7f2ad80191159c185933baf5.png" src="_images/844ebfd68073226112a5672b61cc46e920ec5c4a7f2ad80191159c185933baf5.png" />
 </div>
 </div>
 <div class="cell docutils container">
@@ -1135,7 +1135,7 @@ Min Pixel Value: False
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/febb7f90f53f24389dade57622902a5a172353b0d79bd27a778d47cac82c700e.png" src="_images/febb7f90f53f24389dade57622902a5a172353b0d79bd27a778d47cac82c700e.png" />
+<img alt="_images/812bb1440689f0d1eb935a643590aa06ee18fcaec694efe9bb90c6cb6d60e08c.png" src="_images/812bb1440689f0d1eb935a643590aa06ee18fcaec694efe9bb90c6cb6d60e08c.png" />
 </div>
 </div>
 <p>Ok, maybe that is still quite nightmarish…</p>

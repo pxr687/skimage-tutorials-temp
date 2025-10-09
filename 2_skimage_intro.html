@@ -586,7 +586,7 @@ document.write(`
  [0. 1.]]
 </pre></div>
 </div>
-<img alt="_images/84c0a81a3b0e12ebda874a8e09e8dcfa65911a825220a528adb8d86ba2e53cb7.png" src="_images/84c0a81a3b0e12ebda874a8e09e8dcfa65911a825220a528adb8d86ba2e53cb7.png" />
+<img alt="_images/68263706613df0ced43f23f905ac7be8e9515872ddb6fa5b76d169a7ed40469a.png" src="_images/68263706613df0ced43f23f905ac7be8e9515872ddb6fa5b76d169a7ed40469a.png" />
 </div>
 </div>
 <p>You will recall that this array - in virtue of being 2D and having only one numeric value per array pixel - is a single-channel array. This means that it contains only information about pixel intensity (grey-level), and not about colour.</p>
@@ -613,7 +613,7 @@ Max Pixel Value: 1.0
 Min Pixel Value: 0.0
 </pre></div>
 </div>
-<img alt="_images/73d065dae500961534db22821766c9548d4833c43be838d41fd54da21daa6ec4.png" src="_images/73d065dae500961534db22821766c9548d4833c43be838d41fd54da21daa6ec4.png" />
+<img alt="_images/26677f31560dc35c0238b5d3ceedf5aea493000dd2cb5f368a0d21fb1973347e.png" src="_images/26677f31560dc35c0238b5d3ceedf5aea493000dd2cb5f368a0d21fb1973347e.png" />
 </div>
 </div>
 <p>We show this principle again below, for each colour channel. The top row of the plot shows the channels for <code class="docutils literal notranslate"><span class="pre">uint8</span></code> data with 255 as the maximum pixel intensity value. The second row of the plot shows each channel for <code class="docutils literal notranslate"><span class="pre">float64</span></code> data, using 1 as the maximum pixel intensity value:</p>
@@ -627,7 +627,7 @@ Min Pixel Value: 0.0
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/8d7a0dfab96a639cac5a1254c9ad8ab6230663f7875068b29f26f19c0d915c5d.png" src="_images/8d7a0dfab96a639cac5a1254c9ad8ab6230663f7875068b29f26f19c0d915c5d.png" />
+<img alt="_images/9159f0e5f1f40c662ca18a6bc7b2cf6a82b37e52ee75300e0c16f2d948bc3a71.png" src="_images/9159f0e5f1f40c662ca18a6bc7b2cf6a82b37e52ee75300e0c16f2d948bc3a71.png" />
 </div>
 </div>
 <p>These are the basic aspects of images represented as NumPy arrays. Other ways of representing colour exist and are supported by <code class="docutils literal notranslate"><span class="pre">skimage</span></code>, and indeed, not all 3D image arrays contain colour information (e.g. structural brain images). We will look at these concepts in later sections, but <code class="docutils literal notranslate"><span class="pre">skimage</span></code> can work with these images as easily as the basic coloured squares we have just made - all these images <em>are just NumPy arrays</em> and can be handled just as any NumPy array.</p>
@@ -660,7 +660,7 @@ Max Pixel Value: 1.0
 Min Pixel Value: 0.0
 </pre></div>
 </div>
-<img alt="_images/73d065dae500961534db22821766c9548d4833c43be838d41fd54da21daa6ec4.png" src="_images/73d065dae500961534db22821766c9548d4833c43be838d41fd54da21daa6ec4.png" />
+<img alt="_images/26677f31560dc35c0238b5d3ceedf5aea493000dd2cb5f368a0d21fb1973347e.png" src="_images/26677f31560dc35c0238b5d3ceedf5aea493000dd2cb5f368a0d21fb1973347e.png" />
 </div>
 </div>
 <p>Now, we just pass the <code class="docutils literal notranslate"><span class="pre">squares</span></code> array to <code class="docutils literal notranslate"><span class="pre">ski.color.rgb2gray()</span></code> as an argument:</p>
@@ -681,7 +681,7 @@ Max Pixel Value: 0.21
 Min Pixel Value: 0.0
 </pre></div>
 </div>
-<img alt="_images/84c0a81a3b0e12ebda874a8e09e8dcfa65911a825220a528adb8d86ba2e53cb7.png" src="_images/84c0a81a3b0e12ebda874a8e09e8dcfa65911a825220a528adb8d86ba2e53cb7.png" />
+<img alt="_images/68263706613df0ced43f23f905ac7be8e9515872ddb6fa5b76d169a7ed40469a.png" src="_images/68263706613df0ced43f23f905ac7be8e9515872ddb6fa5b76d169a7ed40469a.png" />
 </div>
 </div>
 <p>Most Scikit-image functions work like  this - they take a NumPy array as input, do something to the array pixel values, then return an altered image array. As we mentioned above, under the hood <code class="docutils literal notranslate"><span class="pre">skimage</span></code> is often using NumPy and SciPy functions to do the image manipulation, something we will explore in more detail on the <a class="reference internal" href="3_skimage_processing_from_numpy_and_scipy.html"><span class="doc std std-doc">next page</span></a>.</p>
@@ -833,7 +833,7 @@ Min Pixel Value: 0
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/6a02ed4bfc301cf831532b63197da2f9686df3611b728fe19b4fb818af43f6d8.png" src="_images/6a02ed4bfc301cf831532b63197da2f9686df3611b728fe19b4fb818af43f6d8.png" />
+<img alt="_images/b3ace24347b7b925e99bc97c1a18d888eadd605c054739fbb0aab93b14c39f1f.png" src="_images/b3ace24347b7b925e99bc97c1a18d888eadd605c054739fbb0aab93b14c39f1f.png" />
 </div>
 </div>
 <p>Because these images are nothing but NumPy arrays, we can use all the standard array slicing to interact with them. For instance, we can easily use slicing to ruin the <code class="docutils literal notranslate"><span class="pre">coffee</span></code> image by placing a huge green square over it:</p>
@@ -846,7 +846,7 @@ Min Pixel Value: 0
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/869dae3c3d94e1f8cb444e395cc156e2ac41b60710a956abd4e560b8dd8acb1b.png" src="_images/869dae3c3d94e1f8cb444e395cc156e2ac41b60710a956abd4e560b8dd8acb1b.png" />
+<img alt="_images/4ba479cb5e7ad611bba4b0fee65fe9848fa0c17683c63b49f17ccc4dcea16628.png" src="_images/4ba479cb5e7ad611bba4b0fee65fe9848fa0c17683c63b49f17ccc4dcea16628.png" />
 </div>
 </div>
 <p>Remember our <a class="reference internal" href="0_images_as_numpy_arrays.html"><span class="doc std std-doc">maxim</span></a> that “image-processing is just the application of operations which change the values inside an image array, and therefore change the corresponding visual image”?</p>
@@ -886,7 +886,7 @@ Min Pixel Value: 0
  [0. 0. 0. 0. 0. 0. 0. 0.]]
 </pre></div>
 </div>
-<img alt="_images/2f5fdd9dea3628083773a9358c1f638ad41931037d58b27612d4b1f99a84101d.png" src="_images/2f5fdd9dea3628083773a9358c1f638ad41931037d58b27612d4b1f99a84101d.png" />
+<img alt="_images/7cfdc6dd3d8123c0f05f1accdd1dbf70cdca4a6c44fdaed51e43db9b33d59f7f.png" src="_images/7cfdc6dd3d8123c0f05f1accdd1dbf70cdca4a6c44fdaed51e43db9b33d59f7f.png" />
 </div>
 </div>
 <div class="cell docutils container">
@@ -949,7 +949,7 @@ Min Pixel Value: 0.0
   0.         0.        ]]
 </pre></div>
 </div>
-<img alt="_images/7d6498c48bdfb17f54f85b09e390f05d38f7deda322b466e929e7de46bffc8ff.png" src="_images/7d6498c48bdfb17f54f85b09e390f05d38f7deda322b466e929e7de46bffc8ff.png" />
+<img alt="_images/14c622896f9a19e57779b234f6436e5d549d4cfe58eaccc5e1f45a411da3c875.png" src="_images/14c622896f9a19e57779b234f6436e5d549d4cfe58eaccc5e1f45a411da3c875.png" />
 </div>
 </div>
 <p><code class="docutils literal notranslate"><span class="pre">smiley</span></code> only gets more terrifying with each manipulation, it seems…</p>
@@ -1110,7 +1110,7 @@ Min Pixel Value: 0.0
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/b4ad3b2b17e4e678041302bf671e1a2f6fc61cfd49c2abaffa0cc285b0cfd734.png" src="_images/b4ad3b2b17e4e678041302bf671e1a2f6fc61cfd49c2abaffa0cc285b0cfd734.png" />
+<img alt="_images/75793bbf45d54792ec482b3f01887e3a57bd179f753308ed87339b5170d888e2.png" src="_images/75793bbf45d54792ec482b3f01887e3a57bd179f753308ed87339b5170d888e2.png" />
 </div>
 </div>
 <p>We can see that the <code class="docutils literal notranslate"><span class="pre">dtype</span></code> of the freshly saved, freshly loaded image is indeed <code class="docutils literal notranslate"><span class="pre">uint8</span></code>:</p>
@@ -1174,7 +1174,7 @@ Min Pixel Value: 0
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/64172f2188887e61555a5da70f568053b1d2d10504107eed7d4a44e8835e2a80.png" src="_images/64172f2188887e61555a5da70f568053b1d2d10504107eed7d4a44e8835e2a80.png" />
+<img alt="_images/f8cc97b320242de206b3267154c6ea191d1476d46c2eea8d903745df4d1a082c.png" src="_images/f8cc97b320242de206b3267154c6ea191d1476d46c2eea8d903745df4d1a082c.png" />
 </div>
 </div>
 <p>Pretty trippy…</p>
@@ -1237,7 +1237,7 @@ Max Pixel Value: 1.0
 Min Pixel Value: 0.0
 </pre></div>
 </div>
-<img alt="_images/7c840c8ca94d7fc2ec0b535f7555abfa2a46bc7eb2d46ad491fa4f0697181f9d.png" src="_images/7c840c8ca94d7fc2ec0b535f7555abfa2a46bc7eb2d46ad491fa4f0697181f9d.png" />
+<img alt="_images/50a074b5aba2b55d78ffc1ea6821681bd8665dadd5187d30ceda18bed012ccc8.png" src="_images/50a074b5aba2b55d78ffc1ea6821681bd8665dadd5187d30ceda18bed012ccc8.png" />
 </div>
 </div>
 </section>
@@ -1341,7 +1341,7 @@ Max Pixel Value: 231
 Min Pixel Value: 0
 </pre></div>
 </div>
-<img alt="_images/9343072c03bd7d288a4459b0351fcb3331a024188034940e13653f068fa0b24f.png" src="_images/9343072c03bd7d288a4459b0351fcb3331a024188034940e13653f068fa0b24f.png" />
+<img alt="_images/60b7cd61208645b425827f7a1ad2f07076f41c86351b79cba077558e9f2a5174.png" src="_images/60b7cd61208645b425827f7a1ad2f07076f41c86351b79cba077558e9f2a5174.png" />
 </div>
 </div>
 <p>On the <a class="reference internal" href="1_colour_images_as_numpy_arrays.html"><span class="doc std std-doc">previous page</span></a> we manually converted colour images to greyscale, using NumPy operations. As we saw earlier on the present page, functions from the <code class="docutils literal notranslate"><span class="pre">ski.color</span></code> module, like <code class="docutils literal notranslate"><span class="pre">ski.color.rgb2gray()</span></code>, can do this more elegantly, with less code:</p>
@@ -1362,7 +1362,7 @@ Max Pixel Value: 0.76
 Min Pixel Value: 0.02
 </pre></div>
 </div>
-<img alt="_images/6efcad720235e9dcf2b91876850d81758f0037b2f445409557dcf8e32210dd9a.png" src="_images/6efcad720235e9dcf2b91876850d81758f0037b2f445409557dcf8e32210dd9a.png" />
+<img alt="_images/12227d6a6aaad732b021a534269fb2007a7a9bfff2d7e26d134d57239ca738a9.png" src="_images/12227d6a6aaad732b021a534269fb2007a7a9bfff2d7e26d134d57239ca738a9.png" />
 </div>
 </div>
 <p>This greyscale conversion is achieved by calculating the luminance of the image via a weighted sum of the information in each colour channel:</p>
@@ -1409,7 +1409,7 @@ Min Pixel Value: 0.0
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/33ea45d524ef0fee25df1910b55b62b6b6a00dcddcd2376bbb11677ab91649d2.png" src="_images/33ea45d524ef0fee25df1910b55b62b6b6a00dcddcd2376bbb11677ab91649d2.png" />
+<img alt="_images/3bdca8058ea5609bed899f241abab6bc5ec9f3fd4d48a2aeaa738318b2227e89.png" src="_images/3bdca8058ea5609bed899f241abab6bc5ec9f3fd4d48a2aeaa738318b2227e89.png" />
 </div>
 </div>
 <p>However, this leaves our image with an illegal pixel intensity range, given the <code class="docutils literal notranslate"><span class="pre">dtype</span></code>:</p>
@@ -1450,7 +1450,7 @@ Max Pixel Value: 1.0
 Min Pixel Value: 0.0
 </pre></div>
 </div>
-<img alt="_images/33ea45d524ef0fee25df1910b55b62b6b6a00dcddcd2376bbb11677ab91649d2.png" src="_images/33ea45d524ef0fee25df1910b55b62b6b6a00dcddcd2376bbb11677ab91649d2.png" />
+<img alt="_images/3bdca8058ea5609bed899f241abab6bc5ec9f3fd4d48a2aeaa738318b2227e89.png" src="_images/3bdca8058ea5609bed899f241abab6bc5ec9f3fd4d48a2aeaa738318b2227e89.png" />
 </div>
 </div>
 </section>
@@ -1473,7 +1473,7 @@ Max Pixel Value: 1.0
 Min Pixel Value: 0.0
 </pre></div>
 </div>
-<img alt="_images/224f6b19a7534f94910c207be7d857eae9f1e3b12bff55409cf04899ed3531d8.png" src="_images/224f6b19a7534f94910c207be7d857eae9f1e3b12bff55409cf04899ed3531d8.png" />
+<img alt="_images/9482504a413b452b78ca4310588f9af3acdde26f7879097fc902fea8b77f73ff.png" src="_images/9482504a413b452b78ca4310588f9af3acdde26f7879097fc902fea8b77f73ff.png" />
 </div>
 </div>
 <p>Psychedelic! Maybe this is how cats look, from the perspective of other cats (e.g. from within their “<a class="reference external" href="https://en.wikipedia.org/wiki/Umwelt">umwelt</a>”), but sadly this is probably not the case…</p>
@@ -1504,7 +1504,7 @@ Min Pixel Value: 0.0
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/38965c3b3e29d85b4babbf130f7a511d25012511f3fe5efae743f435d2717a5a.png" src="_images/38965c3b3e29d85b4babbf130f7a511d25012511f3fe5efae743f435d2717a5a.png" />
+<img alt="_images/ea461b32c47ed04e93c206909388590816a7c8d8981c698a4b311a98cbb6c452.png" src="_images/ea461b32c47ed04e93c206909388590816a7c8d8981c698a4b311a98cbb6c452.png" />
 </div>
 </div>
 </section>
@@ -1520,7 +1520,7 @@ Min Pixel Value: 0.0
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/84c0a81a3b0e12ebda874a8e09e8dcfa65911a825220a528adb8d86ba2e53cb7.png" src="_images/84c0a81a3b0e12ebda874a8e09e8dcfa65911a825220a528adb8d86ba2e53cb7.png" />
+<img alt="_images/68263706613df0ced43f23f905ac7be8e9515872ddb6fa5b76d169a7ed40469a.png" src="_images/68263706613df0ced43f23f905ac7be8e9515872ddb6fa5b76d169a7ed40469a.png" />
 </div>
 </div>
 <p>Let’s <code class="docutils literal notranslate"><span class="pre">np.stack()</span></code> this image array into 4-D, and set only the 1st and 4th channels to have nonzero values (e.g. so all values in the other, green and blue, channels are 0’s):</p>
@@ -1538,7 +1538,7 @@ Min Pixel Value: 0.0
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/f9d017b55f2125a749ca813228299cf077a60c779230976e41148df11981bfd2.png" src="_images/f9d017b55f2125a749ca813228299cf077a60c779230976e41148df11981bfd2.png" />
+<img alt="_images/31db10b9fb5518300ca25a4e1fd6c019fd9c39ab4ca5a805b95a01e5edd61262.png" src="_images/31db10b9fb5518300ca25a4e1fd6c019fd9c39ab4ca5a805b95a01e5edd61262.png" />
 </div>
 </div>
 <p>Ok, so we just get red nonzero pixels. So what does the 4th channel do?</p>
@@ -1553,7 +1553,7 @@ Min Pixel Value: 0.0
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/d4421b3539e6e50c808b4d4940ddb5dbf4ae7513dbd4068c3c8f480636f96779.png" src="_images/d4421b3539e6e50c808b4d4940ddb5dbf4ae7513dbd4068c3c8f480636f96779.png" />
+<img alt="_images/5113bdd9257c45de598b6e3b83395c5a495f872d18dc97880bc55938bb5474de.png" src="_images/5113bdd9257c45de598b6e3b83395c5a495f872d18dc97880bc55938bb5474de.png" />
 </div>
 </div>
 <p>This new transparency channel is called an <em>alpha channel</em>. Let’s add one to our <code class="docutils literal notranslate"><span class="pre">cat</span></code> image. We’ll duplicate the first slice of the third dimension, as the fourth slice:</p>
@@ -1570,7 +1570,7 @@ Min Pixel Value: 0.0
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/4d3a7a2bda620bca07edcaa020f4548e35fc9bc1baaeeb499337fae2d8f4824e.png" src="_images/4d3a7a2bda620bca07edcaa020f4548e35fc9bc1baaeeb499337fae2d8f4824e.png" />
+<img alt="_images/587ab8f9efc1d1b0f8ac8be8d7aa61fb7e0e5b70bc7fcf6f07c1de79398b2a8c.png" src="_images/587ab8f9efc1d1b0f8ac8be8d7aa61fb7e0e5b70bc7fcf6f07c1de79398b2a8c.png" />
 </div>
 </div>
 <p>Pretty ghostly…maybe <em>this</em> is how cats look to one another…</p>
@@ -1655,7 +1655,7 @@ Max Pixel Value: 1.0
 Min Pixel Value: 0.0
 </pre></div>
 </div>
-<img alt="_images/e4e5f2b771c7b312818307e4c246e4e3335368f57b9a19ef274cedf0ce1a80da.png" src="_images/e4e5f2b771c7b312818307e4c246e4e3335368f57b9a19ef274cedf0ce1a80da.png" />
+<img alt="_images/38eab88762ab83254b5e1e79f61c8a07e96cf03a0591d28fd6ce0e3ab28ed38f.png" src="_images/38eab88762ab83254b5e1e79f61c8a07e96cf03a0591d28fd6ce0e3ab28ed38f.png" />
 </div>
 </div>
 <p>Now, if you tried to do the <code class="docutils literal notranslate"><span class="pre">float64</span></code> conversion using the <code class="docutils literal notranslate"><span class="pre">numpy</span></code> <code class="docutils literal notranslate"><span class="pre">.astype()</span></code> method, things will seem OK at first:</p>
@@ -1712,7 +1712,7 @@ Min Pixel Value: 0.0
 <div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Clipping input data to the valid range for imshow with RGB data ([0..1] for floats or [0..255] for integers). Got range [0.0..255.0].
 </pre></div>
 </div>
-<img alt="_images/be7182ea780055bfe116d206863ad30c2749aef6624e15d8c932b62d2c20344e.png" src="_images/be7182ea780055bfe116d206863ad30c2749aef6624e15d8c932b62d2c20344e.png" />
+<img alt="_images/bf0105a6d77114e7aa23c170edcd790620589004690b34f6568516fc54e7a31e.png" src="_images/bf0105a6d77114e7aa23c170edcd790620589004690b34f6568516fc54e7a31e.png" />
 </div>
 </div>
 <p>Matplotlib complains that the maximum values (255.0) violate the required 0 to 1 range of <code class="docutils literal notranslate"><span class="pre">float64</span></code> images. It tries to clip the data to the valid range, but with horrible visual results. Always use <code class="docutils literal notranslate"><span class="pre">skimage</span></code> conversion functions, to ensure the proper pixel intensity range for the current <code class="docutils literal notranslate"><span class="pre">dtype</span></code>, to avoid these sorts of errors…</p>
@@ -1756,7 +1756,7 @@ Min Pixel Value: 0
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/ceac9c9fa797082c2be75c97da8858c38b44d9a80012d1e1d0321c9c64d07686.png" src="_images/ceac9c9fa797082c2be75c97da8858c38b44d9a80012d1e1d0321c9c64d07686.png" />
+<img alt="_images/0da02e49583db8ba19a706f2d30bb4cbbefaa0b4544ae287abbd2a4b231689f8.png" src="_images/0da02e49583db8ba19a706f2d30bb4cbbefaa0b4544ae287abbd2a4b231689f8.png" />
 </div>
 </div>
 <p>You can see that we are walking through the iguana’s head, in the vertical direction.</p>

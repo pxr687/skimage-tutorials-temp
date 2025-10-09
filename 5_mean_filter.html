@@ -549,7 +549,7 @@ document.write(`
  [0 0 0 0 0 0 0 0]]
 </pre></div>
 </div>
-<img alt="_images/b37e797dbc8d5904639b67571cdaca25cfa7262cf4b971c9995410790a05d05e.png" src="_images/b37e797dbc8d5904639b67571cdaca25cfa7262cf4b971c9995410790a05d05e.png" />
+<img alt="_images/37b9b61360bba01248e577d239fe0e2f2d44e2d2dcd7222932d23a061dd125e1.png" src="_images/37b9b61360bba01248e577d239fe0e2f2d44e2d2dcd7222932d23a061dd125e1.png" />
 </div>
 </div>
 <p>Let’s use some indexing to go for a walk through the neighbourhoods (kernels) in this array. We will treat each <code class="docutils literal notranslate"><span class="pre">(3,3)</span></code> set of pixels as a separate neighbourhood. For now, we only walk through the neighborhoods at the “top” of the array. We will start our “walk” in the top-left corner of the array, so that each 3-by-3 slice is centered on a pixel in the second row of the image:</p>
@@ -753,7 +753,7 @@ Crude Mean filter:
  [0.   0.   0.   0.   0.   0.   0.   0.  ]]
 </pre></div>
 </div>
-<img alt="_images/a0728f7adf771e88f0880c022ada85b48e751cd1faf97671419def8e03416a2a.png" src="_images/a0728f7adf771e88f0880c022ada85b48e751cd1faf97671419def8e03416a2a.png" />
+<img alt="_images/470ba2e9be9d67a710f556ad2845253b4a09050794216b37c82110abf3a5a967.png" src="_images/470ba2e9be9d67a710f556ad2845253b4a09050794216b37c82110abf3a5a967.png" />
 </div>
 </div>
 <p>Ok, so we can see that some of the non-black (non-zero) pixel intensity values have been “spread around” to neighbouring pixels, which is unsurprising, given what we know about how this operation works. We have literally, for each given pixel, “averaged out” between the pixels in the 3-by-3 neighbourhood around the pixel. This is a very crude mean filter, intended to show the foundational principles of how filtering via a kernel works. There is a better, less crude way to implement a mean filter, however, to which we will turn in the next section.</p>
@@ -798,7 +798,7 @@ Max Pixel Value: 252
 Min Pixel Value: 1
 </pre></div>
 </div>
-<img alt="_images/ade128d19dbc86243da01e28da40a0a5d3001ec417f4bc0a9a4f35803f8066a6.png" src="_images/ade128d19dbc86243da01e28da40a0a5d3001ec417f4bc0a9a4f35803f8066a6.png" />
+<img alt="_images/ac70f7cc5b678ac690433d0ab55f89b2e45131ef773bcdd68acf4f95b6e8cde6.png" src="_images/ac70f7cc5b678ac690433d0ab55f89b2e45131ef773bcdd68acf4f95b6e8cde6.png" />
 </div>
 </div>
 </section>
@@ -848,7 +848,7 @@ Min Pixel Value: 1
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/ade128d19dbc86243da01e28da40a0a5d3001ec417f4bc0a9a4f35803f8066a6.png" src="_images/ade128d19dbc86243da01e28da40a0a5d3001ec417f4bc0a9a4f35803f8066a6.png" />
+<img alt="_images/ac70f7cc5b678ac690433d0ab55f89b2e45131ef773bcdd68acf4f95b6e8cde6.png" src="_images/ac70f7cc5b678ac690433d0ab55f89b2e45131ef773bcdd68acf4f95b6e8cde6.png" />
 </div>
 </div>
 <p>We then apply our filter, replacing the value of the central pixel in each kernel with negative sum of the value of all the pixels under the kernel:</p>
@@ -861,7 +861,7 @@ Min Pixel Value: 1
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/eaaf490aef457a21615d39d072bdc1de4c50c8702664fb6056ca8cae5207d190.png" src="_images/eaaf490aef457a21615d39d072bdc1de4c50c8702664fb6056ca8cae5207d190.png" />
+<img alt="_images/3da3b6808a1640278b8c6500b61d75c7dd978487f5eac20e7d2abc4a7eb3b4a9.png" src="_images/3da3b6808a1640278b8c6500b61d75c7dd978487f5eac20e7d2abc4a7eb3b4a9.png" />
 </div>
 </div>
 <p>Here are the attributes of the somewhat ghostly, filtered image:</p>
@@ -1021,7 +1021,7 @@ Mean filter:
  [0.   0.   0.78 1.44 1.44 0.67 0.   0.  ]]
 </pre></div>
 </div>
-<img alt="_images/3a3fa851049bb7cccf61cf770d7999db3f573c3fe84daefc753fbe452734e603.png" src="_images/3a3fa851049bb7cccf61cf770d7999db3f573c3fe84daefc753fbe452734e603.png" />
+<img alt="_images/9ea5ff376623a09e70318e2ffa8ed0f255bed2369860bcfcefc16f5b13eda0ad.png" src="_images/9ea5ff376623a09e70318e2ffa8ed0f255bed2369860bcfcefc16f5b13eda0ad.png" />
 </div>
 </div>
 <p>The result is very similar to that obtained by our crude mean filter, only now it has been applied to <em>every</em> array pixel, where our crude filter simply ignored pixels at the edge of the image:</p>
@@ -1108,7 +1108,7 @@ The input is extended by wrapping around to the opposite edge.</p></li>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/ff9c46bb8edf85e1fd08a2d5b1eda8c18afee2ba46744fd2f2a340895e375fe7.png" src="_images/ff9c46bb8edf85e1fd08a2d5b1eda8c18afee2ba46744fd2f2a340895e375fe7.png" />
+<img alt="_images/d38946d2f202013387b898b35e363345af8a65b3ec9b9d9879d594d73402c2ab.png" src="_images/d38946d2f202013387b898b35e363345af8a65b3ec9b9d9879d594d73402c2ab.png" />
 </div>
 </div>
 <p>But first, we will use <code class="docutils literal notranslate"><span class="pre">np.random.normal()</span></code> to add some normally distributed (Gaussian) noise to the image:</p>
@@ -1124,7 +1124,7 @@ The input is extended by wrapping around to the opposite edge.</p></li>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/3b82872b65b9fd68db9ad4c3d83fe189a941197449807ae7f415776f067b6180.png" src="_images/3b82872b65b9fd68db9ad4c3d83fe189a941197449807ae7f415776f067b6180.png" />
+<img alt="_images/0d4030e093dde1a8386aa2911986380e76c7ab2ef6f67cb82a9397f2f5fc68b5.png" src="_images/0d4030e093dde1a8386aa2911986380e76c7ab2ef6f67cb82a9397f2f5fc68b5.png" />
 </div>
 </div>
 <p>The mean filter can remove some of the noise, restoring the clarity of the image:</p>
@@ -1149,7 +1149,7 @@ The input is extended by wrapping around to the opposite edge.</p></li>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/f4d9d5e3097b96409f999b99ab349c9cbee6fd7d28d02bb16626a43242c4d544.png" src="_images/f4d9d5e3097b96409f999b99ab349c9cbee6fd7d28d02bb16626a43242c4d544.png" />
+<img alt="_images/db305c35ec171654a6b79e2fe986cdca473598baec8532020d2de78683d1c945.png" src="_images/db305c35ec171654a6b79e2fe986cdca473598baec8532020d2de78683d1c945.png" />
 </div>
 </div>
 <p>We can see that the image is clearer, the noise has been reduced and some of the signal has been restored.</p>
@@ -1179,7 +1179,7 @@ The input is extended by wrapping around to the opposite edge.</p></li>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/4900f6cec8d08fab48dae69b0ad971bb87e8f4fcdcd6fb8f6d25b4b839da8ce2.png" src="_images/4900f6cec8d08fab48dae69b0ad971bb87e8f4fcdcd6fb8f6d25b4b839da8ce2.png" />
+<img alt="_images/edaa0a9a70ce088a57c4692c6211cae9d0624c95cb22e5e89d321353e408b4b2.png" src="_images/edaa0a9a70ce088a57c4692c6211cae9d0624c95cb22e5e89d321353e408b4b2.png" />
 </div>
 </div>
 <p>As with many filtering operations, the effect of altering aspects of the filtering process (like a threshold value or kernel size), is very context-dependent. It may take many iterations before finding a “sweet spot”, and where the sweet spot is may be somewhat subjective.</p>
@@ -1220,7 +1220,7 @@ Max Pixel Value: 1.0
 Min Pixel Value: 0.0
 </pre></div>
 </div>
-<img alt="_images/ff9c46bb8edf85e1fd08a2d5b1eda8c18afee2ba46744fd2f2a340895e375fe7.png" src="_images/ff9c46bb8edf85e1fd08a2d5b1eda8c18afee2ba46744fd2f2a340895e375fe7.png" />
+<img alt="_images/d38946d2f202013387b898b35e363345af8a65b3ec9b9d9879d594d73402c2ab.png" src="_images/d38946d2f202013387b898b35e363345af8a65b3ec9b9d9879d594d73402c2ab.png" />
 </div>
 </div>
 </section>
@@ -1263,7 +1263,7 @@ Max Pixel Value: 0
 Min Pixel Value: -49
 </pre></div>
 </div>
-<img alt="_images/c804c5d3d845fa0c943c9cac8d8d50914b7a2938fd8aa102afac923a3743f65f.png" src="_images/c804c5d3d845fa0c943c9cac8d8d50914b7a2938fd8aa102afac923a3743f65f.png" />
+<img alt="_images/0a8d71d18e5011e65e32397df34678534b7c99147f34b8ba015e276417e6315b.png" src="_images/0a8d71d18e5011e65e32397df34678534b7c99147f34b8ba015e276417e6315b.png" />
 </div>
 </div>
 <p>Kernels of other sizes will lead to different (albeit cool!) effects:</p>
@@ -1276,7 +1276,7 @@ Min Pixel Value: -49
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/9e5bb2bdc65560892c8fb34ea918d8f8e01a9ff980159603210efdd273efdbf1.png" src="_images/9e5bb2bdc65560892c8fb34ea918d8f8e01a9ff980159603210efdd273efdbf1.png" />
+<img alt="_images/1da5035dbfbb61feea0c6dd8f9908d606a196dae12ce0376bcd0cd7fb294eedb.png" src="_images/1da5035dbfbb61feea0c6dd8f9908d606a196dae12ce0376bcd0cd7fb294eedb.png" />
 </div>
 </div>
 <p>This is quite a strange kernel to apply! But it shows us how easy it is to achieve radical filtering effects with some custom kernels…</p>
@@ -1320,7 +1320,7 @@ Min Pixel Value: -49
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/cacd951dc9f247bd60029487dcfcb23017e7dadc0f2736179ebcf107064af426.png" src="_images/cacd951dc9f247bd60029487dcfcb23017e7dadc0f2736179ebcf107064af426.png" />
+<img alt="_images/50aff3d36362558deba307a37ae4682958e48d2b46c8fe49483f0733bf1123b0.png" src="_images/50aff3d36362558deba307a37ae4682958e48d2b46c8fe49483f0733bf1123b0.png" />
 </div>
 </div>
 <p>Below, we apply the mean filter, using the <code class="docutils literal notranslate"><span class="pre">footprint_9_by_9</span></code> array as the kernel:</p>
@@ -1342,7 +1342,7 @@ Min Pixel Value: -49
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/20cd8f8c379edfa63640d918316518d6b4274902af92ebed24120513b53c036f.png" src="_images/20cd8f8c379edfa63640d918316518d6b4274902af92ebed24120513b53c036f.png" />
+<img alt="_images/87c59692e9c29a830e7da9cc2dc9ce0e64216e318841d04ee1ef945f292213f3.png" src="_images/87c59692e9c29a830e7da9cc2dc9ce0e64216e318841d04ee1ef945f292213f3.png" />
 </div>
 </div>
 </section>
@@ -1366,7 +1366,7 @@ Max Pixel Value: 255
 Min Pixel Value: 0
 </pre></div>
 </div>
-<img alt="_images/68bde4278ebe5d20a0d382e736ebca15b8466d581fc623de58168f01afeb4b3a.png" src="_images/68bde4278ebe5d20a0d382e736ebca15b8466d581fc623de58168f01afeb4b3a.png" />
+<img alt="_images/39688f7d08bf52fa1d58723813882b0b6b86cc75b9ac5c25785897e4c58c71e5.png" src="_images/39688f7d08bf52fa1d58723813882b0b6b86cc75b9ac5c25785897e4c58c71e5.png" />
 </div>
 </div>
 <p>If we try to filter this image with our (3, 3) <code class="docutils literal notranslate"><span class="pre">mean_kernel</span></code> we will get an error:</p>
@@ -1441,7 +1441,7 @@ Min Pixel Value: 0
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/aa8e2f985edb1eab7ecc4fd7699a810b72da3181583479522c0f2b2949d0202a.png" src="_images/aa8e2f985edb1eab7ecc4fd7699a810b72da3181583479522c0f2b2949d0202a.png" />
+<img alt="_images/819049cabe6493a0d2aa201e49e374a801acf18be78dfb5b527b71b31113d9b9.png" src="_images/819049cabe6493a0d2aa201e49e374a801acf18be78dfb5b527b71b31113d9b9.png" />
 </div>
 </div>
 <p>This is straightforward to do with <code class="docutils literal notranslate"><span class="pre">skimage</span></code> as well; we also use the larger (9, 9) <code class="docutils literal notranslate"><span class="pre">footprint_9_by_9</span></code> kernel:</p>
@@ -1476,7 +1476,7 @@ Min Pixel Value: 0
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/b3da0752114821050da47173a0d7220c0e04961d37ce556581784fcaab876e5b.png" src="_images/b3da0752114821050da47173a0d7220c0e04961d37ce556581784fcaab876e5b.png" />
+<img alt="_images/dca42a3c82eb4f39bb699b2bea7ecc9ccb084265e7f8aace2f15cf1c5d7055a2.png" src="_images/dca42a3c82eb4f39bb699b2bea7ecc9ccb084265e7f8aace2f15cf1c5d7055a2.png" />
 </div>
 </div>
 <p>We got a blurrier output image via <code class="docutils literal notranslate"><span class="pre">skimage</span></code> here, than in the manual convolution using <code class="docutils literal notranslate"><span class="pre">ndi.correlate()</span></code>. This is because we used a larger kernel for the <code class="docutils literal notranslate"><span class="pre">skimage</span></code> filtering, and so are averaging over larger pixel neighbourhoods.</p>
@@ -1518,7 +1518,7 @@ Min Pixel Value: 0
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/9eb8bcd2fcfc6a5e35cd417a01e85c7a9a2fc804e7dc25afaad104aa7f4ba585.png" src="_images/9eb8bcd2fcfc6a5e35cd417a01e85c7a9a2fc804e7dc25afaad104aa7f4ba585.png" />
+<img alt="_images/c8ae7707234f553e485189b8e63c537de79133ab155657e4e37416ad2359ccee.png" src="_images/c8ae7707234f553e485189b8e63c537de79133ab155657e4e37416ad2359ccee.png" />
 </div>
 </div>
 <p>Pay attention here to the effect on the <em>colour</em> of the image. How is it different to filtering the colour channels separately?</p>
