@@ -536,7 +536,7 @@ Once you have successfully generated the `target_kernel` using your function, us
 
 ```{python}
 # Read in and show the image which you should blur with your new kernel.
-xenomorph = ski.io.imread("images/xenomorph.png", as_gray=True)
+xenomorph = ski.io.imread("images/xenomorph.jpg", as_gray=True)
 plt.imshow(xenomorph);
 ```
 
@@ -636,6 +636,13 @@ plt.imshow(xenomorph)
 plt.subplot(1, 2, 2)
 plt.imshow(target_image_solution)
 plt.title('Gaussian Blur with `target_kernel`');
+```
+
+```{python tags=c("remove-cell")}
+# This is not part of the solution, but here we save the resulting solution
+# image to display in the exercise introduction above.
+plt.imshow(target_image_solution)
+plt.savefig('images/xeno_blur.png')
 ```
 
 ::: {solution-end}

@@ -257,12 +257,17 @@ So, [remember](https://scikit-image.org/docs/0.25.x/auto_examples/applications/p
 
 # Morphology using more complex images
 
-Let's apply some of this to more complex images. Fittingly, we will use a terrifying picture of a [Xenomorph](https://en.wikipedia.org/wiki/Xenomorph), which at the time of writing Wikipedia defines as "a fictional endoparasitoid extraterrestrial species that serves as the main antagonist of the Alien and Alien vs. Predator franchises". Yikes.
+Let's apply some of this to more complex images. Fittingly, we will use
+a terrifying picture of
+a [Xenomorph](https://en.wikipedia.org/wiki/Xenomorph), which at the time of
+writing Wikipedia defines as "a fictional endoparasitoid extraterrestrial
+species that serves as the main antagonist of the Alien and Alien vs. Predator
+franchises". Yikes.
 
 ```{python}
-# Image from: https://static1.srcdn.com/wordpress/wp-content/uploads/2019/07/Xenomorph-from-the-Alien-franchise.jpg
-xenomorph = ski.io.imread("images/xenomorph.png", 
-                          as_gray=True)
+# Photo by Stockcake
+# - https://stockcake.com/i/alien-head-close-up_1354662_1093149
+xenomorph = ski.io.imread("images/xenomorph.jpg", as_gray=True)
 # Convert to binary.
 xenomorph = ski.util.img_as_bool(xenomorph).astype(int)
 
@@ -282,7 +287,7 @@ True to form, eroding this image using the `diamond` structuring element increas
 
 ```{python}
 # Erode the xenomorph.
-xeno_binary_ero_rad_1_diamond = ski.morphology.erosion(xenomorph, 
+xeno_binary_ero_rad_1_diamond = ski.morphology.erosion(xenomorph,
                                                        footprint=diamond)
 
 # Show the result.
@@ -293,7 +298,7 @@ Whilst dilation increases the size of bright regions (creating a truly, truly te
 
 ```{python}
 # Dilate the xenomorph.
-xeno_binary_dilate_rad_1_diamond = ski.morphology.dilation(xenomorph, 
+xeno_binary_dilate_rad_1_diamond = ski.morphology.dilation(xenomorph,
                                                            footprint=diamond)
 
 # Show the result.
@@ -340,7 +345,7 @@ This new structuring element is the same `shape` as the kernels we used on the [
 
 ```{python}
 # Erode the xenomorph (with the square structuring element).
-xeno_binary_ero_square = ski.morphology.erosion(xenomorph, 
+xeno_binary_ero_square = ski.morphology.erosion(xenomorph,
                                                 footprint=square_SE)
 show_both(xenomorph, xeno_binary_ero_square, "Eroded \n(3,3) Square SE");
 ```
@@ -367,9 +372,11 @@ Try to recreate the following image by processing `xenomorph`, using only `skima
 
 Look at the shape, the *morphology* of the features in the image - what shape and size structuring element do you think you need? Do you think you need dilation or erosion?
 
-For comparison, here is the original image:
+For comparison, here is the original binarized image:
 
-![](images/xenomorph_binary.png)
+```{python}
+plt.imshow(xenomorph);
+```
 
 ```{python}
 # YOUR CODE HERE
@@ -395,7 +402,7 @@ Dilating with this `big_diamond` will give you the right outline, but the wrong 
 
 ```{python}
 # Solution, part 1:
-xeno_big_diamond = ski.morphology.dilation(xenomorph, 
+xeno_big_diamond = ski.morphology.dilation(xenomorph,
                                            footprint=big_diamond)
 plt.imshow(xeno_big_diamond);
 ```
@@ -406,6 +413,13 @@ To get the target image, we need to `invert` the colours:
 # Solution, part 2:
 inverted_xeno_big_diamond = ski.util.invert(xeno_big_diamond)
 plt.imshow(inverted_xeno_big_diamond);
+```
+
+```{python tags=c("remove-cell")}
+# This is not part of the solution, but here we save the resulting solution
+# image to display in the exercise introduction above.
+plt.imshow(inverted_xeno_big_diamond)
+plt.savefig('images/xeno_ex_1.png')
 ```
 
 ::: {solution-end}
