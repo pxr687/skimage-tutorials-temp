@@ -574,7 +574,32 @@ document.write(`
 </div>
 </div>
 </div>
-<p>As you know, the output of the cell above means that the <code class="docutils literal notranslate"><span class="pre">two_d_ones_and_zeros</span></code> array has 2 rows and 2 columns. In virtue of having two dimensions, <em>this array is an image in the technical sense</em>. In fact, we will use the terms “array”, “image” and “image array” interchangeably throughout this tutorial series, where we are referring to arrays of two-dimensions or more.</p>
+<p>As you know, the output of the cell above means that the
+<code class="docutils literal notranslate"><span class="pre">two_d_ones_and_zeros</span></code> array has 2 rows and 2 columns. In virtue of having two
+dimensions, <em>this array is an image in the technical sense</em>. In fact, we will
+use the terms “array”, “image” and “image array” interchangeably throughout
+this tutorial series, where we are referring to arrays of two-dimensions or
+more.</p>
+<div class="dropdown admonition note">
+<p class="admonition-title">Note</p>
+<p><strong>On rows and columns</strong></p>
+<p>You’ll notice that we used “rows” and “columns” above.</p>
+<p><em>Row</em> and <em>column</em> can mean different things in different contexts.  We will
+always use these terms to refer to the first (row) and second (column) axis of
+the <em>array</em> that represents the image.  Therefore the first row of this image,
+in our sense, is given by (here) <code class="docutils literal notranslate"><span class="pre">two_D_ones_and_zeros[0]</span></code>, and the first
+column is given by <code class="docutils literal notranslate"><span class="pre">two_D_ones_and_zeros[:,</span> <span class="pre">0]</span></code>.  That is, if you are looking
+at the display of the array values, you read the first row from left to right,
+and the first column from top to bottom.  We might call this <em>the Numpy convention</em> for referring to rows and columns.</p>
+<p>Please keep this in mind, because it is also relatively common in imaging
+papers and textbooks to use rows and columns in the exact opposite sense — to
+mean, respectively, the second and first axis of the array.  This is the <em>imaging</em> convention for rows and columns.</p>
+<p>To repeat and rephrase, when we refer to <em>row</em> <code class="docutils literal notranslate"><span class="pre">i</span></code>, we mean the values from
+<code class="docutils literal notranslate"><span class="pre">arr[i]</span></code> (where <code class="docutils literal notranslate"><span class="pre">arr</span></code> is an image array).  When we refer to column <code class="docutils literal notranslate"><span class="pre">j</span></code>, we
+mean the values from <code class="docutils literal notranslate"><span class="pre">arr[:,</span> <span class="pre">j]</span></code>.  The first axis is the <em>row</em> axis, and the
+second axis is the <em>column</em> axis.  We are therefore following the Numpy
+convention for the meaning of “row” and “column”.</p>
+</div>
 <p>You may (understandably) be thinking “that array does not look much like an image…”. This is a reasonable thought. So how can we view our array as an image in the intuitive sense - as a picture we can look at and appreciate with our high society friends at a gallery opening? One way is to use <code class="docutils literal notranslate"><span class="pre">plt.matshow()</span></code>, a function from the <a class="reference external" href="https://matplotlib.org">Matplotlib library</a>. The function name <code class="docutils literal notranslate"><span class="pre">plt.matshow()</span></code> stands for <code class="docutils literal notranslate"><span class="pre">mat</span></code>rix <code class="docutils literal notranslate"><span class="pre">show</span></code>. This function has this name because arrays are a representation of <a class="reference external" href="https://en.wikipedia.org/wiki/Matrix_(mathematics)">matrices</a>. As the name implies, it will display a two-dimensional array graphically.</p>
 <p>Let’s see how our <code class="docutils literal notranslate"><span class="pre">two_D_ones_and_zeros</span></code> looks when we pass it as an argument to <code class="docutils literal notranslate"><span class="pre">plt.matshow()</span></code>. We will use <code class="docutils literal notranslate"><span class="pre">plt.axis()</span></code> to keep the axes clear of numbers for now, to keep things uncluttered:</p>
 <div class="cell docutils container">
