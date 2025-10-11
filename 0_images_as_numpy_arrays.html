@@ -178,12 +178,6 @@
 <ul class="current nav bd-sidenav">
 <li class="toctree-l1 current active"><a class="current reference internal" href="#">Images as NumPy arrays</a></li>
 
-
-
-
-
-
-
 <li class="toctree-l1"><a class="reference internal" href="1_colour_images_as_numpy_arrays.html">What about colour?</a></li>
 
 
@@ -495,17 +489,19 @@ document.write(`
             </div>
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Images as NumPy arrays</a></li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#the-simplest-images">The simplest images</a></li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#pixels-pixel-coordinates-and-interpolation">Pixels, pixel coordinates and interpolation</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Images as NumPy arrays</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-simplest-images">The simplest images</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#pixels-pixel-coordinates-and-interpolation">Pixels, pixel coordinates and interpolation</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#more-on-array-pixels-vs-display-pixels">More on array pixels vs display pixels</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#shades-of-grey-and-colourmaps">Shades of grey and colourmaps</a></li>
 </ul>
 </li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#shades-of-grey-and-colourmaps">Shades of grey and colourmaps</a></li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#slightly-more-complex-images">(Slightly) more complex images</a></li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#even-more-complex-images">Even more complex images</a></li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#summary">Summary</a></li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#references">References</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#slightly-more-complex-images">(Slightly) more complex images</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#even-more-complex-images">Even more complex images</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#summary">Summary</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#references">References</a></li>
+</ul>
+</li>
 </ul>
 
             </nav>
@@ -527,9 +523,8 @@ document.write(`
 <p>The file and resulting printed image might depict an object that was not originally created on a computer. The image may be of a hand painting, for example. Things like hand paintings fall under the intuitive meaning of “image”, but, until they are represented on a computer, they do not fall under the technical meaning of “image”. A hand painting is not an array of numbers, but the computer file which represents it is. The technical meaning of “image” refers to the computer representations of these things (e.g. a scan or photograph of a hand painting), as well as to other inherently digital images like digital photographs, CT scans, MRI scans etc. (more on these <a class="reference internal" href="2_skimage_intro.html"><span class="doc std std-doc">later</span></a>).</p>
 <p>Normally, we take an image (in the intuitive sense) and <em>then</em> represent it on a computer (by photographing or scanning it etc.). This can be referred to as <em>digitizing</em> an image. When digitizing, we take an image in the intuitive sense and convert it to an image in the technical sense, by representing it as an at least two-dimensional array of numbers.</p>
 <p>To get a deeper understanding of the computer representation of images, let’s do things the other way around to the normal procedure: let’s create an image, in the technical sense of a two-dimensional array, and then view it as an image, in the intuitive sense, as a visual representation that we can look at as we would any picture.</p>
-</section>
-<section class="tex2jax_ignore mathjax_ignore" id="the-simplest-images">
-<h1>The simplest images<a class="headerlink" href="#the-simplest-images" title="Link to this heading">#</a></h1>
+<section id="the-simplest-images">
+<h2>The simplest images<a class="headerlink" href="#the-simplest-images" title="Link to this heading">#</a></h2>
 <p>First, we will import some Python libraries:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -671,8 +666,8 @@ convention for the meaning of “row” and “column”.</p>
 </div>
 <p>Also notice that for now we are dealing with the <code class="docutils literal notranslate"><span class="pre">float64</span></code> <code class="docutils literal notranslate"><span class="pre">dtype</span></code>. You will find other <code class="docutils literal notranslate"><span class="pre">dtypes</span></code> in image arrays, and this can have big implications for how the image is displayed by Matplotlib. For now we will just deal with these <code class="docutils literal notranslate"><span class="pre">float64</span></code> numbers, and we will return to the topic of <code class="docutils literal notranslate"><span class="pre">dtype</span></code>s <a class="reference internal" href="1_colour_images_as_numpy_arrays.html"><span class="doc std std-doc">later</span></a>.</p>
 </section>
-<section class="tex2jax_ignore mathjax_ignore" id="pixels-pixel-coordinates-and-interpolation">
-<h1>Pixels, pixel coordinates and interpolation<a class="headerlink" href="#pixels-pixel-coordinates-and-interpolation" title="Link to this heading">#</a></h1>
+<section id="pixels-pixel-coordinates-and-interpolation">
+<h2>Pixels, pixel coordinates and interpolation<a class="headerlink" href="#pixels-pixel-coordinates-and-interpolation" title="Link to this heading">#</a></h2>
 <p>So far we have seen that each element in the image array controls what will be seen in each square of the image displayed by <code class="docutils literal notranslate"><span class="pre">plt.matshow()</span></code>. We can refer to each element in our image array as a <em>pixel</em>. This is an abbreviation of <em>picture element</em>. An image array, then, is a collection of pixels.</p>
 <p>Our image contains as many pixels as there are elements in the array. Since our image array contains 4 elements, it therefore has 4 pixels. Each pixel has either a 1 or a 0 value, in the <code class="docutils literal notranslate"><span class="pre">float64</span></code> <code class="docutils literal notranslate"><span class="pre">dtype</span></code>. This type of image, because it contains only two unique values, is called a <em>binary image</em>. When this array is displayed by <code class="docutils literal notranslate"><span class="pre">plt.matshow()</span></code>, by default, 1’s are shown as yellow squares and 0’s are shown as blue squares.</p>
 <p>It is important to distinguish between what we will call <em>array pixels</em> and <em>display pixels</em>. <em>Array pixels</em> are the pixel values in the image, considered as a two-dimensional array of numbers. However, the screen you are reading this tutorial on has a certain number of tiny “dots” which can be coloured in different ways. The image you see on the screen is determined by the precise configuration and colouring of these dots. These dots are also called “pixels”, and because they are involved in the final display of image arrays, we will refer to them as <em>display pixels</em>.</p>
@@ -719,6 +714,7 @@ convention for the meaning of “row” and “column”.</p>
 </div>
 </div>
 <p>You can see that the image we have saved, and then loaded back into this notebook, has a <code class="docutils literal notranslate"><span class="pre">shape</span></code> of <code class="docutils literal notranslate"><span class="pre">(480,</span> <span class="pre">480)</span></code>. This is much larger than our original <code class="docutils literal notranslate"><span class="pre">(4,</span> <span class="pre">4)</span></code> image array. We displayed our original 2-by-2 <em>array image</em> (<code class="docutils literal notranslate"><span class="pre">two_D_ones_and_zeros</span></code>) using Matplotlib, creating a <em>display image</em>. It is this display image that we saved using <code class="docutils literal notranslate"><span class="pre">plt.savefig()</span></code> as a <code class="docutils literal notranslate"><span class="pre">.png</span></code> file. Because it was upscaled for the purposes of display, the display image contains many more pixels than the original <code class="docutils literal notranslate"><span class="pre">two_d_ones_and_zeros</span></code> array.</p>
+</section>
 <section id="more-on-array-pixels-vs-display-pixels">
 <h2>More on array pixels vs display pixels<a class="headerlink" href="#more-on-array-pixels-vs-display-pixels" title="Link to this heading">#</a></h2>
 <p>We have used <code class="docutils literal notranslate"><span class="pre">plt.matshow()</span></code> so far on this page. Perhaps more commonly, you will see another Matplotlib function used to visualise/display/render image arrays. This more commonly seen function is called <code class="docutils literal notranslate"><span class="pre">plt.imshow()</span></code> (for <code class="docutils literal notranslate"><span class="pre">im</span></code>age <code class="docutils literal notranslate"><span class="pre">show</span></code>). It is a more general purpose function than <code class="docutils literal notranslate"><span class="pre">plt.matshow()</span></code> and can be used to display a wider variety of image arrays. See the documentation for each function <a class="reference external" href="https://matplotlib.org/stable/api/_as_gen/matplotlib.pyplot.matshow.html">here</a> and <a class="reference external" href="https://matplotlib.org/stable/api/_as_gen/matplotlib.pyplot.imshow.html">here</a>.</p>
@@ -750,9 +746,8 @@ convention for the meaning of “row” and “column”.</p>
 </div>
 <p>For the rest of this tutorial, for small arrays we will use <code class="docutils literal notranslate"><span class="pre">plt.matshow()</span></code>, to keep the axes labels more intuitively interpretable.</p>
 </section>
-</section>
-<section class="tex2jax_ignore mathjax_ignore" id="shades-of-grey-and-colourmaps">
-<h1>Shades of grey and colourmaps<a class="headerlink" href="#shades-of-grey-and-colourmaps" title="Link to this heading">#</a></h1>
+<section id="shades-of-grey-and-colourmaps">
+<h2>Shades of grey and colourmaps<a class="headerlink" href="#shades-of-grey-and-colourmaps" title="Link to this heading">#</a></h2>
 <p>Why does our image array display in vibrant purple and yellow, you may ask? This is because both <code class="docutils literal notranslate"><span class="pre">plt.matshow()</span></code> - and it’s cousin <code class="docutils literal notranslate"><span class="pre">plt.imshow()</span></code> - have a default <em>colourmap</em>. This is a mapping between the numbers in the array, and the colours that the plot will depict each number with when the array is visualised. The default colourmap is called <a class="reference external" href="https://matplotlib.org/3.5.3/api/_as_gen/matplotlib.pyplot.viridis.html"><code class="docutils literal notranslate"><span class="pre">viridis</span></code></a>. This default colourmap maps low array pixel values to purple, and high array pixel values to yellow.</p>
 <p>We can adjust the colour by changing the <code class="docutils literal notranslate"><span class="pre">cmap</span></code> argument of <code class="docutils literal notranslate"><span class="pre">plt.matshow()</span></code> - for instance, we can change the plot to visualise the array using a greyscale map:</p>
 <div class="cell docutils container">
@@ -912,6 +907,7 @@ convention for the meaning of “row” and “column”.</p>
 <li><p>We know what happens when an image array contains fewer pixels than the rendered image e.g. using interpolation, the image will be upscaled to be displayed using more <em>display pixels</em> than there are <em>array pixels</em> in the original image array.</p></li>
 <li><p>We have seen how changing the elements in an array can change how the image looks when it is displayed.</p></li>
 </ul>
+</section>
 </section>
 <section class="tex2jax_ignore mathjax_ignore" id="slightly-more-complex-images">
 <h1>(Slightly) more complex images<a class="headerlink" href="#slightly-more-complex-images" title="Link to this heading">#</a></h1>
@@ -1104,9 +1100,8 @@ convention for the meaning of “row” and “column”.</p>
 <p>Applying changes such as these to the numbers in the array is the fundamental mechanism of <em>image processing</em> - which can be defined as:</p>
 <p><img alt="" src="_images/processing_definition.png" /></p>
 <p>So, remember this maxim: <em>“image processing” is when we do something which changes the numbers inside the image array, and therefore changes the corresponding visual image</em>. Such image processing operations are carried out by popular software, including that used to edit images for various social media platforms. They are also carried out in a scientific context in fields like medical imaging, where they are applied to the image arrays we get from CT scans and MRI scans, for example.</p>
-</section>
-<section class="tex2jax_ignore mathjax_ignore" id="even-more-complex-images">
-<h1>Even more complex images<a class="headerlink" href="#even-more-complex-images" title="Link to this heading">#</a></h1>
+<section id="even-more-complex-images">
+<h2>Even more complex images<a class="headerlink" href="#even-more-complex-images" title="Link to this heading">#</a></h2>
 <p>All of the principles we have seen apply both to the very small, low-resolution images we looked at above, and also to more complex images. The cell below loads in a picture of a Xenomorph (a creature from the <a class="reference external" href="https://en.wikipedia.org/wiki/Alien_(franchise)">Alien film franchise</a>). The image is show via <code class="docutils literal notranslate"><span class="pre">plt.imshow()</span></code>:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -1239,8 +1234,8 @@ convention for the meaning of “row” and “column”.</p>
 </section>
 </div>
 </section>
-<section class="tex2jax_ignore mathjax_ignore" id="summary">
-<h1>Summary<a class="headerlink" href="#summary" title="Link to this heading">#</a></h1>
+<section id="summary">
+<h2>Summary<a class="headerlink" href="#summary" title="Link to this heading">#</a></h2>
 <p>On this page we have examined the fundamental components of computer images:</p>
 <ul class="simple">
 <li><p>Images are (at least) two-dimensional arrays of numbers.</p></li>
@@ -1250,13 +1245,24 @@ convention for the meaning of “row” and “column”.</p>
 </ul>
 <p>On the <a class="reference internal" href="1_colour_images_as_numpy_arrays.html"><span class="doc std std-doc">next page</span></a>, we will look at the representation of colour in NumPy image arrays.</p>
 </section>
-<section class="tex2jax_ignore mathjax_ignore" id="references">
-<h1>References<a class="headerlink" href="#references" title="Link to this heading">#</a></h1>
-<p>Adapted from: <a class="reference external" href="https://lectures.scientific-python.org/advanced/image_processing">https://lectures.scientific-python.org/advanced/image_processing</a></p>
-<p>Adapted from: <a class="reference external" href="https://lectures.scientific-python.org/packages/scikit-image/index.html">https://lectures.scientific-python.org/packages/scikit-image/index.html</a></p>
-<p>Reference: <a class="reference external" href="https://bic-berkeley.github.io/psych-214-fall-2016/arrays_and_images.html">https://bic-berkeley.github.io/psych-214-fall-2016/arrays_and_images.html</a></p>
-<p>Reference: <a class="reference external" href="https://textbook.nipraxis.org/arrays_3d.html">https://textbook.nipraxis.org/arrays_3d.html</a></p>
-<p>Reference: inspiration from <code class="docutils literal notranslate"><span class="pre">skimage</span></code> tutorials.</p>
+<section id="references">
+<h2>References<a class="headerlink" href="#references" title="Link to this heading">#</a></h2>
+<p>Adapted from:</p>
+<ul class="simple">
+<li><p><a class="reference external" href="https://lectures.scientific-python.org/advanced/image_processing">Scientific Python Lecture Notes - image
+processing</a></p></li>
+<li><p>[Scientific Python Lecture Notes</p>
+<ul>
+<li><p>scikit-image](<a class="reference external" href="https://lectures.scientific-python.org/packages/scikit-image/index.html">https://lectures.scientific-python.org/packages/scikit-image/index.html</a>)</p></li>
+</ul>
+</li>
+<li><p><a class="reference external" href="https://textbook.nipraxis.org/arrays_and_images.html">Nipraxis course - arrays and
+images</a></p></li>
+<li><p><a class="reference external" href="https://textbook.nipraxis.org/arrays_3d.html">Nipraxis course - three-dimensional
+arrays</a></p></li>
+</ul>
+<p>with further inspiration from <code class="docutils literal notranslate"><span class="pre">skimage</span></code> tutorials.</p>
+</section>
 </section>
 
     <script type="text/x-thebe-config">
@@ -1323,17 +1329,19 @@ convention for the meaning of “row” and “column”.</p>
   </div>
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Images as NumPy arrays</a></li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#the-simplest-images">The simplest images</a></li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#pixels-pixel-coordinates-and-interpolation">Pixels, pixel coordinates and interpolation</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Images as NumPy arrays</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-simplest-images">The simplest images</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#pixels-pixel-coordinates-and-interpolation">Pixels, pixel coordinates and interpolation</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#more-on-array-pixels-vs-display-pixels">More on array pixels vs display pixels</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#shades-of-grey-and-colourmaps">Shades of grey and colourmaps</a></li>
 </ul>
 </li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#shades-of-grey-and-colourmaps">Shades of grey and colourmaps</a></li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#slightly-more-complex-images">(Slightly) more complex images</a></li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#even-more-complex-images">Even more complex images</a></li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#summary">Summary</a></li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#references">References</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#slightly-more-complex-images">(Slightly) more complex images</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#even-more-complex-images">Even more complex images</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#summary">Summary</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#references">References</a></li>
+</ul>
+</li>
 </ul>
 
   </nav></div>
