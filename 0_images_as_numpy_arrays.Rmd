@@ -59,7 +59,39 @@ This array is small enough that we can easily see it's dimensionality. If we so 
 two_D_ones_and_zeros.shape
 ```
 
-As you know, the output of the cell above means that the `two_d_ones_and_zeros` array has 2 rows and 2 columns. In virtue of having two dimensions, *this array is an image in the technical sense*. In fact, we will use the terms "array", "image" and "image array" interchangeably throughout this tutorial series, where we are referring to arrays of two-dimensions or more.
+As you know, the output of the cell above means that the
+`two_d_ones_and_zeros` array has 2 rows and 2 columns. In virtue of having two
+dimensions, *this array is an image in the technical sense*. In fact, we will
+use the terms "array", "image" and "image array" interchangeably throughout
+this tutorial series, where we are referring to arrays of two-dimensions or
+more.
+
+::: {note}
+:class: dropdown
+
+**On rows and columns**
+
+You'll notice that we used "rows" and "columns" above.
+
+*Row* and *column* can mean different things in different contexts.  We will
+always use these terms to refer to the first (row) and second (column) axis of
+the *array* that represents the image.  Therefore the first row of this image,
+in our sense, is given by (here) `two_D_ones_and_zeros[0]`, and the first
+column is given by `two_D_ones_and_zeros[:, 0]`.  That is, if you are looking
+at the display of the array values, you read the first row from left to right,
+and the first column from top to bottom.  We might call this *the Numpy convention* for referring to rows and columns.
+
+Please keep this in mind, because it is also relatively common in imaging
+papers and textbooks to use rows and columns in the exact opposite sense — to
+mean, respectively, the second and first axis of the array.  This is the *imaging* convention for rows and columns.
+
+To repeat and rephrase, when we refer to *row* `i`, we mean the values from
+`arr[i]` (where `arr` is an image array).  When we refer to column `j`, we
+mean the values from `arr[:, j]`.  The first axis is the *row* axis, and the
+second axis is the *column* axis.  We are therefore following the Numpy
+convention for the meaning of "row" and "column".
+
+:::
 
 You may (understandably) be thinking "that array does not look much like an image...". This is a reasonable thought. So how can we view our array as an image in the intuitive sense - as a picture we can look at and appreciate with our high society friends at a gallery opening? One way is to use `plt.matshow()`, a function from the [Matplotlib library](https://matplotlib.org). The function name `plt.matshow()` stands for `mat`rix `show`. This function has this name because arrays are a representation of [matrices](https://en.wikipedia.org/wiki/Matrix_(mathematics)). As the name implies, it will display a two-dimensional array graphically.
 
