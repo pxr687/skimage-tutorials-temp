@@ -29,7 +29,7 @@ Normally, we take an image (in the intuitive sense) and *then* represent it on a
 
 To get a deeper understanding of the computer representation of images, let's do things the other way around to the normal procedure: let's create an image, in the technical sense of a two-dimensional array, and then view it as an image, in the intuitive sense, as a visual representation that we can look at as we would any picture.
 
-# The simplest images
+## The simplest images
 
 First, we will import some Python libraries:
 
@@ -134,7 +134,7 @@ two_D_ones_and_zeros[0, 1]
 Also notice that for now we are dealing with the `float64` `dtype`. You will find other `dtypes` in image arrays, and this can have big implications for how the image is displayed by Matplotlib. For now we will just deal with these `float64` numbers, and we will return to the topic of `dtype`s [later](1_colour_images_as_numpy_arrays).
 
 
-# Pixels, pixel coordinates and interpolation
+## Pixels, pixel coordinates and interpolation
 
 So far we have seen that each element in the image array controls what will be seen in each square of the image displayed by `plt.matshow()`. We can refer to each element in our image array as a *pixel*. This is an abbreviation of *picture element*. An image array, then, is a collection of pixels. 
 
@@ -204,7 +204,7 @@ plt.matshow(two_D_ones_and_zeros);
 
 For the rest of this tutorial, for small arrays we will use `plt.matshow()`, to keep the axes labels more intuitively interpretable.
 
-# Shades of grey and colourmaps
+## Shades of grey and colourmaps
 
 Why does our image array display in vibrant purple and yellow, you may ask? This is because both `plt.matshow()` - and it's cousin `plt.imshow()` - have a default *colourmap*. This is a mapping between the numbers in the array, and the colours that the plot will depict each number with when the array is visualised. The default colourmap is called [`viridis`](https://matplotlib.org/3.5.3/api/_as_gen/matplotlib.pyplot.viridis.html). This default colourmap maps low array pixel values to purple, and high array pixel values to yellow.
 
@@ -424,7 +424,7 @@ Applying changes such as these to the numbers in the array is the fundamental me
 So, remember this maxim: *"image processing" is when we do something which changes the numbers inside the image array, and therefore changes the corresponding visual image*. Such image processing operations are carried out by popular software, including that used to edit images for various social media platforms. They are also carried out in a scientific context in fields like medical imaging, where they are applied to the image arrays we get from CT scans and MRI scans, for example.
 
 
-# Even more complex images
+## Even more complex images
 
 All of the principles we have seen apply both to the very small, low-resolution images we looked at above, and also to more complex images. The cell below loads in a picture of a Xenomorph (a creature from the [Alien film franchise](https://en.wikipedia.org/wiki/Alien_(franchise))). The image is show via `plt.imshow()`:
 <!-- #endregion -->
@@ -513,7 +513,7 @@ for val_1, val_2 in zip(np.where(smiley)[0], np.where(smiley)[1]):
 :::
 
 
-# Summary
+## Summary
 
 On this page we have examined the fundamental components of computer images:
 
@@ -528,14 +528,17 @@ On this page we have examined the fundamental components of computer images:
 On the [next page](1_colour_images_as_numpy_arrays), we will look at the representation of colour in NumPy image arrays.
 
 
-# References
+## References
 
-Adapted from: https://lectures.scientific-python.org/advanced/image_processing
+Adapted from:
 
-Adapted from: https://lectures.scientific-python.org/packages/scikit-image/index.html 
+* [Scientific Python Lecture Notes - image
+  processing](https://lectures.scientific-python.org/advanced/image_processing)
+* [Scientific Python Lecture Notes
+  - scikit-image](https://lectures.scientific-python.org/packages/scikit-image/index.html)
+* [Nipraxis course - arrays and
+  images](https://textbook.nipraxis.org/arrays_and_images.html)
+* [Nipraxis course - three-dimensional
+  arrays](https://textbook.nipraxis.org/arrays_3d.html)
 
-Reference: https://bic-berkeley.github.io/psych-214-fall-2016/arrays_and_images.html
-
-Reference: https://textbook.nipraxis.org/arrays_3d.html
-
-Reference: inspiration from `skimage` tutorials.
+with further inspiration from `skimage` tutorials.
