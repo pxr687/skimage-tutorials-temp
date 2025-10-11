@@ -1261,13 +1261,13 @@ Min Pixel Value: 0
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Read in and show the image which you should blur with your new kernel.</span>
-<span class="n">xenomorph</span> <span class="o">=</span> <span class="n">ski</span><span class="o">.</span><span class="n">io</span><span class="o">.</span><span class="n">imread</span><span class="p">(</span><span class="s2">&quot;images/xenomorph.png&quot;</span><span class="p">,</span> <span class="n">as_gray</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">xenomorph</span> <span class="o">=</span> <span class="n">ski</span><span class="o">.</span><span class="n">io</span><span class="o">.</span><span class="n">imread</span><span class="p">(</span><span class="s2">&quot;images/xenomorph.jpg&quot;</span><span class="p">,</span> <span class="n">as_gray</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">xenomorph</span><span class="p">);</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/e37cf73d9787f9fe0d67aa64534280146796ca1dadfb6f635711af3f724f681b.png" src="_images/e37cf73d9787f9fe0d67aa64534280146796ca1dadfb6f635711af3f724f681b.png" />
+<img alt="_images/5ef8ada57c62a558b6eef600c4522bd9d75cc75b88a0fdb32f0485612f09f6e3.png" src="_images/5ef8ada57c62a558b6eef600c4522bd9d75cc75b88a0fdb32f0485612f09f6e3.png" />
 </div>
 </div>
 <p>You should find the <code class="docutils literal notranslate"><span class="pre">sigma</span></code> value that you need in order to produce the following target image:</p>
@@ -1412,7 +1412,7 @@ Same as the target? This array should contain on `True`s if so...:
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/0e8ad49bb5773cb4b1f31bed4d7d7e55e87fd0db848c4a54cba599e77bcc814f.png" src="_images/0e8ad49bb5773cb4b1f31bed4d7d7e55e87fd0db848c4a54cba599e77bcc814f.png" />
+<img alt="_images/5d1586ab88f16347d0137f5a2285493a89bb61922f02395a4ae5d06f84ae2b97.png" src="_images/5d1586ab88f16347d0137f5a2285493a89bb61922f02395a4ae5d06f84ae2b97.png" />
 </div>
 </div>
 </section>
@@ -2036,10 +2036,7 @@ Now, when applied to our <code class="docutils literal notranslate"><span class=
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Type:
-</pre></div>
-</div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> &lt;class &#39;numpy.ndarray&#39;&gt;
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Type: &lt;class &#39;numpy.ndarray&#39;&gt;
 dtype: float64
 Shape: (400, 600)
 Max Pixel Value: 1.0

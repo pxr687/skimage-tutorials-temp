@@ -18,8 +18,10 @@ jupyter:
 
 All of the arrays we have encountered [so far](0_images_as_numpy_arrays) contain just one value at each array pixel location. This page will look at image arrays with more complex shapes, and show how this can encode colour information, giving us beautiful colour images, that create deep aesthetic experiences, like this one:
 
-![](images/xenomorph.png)
-(Image from [here](https://static1.srcdn.com/wordpress/wp-content/uploads/2019/07/Xenomorph-from-the-Alien-franchise.jpg)).
+![](images/xenomorph.jpg)
+
+(Photo by
+[Stockcake](https://stockcake.com/i/alien-head-close-up_1354662_1093149)).
 
 First, some library imports:
 
@@ -32,6 +34,7 @@ import matplotlib.pyplot as plt
 plt.rcParams['image.cmap'] = 'gray'
 
 # Import a custom function to give hints for some exercises.
+# This is a function we wrote for the tutorial.
 from hints import hint_corrupted_camera
 ```
 

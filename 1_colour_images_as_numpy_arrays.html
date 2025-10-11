@@ -515,8 +515,9 @@ document.write(`
   <section class="tex2jax_ignore mathjax_ignore" id="what-about-colour">
 <h1>What about colour?<a class="headerlink" href="#what-about-colour" title="Link to this heading">#</a></h1>
 <p>All of the arrays we have encountered <a class="reference internal" href="0_images_as_numpy_arrays.html"><span class="doc std std-doc">so far</span></a> contain just one value at each array pixel location. This page will look at image arrays with more complex shapes, and show how this can encode colour information, giving us beautiful colour images, that create deep aesthetic experiences, like this one:</p>
-<p><img alt="" src="_images/xenomorph.png" />
-(Image from <a class="reference external" href="https://static1.srcdn.com/wordpress/wp-content/uploads/2019/07/Xenomorph-from-the-Alien-franchise.jpg">here</a>).</p>
+<p><img alt="" src="_images/xenomorph.jpg" /></p>
+<p>(Photo by
+<a class="reference external" href="https://stockcake.com/i/alien-head-close-up_1354662_1093149">Stockcake</a>).</p>
 <p>First, some library imports:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -528,6 +529,7 @@ document.write(`
 <span class="n">plt</span><span class="o">.</span><span class="n">rcParams</span><span class="p">[</span><span class="s1">&#39;image.cmap&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;gray&#39;</span>
 
 <span class="c1"># Import a custom function to give hints for some exercises.</span>
+<span class="c1"># This is a function we wrote for the tutorial.</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">hints</span><span class="w"> </span><span class="kn">import</span> <span class="n">hint_corrupted_camera</span>
 </pre></div>
 </div>
@@ -1230,9 +1232,9 @@ Our 3D stacked array is of the right shape:</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>X1 = 0.18
-X2 = 0.36
-X3 = 0.49
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>X1 = 0.56
+X2 = 0.12
+X3 = 0.7
 </pre></div>
 </div>
 </div>
@@ -1261,12 +1263,12 @@ X3 = 0.49
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Red (X1) = 0.71
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Red (X1) = 0.58
 Green (X2) = 0.77
-Blue (X3) = 0.67
+Blue (X3) = 0.04
 </pre></div>
 </div>
-<img alt="_images/4c746aef64d0e1f1eee0de5bbf6042c80c5c1694abc1602f50d9141ba76a1ac1.png" src="_images/4c746aef64d0e1f1eee0de5bbf6042c80c5c1694abc1602f50d9141ba76a1ac1.png" />
+<img alt="_images/428abf2629fbd87f38371ad82de67f7da8371c1d00850a791baec5a108937084.png" src="_images/428abf2629fbd87f38371ad82de67f7da8371c1d00850a791baec5a108937084.png" />
 </div>
 </div>
 <p>So, each two-dimensional display image has a “hidden” three-dimensional array behind it. Each slice of the third dimension is a colour channel. The mix of values at a given element in each colour channel determines the colour of that pixel in the rendered image. You may want to view this image in a new browser window, to see more clearly the exact mixes of the colour channels, which are shown above each square on the right-hand side of the image:</p>
@@ -1282,7 +1284,7 @@ Blue (X3) = 0.67
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/8575633ec5ab8b6c82cc9374ce00374d81abf7ffcfd34685ace89abf35f3a0af.png" src="_images/8575633ec5ab8b6c82cc9374ce00374d81abf7ffcfd34685ace89abf35f3a0af.png" />
+<img alt="_images/baa1e250834edd5c1c5e02612e3b900fc9325cbf1cab69e77ebe5b905910744e.png" src="_images/baa1e250834edd5c1c5e02612e3b900fc9325cbf1cab69e77ebe5b905910744e.png" />
 </div>
 </div>
 <p>We have now completed our perilous expedition into the third dimension… We have seen that we can use 3D arrays to encode <em>true colour</em> information. This means that the image array itself contains colour information for each pixel, where we are <em>not</em> just pseudocolouring greyscale information using <code class="docutils literal notranslate"><span class="pre">viridis</span></code> or another colourmap…</p>
@@ -1784,7 +1786,7 @@ Min Pixel Value: 0
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/49aa5f5023d1d046f0c268ce720b9ebe157b9252e91f3e9ff50434e2794980f8.png" src="_images/49aa5f5023d1d046f0c268ce720b9ebe157b9252e91f3e9ff50434e2794980f8.png" />
+<img alt="_images/31bb2d4ddad602cb843f9fc5f81f6a0b07af4909e195b6d195e4a7ca477848da.png" src="_images/31bb2d4ddad602cb843f9fc5f81f6a0b07af4909e195b6d195e4a7ca477848da.png" />
 </div>
 </div>
 </section>

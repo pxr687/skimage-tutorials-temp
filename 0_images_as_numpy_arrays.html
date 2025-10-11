@@ -1102,20 +1102,22 @@ convention for the meaning of “row” and “column”.</p>
 <p>So, remember this maxim: <em>“image processing” is when we do something which changes the numbers inside the image array, and therefore changes the corresponding visual image</em>. Such image processing operations are carried out by popular software, including that used to edit images for various social media platforms. They are also carried out in a scientific context in fields like medical imaging, where they are applied to the image arrays we get from CT scans and MRI scans, for example.</p>
 <section id="even-more-complex-images">
 <h2>Even more complex images<a class="headerlink" href="#even-more-complex-images" title="Link to this heading">#</a></h2>
-<p>All of the principles we have seen apply both to the very small, low-resolution images we looked at above, and also to more complex images. The cell below loads in a picture of a Xenomorph (a creature from the <a class="reference external" href="https://en.wikipedia.org/wiki/Alien_(franchise)">Alien film franchise</a>). The image is show via <code class="docutils literal notranslate"><span class="pre">plt.imshow()</span></code>:</p>
+<p>All of the principles we have seen apply both to the very small, low-resolution images we looked at above, and also to more complex images. The cell below loads in a picture of a Xenomorph (a creature from the <a class="reference external" href="https://en.wikipedia.org/wiki/Alien_(franchise)">Alien film franchise</a>). We show the image with <code class="docutils literal notranslate"><span class="pre">plt.imshow()</span></code>:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Load in and `imshow` the image, with a colourbar.</span>
-<span class="n">xeno</span> <span class="o">=</span> <span class="n">io</span><span class="o">.</span><span class="n">imread</span><span class="p">(</span><span class="s2">&quot;images/xenomorph.png&quot;</span><span class="p">,</span> <span class="n">as_gray</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">xeno</span> <span class="o">=</span> <span class="n">io</span><span class="o">.</span><span class="n">imread</span><span class="p">(</span><span class="s2">&quot;images/xenomorph.jpg&quot;</span><span class="p">,</span> <span class="n">as_gray</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">xeno</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">colorbar</span><span class="p">();</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/bfd1d33ac6b747908a0342b1b45609cd3a50907607437cae0f636785a3062e5d.png" src="_images/bfd1d33ac6b747908a0342b1b45609cd3a50907607437cae0f636785a3062e5d.png" />
+<img alt="_images/ba5b9125864ac7e092331781030535a6c8a3bb3f3a79fa8fa09dce420e007aba.png" src="_images/ba5b9125864ac7e092331781030535a6c8a3bb3f3a79fa8fa09dce420e007aba.png" />
 </div>
 </div>
+<p>(Photo by
+<a class="reference external" href="https://stockcake.com/i/alien-head-close-up_1354662_1093149">Stockcake</a>).</p>
 <p>Scary stuff. This image will seem slightly less intimidating when we see that it is, in fact, nothing by a 2D NumPy array of pixel intensity values. We promise it cannot hurt you:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -1125,13 +1127,13 @@ convention for the meaning of “row” and “column”.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([[0.06, 0.06, 0.06, ..., 0.2 , 0.2 , 0.05],
-       [0.06, 0.06, 0.06, ..., 0.2 , 0.2 , 0.05],
-       [0.06, 0.06, 0.06, ..., 0.2 , 0.2 , 0.05],
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([[0.06, 0.05, 0.05, ..., 0.05, 0.05, 0.03],
+       [0.05, 0.05, 0.05, ..., 0.05, 0.05, 0.03],
+       [0.05, 0.05, 0.05, ..., 0.05, 0.05, 0.03],
        ...,
-       [0.06, 0.06, 0.06, ..., 0.2 , 0.2 , 0.05],
-       [0.06, 0.06, 0.06, ..., 0.2 , 0.2 , 0.05],
-       [0.06, 0.06, 0.06, ..., 0.2 , 0.2 , 0.05]], shape=(732, 1313))
+       [0.05, 0.05, 0.05, ..., 0.35, 0.35, 0.36],
+       [0.06, 0.05, 0.05, ..., 0.33, 0.33, 0.33],
+       [0.06, 0.05, 0.04, ..., 0.32, 0.31, 0.3 ]], shape=(1456, 816))
 </pre></div>
 </div>
 </div>

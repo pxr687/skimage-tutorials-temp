@@ -426,15 +426,18 @@ So, remember this maxim: *"image processing" is when we do something which chang
 
 ## Even more complex images
 
-All of the principles we have seen apply both to the very small, low-resolution images we looked at above, and also to more complex images. The cell below loads in a picture of a Xenomorph (a creature from the [Alien film franchise](https://en.wikipedia.org/wiki/Alien_(franchise))). The image is show via `plt.imshow()`:
+All of the principles we have seen apply both to the very small, low-resolution images we looked at above, and also to more complex images. The cell below loads in a picture of a Xenomorph (a creature from the [Alien film franchise](https://en.wikipedia.org/wiki/Alien_(franchise))). We show the image with `plt.imshow()`:
 <!-- #endregion -->
 
 ```{python}
 # Load in and `imshow` the image, with a colourbar.
-xeno = io.imread("images/xenomorph.png", as_gray=True)
+xeno = io.imread("images/xenomorph.jpg", as_gray=True)
 plt.imshow(xeno)
 plt.colorbar();
 ```
+
+(Photo by
+[Stockcake](https://stockcake.com/i/alien-head-close-up_1354662_1093149)).
 
 Scary stuff. This image will seem slightly less intimidating when we see that it is, in fact, nothing by a 2D NumPy array of pixel intensity values. We promise it cannot hurt you:
 
