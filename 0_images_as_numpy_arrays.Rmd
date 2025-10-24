@@ -238,24 +238,45 @@ pixels, the displayed image would be $\frac{1}{112}$ of an inch in each
 direction, and would be very difficult to see.
 
 Thus, when our small (or *low-resolution*) image array is displayed/visualised
-on your screen by something like `plt.matshow()` the image array may be shown
-using a different and larger number of *display pixels*. What Matplotlib is
-doing here, behind the scenes, is something called *image interpolation*. This
-is defined as ["a technique by which a low-resolution image can be scaled up
-to a high-resolution image without degrading the visual
-quality"](https://www.sciencedirect.com/topics/computer-science/image-interpolation#:~:text=Image%20interpolation%20is%20a%20technique,without%20degrading%20the%20visual%20quality.).
+on your screen by something like `plt.matshow()`, Matplotlib has to:
 
-How does Matplotlib know what to show in terms of the new, upscaled display
-pixels? It uses the original array pixels as a guide, to estimate what should
-go in the new display pixels, to give a good, albeit upscaled, representation
-of the information in the original image array. We will [go into more detail
-about this later in this tutorial
+1. work out what size the displayed image should be *on the monitor*;
+2. work out how many *monitor pixels* this will be.  In our case, with a tiny
+   input array (2 x 2), there will be many more monitor pixel values than
+   input array values;
+3. calculate the monitor pixels corresponding to make this much larger
+   displayed image, and
+4. display the *monitor pixels* on the monitor.
+
+In working out the monitor pixels, Matplotlib is doing something called *image
+interpolation*. This is defined as ["a technique by which a low-resolution
+image can be scaled up to a high-resolution image without degrading the visual
+quality"](https://www.sciencedirect.com/topics/computer-science/image-interpolation#:~:text=Image%20interpolation%20is%20a%20technique,without%20degrading%20the%20visual%20quality.).
+We will [go this process in more detail later in this tutorial
 series](3_skimage_processing_from_numpy_and_scipy).
 
-To give a glimpse of what has happened behind the scenes we will save the
-*display image* to a new `.png` file, using `plt.savefig()`. We have saved the
-file in the following path in the directory this notebook is stored in:
-`images/two_D_ones_and_zeros_from_plot.png`.
+To give a glimpse of the kind of thing that has happened behind the scenes we
+can ask Matplotlib to do the same process of creating an output display image,
+by *saving* the image to a new [Portable Network Graphics
+(PNG)](https://en.wikipedia.org/wiki/PNG) file, using `plt.savefig()`.  In
+doing so Matplotlib will do the same process as it did in displaying to the
+screen, but in this case, for saving to an output file.  Matplotlib will:
+
+1. work out what size the displayed image should be *as stored in the file*,
+   in physical units, such as inches;
+2. work out how many *pixels* this will be — in doing this, Matplotlib makes
+   use of a setting called DPI (dots per inch — pixels per inch);
+3. calculate the saved pixels corresponding to make this much larger displayed
+   image, and
+4. save the *output image pixels* to the image file.
+
+For example, in our case, we can work out (in ways that we won't show here)
+that the desired (default) size will be 4.8 by 4.8 inches, that the DPI
+setting is 100, and therefore, the number of pixels in each dimension is 4.8
+x 100 = 480.
+
+We have saved the file in the following path in the directory this notebook is
+stored in: `images/two_D_ones_and_zeros_from_plot.png`.
 
 ```{python}
 # Show the image.
@@ -264,24 +285,6 @@ plt.matshow(two_D_ones_and_zeros)
 # Save the image.
 plt.savefig("images/two_D_ones_and_zeros_from_plot.png")
 ```
-
-When Matplotlib saves an image to a [Portable Network Graphics
-(PNG)](https://en.wikipedia.org/wiki/PNG) file, it does not use the upscaling
-that it used for the computer display, because this would mean the resulting
-image will depend on the configuration of your computer display.  Instead, in our case, it
-uses a default assumed display size of 480 by 480 pixels.   As an aside, you can see the assumed display size by looking at the Matplotlib internals of the displayed image, like this:
-
-```{python}
-# Replot figure, but save output from plot to a variable.
-ax_img = plt.matshow(two_D_ones_and_zeros)
-# Use the output to give information about the figure containing the image.
-print(ax_img.figure)
-```
-
-So, `plt.savefig`, under the hood, took our initial 2 by 2 image, and upscaled
-it to an image of 480 by 480 pixels.  The PNG file format is a wrapper for the
-(here) 480 by 480 array of image values.
-
 
 We will now read this new `.png` image back into this notebook as a NumPy
 array, to view its `shape` attribute.
