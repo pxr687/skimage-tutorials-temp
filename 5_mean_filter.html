@@ -158,8 +158,8 @@
       
     
     
-    <img src="_static/colourwheel.png" class="logo__image only-light" alt="Scikit-image via NumPy and SciPy - Home"/>
-    <script>document.write(`<img src="_static/colourwheel.png" class="logo__image only-dark" alt="Scikit-image via NumPy and SciPy - Home"/>`);</script>
+    <img src="_static/colorwheel.png" class="logo__image only-light" alt="Scikit-image via NumPy and SciPy - Home"/>
+    <script>document.write(`<img src="_static/colorwheel.png" class="logo__image only-dark" alt="Scikit-image via NumPy and SciPy - Home"/>`);</script>
   
   
 </a></div>
@@ -180,7 +180,7 @@
 <ul class="current nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="0_images_as_numpy_arrays.html">Images as NumPy arrays</a></li>
 
-<li class="toctree-l1"><a class="reference internal" href="1_colour_images_as_numpy_arrays.html">What about colour?</a></li>
+<li class="toctree-l1"><a class="reference internal" href="1_color_images_as_numpy_arrays.html">What about color?</a></li>
 
 
 
@@ -735,16 +735,26 @@ random_i[0:3, 5:8]
 
 Crude Mean filter:
 
- [[0.   0.   0.   0.   0.   0.   0.   0.  ]
- [0.   0.   0.78 2.56 2.56 1.78 0.   0.  ]
- [0.   0.   0.78 2.56 2.56 1.78 0.   0.  ]
- [0.   0.   0.78 2.22 2.22 1.44 0.   0.  ]
- [0.   0.   0.78 1.78 1.78 1.   0.   0.  ]
- [0.   0.   1.11 2.67 2.67 1.56 0.   0.  ]
- [0.   0.   1.   3.   3.   2.   0.   0.  ]
- [0.   0.   1.44 3.67 3.67 2.22 0.   0.  ]
- [0.   0.   1.11 2.78 2.78 1.67 0.   0.  ]
- [0.   0.   0.   0.   0.   0.   0.   0.  ]]
+ [[0.         0.         0.         0.         0.         0.
+  0.         0.        ]
+ [0.         0.         0.77777778 2.55555556 2.55555556 1.77777778
+  0.         0.        ]
+ [0.         0.         0.77777778 2.55555556 2.55555556 1.77777778
+  0.         0.        ]
+ [0.         0.         0.77777778 2.22222222 2.22222222 1.44444444
+  0.         0.        ]
+ [0.         0.         0.77777778 1.77777778 1.77777778 1.
+  0.         0.        ]
+ [0.         0.         1.11111111 2.66666667 2.66666667 1.55555556
+  0.         0.        ]
+ [0.         0.         1.         3.         3.         2.
+  0.         0.        ]
+ [0.         0.         1.44444444 3.66666667 3.66666667 2.22222222
+  0.         0.        ]
+ [0.         0.         1.11111111 2.77777778 2.77777778 1.66666667
+  0.         0.        ]
+ [0.         0.         0.         0.         0.         0.
+  0.         0.        ]]
 </pre></div>
 </div>
 <img alt="_images/470ba2e9be9d67a710f556ad2845253b4a09050794216b37c82110abf3a5a967.png" src="_images/470ba2e9be9d67a710f556ad2845253b4a09050794216b37c82110abf3a5a967.png" />
@@ -918,9 +928,9 @@ Min Pixel Value: -1.0
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([[0.11, 0.11, 0.11],
-       [0.11, 0.11, 0.11],
-       [0.11, 0.11, 0.11]])
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([[0.11111111, 0.11111111, 0.11111111],
+       [0.11111111, 0.11111111, 0.11111111],
+       [0.11111111, 0.11111111, 0.11111111]])
 </pre></div>
 </div>
 </div>
@@ -1003,16 +1013,26 @@ Min Pixel Value: -1.0
 
 Mean filter:
 
- [[0.   0.   0.44 1.33 1.33 0.89 0.   0.  ]
- [0.   0.   0.78 2.56 2.56 1.78 0.   0.  ]
- [0.   0.   0.78 2.56 2.56 1.78 0.   0.  ]
- [0.   0.   0.78 2.22 2.22 1.44 0.   0.  ]
- [0.   0.   0.78 1.78 1.78 1.   0.   0.  ]
- [0.   0.   1.11 2.67 2.67 1.56 0.   0.  ]
- [0.   0.   1.   3.   3.   2.   0.   0.  ]
- [0.   0.   1.44 3.67 3.67 2.22 0.   0.  ]
- [0.   0.   1.11 2.78 2.78 1.67 0.   0.  ]
- [0.   0.   0.78 1.44 1.44 0.67 0.   0.  ]]
+ [[0.         0.         0.44444444 1.33333333 1.33333333 0.88888889
+  0.         0.        ]
+ [0.         0.         0.77777778 2.55555556 2.55555556 1.77777778
+  0.         0.        ]
+ [0.         0.         0.77777778 2.55555556 2.55555556 1.77777778
+  0.         0.        ]
+ [0.         0.         0.77777778 2.22222222 2.22222222 1.44444444
+  0.         0.        ]
+ [0.         0.         0.77777778 1.77777778 1.77777778 1.
+  0.         0.        ]
+ [0.         0.         1.11111111 2.66666667 2.66666667 1.55555556
+  0.         0.        ]
+ [0.         0.         1.         3.         3.         2.
+  0.         0.        ]
+ [0.         0.         1.44444444 3.66666667 3.66666667 2.22222222
+  0.         0.        ]
+ [0.         0.         1.11111111 2.77777778 2.77777778 1.66666667
+  0.         0.        ]
+ [0.         0.         0.77777778 1.44444444 1.44444444 0.66666667
+  0.         0.        ]]
 </pre></div>
 </div>
 <img alt="_images/9ea5ff376623a09e70318e2ffa8ed0f255bed2369860bcfcefc16f5b13eda0ad.png" src="_images/9ea5ff376623a09e70318e2ffa8ed0f255bed2369860bcfcefc16f5b13eda0ad.png" />
@@ -1030,30 +1050,50 @@ Mean filter:
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Crude mean filter:
 
- [[0.   0.   0.   0.   0.   0.   0.   0.  ]
- [0.   0.   0.78 2.56 2.56 1.78 0.   0.  ]
- [0.   0.   0.78 2.56 2.56 1.78 0.   0.  ]
- [0.   0.   0.78 2.22 2.22 1.44 0.   0.  ]
- [0.   0.   0.78 1.78 1.78 1.   0.   0.  ]
- [0.   0.   1.11 2.67 2.67 1.56 0.   0.  ]
- [0.   0.   1.   3.   3.   2.   0.   0.  ]
- [0.   0.   1.44 3.67 3.67 2.22 0.   0.  ]
- [0.   0.   1.11 2.78 2.78 1.67 0.   0.  ]
- [0.   0.   0.   0.   0.   0.   0.   0.  ]]
+ [[0.         0.         0.         0.         0.         0.
+  0.         0.        ]
+ [0.         0.         0.77777778 2.55555556 2.55555556 1.77777778
+  0.         0.        ]
+ [0.         0.         0.77777778 2.55555556 2.55555556 1.77777778
+  0.         0.        ]
+ [0.         0.         0.77777778 2.22222222 2.22222222 1.44444444
+  0.         0.        ]
+ [0.         0.         0.77777778 1.77777778 1.77777778 1.
+  0.         0.        ]
+ [0.         0.         1.11111111 2.66666667 2.66666667 1.55555556
+  0.         0.        ]
+ [0.         0.         1.         3.         3.         2.
+  0.         0.        ]
+ [0.         0.         1.44444444 3.66666667 3.66666667 2.22222222
+  0.         0.        ]
+ [0.         0.         1.11111111 2.77777778 2.77777778 1.66666667
+  0.         0.        ]
+ [0.         0.         0.         0.         0.         0.
+  0.         0.        ]]
 
 
 Mean filter via SciPy `correlate`:
 
- [[0.   0.   0.44 1.33 1.33 0.89 0.   0.  ]
- [0.   0.   0.78 2.56 2.56 1.78 0.   0.  ]
- [0.   0.   0.78 2.56 2.56 1.78 0.   0.  ]
- [0.   0.   0.78 2.22 2.22 1.44 0.   0.  ]
- [0.   0.   0.78 1.78 1.78 1.   0.   0.  ]
- [0.   0.   1.11 2.67 2.67 1.56 0.   0.  ]
- [0.   0.   1.   3.   3.   2.   0.   0.  ]
- [0.   0.   1.44 3.67 3.67 2.22 0.   0.  ]
- [0.   0.   1.11 2.78 2.78 1.67 0.   0.  ]
- [0.   0.   0.78 1.44 1.44 0.67 0.   0.  ]]
+ [[0.         0.         0.44444444 1.33333333 1.33333333 0.88888889
+  0.         0.        ]
+ [0.         0.         0.77777778 2.55555556 2.55555556 1.77777778
+  0.         0.        ]
+ [0.         0.         0.77777778 2.55555556 2.55555556 1.77777778
+  0.         0.        ]
+ [0.         0.         0.77777778 2.22222222 2.22222222 1.44444444
+  0.         0.        ]
+ [0.         0.         0.77777778 1.77777778 1.77777778 1.
+  0.         0.        ]
+ [0.         0.         1.11111111 2.66666667 2.66666667 1.55555556
+  0.         0.        ]
+ [0.         0.         1.         3.         3.         2.
+  0.         0.        ]
+ [0.         0.         1.44444444 3.66666667 3.66666667 2.22222222
+  0.         0.        ]
+ [0.         0.         1.11111111 2.77777778 2.77777778 1.66666667
+  0.         0.        ]
+ [0.         0.         0.77777778 1.44444444 1.44444444 0.66666667
+  0.         0.        ]]
 </pre></div>
 </div>
 </div>
@@ -1091,7 +1131,7 @@ The input is extended by wrapping around to the opposite edge.</p></li>
 </div>
 </div>
 </div>
-<p>We’ll apply it to a greyscale <code class="docutils literal notranslate"><span class="pre">coffee</span></code> image, originally a colour image from <code class="docutils literal notranslate"><span class="pre">ski.data</span></code>:</p>
+<p>We’ll apply it to a greyscale <code class="docutils literal notranslate"><span class="pre">coffee</span></code> image, originally a color image from <code class="docutils literal notranslate"><span class="pre">ski.data</span></code>:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Read in an image file.</span>
@@ -1118,7 +1158,7 @@ The input is extended by wrapping around to the opposite edge.</p></li>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/0cf802c534303d390414785550ffb5cdc962444fde0c749c4c4e84cd5c064a42.png" src="_images/0cf802c534303d390414785550ffb5cdc962444fde0c749c4c4e84cd5c064a42.png" />
+<img alt="_images/26caefac6f6a788a999833e95d8a23ef27662c93d31340552c437b796ff6af2f.png" src="_images/26caefac6f6a788a999833e95d8a23ef27662c93d31340552c437b796ff6af2f.png" />
 </div>
 </div>
 <p>The mean filter can remove some of the noise, restoring the clarity of the image:</p>
@@ -1143,7 +1183,7 @@ The input is extended by wrapping around to the opposite edge.</p></li>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/1ccd70c1284ec312472ff1a9c97724c602edcb48532532d5b63f2408018a4ceb.png" src="_images/1ccd70c1284ec312472ff1a9c97724c602edcb48532532d5b63f2408018a4ceb.png" />
+<img alt="_images/c362aed8129f0844f8dad12c08f9f89a36cc6e70ac035f54678e8404b4af71a5.png" src="_images/c362aed8129f0844f8dad12c08f9f89a36cc6e70ac035f54678e8404b4af71a5.png" />
 </div>
 </div>
 <p>We can see that the image is clearer, the noise has been reduced and some of the signal has been restored.</p>
@@ -1173,7 +1213,7 @@ The input is extended by wrapping around to the opposite edge.</p></li>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/f65b1c2fba99c9ca72ae446a034bb5fe17786e434f78ee37b8489d258739529e.png" src="_images/f65b1c2fba99c9ca72ae446a034bb5fe17786e434f78ee37b8489d258739529e.png" />
+<img alt="_images/25f0692c247abfbe20377dc26c782ac6dfa6b2df29ca3192faf0134ebad8a411.png" src="_images/25f0692c247abfbe20377dc26c782ac6dfa6b2df29ca3192faf0134ebad8a411.png" />
 </div>
 </div>
 <p>As with many filtering operations, the effect of altering aspects of the filtering process (like a threshold value or kernel size), is very context-dependent. It may take many iterations before finding a “sweet spot”, and where the sweet spot is may be somewhat subjective.</p>
@@ -1342,7 +1382,7 @@ Min Pixel Value: -49
 </section>
 <section class="tex2jax_ignore mathjax_ignore" id="filtering-3d-images">
 <h1>Filtering 3D images<a class="headerlink" href="#filtering-3d-images" title="Link to this heading">#</a></h1>
-<p>We can filter a 3D colour image just by convolving our filtering kernel with each colour channel separately. Let’s load a 3D image:</p>
+<p>We can filter a 3D color image just by convolving our filtering kernel with each color channel separately. Let’s load a 3D image:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Load in and show an image.</span>
@@ -1403,7 +1443,7 @@ Min Pixel Value: 0
 </div>
 </div>
 </div>
-<p>As you can see, the error results from using a 2D kernel to filter a 3D image. A simple solution to this is just to apply the filter to each colour channel separately. This is done in the cell below, using a for loop to filter each channel, storing the channels separately in a dictionary, and then <code class="docutils literal notranslate"><span class="pre">np.stacking()</span></code> the individually filtered channels back into a 3D image:</p>
+<p>As you can see, the error results from using a 2D kernel to filter a 3D image. A simple solution to this is just to apply the filter to each color channel separately. This is done in the cell below, using a for loop to filter each channel, storing the channels separately in a dictionary, and then <code class="docutils literal notranslate"><span class="pre">np.stacking()</span></code> the individually filtered channels back into a 3D image:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># A dictionary to store the individually filtered channels.</span>
@@ -1495,7 +1535,7 @@ Min Pixel Value: 0
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Mean filter the colour image, with `skimage`.</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Mean filter the color image, with `skimage`.</span>
 <span class="n">astronaut_mean_filtered_ski</span> <span class="o">=</span> <span class="n">ski</span><span class="o">.</span><span class="n">filters</span><span class="o">.</span><span class="n">rank</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">astronaut</span><span class="p">,</span>
                                                     <span class="n">footprint</span><span class="o">=</span><span class="n">footprint_9_by_9_3D</span><span class="p">)</span>
 
@@ -1515,8 +1555,8 @@ Min Pixel Value: 0
 <img alt="_images/c8ae7707234f553e485189b8e63c537de79133ab155657e4e37416ad2359ccee.png" src="_images/c8ae7707234f553e485189b8e63c537de79133ab155657e4e37416ad2359ccee.png" />
 </div>
 </div>
-<p>Pay attention here to the effect on the <em>colour</em> of the image. How is it different to filtering the colour channels separately?</p>
-<p>You’ll notice that the colours have changed substantially, relative to when we filtered each channel separately. This is because the 3D kernel is averaging across the colour channels. We may want this effect (it is somewhat retro), but if we do not want to affect the colour of the image, then generally filtering the channels separately is the way to go…</p>
+<p>Pay attention here to the effect on the <em>color</em> of the image. How is it different to filtering the color channels separately?</p>
+<p>You’ll notice that the colors have changed substantially, relative to when we filtered each channel separately. This is because the 3D kernel is averaging across the color channels. We may want this effect (it is somewhat retro), but if we do not want to affect the color of the image, then generally filtering the channels separately is the way to go…</p>
 </section>
 <section class="tex2jax_ignore mathjax_ignore" id="summary">
 <h1>Summary<a class="headerlink" href="#summary" title="Link to this heading">#</a></h1>

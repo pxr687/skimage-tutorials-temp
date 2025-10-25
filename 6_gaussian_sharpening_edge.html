@@ -158,8 +158,8 @@
       
     
     
-    <img src="_static/colourwheel.png" class="logo__image only-light" alt="Scikit-image via NumPy and SciPy - Home"/>
-    <script>document.write(`<img src="_static/colourwheel.png" class="logo__image only-dark" alt="Scikit-image via NumPy and SciPy - Home"/>`);</script>
+    <img src="_static/colorwheel.png" class="logo__image only-light" alt="Scikit-image via NumPy and SciPy - Home"/>
+    <script>document.write(`<img src="_static/colorwheel.png" class="logo__image only-dark" alt="Scikit-image via NumPy and SciPy - Home"/>`);</script>
   
   
 </a></div>
@@ -180,7 +180,7 @@
 <ul class="current nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="0_images_as_numpy_arrays.html">Images as NumPy arrays</a></li>
 
-<li class="toctree-l1"><a class="reference internal" href="1_colour_images_as_numpy_arrays.html">What about colour?</a></li>
+<li class="toctree-l1"><a class="reference internal" href="1_color_images_as_numpy_arrays.html">What about color?</a></li>
 
 
 
@@ -1164,15 +1164,24 @@ Min Pixel Value: 0
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([[0.01, 0.01, 0.01, 0.01, 0.01, 0.01, 0.01, 0.01, 0.01],
-       [0.01, 0.01, 0.01, 0.01, 0.01, 0.01, 0.01, 0.01, 0.01],
-       [0.01, 0.01, 0.01, 0.01, 0.01, 0.01, 0.01, 0.01, 0.01],
-       [0.01, 0.01, 0.01, 0.03, 0.03, 0.03, 0.01, 0.01, 0.01],
-       [0.01, 0.01, 0.01, 0.03, 0.03, 0.03, 0.01, 0.01, 0.01],
-       [0.01, 0.01, 0.01, 0.03, 0.03, 0.03, 0.01, 0.01, 0.01],
-       [0.01, 0.01, 0.01, 0.01, 0.01, 0.01, 0.01, 0.01, 0.01],
-       [0.01, 0.01, 0.01, 0.01, 0.01, 0.01, 0.01, 0.01, 0.01],
-       [0.01, 0.01, 0.01, 0.01, 0.01, 0.01, 0.01, 0.01, 0.01]])
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([[0.00694444, 0.00694444, 0.00694444, 0.01388889, 0.01388889,
+        0.01388889, 0.00694444, 0.00694444, 0.00694444],
+       [0.00694444, 0.00694444, 0.00694444, 0.01388889, 0.01388889,
+        0.01388889, 0.00694444, 0.00694444, 0.00694444],
+       [0.00694444, 0.00694444, 0.00694444, 0.01388889, 0.01388889,
+        0.01388889, 0.00694444, 0.00694444, 0.00694444],
+       [0.01388889, 0.01388889, 0.01388889, 0.02777778, 0.02777778,
+        0.02777778, 0.01388889, 0.01388889, 0.01388889],
+       [0.01388889, 0.01388889, 0.01388889, 0.02777778, 0.02777778,
+        0.02777778, 0.01388889, 0.01388889, 0.01388889],
+       [0.01388889, 0.01388889, 0.01388889, 0.02777778, 0.02777778,
+        0.02777778, 0.01388889, 0.01388889, 0.01388889],
+       [0.00694444, 0.00694444, 0.00694444, 0.01388889, 0.01388889,
+        0.01388889, 0.00694444, 0.00694444, 0.00694444],
+       [0.00694444, 0.00694444, 0.00694444, 0.01388889, 0.01388889,
+        0.01388889, 0.00694444, 0.00694444, 0.00694444],
+       [0.00694444, 0.00694444, 0.00694444, 0.01388889, 0.01388889,
+        0.01388889, 0.00694444, 0.00694444, 0.00694444]])
 </pre></div>
 </div>
 </div>
@@ -1443,7 +1452,7 @@ Same as the target? This array should contain on `True`s if so...:
 <p>Theoretically speaking, <span class="math notranslate nohighlight">\(\text{(original_image – blurred_image)}\)</span> contains <em>sharpened details</em> of the image, because it results from subtracting out a version of the image which is much blurrier than the original, giving us the <em>difference</em> between the original image and the blurry image. This effect is easiest to appreciate visually:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Perform the sharpening, on each colour channel separately, to avoid altering the colour of the image.</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Perform the sharpening, on each color channel separately, to avoid altering the color of the image.</span>
 <span class="n">gaussian_filtered_cats</span> <span class="o">=</span> <span class="p">[]</span>
 <span class="n">sharpened</span> <span class="o">=</span> <span class="p">[]</span>
 <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">blurry_cat</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">2</span><span class="p">]):</span>
@@ -1630,10 +1639,10 @@ Same as the target? This array should contain on `True`s if so...:
 </div>
 </div>
 </div>
-<p>Let’s apply the <code class="docutils literal notranslate"><span class="pre">sharpening_kernel</span></code> to the <code class="docutils literal notranslate"><span class="pre">blurry_cat</span></code> image array. As this array is a 3D colour image, we apply the kernel to each colour channel separately:</p>
+<p>Let’s apply the <code class="docutils literal notranslate"><span class="pre">sharpening_kernel</span></code> to the <code class="docutils literal notranslate"><span class="pre">blurry_cat</span></code> image array. As this array is a 3D color image, we apply the kernel to each color channel separately:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Separately sharpen each colour channel of the `blurry_cat` image.</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Separately sharpen each color channel of the `blurry_cat` image.</span>
 <span class="n">sharpened_channels</span> <span class="o">=</span> <span class="p">{}</span>
 <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">3</span><span class="p">):</span>
     <span class="n">sharpened_cat_channel</span> <span class="o">=</span> <span class="n">ndi</span><span class="o">.</span><span class="n">correlate</span><span class="p">(</span><span class="n">blurry_cat</span><span class="p">[:,</span> <span class="p">:,</span> <span class="n">i</span><span class="p">],</span>
@@ -1667,7 +1676,7 @@ Same as the target? This array should contain on `True`s if so...:
 </div>
 <p>Sci-kit image (unsurprisingly) also has filters to sharpen images. The <code class="docutils literal notranslate"><span class="pre">ski.filters.unsharp_mask()</span></code> filter is one such filter,  and it uses a similar approach to the one we used above,  when we sharpened an image using a Gaussian filter. <code class="docutils literal notranslate"><span class="pre">ski.filters.unsharp_mask()</span></code> uses the following approach:</p>
 <p><span class="math notranslate nohighlight">\( \text{sharpened_img = original_img + scaling_amount * (original_img - blurred_img)} \)</span></p>
-<p>…where “scaling_amount” is a single value which amplifies the sharpened details. Here is the result on <code class="docutils literal notranslate"><span class="pre">blurry_cat</span></code>, using the default parameters, aside from <code class="docutils literal notranslate"><span class="pre">channel_axis</span></code>. We set this to 2 to tell the function that this is a colour image, with the colour channels in the third dimension (<code class="docutils literal notranslate"><span class="pre">axis</span> <span class="pre">=</span> <span class="pre">2</span></code>). This prevents the sharpening filter from affecting the colour of the image:</p>
+<p>…where “scaling_amount” is a single value which amplifies the sharpened details. Here is the result on <code class="docutils literal notranslate"><span class="pre">blurry_cat</span></code>, using the default parameters, aside from <code class="docutils literal notranslate"><span class="pre">channel_axis</span></code>. We set this to 2 to tell the function that this is a color image, with the color channels in the third dimension (<code class="docutils literal notranslate"><span class="pre">axis</span> <span class="pre">=</span> <span class="pre">2</span></code>). This prevents the sharpening filter from affecting the color of the image:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Sharpen `blurry_cat`.</span>

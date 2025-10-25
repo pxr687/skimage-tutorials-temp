@@ -66,7 +66,7 @@
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="(Sci-kit) Image processing, via NumPy and SciPy" href="3_skimage_processing_from_numpy_and_scipy.html" />
-    <link rel="prev" title="What about colour?" href="1_colour_images_as_numpy_arrays.html" />
+    <link rel="prev" title="What about color?" href="1_color_images_as_numpy_arrays.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   </head>
@@ -158,8 +158,8 @@
       
     
     
-    <img src="_static/colourwheel.png" class="logo__image only-light" alt="Scikit-image via NumPy and SciPy - Home"/>
-    <script>document.write(`<img src="_static/colourwheel.png" class="logo__image only-dark" alt="Scikit-image via NumPy and SciPy - Home"/>`);</script>
+    <img src="_static/colorwheel.png" class="logo__image only-light" alt="Scikit-image via NumPy and SciPy - Home"/>
+    <script>document.write(`<img src="_static/colorwheel.png" class="logo__image only-dark" alt="Scikit-image via NumPy and SciPy - Home"/>`);</script>
   
   
 </a></div>
@@ -180,7 +180,7 @@
 <ul class="current nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="0_images_as_numpy_arrays.html">Images as NumPy arrays</a></li>
 
-<li class="toctree-l1"><a class="reference internal" href="1_colour_images_as_numpy_arrays.html">What about colour?</a></li>
+<li class="toctree-l1"><a class="reference internal" href="1_color_images_as_numpy_arrays.html">What about color?</a></li>
 
 
 
@@ -499,7 +499,7 @@ document.write(`
 <li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#small-image-arrays-big-image-arrays">Small image arrays, big image arrays</a></li>
 <li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#colourspaces">Colourspaces</a></li>
 <li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#colourspaces-2-transparency-in-the-3rd-dimension">Colourspaces 2: transparency in the 3rd dimension</a></li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#not-all-3d-images-are-in-colour">Not all 3D images are in colour…</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#not-all-3d-images-are-in-color">Not all 3D images are in color…</a></li>
 <li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#summary">Summary</a></li>
 <li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#references">References</a></li>
 </ul>
@@ -520,7 +520,7 @@ document.write(`
 </section>
 <section class="tex2jax_ignore mathjax_ignore" id="images-are-arrays-arrays-are-images">
 <h1>Images are arrays, arrays are images<a class="headerlink" href="#images-are-arrays-arrays-are-images" title="Link to this heading">#</a></h1>
-<p>As we have seen, the technical definition of an image is <em>an (at least) two-dimensional array</em>. We know that each element of an image array (an “array pixel”) contains information about the grey-level or colour of that element. Perhaps obviously, these fundamental principles apply equally to Scikit-image, given that it represents images as NumPy arrays. The table below outlines how images are represented in <code class="docutils literal notranslate"><span class="pre">skimage</span></code> - you’ll notice it is identical to the principles we have seen for representing images in NumPy:</p>
+<p>As we have seen, the technical definition of an image is <em>an (at least) two-dimensional array</em>. We know that each element of an image array (an “array pixel”) contains information about the grey-level or color of that element. Perhaps obviously, these fundamental principles apply equally to Scikit-image, given that it represents images as NumPy arrays. The table below outlines how images are represented in <code class="docutils literal notranslate"><span class="pre">skimage</span></code> - you’ll notice it is identical to the principles we have seen for representing images in NumPy:</p>
 <div class="pst-scrollable-table-container"><table class="table">
 <thead>
 <tr class="row-odd"><th class="head text-left"><p></p></th>
@@ -547,7 +547,7 @@ document.write(`
 <span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
 
-<span class="c1"># Set the default colourmap for this session.</span>
+<span class="c1"># Set the default colormap for this session.</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">rcParams</span><span class="p">[</span><span class="s1">&#39;image.cmap&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;gray&#39;</span>
 
 <span class="c1"># Import a custom function to give hints for some exercises.</span>
@@ -583,10 +583,10 @@ document.write(`
 <img alt="_images/68263706613df0ced43f23f905ac7be8e9515872ddb6fa5b76d169a7ed40469a.png" src="_images/68263706613df0ced43f23f905ac7be8e9515872ddb6fa5b76d169a7ed40469a.png" />
 </div>
 </div>
-<p>You will recall that this array - in virtue of being 2D and having only one numeric value per array pixel - is a single-channel array. This means that it contains only information about pixel intensity (grey-level), and not about colour.</p>
-<p>To include true colour information, our array must be of <em>at least</em> three dimensions. A three-dimensional colour image array typically has three “slices” in the third dimension. Each element of each slice contains a number between 0 and 1 (for <code class="docutils literal notranslate"><span class="pre">float64</span></code> data), or between 1 and 255 (for <code class="docutils literal notranslate"><span class="pre">uint8</span></code> data). For the standard RGB (Red-Green-Blue) format the number in each element of each slice in the third dimension tells that array pixel what colour to be (e.g. a mix of red, green and blue, across the three slices). Hence these slices, in the third dimension, are called “colour channels”.</p>
+<p>You will recall that this array - in virtue of being 2D and having only one numeric value per array pixel - is a single-channel array. This means that it contains only information about pixel intensity (grey-level), and not about color.</p>
+<p>To include true color information, our array must be of <em>at least</em> three dimensions. A three-dimensional color image array typically has three “slices” in the third dimension. Each element of each slice contains a number between 0 and 1 (for <code class="docutils literal notranslate"><span class="pre">float64</span></code> data), or between 1 and 255 (for <code class="docutils literal notranslate"><span class="pre">uint8</span></code> data). For the standard RGB (Red-Green-Blue) format the number in each element of each slice in the third dimension tells that array pixel what color to be (e.g. a mix of red, green and blue, across the three slices). Hence these slices, in the third dimension, are called “color channels”.</p>
 <p><img alt="" src="_images/three_slice_algebraic_multi.png" /></p>
-<p>As we saw previously, we can control the amount of colour in the image by manipulating each channel in the third dimension:</p>
+<p>As we saw previously, we can control the amount of color in the image by manipulating each channel in the third dimension:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Using `np.stack()` to create a multi-channel array.</span>
@@ -610,12 +610,12 @@ Min Pixel Value: 0.0
 <img alt="_images/26677f31560dc35c0238b5d3ceedf5aea493000dd2cb5f368a0d21fb1973347e.png" src="_images/26677f31560dc35c0238b5d3ceedf5aea493000dd2cb5f368a0d21fb1973347e.png" />
 </div>
 </div>
-<p>We show this principle again below, for each colour channel. The top row of the plot shows the channels for <code class="docutils literal notranslate"><span class="pre">uint8</span></code> data with 255 as the maximum pixel intensity value. The second row of the plot shows each channel for <code class="docutils literal notranslate"><span class="pre">float64</span></code> data, using 1 as the maximum pixel intensity value:</p>
+<p>We show this principle again below, for each color channel. The top row of the plot shows the channels for <code class="docutils literal notranslate"><span class="pre">uint8</span></code> data with 255 as the maximum pixel intensity value. The second row of the plot shows each channel for <code class="docutils literal notranslate"><span class="pre">float64</span></code> data, using 1 as the maximum pixel intensity value:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Use a custom function to plot the maximum intensity values in the diagonals, for `int` and `float` data,</span>
 <span class="c1"># using our familiar 1&#39;s and 0&#39;s array.</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">random_colours</span><span class="w"> </span><span class="kn">import</span> <span class="n">plot_int_float</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">random_colors</span><span class="w"> </span><span class="kn">import</span> <span class="n">plot_int_float</span>
 <span class="n">plot_int_float</span><span class="p">();</span>
 </pre></div>
 </div>
@@ -624,7 +624,7 @@ Min Pixel Value: 0.0
 <img alt="_images/9159f0e5f1f40c662ca18a6bc7b2cf6a82b37e52ee75300e0c16f2d948bc3a71.png" src="_images/9159f0e5f1f40c662ca18a6bc7b2cf6a82b37e52ee75300e0c16f2d948bc3a71.png" />
 </div>
 </div>
-<p>These are the basic aspects of images represented as NumPy arrays. Other ways of representing colour exist and are supported by <code class="docutils literal notranslate"><span class="pre">skimage</span></code>, and indeed, not all 3D image arrays contain colour information (e.g. structural brain images). We will look at these concepts in later sections, but <code class="docutils literal notranslate"><span class="pre">skimage</span></code> can work with these images as easily as the basic coloured squares we have just made - all these images <em>are just NumPy arrays</em> and can be handled just as any NumPy array.</p>
+<p>These are the basic aspects of images represented as NumPy arrays. Other ways of representing color exist and are supported by <code class="docutils literal notranslate"><span class="pre">skimage</span></code>, and indeed, not all 3D image arrays contain color information (e.g. structural brain images). We will look at these concepts in later sections, but <code class="docutils literal notranslate"><span class="pre">skimage</span></code> can work with these images as easily as the basic colored squares we have just made - all these images <em>are just NumPy arrays</em> and can be handled just as any NumPy array.</p>
 </section>
 <section class="tex2jax_ignore mathjax_ignore" id="going-ski-ing-arrays-as-arguments">
 <h1>Going <code class="docutils literal notranslate"><span class="pre">ski</span></code>-ing : arrays as arguments<a class="headerlink" href="#going-ski-ing-arrays-as-arguments" title="Link to this heading">#</a></h1>
@@ -959,10 +959,10 @@ Min Pixel Value: 0.0
 <div class="cell_output docutils container">
 <div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
 <span class="ne">KeyError</span><span class="g g-Whitespace">                                  </span>Traceback (most recent call last)
-<span class="nn">File /opt/hostedtoolcache/Python/3.12.11/x64/lib/python3.12/site-packages/PIL/PngImagePlugin.py:1368,</span> in <span class="ni">_save</span><span class="nt">(im, fp, filename, chunk, save_all)</span>
-<span class="g g-Whitespace">   </span><span class="mi">1367</span> <span class="k">try</span><span class="p">:</span>
-<span class="ne">-&gt; </span><span class="mi">1368</span>     <span class="n">rawmode</span><span class="p">,</span> <span class="n">bit_depth</span><span class="p">,</span> <span class="n">color_type</span> <span class="o">=</span> <span class="n">_OUTMODES</span><span class="p">[</span><span class="n">outmode</span><span class="p">]</span>
-<span class="g g-Whitespace">   </span><span class="mi">1369</span> <span class="k">except</span> <span class="ne">KeyError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+<span class="nn">File /opt/hostedtoolcache/Python/3.12.11/x64/lib/python3.12/site-packages/PIL/PngImagePlugin.py:1370,</span> in <span class="ni">_save</span><span class="nt">(im, fp, filename, chunk, save_all)</span>
+<span class="g g-Whitespace">   </span><span class="mi">1369</span> <span class="k">try</span><span class="p">:</span>
+<span class="ne">-&gt; </span><span class="mi">1370</span>     <span class="n">rawmode</span><span class="p">,</span> <span class="n">bit_depth</span><span class="p">,</span> <span class="n">color_type</span> <span class="o">=</span> <span class="n">_OUTMODES</span><span class="p">[</span><span class="n">outmode</span><span class="p">]</span>
+<span class="g g-Whitespace">   </span><span class="mi">1371</span> <span class="k">except</span> <span class="ne">KeyError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
 
 <span class="ne">KeyError</span>: &#39;F&#39;
 
@@ -1030,19 +1030,19 @@ Min Pixel Value: 0.0
 <span class="g g-Whitespace">    </span><span class="mi">486</span> <span class="bp">self</span><span class="o">.</span><span class="n">images_to_write</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
 <span class="g g-Whitespace">    </span><span class="mi">487</span> <span class="bp">self</span><span class="o">.</span><span class="n">save_args</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
 
-<span class="nn">File /opt/hostedtoolcache/Python/3.12.11/x64/lib/python3.12/site-packages/PIL/Image.py:2588,</span> in <span class="ni">Image.save</span><span class="nt">(self, fp, format, **params)</span>
-<span class="g g-Whitespace">   </span><span class="mi">2585</span>     <span class="n">fp</span> <span class="o">=</span> <span class="n">cast</span><span class="p">(</span><span class="n">IO</span><span class="p">[</span><span class="nb">bytes</span><span class="p">],</span> <span class="n">fp</span><span class="p">)</span>
-<span class="g g-Whitespace">   </span><span class="mi">2587</span> <span class="k">try</span><span class="p">:</span>
-<span class="ne">-&gt; </span><span class="mi">2588</span>     <span class="n">save_handler</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fp</span><span class="p">,</span> <span class="n">filename</span><span class="p">)</span>
-<span class="g g-Whitespace">   </span><span class="mi">2589</span> <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
-<span class="g g-Whitespace">   </span><span class="mi">2590</span>     <span class="k">if</span> <span class="n">open_fp</span><span class="p">:</span>
+<span class="nn">File /opt/hostedtoolcache/Python/3.12.11/x64/lib/python3.12/site-packages/PIL/Image.py:2571,</span> in <span class="ni">Image.save</span><span class="nt">(self, fp, format, **params)</span>
+<span class="g g-Whitespace">   </span><span class="mi">2568</span>     <span class="n">fp</span> <span class="o">=</span> <span class="n">cast</span><span class="p">(</span><span class="n">IO</span><span class="p">[</span><span class="nb">bytes</span><span class="p">],</span> <span class="n">fp</span><span class="p">)</span>
+<span class="g g-Whitespace">   </span><span class="mi">2570</span> <span class="k">try</span><span class="p">:</span>
+<span class="ne">-&gt; </span><span class="mi">2571</span>     <span class="n">save_handler</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fp</span><span class="p">,</span> <span class="n">filename</span><span class="p">)</span>
+<span class="g g-Whitespace">   </span><span class="mi">2572</span> <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
+<span class="g g-Whitespace">   </span><span class="mi">2573</span>     <span class="k">if</span> <span class="n">open_fp</span><span class="p">:</span>
 
-<span class="nn">File /opt/hostedtoolcache/Python/3.12.11/x64/lib/python3.12/site-packages/PIL/PngImagePlugin.py:1371,</span> in <span class="ni">_save</span><span class="nt">(im, fp, filename, chunk, save_all)</span>
-<span class="g g-Whitespace">   </span><span class="mi">1369</span> <span class="k">except</span> <span class="ne">KeyError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
-<span class="g g-Whitespace">   </span><span class="mi">1370</span>     <span class="n">msg</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;cannot write mode </span><span class="si">{</span><span class="n">mode</span><span class="si">}</span><span class="s2"> as PNG&quot;</span>
-<span class="ne">-&gt; </span><span class="mi">1371</span>     <span class="k">raise</span> <span class="ne">OSError</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span> <span class="kn">from</span><span class="w"> </span><span class="nn">e</span>
-<span class="g g-Whitespace">   </span><span class="mi">1372</span> <span class="k">if</span> <span class="n">outmode</span> <span class="o">==</span> <span class="s2">&quot;I&quot;</span><span class="p">:</span>
-<span class="g g-Whitespace">   </span><span class="mi">1373</span>     <span class="n">deprecate</span><span class="p">(</span><span class="s2">&quot;Saving I mode images as PNG&quot;</span><span class="p">,</span> <span class="mi">13</span><span class="p">,</span> <span class="n">stacklevel</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span>
+<span class="nn">File /opt/hostedtoolcache/Python/3.12.11/x64/lib/python3.12/site-packages/PIL/PngImagePlugin.py:1373,</span> in <span class="ni">_save</span><span class="nt">(im, fp, filename, chunk, save_all)</span>
+<span class="g g-Whitespace">   </span><span class="mi">1371</span> <span class="k">except</span> <span class="ne">KeyError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+<span class="g g-Whitespace">   </span><span class="mi">1372</span>     <span class="n">msg</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;cannot write mode </span><span class="si">{</span><span class="n">mode</span><span class="si">}</span><span class="s2"> as PNG&quot;</span>
+<span class="ne">-&gt; </span><span class="mi">1373</span>     <span class="k">raise</span> <span class="ne">OSError</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span> <span class="kn">from</span><span class="w"> </span><span class="nn">e</span>
+<span class="g g-Whitespace">   </span><span class="mi">1374</span> <span class="k">if</span> <span class="n">outmode</span> <span class="o">==</span> <span class="s2">&quot;I&quot;</span><span class="p">:</span>
+<span class="g g-Whitespace">   </span><span class="mi">1375</span>     <span class="n">deprecate</span><span class="p">(</span><span class="s2">&quot;Saving I mode images as PNG&quot;</span><span class="p">,</span> <span class="mi">13</span><span class="p">,</span> <span class="n">stacklevel</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span>
 
 <span class="ne">OSError</span>: cannot write mode F as PNG
 </pre></div>
@@ -1180,7 +1180,7 @@ Min Pixel Value: 0
 <p><img alt="" src="_images/camera_plot.png" /></p>
 <p>Try to recreate something like the image below, by adding noise to the image with <code class="docutils literal notranslate"><span class="pre">ski.util.random_noise()</span></code>. Like most <code class="docutils literal notranslate"><span class="pre">skimage</span></code> functions, <code class="docutils literal notranslate"><span class="pre">random_noise()</span></code> takes a NumPy image array as an argument, and adds random quantities to the array pixel values. To match the target image below, you will need to adjust an optional argument, see if you can work out which argument it is by reading the <a class="reference external" href="https://scikit-image.org/docs/0.25.x/api/skimage.util.html#skimage.util.random_noise">documentation</a>.</p>
 <p><img alt="" src="_images/noisy_camera.png" /></p>
-<p>Make sure you pay attention to the <em>colour</em> of the noise…</p>
+<p>Make sure you pay attention to the <em>color</em> of the noise…</p>
 <p>Your new image should have the following attributes:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>Type: &lt;class &#39;numpy.ndarray&#39;&gt;
 dtype: float64
@@ -1202,7 +1202,7 @@ Min Pixel Value: 0.0
 
 <p class="admonition-title">Solution to<a class="reference internal" href="#noisy-camera"> Exercise 7</a></p>
 <section id="solution-content">
-<p>The solution here is to <code class="docutils literal notranslate"><span class="pre">np.stack()</span></code> the <code class="docutils literal notranslate"><span class="pre">camera</span></code> image, to introduce colour channels. We then pass our 3D array to <code class="docutils literal notranslate"><span class="pre">ski.util.random_noise()</span></code>, manipulating the <code class="docutils literal notranslate"><span class="pre">var</span></code> argument to control the “level” of the noise. Specifically, <code class="docutils literal notranslate"><span class="pre">var</span></code> will control the range of the changes. Higher values of <code class="docutils literal notranslate"><span class="pre">var</span></code> means bigger absolute random values can potentially be added/subtracted from each pixel:</p>
+<p>The solution here is to <code class="docutils literal notranslate"><span class="pre">np.stack()</span></code> the <code class="docutils literal notranslate"><span class="pre">camera</span></code> image, to introduce color channels. We then pass our 3D array to <code class="docutils literal notranslate"><span class="pre">ski.util.random_noise()</span></code>, manipulating the <code class="docutils literal notranslate"><span class="pre">var</span></code> argument to control the “level” of the noise. Specifically, <code class="docutils literal notranslate"><span class="pre">var</span></code> will control the range of the changes. Higher values of <code class="docutils literal notranslate"><span class="pre">var</span></code> means bigger absolute random values can potentially be added/subtracted from each pixel:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution.</span>
@@ -1214,7 +1214,7 @@ Min Pixel Value: 0.0
                                <span class="n">camera</span><span class="p">],</span> 
                                <span class="n">axis</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
 
-<span class="c1"># Add noisy to every colour channel.</span>
+<span class="c1"># Add noisy to every color channel.</span>
 <span class="n">camera_with_noise</span> <span class="o">=</span> <span class="n">ski</span><span class="o">.</span><span class="n">util</span><span class="o">.</span><span class="n">random_noise</span><span class="p">(</span><span class="n">camera_with_noise</span><span class="p">,</span>
                                           <span class="n">var</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
 <span class="c1"># Show the result.</span>
@@ -1231,7 +1231,7 @@ Max Pixel Value: 1.0
 Min Pixel Value: 0.0
 </pre></div>
 </div>
-<img alt="_images/2feab20fac2e4fd5fde2d496e2819927f5f7a142e712ae53b193420960c66748.png" src="_images/2feab20fac2e4fd5fde2d496e2819927f5f7a142e712ae53b193420960c66748.png" />
+<img alt="_images/abf9b37f11e6bc6f6c6820a0871029bbf1148f65e82f0f1e1d7b78e868f4c55e.png" src="_images/abf9b37f11e6bc6f6c6820a0871029bbf1148f65e82f0f1e1d7b78e868f4c55e.png" />
 </div>
 </div>
 </section>
@@ -1239,8 +1239,8 @@ Min Pixel Value: 0.0
 </section>
 <section class="tex2jax_ignore mathjax_ignore" id="colourspaces">
 <h1>Colourspaces<a class="headerlink" href="#colourspaces" title="Link to this heading">#</a></h1>
-<p>So far we have looked primarily at binary/monochrome single-channel image arrays and three-channel RGB colour image arrays. We can use the <code class="docutils literal notranslate"><span class="pre">shape</span></code> conventions from NumPy to think about these image types. Single channel images have a <code class="docutils literal notranslate"><span class="pre">shape</span></code> of <code class="docutils literal notranslate"><span class="pre">(n,</span> <span class="pre">m)</span></code> where <code class="docutils literal notranslate"><span class="pre">n</span></code> is the number of rows and <code class="docutils literal notranslate"><span class="pre">m</span></code> is the number of columns. RGB images have a shape of <code class="docutils literal notranslate"><span class="pre">(n,</span> <span class="pre">m,</span> <span class="pre">3)</span></code>, so <code class="docutils literal notranslate"><span class="pre">n</span></code> rows, <code class="docutils literal notranslate"><span class="pre">m</span></code> columns and <code class="docutils literal notranslate"><span class="pre">3</span></code> slices (the colour channels).</p>
-<p>RGB is the default, but colour images of shape <code class="docutils literal notranslate"><span class="pre">(n,</span> <span class="pre">m,</span> <span class="pre">3)</span></code> can use different representations of colour to the RGB method we have seen. We call these different colour representation formats <em>colourspaces</em>. <code class="docutils literal notranslate"><span class="pre">skimage</span></code> supports many of them, and contains many functions for converting image arrays between colourspaces. These functions are contained in the <code class="docutils literal notranslate"><span class="pre">ski.color</span></code> module:</p>
+<p>So far we have looked primarily at binary/monochrome single-channel image arrays and three-channel RGB color image arrays. We can use the <code class="docutils literal notranslate"><span class="pre">shape</span></code> conventions from NumPy to think about these image types. Single channel images have a <code class="docutils literal notranslate"><span class="pre">shape</span></code> of <code class="docutils literal notranslate"><span class="pre">(n,</span> <span class="pre">m)</span></code> where <code class="docutils literal notranslate"><span class="pre">n</span></code> is the number of rows and <code class="docutils literal notranslate"><span class="pre">m</span></code> is the number of columns. RGB images have a shape of <code class="docutils literal notranslate"><span class="pre">(n,</span> <span class="pre">m,</span> <span class="pre">3)</span></code>, so <code class="docutils literal notranslate"><span class="pre">n</span></code> rows, <code class="docutils literal notranslate"><span class="pre">m</span></code> columns and <code class="docutils literal notranslate"><span class="pre">3</span></code> slices (the color channels).</p>
+<p>RGB is the default, but color images of shape <code class="docutils literal notranslate"><span class="pre">(n,</span> <span class="pre">m,</span> <span class="pre">3)</span></code> can use different representations of color to the RGB method we have seen. We call these different color representation formats <em>colorspaces</em>. <code class="docutils literal notranslate"><span class="pre">skimage</span></code> supports many of them, and contains many functions for converting image arrays between colorspaces. These functions are contained in the <code class="docutils literal notranslate"><span class="pre">ski.color</span></code> module:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Show the functions in `ski.color`.</span>
@@ -1317,7 +1317,7 @@ Min Pixel Value: 0.0
 </div>
 </div>
 </div>
-<p>Let’s load in the <code class="docutils literal notranslate"><span class="pre">cat</span></code> image from <code class="docutils literal notranslate"><span class="pre">ski.data</span></code>, to look at a different colourspace:</p>
+<p>Let’s load in the <code class="docutils literal notranslate"><span class="pre">cat</span></code> image from <code class="docutils literal notranslate"><span class="pre">ski.data</span></code>, to look at a different colorspace:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Load the image and show it.</span>
@@ -1338,7 +1338,7 @@ Min Pixel Value: 0
 <img alt="_images/60b7cd61208645b425827f7a1ad2f07076f41c86351b79cba077558e9f2a5174.png" src="_images/60b7cd61208645b425827f7a1ad2f07076f41c86351b79cba077558e9f2a5174.png" />
 </div>
 </div>
-<p>On the <a class="reference internal" href="1_colour_images_as_numpy_arrays.html"><span class="doc std std-doc">previous page</span></a> we manually converted colour images to greyscale, using NumPy operations. As we saw earlier on the present page, functions from the <code class="docutils literal notranslate"><span class="pre">ski.color</span></code> module, like <code class="docutils literal notranslate"><span class="pre">ski.color.rgb2gray()</span></code>, can do this more elegantly, with less code:</p>
+<p>On the <a class="reference internal" href="1_color_images_as_numpy_arrays.html"><span class="doc std std-doc">previous page</span></a> we manually converted color images to greyscale, using NumPy operations. As we saw earlier on the present page, functions from the <code class="docutils literal notranslate"><span class="pre">ski.color</span></code> module, like <code class="docutils literal notranslate"><span class="pre">ski.color.rgb2gray()</span></code>, can do this more elegantly, with less code:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># From RGB to greyscale.</span>
@@ -1359,17 +1359,17 @@ Min Pixel Value: 0.02
 <img alt="_images/12227d6a6aaad732b021a534269fb2007a7a9bfff2d7e26d134d57239ca738a9.png" src="_images/12227d6a6aaad732b021a534269fb2007a7a9bfff2d7e26d134d57239ca738a9.png" />
 </div>
 </div>
-<p>This greyscale conversion is achieved by calculating the luminance of the image via a weighted sum of the information in each colour channel:</p>
+<p>This greyscale conversion is achieved by calculating the luminance of the image via a weighted sum of the information in each color channel:</p>
 <div class="math notranslate nohighlight">
 \[
 Y = 0.2126R + 0.7152G + 0.0722B
 \]</div>
-<p>This has the effect of removing the colour channels, so the output array is 2D. Why do we use these specific numbers? You could go and knock on the door of your physicist friend to ask (don’t worry, they’ll be in…), or you can see <a class="reference external" href="https://stackoverflow.com/questions/596216/formula-to-determine-perceived-brightness-of-rgb-color">this page</a> for a detailed explanation of where the weights come from.</p>
-<div class="exercise dropdown admonition" id="no-colour-cat">
+<p>This has the effect of removing the color channels, so the output array is 2D. Why do we use these specific numbers? You could go and knock on the door of your physicist friend to ask (don’t worry, they’ll be in…), or you can see <a class="reference external" href="https://stackoverflow.com/questions/596216/formula-to-determine-perceived-brightness-of-rgb-color">this page</a> for a detailed explanation of where the weights come from.</p>
+<div class="exercise dropdown admonition" id="no-color-cat">
 
 <p class="admonition-title"><span class="caption-number">Exercise 8 </span></p>
 <section id="exercise-content">
-<p>Re-colour the <code class="docutils literal notranslate"><span class="pre">cat</span></code> image using the luminance formula provided above. Your output image should have the following attributes:</p>
+<p>Re-color the <code class="docutils literal notranslate"><span class="pre">cat</span></code> image using the luminance formula provided above. Your output image should have the following attributes:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>Type: &lt;class &#39;numpy.ndarray&#39;&gt;
 dtype: float64
 Shape: (300, 451)
@@ -1391,9 +1391,9 @@ Min Pixel Value: 0.0
 </div>
 <div class="solution dropdown admonition" id="2_skimage_intro-solution-3">
 
-<p class="admonition-title">Solution to<a class="reference internal" href="#no-colour-cat"> Exercise 8</a></p>
+<p class="admonition-title">Solution to<a class="reference internal" href="#no-color-cat"> Exercise 8</a></p>
 <section id="solution-content">
-<p>This is a very simple operation! We can just “plug” each colour channel of the <code class="docutils literal notranslate"><span class="pre">cat</span></code> array into the formula, using NumPy array indexing:</p>
+<p>This is a very simple operation! We can just “plug” each color channel of the <code class="docutils literal notranslate"><span class="pre">cat</span></code> array into the formula, using NumPy array indexing:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Apply the formula.        Red channel.           Blue channel.          Green channel.</span>
@@ -1449,10 +1449,10 @@ Min Pixel Value: 0.0
 </div>
 </section>
 </div>
-<p>We can also convert an image into a different true colourspace (e.g. not greyscale). <code class="docutils literal notranslate"><span class="pre">ski.color.rgb2hsv()</span></code> will convert an RGB image to an image in the HSV colourspace. HSV stands for <a class="reference external" href="https://en.wikipedia.org/wiki/HSL_and_HSV">Hue, Saturation, Value</a>:</p>
+<p>We can also convert an image into a different true colorspace (e.g. not greyscale). <code class="docutils literal notranslate"><span class="pre">ski.color.rgb2hsv()</span></code> will convert an RGB image to an image in the HSV colorspace. HSV stands for <a class="reference external" href="https://en.wikipedia.org/wiki/HSL_and_HSV">Hue, Saturation, Value</a>:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Convert `cat` to the HSV colourspcae</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Convert `cat` to the HSV colorspcae</span>
 <span class="n">hsv_cat</span> <span class="o">=</span> <span class="n">ski</span><span class="o">.</span><span class="n">color</span><span class="o">.</span><span class="n">rgb2hsv</span><span class="p">(</span><span class="n">cat</span><span class="p">)</span>
 <span class="n">show_attributes</span><span class="p">(</span><span class="n">hsv_cat</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">hsv_cat</span><span class="p">);</span>
@@ -1504,7 +1504,7 @@ Min Pixel Value: 0.0
 </section>
 <section class="tex2jax_ignore mathjax_ignore" id="colourspaces-2-transparency-in-the-3rd-dimension">
 <h1>Colourspaces 2: transparency in the 3rd dimension<a class="headerlink" href="#colourspaces-2-transparency-in-the-3rd-dimension" title="Link to this heading">#</a></h1>
-<p>Now, other colourspaces involve arrays of different <code class="docutils literal notranslate"><span class="pre">shape</span></code>s. For instance, some image arrays are <code class="docutils literal notranslate"><span class="pre">(n,</span> <span class="pre">m,</span> <span class="pre">4)</span></code> - so that’s <code class="docutils literal notranslate"><span class="pre">n</span></code> rows, <code class="docutils literal notranslate"><span class="pre">m</span></code> columns and <code class="docutils literal notranslate"><span class="pre">4</span></code> slices in the third dimension.</p>
+<p>Now, other colorspaces involve arrays of different <code class="docutils literal notranslate"><span class="pre">shape</span></code>s. For instance, some image arrays are <code class="docutils literal notranslate"><span class="pre">(n,</span> <span class="pre">m,</span> <span class="pre">4)</span></code> - so that’s <code class="docutils literal notranslate"><span class="pre">n</span></code> rows, <code class="docutils literal notranslate"><span class="pre">m</span></code> columns and <code class="docutils literal notranslate"><span class="pre">4</span></code> slices in the third dimension.</p>
 <p>Let’s see what that extra slice does, using our tried and true <code class="docutils literal notranslate"><span class="pre">squares</span></code> image array:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -1536,7 +1536,7 @@ Min Pixel Value: 0.0
 </div>
 </div>
 <p>Ok, so we just get red nonzero pixels. So what does the 4th channel do?</p>
-<p>It controls <em>transparency</em>. Setting it to 1 gives maximum <em>opacity</em> e.g. solid, non-see through colour.</p>
+<p>It controls <em>transparency</em>. Setting it to 1 gives maximum <em>opacity</em> e.g. solid, non-see through color.</p>
 <p>Let’s set it lower:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -1595,7 +1595,7 @@ Min Pixel Value: 0.0
 <p>Here are some things to pay attention to, in the target image, to help you think about what operations you need here:</p>
 <ul class="simple">
 <li><p>the <code class="docutils literal notranslate"><span class="pre">shape</span></code> of the target image.</p></li>
-<li><p>the colour of the target image in different regions.</p></li>
+<li><p>the color of the target image in different regions.</p></li>
 <li><p>the <code class="docutils literal notranslate"><span class="pre">dtype</span></code> of the target image.</p></li>
 </ul>
 <p><em>Hint 1:</em> run the function <code class="docutils literal notranslate"><span class="pre">hint_camera()</span></code> for some additional help if you get stuck.</p>
@@ -1614,7 +1614,7 @@ Min Pixel Value: 0.0
 <p class="admonition-title">Solution to<a class="reference internal" href="#shoegaze"> Exercise 9</a></p>
 <section id="solution-content">
 <p>There are several steps here - this was not an easy task! First, we need to convert our image to the <code class="docutils literal notranslate"><span class="pre">float64</span></code>. We need the <code class="docutils literal notranslate"><span class="pre">ski.util.img_as_float()</span></code> function to do this. If you tried to use the NumPy <code class="docutils literal notranslate"><span class="pre">.astype(float)</span></code> method, you will have encountered a thorny error (more on this below).</p>
-<p>If you look at the target image, you will notice that it has a green-ish tone, but not so green as we would get if the other colour channels were “switched off”. As such, you can get the correct effect by reducing the impact of the red and blue channels, by halving their values.</p>
+<p>If you look at the target image, you will notice that it has a green-ish tone, but not so green as we would get if the other color channels were “switched off”. As such, you can get the correct effect by reducing the impact of the red and blue channels, by halving their values.</p>
 <p>The left-hand side of the image has variance in <em>transparency</em> - pixels where the image is darker are <em>more transparent</em>. This is because, in the target image, the alpha channel is a copy of the original 2D image.</p>
 <p>The distinction between the left-hand side and right-hand side of the image is that in the right-hand side, the transparency channel values are all uniform, though less than maximum opacity, giving a hazy effect. This can be achieved by NumPy array indexing, and setting values in the alpha channel in the right-hand side of the image to all equal 0.5:</p>
 <div class="cell docutils container">
@@ -1713,11 +1713,11 @@ Min Pixel Value: 0.0
 </section>
 </div>
 </section>
-<section class="tex2jax_ignore mathjax_ignore" id="not-all-3d-images-are-in-colour">
-<h1>Not all 3D images are in colour…<a class="headerlink" href="#not-all-3d-images-are-in-colour" title="Link to this heading">#</a></h1>
-<p>We noted <a class="reference internal" href="1_colour_images_as_numpy_arrays.html"><span class="doc std std-doc">earlier</span></a> that it is important to know that not all 3D images contain colour information. What sort of images are these? Typically, they are images obtained during <a class="reference external" href="https://en.wikipedia.org/wiki/Medical_imaging">medical imaging</a> scans, like brain imaging. The “slices” in the third dimension, for these images, are literally slices of a 3D object (like a brain, chest, arm or leg!) rather than colour channels.</p>
+<section class="tex2jax_ignore mathjax_ignore" id="not-all-3d-images-are-in-color">
+<h1>Not all 3D images are in color…<a class="headerlink" href="#not-all-3d-images-are-in-color" title="Link to this heading">#</a></h1>
+<p>We noted <a class="reference internal" href="1_color_images_as_numpy_arrays.html"><span class="doc std std-doc">earlier</span></a> that it is important to know that not all 3D images contain color information. What sort of images are these? Typically, they are images obtained during <a class="reference external" href="https://en.wikipedia.org/wiki/Medical_imaging">medical imaging</a> scans, like brain imaging. The “slices” in the third dimension, for these images, are literally slices of a 3D object (like a brain, chest, arm or leg!) rather than color channels.</p>
 <p>To show this, below we use <code class="docutils literal notranslate"><span class="pre">ski.io.imread()</span></code> to load in an image in one of these formats. The image is an X-ray of the head of a desert <a class="reference external" href="https://github.com/neurolabusc/niivue-images/tree/main">iguana</a>.</p>
-<p><em>Note:</em> here we are loading in a <code class="docutils literal notranslate"><span class="pre">.png</span></code> image, this is a highly atypical format to store medical images, but we use it just for illustration of a 3D image that does not contain colour, using a familiar image format… The original image file, in the more standard <a class="reference external" href="https://brainder.org/2012/09/23/the-nifti-file-format">Nifti format</a>, is <a class="reference external" href="https://github.com/neurolabusc/niivue-images/blob/main/Iguana.nii.gz">here</a>.</p>
+<p><em>Note:</em> here we are loading in a <code class="docutils literal notranslate"><span class="pre">.png</span></code> image, this is a highly atypical format to store medical images, but we use it just for illustration of a 3D image that does not contain color, using a familiar image format… The original image file, in the more standard <a class="reference external" href="https://brainder.org/2012/09/23/the-nifti-file-format">Nifti format</a>, is <a class="reference external" href="https://github.com/neurolabusc/niivue-images/blob/main/Iguana.nii.gz">here</a>.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Read in the `iguana` image, show its attributes.</span>
@@ -1736,7 +1736,7 @@ Min Pixel Value: 0
 </div>
 </div>
 </div>
-<p>We can see now that there are 179 slices in the third dimension - however, we do not have 179 colour channels! Each “slice” is a different literal “slice” of the iguana’s head. Below, we “walk” through the slices, showing those early in the stack (<code class="docutils literal notranslate"><span class="pre">iguana[:,</span> <span class="pre">:,</span> <span class="pre">10]</span></code>) as well as those in the middle (<code class="docutils literal notranslate"><span class="pre">iguana[:,</span> <span class="pre">:,</span> <span class="pre">84]</span></code>) and at the end (<code class="docutils literal notranslate"><span class="pre">iguana[:,</span> <span class="pre">:,</span> <span class="pre">178]</span></code>):</p>
+<p>We can see now that there are 179 slices in the third dimension - however, we do not have 179 color channels! Each “slice” is a different literal “slice” of the iguana’s head. Below, we “walk” through the slices, showing those early in the stack (<code class="docutils literal notranslate"><span class="pre">iguana[:,</span> <span class="pre">:,</span> <span class="pre">10]</span></code>) as well as those in the middle (<code class="docutils literal notranslate"><span class="pre">iguana[:,</span> <span class="pre">:,</span> <span class="pre">84]</span></code>) and at the end (<code class="docutils literal notranslate"><span class="pre">iguana[:,</span> <span class="pre">:,</span> <span class="pre">178]</span></code>):</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Show multiple slices of the iguana&#39;s head...</span>
@@ -1754,8 +1754,8 @@ Min Pixel Value: 0
 </div>
 </div>
 <p>You can see that we are walking through the iguana’s head, in the vertical direction.</p>
-<p>Because this image file contains information about a literal 3D object (e.g. an iguana’s head), we can refer to it as a <em>volumetric</em> image. In such images, the third dimension contains <em>spatial information</em>, and not <em>colour information</em>.</p>
-<p>Both <code class="docutils literal notranslate"><span class="pre">skimage</span></code> and <code class="docutils literal notranslate"><span class="pre">matplotlib</span></code> know the slices in the third dimension are not colour channels because there are many too many slices to function as colour channels, so it is assumed that the image is volumetric.</p>
+<p>Because this image file contains information about a literal 3D object (e.g. an iguana’s head), we can refer to it as a <em>volumetric</em> image. In such images, the third dimension contains <em>spatial information</em>, and not <em>color information</em>.</p>
+<p>Both <code class="docutils literal notranslate"><span class="pre">skimage</span></code> and <code class="docutils literal notranslate"><span class="pre">matplotlib</span></code> know the slices in the third dimension are not color channels because there are many too many slices to function as color channels, so it is assumed that the image is volumetric.</p>
 </section>
 <section class="tex2jax_ignore mathjax_ignore" id="summary">
 <h1>Summary<a class="headerlink" href="#summary" title="Link to this heading">#</a></h1>
@@ -1765,9 +1765,9 @@ Min Pixel Value: 0
 <li><p>Most <code class="docutils literal notranslate"><span class="pre">skimage</span></code> functions take NumPy arrays as arguments.</p></li>
 <li><p>The <code class="docutils literal notranslate"><span class="pre">ski.io</span></code> module handles input and output (e.g. reading and saving image files).</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">skimage</span></code> supports multiple <code class="docutils literal notranslate"><span class="pre">dtypes</span></code> in image arrays, and contains convenience functions for converting between <code class="docutils literal notranslate"><span class="pre">dtypes</span></code>.</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">skimage</span></code> supports multiple colourspaces which use different colour representations to the default RGB colourspace.</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">skimage</span></code> supports both three-channel colour image arrays with shape <code class="docutils literal notranslate"><span class="pre">(n,</span> <span class="pre">m,</span> <span class="pre">3)</span></code> and four-channel colour image arrays with shape <code class="docutils literal notranslate"><span class="pre">(n,</span> <span class="pre">m,</span> <span class="pre">4)</span></code>, where an extra channel codes for transparency/opacity.</p></li>
-<li><p>Some 3D images are volumetric, and do not contain colour channels, despite having a third dimension. <code class="docutils literal notranslate"><span class="pre">skimage</span></code> supports these image formats as well.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">skimage</span></code> supports multiple colorspaces which use different color representations to the default RGB colorspace.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">skimage</span></code> supports both three-channel color image arrays with shape <code class="docutils literal notranslate"><span class="pre">(n,</span> <span class="pre">m,</span> <span class="pre">3)</span></code> and four-channel color image arrays with shape <code class="docutils literal notranslate"><span class="pre">(n,</span> <span class="pre">m,</span> <span class="pre">4)</span></code>, where an extra channel codes for transparency/opacity.</p></li>
+<li><p>Some 3D images are volumetric, and do not contain color channels, despite having a third dimension. <code class="docutils literal notranslate"><span class="pre">skimage</span></code> supports these image formats as well.</p></li>
 </ul>
 <p>On the <a class="reference internal" href="3_skimage_processing_from_numpy_and_scipy.html"><span class="doc std std-doc">next page</span></a> we will look at how image processing can be performed using NumPy, SciPy and Scikit-image.</p>
 </section>
@@ -1809,12 +1809,12 @@ Min Pixel Value: 0
                   
 <div class="prev-next-area">
     <a class="left-prev"
-       href="1_colour_images_as_numpy_arrays.html"
+       href="1_color_images_as_numpy_arrays.html"
        title="previous page">
       <i class="fa-solid fa-angle-left"></i>
       <div class="prev-next-info">
         <p class="prev-next-subtitle">previous</p>
-        <p class="prev-next-title">What about colour?</p>
+        <p class="prev-next-title">What about color?</p>
       </div>
     </a>
     <a class="right-next"
@@ -1850,7 +1850,7 @@ Min Pixel Value: 0
 <li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#small-image-arrays-big-image-arrays">Small image arrays, big image arrays</a></li>
 <li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#colourspaces">Colourspaces</a></li>
 <li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#colourspaces-2-transparency-in-the-3rd-dimension">Colourspaces 2: transparency in the 3rd dimension</a></li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#not-all-3d-images-are-in-colour">Not all 3D images are in colour…</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#not-all-3d-images-are-in-color">Not all 3D images are in color…</a></li>
 <li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#summary">Summary</a></li>
 <li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#references">References</a></li>
 </ul>

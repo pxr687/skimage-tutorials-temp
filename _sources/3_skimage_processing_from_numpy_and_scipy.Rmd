@@ -216,7 +216,7 @@ Max Pixel Value: 1.0
 Min Pixel Value: -1.0
 ```
 
-*Note*: notice how we have lost a column, relative to the original `i_img` array...We also now have -1 values in the array, have a think about which colours in the displayed image you think that these negative values will correspond to.
+*Note*: notice how we have lost a column, relative to the original `i_img` array...We also now have -1 values in the array, have a think about which colors in the displayed image you think that these negative values will correspond to.
 
 *Hint:* run the function `hint_split_i()`, which was imported at the beginning of this notebook, to see a helpful hint.
 
@@ -245,7 +245,7 @@ print(split_i_solution)
 plt.imshow(split_i_solution);
 ```
 
-Why is the background now grey? Well, remember that, for a monochrome image visualised with the `gray` colourmap: the most intense (highest value) pixels are white, and the least intense (lowest value) pixels are black, and intermediate values are a shade of grey.
+Why is the background now grey? Well, remember that, for a monochrome image visualised with the `gray` colormap: the most intense (highest value) pixels are white, and the least intense (lowest value) pixels are black, and intermediate values are a shade of grey.
 
 When we subtract along the column, with `np.diff()` the third value is subtracted from the fourth value etc., and so the resulting differences are calculated as:
 
@@ -535,7 +535,7 @@ We can see that the cameraman is facing a different direction in each image (tak
 
 The difference here is that transposing an image switches the rows and columns, such that the first row becomes the first column etc. Conversely, `skimage.transform.rotate()` pivots the pixels around a central point. Essentially, transposing gives a *mirroring effect* which is different from a rotation.
 
-Pay attention to the location of the spoon in the `coffee` image. First, we `ski.transform.rotate()` it by 90 degrees. Then, we show it `.transpose`d, switching the rows and columns. As `coffee` is a 3D image, the `.T` method will produce an error, because the colour channels will be moved into the wrong dimension - to avoid this we use the `.transpose` method, to keep the colour channels in the third dimension, whilst switching the rows and columns:
+Pay attention to the location of the spoon in the `coffee` image. First, we `ski.transform.rotate()` it by 90 degrees. Then, we show it `.transpose`d, switching the rows and columns. As `coffee` is a 3D image, the `.T` method will produce an error, because the color channels will be moved into the wrong dimension - to avoid this we use the `.transpose` method, to keep the color channels in the third dimension, whilst switching the rows and columns:
 
 ```{python}
 # The `shape` of the original `coffee` image.
@@ -544,16 +544,16 @@ coffee.shape
 
 ```{python}
 # Why we cannot use the `.T` method. We get an array which
-# is the wrong `shape` for a colour image!
+# is the wrong `shape` for a color image!
 coffee.T.shape
 ```
 
 ```{python}
 coffee_transposed = coffee.transpose((1, 0, 2)) # Move the columns into the rows, the rows into the columns, 
-                                               # and leave the colour channels in the third dimension.
+                                               # and leave the color channels in the third dimension.
 plt.imshow(coffee_transposed); 
  
-# Show the attributes (not that the `shape` is still correct for a colour image).
+# Show the attributes (not that the `shape` is still correct for a color image).
 show_attributes(coffee_transposed)
 ```
 
@@ -734,7 +734,7 @@ show_attributes(cat_solution)
 plt.imshow(cat_solution);
 ```
 
-Next, to replicate the yellow-y tone of the target image, we "switch off" the blue colour channel (because red + green = yellow):
+Next, to replicate the yellow-y tone of the target image, we "switch off" the blue color channel (because red + green = yellow):
 
 ```{python}
 # Make it yellow!
@@ -862,7 +862,7 @@ In image processing, a mask is a matrix/array containing a collection of element
 ```{python}
 coffee_grey = ski.io.imread("images/coffee_grey.png", 
                         as_gray=True) # We could also use indexing/skimage.color to do this, 
-                                      # by removing colour channels.
+                                      # by removing color channels.
 show_attributes(coffee_grey)
 plt.imshow(coffee_grey);
 ```
@@ -962,9 +962,9 @@ plt.imshow(camera_masked_solution);
 :::
 
 
-# Inverting image colours
+# Inverting image colors
 
-We saw *colour inversion* on an [earlier page](0_images_as_numpy_arrays). This is where all the pixel values in an image are, shockingly, inverted: high numbers become low numbers and vice versa:
+We saw *color inversion* on an [earlier page](0_images_as_numpy_arrays). This is where all the pixel values in an image are, shockingly, inverted: high numbers become low numbers and vice versa:
 
 For a binary image, this involves swapping 1s and 0s...
 
@@ -982,41 +982,41 @@ print(inverted_i)
 plt.imshow(inverted_i);
 ```
 
-What about a colour image? 
+What about a color image? 
 
 ```{python}
-# Read in a colour image.
-colourwheel = ski.io.imread("images/colourwheel.png")
-show_attributes(colourwheel)
-plt.imshow(colourwheel);
+# Read in a color image.
+colorwheel = ski.io.imread("images/colorwheel.png")
+show_attributes(colorwheel)
+plt.imshow(colorwheel);
 ```
 
-The numerical trick that we used with the binary image will not work for a colour image like this, because the pixel values range from 0 to 255. -255 is not allowed within the acceptable range for `uint8` image data and will produce an error!
+The numerical trick that we used with the binary image will not work for a color image like this, because the pixel values range from 0 to 255. -255 is not allowed within the acceptable range for `uint8` image data and will produce an error!
 
 ```{python tags=c("raises-exception")}
-# Shortcut will not work for colour images
-plt.imshow(colourwheel * -1)
+# Shortcut will not work for color images
+plt.imshow(colorwheel * -1)
 ```
 
-But remember that inversion means we, well, "invert" the pixel values. Because the maximum value is now 255, we can subtract each array pixel value in each colour channel from 255 to "reverse" the values:
+But remember that inversion means we, well, "invert" the pixel values. Because the maximum value is now 255, we can subtract each array pixel value in each color channel from 255 to "reverse" the values:
 
 ```{python}
-# Invert the colour image, manually.
-inverted_colourwheel = colourwheel.copy()
+# Invert the color image, manually.
+inverted_colorwheel = colorwheel.copy()
 for i in np.arange(3):
-    inverted_colourwheel[:, :, i] = 255 - inverted_colourwheel[:, :, i] 
+    inverted_colorwheel[:, :, i] = 255 - inverted_colorwheel[:, :, i] 
     
-plt.imshow(inverted_colourwheel);
+plt.imshow(inverted_colorwheel);
 ```
 
-# Inverting colours with `skimage`
+# Inverting colors with `skimage`
 
-`ski.util.invert()` handles colour inversion, we simply pass it a colour NumPy image array and voilà!:
+`ski.util.invert()` handles color inversion, we simply pass it a color NumPy image array and voilà!:
 
 ```{python}
-# Invert the colour image, with `skimage`.
-invert_colourwheel_with_skimage = ski.util.invert(colourwheel)
-plt.imshow(invert_colourwheel_with_skimage);
+# Invert the color image, with `skimage`.
+invert_colorwheel_with_skimage = ski.util.invert(colorwheel)
+plt.imshow(invert_colorwheel_with_skimage);
 ```
 
 ::: {exercise-start}
@@ -1153,7 +1153,7 @@ plt.imshow(ski.util.invert(cat_solution_2));
 
 This looks cool - if anything *cooler* than the target image - but it is not what we want.
 
-To recreate the target image, we must "switch" off the green colour channel *before* we invert the colours:
+To recreate the target image, we must "switch" off the green color channel *before* we invert the colors:
 
 ```{python}
 cat_purple = cat_solution_2.copy()
@@ -1216,10 +1216,10 @@ plt.matshow(binary_check_from_ski);
 
 # Colour to greyscale conversion
 
-To downgrade a colour image to greyscale we can use a brute force method of taking the mean of the three colour channels, to produce a 2D monochrome image array:
+To downgrade a color image to greyscale we can use a brute force method of taking the mean of the three color channels, to produce a 2D monochrome image array:
 
 ```{python}
-grey_wheel = np.mean(colourwheel, 
+grey_wheel = np.mean(colorwheel, 
                      axis=2)
 
 plt.imshow(grey_wheel);
@@ -1231,16 +1231,16 @@ $$
 Y = 0.2126R + 0.7152G + 0.0722B
 $$
 
-This "collapses" a 3D colour image into a 2D greyscale image via a weighted sum of the channels.
+This "collapses" a 3D color image into a 2D greyscale image via a weighted sum of the channels.
 
 ::: {exercise-start}
 :label: grey-wheel
 :class: dropdown
 :::
 
-Here is the original `colourwheel` image:
+Here is the original `colorwheel` image:
 
-![](images/colourwheel.png)
+![](images/colorwheel.png)
 
 It has the following attributes:
 
@@ -1252,7 +1252,7 @@ Max Pixel Value: 255
 Min Pixel Value: 0
 ```
 
-Using the luminance formula, and any other required `numpy`, `scipy` or `skimage` operations, recreate the target image below, starting from the `colourwheel` array:
+Using the luminance formula, and any other required `numpy`, `scipy` or `skimage` operations, recreate the target image below, starting from the `colorwheel` array:
 
 ![](images/grey_wheel.png)
 
@@ -1290,7 +1290,7 @@ The solution here requires some close attention to `dtype`. To apply the luminan
 weights = np.array([0.2126, 0.7152, 0.0722])
 
 # Run the numbers...
-grey_wheel = np.dot(colourwheel, weights)
+grey_wheel = np.dot(colorwheel, weights)
 
 # Show the result.
 show_attributes(grey_wheel)
@@ -1314,13 +1314,13 @@ grey_wheel = ski.exposure.rescale_intensity(grey_wheel,
 show_attributes(grey_wheel)
 ```
 
-Now, we can painlessly convert to `uint8`. Finally, to match the target image, we must `ski.transform.invert()` our depressingly dreary colourwheel:
+Now, we can painlessly convert to `uint8`. Finally, to match the target image, we must `ski.transform.invert()` our depressingly dreary colorwheel:
 
 ```{python}
 # Convert to `uint8` `dtype`.
 grey_wheel = ski.util.img_as_ubyte(grey_wheel)
 
-# Invert the colour and show the result.
+# Invert the color and show the result.
 grey_wheel =  ski.util.invert(grey_wheel)
 show_attributes(grey_wheel)
 plt.imshow(grey_wheel);
@@ -1332,13 +1332,13 @@ plt.imshow(grey_wheel);
 
 # Colour to greyscale conversion with `skimage`
 
-As always, the `ski.color` module has us covered here with the `rgb2gray()` function. We simply pass it the colour array that we want to convert to greyscale, without the direct need for the luminance formula:
+As always, the `ski.color` module has us covered here with the `rgb2gray()` function. We simply pass it the color array that we want to convert to greyscale, without the direct need for the luminance formula:
 
 ```{python}
-# Convert colour to greyscale.
-grey_colourwheel_from_ski = ski.color.rgb2gray(colourwheel)
-show_attributes(grey_colourwheel_from_ski)
-plt.imshow(grey_colourwheel_from_ski);
+# Convert color to greyscale.
+grey_colorwheel_from_ski = ski.color.rgb2gray(colorwheel)
+show_attributes(grey_colorwheel_from_ski)
+plt.imshow(grey_colorwheel_from_ski);
 ```
 
 # Summary
