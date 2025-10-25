@@ -399,7 +399,7 @@ def mean_filter(image_array, kernel_shape):
                         output=float)
 ```
 
-We'll apply it to a greyscale `coffee` image, originally a colour image from `ski.data`:
+We'll apply it to a greyscale `coffee` image, originally a color image from `ski.data`:
 
 ```{python}
 # Read in an image file.
@@ -590,7 +590,7 @@ plt.imshow(mean_filtered_camera);
 
 # Filtering 3D images
 
-We can filter a 3D colour image just by convolving our filtering kernel with each colour channel separately. Let's load a 3D image:
+We can filter a 3D color image just by convolving our filtering kernel with each color channel separately. Let's load a 3D image:
 
 ```{python}
 # Load in and show an image.
@@ -606,7 +606,7 @@ If we try to filter this image with our (3, 3) `mean_kernel` we will get an erro
 astronaut_mean_filtered = ndi.correlate(astronaut, weights=mean_kernel)
 ```
 
-As you can see, the error results from using a 2D kernel to filter a 3D image. A simple solution to this is just to apply the filter to each colour channel separately. This is done in the cell below, using a for loop to filter each channel, storing the channels separately in a dictionary, and then `np.stacking()` the individually filtered channels back into a 3D image:
+As you can see, the error results from using a 2D kernel to filter a 3D image. A simple solution to this is just to apply the filter to each color channel separately. This is done in the cell below, using a for loop to filter each channel, storing the channels separately in a dictionary, and then `np.stacking()` the individually filtered channels back into a 3D image:
 
 ```{python}
 # A dictionary to store the individually filtered channels.
@@ -681,7 +681,7 @@ footprint_9_by_9_3D.shape
 ```
 
 ```{python}
-# Mean filter the colour image, with `skimage`.
+# Mean filter the color image, with `skimage`.
 astronaut_mean_filtered_ski = ski.filters.rank.mean(astronaut,
                                                     footprint=footprint_9_by_9_3D)
 
@@ -696,9 +696,9 @@ plt.imshow(astronaut_mean_filtered_ski)
 plt.tight_layout();
 ```
 
-Pay attention here to the effect on the *colour* of the image. How is it different to filtering the colour channels separately?
+Pay attention here to the effect on the *color* of the image. How is it different to filtering the color channels separately?
 
-You'll notice that the colours have changed substantially, relative to when we filtered each channel separately. This is because the 3D kernel is averaging across the colour channels. We may want this effect (it is somewhat retro), but if we do not want to affect the colour of the image, then generally filtering the channels separately is the way to go...
+You'll notice that the colors have changed substantially, relative to when we filtered each channel separately. This is because the 3D kernel is averaging across the color channels. We may want this effect (it is somewhat retro), but if we do not want to affect the color of the image, then generally filtering the channels separately is the way to go...
 
 
 # Summary

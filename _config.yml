@@ -2,7 +2,7 @@
 title : "Scikit-image via NumPy and SciPy"
 author: Peter Rush, Matthew Brett
 copyright: "2025"
-logo: images/colourwheel.png
+logo: images/colorwheel.png
 email: peter_rush@live.co.uk
 # >- starts a multiline string, where newlines replaced by spaces, and final
 # newlines are stripped.
