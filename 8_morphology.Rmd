@@ -398,7 +398,7 @@ big_diamond = ski.morphology.diamond(radius=30)
 plt.imshow(big_diamond);
 ```
 
-Dilating with this `big_diamond` will give you the right outline, but the wrong colours:
+Dilating with this `big_diamond` will give you the right outline, but the wrong colors:
 
 ```{python}
 # Solution, part 1:
@@ -407,7 +407,7 @@ xeno_big_diamond = ski.morphology.dilation(xenomorph,
 plt.imshow(xeno_big_diamond);
 ```
 
-To get the target image, we need to `invert` the colours:
+To get the target image, we need to `invert` the colors:
 
 ```{python}
 # Solution, part 2:

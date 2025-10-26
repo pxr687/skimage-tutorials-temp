@@ -216,7 +216,7 @@ histogram = plt.hist(camera.ravel(), bins=n_bins_few)
 plt.title(f"{n_bins_few} bins. Too few!")
 plt.xlabel('Pixel Intensity Value')
 plt.ylabel('Pixel Count')
-colours=['red', 'yellow']
+colors=['red', 'yellow']
 for val in histogram[1]:
     plt.plot(val, 0, marker=marker,
              color = "red", markersize=markersize,
@@ -514,7 +514,7 @@ print("Mean of histogram above the 50th bin:", mean_above_50th_bin.round(2))
 print("SSD of histogram above the 50th bin:", ssd_above_50th_bin.round(2))
 ```
 
-The cell below defines a convenience plotting function, the mean of each histogram is shown on the plot, as a vertical line in the same colour as the histogram that it corresponds to (left or right). A horizontal line around each mean indicates the spread around that mean (FYI this spread has been converted back to the original scale of the plot, rather than the squared value of the `ssd`):
+The cell below defines a convenience plotting function, the mean of each histogram is shown on the plot, as a vertical line in the same color as the histogram that it corresponds to (left or right). A horizontal line around each mean indicates the spread around that mean (FYI this spread has been converted back to the original scale of the plot, rather than the squared value of the `ssd`):
 
 ```{python}
 # A convenience plotting function.
