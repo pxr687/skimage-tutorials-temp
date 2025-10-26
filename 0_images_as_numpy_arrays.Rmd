@@ -39,7 +39,7 @@ a picture *of*).
 ![](images/printed_paper.png)
 
 The file and resulting printed image might depict an object that was not
-originally created on a computer. The image may be of a oil painting, for
+originally created on a computer. The image may be of an oil painting, for
 example. Things like paintings fall under the intuitive meaning of "image",
 but, until they are represented on a computer, they do not fall under the
 technical meaning of "image". A painting is not an array of numbers, but
