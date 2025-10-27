@@ -19,7 +19,7 @@ jupyter:
 
 # Images are arrays, arrays are images
 
-As we have seen, the technical definition of an image is *an (at least) two-dimensional array*. We know that each element of an image array (an "array pixel") contains information about the grey-level or color of that element. Perhaps obviously, these fundamental principles apply equally to Scikit-image, given that it represents images as NumPy arrays. The table below outlines how images are represented in `skimage` - you'll notice it is identical to the principles we have seen for representing images in NumPy: 
+As we have seen, the technical definition of an image is *an (at least) two-dimensional array*. We know that each element of an image array (an "array pixel") contains information about the gray-level or color of that element. Perhaps obviously, these fundamental principles apply equally to Scikit-image, given that it represents images as NumPy arrays. The table below outlines how images are represented in `skimage` - you'll notice it is identical to the principles we have seen for representing images in NumPy: 
 
 |||
 |:---|:---|
@@ -59,7 +59,7 @@ print(squares)
 plt.matshow(squares);
 ```
 
-You will recall that this array - in virtue of being 2D and having only one numeric value per array pixel - is a single-channel array. This means that it contains only information about pixel intensity (grey-level), and not about color. 
+You will recall that this array - in virtue of being 2D and having only one numeric value per array pixel - is a single-channel array. This means that it contains only information about pixel intensity (gray-level), and not about color. 
 
 To include true color information, our array must be of *at least* three dimensions. A three-dimensional color image array typically has three "slices" in the third dimension. Each element of each slice contains a number between 0 and 1 (for `float64` data), or between 1 and 255 (for `uint8` data). For the standard RGB (Red-Green-Blue) format the number in each element of each slice in the third dimension tells that array pixel what color to be (e.g. a mix of red, green and blue, across the three slices). Hence these slices, in the third dimension, are called "color channels". 
 
@@ -97,7 +97,7 @@ So far so good, we have an image array to experiment with. Let's import `skimage
 import skimage as ski
 ```
 
-Because Scikit-image represents images as NumPy arrays, *the majority of Scikit-image functions take NumPy `ndarray`s as arguments.* For instance, the `rgb2gray()` function from the `ski.color` module can take a multi-channel array, and convert it to a single channel, greyscale image. We will show this with the `red_squares` array from above:
+Because Scikit-image represents images as NumPy arrays, *the majority of Scikit-image functions take NumPy `ndarray`s as arguments.* For instance, the `rgb2gray()` function from the `ski.color` module can take a multi-channel array, and convert it to a single channel, grayscale image. We will show this with the `red_squares` array from above:
 
 ```{python}
 # Show the original `red_squares` array
@@ -108,7 +108,7 @@ plt.matshow(red_squares);
 Now, we just pass the `squares` array to `ski.color.rgb2gray()` as an argument:
 
 ```{python}
-# Convert the `red_squares` array to greyscale.
+# Convert the `red_squares` array to grayscale.
 back_to_black = ski.color.rgb2gray(red_squares)
 show_attributes(back_to_black)
 plt.matshow(back_to_black);
@@ -374,16 +374,16 @@ show_attributes(cat)
 plt.imshow(cat);
 ```
 
-On the [previous page](1_color_images_as_numpy_arrays) we manually converted color images to greyscale, using NumPy operations. As we saw earlier on the present page, functions from the `ski.color` module, like `ski.color.rgb2gray()`, can do this more elegantly, with less code:
+On the [previous page](1_color_images_as_numpy_arrays) we manually converted color images to grayscale, using NumPy operations. As we saw earlier on the present page, functions from the `ski.color` module, like `ski.color.rgb2gray()`, can do this more elegantly, with less code:
 
 ```{python}
-# From RGB to greyscale.
-grey_cat = ski.color.rgb2gray(cat)
-show_attributes(grey_cat)
-plt.imshow(grey_cat);
+# From RGB to grayscale.
+gray_cat = ski.color.rgb2gray(cat)
+show_attributes(gray_cat)
+plt.imshow(gray_cat);
 ```
 
-This greyscale conversion is achieved by calculating the luminance of the image via a weighted sum of the information in each color channel:
+This grayscale conversion is achieved by calculating the luminance of the image via a weighted sum of the information in each color channel:
 
 $$
 Y = 0.2126R + 0.7152G + 0.0722B
@@ -426,33 +426,33 @@ This is a very simple operation! We can just "plug" each color channel of the `c
 
 ```{python}
 # Apply the formula.        Red channel.           Blue channel.          Green channel.
-cat_manual_grey = 0.2126 * cat[:, :, 0] + 0.7152 * cat[:, :, 1] + 0.0722 * cat[:, :, 2]
-plt.imshow(cat_manual_grey);
+cat_manual_gray = 0.2126 * cat[:, :, 0] + 0.7152 * cat[:, :, 1] + 0.0722 * cat[:, :, 2]
+plt.imshow(cat_manual_gray);
 ```
 
 However, this leaves our image with an illegal pixel intensity range, given the `dtype`:
 
 ```{python}
-show_attributes(cat_manual_grey)
+show_attributes(cat_manual_gray)
 ```
 
 `float64` images, to avoid errors, should have a pixel intensity range between 0 and 1 (or -1 to 1, but we digress). Matplotlib knows how to render this image, but the values themselves are technically illegal, and would likely cause errors with subsequent processing operations. We can use `ski.exposure.rescale_intensity()` to ensure our image adheres to the `skimage` conventions:
 
 ```{python}
 # Ensure the correct pixel intensity range.
-cat_manual_grey = ski.exposure.rescale_intensity(cat_manual_grey,
+cat_manual_gray = ski.exposure.rescale_intensity(cat_manual_gray,
                                                  out_range=(0, 1)) # Set the desired pixel intensity range.
 
 # Show the result.
-show_attributes(cat_manual_grey)
-plt.imshow(cat_manual_grey);
+show_attributes(cat_manual_gray)
+plt.imshow(cat_manual_gray);
 ```
 
 ::: {solution-end}
 :::
 
 
-We can also convert an image into a different true colorspace (e.g. not greyscale). `ski.color.rgb2hsv()` will convert an RGB image to an image in the HSV colorspace. HSV stands for [Hue, Saturation, Value](https://en.wikipedia.org/wiki/HSL_and_HSV):
+We can also convert an image into a different true colorspace (e.g. not grayscale). `ski.color.rgb2hsv()` will convert an RGB image to an image in the HSV colorspace. HSV stands for [Hue, Saturation, Value](https://en.wikipedia.org/wiki/HSL_and_HSV):
 
 ```{python}
 # Convert `cat` to the HSV colorspcae
@@ -463,7 +463,7 @@ plt.imshow(hsv_cat);
 
 Psychedelic! Maybe this is how cats look, from the perspective of other cats (e.g. from within their "[umwelt](https://en.wikipedia.org/wiki/Umwelt)"), but sadly this is probably not the case...
 
-Let's extract the individual channels with some array indexing operations. Each channel is 2D, and therefore will render as a greyscale image when displayed with Matplotlib:
+Let's extract the individual channels with some array indexing operations. Each channel is 2D, and therefore will render as a grayscale image when displayed with Matplotlib:
 
 ```{python}
 # Extract the HSV channels.

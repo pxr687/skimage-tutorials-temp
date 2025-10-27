@@ -139,10 +139,10 @@ Reducing noise and enhancing image features are both common aims in image filter
 
 # Threshold filtering is just Boolean filtering
 
-As we have seen, threshold filtering involves modifying pixel values based on a threshold value. Let's investigate other thresholding methods using a greyscale image:
+As we have seen, threshold filtering involves modifying pixel values based on a threshold value. Let's investigate other thresholding methods using a grayscale image:
 
 ```{python}
-# Create a greyscale image array.
+# Create a grayscale image array.
 random_i = np.array([[0, 0, 0, 0, 0, 0, 0, 0],
                      [0, 0, 0, 4, 8, 0, 0, 0],
                      [0, 0, 0, 3, 8, 0, 0, 0],
@@ -714,7 +714,7 @@ Your task now is to split `camera` into *three distinct pixel classes*, using th
 
 ![](images/camera_3_regions.png)
 
-Roughly, in the target image, the sky has white pixels, the ground has grey pixels and the cameraman's body has black pixels. Your final image should contain only the following `np.unique()` values:
+Roughly, in the target image, the sky has white pixels, the ground has gray pixels and the cameraman's body has black pixels. Your final image should contain only the following `np.unique()` values:
 
 ```
 array([0, 1, 2])
