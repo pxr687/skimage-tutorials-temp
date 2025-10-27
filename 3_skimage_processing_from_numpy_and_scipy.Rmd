@@ -857,12 +857,11 @@ show_attributes(camera[130:160, 240:320])
 
 
 # Masks
-In image processing, a mask is a matrix/array containing a collection of elements in a certain shape. A mask is "placed" on an image, and pixel values under the mask are all replaced with a specific value. Let's demonstrate with a real image:
+
+In image processing, a mask is a matrix/array containing a collection of elements in a certain shape. A mask is "placed" on an image, and pixel values under the mask are all replaced with a specific value. Let's demonstrate with a real image — a grayscale version of the standard `coffee` image:
 
 ```{python}
-coffee_gray = ski.io.imread("images/coffee_gray.png", 
-                        as_gray=True) # We could also use indexing/skimage.color to do this, 
-                                      # by removing color channels.
+coffee_gray = ski.color.rgb2gray(ski.data.coffee())
 show_attributes(coffee_gray)
 plt.imshow(coffee_gray);
 ```
@@ -877,7 +876,7 @@ dim_1, dim_2 = coffee_gray.shape
 dim_1, dim_2
 ```
 
-Then we can use these elements (579 and 867) via `np.orgid()` to create one array with 579 rows, and 1 column, and another array with 1 row and 867 columns. These elements can be used to make a 2D mask, in a specific shape:
+Then we can use these elements (400 and 600) via `np.orgid()` to create one array with 400 rows, and 1 column, and another array with 1 row and 600 columns. These elements can be used to make a 2D mask, in a specific shape:
 
 ```{python}
 # Create a grid, based on the image `shape`.
