@@ -402,9 +402,7 @@ def mean_filter(image_array, kernel_shape):
 We'll apply it to a grayscale `coffee` image, originally a color image from `ski.data`:
 
 ```{python}
-# Read in an image file.
-coffee_gray =  ski.io.imread("images/coffee_gray.png", 
-                             as_gray=True)
+coffee_gray = ski.color.rgb2gray(ski.data.coffee())
 plt.imshow(coffee_gray);
 ```
 
@@ -486,8 +484,8 @@ Your final image should have the following attributes (again, you may need to `r
 ```
 Type: <class 'numpy.ndarray'>
 dtype: int8
-Shape: (579, 867)
-Max Pixel Value: 0
+Shape: (400, 600)
+Max Pixel Value: -1
 Min Pixel Value: -49
 ```
 
