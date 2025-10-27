@@ -1925,12 +1925,10 @@ Min Pixel Value: 23
 </section>
 <section class="tex2jax_ignore mathjax_ignore" id="masks">
 <h1>Masks<a class="headerlink" href="#masks" title="Link to this heading">#</a></h1>
-<p>In image processing, a mask is a matrix/array containing a collection of elements in a certain shape. A mask is “placed” on an image, and pixel values under the mask are all replaced with a specific value. Let’s demonstrate with a real image:</p>
+<p>In image processing, a mask is a matrix/array containing a collection of elements in a certain shape. A mask is “placed” on an image, and pixel values under the mask are all replaced with a specific value. Let’s demonstrate with a real image — a grayscale version of the standard <code class="docutils literal notranslate"><span class="pre">coffee</span></code> image:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">coffee_gray</span> <span class="o">=</span> <span class="n">ski</span><span class="o">.</span><span class="n">io</span><span class="o">.</span><span class="n">imread</span><span class="p">(</span><span class="s2">&quot;images/coffee_gray.png&quot;</span><span class="p">,</span> 
-                        <span class="n">as_gray</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span> <span class="c1"># We could also use indexing/skimage.color to do this, </span>
-                                      <span class="c1"># by removing color channels.</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">coffee_gray</span> <span class="o">=</span> <span class="n">ski</span><span class="o">.</span><span class="n">color</span><span class="o">.</span><span class="n">rgb2gray</span><span class="p">(</span><span class="n">ski</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">coffee</span><span class="p">())</span>
 <span class="n">show_attributes</span><span class="p">(</span><span class="n">coffee_gray</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">coffee_gray</span><span class="p">);</span>
 </pre></div>
@@ -1939,12 +1937,12 @@ Min Pixel Value: 23
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Type: &lt;class &#39;numpy.ndarray&#39;&gt;
 dtype: float64
-Shape: (579, 867)
+Shape: (400, 600)
 Max Pixel Value: 1.0
 Min Pixel Value: 0.0
 </pre></div>
 </div>
-<img alt="_images/d38946d2f202013387b898b35e363345af8a65b3ec9b9d9879d594d73402c2ab.png" src="_images/d38946d2f202013387b898b35e363345af8a65b3ec9b9d9879d594d73402c2ab.png" />
+<img alt="_images/dac19c1554e829ebdf2e46c41facbcef0df8303b750143bd5cda389f38533b83.png" src="_images/dac19c1554e829ebdf2e46c41facbcef0df8303b750143bd5cda389f38533b83.png" />
 </div>
 </div>
 <p>First, we extract the <code class="docutils literal notranslate"><span class="pre">shape</span></code> of the image, and store each element as a separate variable. In this case, the image is 2D (e.g. single-channel, monochrome) and so we extract the number of rows and the number of columns:</p>
@@ -1959,12 +1957,12 @@ Min Pixel Value: 0.0
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(579, 867)
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(400, 600)
 </pre></div>
 </div>
 </div>
 </div>
-<p>Then we can use these elements (579 and 867) via <code class="docutils literal notranslate"><span class="pre">np.orgid()</span></code> to create one array with 579 rows, and 1 column, and another array with 1 row and 867 columns. These elements can be used to make a 2D mask, in a specific shape:</p>
+<p>Then we can use these elements (400 and 600) via <code class="docutils literal notranslate"><span class="pre">np.orgid()</span></code> to create one array with 400 rows, and 1 column, and another array with 1 row and 600 columns. These elements can be used to make a 2D mask, in a specific shape:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Create a grid, based on the image `shape`.</span>
@@ -1979,7 +1977,7 @@ Min Pixel Value: 0.0
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(579, 1)
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(400, 1)
 </pre></div>
 </div>
 <div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([[0],
@@ -2007,7 +2005,7 @@ Min Pixel Value: 0.0
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(1, 867)
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(1, 600)
 </pre></div>
 </div>
 <div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([[  0,   1,   2,   3,   4,   5,   6,   7,   8,   9,  10,  11,  12,
@@ -2056,27 +2054,7 @@ Min Pixel Value: 0.0
         559, 560, 561, 562, 563, 564, 565, 566, 567, 568, 569, 570, 571,
         572, 573, 574, 575, 576, 577, 578, 579, 580, 581, 582, 583, 584,
         585, 586, 587, 588, 589, 590, 591, 592, 593, 594, 595, 596, 597,
-        598, 599, 600, 601, 602, 603, 604, 605, 606, 607, 608, 609, 610,
-        611, 612, 613, 614, 615, 616, 617, 618, 619, 620, 621, 622, 623,
-        624, 625, 626, 627, 628, 629, 630, 631, 632, 633, 634, 635, 636,
-        637, 638, 639, 640, 641, 642, 643, 644, 645, 646, 647, 648, 649,
-        650, 651, 652, 653, 654, 655, 656, 657, 658, 659, 660, 661, 662,
-        663, 664, 665, 666, 667, 668, 669, 670, 671, 672, 673, 674, 675,
-        676, 677, 678, 679, 680, 681, 682, 683, 684, 685, 686, 687, 688,
-        689, 690, 691, 692, 693, 694, 695, 696, 697, 698, 699, 700, 701,
-        702, 703, 704, 705, 706, 707, 708, 709, 710, 711, 712, 713, 714,
-        715, 716, 717, 718, 719, 720, 721, 722, 723, 724, 725, 726, 727,
-        728, 729, 730, 731, 732, 733, 734, 735, 736, 737, 738, 739, 740,
-        741, 742, 743, 744, 745, 746, 747, 748, 749, 750, 751, 752, 753,
-        754, 755, 756, 757, 758, 759, 760, 761, 762, 763, 764, 765, 766,
-        767, 768, 769, 770, 771, 772, 773, 774, 775, 776, 777, 778, 779,
-        780, 781, 782, 783, 784, 785, 786, 787, 788, 789, 790, 791, 792,
-        793, 794, 795, 796, 797, 798, 799, 800, 801, 802, 803, 804, 805,
-        806, 807, 808, 809, 810, 811, 812, 813, 814, 815, 816, 817, 818,
-        819, 820, 821, 822, 823, 824, 825, 826, 827, 828, 829, 830, 831,
-        832, 833, 834, 835, 836, 837, 838, 839, 840, 841, 842, 843, 844,
-        845, 846, 847, 848, 849, 850, 851, 852, 853, 854, 855, 856, 857,
-        858, 859, 860, 861, 862, 863, 864, 865, 866]])
+        598, 599]])
 </pre></div>
 </div>
 </div>
@@ -2094,12 +2072,12 @@ Min Pixel Value: 0.0
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Type: &lt;class &#39;numpy.ndarray&#39;&gt;
 dtype: bool
-Shape: (579, 867)
+Shape: (400, 600)
 Max Pixel Value: True
 Min Pixel Value: False
 </pre></div>
 </div>
-<img alt="_images/161dcfcb27f64864eb8b1d9e70acaad6c3b060a835290fbdd7f1770ae148744c.png" src="_images/161dcfcb27f64864eb8b1d9e70acaad6c3b060a835290fbdd7f1770ae148744c.png" />
+<img alt="_images/665b2175bcf058937ab014eb197538a25ae346c188ebcd6471225ee44ce5f400.png" src="_images/665b2175bcf058937ab014eb197538a25ae346c188ebcd6471225ee44ce5f400.png" />
 </div>
 </div>
 <p>Once we have our mask - which is just a Boolean array - it is just a matter of Boolean indexing to use it set all the pixel values underneath it to be equal to the same value:</p>
@@ -2114,7 +2092,7 @@ Min Pixel Value: False
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/93ec6771df6d6c93c49cf1e200ad9d66b562af6619aaab374d6d1d3a990d592f.png" src="_images/93ec6771df6d6c93c49cf1e200ad9d66b562af6619aaab374d6d1d3a990d592f.png" />
+<img alt="_images/2c9dd327a394da6fd6eefdc99df07f9fb61e907fb44ff7d76f459197ef1f8595.png" src="_images/2c9dd327a394da6fd6eefdc99df07f9fb61e907fb44ff7d76f459197ef1f8595.png" />
 </div>
 </div>
 <div class="exercise dropdown admonition" id="masked-man">

@@ -1094,15 +1094,13 @@ The input is extended by wrapping around to the opposite edge.</p></li>
 <p>We’ll apply it to a grayscale <code class="docutils literal notranslate"><span class="pre">coffee</span></code> image, originally a color image from <code class="docutils literal notranslate"><span class="pre">ski.data</span></code>:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Read in an image file.</span>
-<span class="n">coffee_gray</span> <span class="o">=</span>  <span class="n">ski</span><span class="o">.</span><span class="n">io</span><span class="o">.</span><span class="n">imread</span><span class="p">(</span><span class="s2">&quot;images/coffee_gray.png&quot;</span><span class="p">,</span> 
-                             <span class="n">as_gray</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">coffee_gray</span> <span class="o">=</span> <span class="n">ski</span><span class="o">.</span><span class="n">color</span><span class="o">.</span><span class="n">rgb2gray</span><span class="p">(</span><span class="n">ski</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">coffee</span><span class="p">())</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">coffee_gray</span><span class="p">);</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/d38946d2f202013387b898b35e363345af8a65b3ec9b9d9879d594d73402c2ab.png" src="_images/d38946d2f202013387b898b35e363345af8a65b3ec9b9d9879d594d73402c2ab.png" />
+<img alt="_images/dac19c1554e829ebdf2e46c41facbcef0df8303b750143bd5cda389f38533b83.png" src="_images/dac19c1554e829ebdf2e46c41facbcef0df8303b750143bd5cda389f38533b83.png" />
 </div>
 </div>
 <p>But first, we will use <code class="docutils literal notranslate"><span class="pre">np.random.normal()</span></code> to add some normally distributed (Gaussian) noise to the image:</p>
@@ -1118,7 +1116,7 @@ The input is extended by wrapping around to the opposite edge.</p></li>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/e7984de2d5885b939cd327a0813161a28636e623fb48e1eaad9abb273e00d737.png" src="_images/e7984de2d5885b939cd327a0813161a28636e623fb48e1eaad9abb273e00d737.png" />
+<img alt="_images/8cff1d176c2de8c2d86af3f3f85c9c91f921f1bc2c968c737aafa76b1a4c35ca.png" src="_images/8cff1d176c2de8c2d86af3f3f85c9c91f921f1bc2c968c737aafa76b1a4c35ca.png" />
 </div>
 </div>
 <p>The mean filter can remove some of the noise, restoring the clarity of the image:</p>
@@ -1143,7 +1141,7 @@ The input is extended by wrapping around to the opposite edge.</p></li>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/1ea6dce3078795f7c64af3b1f05dd53751f6c4eadc3a6925860395e519caae9d.png" src="_images/1ea6dce3078795f7c64af3b1f05dd53751f6c4eadc3a6925860395e519caae9d.png" />
+<img alt="_images/bb053c879f67fc4406e6ed49451d57ab8f52eef9a5e3ad2046dd640de0f56e63.png" src="_images/bb053c879f67fc4406e6ed49451d57ab8f52eef9a5e3ad2046dd640de0f56e63.png" />
 </div>
 </div>
 <p>We can see that the image is clearer, the noise has been reduced and some of the signal has been restored.</p>
@@ -1173,7 +1171,7 @@ The input is extended by wrapping around to the opposite edge.</p></li>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/b689217e7c9fb75860298fcfac83455f463bab009bf0fa926a9ac3ae9ddf7400.png" src="_images/b689217e7c9fb75860298fcfac83455f463bab009bf0fa926a9ac3ae9ddf7400.png" />
+<img alt="_images/66b9597908638c1dfa14d08d7a409d8f6717fd7ba7719716a3c649e51ceb1ecf.png" src="_images/66b9597908638c1dfa14d08d7a409d8f6717fd7ba7719716a3c649e51ceb1ecf.png" />
 </div>
 </div>
 <p>As with many filtering operations, the effect of altering aspects of the filtering process (like a threshold value or kernel size), is very context-dependent. It may take many iterations before finding a “sweet spot”, and where the sweet spot is may be somewhat subjective.</p>
@@ -1188,8 +1186,8 @@ The input is extended by wrapping around to the opposite edge.</p></li>
 <p>Your final image should have the following attributes (again, you may need to <code class="docutils literal notranslate"><span class="pre">rescale_intensity()</span></code> or take other steps to avoid illegal pixel values, for the <code class="docutils literal notranslate"><span class="pre">dtype</span></code>):</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>Type: &lt;class &#39;numpy.ndarray&#39;&gt;
 dtype: int8
-Shape: (579, 867)
-Max Pixel Value: 0
+Shape: (400, 600)
+Max Pixel Value: -1
 Min Pixel Value: -49
 </pre></div>
 </div>
@@ -1209,12 +1207,12 @@ Min Pixel Value: -49
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Type: &lt;class &#39;numpy.ndarray&#39;&gt;
 dtype: float64
-Shape: (579, 867)
+Shape: (400, 600)
 Max Pixel Value: 1.0
 Min Pixel Value: 0.0
 </pre></div>
 </div>
-<img alt="_images/d38946d2f202013387b898b35e363345af8a65b3ec9b9d9879d594d73402c2ab.png" src="_images/d38946d2f202013387b898b35e363345af8a65b3ec9b9d9879d594d73402c2ab.png" />
+<img alt="_images/dac19c1554e829ebdf2e46c41facbcef0df8303b750143bd5cda389f38533b83.png" src="_images/dac19c1554e829ebdf2e46c41facbcef0df8303b750143bd5cda389f38533b83.png" />
 </div>
 </div>
 </section>
@@ -1252,12 +1250,12 @@ Min Pixel Value: 0.0
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Type: &lt;class &#39;numpy.ndarray&#39;&gt;
 dtype: int8
-Shape: (579, 867)
-Max Pixel Value: 0
+Shape: (400, 600)
+Max Pixel Value: -1
 Min Pixel Value: -49
 </pre></div>
 </div>
-<img alt="_images/0a8d71d18e5011e65e32397df34678534b7c99147f34b8ba015e276417e6315b.png" src="_images/0a8d71d18e5011e65e32397df34678534b7c99147f34b8ba015e276417e6315b.png" />
+<img alt="_images/597f2407f54214c46a1c2ffdc7ab006c8ebb999da17b23833cf73cd04f3fb3b5.png" src="_images/597f2407f54214c46a1c2ffdc7ab006c8ebb999da17b23833cf73cd04f3fb3b5.png" />
 </div>
 </div>
 <p>Kernels of other sizes will lead to different (albeit cool!) effects:</p>
@@ -1270,7 +1268,7 @@ Min Pixel Value: -49
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/1da5035dbfbb61feea0c6dd8f9908d606a196dae12ce0376bcd0cd7fb294eedb.png" src="_images/1da5035dbfbb61feea0c6dd8f9908d606a196dae12ce0376bcd0cd7fb294eedb.png" />
+<img alt="_images/f5f29ec103e2fbb77441b4b0aa9e9c9cf9a560d00d3d1d3a8bcc3d39e366c9d1.png" src="_images/f5f29ec103e2fbb77441b4b0aa9e9c9cf9a560d00d3d1d3a8bcc3d39e366c9d1.png" />
 </div>
 </div>
 <p>This is quite a strange kernel to apply! But it shows us how easy it is to achieve radical filtering effects with some custom kernels…</p>
