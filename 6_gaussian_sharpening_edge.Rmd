@@ -1054,37 +1054,37 @@ edgy_vertical = ndi.correlate(edgy,
 plt.imshow(edgy_vertical);
 ```
 
-Again, in the resultant image, changes from black to white (0-to-1) end up as white pixels (with value 1). Conversely, changes from white to black (1-to-0) end up as black pixels (with value -1). No change ends up as grey (0):
+Again, in the resultant image, changes from black to white (0-to-1) end up as white pixels (with value 1). Conversely, changes from white to black (1-to-0) end up as black pixels (with value -1). No change ends up as gray (0):
 
 ![](images/vertical_edge_matrices.png)
 
 Applied to more complex images, this edge detection can have some pretty cool effects:
 
 ```{python}
-# Load in an image, convert to greyscale.
-coffee_grey = ski.color.rgb2gray(ski.data.coffee())
+# Load in an image, convert to grayscale.
+coffee_gray = ski.color.rgb2gray(ski.data.coffee())
 
 # Plot the original image.
-plt.imshow(coffee_grey)
-show_attributes(coffee_grey);
+plt.imshow(coffee_gray)
+show_attributes(coffee_gray);
 ```
 
 First, we detect edges in the horizontal direction:
 
 ```{python}
 # Filter using the horizontal edge detection kernel.
-gradient_horizontal_coffee_grey = ndi.correlate(coffee_grey,
+gradient_horizontal_coffee_gray = ndi.correlate(coffee_gray,
                                               horizontal_edge_detection_kernel)
-plt.imshow(gradient_horizontal_coffee_grey);
+plt.imshow(gradient_horizontal_coffee_gray);
 ```
 
 Then, in the vertical direction:
 
 ```{python}
 # Filter using the vertical edge detection kernel.
-gradient_vertical_coffee_grey = ndi.correlate(coffee_grey,
+gradient_vertical_coffee_gray = ndi.correlate(coffee_gray,
                                                vertical_edge_detection_kernel)
-plt.imshow(gradient_vertical_coffee_grey);
+plt.imshow(gradient_vertical_coffee_gray);
 ```
 
 We can combine these two edge detection filters together to search for edges in both directions. First, lets refreseh our memory of what `edgy` looked like, filtered in both directions separately:
@@ -1144,12 +1144,12 @@ The pixel values throughout this edge detection process, on the `edgy` array, ar
 ![](images/edge_detection_process.png)
 
 
-Let's do this again, for the images that resulted from filtering `coffee_grey` with our horizontal and vertical edge detection kernels, respectively.
+Let's do this again, for the images that resulted from filtering `coffee_gray` with our horizontal and vertical edge detection kernels, respectively.
 
 ```{python}
-# Search for both types of edge (with `coffee_grey`).
-coffee_vertical_horizontal_stack = np.stack([gradient_vertical_coffee_grey, 
-                                             gradient_horizontal_coffee_grey], axis=2) # Stack to 3D, `shape` = (400, 600, 2).
+# Search for both types of edge (with `coffee_gray`).
+coffee_vertical_horizontal_stack = np.stack([gradient_vertical_coffee_gray, 
+                                             gradient_horizontal_coffee_gray], axis=2) # Stack to 3D, `shape` = (400, 600, 2).
 coffee_vertical_horizontal_stack = np.abs(coffee_vertical_horizontal_stack) # Remove the signs, from all elements in the 3D array.
 coffee_vertical_horizontal_stack = coffee_vertical_horizontal_stack.max(axis=2)# Reshape to 2D, leaving only the largest value from
                                                                                # from either slice in the resulting 2D array.
@@ -1163,17 +1163,17 @@ Edgy indeed...
 We can view all of these steps together, on the plot below:
 
 ```{python}
-# Plot all the `coffee_grey` images together.
+# Plot all the `coffee_gray` images together.
 plt.figure(figsize=(12,8))
 plt.subplot(2, 2, 1)
 plt.title("Original")
-plt.imshow(coffee_grey)
+plt.imshow(coffee_gray)
 plt.subplot(2, 2, 2)
 plt.title("Horizontal Edges")
-plt.imshow(gradient_horizontal_coffee_grey)
+plt.imshow(gradient_horizontal_coffee_gray)
 plt.subplot(2, 2, 3)
 plt.title("Vertical Edges")
-plt.imshow(gradient_vertical_coffee_grey)
+plt.imshow(gradient_vertical_coffee_gray)
 plt.subplot(2, 2, 4)
 plt.title("Both Combined")
 plt.imshow(coffee_vertical_horizontal_stack);
@@ -1286,8 +1286,8 @@ The plot below shows the effect of both filters, side by side:
 coins = ski.data.coins()
 prewitt_coins = ski.filters.prewitt(coins)
 sobel_coins = ski.filters.sobel(coins)
-prewitt_coffee = ski.filters.prewitt(coffee_grey)
-sobel_coffee = ski.filters.sobel(coffee_grey)
+prewitt_coffee = ski.filters.prewitt(coffee_gray)
+sobel_coffee = ski.filters.sobel(coffee_gray)
 fig, ax = plt.subplots(3, 3, 
                        figsize=(12, 12),
                        constrained_layout=True)
@@ -1309,7 +1309,7 @@ ax[1, 1].axis('off')
 ax[1, 2].imshow(sobel_coins)
 ax[1, 2].set_title('Sobel Edge Filter')
 ax[1, 2].axis('off')
-ax[2, 0].imshow(coffee_grey)
+ax[2, 0].imshow(coffee_gray)
 ax[2, 0].set_title('Original')
 ax[2, 0].axis('off')
 ax[2, 1].imshow(prewitt_coffee)

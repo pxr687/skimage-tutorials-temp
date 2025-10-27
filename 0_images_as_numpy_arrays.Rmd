@@ -19,7 +19,7 @@ This page explores how images can be represented as NumPy arrays. To get started
 
 The *technical meaning* of image - in scientific computing - is *an at least two dimensional array*. Depending on your background and familiarity with the topic, this definition may sound more or less strange. We assure you that each meaning is consistent with the other. However, each meaning refers to different, but overlapping, sets of things. 
 
-Imagine an image - in the intuitive sense - printed on a piece of paper. The image has two dimensions, one dimensions runs along the *length* of the paper and one runs along the *width* of the paper. Now imagine the *computer file* that was used to print the image onto the paper (e.g. the image file that was sent to a run-of-the-mill printer to produce the printed image). The computer file must contain information which tells the printer what to put where along each dimension of the piece of paper. For instance, should that location contain black, white, grey or a color? By controlling these things, the information contained in the file will ultimately determine the look of the printed image (e.g. what it is a picture *of*). 
+Imagine an image - in the intuitive sense - printed on a piece of paper. The image has two dimensions, one dimensions runs along the *length* of the paper and one runs along the *width* of the paper. Now imagine the *computer file* that was used to print the image onto the paper (e.g. the image file that was sent to a run-of-the-mill printer to produce the printed image). The computer file must contain information which tells the printer what to put where along each dimension of the piece of paper. For instance, should that location contain black, white, gray or a color? By controlling these things, the information contained in the file will ultimately determine the look of the printed image (e.g. what it is a picture *of*). 
 
 ![](images/printed_paper.png)
 
@@ -204,11 +204,11 @@ plt.matshow(two_D_ones_and_zeros);
 
 For the rest of this tutorial, for small arrays we will use `plt.matshow()`, to keep the axes labels more intuitively interpretable.
 
-## Shades of grey and colormaps
+## Shades of gray and colormaps
 
 Why does our image array display in vibrant purple and yellow, you may ask? This is because both `plt.matshow()` - and it's cousin `plt.imshow()` - have a default *colormap*. This is a mapping between the numbers in the array, and the colors that the plot will depict each number with when the array is visualised. The default colormap is called [`viridis`](https://matplotlib.org/3.5.3/api/_as_gen/matplotlib.pyplot.viridis.html). This default colormap maps low array pixel values to purple, and high array pixel values to yellow.
 
-We can adjust the color by changing the `cmap` argument of `plt.matshow()` - for instance, we can change the plot to visualise the array using a greyscale map:
+We can adjust the color by changing the `cmap` argument of `plt.matshow()` - for instance, we can change the plot to visualise the array using a grayscale map:
 
 ```{python}
 # Show the array, change the colormap.
@@ -216,14 +216,14 @@ plt.matshow(two_D_ones_and_zeros,
             cmap="gray"); # Specify the colormap
 ```
 
-So far so good. We have hand-crafted an image of something which looks like a very small chessboard. Using the `gray` colormap, each number in the array is now mapped to a shade between black and white. We can call this the *grey-level* of each element. This is a technical term, and may seem a bit odd given that the image shows only black or white squares. This helpful image makes things clearer:
+So far so good. We have hand-crafted an image of something which looks like a very small chessboard. Using the `gray` colormap, each number in the array is now mapped to a shade between black and white. We can call this the *gray-level* of each element. This is a technical term, and may seem a bit odd given that the image shows only black or white squares. This helpful image makes things clearer:
 
 ![](images/grey-colours.png)
 (Image from [here](https://www.pythoninformer.com/computer-science/colour/grey-colour)).
 
-Personally, we think a better term here would be "white-level", but the term "grey-level" is already established... 
+Personally, we think a better term here would be "white-level", but the term "gray-level" is already established... 
 
-Our image array so far contains only 1's and 0's; you might naturally ask "what happens if we use other numbers, how does this affect the color/grey-level of the display image?". To demonstrate, in the cell below, we create a new two-dimensional array which contains decimal numbers 0 and 1.
+Our image array so far contains only 1's and 0's; you might naturally ask "what happens if we use other numbers, how does this affect the color/gray-level of the display image?". To demonstrate, in the cell below, we create a new two-dimensional array which contains decimal numbers 0 and 1.
 
 ```{python}
 # A two dimensional numpy array of numbers between 0 and 1.
@@ -240,7 +240,7 @@ These numbers are again of the `float64` `dtype`:
 two_D_other_numbers.dtype
 ```
 
-Let's show this image using the greyscale colormap:
+Let's show this image using the grayscale colormap:
 
 ```{python}
 # Show the new array (using Matplotlib).
@@ -248,7 +248,7 @@ plt.matshow(two_D_other_numbers,
            cmap="gray");
 ```
 
-You can compare this visualisation of the image to the "raw" array output from the cell below. You'll notice that *larger* numbers are represented with *lighter* squares, and *smaller* numbers are represented with *darker* squares. When we are using `float64` data, as we are here, you can think of each pixel value (0, 1 or in between) as specifying the grey-level as a percentage - with 1 being 100%, 0 being 0%, 0.5 being 50% and so on:
+You can compare this visualisation of the image to the "raw" array output from the cell below. You'll notice that *larger* numbers are represented with *lighter* squares, and *smaller* numbers are represented with *darker* squares. When we are using `float64` data, as we are here, you can think of each pixel value (0, 1 or in between) as specifying the gray-level as a percentage - with 1 being 100%, 0 being 0%, 0.5 being 50% and so on:
 
 ```{python}
 # Show the new array (from the NumPy output).
@@ -297,7 +297,7 @@ plt.matshow(two_D_other_numbers,
 plt.colorbar();
 ```
 
-We will talk more about color in the [next tutorial](1_color_images_as_numpy_arrays). For now, you can think of these plots as showing the same array pixel information, just using a different color gradient. The single numeric value in each array pixel location determines *pixel intensity*. This is the brightness or darkness with which that pixel will be displayed when the image is displayed by something like Matplotlib. The `viridis` colormap maps these pixel intensities to a gradient of purple-yellow; the `gray` colormap maps these pixel intensities to a gradient of black-grey-white.
+We will talk more about color in the [next tutorial](1_color_images_as_numpy_arrays). For now, you can think of these plots as showing the same array pixel information, just using a different color gradient. The single numeric value in each array pixel location determines *pixel intensity*. This is the brightness or darkness with which that pixel will be displayed when the image is displayed by something like Matplotlib. The `viridis` colormap maps these pixel intensities to a gradient of purple-yellow; the `gray` colormap maps these pixel intensities to a gradient of black-gray-white.
 
 We can change the default colormap for the rest of the plots we create in this session by using the code in the cell below. See [here](https://matplotlib.org/stable/tutorials/introductory/customizing.html) for more information on how to change Matplotlib's default behaviour across every session:
 
@@ -310,7 +310,7 @@ You now understand the fundamentals of the computer representation of images! Be
 
 * We know that an image (in the technical sense) is a numeric array of at least two dimensions - often but not necessarily containing information about, or depicting, something in the world.
 
-* We know that the number at each element of the array tells a computer what pixel intensity (e.g. grey-level) to show at that array pixel location. These pixel intensities determine the color of the corresponding display pixels in the rendered image. In the arrays we have seen, color is determined in accordance with the `colormap` we use for plotting.
+* We know that the number at each element of the array tells a computer what pixel intensity (e.g. gray-level) to show at that array pixel location. These pixel intensities determine the color of the corresponding display pixels in the rendered image. In the arrays we have seen, color is determined in accordance with the `colormap` we use for plotting.
 
 * We know what happens when an image array contains fewer pixels than the rendered image e.g. using interpolation, the image will be upscaled to be displayed using more *display pixels* than there are *array pixels* in the original image array.
 
@@ -524,7 +524,7 @@ On this page we have examined the fundamental components of computer images:
 
 * For small/low-resolution arrays, the values in the array will be displayed on more pixels than there are values in the array.
 
-* The number at each location in an image array determines the pixel intensity (grey-level) in a 2D array. We have seen that different `colormap`s can display this information using different color gradients.
+* The number at each location in an image array determines the pixel intensity (gray-level) in a 2D array. We have seen that different `colormap`s can display this information using different color gradients.
 
 * These principles apply both to very simple and very complex images.
 

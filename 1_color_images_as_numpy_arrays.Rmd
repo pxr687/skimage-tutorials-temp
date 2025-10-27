@@ -88,18 +88,18 @@ plt.matshow(two_D_other_integers)
 plt.colorbar();
 ```
 
-The first image - with black and white squares only, no grey - is a *binary image*. This is an image where each array pixel contains only one of two values. In this case the two values are 0 or 1, with 0 corresponding to black pixels and 1 corresponding to white pixels.
+The first image - with black and white squares only, no gray - is a *binary image*. This is an image where each array pixel contains only one of two values. In this case the two values are 0 or 1, with 0 corresponding to black pixels and 1 corresponding to white pixels.
 
-The second image - black, white and grey squares - is a *monochrome image*. This image contains more than two unique values. It has black pixels (the lowest pixel values, 0); white pixels (the highest pixel values, 1); and grey pixels (intermediate pixel values, > 0 but < 1).
+The second image - black, white and gray squares - is a *monochrome image*. This image contains more than two unique values. It has black pixels (the lowest pixel values, 0); white pixels (the highest pixel values, 1); and gray pixels (intermediate pixel values, > 0 but < 1).
 
 **This is important:** for two-dimensional arrays like these each array pixel is just a *single number*. Because of this, we can refer to both of these arrays as *single-channel image arrays*. Each individual array pixel value determines the *intensity* of that pixel, e.g. the brightness or darkness of that pixel. 
 
-As we saw on the [last page](0_images_as_numpy_arrays), a colormap (e.g. `viridis` or `gray`) maps  each single-valued pixel intensity to a gradient of colors/shades. This is a black-grey-white gradient for the `gray` colormap and a purple-yellow gradient for the `viridis` colormap. Technically speaking, for single-channel image arrays, the intensity values only convey black-white-gray information - the `viridis` colormap merely *translates* this black-grey-white information into a colored presentation for the purposes of display. 
+As we saw on the [last page](0_images_as_numpy_arrays), a colormap (e.g. `viridis` or `gray`) maps  each single-valued pixel intensity to a gradient of colors/shades. This is a black-gray-white gradient for the `gray` colormap and a purple-yellow gradient for the `viridis` colormap. Technically speaking, for single-channel image arrays, the intensity values only convey black-white-gray information - the `viridis` colormap merely *translates* this black-gray-white information into a colored presentation for the purposes of display. 
 
-What `viridis` is doing is called [*pseudo-coloring*](https://www.spiedigitallibrary.org/conference-proceedings-of-spie/0048/0000/Digital-Image-Processing-With-Pseudo-Color/10.1117/12.954071.short) - it is mapping black-grey-white information to display colors. The plot below show's both arrays, with both colormaps, for comparison:
+What `viridis` is doing is called [*pseudo-coloring*](https://www.spiedigitallibrary.org/conference-proceedings-of-spie/0048/0000/Digital-Image-Processing-With-Pseudo-Color/10.1117/12.954071.short) - it is mapping black-gray-white information to display colors. The plot below show's both arrays, with both colormaps, for comparison:
 
 ```{python}
-# An image from earlier (using the `grey` colormap)
+# An image from earlier (using the `gray` colormap)
 plt.figure(figsize=(8, 8))
 plt.subplot(2, 2, 1)
 plt.matshow(two_D_ones_and_zeros,
@@ -107,7 +107,7 @@ plt.matshow(two_D_ones_and_zeros,
 plt.title('`gray` colormap \n(binary image)')
 plt.colorbar()
 plt.subplot(2, 2, 2)
-# Another image from earlier (using the `grey` colormap)
+# Another image from earlier (using the `gray` colormap)
 plt.matshow(two_D_other_integers,
             fignum=0)
 plt.title('`gray` colormap \n(monochrome image)')
@@ -129,7 +129,7 @@ plt.colorbar()
 plt.tight_layout();
 ```
 
-We can say then, that the plots on the bottom row are *displayed using pseudo-color*. The original image arrays only contain black-white-grey information in their pixel intensity values; they do not contain *true color* information. **This will be true of any two-dimensional image array**, and both of these image arrays are two-dimensional:
+We can say then, that the plots on the bottom row are *displayed using pseudo-color*. The original image arrays only contain black-white-gray information in their pixel intensity values; they do not contain *true color* information. **This will be true of any two-dimensional image array**, and both of these image arrays are two-dimensional:
 
 ```{python}
 # Show the dimensionality of our binary image array.
@@ -137,11 +137,11 @@ two_D_ones_and_zeros.shape
 ```
 
 ```{python}
-# Show the dimensionality of our greyscale image array.
+# Show the dimensionality of our grayscale image array.
 two_D_other_integers.shape
 ```
 
-An image which has what we will call *true color* contains information in each array pixel about more than just *intensity* - it also contains information about *color*. So, to hammer this point home: greyscale and binary images displayed with the `viridis` colormap do not contain true color information in their array pixel values. Instead Matplotlib is *displaying* binary and greyscale information using colors. To introduce true color into the image, we need a spooky third dimension... 
+An image which has what we will call *true color* contains information in each array pixel about more than just *intensity* - it also contains information about *color*. So, to hammer this point home: grayscale and binary images displayed with the `viridis` colormap do not contain true color information in their array pixel values. Instead Matplotlib is *displaying* binary and grayscale information using colors. To introduce true color into the image, we need a spooky third dimension... 
 
 # True Colour in 3D
 
@@ -509,7 +509,7 @@ from random_colors import random_color_array
 random_color_array(8, 8)
 ```
 
-We have now completed our perilous expedition into the third dimension... We have seen that we can use 3D arrays to encode *true color* information. This means that the image array itself contains color information for each pixel, where we are *not* just pseudocoloring greyscale information using `viridis` or another colormap...
+We have now completed our perilous expedition into the third dimension... We have seen that we can use 3D arrays to encode *true color* information. This means that the image array itself contains color information for each pixel, where we are *not* just pseudocoloring grayscale information using `viridis` or another colormap...
 
 Let's explore a color image of a real object. We will introduce Scikit-image (`skimage`) in more detail on the [next page](2_skimage_intro), but for now we will again use the straightforwardly named `imread()` function to load an image from a file:
 
@@ -596,7 +596,7 @@ for i in np.arange(len(RGB_chan_names)):
 
 Now we are viewing each slice/color channel separately, we are again visualising 2D arrays - you can see the `.shape` of each slice below each image. 
 
-The image from each color channel, when visualised separately, is now essentially a single-channel image, and so Matplotlib is rendering it in greyscale. As we know, we could also use the `viridis` colormap to pseudocolor the greyscale information in the images for the purposes of the display. Though in this instance, `viridis` results in some slightly queasy-looking images:
+The image from each color channel, when visualised separately, is now essentially a single-channel image, and so Matplotlib is rendering it in grayscale. As we know, we could also use the `viridis` colormap to pseudocolor the grayscale information in the images for the purposes of the display. Though in this instance, `viridis` results in some slightly queasy-looking images:
 
 ```{python}
 # Pseudo-color with `viridis`.
@@ -794,7 +794,7 @@ colorless_coffee_solution = coffee.mean(axis=2)
 plt.imshow(colorless_coffee_solution);
 ```
 
-Any computations (such as summing across the channels) which collapse the 3D color array into 2D will achieve a similar effect. We deem any of these as correct answers, so long as your output image is greyscale...
+Any computations (such as summing across the channels) which collapse the 3D color array into 2D will achieve a similar effect. We deem any of these as correct answers, so long as your output image is grayscale...
 
 Another way is just to use NumPy indexing to extract one color channel slice:
 
@@ -814,7 +814,7 @@ colorless_coffee_solution = coffee.copy()[:, :, 2]
 plt.imshow(colorless_coffee_solution);
 ```
 
-...we will allow any slice as the correct solution, however, as they are all greyscale.
+...we will allow any slice as the correct solution, however, as they are all grayscale.
 
 
 ::: {solution-end}
@@ -890,7 +890,7 @@ plt.imshow(noisy_camera_solution);
 
 # More (actually) complex images
 
-So far we have looked at simple images - 2D binary and greyscale low-resolution image arrays, like `smiley` - or more complex color images with three color channels (like `coffee`). However, the principles we have seen extend to even more complex images, like the image arrays generated by [brain imaging](https://en.wikipedia.org/wiki/Neuroimaging), for instance.
+So far we have looked at simple images - 2D binary and grayscale low-resolution image arrays, like `smiley` - or more complex color images with three color channels (like `coffee`). However, the principles we have seen extend to even more complex images, like the image arrays generated by [brain imaging](https://en.wikipedia.org/wiki/Neuroimaging), for instance.
 
 Here is an image of one "slice" of one of the authors brains, which was captured by a [magnetic resonance imaging](https://en.wikipedia.org/wiki/Magnetic_resonance_imaging) scanner:
 
@@ -916,7 +916,7 @@ On this page we have seen how color can be represented in NumPy array images:
 
 * Images are (at least) two-dimensional arrays of numbers. Multiple `dtype`s in image arrays are supported by Sci-kit image.
 
-* We have seen images where the number at each array pixel location determines the grey-level (in a 2D array) or color (in a 3D array) of that location when the image is displayed. For 3D color arrays the number in each slice/channel is summed to determine the color in the 2D displayed image.
+* We have seen images where the number at each array pixel location determines the gray-level (in a 2D array) or color (in a 3D array) of that location when the image is displayed. For 3D color arrays the number in each slice/channel is summed to determine the color in the 2D displayed image.
 
 * These methods of color encoding can apply to both to very simple and very complex images. Some types of image (e.g. brain images) use higher-dimensionality to encode information other than color (e.g. time).
 

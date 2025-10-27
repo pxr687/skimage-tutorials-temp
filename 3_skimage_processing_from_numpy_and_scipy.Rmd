@@ -245,7 +245,7 @@ print(split_i_solution)
 plt.imshow(split_i_solution);
 ```
 
-Why is the background now grey? Well, remember that, for a monochrome image visualised with the `gray` colormap: the most intense (highest value) pixels are white, and the least intense (lowest value) pixels are black, and intermediate values are a shade of grey.
+Why is the background now gray? Well, remember that, for a monochrome image visualised with the `gray` colormap: the most intense (highest value) pixels are white, and the least intense (lowest value) pixels are black, and intermediate values are a shade of gray.
 
 When we subtract along the column, with `np.diff()` the third value is subtracted from the fourth value etc., and so the resulting differences are calculated as:
 
@@ -332,7 +332,7 @@ The array pixels highlighted in red are the original pixels from the `(2, 2)` or
 
 ![](images/resize_interpolation.png)
 
-All the other pixels have been added by `skimage` during the `resize`-ing process. Pixels closer to the original pixels share closer intensity values to the original pixel (meaning they are more black or more white, depending on the original pixel). Images further from the original pixels become more grey.
+All the other pixels have been added by `skimage` during the `resize`-ing process. Pixels closer to the original pixels share closer intensity values to the original pixel (meaning they are more black or more white, depending on the original pixel). Images further from the original pixels become more gray.
 
 We can control the type of interpolation that `skimage` uses by changing the (somewhat cryptically named) `order` argument. Setting this to 0 will activate [nearest neighbour interpolation](https://en.wikipedia.org/wiki/Nearest-neighbor_interpolation):
 
@@ -623,7 +623,7 @@ look_at_me = ski.data.camera()
 
 Here we need a transpose operation, followed by a rotation, followed by a concatenation.
 
-That is a mouthful, let's break it down. First we transpose the `camera` array, we can use `.T` here rather than `.transpose` as we are dealing with a 2D greyscale image:
+That is a mouthful, let's break it down. First we transpose the `camera` array, we can use `.T` here rather than `.transpose` as we are dealing with a 2D grayscale image:
 
 ```{python}
 # Transpose `camera`.
@@ -860,18 +860,18 @@ show_attributes(camera[130:160, 240:320])
 In image processing, a mask is a matrix/array containing a collection of elements in a certain shape. A mask is "placed" on an image, and pixel values under the mask are all replaced with a specific value. Let's demonstrate with a real image:
 
 ```{python}
-coffee_grey = ski.io.imread("images/coffee_grey.png", 
+coffee_gray = ski.io.imread("images/coffee_gray.png", 
                         as_gray=True) # We could also use indexing/skimage.color to do this, 
                                       # by removing color channels.
-show_attributes(coffee_grey)
-plt.imshow(coffee_grey);
+show_attributes(coffee_gray)
+plt.imshow(coffee_gray);
 ```
 
 First, we extract the `shape` of the image, and store each element as a separate variable. In this case, the image is 2D (e.g. single-channel, monochrome) and so we extract the number of rows and the number of columns:
 
 ```{python}
 # Unpack and store the number of rows and number of columns.
-dim_1, dim_2 = coffee_grey.shape
+dim_1, dim_2 = coffee_gray.shape
 
 # Show the values.
 dim_1, dim_2
@@ -911,10 +911,10 @@ Once we have our mask - which is just a Boolean array - it is just a matter of B
 
 ```{python}
 # Apply the mask.
-coffee_grey_masked = coffee_grey.copy()
-coffee_grey_masked[mask] = 0
+coffee_gray_masked = coffee_gray.copy()
+coffee_gray_masked[mask] = 0
 
-plt.matshow(coffee_grey_masked);
+plt.matshow(coffee_gray_masked);
 ```
 
 ::: {exercise-start}
@@ -1092,7 +1092,7 @@ small_arr
 ```
 
 ```{python}
-# Show the small array (0 elements are now grey).
+# Show the small array (0 elements are now gray).
 plt.imshow(small_arr);
 ```
 
@@ -1175,10 +1175,10 @@ plt.imshow(ski.util.invert(cat_purple));
 
 Greyscale to binary conversion can be achieved using comparison operators (`<`, `>`, `<=`, `>=`, `==`). The resulting Boolean array will always be binary.
 
-Let's demonstrate with a greyscale image:
+Let's demonstrate with a grayscale image:
 
 ```{python}
-# Create a greyscale image.
+# Create a grayscale image.
 np.random.seed(10)
 random_check = np.array([[1, 0, 1, 0], 
                          [0, 1, 0, 1],
@@ -1205,7 +1205,7 @@ threshold = ski.filters.threshold_minimum(random_check)
 threshold
 ```
 
-We can then use this threshold to create a binary array, successfully binarizing our greyscale image:
+We can then use this threshold to create a binary array, successfully binarizing our grayscale image:
 
 ```{python}
 # Binarize the array, based on the threshold.
@@ -1214,15 +1214,15 @@ show_attributes(binary_check_from_ski)
 plt.matshow(binary_check_from_ski);
 ```
 
-# Colour to greyscale conversion
+# Colour to grayscale conversion
 
-To downgrade a color image to greyscale we can use a brute force method of taking the mean of the three color channels, to produce a 2D monochrome image array:
+To downgrade a color image to grayscale we can use a brute force method of taking the mean of the three color channels, to produce a 2D monochrome image array:
 
 ```{python}
-grey_wheel = np.mean(colorwheel, 
+gray_wheel = np.mean(colorwheel, 
                      axis=2)
 
-plt.imshow(grey_wheel);
+plt.imshow(gray_wheel);
 ```
 
 A better option here, that we encountered on the [previous page](2_skimage_intro), is to use the *luminance formula*:
@@ -1231,10 +1231,10 @@ $$
 Y = 0.2126R + 0.7152G + 0.0722B
 $$
 
-This "collapses" a 3D color image into a 2D greyscale image via a weighted sum of the channels.
+This "collapses" a 3D color image into a 2D grayscale image via a weighted sum of the channels.
 
 ::: {exercise-start}
-:label: grey-wheel
+:label: gray-wheel
 :class: dropdown
 :::
 
@@ -1254,7 +1254,7 @@ Min Pixel Value: 0
 
 Using the luminance formula, and any other required `numpy`, `scipy` or `skimage` operations, recreate the target image below, starting from the `colorwheel` array:
 
-![](images/grey_wheel.png)
+![](images/gray_wheel.png)
 
 Your final image should have the following attributes:
 
@@ -1277,7 +1277,7 @@ Try to use `np.dot()` rather than slicing, when you complete this exercise.
 ::: {exercise-end}
 :::
 
-::: {solution-start} grey-wheel
+::: {solution-start} gray-wheel
 :class: dropdown
 :::
 
@@ -1290,55 +1290,55 @@ The solution here requires some close attention to `dtype`. To apply the luminan
 weights = np.array([0.2126, 0.7152, 0.0722])
 
 # Run the numbers...
-grey_wheel = np.dot(colorwheel, weights)
+gray_wheel = np.dot(colorwheel, weights)
 
 # Show the result.
-show_attributes(grey_wheel)
-plt.imshow(grey_wheel);
+show_attributes(gray_wheel)
+plt.imshow(gray_wheel);
 ```
 
 But this gives us min/max pixel intensity values which are illegal for the `float64` dtype, and will generate an error when we try to convert to `uint8` to match the target image:
 
 ```{python tags=c("raises-exception")}
 # Ouch!
-ski.util.img_as_ubyte(grey_wheel)
+ski.util.img_as_ubyte(gray_wheel)
 ```
 
 The `ski.exposure.rescale_intensity()` function can save us again here. First, we make the values legal for a `float64` image (`np.dot()` left us with float values, as the weights in the luminance formula are decimal numbers):
 
 ```{python}
 # Rescale the pixel intensity values into a legal range, for the current `dtype`.
-grey_wheel = ski.exposure.rescale_intensity(grey_wheel,
+gray_wheel = ski.exposure.rescale_intensity(gray_wheel,
                               out_range=(0, 1))
 
-show_attributes(grey_wheel)
+show_attributes(gray_wheel)
 ```
 
 Now, we can painlessly convert to `uint8`. Finally, to match the target image, we must `ski.transform.invert()` our depressingly dreary colorwheel:
 
 ```{python}
 # Convert to `uint8` `dtype`.
-grey_wheel = ski.util.img_as_ubyte(grey_wheel)
+gray_wheel = ski.util.img_as_ubyte(gray_wheel)
 
 # Invert the color and show the result.
-grey_wheel =  ski.util.invert(grey_wheel)
-show_attributes(grey_wheel)
-plt.imshow(grey_wheel);
+gray_wheel =  ski.util.invert(gray_wheel)
+show_attributes(gray_wheel)
+plt.imshow(gray_wheel);
 ```
 
 ::: {solution-end}
 :::
 
 
-# Colour to greyscale conversion with `skimage`
+# Colour to grayscale conversion with `skimage`
 
-As always, the `ski.color` module has us covered here with the `rgb2gray()` function. We simply pass it the color array that we want to convert to greyscale, without the direct need for the luminance formula:
+As always, the `ski.color` module has us covered here with the `rgb2gray()` function. We simply pass it the color array that we want to convert to grayscale, without the direct need for the luminance formula:
 
 ```{python}
-# Convert color to greyscale.
-grey_colorwheel_from_ski = ski.color.rgb2gray(colorwheel)
-show_attributes(grey_colorwheel_from_ski)
-plt.imshow(grey_colorwheel_from_ski);
+# Convert color to grayscale.
+gray_colorwheel_from_ski = ski.color.rgb2gray(colorwheel)
+show_attributes(gray_colorwheel_from_ski)
+plt.imshow(gray_colorwheel_from_ski);
 ```
 
 # Summary
