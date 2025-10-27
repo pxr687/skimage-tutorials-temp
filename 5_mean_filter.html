@@ -514,7 +514,7 @@ document.write(`
 <p>Next, we create the <code class="docutils literal notranslate"><span class="pre">random_i</span></code> image array:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Create a greyscale image array.</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Create a grayscale image array.</span>
 <span class="n">random_i</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span>
                      <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span>
                      <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span>
@@ -735,26 +735,16 @@ random_i[0:3, 5:8]
 
 Crude Mean filter:
 
- [[0.         0.         0.         0.         0.         0.
-  0.         0.        ]
- [0.         0.         0.77777778 2.55555556 2.55555556 1.77777778
-  0.         0.        ]
- [0.         0.         0.77777778 2.55555556 2.55555556 1.77777778
-  0.         0.        ]
- [0.         0.         0.77777778 2.22222222 2.22222222 1.44444444
-  0.         0.        ]
- [0.         0.         0.77777778 1.77777778 1.77777778 1.
-  0.         0.        ]
- [0.         0.         1.11111111 2.66666667 2.66666667 1.55555556
-  0.         0.        ]
- [0.         0.         1.         3.         3.         2.
-  0.         0.        ]
- [0.         0.         1.44444444 3.66666667 3.66666667 2.22222222
-  0.         0.        ]
- [0.         0.         1.11111111 2.77777778 2.77777778 1.66666667
-  0.         0.        ]
- [0.         0.         0.         0.         0.         0.
-  0.         0.        ]]
+ [[0.   0.   0.   0.   0.   0.   0.   0.  ]
+ [0.   0.   0.78 2.56 2.56 1.78 0.   0.  ]
+ [0.   0.   0.78 2.56 2.56 1.78 0.   0.  ]
+ [0.   0.   0.78 2.22 2.22 1.44 0.   0.  ]
+ [0.   0.   0.78 1.78 1.78 1.   0.   0.  ]
+ [0.   0.   1.11 2.67 2.67 1.56 0.   0.  ]
+ [0.   0.   1.   3.   3.   2.   0.   0.  ]
+ [0.   0.   1.44 3.67 3.67 2.22 0.   0.  ]
+ [0.   0.   1.11 2.78 2.78 1.67 0.   0.  ]
+ [0.   0.   0.   0.   0.   0.   0.   0.  ]]
 </pre></div>
 </div>
 <img alt="_images/470ba2e9be9d67a710f556ad2845253b4a09050794216b37c82110abf3a5a967.png" src="_images/470ba2e9be9d67a710f556ad2845253b4a09050794216b37c82110abf3a5a967.png" />
@@ -928,9 +918,9 @@ Min Pixel Value: -1.0
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([[0.11111111, 0.11111111, 0.11111111],
-       [0.11111111, 0.11111111, 0.11111111],
-       [0.11111111, 0.11111111, 0.11111111]])
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([[0.11, 0.11, 0.11],
+       [0.11, 0.11, 0.11],
+       [0.11, 0.11, 0.11]])
 </pre></div>
 </div>
 </div>
@@ -1013,26 +1003,16 @@ Min Pixel Value: -1.0
 
 Mean filter:
 
- [[0.         0.         0.44444444 1.33333333 1.33333333 0.88888889
-  0.         0.        ]
- [0.         0.         0.77777778 2.55555556 2.55555556 1.77777778
-  0.         0.        ]
- [0.         0.         0.77777778 2.55555556 2.55555556 1.77777778
-  0.         0.        ]
- [0.         0.         0.77777778 2.22222222 2.22222222 1.44444444
-  0.         0.        ]
- [0.         0.         0.77777778 1.77777778 1.77777778 1.
-  0.         0.        ]
- [0.         0.         1.11111111 2.66666667 2.66666667 1.55555556
-  0.         0.        ]
- [0.         0.         1.         3.         3.         2.
-  0.         0.        ]
- [0.         0.         1.44444444 3.66666667 3.66666667 2.22222222
-  0.         0.        ]
- [0.         0.         1.11111111 2.77777778 2.77777778 1.66666667
-  0.         0.        ]
- [0.         0.         0.77777778 1.44444444 1.44444444 0.66666667
-  0.         0.        ]]
+ [[0.   0.   0.44 1.33 1.33 0.89 0.   0.  ]
+ [0.   0.   0.78 2.56 2.56 1.78 0.   0.  ]
+ [0.   0.   0.78 2.56 2.56 1.78 0.   0.  ]
+ [0.   0.   0.78 2.22 2.22 1.44 0.   0.  ]
+ [0.   0.   0.78 1.78 1.78 1.   0.   0.  ]
+ [0.   0.   1.11 2.67 2.67 1.56 0.   0.  ]
+ [0.   0.   1.   3.   3.   2.   0.   0.  ]
+ [0.   0.   1.44 3.67 3.67 2.22 0.   0.  ]
+ [0.   0.   1.11 2.78 2.78 1.67 0.   0.  ]
+ [0.   0.   0.78 1.44 1.44 0.67 0.   0.  ]]
 </pre></div>
 </div>
 <img alt="_images/9ea5ff376623a09e70318e2ffa8ed0f255bed2369860bcfcefc16f5b13eda0ad.png" src="_images/9ea5ff376623a09e70318e2ffa8ed0f255bed2369860bcfcefc16f5b13eda0ad.png" />
@@ -1050,50 +1030,30 @@ Mean filter:
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Crude mean filter:
 
- [[0.         0.         0.         0.         0.         0.
-  0.         0.        ]
- [0.         0.         0.77777778 2.55555556 2.55555556 1.77777778
-  0.         0.        ]
- [0.         0.         0.77777778 2.55555556 2.55555556 1.77777778
-  0.         0.        ]
- [0.         0.         0.77777778 2.22222222 2.22222222 1.44444444
-  0.         0.        ]
- [0.         0.         0.77777778 1.77777778 1.77777778 1.
-  0.         0.        ]
- [0.         0.         1.11111111 2.66666667 2.66666667 1.55555556
-  0.         0.        ]
- [0.         0.         1.         3.         3.         2.
-  0.         0.        ]
- [0.         0.         1.44444444 3.66666667 3.66666667 2.22222222
-  0.         0.        ]
- [0.         0.         1.11111111 2.77777778 2.77777778 1.66666667
-  0.         0.        ]
- [0.         0.         0.         0.         0.         0.
-  0.         0.        ]]
+ [[0.   0.   0.   0.   0.   0.   0.   0.  ]
+ [0.   0.   0.78 2.56 2.56 1.78 0.   0.  ]
+ [0.   0.   0.78 2.56 2.56 1.78 0.   0.  ]
+ [0.   0.   0.78 2.22 2.22 1.44 0.   0.  ]
+ [0.   0.   0.78 1.78 1.78 1.   0.   0.  ]
+ [0.   0.   1.11 2.67 2.67 1.56 0.   0.  ]
+ [0.   0.   1.   3.   3.   2.   0.   0.  ]
+ [0.   0.   1.44 3.67 3.67 2.22 0.   0.  ]
+ [0.   0.   1.11 2.78 2.78 1.67 0.   0.  ]
+ [0.   0.   0.   0.   0.   0.   0.   0.  ]]
 
 
 Mean filter via SciPy `correlate`:
 
- [[0.         0.         0.44444444 1.33333333 1.33333333 0.88888889
-  0.         0.        ]
- [0.         0.         0.77777778 2.55555556 2.55555556 1.77777778
-  0.         0.        ]
- [0.         0.         0.77777778 2.55555556 2.55555556 1.77777778
-  0.         0.        ]
- [0.         0.         0.77777778 2.22222222 2.22222222 1.44444444
-  0.         0.        ]
- [0.         0.         0.77777778 1.77777778 1.77777778 1.
-  0.         0.        ]
- [0.         0.         1.11111111 2.66666667 2.66666667 1.55555556
-  0.         0.        ]
- [0.         0.         1.         3.         3.         2.
-  0.         0.        ]
- [0.         0.         1.44444444 3.66666667 3.66666667 2.22222222
-  0.         0.        ]
- [0.         0.         1.11111111 2.77777778 2.77777778 1.66666667
-  0.         0.        ]
- [0.         0.         0.77777778 1.44444444 1.44444444 0.66666667
-  0.         0.        ]]
+ [[0.   0.   0.44 1.33 1.33 0.89 0.   0.  ]
+ [0.   0.   0.78 2.56 2.56 1.78 0.   0.  ]
+ [0.   0.   0.78 2.56 2.56 1.78 0.   0.  ]
+ [0.   0.   0.78 2.22 2.22 1.44 0.   0.  ]
+ [0.   0.   0.78 1.78 1.78 1.   0.   0.  ]
+ [0.   0.   1.11 2.67 2.67 1.56 0.   0.  ]
+ [0.   0.   1.   3.   3.   2.   0.   0.  ]
+ [0.   0.   1.44 3.67 3.67 2.22 0.   0.  ]
+ [0.   0.   1.11 2.78 2.78 1.67 0.   0.  ]
+ [0.   0.   0.78 1.44 1.44 0.67 0.   0.  ]]
 </pre></div>
 </div>
 </div>
@@ -1131,13 +1091,13 @@ The input is extended by wrapping around to the opposite edge.</p></li>
 </div>
 </div>
 </div>
-<p>We’ll apply it to a greyscale <code class="docutils literal notranslate"><span class="pre">coffee</span></code> image, originally a color image from <code class="docutils literal notranslate"><span class="pre">ski.data</span></code>:</p>
+<p>We’ll apply it to a grayscale <code class="docutils literal notranslate"><span class="pre">coffee</span></code> image, originally a color image from <code class="docutils literal notranslate"><span class="pre">ski.data</span></code>:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Read in an image file.</span>
-<span class="n">coffee_grey</span> <span class="o">=</span>  <span class="n">ski</span><span class="o">.</span><span class="n">io</span><span class="o">.</span><span class="n">imread</span><span class="p">(</span><span class="s2">&quot;images/coffee_grey.png&quot;</span><span class="p">,</span> 
+<span class="n">coffee_gray</span> <span class="o">=</span>  <span class="n">ski</span><span class="o">.</span><span class="n">io</span><span class="o">.</span><span class="n">imread</span><span class="p">(</span><span class="s2">&quot;images/coffee_gray.png&quot;</span><span class="p">,</span> 
                              <span class="n">as_gray</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">coffee_grey</span><span class="p">);</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">coffee_gray</span><span class="p">);</span>
 </pre></div>
 </div>
 </div>
@@ -1149,41 +1109,41 @@ The input is extended by wrapping around to the opposite edge.</p></li>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Add some noise to the pixel values in `coffee`.</span>
-<span class="n">noisy_coffee_grey</span> <span class="o">=</span> <span class="n">coffee_grey</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span>
+<span class="n">noisy_coffee_gray</span> <span class="o">=</span> <span class="n">coffee_gray</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span>
                                                    <span class="mi">2</span><span class="p">,</span>
-                                                   <span class="n">coffee_grey</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+                                                   <span class="n">coffee_gray</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
 
-<span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">noisy_coffee_grey</span><span class="p">);</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">noisy_coffee_gray</span><span class="p">);</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/26caefac6f6a788a999833e95d8a23ef27662c93d31340552c437b796ff6af2f.png" src="_images/26caefac6f6a788a999833e95d8a23ef27662c93d31340552c437b796ff6af2f.png" />
+<img alt="_images/e7984de2d5885b939cd327a0813161a28636e623fb48e1eaad9abb273e00d737.png" src="_images/e7984de2d5885b939cd327a0813161a28636e623fb48e1eaad9abb273e00d737.png" />
 </div>
 </div>
 <p>The mean filter can remove some of the noise, restoring the clarity of the image:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Mean filter the noisy coffee image, and show the result.</span>
-<span class="n">noisy_coffee_grey_mean_filtered</span> <span class="o">=</span> <span class="n">mean_filter</span><span class="p">(</span><span class="n">noisy_coffee_grey</span><span class="p">,</span> <span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">10</span><span class="p">))</span>
+<span class="n">noisy_coffee_gray_mean_filtered</span> <span class="o">=</span> <span class="n">mean_filter</span><span class="p">(</span><span class="n">noisy_coffee_gray</span><span class="p">,</span> <span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">10</span><span class="p">))</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">20</span><span class="p">,</span> <span class="mi">20</span><span class="p">))</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">coffee_grey</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">coffee_gray</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Original&quot;</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">axis</span><span class="p">(</span><span class="s1">&#39;off&#39;</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Noisy&#39;</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">noisy_coffee_grey</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">noisy_coffee_gray</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">axis</span><span class="p">(</span><span class="s1">&#39;off&#39;</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Mean Filtered&#39;</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">noisy_coffee_grey_mean_filtered</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">noisy_coffee_gray_mean_filtered</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">axis</span><span class="p">(</span><span class="s1">&#39;off&#39;</span><span class="p">);</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/c362aed8129f0844f8dad12c08f9f89a36cc6e70ac035f54678e8404b4af71a5.png" src="_images/c362aed8129f0844f8dad12c08f9f89a36cc6e70ac035f54678e8404b4af71a5.png" />
+<img alt="_images/1ea6dce3078795f7c64af3b1f05dd53751f6c4eadc3a6925860395e519caae9d.png" src="_images/1ea6dce3078795f7c64af3b1f05dd53751f6c4eadc3a6925860395e519caae9d.png" />
 </div>
 </div>
 <p>We can see that the image is clearer, the noise has been reduced and some of the signal has been restored.</p>
@@ -1194,18 +1154,18 @@ The input is extended by wrapping around to the opposite edge.</p></li>
 <span class="n">n_cols</span> <span class="o">=</span> <span class="mi">3</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span> <span class="mi">7</span><span class="p">))</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="n">n_cols</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">coffee_grey</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">coffee_gray</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Original&quot;</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">axis</span><span class="p">(</span><span class="s1">&#39;off&#39;</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="n">n_cols</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Noisy&#39;</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">noisy_coffee_grey</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">noisy_coffee_gray</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">axis</span><span class="p">(</span><span class="s1">&#39;off&#39;</span><span class="p">)</span>
 <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="nb">int</span><span class="p">(</span><span class="n">n_cols</span><span class="o">*</span><span class="mi">2</span><span class="p">)</span><span class="o">+</span><span class="mi">1</span><span class="p">):</span>
     <span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="n">n_cols</span><span class="p">,</span> <span class="n">i</span><span class="p">)</span>
     <span class="n">kernel_shape</span> <span class="o">=</span> <span class="p">(</span><span class="n">i</span><span class="o">+</span><span class="p">(</span><span class="n">i</span><span class="o">*</span><span class="mi">3</span><span class="p">),</span> <span class="n">i</span><span class="o">+</span><span class="p">(</span><span class="n">i</span><span class="o">*</span><span class="mi">3</span><span class="p">))</span>
     <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Mean Filtered</span><span class="se">\n</span><span class="s1">Kernel = (</span><span class="si">{</span><span class="n">i</span><span class="o">+</span><span class="p">(</span><span class="n">i</span><span class="o">*</span><span class="mi">3</span><span class="p">)</span><span class="si">}</span><span class="s1">,</span><span class="si">{</span><span class="n">i</span><span class="o">+</span><span class="p">(</span><span class="n">i</span><span class="o">*</span><span class="mi">3</span><span class="p">)</span><span class="si">}</span><span class="s1">)&#39;</span><span class="p">)</span>
-    <span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">mean_filter</span><span class="p">(</span><span class="n">noisy_coffee_grey</span><span class="p">,</span> <span class="n">kernel_shape</span><span class="p">))</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">mean_filter</span><span class="p">(</span><span class="n">noisy_coffee_gray</span><span class="p">,</span> <span class="n">kernel_shape</span><span class="p">))</span>
     <span class="n">plt</span><span class="o">.</span><span class="n">axis</span><span class="p">(</span><span class="s1">&#39;off&#39;</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">subplots_adjust</span><span class="p">()</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">();</span>
@@ -1213,7 +1173,7 @@ The input is extended by wrapping around to the opposite edge.</p></li>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/25f0692c247abfbe20377dc26c782ac6dfa6b2df29ca3192faf0134ebad8a411.png" src="_images/25f0692c247abfbe20377dc26c782ac6dfa6b2df29ca3192faf0134ebad8a411.png" />
+<img alt="_images/b689217e7c9fb75860298fcfac83455f463bab009bf0fa926a9ac3ae9ddf7400.png" src="_images/b689217e7c9fb75860298fcfac83455f463bab009bf0fa926a9ac3ae9ddf7400.png" />
 </div>
 </div>
 <p>As with many filtering operations, the effect of altering aspects of the filtering process (like a threshold value or kernel size), is very context-dependent. It may take many iterations before finding a “sweet spot”, and where the sweet spot is may be somewhat subjective.</p>
@@ -1221,7 +1181,7 @@ The input is extended by wrapping around to the opposite edge.</p></li>
 
 <p class="admonition-title"><span class="caption-number">Exercise 21 </span></p>
 <section id="exercise-content">
-<p>The nice thing about applying filtering via convolution kernels is that changing the kernel itself lets us implement a wide variety of functions, even strange ones. In this exercise, you will write a function called <code class="docutils literal notranslate"><span class="pre">strange_filter()</span></code>. You should apply it to <code class="docutils literal notranslate"><span class="pre">coffe_grey</span></code> to produce the following image:</p>
+<p>The nice thing about applying filtering via convolution kernels is that changing the kernel itself lets us implement a wide variety of functions, even strange ones. In this exercise, you will write a function called <code class="docutils literal notranslate"><span class="pre">strange_filter()</span></code>. You should apply it to <code class="docutils literal notranslate"><span class="pre">coffee_gray</span></code> to produce the following image:</p>
 <p><img alt="" src="_images/coffee_strange_kernel.png" /></p>
 <p>For a given pixel value, when the value is multiplied by it’s corresponding kernel element, the <em>absolute</em> value of the result should be <em>half as big as the absolute original pixel value</em>.</p>
 <p>Write your function so that it can be used with kernels of different <code class="docutils literal notranslate"><span class="pre">shape</span></code>s, so you can work out what kernel <code class="docutils literal notranslate"><span class="pre">shape</span></code> you need to recreate the target image, by trial and error.</p>
@@ -1238,7 +1198,7 @@ Min Pixel Value: -49
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># YOUR CODE HERE</span>
-<span class="n">strange_coffee</span> <span class="o">=</span> <span class="n">coffee_grey</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+<span class="n">strange_coffee</span> <span class="o">=</span> <span class="n">coffee_gray</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
 
 <span class="c1"># Show `strange_coffee`.</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">strange_coffee</span><span class="p">)</span>
@@ -1283,7 +1243,7 @@ Min Pixel Value: 0.0
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Apply the filter and show the result.</span>
-<span class="n">strange_filter_coffee</span> <span class="o">=</span> <span class="n">strange_filter_solution</span><span class="p">(</span><span class="n">coffee_grey</span><span class="p">,</span> <span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">10</span><span class="p">))</span>
+<span class="n">strange_filter_coffee</span> <span class="o">=</span> <span class="n">strange_filter_solution</span><span class="p">(</span><span class="n">coffee_gray</span><span class="p">,</span> <span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">10</span><span class="p">))</span>
 <span class="n">show_attributes</span><span class="p">(</span><span class="n">strange_filter_coffee</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">strange_filter_coffee</span><span class="p">);</span>
 </pre></div>
@@ -1304,7 +1264,7 @@ Min Pixel Value: -49
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Apply the filter and show the result.</span>
-<span class="n">strange_filter_coffee_other</span> <span class="o">=</span> <span class="n">strange_filter_solution</span><span class="p">(</span><span class="n">coffee_grey</span><span class="p">,</span> <span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">))</span>
+<span class="n">strange_filter_coffee_other</span> <span class="o">=</span> <span class="n">strange_filter_solution</span><span class="p">(</span><span class="n">coffee_gray</span><span class="p">,</span> <span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">))</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">strange_filter_coffee_other</span><span class="p">);</span>
 </pre></div>
 </div>

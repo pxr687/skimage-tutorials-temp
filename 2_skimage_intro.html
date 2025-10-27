@@ -520,7 +520,7 @@ document.write(`
 </section>
 <section class="tex2jax_ignore mathjax_ignore" id="images-are-arrays-arrays-are-images">
 <h1>Images are arrays, arrays are images<a class="headerlink" href="#images-are-arrays-arrays-are-images" title="Link to this heading">#</a></h1>
-<p>As we have seen, the technical definition of an image is <em>an (at least) two-dimensional array</em>. We know that each element of an image array (an “array pixel”) contains information about the grey-level or color of that element. Perhaps obviously, these fundamental principles apply equally to Scikit-image, given that it represents images as NumPy arrays. The table below outlines how images are represented in <code class="docutils literal notranslate"><span class="pre">skimage</span></code> - you’ll notice it is identical to the principles we have seen for representing images in NumPy:</p>
+<p>As we have seen, the technical definition of an image is <em>an (at least) two-dimensional array</em>. We know that each element of an image array (an “array pixel”) contains information about the gray-level or color of that element. Perhaps obviously, these fundamental principles apply equally to Scikit-image, given that it represents images as NumPy arrays. The table below outlines how images are represented in <code class="docutils literal notranslate"><span class="pre">skimage</span></code> - you’ll notice it is identical to the principles we have seen for representing images in NumPy:</p>
 <div class="pst-scrollable-table-container"><table class="table">
 <thead>
 <tr class="row-odd"><th class="head text-left"><p></p></th>
@@ -583,7 +583,7 @@ document.write(`
 <img alt="_images/68263706613df0ced43f23f905ac7be8e9515872ddb6fa5b76d169a7ed40469a.png" src="_images/68263706613df0ced43f23f905ac7be8e9515872ddb6fa5b76d169a7ed40469a.png" />
 </div>
 </div>
-<p>You will recall that this array - in virtue of being 2D and having only one numeric value per array pixel - is a single-channel array. This means that it contains only information about pixel intensity (grey-level), and not about color.</p>
+<p>You will recall that this array - in virtue of being 2D and having only one numeric value per array pixel - is a single-channel array. This means that it contains only information about pixel intensity (gray-level), and not about color.</p>
 <p>To include true color information, our array must be of <em>at least</em> three dimensions. A three-dimensional color image array typically has three “slices” in the third dimension. Each element of each slice contains a number between 0 and 1 (for <code class="docutils literal notranslate"><span class="pre">float64</span></code> data), or between 1 and 255 (for <code class="docutils literal notranslate"><span class="pre">uint8</span></code> data). For the standard RGB (Red-Green-Blue) format the number in each element of each slice in the third dimension tells that array pixel what color to be (e.g. a mix of red, green and blue, across the three slices). Hence these slices, in the third dimension, are called “color channels”.</p>
 <p><img alt="" src="_images/three_slice_algebraic_multi.png" /></p>
 <p>As we saw previously, we can control the amount of color in the image by manipulating each channel in the third dimension:</p>
@@ -637,7 +637,7 @@ Min Pixel Value: 0.0
 </div>
 </div>
 </div>
-<p>Because Scikit-image represents images as NumPy arrays, <em>the majority of Scikit-image functions take NumPy <code class="docutils literal notranslate"><span class="pre">ndarray</span></code>s as arguments.</em> For instance, the <code class="docutils literal notranslate"><span class="pre">rgb2gray()</span></code> function from the <code class="docutils literal notranslate"><span class="pre">ski.color</span></code> module can take a multi-channel array, and convert it to a single channel, greyscale image. We will show this with the <code class="docutils literal notranslate"><span class="pre">red_squares</span></code> array from above:</p>
+<p>Because Scikit-image represents images as NumPy arrays, <em>the majority of Scikit-image functions take NumPy <code class="docutils literal notranslate"><span class="pre">ndarray</span></code>s as arguments.</em> For instance, the <code class="docutils literal notranslate"><span class="pre">rgb2gray()</span></code> function from the <code class="docutils literal notranslate"><span class="pre">ski.color</span></code> module can take a multi-channel array, and convert it to a single channel, grayscale image. We will show this with the <code class="docutils literal notranslate"><span class="pre">red_squares</span></code> array from above:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Show the original `red_squares` array</span>
@@ -660,7 +660,7 @@ Min Pixel Value: 0.0
 <p>Now, we just pass the <code class="docutils literal notranslate"><span class="pre">squares</span></code> array to <code class="docutils literal notranslate"><span class="pre">ski.color.rgb2gray()</span></code> as an argument:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Convert the `red_squares` array to greyscale.</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Convert the `red_squares` array to grayscale.</span>
 <span class="n">back_to_black</span> <span class="o">=</span> <span class="n">ski</span><span class="o">.</span><span class="n">color</span><span class="o">.</span><span class="n">rgb2gray</span><span class="p">(</span><span class="n">red_squares</span><span class="p">)</span>
 <span class="n">show_attributes</span><span class="p">(</span><span class="n">back_to_black</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">matshow</span><span class="p">(</span><span class="n">back_to_black</span><span class="p">);</span>
@@ -1231,7 +1231,7 @@ Max Pixel Value: 1.0
 Min Pixel Value: 0.0
 </pre></div>
 </div>
-<img alt="_images/abf9b37f11e6bc6f6c6820a0871029bbf1148f65e82f0f1e1d7b78e868f4c55e.png" src="_images/abf9b37f11e6bc6f6c6820a0871029bbf1148f65e82f0f1e1d7b78e868f4c55e.png" />
+<img alt="_images/2a6bdd6cf4b890a3b0ef06867717dc8ec1f895624ccba96399487fd908b8f9bd.png" src="_images/2a6bdd6cf4b890a3b0ef06867717dc8ec1f895624ccba96399487fd908b8f9bd.png" />
 </div>
 </div>
 </section>
@@ -1338,13 +1338,13 @@ Min Pixel Value: 0
 <img alt="_images/60b7cd61208645b425827f7a1ad2f07076f41c86351b79cba077558e9f2a5174.png" src="_images/60b7cd61208645b425827f7a1ad2f07076f41c86351b79cba077558e9f2a5174.png" />
 </div>
 </div>
-<p>On the <a class="reference internal" href="1_color_images_as_numpy_arrays.html"><span class="doc std std-doc">previous page</span></a> we manually converted color images to greyscale, using NumPy operations. As we saw earlier on the present page, functions from the <code class="docutils literal notranslate"><span class="pre">ski.color</span></code> module, like <code class="docutils literal notranslate"><span class="pre">ski.color.rgb2gray()</span></code>, can do this more elegantly, with less code:</p>
+<p>On the <a class="reference internal" href="1_color_images_as_numpy_arrays.html"><span class="doc std std-doc">previous page</span></a> we manually converted color images to grayscale, using NumPy operations. As we saw earlier on the present page, functions from the <code class="docutils literal notranslate"><span class="pre">ski.color</span></code> module, like <code class="docutils literal notranslate"><span class="pre">ski.color.rgb2gray()</span></code>, can do this more elegantly, with less code:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># From RGB to greyscale.</span>
-<span class="n">grey_cat</span> <span class="o">=</span> <span class="n">ski</span><span class="o">.</span><span class="n">color</span><span class="o">.</span><span class="n">rgb2gray</span><span class="p">(</span><span class="n">cat</span><span class="p">)</span>
-<span class="n">show_attributes</span><span class="p">(</span><span class="n">grey_cat</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">grey_cat</span><span class="p">);</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># From RGB to grayscale.</span>
+<span class="n">gray_cat</span> <span class="o">=</span> <span class="n">ski</span><span class="o">.</span><span class="n">color</span><span class="o">.</span><span class="n">rgb2gray</span><span class="p">(</span><span class="n">cat</span><span class="p">)</span>
+<span class="n">show_attributes</span><span class="p">(</span><span class="n">gray_cat</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">gray_cat</span><span class="p">);</span>
 </pre></div>
 </div>
 </div>
@@ -1359,7 +1359,7 @@ Min Pixel Value: 0.02
 <img alt="_images/12227d6a6aaad732b021a534269fb2007a7a9bfff2d7e26d134d57239ca738a9.png" src="_images/12227d6a6aaad732b021a534269fb2007a7a9bfff2d7e26d134d57239ca738a9.png" />
 </div>
 </div>
-<p>This greyscale conversion is achieved by calculating the luminance of the image via a weighted sum of the information in each color channel:</p>
+<p>This grayscale conversion is achieved by calculating the luminance of the image via a weighted sum of the information in each color channel:</p>
 <div class="math notranslate nohighlight">
 \[
 Y = 0.2126R + 0.7152G + 0.0722B
@@ -1397,8 +1397,8 @@ Min Pixel Value: 0.0
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Apply the formula.        Red channel.           Blue channel.          Green channel.</span>
-<span class="n">cat_manual_grey</span> <span class="o">=</span> <span class="mf">0.2126</span> <span class="o">*</span> <span class="n">cat</span><span class="p">[:,</span> <span class="p">:,</span> <span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="mf">0.7152</span> <span class="o">*</span> <span class="n">cat</span><span class="p">[:,</span> <span class="p">:,</span> <span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="mf">0.0722</span> <span class="o">*</span> <span class="n">cat</span><span class="p">[:,</span> <span class="p">:,</span> <span class="mi">2</span><span class="p">]</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">cat_manual_grey</span><span class="p">);</span>
+<span class="n">cat_manual_gray</span> <span class="o">=</span> <span class="mf">0.2126</span> <span class="o">*</span> <span class="n">cat</span><span class="p">[:,</span> <span class="p">:,</span> <span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="mf">0.7152</span> <span class="o">*</span> <span class="n">cat</span><span class="p">[:,</span> <span class="p">:,</span> <span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="mf">0.0722</span> <span class="o">*</span> <span class="n">cat</span><span class="p">[:,</span> <span class="p">:,</span> <span class="mi">2</span><span class="p">]</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">cat_manual_gray</span><span class="p">);</span>
 </pre></div>
 </div>
 </div>
@@ -1409,7 +1409,7 @@ Min Pixel Value: 0.0
 <p>However, this leaves our image with an illegal pixel intensity range, given the <code class="docutils literal notranslate"><span class="pre">dtype</span></code>:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">show_attributes</span><span class="p">(</span><span class="n">cat_manual_grey</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">show_attributes</span><span class="p">(</span><span class="n">cat_manual_gray</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -1427,12 +1427,12 @@ Min Pixel Value: 3.86
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Ensure the correct pixel intensity range.</span>
-<span class="n">cat_manual_grey</span> <span class="o">=</span> <span class="n">ski</span><span class="o">.</span><span class="n">exposure</span><span class="o">.</span><span class="n">rescale_intensity</span><span class="p">(</span><span class="n">cat_manual_grey</span><span class="p">,</span>
+<span class="n">cat_manual_gray</span> <span class="o">=</span> <span class="n">ski</span><span class="o">.</span><span class="n">exposure</span><span class="o">.</span><span class="n">rescale_intensity</span><span class="p">(</span><span class="n">cat_manual_gray</span><span class="p">,</span>
                                                  <span class="n">out_range</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span> <span class="c1"># Set the desired pixel intensity range.</span>
 
 <span class="c1"># Show the result.</span>
-<span class="n">show_attributes</span><span class="p">(</span><span class="n">cat_manual_grey</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">cat_manual_grey</span><span class="p">);</span>
+<span class="n">show_attributes</span><span class="p">(</span><span class="n">cat_manual_gray</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">cat_manual_gray</span><span class="p">);</span>
 </pre></div>
 </div>
 </div>
@@ -1449,7 +1449,7 @@ Min Pixel Value: 0.0
 </div>
 </section>
 </div>
-<p>We can also convert an image into a different true colorspace (e.g. not greyscale). <code class="docutils literal notranslate"><span class="pre">ski.color.rgb2hsv()</span></code> will convert an RGB image to an image in the HSV colorspace. HSV stands for <a class="reference external" href="https://en.wikipedia.org/wiki/HSL_and_HSV">Hue, Saturation, Value</a>:</p>
+<p>We can also convert an image into a different true colorspace (e.g. not grayscale). <code class="docutils literal notranslate"><span class="pre">ski.color.rgb2hsv()</span></code> will convert an RGB image to an image in the HSV colorspace. HSV stands for <a class="reference external" href="https://en.wikipedia.org/wiki/HSL_and_HSV">Hue, Saturation, Value</a>:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Convert `cat` to the HSV colorspcae</span>
@@ -1471,7 +1471,7 @@ Min Pixel Value: 0.0
 </div>
 </div>
 <p>Psychedelic! Maybe this is how cats look, from the perspective of other cats (e.g. from within their “<a class="reference external" href="https://en.wikipedia.org/wiki/Umwelt">umwelt</a>”), but sadly this is probably not the case…</p>
-<p>Let’s extract the individual channels with some array indexing operations. Each channel is 2D, and therefore will render as a greyscale image when displayed with Matplotlib:</p>
+<p>Let’s extract the individual channels with some array indexing operations. Each channel is 2D, and therefore will render as a grayscale image when displayed with Matplotlib:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Extract the HSV channels.</span>

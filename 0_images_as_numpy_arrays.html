@@ -493,7 +493,7 @@ document.write(`
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-simplest-images">The simplest images</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#pixels-pixel-coordinates-and-interpolation">Pixels, pixel coordinates and interpolation</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#more-on-array-pixels-vs-display-pixels">More on array pixels vs display pixels</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#shades-of-grey-and-colormaps">Shades of grey and colormaps</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#shades-of-gray-and-colormaps">Shades of gray and colormaps</a></li>
 </ul>
 </li>
 <li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#slightly-more-complex-images">(Slightly) more complex images</a><ul class="visible nav section-nav flex-column">
@@ -518,7 +518,7 @@ document.write(`
 <h1>Images as NumPy arrays<a class="headerlink" href="#images-as-numpy-arrays" title="Link to this heading">#</a></h1>
 <p>This page explores how images can be represented as NumPy arrays. To get started, let’s think about the meaning of the word “image”.  The <em>intuitive meaning</em> is roughly “a picture of something”, or perhaps more broadly “a visual representation of something”. This is the familiar meaning which applies to images we encounter in everyday life, like advertisement posters, paintings, drawings, photographs and so on.</p>
 <p>The <em>technical meaning</em> of image - in scientific computing - is <em>an at least two dimensional array</em>. Depending on your background and familiarity with the topic, this definition may sound more or less strange. We assure you that each meaning is consistent with the other. However, each meaning refers to different, but overlapping, sets of things.</p>
-<p>Imagine an image - in the intuitive sense - printed on a piece of paper. The image has two dimensions, one dimensions runs along the <em>length</em> of the paper and one runs along the <em>width</em> of the paper. Now imagine the <em>computer file</em> that was used to print the image onto the paper (e.g. the image file that was sent to a run-of-the-mill printer to produce the printed image). The computer file must contain information which tells the printer what to put where along each dimension of the piece of paper. For instance, should that location contain black, white, grey or a color? By controlling these things, the information contained in the file will ultimately determine the look of the printed image (e.g. what it is a picture <em>of</em>).</p>
+<p>Imagine an image - in the intuitive sense - printed on a piece of paper. The image has two dimensions, one dimensions runs along the <em>length</em> of the paper and one runs along the <em>width</em> of the paper. Now imagine the <em>computer file</em> that was used to print the image onto the paper (e.g. the image file that was sent to a run-of-the-mill printer to produce the printed image). The computer file must contain information which tells the printer what to put where along each dimension of the piece of paper. For instance, should that location contain black, white, gray or a color? By controlling these things, the information contained in the file will ultimately determine the look of the printed image (e.g. what it is a picture <em>of</em>).</p>
 <p><img alt="" src="_images/printed_paper.png" /></p>
 <p>The file and resulting printed image might depict an object that was not originally created on a computer. The image may be of a hand painting, for example. Things like hand paintings fall under the intuitive meaning of “image”, but, until they are represented on a computer, they do not fall under the technical meaning of “image”. A hand painting is not an array of numbers, but the computer file which represents it is. The technical meaning of “image” refers to the computer representations of these things (e.g. a scan or photograph of a hand painting), as well as to other inherently digital images like digital photographs, CT scans, MRI scans etc. (more on these <a class="reference internal" href="2_skimage_intro.html"><span class="doc std std-doc">later</span></a>).</p>
 <p>Normally, we take an image (in the intuitive sense) and <em>then</em> represent it on a computer (by photographing or scanning it etc.). This can be referred to as <em>digitizing</em> an image. When digitizing, we take an image in the intuitive sense and convert it to an image in the technical sense, by representing it as an at least two-dimensional array of numbers.</p>
@@ -746,10 +746,10 @@ convention for the meaning of “row” and “column”.</p>
 </div>
 <p>For the rest of this tutorial, for small arrays we will use <code class="docutils literal notranslate"><span class="pre">plt.matshow()</span></code>, to keep the axes labels more intuitively interpretable.</p>
 </section>
-<section id="shades-of-grey-and-colormaps">
-<h2>Shades of grey and colormaps<a class="headerlink" href="#shades-of-grey-and-colormaps" title="Link to this heading">#</a></h2>
+<section id="shades-of-gray-and-colormaps">
+<h2>Shades of gray and colormaps<a class="headerlink" href="#shades-of-gray-and-colormaps" title="Link to this heading">#</a></h2>
 <p>Why does our image array display in vibrant purple and yellow, you may ask? This is because both <code class="docutils literal notranslate"><span class="pre">plt.matshow()</span></code> - and it’s cousin <code class="docutils literal notranslate"><span class="pre">plt.imshow()</span></code> - have a default <em>colormap</em>. This is a mapping between the numbers in the array, and the colors that the plot will depict each number with when the array is visualised. The default colormap is called <a class="reference external" href="https://matplotlib.org/3.5.3/api/_as_gen/matplotlib.pyplot.viridis.html"><code class="docutils literal notranslate"><span class="pre">viridis</span></code></a>. This default colormap maps low array pixel values to purple, and high array pixel values to yellow.</p>
-<p>We can adjust the color by changing the <code class="docutils literal notranslate"><span class="pre">cmap</span></code> argument of <code class="docutils literal notranslate"><span class="pre">plt.matshow()</span></code> - for instance, we can change the plot to visualise the array using a greyscale map:</p>
+<p>We can adjust the color by changing the <code class="docutils literal notranslate"><span class="pre">cmap</span></code> argument of <code class="docutils literal notranslate"><span class="pre">plt.matshow()</span></code> - for instance, we can change the plot to visualise the array using a grayscale map:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Show the array, change the colormap.</span>
@@ -762,11 +762,11 @@ convention for the meaning of “row” and “column”.</p>
 <img alt="_images/68263706613df0ced43f23f905ac7be8e9515872ddb6fa5b76d169a7ed40469a.png" src="_images/68263706613df0ced43f23f905ac7be8e9515872ddb6fa5b76d169a7ed40469a.png" />
 </div>
 </div>
-<p>So far so good. We have hand-crafted an image of something which looks like a very small chessboard. Using the <code class="docutils literal notranslate"><span class="pre">gray</span></code> colormap, each number in the array is now mapped to a shade between black and white. We can call this the <em>grey-level</em> of each element. This is a technical term, and may seem a bit odd given that the image shows only black or white squares. This helpful image makes things clearer:</p>
+<p>So far so good. We have hand-crafted an image of something which looks like a very small chessboard. Using the <code class="docutils literal notranslate"><span class="pre">gray</span></code> colormap, each number in the array is now mapped to a shade between black and white. We can call this the <em>gray-level</em> of each element. This is a technical term, and may seem a bit odd given that the image shows only black or white squares. This helpful image makes things clearer:</p>
 <p><img alt="" src="_images/grey-colours.png" />
 (Image from <a class="reference external" href="https://www.pythoninformer.com/computer-science/colour/grey-colour">here</a>).</p>
-<p>Personally, we think a better term here would be “white-level”, but the term “grey-level” is already established…</p>
-<p>Our image array so far contains only 1’s and 0’s; you might naturally ask “what happens if we use other numbers, how does this affect the color/grey-level of the display image?”. To demonstrate, in the cell below, we create a new two-dimensional array which contains decimal numbers 0 and 1.</p>
+<p>Personally, we think a better term here would be “white-level”, but the term “gray-level” is already established…</p>
+<p>Our image array so far contains only 1’s and 0’s; you might naturally ask “what happens if we use other numbers, how does this affect the color/gray-level of the display image?”. To demonstrate, in the cell below, we create a new two-dimensional array which contains decimal numbers 0 and 1.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># A two dimensional numpy array of numbers between 0 and 1.</span>
@@ -798,7 +798,7 @@ convention for the meaning of “row” and “column”.</p>
 </div>
 </div>
 </div>
-<p>Let’s show this image using the greyscale colormap:</p>
+<p>Let’s show this image using the grayscale colormap:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Show the new array (using Matplotlib).</span>
@@ -811,7 +811,7 @@ convention for the meaning of “row” and “column”.</p>
 <img alt="_images/0e057bb457f93d992a7b79f45e6399df463d5b30e0ac1584fa5cd40db9b1b91f.png" src="_images/0e057bb457f93d992a7b79f45e6399df463d5b30e0ac1584fa5cd40db9b1b91f.png" />
 </div>
 </div>
-<p>You can compare this visualisation of the image to the “raw” array output from the cell below. You’ll notice that <em>larger</em> numbers are represented with <em>lighter</em> squares, and <em>smaller</em> numbers are represented with <em>darker</em> squares. When we are using <code class="docutils literal notranslate"><span class="pre">float64</span></code> data, as we are here, you can think of each pixel value (0, 1 or in between) as specifying the grey-level as a percentage - with 1 being 100%, 0 being 0%, 0.5 being 50% and so on:</p>
+<p>You can compare this visualisation of the image to the “raw” array output from the cell below. You’ll notice that <em>larger</em> numbers are represented with <em>lighter</em> squares, and <em>smaller</em> numbers are represented with <em>darker</em> squares. When we are using <code class="docutils literal notranslate"><span class="pre">float64</span></code> data, as we are here, you can think of each pixel value (0, 1 or in between) as specifying the gray-level as a percentage - with 1 being 100%, 0 being 0%, 0.5 being 50% and so on:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Show the new array (from the NumPy output).</span>
@@ -890,7 +890,7 @@ convention for the meaning of “row” and “column”.</p>
 <img alt="_images/5b483ade5351f5a901461c39c6e1fd73d14a80afe183ed060cb5d454e5a83c01.png" src="_images/5b483ade5351f5a901461c39c6e1fd73d14a80afe183ed060cb5d454e5a83c01.png" />
 </div>
 </div>
-<p>We will talk more about color in the <a class="reference internal" href="1_color_images_as_numpy_arrays.html"><span class="doc std std-doc">next tutorial</span></a>. For now, you can think of these plots as showing the same array pixel information, just using a different color gradient. The single numeric value in each array pixel location determines <em>pixel intensity</em>. This is the brightness or darkness with which that pixel will be displayed when the image is displayed by something like Matplotlib. The <code class="docutils literal notranslate"><span class="pre">viridis</span></code> colormap maps these pixel intensities to a gradient of purple-yellow; the <code class="docutils literal notranslate"><span class="pre">gray</span></code> colormap maps these pixel intensities to a gradient of black-grey-white.</p>
+<p>We will talk more about color in the <a class="reference internal" href="1_color_images_as_numpy_arrays.html"><span class="doc std std-doc">next tutorial</span></a>. For now, you can think of these plots as showing the same array pixel information, just using a different color gradient. The single numeric value in each array pixel location determines <em>pixel intensity</em>. This is the brightness or darkness with which that pixel will be displayed when the image is displayed by something like Matplotlib. The <code class="docutils literal notranslate"><span class="pre">viridis</span></code> colormap maps these pixel intensities to a gradient of purple-yellow; the <code class="docutils literal notranslate"><span class="pre">gray</span></code> colormap maps these pixel intensities to a gradient of black-gray-white.</p>
 <p>We can change the default colormap for the rest of the plots we create in this session by using the code in the cell below. See <a class="reference external" href="https://matplotlib.org/stable/tutorials/introductory/customizing.html">here</a> for more information on how to change Matplotlib’s default behaviour across every session:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -903,7 +903,7 @@ convention for the meaning of “row” and “column”.</p>
 <p>You now understand the fundamentals of the computer representation of images! Before moving on, let’s recap where we are:</p>
 <ul class="simple">
 <li><p>We know that an image (in the technical sense) is a numeric array of at least two dimensions - often but not necessarily containing information about, or depicting, something in the world.</p></li>
-<li><p>We know that the number at each element of the array tells a computer what pixel intensity (e.g. grey-level) to show at that array pixel location. These pixel intensities determine the color of the corresponding display pixels in the rendered image. In the arrays we have seen, color is determined in accordance with the <code class="docutils literal notranslate"><span class="pre">colormap</span></code> we use for plotting.</p></li>
+<li><p>We know that the number at each element of the array tells a computer what pixel intensity (e.g. gray-level) to show at that array pixel location. These pixel intensities determine the color of the corresponding display pixels in the rendered image. In the arrays we have seen, color is determined in accordance with the <code class="docutils literal notranslate"><span class="pre">colormap</span></code> we use for plotting.</p></li>
 <li><p>We know what happens when an image array contains fewer pixels than the rendered image e.g. using interpolation, the image will be upscaled to be displayed using more <em>display pixels</em> than there are <em>array pixels</em> in the original image array.</p></li>
 <li><p>We have seen how changing the elements in an array can change how the image looks when it is displayed.</p></li>
 </ul>
@@ -1242,7 +1242,7 @@ convention for the meaning of “row” and “column”.</p>
 <ul class="simple">
 <li><p>Images are (at least) two-dimensional arrays of numbers.</p></li>
 <li><p>For small/low-resolution arrays, the values in the array will be displayed on more pixels than there are values in the array.</p></li>
-<li><p>The number at each location in an image array determines the pixel intensity (grey-level) in a 2D array. We have seen that different <code class="docutils literal notranslate"><span class="pre">colormap</span></code>s can display this information using different color gradients.</p></li>
+<li><p>The number at each location in an image array determines the pixel intensity (gray-level) in a 2D array. We have seen that different <code class="docutils literal notranslate"><span class="pre">colormap</span></code>s can display this information using different color gradients.</p></li>
 <li><p>These principles apply both to very simple and very complex images.</p></li>
 </ul>
 <p>On the <a class="reference internal" href="1_color_images_as_numpy_arrays.html"><span class="doc std std-doc">next page</span></a>, we will look at the representation of color in NumPy image arrays.</p>
@@ -1335,7 +1335,7 @@ arrays</a></p></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-simplest-images">The simplest images</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#pixels-pixel-coordinates-and-interpolation">Pixels, pixel coordinates and interpolation</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#more-on-array-pixels-vs-display-pixels">More on array pixels vs display pixels</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#shades-of-grey-and-colormaps">Shades of grey and colormaps</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#shades-of-gray-and-colormaps">Shades of gray and colormaps</a></li>
 </ul>
 </li>
 <li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#slightly-more-complex-images">(Slightly) more complex images</a><ul class="visible nav section-nav flex-column">

@@ -501,8 +501,8 @@ document.write(`
 <li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#inverting-image-colors">Inverting image colors</a></li>
 <li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#inverting-colors-with-skimage">Inverting colors with <code class="docutils literal notranslate"><span class="pre">skimage</span></code></a></li>
 <li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#greyscale-to-binary-conversion">Greyscale to binary conversion</a></li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#colour-to-greyscale-conversion">Colour to greyscale conversion</a></li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#colour-to-greyscale-conversion-with-skimage">Colour to greyscale conversion with <code class="docutils literal notranslate"><span class="pre">skimage</span></code></a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#colour-to-grayscale-conversion">Colour to grayscale conversion</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#colour-to-grayscale-conversion-with-skimage">Colour to grayscale conversion with <code class="docutils literal notranslate"><span class="pre">skimage</span></code></a></li>
 <li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#summary">Summary</a></li>
 <li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#references">References</a></li>
 </ul>
@@ -942,7 +942,7 @@ Min Pixel Value: -1.0
 <img alt="_images/b466fbed2ca920299e21f27fb7b310f85eaf174de5c87f2025a66f1a679106bd.png" src="_images/b466fbed2ca920299e21f27fb7b310f85eaf174de5c87f2025a66f1a679106bd.png" />
 </div>
 </div>
-<p>Why is the background now grey? Well, remember that, for a monochrome image visualised with the <code class="docutils literal notranslate"><span class="pre">gray</span></code> colormap: the most intense (highest value) pixels are white, and the least intense (lowest value) pixels are black, and intermediate values are a shade of grey.</p>
+<p>Why is the background now gray? Well, remember that, for a monochrome image visualised with the <code class="docutils literal notranslate"><span class="pre">gray</span></code> colormap: the most intense (highest value) pixels are white, and the least intense (lowest value) pixels are black, and intermediate values are a shade of gray.</p>
 <p>When we subtract along the column, with <code class="docutils literal notranslate"><span class="pre">np.diff()</span></code> the third value is subtracted from the fourth value etc., and so the resulting differences are calculated as:</p>
 <ul class="simple">
 <li><p><code class="docutils literal notranslate"><span class="pre">1</span> <span class="pre">-</span> <span class="pre">0</span> <span class="pre">=</span> <span class="pre">1</span></code> for 1 values on the left-hand side of the original image, and…</p></li>
@@ -1116,7 +1116,7 @@ Min Pixel Value: 0.0
 </div>
 <p>The array pixels highlighted in red are the original pixels from the <code class="docutils literal notranslate"><span class="pre">(2,</span> <span class="pre">2)</span></code> original array:</p>
 <p><img alt="" src="_images/resize_interpolation.png" /></p>
-<p>All the other pixels have been added by <code class="docutils literal notranslate"><span class="pre">skimage</span></code> during the <code class="docutils literal notranslate"><span class="pre">resize</span></code>-ing process. Pixels closer to the original pixels share closer intensity values to the original pixel (meaning they are more black or more white, depending on the original pixel). Images further from the original pixels become more grey.</p>
+<p>All the other pixels have been added by <code class="docutils literal notranslate"><span class="pre">skimage</span></code> during the <code class="docutils literal notranslate"><span class="pre">resize</span></code>-ing process. Pixels closer to the original pixels share closer intensity values to the original pixel (meaning they are more black or more white, depending on the original pixel). Images further from the original pixels become more gray.</p>
 <p>We can control the type of interpolation that <code class="docutils literal notranslate"><span class="pre">skimage</span></code> uses by changing the (somewhat cryptically named) <code class="docutils literal notranslate"><span class="pre">order</span></code> argument. Setting this to 0 will activate <a class="reference external" href="https://en.wikipedia.org/wiki/Nearest-neighbor_interpolation">nearest neighbour interpolation</a>:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -1275,54 +1275,38 @@ Min Pixel Value: 0.0
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[[ 0.00000000e+00  0.00000000e+00  0.00000000e+00  0.00000000e+00
-   0.00000000e+00  0.00000000e+00  0.00000000e+00  0.00000000e+00
-   0.00000000e+00  0.00000000e+00  0.00000000e+00]
- [ 0.00000000e+00  0.00000000e+00  0.00000000e+00  9.19215184e-02
-   3.28470133e-01  1.46497896e-02 -9.29503733e-03  1.13781898e-03
-   0.00000000e+00  0.00000000e+00  0.00000000e+00]
- [ 0.00000000e+00  1.18968246e-02 -7.40381162e-02  8.84964079e-01
-   1.30120188e+00  2.34447181e-01 -5.79315433e-02  9.73504009e-03
-   0.00000000e+00  0.00000000e+00  0.00000000e+00]
- [ 0.00000000e+00  2.29671560e-02 -9.94042830e-02  5.31798535e-01
-   1.15611551e+00  4.45577123e-01 -9.18284541e-02  1.96647314e-02
-   0.00000000e+00  0.00000000e+00  0.00000000e+00]
- [ 0.00000000e+00  1.32608388e-02 -7.05211077e-02  2.93790739e-01
-   1.18460203e+00  7.22474080e-01 -9.12246057e-02  2.01493489e-02
-   0.00000000e+00  0.00000000e+00  0.00000000e+00]
- [ 0.00000000e+00  3.34516900e-03 -2.49214500e-02  7.87370974e-02
-   1.06169340e+00  9.44523526e-01 -2.01243065e-02  1.59112890e-03
-   3.04015236e-05  0.00000000e+00  0.00000000e+00]
- [ 0.00000000e+00  0.00000000e+00  1.04741039e-02 -5.30941491e-02
-   8.77232327e-01  1.11101328e+00  1.42520903e-01 -4.03853734e-02
-   6.37422998e-03  0.00000000e+00  0.00000000e+00]
- [ 0.00000000e+00  0.00000000e+00  2.16183152e-02 -9.76654040e-02
-   6.31151492e-01  1.18792623e+00  3.72780613e-01 -8.34291493e-02
-   1.69645122e-02  0.00000000e+00  0.00000000e+00]
- [ 0.00000000e+00  0.00000000e+00  1.68698125e-02 -8.35253062e-02
-   3.75604172e-01  1.20161822e+00  6.38016943e-01 -9.80106114e-02
-   2.13632710e-02  0.00000000e+00  0.00000000e+00]
- [ 0.00000000e+00  0.00000000e+00  6.43343197e-03 -4.03557546e-02
-   1.39988080e-01  1.07425986e+00  8.45534837e-01 -5.22251910e-02
-   1.08405644e-02  0.00000000e+00  0.00000000e+00]
- [ 0.00000000e+00  0.00000000e+00  2.94094884e-05  1.58642741e-03
-  -2.12667395e-02  1.05460895e+00  1.20606493e+00  8.46172620e-02
-  -2.23205435e-02  2.07669766e-03  0.00000000e+00]
- [ 0.00000000e+00  0.00000000e+00  0.00000000e+00  2.07484137e-02
-  -7.40162294e-02  3.77155614e-01  2.85936746e-01  1.33619250e-02
-  -6.91365994e-04  2.07830046e-03  0.00000000e+00]
- [ 0.00000000e+00  0.00000000e+00  0.00000000e+00  2.41089617e-04
-  -3.73646884e-03  1.05162512e-01  6.11147312e-01  4.41606683e-01
-  -1.03596526e-01  2.56953998e-02  0.00000000e+00]
- [ 0.00000000e+00  0.00000000e+00  0.00000000e+00  8.91021666e-03
-  -6.26095893e-02  2.63155567e-01  1.42628749e+00  9.23829176e-01
-  -7.35560478e-02  1.14267385e-02  0.00000000e+00]
- [ 0.00000000e+00  0.00000000e+00  0.00000000e+00  1.16719133e-03
-  -9.11664252e-03  1.39517091e-02  3.06486410e-01  8.44898124e-02
-   0.00000000e+00  0.00000000e+00  0.00000000e+00]
- [ 0.00000000e+00  0.00000000e+00  0.00000000e+00  0.00000000e+00
-   0.00000000e+00  0.00000000e+00  0.00000000e+00  0.00000000e+00
-   0.00000000e+00  0.00000000e+00  0.00000000e+00]]
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[[ 0.00e+00  0.00e+00  0.00e+00  0.00e+00  0.00e+00  0.00e+00  0.00e+00
+   0.00e+00  0.00e+00  0.00e+00  0.00e+00]
+ [ 0.00e+00  0.00e+00  0.00e+00  9.19e-02  3.28e-01  1.46e-02 -9.30e-03
+   1.14e-03  0.00e+00  0.00e+00  0.00e+00]
+ [ 0.00e+00  1.19e-02 -7.40e-02  8.85e-01  1.30e+00  2.34e-01 -5.79e-02
+   9.74e-03  0.00e+00  0.00e+00  0.00e+00]
+ [ 0.00e+00  2.30e-02 -9.94e-02  5.32e-01  1.16e+00  4.46e-01 -9.18e-02
+   1.97e-02  0.00e+00  0.00e+00  0.00e+00]
+ [ 0.00e+00  1.33e-02 -7.05e-02  2.94e-01  1.18e+00  7.22e-01 -9.12e-02
+   2.01e-02  0.00e+00  0.00e+00  0.00e+00]
+ [ 0.00e+00  3.35e-03 -2.49e-02  7.87e-02  1.06e+00  9.45e-01 -2.01e-02
+   1.59e-03  3.04e-05  0.00e+00  0.00e+00]
+ [ 0.00e+00  0.00e+00  1.05e-02 -5.31e-02  8.77e-01  1.11e+00  1.43e-01
+  -4.04e-02  6.37e-03  0.00e+00  0.00e+00]
+ [ 0.00e+00  0.00e+00  2.16e-02 -9.77e-02  6.31e-01  1.19e+00  3.73e-01
+  -8.34e-02  1.70e-02  0.00e+00  0.00e+00]
+ [ 0.00e+00  0.00e+00  1.69e-02 -8.35e-02  3.76e-01  1.20e+00  6.38e-01
+  -9.80e-02  2.14e-02  0.00e+00  0.00e+00]
+ [ 0.00e+00  0.00e+00  6.43e-03 -4.04e-02  1.40e-01  1.07e+00  8.46e-01
+  -5.22e-02  1.08e-02  0.00e+00  0.00e+00]
+ [ 0.00e+00  0.00e+00  2.94e-05  1.59e-03 -2.13e-02  1.05e+00  1.21e+00
+   8.46e-02 -2.23e-02  2.08e-03  0.00e+00]
+ [ 0.00e+00  0.00e+00  0.00e+00  2.07e-02 -7.40e-02  3.77e-01  2.86e-01
+   1.34e-02 -6.91e-04  2.08e-03  0.00e+00]
+ [ 0.00e+00  0.00e+00  0.00e+00  2.41e-04 -3.74e-03  1.05e-01  6.11e-01
+   4.42e-01 -1.04e-01  2.57e-02  0.00e+00]
+ [ 0.00e+00  0.00e+00  0.00e+00  8.91e-03 -6.26e-02  2.63e-01  1.43e+00
+   9.24e-01 -7.36e-02  1.14e-02  0.00e+00]
+ [ 0.00e+00  0.00e+00  0.00e+00  1.17e-03 -9.12e-03  1.40e-02  3.06e-01
+   8.45e-02  0.00e+00  0.00e+00  0.00e+00]
+ [ 0.00e+00  0.00e+00  0.00e+00  0.00e+00  0.00e+00  0.00e+00  0.00e+00
+   0.00e+00  0.00e+00  0.00e+00  0.00e+00]]
 </pre></div>
 </div>
 <img alt="_images/c15b46825c7a1584796c6908cc45ec543d9a0d2ead0f9bdb76eee4cf9639ae49.png" src="_images/c15b46825c7a1584796c6908cc45ec543d9a0d2ead0f9bdb76eee4cf9639ae49.png" />
@@ -1594,7 +1578,7 @@ Min Pixel Value: 0
 <p class="admonition-title">Solution to<a class="reference internal" href="#look-at-me"> Exercise 12</a></p>
 <section id="solution-content">
 <p>Here we need a transpose operation, followed by a rotation, followed by a concatenation.</p>
-<p>That is a mouthful, let’s break it down. First we transpose the <code class="docutils literal notranslate"><span class="pre">camera</span></code> array, we can use <code class="docutils literal notranslate"><span class="pre">.T</span></code> here rather than <code class="docutils literal notranslate"><span class="pre">.transpose</span></code> as we are dealing with a 2D greyscale image:</p>
+<p>That is a mouthful, let’s break it down. First we transpose the <code class="docutils literal notranslate"><span class="pre">camera</span></code> array, we can use <code class="docutils literal notranslate"><span class="pre">.T</span></code> here rather than <code class="docutils literal notranslate"><span class="pre">.transpose</span></code> as we are dealing with a 2D grayscale image:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Transpose `camera`.</span>
@@ -1944,11 +1928,11 @@ Min Pixel Value: 23
 <p>In image processing, a mask is a matrix/array containing a collection of elements in a certain shape. A mask is “placed” on an image, and pixel values under the mask are all replaced with a specific value. Let’s demonstrate with a real image:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">coffee_grey</span> <span class="o">=</span> <span class="n">ski</span><span class="o">.</span><span class="n">io</span><span class="o">.</span><span class="n">imread</span><span class="p">(</span><span class="s2">&quot;images/coffee_grey.png&quot;</span><span class="p">,</span> 
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">coffee_gray</span> <span class="o">=</span> <span class="n">ski</span><span class="o">.</span><span class="n">io</span><span class="o">.</span><span class="n">imread</span><span class="p">(</span><span class="s2">&quot;images/coffee_gray.png&quot;</span><span class="p">,</span> 
                         <span class="n">as_gray</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span> <span class="c1"># We could also use indexing/skimage.color to do this, </span>
                                       <span class="c1"># by removing color channels.</span>
-<span class="n">show_attributes</span><span class="p">(</span><span class="n">coffee_grey</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">coffee_grey</span><span class="p">);</span>
+<span class="n">show_attributes</span><span class="p">(</span><span class="n">coffee_gray</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">coffee_gray</span><span class="p">);</span>
 </pre></div>
 </div>
 </div>
@@ -1967,7 +1951,7 @@ Min Pixel Value: 0.0
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Unpack and store the number of rows and number of columns.</span>
-<span class="n">dim_1</span><span class="p">,</span> <span class="n">dim_2</span> <span class="o">=</span> <span class="n">coffee_grey</span><span class="o">.</span><span class="n">shape</span>
+<span class="n">dim_1</span><span class="p">,</span> <span class="n">dim_2</span> <span class="o">=</span> <span class="n">coffee_gray</span><span class="o">.</span><span class="n">shape</span>
 
 <span class="c1"># Show the values.</span>
 <span class="n">dim_1</span><span class="p">,</span> <span class="n">dim_2</span>
@@ -2122,10 +2106,10 @@ Min Pixel Value: False
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Apply the mask.</span>
-<span class="n">coffee_grey_masked</span> <span class="o">=</span> <span class="n">coffee_grey</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
-<span class="n">coffee_grey_masked</span><span class="p">[</span><span class="n">mask</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="n">coffee_gray_masked</span> <span class="o">=</span> <span class="n">coffee_gray</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+<span class="n">coffee_gray_masked</span><span class="p">[</span><span class="n">mask</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
 
-<span class="n">plt</span><span class="o">.</span><span class="n">matshow</span><span class="p">(</span><span class="n">coffee_grey_masked</span><span class="p">);</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">matshow</span><span class="p">(</span><span class="n">coffee_gray_masked</span><span class="p">);</span>
 </pre></div>
 </div>
 </div>
@@ -2403,7 +2387,7 @@ Min Pixel Value: 48
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Show the small array (0 elements are now grey).</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Show the small array (0 elements are now gray).</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">small_arr</span><span class="p">);</span>
 </pre></div>
 </div>
@@ -2522,10 +2506,10 @@ Min Pixel Value: 0
 <section class="tex2jax_ignore mathjax_ignore" id="greyscale-to-binary-conversion">
 <h1>Greyscale to binary conversion<a class="headerlink" href="#greyscale-to-binary-conversion" title="Link to this heading">#</a></h1>
 <p>Greyscale to binary conversion can be achieved using comparison operators (<code class="docutils literal notranslate"><span class="pre">&lt;</span></code>, <code class="docutils literal notranslate"><span class="pre">&gt;</span></code>, <code class="docutils literal notranslate"><span class="pre">&lt;=</span></code>, <code class="docutils literal notranslate"><span class="pre">&gt;=</span></code>, <code class="docutils literal notranslate"><span class="pre">==</span></code>). The resulting Boolean array will always be binary.</p>
-<p>Let’s demonstrate with a greyscale image:</p>
+<p>Let’s demonstrate with a grayscale image:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Create a greyscale image.</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Create a grayscale image.</span>
 <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
 <span class="n">random_check</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> 
                          <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span>
@@ -2576,7 +2560,7 @@ Min Pixel Value: 0
 </div>
 </div>
 </div>
-<p>We can then use this threshold to create a binary array, successfully binarizing our greyscale image:</p>
+<p>We can then use this threshold to create a binary array, successfully binarizing our grayscale image:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Binarize the array, based on the threshold.</span>
@@ -2598,15 +2582,15 @@ Min Pixel Value: False
 </div>
 </div>
 </section>
-<section class="tex2jax_ignore mathjax_ignore" id="colour-to-greyscale-conversion">
-<h1>Colour to greyscale conversion<a class="headerlink" href="#colour-to-greyscale-conversion" title="Link to this heading">#</a></h1>
-<p>To downgrade a color image to greyscale we can use a brute force method of taking the mean of the three color channels, to produce a 2D monochrome image array:</p>
+<section class="tex2jax_ignore mathjax_ignore" id="colour-to-grayscale-conversion">
+<h1>Colour to grayscale conversion<a class="headerlink" href="#colour-to-grayscale-conversion" title="Link to this heading">#</a></h1>
+<p>To downgrade a color image to grayscale we can use a brute force method of taking the mean of the three color channels, to produce a 2D monochrome image array:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">grey_wheel</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">colorwheel</span><span class="p">,</span> 
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">gray_wheel</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">colorwheel</span><span class="p">,</span> 
                      <span class="n">axis</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
 
-<span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">grey_wheel</span><span class="p">);</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">gray_wheel</span><span class="p">);</span>
 </pre></div>
 </div>
 </div>
@@ -2619,8 +2603,8 @@ Min Pixel Value: False
 \[
 Y = 0.2126R + 0.7152G + 0.0722B
 \]</div>
-<p>This “collapses” a 3D color image into a 2D greyscale image via a weighted sum of the channels.</p>
-<div class="exercise dropdown admonition" id="grey-wheel">
+<p>This “collapses” a 3D color image into a 2D grayscale image via a weighted sum of the channels.</p>
+<div class="exercise dropdown admonition" id="gray-wheel">
 
 <p class="admonition-title"><span class="caption-number">Exercise 18 </span></p>
 <section id="exercise-content">
@@ -2635,7 +2619,7 @@ Min Pixel Value: 0
 </pre></div>
 </div>
 <p>Using the luminance formula, and any other required <code class="docutils literal notranslate"><span class="pre">numpy</span></code>, <code class="docutils literal notranslate"><span class="pre">scipy</span></code> or <code class="docutils literal notranslate"><span class="pre">skimage</span></code> operations, recreate the target image below, starting from the <code class="docutils literal notranslate"><span class="pre">colorwheel</span></code> array:</p>
-<p><img alt="" src="_images/grey_wheel.png" /></p>
+<p><img alt="" src="_images/gray_wheel.png" /></p>
 <p>Your final image should have the following attributes:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>Type: &lt;class &#39;numpy.ndarray&#39;&gt;
 dtype: uint8
@@ -2657,7 +2641,7 @@ Min Pixel Value: 0
 </div>
 <div class="solution dropdown admonition" id="3_skimage_processing_from_numpy_and_scipy-solution-17">
 
-<p class="admonition-title">Solution to<a class="reference internal" href="#grey-wheel"> Exercise 18</a></p>
+<p class="admonition-title">Solution to<a class="reference internal" href="#gray-wheel"> Exercise 18</a></p>
 <section id="solution-content">
 <p>The solution here requires some close attention to <code class="docutils literal notranslate"><span class="pre">dtype</span></code>. To apply the luminance formula using <code class="docutils literal notranslate"><span class="pre">np.dot()</span></code> is pretty straightforward:</p>
 <div class="cell docutils container">
@@ -2668,11 +2652,11 @@ Min Pixel Value: 0
 <span class="n">weights</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">0.2126</span><span class="p">,</span> <span class="mf">0.7152</span><span class="p">,</span> <span class="mf">0.0722</span><span class="p">])</span>
 
 <span class="c1"># Run the numbers...</span>
-<span class="n">grey_wheel</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">colorwheel</span><span class="p">,</span> <span class="n">weights</span><span class="p">)</span>
+<span class="n">gray_wheel</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">colorwheel</span><span class="p">,</span> <span class="n">weights</span><span class="p">)</span>
 
 <span class="c1"># Show the result.</span>
-<span class="n">show_attributes</span><span class="p">(</span><span class="n">grey_wheel</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">grey_wheel</span><span class="p">);</span>
+<span class="n">show_attributes</span><span class="p">(</span><span class="n">gray_wheel</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">gray_wheel</span><span class="p">);</span>
 </pre></div>
 </div>
 </div>
@@ -2691,7 +2675,7 @@ Min Pixel Value: 0.0
 <div class="cell tag_raises-exception docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Ouch!</span>
-<span class="n">ski</span><span class="o">.</span><span class="n">util</span><span class="o">.</span><span class="n">img_as_ubyte</span><span class="p">(</span><span class="n">grey_wheel</span><span class="p">)</span>
+<span class="n">ski</span><span class="o">.</span><span class="n">util</span><span class="o">.</span><span class="n">img_as_ubyte</span><span class="p">(</span><span class="n">gray_wheel</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -2700,7 +2684,7 @@ Min Pixel Value: 0.0
 <span class="ne">ValueError</span><span class="g g-Whitespace">                                </span>Traceback (most recent call last)
 <span class="n">Cell</span> <span class="n">In</span><span class="p">[</span><span class="mi">89</span><span class="p">],</span> <span class="n">line</span> <span class="mi">2</span>
 <span class="g g-Whitespace">      </span><span class="mi">1</span> <span class="c1"># Ouch!</span>
-<span class="ne">----&gt; </span><span class="mi">2</span> <span class="n">ski</span><span class="o">.</span><span class="n">util</span><span class="o">.</span><span class="n">img_as_ubyte</span><span class="p">(</span><span class="n">grey_wheel</span><span class="p">)</span>
+<span class="ne">----&gt; </span><span class="mi">2</span> <span class="n">ski</span><span class="o">.</span><span class="n">util</span><span class="o">.</span><span class="n">img_as_ubyte</span><span class="p">(</span><span class="n">gray_wheel</span><span class="p">)</span>
 
 <span class="nn">File /opt/hostedtoolcache/Python/3.12.11/x64/lib/python3.12/site-packages/skimage/util/dtype.py:576,</span> in <span class="ni">img_as_ubyte</span><span class="nt">(image, force_copy)</span>
 <span class="g g-Whitespace">    </span><span class="mi">555</span> <span class="k">def</span><span class="w"> </span><span class="nf">img_as_ubyte</span><span class="p">(</span><span class="n">image</span><span class="p">,</span> <span class="n">force_copy</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
@@ -2730,10 +2714,10 @@ Min Pixel Value: 0.0
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Rescale the pixel intensity values into a legal range, for the current `dtype`.</span>
-<span class="n">grey_wheel</span> <span class="o">=</span> <span class="n">ski</span><span class="o">.</span><span class="n">exposure</span><span class="o">.</span><span class="n">rescale_intensity</span><span class="p">(</span><span class="n">grey_wheel</span><span class="p">,</span>
+<span class="n">gray_wheel</span> <span class="o">=</span> <span class="n">ski</span><span class="o">.</span><span class="n">exposure</span><span class="o">.</span><span class="n">rescale_intensity</span><span class="p">(</span><span class="n">gray_wheel</span><span class="p">,</span>
                               <span class="n">out_range</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>
 
-<span class="n">show_attributes</span><span class="p">(</span><span class="n">grey_wheel</span><span class="p">)</span>
+<span class="n">show_attributes</span><span class="p">(</span><span class="n">gray_wheel</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -2751,12 +2735,12 @@ Min Pixel Value: 0.0
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Convert to `uint8` `dtype`.</span>
-<span class="n">grey_wheel</span> <span class="o">=</span> <span class="n">ski</span><span class="o">.</span><span class="n">util</span><span class="o">.</span><span class="n">img_as_ubyte</span><span class="p">(</span><span class="n">grey_wheel</span><span class="p">)</span>
+<span class="n">gray_wheel</span> <span class="o">=</span> <span class="n">ski</span><span class="o">.</span><span class="n">util</span><span class="o">.</span><span class="n">img_as_ubyte</span><span class="p">(</span><span class="n">gray_wheel</span><span class="p">)</span>
 
 <span class="c1"># Invert the color and show the result.</span>
-<span class="n">grey_wheel</span> <span class="o">=</span>  <span class="n">ski</span><span class="o">.</span><span class="n">util</span><span class="o">.</span><span class="n">invert</span><span class="p">(</span><span class="n">grey_wheel</span><span class="p">)</span>
-<span class="n">show_attributes</span><span class="p">(</span><span class="n">grey_wheel</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">grey_wheel</span><span class="p">);</span>
+<span class="n">gray_wheel</span> <span class="o">=</span>  <span class="n">ski</span><span class="o">.</span><span class="n">util</span><span class="o">.</span><span class="n">invert</span><span class="p">(</span><span class="n">gray_wheel</span><span class="p">)</span>
+<span class="n">show_attributes</span><span class="p">(</span><span class="n">gray_wheel</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">gray_wheel</span><span class="p">);</span>
 </pre></div>
 </div>
 </div>
@@ -2774,15 +2758,15 @@ Min Pixel Value: 0
 </section>
 </div>
 </section>
-<section class="tex2jax_ignore mathjax_ignore" id="colour-to-greyscale-conversion-with-skimage">
-<h1>Colour to greyscale conversion with <code class="docutils literal notranslate"><span class="pre">skimage</span></code><a class="headerlink" href="#colour-to-greyscale-conversion-with-skimage" title="Link to this heading">#</a></h1>
-<p>As always, the <code class="docutils literal notranslate"><span class="pre">ski.color</span></code> module has us covered here with the <code class="docutils literal notranslate"><span class="pre">rgb2gray()</span></code> function. We simply pass it the color array that we want to convert to greyscale, without the direct need for the luminance formula:</p>
+<section class="tex2jax_ignore mathjax_ignore" id="colour-to-grayscale-conversion-with-skimage">
+<h1>Colour to grayscale conversion with <code class="docutils literal notranslate"><span class="pre">skimage</span></code><a class="headerlink" href="#colour-to-grayscale-conversion-with-skimage" title="Link to this heading">#</a></h1>
+<p>As always, the <code class="docutils literal notranslate"><span class="pre">ski.color</span></code> module has us covered here with the <code class="docutils literal notranslate"><span class="pre">rgb2gray()</span></code> function. We simply pass it the color array that we want to convert to grayscale, without the direct need for the luminance formula:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Convert color to greyscale.</span>
-<span class="n">grey_colorwheel_from_ski</span> <span class="o">=</span> <span class="n">ski</span><span class="o">.</span><span class="n">color</span><span class="o">.</span><span class="n">rgb2gray</span><span class="p">(</span><span class="n">colorwheel</span><span class="p">)</span>
-<span class="n">show_attributes</span><span class="p">(</span><span class="n">grey_colorwheel_from_ski</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">grey_colorwheel_from_ski</span><span class="p">);</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Convert color to grayscale.</span>
+<span class="n">gray_colorwheel_from_ski</span> <span class="o">=</span> <span class="n">ski</span><span class="o">.</span><span class="n">color</span><span class="o">.</span><span class="n">rgb2gray</span><span class="p">(</span><span class="n">colorwheel</span><span class="p">)</span>
+<span class="n">show_attributes</span><span class="p">(</span><span class="n">gray_colorwheel_from_ski</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">gray_colorwheel_from_ski</span><span class="p">);</span>
 </pre></div>
 </div>
 </div>
@@ -2884,8 +2868,8 @@ Min Pixel Value: 0.0
 <li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#inverting-image-colors">Inverting image colors</a></li>
 <li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#inverting-colors-with-skimage">Inverting colors with <code class="docutils literal notranslate"><span class="pre">skimage</span></code></a></li>
 <li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#greyscale-to-binary-conversion">Greyscale to binary conversion</a></li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#colour-to-greyscale-conversion">Colour to greyscale conversion</a></li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#colour-to-greyscale-conversion-with-skimage">Colour to greyscale conversion with <code class="docutils literal notranslate"><span class="pre">skimage</span></code></a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#colour-to-grayscale-conversion">Colour to grayscale conversion</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#colour-to-grayscale-conversion-with-skimage">Colour to grayscale conversion with <code class="docutils literal notranslate"><span class="pre">skimage</span></code></a></li>
 <li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#summary">Summary</a></li>
 <li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#references">References</a></li>
 </ul>

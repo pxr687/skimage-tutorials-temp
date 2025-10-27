@@ -613,14 +613,14 @@ document.write(`
 <img alt="_images/6c0e02b42eb999051e6b47b222c6f2c9b504fb7323180e897ead681833cb4942.png" src="_images/6c0e02b42eb999051e6b47b222c6f2c9b504fb7323180e897ead681833cb4942.png" />
 </div>
 </div>
-<p>The first image - with black and white squares only, no grey - is a <em>binary image</em>. This is an image where each array pixel contains only one of two values. In this case the two values are 0 or 1, with 0 corresponding to black pixels and 1 corresponding to white pixels.</p>
-<p>The second image - black, white and grey squares - is a <em>monochrome image</em>. This image contains more than two unique values. It has black pixels (the lowest pixel values, 0); white pixels (the highest pixel values, 1); and grey pixels (intermediate pixel values, &gt; 0 but &lt; 1).</p>
+<p>The first image - with black and white squares only, no gray - is a <em>binary image</em>. This is an image where each array pixel contains only one of two values. In this case the two values are 0 or 1, with 0 corresponding to black pixels and 1 corresponding to white pixels.</p>
+<p>The second image - black, white and gray squares - is a <em>monochrome image</em>. This image contains more than two unique values. It has black pixels (the lowest pixel values, 0); white pixels (the highest pixel values, 1); and gray pixels (intermediate pixel values, &gt; 0 but &lt; 1).</p>
 <p><strong>This is important:</strong> for two-dimensional arrays like these each array pixel is just a <em>single number</em>. Because of this, we can refer to both of these arrays as <em>single-channel image arrays</em>. Each individual array pixel value determines the <em>intensity</em> of that pixel, e.g. the brightness or darkness of that pixel.</p>
-<p>As we saw on the <a class="reference internal" href="0_images_as_numpy_arrays.html"><span class="doc std std-doc">last page</span></a>, a colormap (e.g. <code class="docutils literal notranslate"><span class="pre">viridis</span></code> or <code class="docutils literal notranslate"><span class="pre">gray</span></code>) maps  each single-valued pixel intensity to a gradient of colors/shades. This is a black-grey-white gradient for the <code class="docutils literal notranslate"><span class="pre">gray</span></code> colormap and a purple-yellow gradient for the <code class="docutils literal notranslate"><span class="pre">viridis</span></code> colormap. Technically speaking, for single-channel image arrays, the intensity values only convey black-white-gray information - the <code class="docutils literal notranslate"><span class="pre">viridis</span></code> colormap merely <em>translates</em> this black-grey-white information into a colored presentation for the purposes of display.</p>
-<p>What <code class="docutils literal notranslate"><span class="pre">viridis</span></code> is doing is called <a class="reference external" href="https://www.spiedigitallibrary.org/conference-proceedings-of-spie/0048/0000/Digital-Image-Processing-With-Pseudo-Color/10.1117/12.954071.short"><em>pseudo-coloring</em></a> - it is mapping black-grey-white information to display colors. The plot below show’s both arrays, with both colormaps, for comparison:</p>
+<p>As we saw on the <a class="reference internal" href="0_images_as_numpy_arrays.html"><span class="doc std std-doc">last page</span></a>, a colormap (e.g. <code class="docutils literal notranslate"><span class="pre">viridis</span></code> or <code class="docutils literal notranslate"><span class="pre">gray</span></code>) maps  each single-valued pixel intensity to a gradient of colors/shades. This is a black-gray-white gradient for the <code class="docutils literal notranslate"><span class="pre">gray</span></code> colormap and a purple-yellow gradient for the <code class="docutils literal notranslate"><span class="pre">viridis</span></code> colormap. Technically speaking, for single-channel image arrays, the intensity values only convey black-white-gray information - the <code class="docutils literal notranslate"><span class="pre">viridis</span></code> colormap merely <em>translates</em> this black-gray-white information into a colored presentation for the purposes of display.</p>
+<p>What <code class="docutils literal notranslate"><span class="pre">viridis</span></code> is doing is called <a class="reference external" href="https://www.spiedigitallibrary.org/conference-proceedings-of-spie/0048/0000/Digital-Image-Processing-With-Pseudo-Color/10.1117/12.954071.short"><em>pseudo-coloring</em></a> - it is mapping black-gray-white information to display colors. The plot below show’s both arrays, with both colormaps, for comparison:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># An image from earlier (using the `grey` colormap)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># An image from earlier (using the `gray` colormap)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="mi">8</span><span class="p">))</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">matshow</span><span class="p">(</span><span class="n">two_D_ones_and_zeros</span><span class="p">,</span>
@@ -628,7 +628,7 @@ document.write(`
 <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;`gray` colormap </span><span class="se">\n</span><span class="s1">(binary image)&#39;</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">colorbar</span><span class="p">()</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
-<span class="c1"># Another image from earlier (using the `grey` colormap)</span>
+<span class="c1"># Another image from earlier (using the `gray` colormap)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">matshow</span><span class="p">(</span><span class="n">two_D_other_integers</span><span class="p">,</span>
             <span class="n">fignum</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;`gray` colormap </span><span class="se">\n</span><span class="s1">(monochrome image)&#39;</span><span class="p">)</span>
@@ -655,7 +655,7 @@ document.write(`
 <img alt="_images/80ef768e41cd7f33fa79673d160887b3f863c6648bcae9796085b112bd01eb04.png" src="_images/80ef768e41cd7f33fa79673d160887b3f863c6648bcae9796085b112bd01eb04.png" />
 </div>
 </div>
-<p>We can say then, that the plots on the bottom row are <em>displayed using pseudo-color</em>. The original image arrays only contain black-white-grey information in their pixel intensity values; they do not contain <em>true color</em> information. <strong>This will be true of any two-dimensional image array</strong>, and both of these image arrays are two-dimensional:</p>
+<p>We can say then, that the plots on the bottom row are <em>displayed using pseudo-color</em>. The original image arrays only contain black-white-gray information in their pixel intensity values; they do not contain <em>true color</em> information. <strong>This will be true of any two-dimensional image array</strong>, and both of these image arrays are two-dimensional:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Show the dimensionality of our binary image array.</span>
@@ -671,7 +671,7 @@ document.write(`
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Show the dimensionality of our greyscale image array.</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Show the dimensionality of our grayscale image array.</span>
 <span class="n">two_D_other_integers</span><span class="o">.</span><span class="n">shape</span>
 </pre></div>
 </div>
@@ -682,7 +682,7 @@ document.write(`
 </div>
 </div>
 </div>
-<p>An image which has what we will call <em>true color</em> contains information in each array pixel about more than just <em>intensity</em> - it also contains information about <em>color</em>. So, to hammer this point home: greyscale and binary images displayed with the <code class="docutils literal notranslate"><span class="pre">viridis</span></code> colormap do not contain true color information in their array pixel values. Instead Matplotlib is <em>displaying</em> binary and greyscale information using colors. To introduce true color into the image, we need a spooky third dimension…</p>
+<p>An image which has what we will call <em>true color</em> contains information in each array pixel about more than just <em>intensity</em> - it also contains information about <em>color</em>. So, to hammer this point home: grayscale and binary images displayed with the <code class="docutils literal notranslate"><span class="pre">viridis</span></code> colormap do not contain true color information in their array pixel values. Instead Matplotlib is <em>displaying</em> binary and grayscale information using colors. To introduce true color into the image, we need a spooky third dimension…</p>
 </section>
 <section class="tex2jax_ignore mathjax_ignore" id="true-colour-in-3d">
 <h1>True Colour in 3D<a class="headerlink" href="#true-colour-in-3d" title="Link to this heading">#</a></h1>
@@ -1232,9 +1232,9 @@ Our 3D stacked array is of the right shape:</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>X1 = 0.23
-X2 = 0.44
-X3 = 0.23
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>X1 = 0.54
+X2 = 0.15
+X3 = 0.15
 </pre></div>
 </div>
 </div>
@@ -1263,12 +1263,12 @@ X3 = 0.23
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Red (X1) = 0.67
-Green (X2) = 0.98
-Blue (X3) = 0.65
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Red (X1) = 0.29
+Green (X2) = 0.2
+Blue (X3) = 0.06
 </pre></div>
 </div>
-<img alt="_images/3cb1df0a06148b93ab2573afc23c4a1039a726569fa425a468aac696c7a35086.png" src="_images/3cb1df0a06148b93ab2573afc23c4a1039a726569fa425a468aac696c7a35086.png" />
+<img alt="_images/9bb307210129c69519032598f86c6106f0767b569d68f412670aca25a887d417.png" src="_images/9bb307210129c69519032598f86c6106f0767b569d68f412670aca25a887d417.png" />
 </div>
 </div>
 <p>So, each two-dimensional display image has a “hidden” three-dimensional array behind it. Each slice of the third dimension is a color channel. The mix of values at a given element in each color channel determines the color of that pixel in the rendered image. You may want to view this image in a new browser window, to see more clearly the exact mixes of the color channels, which are shown above each square on the right-hand side of the image:</p>
@@ -1284,10 +1284,10 @@ Blue (X3) = 0.65
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/62225c9b1942b48deacc9875ee36d63a858f0bfb976558ba554f9f86e1160acf.png" src="_images/62225c9b1942b48deacc9875ee36d63a858f0bfb976558ba554f9f86e1160acf.png" />
+<img alt="_images/e9463571b88208cddbd60ee6f8f607d2a72f2ddbbdc30e84ba877473d2dcb29b.png" src="_images/e9463571b88208cddbd60ee6f8f607d2a72f2ddbbdc30e84ba877473d2dcb29b.png" />
 </div>
 </div>
-<p>We have now completed our perilous expedition into the third dimension… We have seen that we can use 3D arrays to encode <em>true color</em> information. This means that the image array itself contains color information for each pixel, where we are <em>not</em> just pseudocoloring greyscale information using <code class="docutils literal notranslate"><span class="pre">viridis</span></code> or another colormap…</p>
+<p>We have now completed our perilous expedition into the third dimension… We have seen that we can use 3D arrays to encode <em>true color</em> information. This means that the image array itself contains color information for each pixel, where we are <em>not</em> just pseudocoloring grayscale information using <code class="docutils literal notranslate"><span class="pre">viridis</span></code> or another colormap…</p>
 <p>Let’s explore a color image of a real object. We will introduce Scikit-image (<code class="docutils literal notranslate"><span class="pre">skimage</span></code>) in more detail on the <a class="reference internal" href="2_skimage_intro.html"><span class="doc std std-doc">next page</span></a>, but for now we will again use the straightforwardly named <code class="docutils literal notranslate"><span class="pre">imread()</span></code> function to load an image from a file:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -1451,7 +1451,7 @@ Min Pixel Value: 0
 </div>
 </div>
 <p>Now we are viewing each slice/color channel separately, we are again visualising 2D arrays - you can see the <code class="docutils literal notranslate"><span class="pre">.shape</span></code> of each slice below each image.</p>
-<p>The image from each color channel, when visualised separately, is now essentially a single-channel image, and so Matplotlib is rendering it in greyscale. As we know, we could also use the <code class="docutils literal notranslate"><span class="pre">viridis</span></code> colormap to pseudocolor the greyscale information in the images for the purposes of the display. Though in this instance, <code class="docutils literal notranslate"><span class="pre">viridis</span></code> results in some slightly queasy-looking images:</p>
+<p>The image from each color channel, when visualised separately, is now essentially a single-channel image, and so Matplotlib is rendering it in grayscale. As we know, we could also use the <code class="docutils literal notranslate"><span class="pre">viridis</span></code> colormap to pseudocolor the grayscale information in the images for the purposes of the display. Though in this instance, <code class="docutils literal notranslate"><span class="pre">viridis</span></code> results in some slightly queasy-looking images:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Pseudo-color with `viridis`.</span>
@@ -1690,7 +1690,7 @@ Min Pixel Value: 0
 <img alt="_images/68291358b580a212be476bd9a35bb57cee2306d8289ad32548acb90a2d49b4bd.png" src="_images/68291358b580a212be476bd9a35bb57cee2306d8289ad32548acb90a2d49b4bd.png" />
 </div>
 </div>
-<p>Any computations (such as summing across the channels) which collapse the 3D color array into 2D will achieve a similar effect. We deem any of these as correct answers, so long as your output image is greyscale…</p>
+<p>Any computations (such as summing across the channels) which collapse the 3D color array into 2D will achieve a similar effect. We deem any of these as correct answers, so long as your output image is grayscale…</p>
 <p>Another way is just to use NumPy indexing to extract one color channel slice:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -1719,7 +1719,7 @@ Min Pixel Value: 0
 <img alt="_images/fced0bd41b25e71be69086d2ea90a2ea8556e83acf47033de40d4172acf1d294.png" src="_images/fced0bd41b25e71be69086d2ea90a2ea8556e83acf47033de40d4172acf1d294.png" />
 </div>
 </div>
-<p>…we will allow any slice as the correct solution, however, as they are all greyscale.</p>
+<p>…we will allow any slice as the correct solution, however, as they are all grayscale.</p>
 </section>
 </div>
 <div class="exercise dropdown admonition" id="corrupted-camera">
@@ -1786,7 +1786,7 @@ Min Pixel Value: 0
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/622a5733f6b8433bc7bb90617690d46e51e820e2cf6f8f4694bba81a325eeee0.png" src="_images/622a5733f6b8433bc7bb90617690d46e51e820e2cf6f8f4694bba81a325eeee0.png" />
+<img alt="_images/998bd3b0e9f1a2bec732f9eaeb5505f92530c3f9c701ad4e795c35f625f12c64.png" src="_images/998bd3b0e9f1a2bec732f9eaeb5505f92530c3f9c701ad4e795c35f625f12c64.png" />
 </div>
 </div>
 </section>
@@ -1794,7 +1794,7 @@ Min Pixel Value: 0
 </section>
 <section class="tex2jax_ignore mathjax_ignore" id="more-actually-complex-images">
 <h1>More (actually) complex images<a class="headerlink" href="#more-actually-complex-images" title="Link to this heading">#</a></h1>
-<p>So far we have looked at simple images - 2D binary and greyscale low-resolution image arrays, like <code class="docutils literal notranslate"><span class="pre">smiley</span></code> - or more complex color images with three color channels (like <code class="docutils literal notranslate"><span class="pre">coffee</span></code>). However, the principles we have seen extend to even more complex images, like the image arrays generated by <a class="reference external" href="https://en.wikipedia.org/wiki/Neuroimaging">brain imaging</a>, for instance.</p>
+<p>So far we have looked at simple images - 2D binary and grayscale low-resolution image arrays, like <code class="docutils literal notranslate"><span class="pre">smiley</span></code> - or more complex color images with three color channels (like <code class="docutils literal notranslate"><span class="pre">coffee</span></code>). However, the principles we have seen extend to even more complex images, like the image arrays generated by <a class="reference external" href="https://en.wikipedia.org/wiki/Neuroimaging">brain imaging</a>, for instance.</p>
 <p>Here is an image of one “slice” of one of the authors brains, which was captured by a <a class="reference external" href="https://en.wikipedia.org/wiki/Magnetic_resonance_imaging">magnetic resonance imaging</a> scanner:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -1834,7 +1834,7 @@ Min Pixel Value: 0
 <p>On this page we have seen how color can be represented in NumPy array images:</p>
 <ul class="simple">
 <li><p>Images are (at least) two-dimensional arrays of numbers. Multiple <code class="docutils literal notranslate"><span class="pre">dtype</span></code>s in image arrays are supported by Sci-kit image.</p></li>
-<li><p>We have seen images where the number at each array pixel location determines the grey-level (in a 2D array) or color (in a 3D array) of that location when the image is displayed. For 3D color arrays the number in each slice/channel is summed to determine the color in the 2D displayed image.</p></li>
+<li><p>We have seen images where the number at each array pixel location determines the gray-level (in a 2D array) or color (in a 3D array) of that location when the image is displayed. For 3D color arrays the number in each slice/channel is summed to determine the color in the 2D displayed image.</p></li>
 <li><p>These methods of color encoding can apply to both to very simple and very complex images. Some types of image (e.g. brain images) use higher-dimensionality to encode information other than color (e.g. time).</p></li>
 </ul>
 <p>On the <a class="reference internal" href="2_skimage_intro.html"><span class="doc std std-doc">next page</span></a> we will formally introduce Scikit-image, which uses NumPy image arrays as its fundamental representation of images.</p>
