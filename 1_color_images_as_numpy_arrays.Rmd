@@ -186,13 +186,13 @@ red, the intensity of green and the intensity of blue (RGB).  By giving the
 intensity of the three primary colors, the three pixel values encode the color
 at that pixel.
 
-To hammer this point home although single-channel can be displayed in color,
-the value itself cannot specify the color; grayscale and binary images
-displayed with the `viridis` colormap do not contain color information in
-their array pixel values. Instead Matplotlib is *displaying* binary and
-intensity information using colors. To *specify* color at each pixel, we need
-at least three values.  To store the three values for each pixel, we need
-a spooky third dimension...
+To hammer this point home — although single-channel images can be displayed in
+color, the single value per pixel cannot itself specify the color; grayscale
+and binary images displayed with the `viridis` colormap do not contain color
+information in their array pixel values. Instead Matplotlib is *displaying*
+binary and intensity information using colors. To *specify* color at each
+pixel, we need at least three values.  To store the three values for each
+pixel, we need a spooky third dimension...
 
 
 ## Color from 3D
@@ -206,15 +206,15 @@ Let's focus on our lowly 4-pixel binary array (4 *array pixels*, that is):
 two_D_ones_and_zeros
 ```
 
-Let's visualise this array with Matplotlib:
+We visualise this array with Matplotlib:
 
 ```{python}
 # Our 4-pixel, binary array.
 plt.matshow(two_D_ones_and_zeros);
 ```
 
-Now, picture this array as physical object, like a tray, standing on one side,
-in physical space:
+Now, picture this array as a physical object, like a tray, standing on one
+side, in physical space:
 
 ![](images/one_slice.png)
 
@@ -222,15 +222,16 @@ Now, imagine "stacking" another copy of this array *behind* the first, like this
 
 ![](images/two_slice.png)
 
-Let's refer to each of these trays as a *slice*. So we have two slices in
-the image above, one in the foreground, and one in the background.
+Let's refer to each of these trays as a *slice*. So we have two slices in the
+image above, one in the foreground, and one in the background.
 
 We can do the equivalent of this three-dimensional stacking — to our actual
-binary arrays - using the helpfully named `np.stack()` function. We can use
-`np.stack()` to - as the name implies - *stack* two 2D arrays into a 3D array,
+binary arrays — using the helpfully named `np.stack()` function. We can use
+`np.stack()` to — as the name implies — *stack* two 2D arrays into a 3D array,
 as in the image shown above. To do this, we stack over the third axis using
 the argument `axis=2`. This adds new arrays to the stack along the third
-dimension, when we count the dimensions from 0, as we do in Python indexing:
+dimension, when we count the dimensions (axes) from 0, as we do in Python
+indexing:
 
 ```{python}
 # Stack the arrays in the third dimension.
@@ -248,13 +249,17 @@ the right shape:
 three_D_stack_array.shape
 ```
 
-We can refer to each dimension in the `shape` of `(2, 2, 2)` as `(x, y, z)`. `x` is the row dimension, `y` is the column dimension, and `z` is the slice dimension.  These dimensions map to the image as shown below:
+We can refer to each dimension in the `shape` of `(2, 2, 2)` as `(i, j, k)`.
+`i` is the vertical (or *row*) dimension, `j` is the horizontal (*column*)
+dimension, and `k` is the slice dimension.  (See the [note on rows and
+columns](on-rows-and-columns) for some discussion).  These dimensions map to
+the image as shown below:
 
 ![](images/two_slice_dims.png)
 
 We can read this shape as "two slices, each with two rows and two columns", which now clearly corresponds to the image.
 
-Imagine being in the same physical space as these slices. Starting at the front of the image, you begin walking toward the first slice (nearest to the reader, in the foreground), then past it toward the second slice (furthest from the reader, in the background). So, in this imaginative exercise, you are walking along the $z$ dimension.
+Imagine being in the same physical space as these slices. Starting at the front of the image, you begin walking toward the first slice (nearest to the reader, in the foreground), then past it toward the second slice (furthest from the reader, in the background). So, in this imaginative exercise, you are walking along the $k$ dimension.
 
 We can use indexing operations to create the experience of this walk, in "Python space". Because we are dealing with a three-dimensional array we use three elements for indexing, separated by commas. The first element is for rows, the second for columns, and the third for slices. We can retrieve the first slice using:
 
@@ -276,7 +281,8 @@ The image below shows these indexing operations represented in three-dimensional
 
 ![](images/two_slice_annotated.png)
 
-So far we have two slices in the third dimension. We can easily add a third slice, using `np.stack()`:
+So far we have two slices in the third dimension. We can easily add a third
+slice, using `np.stack()`:
 
 ```{python}
 # Add a third slice in the third dimension.
@@ -297,7 +303,7 @@ We can visualise this new array, in the same three-dimensional space:
 
 ![](images/three_slice.png)
 
-Again, we can use indexing to "walk" through the slices, along the $z$ dimension:
+Again, we can use indexing to "walk" through the slices, along the $k$ dimension:
 
 ```{python}
 # First 2D slice of the stack.
@@ -316,27 +322,58 @@ three_D_stack_array[:, :, 2]
 
 ![](images/three_slice_annotated.png)
 
-So far we have visualised these slices using a similar graphic to depicting an individual slice using the `gray` Matplotlib colormap. We can just as well visualise the slices using the numbers they contain:
+So far we have visualised these slices using a similar graphic to depicting an individual slice using the `gray` Matplotlib colormap. We can just as well visualise the slices using the numbers they contain:[^digits-decimal]
 
 ![](images/three_slice_nums_only_annotated.png)
 
-Remember, the actual numbers in each "slice" are of the `float64` `dtype` and so contain (empty) decimal places. However, we will show the numbers just as 0 or 1, to keep the image uncluttered. Above we said we wanted to introduce a third dimension to introduce "true" color information into the image. Well, now we have three dimensions surely plotting our image will render a vibrantly colored picture?:
+[^digits-decimal]: Remember, the actual numbers in each "slice" are of the
+  `float64` `dtype` and so can (but here, do not) have digits after the
+  decimal point. However, we will show the numbers just as 0 or 1, to keep the
+  image uncluttered.
+
+Above we said we wanted to introduce a third dimension to specify
+color information in the image itself. Well, now we have three dimensions
+surely plotting our image will render a vibrantly colored picture?:
 
 ```{python}
 # Ooof...not what we wanted...
 plt.matshow(three_D_stack_array);
 ```
 
-Ok, that is not what we wanted - nothing has changed! Interestingly though, the 3D image array still renders as a 2D display image:
+::: {exercise-start}
+:label: why-no-color
+:class: dropdown
+:::
+
+Given what you've read above, why do you think that the image with the three channels is all white?
+
+::: {exercise-end}
+:::
+
+::: {solution-start} why-no-color
+:class: dropdown
+:::
+
+We've said above that the first channel (first slice) specifies intensity Red,
+the second specifies Green, and the third specifies Blue (RGB).
+
+All the values are 1.
+
+An equal mix of Red, Green and Blue gives gray.  If the intensities are all maximum (1) then this gives white.
+
+::: {solution-end}
+:::
+
+Ok, that is not what we wanted — nothing has changed! Interestingly though, the 3D image array still renders as a 2D display image:
 
 ![](images/three_slice_all_1s.png)
 
-What happens if we set every element, in every slice, to equal 0? To do this, first we create a 2D, 4-pixel array containing only 0's:
+What happens if we set every element, in every slice, to equal 0? To do this,
+first we create a 2D, 4-pixel array containing only 0's:
 
 ```{python}
 # Create a 4-pixel array containing only 0's.
-two_D_zeros = two_D_ones_and_zeros * 0.
-
+two_D_zeros = np.zeros(two_D_ones_and_zeros.shape)
 two_D_zeros
 ```
 
@@ -362,11 +399,14 @@ Next, we plot with Matplotlib:
 plt.matshow(three_D_zeros);
 ```
 
-Ok, so now we have a fully black 2D display image, from our 3D array which contains only 0's:
+Ok, so now we have a fully black 2D display image, from our 3D array which
+contains only 0's:
 
 ![](images/three_slice_zeros_visualised.png)
 
-As an experiment, let's see what happens if put 1's on the diagonal in the *first slice only*. To do this, we will stack the `two_D_ones_and_zeros` array as the first slice, and `two_D_zeros` as the other two slices:
+As an experiment, let's see what happens if we put 1's on the diagonal in the
+*first slice only*. To do this, we will stack the `two_D_ones_and_zeros` array
+as the first slice, and `two_D_zeros` as the other two slices:
 
 ```{python}
 # Show the array (for the first slice).
@@ -390,7 +430,7 @@ More intuitively visualised, our new three dimensional array looks like this:
 
 ![](images/three_slice_red.png)
 
-You can see the values of 1 in the top-left and bottom-right elements of the first slice, all other elements are 0. Once more we can "walk" along the $z$ dimension, using indexing operations:
+You can see the values of 1 in the top-left and bottom-right elements of the first slice, all other elements are 0. Once more we can "walk" along the $k$ dimension, using indexing operations:
 
 ```{python}
 # First 2D slice of the stack.
@@ -413,15 +453,22 @@ Now let's see what happens if we plot this new 3D array using Matplotlib:
 plt.matshow(three_D_stack_array_altered_first);
 ```
 
-Great! We have now used the third dimension to introduce *true color information* into our image array. We can visualise this process using the graphic below:
+Great! We have now used the third dimension to introduce *color information*
+into our image array. We can visualise this process using the graphic below:
 
 ![](images/three_slice_red_visualised.png)
 
-Just to clarify, again our *array image* is three-dimensional, but our *display image* - e.g. the image rendered/displayed by Matplotlib - is two-dimensional, like the visualisations we saw earlier. In virtue of being 3D, the image array itself contains three values for each array pixel - with one value in each "slice" in the third dimension.
+Just to clarify, again our *array image* is three-dimensional, but our
+*display image* — e.g. the image rendered/displayed by Matplotlib — is
+two-dimensional, like the visualisations we saw earlier. In virtue of being
+3D, the image array itself contains three values for each array pixel - with
+one value in each "slice" in the third dimension.
 
 To produce this red and black square, we altered the *first slice* of the 3D array, such that it contains 1's along its diagonal, but all other elements in the array are 0's.
 
-The first slice of the third dimension - in our 3D image array - controls the amount of red in the image. We can therefore (for now) call this slice the *red slice*.
+The first slice of the third dimension - in our 3D image array - controls the
+amount of red in the image. We can therefore (for now) call this slice the
+*red slice*.
 
 What happens if we alter only the *second slice* in the third dimension, so that only it contains 1's along its diagonal, and all other array elements equal 0?
 
@@ -507,6 +554,7 @@ plt.matshow(three_D_stack_array_altered_third);
 So, this has given us:
 
 ![](images/three_slice_blue_visualised.png)
+
 
 ## Color channels
 
