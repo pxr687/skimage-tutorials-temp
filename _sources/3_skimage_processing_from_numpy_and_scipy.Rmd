@@ -1213,7 +1213,7 @@ show_attributes(binary_check_from_ski)
 plt.matshow(binary_check_from_ski);
 ```
 
-# Colour to grayscale conversion
+# Color to grayscale conversion
 
 To downgrade a color image to grayscale we can use a brute force method of taking the mean of the three color channels, to produce a 2D monochrome image array:
 
@@ -1329,7 +1329,7 @@ plt.imshow(gray_wheel);
 :::
 
 
-# Colour to grayscale conversion with `skimage`
+# Color to grayscale conversion with `skimage`
 
 As always, the `ski.color` module has us covered here with the `rgb2gray()` function. We simply pass it the color array that we want to convert to grayscale, without the direct need for the luminance formula:
 

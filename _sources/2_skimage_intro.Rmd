@@ -116,7 +116,7 @@ plt.matshow(back_to_black);
 
 Most Scikit-image functions work like  this - they take a NumPy array as input, do something to the array pixel values, then return an altered image array. As we mentioned above, under the hood `skimage` is often using NumPy and SciPy functions to do the image manipulation, something we will explore in more detail on the [next page](3_skimage_processing_from_numpy_and_scipy). 
 
-You may ask why the maximum pixel values are now 0.21, rather than 1? This is because of the [formula](https://stackoverflow.com/questions/596216/formula-to-determine-perceived-brightness-of-rgb-color) that `rgb2gray()` uses to do the conversion. We will show this in detail in the *Colourspaces* section later in this tutorial.
+You may ask why the maximum pixel values are now 0.21, rather than 1? This is because of the [formula](https://stackoverflow.com/questions/596216/formula-to-determine-perceived-brightness-of-rgb-color) that `rgb2gray()` uses to do the conversion. We will show this in detail in the *Colorspaces* section later in this tutorial.
 
 # Scikit-image ships with built-in images
 
@@ -354,7 +354,7 @@ show_attributes(camera_with_noise);
 ::: {solution-end}
 :::
 
-# Colourspaces
+# Colorspaces
 
 So far we have looked primarily at binary/monochrome single-channel image arrays and three-channel RGB color image arrays. We can use the `shape` conventions from NumPy to think about these image types. Single channel images have a `shape` of `(n, m)` where `n` is the number of rows and `m` is the number of columns. RGB images have a shape of `(n, m, 3)`, so `n` rows, `m` columns and `3` slices (the color channels).
 
@@ -488,7 +488,7 @@ plt.title('Value Channel')
 plt.tight_layout();
 ```
 
-# Colourspaces 2: transparency in the 3rd dimension
+# Colorspaces 2: transparency in the 3rd dimension
 
 Now, other colorspaces involve arrays of different `shape`s. For instance, some image arrays are `(n, m, 4)` - so that's `n` rows, `m` columns and `4` slices in the third dimension.
 

@@ -492,8 +492,8 @@ document.write(`
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
 <li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">What about color?</a></li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#true-colour-in-3d">True Colour in 3D</a><ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#colour-channels">Colour channels</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#true-color-in-3d">True Color in 3D</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#color-channels">Color channels</a></li>
 </ul>
 </li>
 <li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#pixels-and-dtype">Pixels and <code class="docutils literal notranslate"><span class="pre">dtype</span></code></a></li>
@@ -684,8 +684,8 @@ document.write(`
 </div>
 <p>An image which has what we will call <em>true color</em> contains information in each array pixel about more than just <em>intensity</em> - it also contains information about <em>color</em>. So, to hammer this point home: grayscale and binary images displayed with the <code class="docutils literal notranslate"><span class="pre">viridis</span></code> colormap do not contain true color information in their array pixel values. Instead Matplotlib is <em>displaying</em> binary and grayscale information using colors. To introduce true color into the image, we need a spooky third dimension…</p>
 </section>
-<section class="tex2jax_ignore mathjax_ignore" id="true-colour-in-3d">
-<h1>True Colour in 3D<a class="headerlink" href="#true-colour-in-3d" title="Link to this heading">#</a></h1>
+<section class="tex2jax_ignore mathjax_ignore" id="true-color-in-3d">
+<h1>True Color in 3D<a class="headerlink" href="#true-color-in-3d" title="Link to this heading">#</a></h1>
 <p>Sounds Sci-Fi! But what does it mean?</p>
 <p>Let’s focus on our lowly 4-pixel binary array (4 <em>array pixels</em>, that is):</p>
 <div class="cell docutils container">
@@ -1212,8 +1212,8 @@ Our 3D stacked array is of the right shape:</p>
 </div>
 <p>So, this has given us:</p>
 <p><img alt="" src="_images/three_slice_blue_visualised.png" /></p>
-<section id="colour-channels">
-<h2>Colour channels<a class="headerlink" href="#colour-channels" title="Link to this heading">#</a></h2>
+<section id="color-channels">
+<h2>Color channels<a class="headerlink" href="#color-channels" title="Link to this heading">#</a></h2>
 <p>What is happening here?</p>
 <p>Recall that we referred to the 2D arrays that we used at the start of this tutorial as <em>single-channel image arrays</em>? The 3D arrays we just created are  <em>three-channel image arrays</em>. This means that each array pixel has three values, one in each slice of the 3D stacks we created. You can think of each slice as being one <em>color channel</em>. Each color channel controls the amount of a specific color in the image, depending on the values of the array pixels in that slice.</p>
 <p>Using these three-channel arrays, when Matplotlib produces a two-dimensional <em>display image</em> (e.g. the matrix with colored squares along the diagonal and black squares elsewhere). However, behind this 2D display image there are three slices in the third dimension, each with the same number of rows and columns as the final 2D display image. Each pixel (e.g. each array element) in the display image gets its color information from a mix of the corresponding elements in each slice in the 3D image array.</p>
@@ -1232,9 +1232,9 @@ Our 3D stacked array is of the right shape:</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>X1 = 0.42
-X2 = 0.59
-X3 = 0.98
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>X1 = 0.29
+X2 = 0.35
+X3 = 0.97
 </pre></div>
 </div>
 </div>
@@ -1263,12 +1263,12 @@ X3 = 0.98
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Red (X1) = 0.44
-Green (X2) = 0.98
-Blue (X3) = 0.85
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Red (X1) = 0.03
+Green (X2) = 0.2
+Blue (X3) = 0.09
 </pre></div>
 </div>
-<img alt="_images/9d4a77d73f3d63a944472a3241c053562d1ec855132c5a8a8748c306284b2aed.png" src="_images/9d4a77d73f3d63a944472a3241c053562d1ec855132c5a8a8748c306284b2aed.png" />
+<img alt="_images/73d82294f69664360e0b760409f9e15f87a84972982ff1e1e207f51af734599f.png" src="_images/73d82294f69664360e0b760409f9e15f87a84972982ff1e1e207f51af734599f.png" />
 </div>
 </div>
 <p>So, each two-dimensional display image has a “hidden” three-dimensional array behind it. Each slice of the third dimension is a color channel. The mix of values at a given element in each color channel determines the color of that pixel in the rendered image. You may want to view this image in a new browser window, to see more clearly the exact mixes of the color channels, which are shown above each square on the right-hand side of the image:</p>
@@ -1284,7 +1284,7 @@ Blue (X3) = 0.85
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/87b714eac7a97a1ef1f2e2ffb68c42353e1a12e1c2577731f07a7ffdd350594b.png" src="_images/87b714eac7a97a1ef1f2e2ffb68c42353e1a12e1c2577731f07a7ffdd350594b.png" />
+<img alt="_images/8097a1768705e3ba5b0dc018612381fa31eb754a27af1cf8bc09a92f91f9bc54.png" src="_images/8097a1768705e3ba5b0dc018612381fa31eb754a27af1cf8bc09a92f91f9bc54.png" />
 </div>
 </div>
 <p>We have now completed our perilous expedition into the third dimension… We have seen that we can use 3D arrays to encode <em>true color</em> information. This means that the image array itself contains color information for each pixel, where we are <em>not</em> just pseudocoloring grayscale information using <code class="docutils literal notranslate"><span class="pre">viridis</span></code> or another colormap…</p>
@@ -1786,7 +1786,7 @@ Min Pixel Value: 0
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/651f1982e631da2f48c3fbe6cb949fc298f50cad4d2c52bb4244bfe6da5db22c.png" src="_images/651f1982e631da2f48c3fbe6cb949fc298f50cad4d2c52bb4244bfe6da5db22c.png" />
+<img alt="_images/413a252410fb4011b5f3f0cec459f1d80da540f8f4186dd78ce0bf1df3b615f0.png" src="_images/413a252410fb4011b5f3f0cec459f1d80da540f8f4186dd78ce0bf1df3b615f0.png" />
 </div>
 </div>
 </section>
@@ -1913,8 +1913,8 @@ Min Pixel Value: 0
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
 <li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">What about color?</a></li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#true-colour-in-3d">True Colour in 3D</a><ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#colour-channels">Colour channels</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#true-color-in-3d">True Color in 3D</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#color-channels">Color channels</a></li>
 </ul>
 </li>
 <li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#pixels-and-dtype">Pixels and <code class="docutils literal notranslate"><span class="pre">dtype</span></code></a></li>

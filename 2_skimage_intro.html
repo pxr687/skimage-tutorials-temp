@@ -497,8 +497,8 @@ document.write(`
 <li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#scikit-image-ships-with-built-in-images">Scikit-image ships with built-in images</a></li>
 <li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#input-output-and-dtypes-in-skimage">Input/output and <code class="docutils literal notranslate"><span class="pre">dtype</span></code>s in <code class="docutils literal notranslate"><span class="pre">skimage</span></code></a></li>
 <li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#small-image-arrays-big-image-arrays">Small image arrays, big image arrays</a></li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#colourspaces">Colourspaces</a></li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#colourspaces-2-transparency-in-the-3rd-dimension">Colourspaces 2: transparency in the 3rd dimension</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#colorspaces">Colorspaces</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#colorspaces-2-transparency-in-the-3rd-dimension">Colorspaces 2: transparency in the 3rd dimension</a></li>
 <li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#not-all-3d-images-are-in-color">Not all 3D images are in color…</a></li>
 <li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#summary">Summary</a></li>
 <li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#references">References</a></li>
@@ -679,7 +679,7 @@ Min Pixel Value: 0.0
 </div>
 </div>
 <p>Most Scikit-image functions work like  this - they take a NumPy array as input, do something to the array pixel values, then return an altered image array. As we mentioned above, under the hood <code class="docutils literal notranslate"><span class="pre">skimage</span></code> is often using NumPy and SciPy functions to do the image manipulation, something we will explore in more detail on the <a class="reference internal" href="3_skimage_processing_from_numpy_and_scipy.html"><span class="doc std std-doc">next page</span></a>.</p>
-<p>You may ask why the maximum pixel values are now 0.21, rather than 1? This is because of the <a class="reference external" href="https://stackoverflow.com/questions/596216/formula-to-determine-perceived-brightness-of-rgb-color">formula</a> that <code class="docutils literal notranslate"><span class="pre">rgb2gray()</span></code> uses to do the conversion. We will show this in detail in the <em>Colourspaces</em> section later in this tutorial.</p>
+<p>You may ask why the maximum pixel values are now 0.21, rather than 1? This is because of the <a class="reference external" href="https://stackoverflow.com/questions/596216/formula-to-determine-perceived-brightness-of-rgb-color">formula</a> that <code class="docutils literal notranslate"><span class="pre">rgb2gray()</span></code> uses to do the conversion. We will show this in detail in the <em>Colorspaces</em> section later in this tutorial.</p>
 </section>
 <section class="tex2jax_ignore mathjax_ignore" id="scikit-image-ships-with-built-in-images">
 <h1>Scikit-image ships with built-in images<a class="headerlink" href="#scikit-image-ships-with-built-in-images" title="Link to this heading">#</a></h1>
@@ -1231,14 +1231,14 @@ Max Pixel Value: 1.0
 Min Pixel Value: 0.0
 </pre></div>
 </div>
-<img alt="_images/58a1012d536852f6ba96380945d12b51aa189bd61edb951f423754983e9cfaad.png" src="_images/58a1012d536852f6ba96380945d12b51aa189bd61edb951f423754983e9cfaad.png" />
+<img alt="_images/1051f4017b8c603eef4791ddeaad433efa5cc51f010d7ca6c8f466c9bbfe8b89.png" src="_images/1051f4017b8c603eef4791ddeaad433efa5cc51f010d7ca6c8f466c9bbfe8b89.png" />
 </div>
 </div>
 </section>
 </div>
 </section>
-<section class="tex2jax_ignore mathjax_ignore" id="colourspaces">
-<h1>Colourspaces<a class="headerlink" href="#colourspaces" title="Link to this heading">#</a></h1>
+<section class="tex2jax_ignore mathjax_ignore" id="colorspaces">
+<h1>Colorspaces<a class="headerlink" href="#colorspaces" title="Link to this heading">#</a></h1>
 <p>So far we have looked primarily at binary/monochrome single-channel image arrays and three-channel RGB color image arrays. We can use the <code class="docutils literal notranslate"><span class="pre">shape</span></code> conventions from NumPy to think about these image types. Single channel images have a <code class="docutils literal notranslate"><span class="pre">shape</span></code> of <code class="docutils literal notranslate"><span class="pre">(n,</span> <span class="pre">m)</span></code> where <code class="docutils literal notranslate"><span class="pre">n</span></code> is the number of rows and <code class="docutils literal notranslate"><span class="pre">m</span></code> is the number of columns. RGB images have a shape of <code class="docutils literal notranslate"><span class="pre">(n,</span> <span class="pre">m,</span> <span class="pre">3)</span></code>, so <code class="docutils literal notranslate"><span class="pre">n</span></code> rows, <code class="docutils literal notranslate"><span class="pre">m</span></code> columns and <code class="docutils literal notranslate"><span class="pre">3</span></code> slices (the color channels).</p>
 <p>RGB is the default, but color images of shape <code class="docutils literal notranslate"><span class="pre">(n,</span> <span class="pre">m,</span> <span class="pre">3)</span></code> can use different representations of color to the RGB method we have seen. We call these different color representation formats <em>colorspaces</em>. <code class="docutils literal notranslate"><span class="pre">skimage</span></code> supports many of them, and contains many functions for converting image arrays between colorspaces. These functions are contained in the <code class="docutils literal notranslate"><span class="pre">ski.color</span></code> module:</p>
 <div class="cell docutils container">
@@ -1502,8 +1502,8 @@ Min Pixel Value: 0.0
 </div>
 </div>
 </section>
-<section class="tex2jax_ignore mathjax_ignore" id="colourspaces-2-transparency-in-the-3rd-dimension">
-<h1>Colourspaces 2: transparency in the 3rd dimension<a class="headerlink" href="#colourspaces-2-transparency-in-the-3rd-dimension" title="Link to this heading">#</a></h1>
+<section class="tex2jax_ignore mathjax_ignore" id="colorspaces-2-transparency-in-the-3rd-dimension">
+<h1>Colorspaces 2: transparency in the 3rd dimension<a class="headerlink" href="#colorspaces-2-transparency-in-the-3rd-dimension" title="Link to this heading">#</a></h1>
 <p>Now, other colorspaces involve arrays of different <code class="docutils literal notranslate"><span class="pre">shape</span></code>s. For instance, some image arrays are <code class="docutils literal notranslate"><span class="pre">(n,</span> <span class="pre">m,</span> <span class="pre">4)</span></code> - so that’s <code class="docutils literal notranslate"><span class="pre">n</span></code> rows, <code class="docutils literal notranslate"><span class="pre">m</span></code> columns and <code class="docutils literal notranslate"><span class="pre">4</span></code> slices in the third dimension.</p>
 <p>Let’s see what that extra slice does, using our tried and true <code class="docutils literal notranslate"><span class="pre">squares</span></code> image array:</p>
 <div class="cell docutils container">
@@ -1848,8 +1848,8 @@ Min Pixel Value: 0
 <li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#scikit-image-ships-with-built-in-images">Scikit-image ships with built-in images</a></li>
 <li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#input-output-and-dtypes-in-skimage">Input/output and <code class="docutils literal notranslate"><span class="pre">dtype</span></code>s in <code class="docutils literal notranslate"><span class="pre">skimage</span></code></a></li>
 <li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#small-image-arrays-big-image-arrays">Small image arrays, big image arrays</a></li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#colourspaces">Colourspaces</a></li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#colourspaces-2-transparency-in-the-3rd-dimension">Colourspaces 2: transparency in the 3rd dimension</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#colorspaces">Colorspaces</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#colorspaces-2-transparency-in-the-3rd-dimension">Colorspaces 2: transparency in the 3rd dimension</a></li>
 <li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#not-all-3d-images-are-in-color">Not all 3D images are in color…</a></li>
 <li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#summary">Summary</a></li>
 <li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#references">References</a></li>
