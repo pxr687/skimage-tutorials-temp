@@ -124,13 +124,13 @@ As we saw on the [last page](0_images_as_numpy_arrays), a colormap (e.g.
 (a map) of colors/shades. This map is black (low intensity)-gray (medium
 intensity)-white (high intensity) for the `gray` colormap.  For the viridis colormap, low intensity gives a purple color and high intensity gives a yellow color, with intermediate intensities giving intermediate colors.
 
-The colormap *translates* (maps) the intensity values to colors, where the `gray` colormap simply maps intensity to intensity of white, and the `viridis` colormap maps intensity to a color from the purple to yellow.
+The colormap *translates* (maps) the intensity values to colors, where the
+`gray` colormap simply maps intensity to intensity of white, and the `viridis`
+colormap maps intensity to a color from the purple to yellow.
 
 We can think of the `gray` colormap as a straightforward map of image
-intensity to white intensity, whereas  `viridis` does
-[*pseudo-coloring*](https://www.spiedigitallibrary.org/conference-proceedings-of-spie/0048/0000/Digital-Image-Processing-With-Pseudo-Color/10.1117/12.954071.short)
-— it maps intensity to a range of color. The plot below shows both arrays,
-with both colormaps, for comparison:
+intensity to white intensity, whereas  `viridis` maps intensity to a range of
+color. The plot below shows both arrays, with both colormaps, for comparison:
 
 ```{python}
 # An image from earlier (using the `gray` colormap)
@@ -163,12 +163,10 @@ plt.colorbar()
 plt.tight_layout();
 ```
 
-We can say then, that the plots on the bottom row are *displayed using
-pseudo-color*. The original image arrays only contain one values-worth of
-information in their pixel values; they cannot themselves specify color
-information. **This will be true of any two-dimensional image array**, because
-there is only one value per pixel, and both of these image arrays are
-two-dimensional:
+The original image arrays only contain one values-worth of information in
+their pixel values; they cannot themselves specify color information. **This
+will be true of any two-dimensional image array**, because there is only one
+value per pixel, and both of these image arrays are two-dimensional:
 
 ```{python}
 # Show the dimensionality of our binary image array.
@@ -180,15 +178,24 @@ two_D_ones_and_zeros.shape
 two_D_other_integers.shape
 ```
 
-An image which has what we will call *true color* contains information in each
-array pixel about more than just *intensity* - it also contains information
-about *color*.  To hammer this point home: grayscale and binary images
-displayed with the `viridis` colormap do not contain true color information in
-their array pixel values. Instead Matplotlib is *displaying* binary and
-intensity information using colors. To introduce true color into the image, we
-need a spooky third dimension...
+A two-dimensional image has one value per pixel, so we will call this a *single-channel* image.
 
-# True Color in 3D
+However, it is common to have images that have three values per pixel — and
+these are *three-channel* images.  The three values represent the intensity of
+red, the intensity of green and the intensity of blue (RGB).  By giving the
+intensity of the three primary colors, the three pixel values encode the color
+at that pixel.
+
+To hammer this point home although single-channel can be displayed in color,
+the value itself cannot specify the color; grayscale and binary images
+displayed with the `viridis` colormap do not contain color information in
+their array pixel values. Instead Matplotlib is *displaying* binary and
+intensity information using colors. To *specify* color at each pixel, we need
+at least three values.  To store the three values for each pixel, we need
+a spooky third dimension...
+
+
+## Color from 3D
 
 Sounds Sci-Fi! But what does it mean?
 
