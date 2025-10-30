@@ -143,7 +143,7 @@ two_D_other_integers.shape
 
 An image which has what we will call *true color* contains information in each array pixel about more than just *intensity* - it also contains information about *color*. So, to hammer this point home: grayscale and binary images displayed with the `viridis` colormap do not contain true color information in their array pixel values. Instead Matplotlib is *displaying* binary and grayscale information using colors. To introduce true color into the image, we need a spooky third dimension... 
 
-# True Colour in 3D
+# True Color in 3D
 
 Sounds Sci-Fi! But what does it mean?
 
@@ -446,7 +446,7 @@ So, this has given us:
 
 ![](images/three_slice_blue_visualised.png)
 
-## Colour channels
+## Color channels
 
 What is happening here?
 
