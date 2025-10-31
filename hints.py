@@ -2,7 +2,9 @@ import numpy as np
 
 
 def hint_corrupted_camera():
-    print("""You may want to `permute` some values.""")
+    print("You might consider adding some random integer values "
+          "to each channel of the face part of the image. Think "
+          "carefully about the range of values you want to add.")
 
 
 def hint_split_i():

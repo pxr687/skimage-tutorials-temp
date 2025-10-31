@@ -572,11 +572,22 @@ Now, despite the visualisations of our array containing only one primary color, 
 
 Other non-primary colors can be created using different blends of the primary colors (red, green, blue) in each slice of the array. For `float64` image data, you can think of 0 as meaning 0% and 1 as meaning 100%, 0.5 meaning 50% and so on. So a 1 in the red slice means 100% red is mixed in for that pixel, along with the percentages from the other color channels (which in the arrays above, are 0's).
 
-We can see this by choosing intensity values randomly for each color channel. The function `np.random.uniform()` can supply us with three random decimal numbers between 0 and 1. Run the cell below a few times if you are using this tutorial interactively, to see the random draw a few times:
+We can see this by choosing intensity values randomly for each color channel.
+We will use the `uniform()` method of a Numpy random number generator to
+supply us with three random decimal numbers between 0 and 1.
+
+First we make a random number generator:
+
+```{python}
+rng = np.random.default_rng()
+```
+
+Now run the cell below a few times if you are using this tutorial
+interactively, to see the random draw a few times:
 
 ```{python}
 # Three random integers.
-X1, X2, X3 = np.random.uniform(size=3).round(2)
+X1, X2, X3 = rng.uniform(size=3).round(2)
 
 print(f"X1 = {X1}\nX2 = {X2}\nX3 = {X3}")
 ```
@@ -587,7 +598,7 @@ We will then view the resulting display image. Again, if you are using this tuto
 
 ```{python}
 # Get three random integers between 0 and 255
-X1, X2, X3 = np.random.uniform(size=3).round(2)
+X1, X2, X3 = rng.uniform(size=3).round(2)
 
 # Display the values of the random integers.
 print(f"Red (X1) = {X1}\nGreen (X2) = {X2}\nBlue (X3) = {X3}")
@@ -612,6 +623,7 @@ You can view lots of random mixes across the color channels, as a grid of plots,
 # A custom function to demonstrate many mixes of values across the three
 # color channels.
 from random_colors import random_color_array
+
 random_color_array(8, 8)
 ```
 
@@ -975,7 +987,9 @@ plt.imshow(colorless_coffee_solution);
 
 In image processing "signal" can very roughly be thought of as a meaningful visual representation of something, in pixel values. Conversely, noise can be thought of as meaningless randomness in pixel values.
 
-Your job now, like an aging memory card or broken file system, is to corrupt the `camera` image below with some noisy pixels.
+One use of noise is to obscure or fuzz a part of the image.
+
+In this case, let's assume that the person in the `camera` image wants to make it more difficult for someone to identify him from the image.  Accordingly, we are going to add some random noise to the region around his face.  To make that noise even more distracting, it should be random noise on all three color channels, to give a confusing mix of random color, added to the face area of the image.
 
 Here is the original image:
 
@@ -997,15 +1011,21 @@ Max Pixel Value: 255
 Min Pixel Value: 0
 ```
 
-*Hint 1*: this sort of noise is *random*, you can think about functions in the
-`np.random` module which might be of use here...
+*Hint 1*: We think that the face part of the image is from row (`i`)
+coordinate 100 through 199, and column (`j`) coordinate 190 through 259.
 
-*Hint 2*: to work out what values (pixels) should be random, it may help to
-pay attention to the color of the noisy region...
+*Hint 2*: This sort of noise is *random*, you can think about methods of the
+Numpy random number generator (`rng` in the code so far) which might be of use
+here...
 
-*Hint 3*: run the function `hint_corrupted_camera()` for additional help...
+*Hint 3*: Don't forget this is an *integer* image.
+
+*Hint 3*: Run the function `hint_corrupted_camera()` for additional help...
 
 ```{python}
+# Make a random number generator
+rng = np.random.default_rng()
+
 # Import the camera image.
 camera = io.imread("images/camera.png")
 
@@ -1023,7 +1043,7 @@ noisy_camera = ...
 :class: dropdown
 :::
 
-The way we did this was by stacking `camera` into a 3D array. We then used NumPy indexing to isolate a region around the cameraman's face in the green color channel (second slice). We used the `np.random.permutation()` function to shuffle (e.g. randomize) the pixel values in this region:
+The way we did this was by stacking `camera` into a 3D array. We then used NumPy indexing to isolate a region around the cameraman's face, and added some random integer noise to each channel in that region.  Bear in mind that the output image is an integer image, so Matplotlib interprets 255 as maximum intensity, and 0 as minimum.
 
 ```{python}
 # Solution.
@@ -1031,8 +1051,26 @@ noisy_camera_solution = np.stack([camera,
                                   camera,
                                   camera],
                                   axis=2)
-noisy_camera_solution[100:200, 190:260, 1] = np.random.permutation(noisy_camera_solution[100:200, 190:260, 1])
+face = noisy_camera_solution[100:200, 190:260, :]
+# In fact, `face` is a *view* onto the data in `noisy_camera_solution`
+# so you can write the code below more simply, but to avoid confusion,
+# let's do it long way.
+noisy_camera_solution[100:200, 190:260, :] = face + rng.integers(-100, 100, size=face.shape)
+# For neatness, you might also consider clipping the image to have min 0 and
+# max 255 (< 0 set as 0, > 255 set as 255).
+noisy_camera_solution = np.clip(noisy_camera_solution, 0, 255)
 plt.imshow(noisy_camera_solution);
+```
+
+```{python tags=c("remove-cell", "hide-output")}
+# We regenerate and store the output image for page generation, used above.
+# Check this code against the solution code above.
+out_rng = np.random.default_rng(1939)  # Predictable output for predictable image.
+out_sol = np.stack([camera, camera, camera], axis=2)  # Regenerate solution
+out_face = out_sol[100:200, 190:260, :]
+out_sol[100:200, 190:260, :] = out_face + out_rng.integers(-100, 100, size=face.shape)
+plt.imshow(out_sol);
+plt.savefig('images/corrupted_camera.png')
 ```
 
 ::: {solution-end}
@@ -1061,7 +1099,15 @@ nothing but arrays of numbers:
 show_attributes(brain)
 ```
 
-Note that this image is 2D, and it is actually a relatively simple brain image. Other brain images can also contain *time* information - e.g. an image of the brain through time, as it responds to different stimuli. Such images are actually 4-D, with an extra dimension for temporal information. However, all of these images can still be represented as NumPy arrays, with varying dimensionalities and various min/max pixel value conventions.  These higher-dimensional images do not always contain color information - the way we have seen above is just one way of using higher-dimensional image arrays, to encode color. We will investigate this topic more on the [next page](2_skimage_intro).
+Note that this image is 2D, and it is actually a relatively simple brain
+image.  But of course, the scanner took many images (slices) like this, to
+give a full 3D picture, from left ear to right ear. Of course the natural way
+to store such an image is as a 3D Numpy array, and this reminds us that Numpy
+arrays can and do use the third dimension to store information other than
+color.  It is Matplotlib, our display library, that will interpret the third
+dimension as color channels — which is why we will nearly always use the third
+dimension of images to store color.  We will investigate this topic more on
+the [next page](2_skimage_intro).
 
 
 ## Summary
@@ -1088,8 +1134,7 @@ which uses NumPy image arrays as its fundamental representation of images.
 
 * [Scientific Python Lecture Notes - image
   processing](https://lectures.scientific-python.org/advanced/image_processing)
-* [Scientific Python Lecture Notes
-  - scikit-image](https://lectures.scientific-python.org/packages/scikit-image/index.html)
+* [Scientific Python Lecture Notes: scikit-image](https://lectures.scientific-python.org/packages/scikit-image/index.html)
 * [Nipraxis course - arrays and
   images](https://textbook.nipraxis.org/arrays_and_images.html)
 * [Nipraxis course - three-dimensional
