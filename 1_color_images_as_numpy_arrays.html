@@ -193,7 +193,7 @@
 
 
 
-<li class="toctree-l1"><a class="reference internal" href="3_skimage_processing_from_numpy_and_scipy.html">(Sci-kit) Image processing, via NumPy and SciPy</a></li>
+<li class="toctree-l1"><a class="reference internal" href="3_skimage_processing_from_numpy_and_scipy.html">(Scikit) Image processing, via NumPy and SciPy</a></li>
 
 
 
@@ -1335,9 +1335,9 @@ interactively, to see the random draw a few times:</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>X1 = 0.81
-X2 = 0.33
-X3 = 0.25
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>X1 = 0.69
+X2 = 0.15
+X3 = 0.37
 </pre></div>
 </div>
 </div>
@@ -1364,12 +1364,12 @@ X3 = 0.25
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Red (X1) = 0.51
-Green (X2) = 0.13
-Blue (X3) = 0.03
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Red (X1) = 0.76
+Green (X2) = 0.06
+Blue (X3) = 0.35
 </pre></div>
 </div>
-<img alt="_images/9216a0f411e4d963fbce490e456303f2938c1b5fddb25125a65fbce8e0c09184.png" src="_images/9216a0f411e4d963fbce490e456303f2938c1b5fddb25125a65fbce8e0c09184.png" />
+<img alt="_images/64c59ee0a4b15371db4aad8899bc803e86b24ea7097007c3c139eae0f4434008.png" src="_images/64c59ee0a4b15371db4aad8899bc803e86b24ea7097007c3c139eae0f4434008.png" />
 </div>
 </div>
 <p>So, each two-dimensional display image has a “hidden” three-dimensional array behind it. Each slice of the third dimension is a color channel. The mix of values at a given element in each color channel determines the color of that pixel in the rendered image. You may want to view this image in a new browser window, to see more clearly the exact mixes of the color channels, which are shown above each square on the right-hand side of the image:</p>
@@ -1386,7 +1386,7 @@ Blue (X3) = 0.03
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/3483c58ac0d5ba43f80a246ecc2fdb858e57746021abcf2ca3a7cea68c784cfc.png" src="_images/3483c58ac0d5ba43f80a246ecc2fdb858e57746021abcf2ca3a7cea68c784cfc.png" />
+<img alt="_images/298b4e24d0aff5b007b4f17560b45555baadd27484319cd81c4158ea7469cb6f.png" src="_images/298b4e24d0aff5b007b4f17560b45555baadd27484319cd81c4158ea7469cb6f.png" />
 </div>
 </div>
 <p>We have now completed our perilous expedition into the third dimension… We
@@ -1523,7 +1523,7 @@ arrays, such as <code class="docutils literal notranslate"><span class="pre">dty
 arrays, such as <code class="docutils literal notranslate"><span class="pre">dtype=np.uint8</span></code>).</p></li>
 </ul>
 <p>You will see both conventions in images you encounter “in the wild”, and
-Sci-kit image supports both formats (as well as multiple other formats - see
+Scikit image supports both formats (as well as multiple other formats - see
 the table below). Neglecting to pay attention to <code class="docutils literal notranslate"><span class="pre">dtype</span></code> is a very common
 source of errors when dealing with image arrays, so keep track of it, and
 deliberately specify it as often as possible!</p>
@@ -1944,7 +1944,7 @@ Min Pixel Value: 0
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/ade585a0b080308d58da0f18edee1630816fe6e52c371e17390d41a154ff6e8e.png" src="_images/ade585a0b080308d58da0f18edee1630816fe6e52c371e17390d41a154ff6e8e.png" />
+<img alt="_images/b011f37b79137df4723f0d73f5d89c9317639e47cc1c6426a69f14fadc4cda2b.png" src="_images/b011f37b79137df4723f0d73f5d89c9317639e47cc1c6426a69f14fadc4cda2b.png" />
 </div>
 </div>
 </section>
@@ -2002,7 +2002,7 @@ the <a class="reference internal" href="2_skimage_intro.html"><span class="doc s
 <p>On this page we have seen how color can be represented in NumPy array images:</p>
 <ul class="simple">
 <li><p>Images are (at least) two-dimensional arrays of numbers. Multiple <code class="docutils literal notranslate"><span class="pre">dtype</span></code>s
-in image arrays are supported by Sci-kit image.</p></li>
+in image arrays are supported by Scikit image.</p></li>
 <li><p>We have seen images where the number at each array pixel location determines
 the gray-level (in a 2D array) or color (in a 3D array) of that location
 when the image is displayed. For 3D color arrays the number in each

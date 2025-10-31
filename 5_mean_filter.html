@@ -193,7 +193,7 @@
 
 
 
-<li class="toctree-l1"><a class="reference internal" href="3_skimage_processing_from_numpy_and_scipy.html">(Sci-kit) Image processing, via NumPy and SciPy</a></li>
+<li class="toctree-l1"><a class="reference internal" href="3_skimage_processing_from_numpy_and_scipy.html">(Scikit) Image processing, via NumPy and SciPy</a></li>
 
 
 
@@ -484,7 +484,7 @@ document.write(`
 <p>On the last page we filtered images based on a single threshold value, or based on multiple threshold values. Other filters work differently to this: they work by adjusting a given pixel’s value based on the value of other pixels which surround it, in a specified area. The mean filter is one such filter that works in this manner.</p>
 <p>The mean filter is a <em>local filter</em>, because it alters a given pixel’s value based on the values of other pixels in the surrounding “local neighborhood”. The image below shows the pixel values in the <code class="docutils literal notranslate"><span class="pre">smiley</span></code> image array that we created on an earlier <a class="reference internal" href="0_images_as_numpy_arrays.html"><span class="doc std std-doc">page</span></a>. Two possible “local neighbourhoods” are shown for a given pixel, which is highlighted in red. One neighbourhood is 3-by-3, and the other is 5-by-5 - we could use either when using a local filter:</p>
 <p><img alt="" src="_images/smiley_neighbourhoods.png" /></p>
-<p>The values within a pixel’s local neighbourhood will influence the change that a local filter makes to the central pixel. The <code class="docutils literal notranslate"><span class="pre">size</span></code> and <code class="docutils literal notranslate"><span class="pre">shape</span></code> of the “neighborhood” are up to the user. We can synonomously refer to the neighborhood as a “kernel”, “footprint” or “structuring element”. As we will see later, Sci-kit image favours the term “footprint”. For now, we will use the terms “kernel” and “neighborhood” interchangeably to refer to some set of pixels that surround a given pixel.</p>
+<p>The values within a pixel’s local neighbourhood will influence the change that a local filter makes to the central pixel. The <code class="docutils literal notranslate"><span class="pre">size</span></code> and <code class="docutils literal notranslate"><span class="pre">shape</span></code> of the “neighborhood” are up to the user. We can synonomously refer to the neighborhood as a “kernel”, “footprint” or “structuring element”. As we will see later, Scikit image favours the term “footprint”. For now, we will use the terms “kernel” and “neighborhood” interchangeably to refer to some set of pixels that surround a given pixel.</p>
 <p>The mean filter, as the name suggests, <em>averages</em> the pixel values within a kernel/neighbourhood. To see this in action, let’s build a simple mean filter to filter an image array. First, we perform some imports:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -1112,7 +1112,7 @@ The input is extended by wrapping around to the opposite edge.</p></li>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/4ff8319bb349cdcae2f0358b46396c98bef886d3ce1d7a3a40cbe1b7655eb485.png" src="_images/4ff8319bb349cdcae2f0358b46396c98bef886d3ce1d7a3a40cbe1b7655eb485.png" />
+<img alt="_images/8e0572260a0d5189ff10792820ebe575fa366d5ed6b37afc8646f715fb8ab285.png" src="_images/8e0572260a0d5189ff10792820ebe575fa366d5ed6b37afc8646f715fb8ab285.png" />
 </div>
 </div>
 <p>The mean filter can remove some of the noise, restoring the clarity of the image:</p>
@@ -1137,7 +1137,7 @@ The input is extended by wrapping around to the opposite edge.</p></li>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/955429b04c7108180a4fa5de0d9bc72fae10a02f822b96e45f6f7a5d01d6fe26.png" src="_images/955429b04c7108180a4fa5de0d9bc72fae10a02f822b96e45f6f7a5d01d6fe26.png" />
+<img alt="_images/c7995a645aa3778c8219840c0c793fa228e7532fa4d227e9b56865daa6452602.png" src="_images/c7995a645aa3778c8219840c0c793fa228e7532fa4d227e9b56865daa6452602.png" />
 </div>
 </div>
 <p>We can see that the image is clearer, the noise has been reduced and some of the signal has been restored.</p>
@@ -1167,7 +1167,7 @@ The input is extended by wrapping around to the opposite edge.</p></li>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/66d05c17cf55dbab73080cb677c73a82577829e727ddbb6ff7ff1c966f53ea2f.png" src="_images/66d05c17cf55dbab73080cb677c73a82577829e727ddbb6ff7ff1c966f53ea2f.png" />
+<img alt="_images/8b2bea983fd3c049016ecbf89f58b5924c3b46834f78175c44e982576c7237fd.png" src="_images/8b2bea983fd3c049016ecbf89f58b5924c3b46834f78175c44e982576c7237fd.png" />
 </div>
 </div>
 <p>As with many filtering operations, the effect of altering aspects of the filtering process (like a threshold value or kernel size), is very context-dependent. It may take many iterations before finding a “sweet spot”, and where the sweet spot is may be somewhat subjective.</p>
