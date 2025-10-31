@@ -18,3 +18,8 @@ same license as the original.
 
 `xeno_ex_1.png` similarly results from processing in the [page on
 morpology](../8_morphology), and has the same license as the original.
+
+## `corrupted_camera.png`
+
+Generated from Scikit-image standard `camera` image in [color
+page](../1_color_images_as_numpy_arrays).

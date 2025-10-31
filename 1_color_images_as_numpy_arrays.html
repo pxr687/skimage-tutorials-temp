@@ -1312,19 +1312,31 @@ amount of red in the image. We can therefore (for now) call this slice the
 <p><img alt="" src="_images/color_channels_all.png" /></p>
 <p>Now, despite the visualisations of our array containing only one primary color, the color channels are in fact being mixed together. However, because we have set two of the slices to contain only 0’s, we are essentially “switching off” those color channels in the final mix (e.g. in the image displayed by Matplotlib).</p>
 <p>Other non-primary colors can be created using different blends of the primary colors (red, green, blue) in each slice of the array. For <code class="docutils literal notranslate"><span class="pre">float64</span></code> image data, you can think of 0 as meaning 0% and 1 as meaning 100%, 0.5 meaning 50% and so on. So a 1 in the red slice means 100% red is mixed in for that pixel, along with the percentages from the other color channels (which in the arrays above, are 0’s).</p>
-<p>We can see this by choosing intensity values randomly for each color channel. The function <code class="docutils literal notranslate"><span class="pre">np.random.uniform()</span></code> can supply us with three random decimal numbers between 0 and 1. Run the cell below a few times if you are using this tutorial interactively, to see the random draw a few times:</p>
+<p>We can see this by choosing intensity values randomly for each color channel.
+We will use the <code class="docutils literal notranslate"><span class="pre">uniform()</span></code> method of a Numpy random number generator to
+supply us with three random decimal numbers between 0 and 1.</p>
+<p>First we make a random number generator:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">rng</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">default_rng</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Now run the cell below a few times if you are using this tutorial
+interactively, to see the random draw a few times:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Three random integers.</span>
-<span class="n">X1</span><span class="p">,</span> <span class="n">X2</span><span class="p">,</span> <span class="n">X3</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">uniform</span><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">X1</span><span class="p">,</span> <span class="n">X2</span><span class="p">,</span> <span class="n">X3</span> <span class="o">=</span> <span class="n">rng</span><span class="o">.</span><span class="n">uniform</span><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
 
 <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;X1 = </span><span class="si">{</span><span class="n">X1</span><span class="si">}</span><span class="se">\n</span><span class="s2">X2 = </span><span class="si">{</span><span class="n">X2</span><span class="si">}</span><span class="se">\n</span><span class="s2">X3 = </span><span class="si">{</span><span class="n">X3</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>X1 = 0.59
-X2 = 0.55
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>X1 = 0.14
+X2 = 0.71
 X3 = 0.91
 </pre></div>
 </div>
@@ -1335,7 +1347,7 @@ X3 = 0.91
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Get three random integers between 0 and 255</span>
-<span class="n">X1</span><span class="p">,</span> <span class="n">X2</span><span class="p">,</span> <span class="n">X3</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">uniform</span><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">X1</span><span class="p">,</span> <span class="n">X2</span><span class="p">,</span> <span class="n">X3</span> <span class="o">=</span> <span class="n">rng</span><span class="o">.</span><span class="n">uniform</span><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
 
 <span class="c1"># Display the values of the random integers.</span>
 <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Red (X1) = </span><span class="si">{</span><span class="n">X1</span><span class="si">}</span><span class="se">\n</span><span class="s2">Green (X2) = </span><span class="si">{</span><span class="n">X2</span><span class="si">}</span><span class="se">\n</span><span class="s2">Blue (X3) = </span><span class="si">{</span><span class="n">X3</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
@@ -1352,12 +1364,12 @@ X3 = 0.91
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Red (X1) = 0.06
-Green (X2) = 0.35
-Blue (X3) = 0.57
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Red (X1) = 0.45
+Green (X2) = 0.51
+Blue (X3) = 0.15
 </pre></div>
 </div>
-<img alt="_images/0f307b5d54e734d308a72250d5afcf656709483709ae90ca7e019d902e8397d8.png" src="_images/0f307b5d54e734d308a72250d5afcf656709483709ae90ca7e019d902e8397d8.png" />
+<img alt="_images/9f9fd3da91a35f4418a9240b3a3dc59232e25ed2f25471179408979b020c1192.png" src="_images/9f9fd3da91a35f4418a9240b3a3dc59232e25ed2f25471179408979b020c1192.png" />
 </div>
 </div>
 <p>So, each two-dimensional display image has a “hidden” three-dimensional array behind it. Each slice of the third dimension is a color channel. The mix of values at a given element in each color channel determines the color of that pixel in the rendered image. You may want to view this image in a new browser window, to see more clearly the exact mixes of the color channels, which are shown above each square on the right-hand side of the image:</p>
@@ -1368,12 +1380,13 @@ Blue (X3) = 0.57
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># A custom function to demonstrate many mixes of values across the three</span>
 <span class="c1"># color channels.</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">random_colors</span><span class="w"> </span><span class="kn">import</span> <span class="n">random_color_array</span>
+
 <span class="n">random_color_array</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="mi">8</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/8045d41f57ab69372f5b713a17ca4383d9e69f0a66ebdb043a0fef252b3f04a5.png" src="_images/8045d41f57ab69372f5b713a17ca4383d9e69f0a66ebdb043a0fef252b3f04a5.png" />
+<img alt="_images/78b0a5ab21fd18342dacd914cca2f10ef4e7850a0013efbab2c66ba295b4a77e.png" src="_images/78b0a5ab21fd18342dacd914cca2f10ef4e7850a0013efbab2c66ba295b4a77e.png" />
 </div>
 </div>
 <p>We have now completed our perilous expedition into the third dimension… We
@@ -1855,7 +1868,8 @@ channels by multiplying their pixel values by 0:</p>
 <p class="admonition-title"><span class="caption-number">Exercise 7 </span></p>
 <section id="exercise-content">
 <p>In image processing “signal” can very roughly be thought of as a meaningful visual representation of something, in pixel values. Conversely, noise can be thought of as meaningless randomness in pixel values.</p>
-<p>Your job now, like an aging memory card or broken file system, is to corrupt the <code class="docutils literal notranslate"><span class="pre">camera</span></code> image below with some noisy pixels.</p>
+<p>One use of noise is to obscure or fuzz a part of the image.</p>
+<p>In this case, let’s assume that the person in the <code class="docutils literal notranslate"><span class="pre">camera</span></code> image wants to make it more difficult for someone to identify him from the image.  Accordingly, we are going to add some random noise to the region around his face.  To make that noise even more distracting, it should be random noise on all three color channels, to give a confusing mix of random color, added to the face area of the image.</p>
 <p>Here is the original image:</p>
 <p><img alt="" src="_images/camera_plot.png" /></p>
 <p>You should use NumPy and numerical operations only, to create something like
@@ -1870,14 +1884,19 @@ Max Pixel Value: 255
 Min Pixel Value: 0
 </pre></div>
 </div>
-<p><em>Hint 1</em>: this sort of noise is <em>random</em>, you can think about functions in the
-<code class="docutils literal notranslate"><span class="pre">np.random</span></code> module which might be of use here…</p>
-<p><em>Hint 2</em>: to work out what values (pixels) should be random, it may help to
-pay attention to the color of the noisy region…</p>
-<p><em>Hint 3</em>: run the function <code class="docutils literal notranslate"><span class="pre">hint_corrupted_camera()</span></code> for additional help…</p>
+<p><em>Hint 1</em>: We think that the face part of the image is from row (<code class="docutils literal notranslate"><span class="pre">i</span></code>)
+coordinate 100 through 199, and column (<code class="docutils literal notranslate"><span class="pre">j</span></code>) coordinate 190 through 259.</p>
+<p><em>Hint 2</em>: This sort of noise is <em>random</em>, you can think about methods of the
+Numpy random number generator (<code class="docutils literal notranslate"><span class="pre">rng</span></code> in the code so far) which might be of use
+here…</p>
+<p><em>Hint 3</em>: Don’t forget this is an <em>integer</em> image.</p>
+<p><em>Hint 3</em>: Run the function <code class="docutils literal notranslate"><span class="pre">hint_corrupted_camera()</span></code> for additional help…</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Import the camera image.</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Make a random number generator</span>
+<span class="n">rng</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">default_rng</span><span class="p">()</span>
+
+<span class="c1"># Import the camera image.</span>
 <span class="n">camera</span> <span class="o">=</span> <span class="n">io</span><span class="o">.</span><span class="n">imread</span><span class="p">(</span><span class="s2">&quot;images/camera.png&quot;</span><span class="p">)</span>
 
 <span class="c1"># Show the attributes of `camera`/</span>
@@ -1904,7 +1923,7 @@ Min Pixel Value: 0
 
 <p class="admonition-title">Solution to<a class="reference internal" href="#corrupted-camera"> Exercise 7</a></p>
 <section id="solution-content">
-<p>The way we did this was by stacking <code class="docutils literal notranslate"><span class="pre">camera</span></code> into a 3D array. We then used NumPy indexing to isolate a region around the cameraman’s face in the green color channel (second slice). We used the <code class="docutils literal notranslate"><span class="pre">np.random.permutation()</span></code> function to shuffle (e.g. randomize) the pixel values in this region:</p>
+<p>The way we did this was by stacking <code class="docutils literal notranslate"><span class="pre">camera</span></code> into a 3D array. We then used NumPy indexing to isolate a region around the cameraman’s face, and added some random integer noise to each channel in that region.  Bear in mind that the output image is an integer image, so Matplotlib interprets 255 as maximum intensity, and 0 as minimum.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution.</span>
@@ -1912,13 +1931,20 @@ Min Pixel Value: 0
                                   <span class="n">camera</span><span class="p">,</span>
                                   <span class="n">camera</span><span class="p">],</span>
                                   <span class="n">axis</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
-<span class="n">noisy_camera_solution</span><span class="p">[</span><span class="mi">100</span><span class="p">:</span><span class="mi">200</span><span class="p">,</span> <span class="mi">190</span><span class="p">:</span><span class="mi">260</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">permutation</span><span class="p">(</span><span class="n">noisy_camera_solution</span><span class="p">[</span><span class="mi">100</span><span class="p">:</span><span class="mi">200</span><span class="p">,</span> <span class="mi">190</span><span class="p">:</span><span class="mi">260</span><span class="p">,</span> <span class="mi">1</span><span class="p">])</span>
+<span class="n">face</span> <span class="o">=</span> <span class="n">noisy_camera_solution</span><span class="p">[</span><span class="mi">100</span><span class="p">:</span><span class="mi">200</span><span class="p">,</span> <span class="mi">190</span><span class="p">:</span><span class="mi">260</span><span class="p">,</span> <span class="p">:]</span>
+<span class="c1"># In fact, `face` is a *view* onto the data in `noisy_camera_solution`</span>
+<span class="c1"># so you can write the code below more simply, but to avoid confusion,</span>
+<span class="c1"># let&#39;s do it long way.</span>
+<span class="n">noisy_camera_solution</span><span class="p">[</span><span class="mi">100</span><span class="p">:</span><span class="mi">200</span><span class="p">,</span> <span class="mi">190</span><span class="p">:</span><span class="mi">260</span><span class="p">,</span> <span class="p">:]</span> <span class="o">=</span> <span class="n">face</span> <span class="o">+</span> <span class="n">rng</span><span class="o">.</span><span class="n">integers</span><span class="p">(</span><span class="o">-</span><span class="mi">100</span><span class="p">,</span> <span class="mi">100</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="n">face</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+<span class="c1"># For neatness, you might also consider clipping the image to have min 0 and</span>
+<span class="c1"># max 255 (&lt; 0 set as 0, &gt; 255 set as 255).</span>
+<span class="n">noisy_camera_solution</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">clip</span><span class="p">(</span><span class="n">noisy_camera_solution</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">255</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">noisy_camera_solution</span><span class="p">);</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/2332af6319aebc01f95c492b7dfb738ede6e6595b78d2e430508feb2d87225b5.png" src="_images/2332af6319aebc01f95c492b7dfb738ede6e6595b78d2e430508feb2d87225b5.png" />
+<img alt="_images/45ea38970f6bba34d6854e9bb987d48741f392a648290db91310ed6579b77a8d.png" src="_images/45ea38970f6bba34d6854e9bb987d48741f392a648290db91310ed6579b77a8d.png" />
 </div>
 </div>
 </section>
@@ -1961,7 +1987,15 @@ Min Pixel Value: 0
 </div>
 </div>
 </div>
-<p>Note that this image is 2D, and it is actually a relatively simple brain image. Other brain images can also contain <em>time</em> information - e.g. an image of the brain through time, as it responds to different stimuli. Such images are actually 4-D, with an extra dimension for temporal information. However, all of these images can still be represented as NumPy arrays, with varying dimensionalities and various min/max pixel value conventions.  These higher-dimensional images do not always contain color information - the way we have seen above is just one way of using higher-dimensional image arrays, to encode color. We will investigate this topic more on the <a class="reference internal" href="2_skimage_intro.html"><span class="doc std std-doc">next page</span></a>.</p>
+<p>Note that this image is 2D, and it is actually a relatively simple brain
+image.  But of course, the scanner took many images (slices) like this, to
+give a full 3D picture, from left ear to right ear. Of course the natural way
+to store such an image is as a 3D Numpy array, and this reminds us that Numpy
+arrays can and do use the third dimension to store information other than
+color.  It is Matplotlib, our display library, that will interpret the third
+dimension as color channels — which is why we will nearly always use the third
+dimension of images to store color.  We will investigate this topic more on
+the <a class="reference internal" href="2_skimage_intro.html"><span class="doc std std-doc">next page</span></a>.</p>
 </section>
 <section id="summary">
 <h2>Summary<a class="headerlink" href="#summary" title="Link to this heading">#</a></h2>
@@ -1988,11 +2022,7 @@ which uses NumPy image arrays as its fundamental representation of images.</p>
 <ul class="simple">
 <li><p><a class="reference external" href="https://lectures.scientific-python.org/advanced/image_processing">Scientific Python Lecture Notes - image
 processing</a></p></li>
-<li><p>[Scientific Python Lecture Notes</p>
-<ul>
-<li><p>scikit-image](<a class="reference external" href="https://lectures.scientific-python.org/packages/scikit-image/index.html">https://lectures.scientific-python.org/packages/scikit-image/index.html</a>)</p></li>
-</ul>
-</li>
+<li><p><a class="reference external" href="https://lectures.scientific-python.org/packages/scikit-image/index.html">Scientific Python Lecture Notes: scikit-image</a></p></li>
 <li><p><a class="reference external" href="https://textbook.nipraxis.org/arrays_and_images.html">Nipraxis course - arrays and
 images</a></p></li>
 <li><p><a class="reference external" href="https://textbook.nipraxis.org/arrays_3d.html">Nipraxis course - three-dimensional
