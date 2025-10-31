@@ -182,10 +182,6 @@
 
 <li class="toctree-l1"><a class="reference internal" href="1_color_images_as_numpy_arrays.html">What about color?</a></li>
 
-
-
-
-
 <li class="toctree-l1"><a class="reference internal" href="2_skimage_intro.html">Introducing Scikit-image</a></li>
 
 
@@ -816,7 +812,7 @@ Min Pixel Value: 0.0
 </div>
 <div class="exercise dropdown admonition" id="i-!">
 
-<p class="admonition-title"><span class="caption-number">Exercise 10 </span></p>
+<p class="admonition-title"><span class="caption-number">Exercise 11 </span></p>
 <section id="exercise-content">
 <p>Your job now is to use NumPy operations <em>only</em> to create the following image array, using the <code class="docutils literal notranslate"><span class="pre">i_img</span></code> array as your starting point:</p>
 <p><img alt="" src="_images/eye-%21.png" /></p>
@@ -841,7 +837,7 @@ Min Pixel Value: 0.0
 </div>
 <div class="solution dropdown admonition" id="3_skimage_processing_from_numpy_and_scipy-solution-1">
 
-<p class="admonition-title">Solution to<a class="reference internal" href="#i-!"> Exercise 10</a></p>
+<p class="admonition-title">Solution to<a class="reference internal" href="#i-!"> Exercise 11</a></p>
 <section id="solution-content">
 <p>You can do this in one line of code by using a combination of <code class="docutils literal notranslate"><span class="pre">np.concat()</span></code>, <code class="docutils literal notranslate"><span class="pre">np.flip()</span></code> and <code class="docutils literal notranslate"><span class="pre">plt.imshow()</span></code>. Notably,<code class="docutils literal notranslate"><span class="pre">np.concat()</span></code> will “stick” arrays together, rather than <code class="docutils literal notranslate"><span class="pre">np.repeat()</span></code>-ing the values…</p>
 <p>Combined with <code class="docutils literal notranslate"><span class="pre">np.flip()</span></code> we can produce the desired result in one line of code:</p>
@@ -860,7 +856,7 @@ Min Pixel Value: 0.0
 </div>
 <div class="exercise dropdown admonition" id="split-i">
 
-<p class="admonition-title"><span class="caption-number">Exercise 11 </span></p>
+<p class="admonition-title"><span class="caption-number">Exercise 12 </span></p>
 <section id="exercise-content">
 <p>Here again is the <code class="docutils literal notranslate"><span class="pre">i_img</span></code> array, and a printout of its attributes:</p>
 <div class="cell docutils container">
@@ -905,7 +901,7 @@ Min Pixel Value: -1.0
 </div>
 <div class="solution dropdown admonition" id="3_skimage_processing_from_numpy_and_scipy-solution-3">
 
-<p class="admonition-title">Solution to<a class="reference internal" href="#split-i"> Exercise 11</a></p>
+<p class="admonition-title">Solution to<a class="reference internal" href="#split-i"> Exercise 12</a></p>
 <section id="solution-content">
 <p>The target image can be created using the <code class="docutils literal notranslate"><span class="pre">np.diff()</span></code> function, which calculates the difference between adjacent values in an array. By default <code class="docutils literal notranslate"><span class="pre">np.diff()</span></code> operates in steps of 1 across the columns:</p>
 <div class="cell docutils container">
@@ -1540,7 +1536,7 @@ Min Pixel Value: 0
 <p>Unless you specifically want a mirroring transformation, then use <code class="docutils literal notranslate"><span class="pre">.rotate()</span></code>!</p>
 <div class="exercise dropdown admonition" id="look-at-me">
 
-<p class="admonition-title"><span class="caption-number">Exercise 12 </span></p>
+<p class="admonition-title"><span class="caption-number">Exercise 13 </span></p>
 <section id="exercise-content">
 <p>Your mission now is to transform <code class="docutils literal notranslate"><span class="pre">camera</span></code> into this slightly brain-bending image:</p>
 <p><img alt="" src="_images/look_at_me.png" /></p>
@@ -1575,7 +1571,7 @@ Min Pixel Value: 0
 </div>
 <div class="solution dropdown admonition" id="3_skimage_processing_from_numpy_and_scipy-solution-5">
 
-<p class="admonition-title">Solution to<a class="reference internal" href="#look-at-me"> Exercise 12</a></p>
+<p class="admonition-title">Solution to<a class="reference internal" href="#look-at-me"> Exercise 13</a></p>
 <section id="solution-content">
 <p>Here we need a transpose operation, followed by a rotation, followed by a concatenation.</p>
 <p>That is a mouthful, let’s break it down. First we transpose the <code class="docutils literal notranslate"><span class="pre">camera</span></code> array, we can use <code class="docutils literal notranslate"><span class="pre">.T</span></code> here rather than <code class="docutils literal notranslate"><span class="pre">.transpose</span></code> as we are dealing with a 2D grayscale image:</p>
@@ -1676,7 +1672,7 @@ Min Pixel Value: 0.0
 </div>
 <div class="exercise dropdown admonition" id="yellow-fellow">
 
-<p class="admonition-title"><span class="caption-number">Exercise 13 </span></p>
+<p class="admonition-title"><span class="caption-number">Exercise 14 </span></p>
 <section id="exercise-content">
 <p>For this exercise, you should load in the <code class="docutils literal notranslate"><span class="pre">cat</span></code> image from <code class="docutils literal notranslate"><span class="pre">ski.data</span></code>. Here is the original <code class="docutils literal notranslate"><span class="pre">cat</span></code> image:</p>
 <p><img alt="" src="_images/cat.png" /></p>
@@ -1710,7 +1706,7 @@ Min Pixel Value: 0.0
 </div>
 <div class="solution dropdown admonition" id="3_skimage_processing_from_numpy_and_scipy-solution-7">
 
-<p class="admonition-title">Solution to<a class="reference internal" href="#yellow-fellow"> Exercise 13</a></p>
+<p class="admonition-title">Solution to<a class="reference internal" href="#yellow-fellow"> Exercise 14</a></p>
 <section id="solution-content">
 <p>The solution here again involves multiple steps. First we load in the <code class="docutils literal notranslate"><span class="pre">cat</span></code> image:</p>
 <div class="cell docutils container">
@@ -1845,7 +1841,7 @@ Min Pixel Value: 0.0
 </div>
 <div class="exercise dropdown admonition" id="cropped-camera">
 
-<p class="admonition-title"><span class="caption-number">Exercise 14 </span></p>
+<p class="admonition-title"><span class="caption-number">Exercise 15 </span></p>
 <section id="exercise-content">
 <p>Take the original <code class="docutils literal notranslate"><span class="pre">camera</span></code> image:</p>
 <p><img alt="" src="_images/camera_plot.png" /></p>
@@ -1876,7 +1872,7 @@ Min Pixel Value: 23
 </div>
 <div class="solution dropdown admonition" id="3_skimage_processing_from_numpy_and_scipy-solution-9">
 
-<p class="admonition-title">Solution to<a class="reference internal" href="#cropped-camera"> Exercise 14</a></p>
+<p class="admonition-title">Solution to<a class="reference internal" href="#cropped-camera"> Exercise 15</a></p>
 <section id="solution-content">
 <p>This is a simple task once you know what indexes you need. Using <code class="docutils literal notranslate"><span class="pre">plt.grid()</span></code> can make this information easier to obtain:</p>
 <div class="cell docutils container">
@@ -2097,7 +2093,7 @@ Min Pixel Value: False
 </div>
 <div class="exercise dropdown admonition" id="masked-man">
 
-<p class="admonition-title"><span class="caption-number">Exercise 15 </span></p>
+<p class="admonition-title"><span class="caption-number">Exercise 16 </span></p>
 <section id="exercise-content">
 <p>Your mission now is to use a mask, similar to the one we have just seen, to transform <code class="docutils literal notranslate"><span class="pre">camera</span></code> into the following image:</p>
 <p><img alt="" src="_images/masked_camera.png" /></p>
@@ -2106,7 +2102,7 @@ Min Pixel Value: False
 </div>
 <div class="solution dropdown admonition" id="3_skimage_processing_from_numpy_and_scipy-solution-11">
 
-<p class="admonition-title">Solution to<a class="reference internal" href="#masked-man"> Exercise 15</a></p>
+<p class="admonition-title">Solution to<a class="reference internal" href="#masked-man"> Exercise 16</a></p>
 <section id="solution-content">
 <p>The circular mask we used above was generated via the following:</p>
 <p><code class="docutils literal notranslate"><span class="pre">mask</span> <span class="pre">=</span> <span class="pre">(X</span> <span class="pre">-</span> <span class="pre">dim_1/</span> <span class="pre">2)</span> <span class="pre">**</span> <span class="pre">2</span> <span class="pre">+</span> <span class="pre">(Y</span> <span class="pre">-</span> <span class="pre">dim_2</span> <span class="pre">/</span> <span class="pre">2)</span> <span class="pre">**</span> <span class="pre">2</span> <span class="pre">&gt;</span> <span class="pre">dim_1</span> <span class="pre">*</span> <span class="pre">dim_2</span> <span class="pre">/</span> <span class="pre">4</span></code></p>
@@ -2279,7 +2275,7 @@ Min Pixel Value: 0
 </div>
 <div class="exercise dropdown admonition" id="inv-brick">
 
-<p class="admonition-title"><span class="caption-number">Exercise 16 </span></p>
+<p class="admonition-title"><span class="caption-number">Exercise 17 </span></p>
 <section id="exercise-content">
 <p>Now over to you. Your task here is to load the <code class="docutils literal notranslate"><span class="pre">brick</span></code> image from <code class="docutils literal notranslate"><span class="pre">ski.data.image</span></code>.</p>
 <p>You should then invert every 2nd element on even numbered rows…</p>
@@ -2317,7 +2313,7 @@ Min Pixel Value: 48
 </div>
 <div class="solution dropdown admonition" id="3_skimage_processing_from_numpy_and_scipy-solution-13">
 
-<p class="admonition-title">Solution to<a class="reference internal" href="#inv-brick"> Exercise 16</a></p>
+<p class="admonition-title">Solution to<a class="reference internal" href="#inv-brick"> Exercise 17</a></p>
 <section id="solution-content">
 <p>The solution here is just to use slicing to select the elements we need, and <code class="docutils literal notranslate"><span class="pre">ski.util.invert()</span></code> just these elements, using array indexing.</p>
 <p>To get every 2nd element on even numbered rows, we can use <code class="docutils literal notranslate"><span class="pre">brick[0::2,</span> <span class="pre">1::2]</span></code>.</p>
@@ -2402,7 +2398,7 @@ Min Pixel Value: 48
 </div>
 <div class="exercise dropdown admonition" id="inverted-purple">
 
-<p class="admonition-title"><span class="caption-number">Exercise 17 </span></p>
+<p class="admonition-title"><span class="caption-number">Exercise 18 </span></p>
 <section id="exercise-content">
 <p>Again using the <code class="docutils literal notranslate"><span class="pre">cat</span></code> image, try to recreate the following target image, using only <code class="docutils literal notranslate"><span class="pre">numpy</span></code> and <code class="docutils literal notranslate"><span class="pre">skimage</span></code>:</p>
 <p><img alt="" src="_images/purple_inverted_cat.png" /></p>
@@ -2438,7 +2434,7 @@ Min Pixel Value: 0
 </div>
 <div class="solution dropdown admonition" id="3_skimage_processing_from_numpy_and_scipy-solution-15">
 
-<p class="admonition-title">Solution to<a class="reference internal" href="#inverted-purple"> Exercise 17</a></p>
+<p class="admonition-title">Solution to<a class="reference internal" href="#inverted-purple"> Exercise 18</a></p>
 <section id="solution-content">
 <p>The target image <em>cannot</em> be created using just <code class="docutils literal notranslate"><span class="pre">ski.util.invert()</span></code> on the whole <code class="docutils literal notranslate"><span class="pre">cat</span></code> image array:</p>
 <div class="cell docutils container">
@@ -2584,7 +2580,7 @@ Y = 0.2126R + 0.7152G + 0.0722B
 <p>This “collapses” a 3D color image into a 2D grayscale image via a weighted sum of the channels.</p>
 <div class="exercise dropdown admonition" id="gray-wheel">
 
-<p class="admonition-title"><span class="caption-number">Exercise 18 </span></p>
+<p class="admonition-title"><span class="caption-number">Exercise 19 </span></p>
 <section id="exercise-content">
 <p>Here is the original <code class="docutils literal notranslate"><span class="pre">colorwheel</span></code> image:</p>
 <p><img alt="" src="_images/colorwheel.png" /></p>
@@ -2619,7 +2615,7 @@ Min Pixel Value: 0
 </div>
 <div class="solution dropdown admonition" id="3_skimage_processing_from_numpy_and_scipy-solution-17">
 
-<p class="admonition-title">Solution to<a class="reference internal" href="#gray-wheel"> Exercise 18</a></p>
+<p class="admonition-title">Solution to<a class="reference internal" href="#gray-wheel"> Exercise 19</a></p>
 <section id="solution-content">
 <p>The solution here requires some close attention to <code class="docutils literal notranslate"><span class="pre">dtype</span></code>. To apply the luminance formula using <code class="docutils literal notranslate"><span class="pre">np.dot()</span></code> is pretty straightforward:</p>
 <div class="cell docutils container">
@@ -2730,7 +2726,7 @@ Max Pixel Value: 255
 Min Pixel Value: 0
 </pre></div>
 </div>
-<img alt="_images/a8405e2b36a495c96c8567c354ffc78109f1be42df757635cd03ad92041009f2.png" src="_images/a8405e2b36a495c96c8567c354ffc78109f1be42df757635cd03ad92041009f2.png" />
+<img alt="_images/56a37945a10034f300442ea064bae46c13cc48af240b36a2180a72942af5d1ef.png" src="_images/56a37945a10034f300442ea064bae46c13cc48af240b36a2180a72942af5d1ef.png" />
 </div>
 </div>
 </section>

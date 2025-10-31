@@ -182,10 +182,6 @@
 
 <li class="toctree-l1"><a class="reference internal" href="1_color_images_as_numpy_arrays.html">What about color?</a></li>
 
-
-
-
-
 <li class="toctree-l1 current active"><a class="current reference internal" href="#">Introducing Scikit-image</a></li>
 
 
@@ -1174,7 +1170,7 @@ Min Pixel Value: 0
 <p>Pretty trippy…</p>
 <div class="exercise dropdown admonition" id="noisy-camera">
 
-<p class="admonition-title"><span class="caption-number">Exercise 7 </span></p>
+<p class="admonition-title"><span class="caption-number">Exercise 8 </span></p>
 <section id="exercise-content">
 <p>Now investigate the use of <code class="docutils literal notranslate"><span class="pre">ski.util.random_noise()</span></code> to add extra noise to an image. Remember that in the context of image processing, noise is <em>randomness</em>. Here is the original <code class="docutils literal notranslate"><span class="pre">camera</span></code> image from <code class="docutils literal notranslate"><span class="pre">ski.data</span></code>:</p>
 <p><img alt="" src="_images/camera_plot.png" /></p>
@@ -1200,7 +1196,7 @@ Min Pixel Value: 0.0
 </div>
 <div class="solution dropdown admonition" id="2_skimage_intro-solution-1">
 
-<p class="admonition-title">Solution to<a class="reference internal" href="#noisy-camera"> Exercise 7</a></p>
+<p class="admonition-title">Solution to<a class="reference internal" href="#noisy-camera"> Exercise 8</a></p>
 <section id="solution-content">
 <p>The solution here is to <code class="docutils literal notranslate"><span class="pre">np.stack()</span></code> the <code class="docutils literal notranslate"><span class="pre">camera</span></code> image, to introduce color channels. We then pass our 3D array to <code class="docutils literal notranslate"><span class="pre">ski.util.random_noise()</span></code>, manipulating the <code class="docutils literal notranslate"><span class="pre">var</span></code> argument to control the “level” of the noise. Specifically, <code class="docutils literal notranslate"><span class="pre">var</span></code> will control the range of the changes. Higher values of <code class="docutils literal notranslate"><span class="pre">var</span></code> means bigger absolute random values can potentially be added/subtracted from each pixel:</p>
 <div class="cell docutils container">
@@ -1231,7 +1227,7 @@ Max Pixel Value: 1.0
 Min Pixel Value: 0.0
 </pre></div>
 </div>
-<img alt="_images/1051f4017b8c603eef4791ddeaad433efa5cc51f010d7ca6c8f466c9bbfe8b89.png" src="_images/1051f4017b8c603eef4791ddeaad433efa5cc51f010d7ca6c8f466c9bbfe8b89.png" />
+<img alt="_images/5b10e160009a39e86e4339f7b3f76b1894fee86105ebb0b2b1123fc9bce04f49.png" src="_images/5b10e160009a39e86e4339f7b3f76b1894fee86105ebb0b2b1123fc9bce04f49.png" />
 </div>
 </div>
 </section>
@@ -1367,7 +1363,7 @@ Y = 0.2126R + 0.7152G + 0.0722B
 <p>This has the effect of removing the color channels, so the output array is 2D. Why do we use these specific numbers? You could go and knock on the door of your physicist friend to ask (don’t worry, they’ll be in…), or you can see <a class="reference external" href="https://stackoverflow.com/questions/596216/formula-to-determine-perceived-brightness-of-rgb-color">this page</a> for a detailed explanation of where the weights come from.</p>
 <div class="exercise dropdown admonition" id="no-color-cat">
 
-<p class="admonition-title"><span class="caption-number">Exercise 8 </span></p>
+<p class="admonition-title"><span class="caption-number">Exercise 9 </span></p>
 <section id="exercise-content">
 <p>Re-color the <code class="docutils literal notranslate"><span class="pre">cat</span></code> image using the luminance formula provided above. Your output image should have the following attributes:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>Type: &lt;class &#39;numpy.ndarray&#39;&gt;
@@ -1391,7 +1387,7 @@ Min Pixel Value: 0.0
 </div>
 <div class="solution dropdown admonition" id="2_skimage_intro-solution-3">
 
-<p class="admonition-title">Solution to<a class="reference internal" href="#no-color-cat"> Exercise 8</a></p>
+<p class="admonition-title">Solution to<a class="reference internal" href="#no-color-cat"> Exercise 9</a></p>
 <section id="solution-content">
 <p>This is a very simple operation! We can just “plug” each color channel of the <code class="docutils literal notranslate"><span class="pre">cat</span></code> array into the formula, using NumPy array indexing:</p>
 <div class="cell docutils container">
@@ -1570,7 +1566,7 @@ Min Pixel Value: 0.0
 <p>Pretty ghostly…maybe <em>this</em> is how cats look to one another…</p>
 <div class="exercise dropdown admonition" id="shoegaze">
 
-<p class="admonition-title"><span class="caption-number">Exercise 9 </span></p>
+<p class="admonition-title"><span class="caption-number">Exercise 10 </span></p>
 <section id="exercise-content">
 <p>Your task now, is to manipulate <code class="docutils literal notranslate"><span class="pre">camera</span></code> to make it look like the target image below. Use whatever <code class="docutils literal notranslate"><span class="pre">numpy</span></code>, <code class="docutils literal notranslate"><span class="pre">skimage</span></code> and numerical operations you need, based on what you have seen on this page and the previous pages. Here is the original <code class="docutils literal notranslate"><span class="pre">camera</span></code> image:</p>
 <p><img alt="" src="_images/camera_plot.png" /></p>
@@ -1611,7 +1607,7 @@ Min Pixel Value: 0.0
 </div>
 <div class="solution dropdown admonition" id="2_skimage_intro-solution-5">
 
-<p class="admonition-title">Solution to<a class="reference internal" href="#shoegaze"> Exercise 9</a></p>
+<p class="admonition-title">Solution to<a class="reference internal" href="#shoegaze"> Exercise 10</a></p>
 <section id="solution-content">
 <p>There are several steps here - this was not an easy task! First, we need to convert our image to the <code class="docutils literal notranslate"><span class="pre">float64</span></code>. We need the <code class="docutils literal notranslate"><span class="pre">ski.util.img_as_float()</span></code> function to do this. If you tried to use the NumPy <code class="docutils literal notranslate"><span class="pre">.astype(float)</span></code> method, you will have encountered a thorny error (more on this below).</p>
 <p>If you look at the target image, you will notice that it has a green-ish tone, but not so green as we would get if the other color channels were “switched off”. As such, you can get the correct effect by reducing the impact of the red and blue channels, by halving their values.</p>

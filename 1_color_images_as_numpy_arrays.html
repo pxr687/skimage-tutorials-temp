@@ -182,10 +182,6 @@
 
 <li class="toctree-l1 current active"><a class="current reference internal" href="#">What about color?</a></li>
 
-
-
-
-
 <li class="toctree-l1"><a class="reference internal" href="2_skimage_intro.html">Introducing Scikit-image</a></li>
 
 
@@ -491,14 +487,14 @@ document.write(`
             </div>
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">What about color?</a></li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#true-color-in-3d">True Color in 3D</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">What about color?</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#color-from-3d">Color from 3D</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#color-channels">Color channels</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#pixels-and-dtype">Pixels and <code class="docutils literal notranslate"><span class="pre">dtype</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#more-actually-complex-images">More (actually) complex images</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#summary">Summary</a></li>
 </ul>
 </li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#pixels-and-dtype">Pixels and <code class="docutils literal notranslate"><span class="pre">dtype</span></code></a></li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#more-actually-complex-images">More (actually) complex images</a></li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#summary">Summary</a></li>
 <li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#references">References</a></li>
 </ul>
 
@@ -514,7 +510,11 @@ document.write(`
                   
   <section class="tex2jax_ignore mathjax_ignore" id="what-about-color">
 <h1>What about color?<a class="headerlink" href="#what-about-color" title="Link to this heading">#</a></h1>
-<p>All of the arrays we have encountered <a class="reference internal" href="0_images_as_numpy_arrays.html"><span class="doc std std-doc">so far</span></a> contain just one value at each array pixel location. This page will look at image arrays with more complex shapes, and show how this can encode color information, giving us beautiful color images, that create deep aesthetic experiences, like this one:</p>
+<p>All of the arrays we have encountered <a class="reference internal" href="0_images_as_numpy_arrays.html"><span class="doc std std-doc">so far</span></a>
+contain just one value at each array pixel location. This page will look at
+image arrays with more than one value per pixel, and show how this can encode
+color information, giving us beautiful color images, that create deep
+aesthetic experiences, like this one:</p>
 <p><img alt="" src="_images/xenomorph.jpg" /></p>
 <p>(Photo by
 <a class="reference external" href="https://stockcake.com/i/alien-head-close-up_1354662_1093149">Stockcake</a>).</p>
@@ -535,16 +535,17 @@ document.write(`
 </div>
 </div>
 </div>
-<p>Below, we create some low-resolution 2D image arrays, with which to explore color representation:</p>
+<p>Below, we create some small 2D image arrays, with which to explore color
+representation:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># A two-dimensional numpy array of 1&#39;s and 0&#39;s.</span>
-<span class="n">two_D_ones_and_zeros</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,],</span> 
+<span class="n">two_D_ones_and_zeros</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,],</span>
                                  <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,]],</span>
                                  <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">)</span>
 
 <span class="c1"># A two dimensional numpy array of numbers between 0 and 10.</span>
-<span class="n">two_D_other_integers</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">10</span><span class="p">],</span> 
+<span class="n">two_D_other_integers</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">10</span><span class="p">],</span>
                                  <span class="p">[</span><span class="mi">5</span><span class="p">,</span> <span class="mi">3</span><span class="p">]],</span>
                                  <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">)</span>
 
@@ -568,56 +569,86 @@ document.write(`
 <p>In our humble <code class="docutils literal notranslate"><span class="pre">two_D_ones_and_zeros</span></code> image array, each pixel is either a 1 or 0 in the <code class="docutils literal notranslate"><span class="pre">float64</span></code> <code class="docutils literal notranslate"><span class="pre">dtype</span></code>:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Show the array, via NumPy, then plot.</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">two_D_ones_and_zeros</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Show the array</span>
+<span class="n">two_D_ones_and_zeros</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([[1., 0.],
+       [0., 1.]])
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Display array on screen.</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">matshow</span><span class="p">(</span><span class="n">two_D_ones_and_zeros</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">colorbar</span><span class="p">();</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[[1. 0.]
- [0. 1.]]
-</pre></div>
-</div>
 <img alt="_images/d32632a2dbfed167b625bf38db334fa18107d2d08fd992b7fb768a196a965bb3.png" src="_images/d32632a2dbfed167b625bf38db334fa18107d2d08fd992b7fb768a196a965bb3.png" />
 </div>
 </div>
+<p>Conversely, the array <code class="docutils literal notranslate"><span class="pre">two_D_other_integers</span></code> contains values other than 0 and</p>
+<ol class="arabic simple">
+<li><p>Note that, though these <em>numbers</em> themselves are integers, they are
+represented by NumPy as <code class="docutils literal notranslate"><span class="pre">float64</span></code> values, because we specified the <code class="docutils literal notranslate"><span class="pre">float</span></code> data type.</p></li>
+</ol>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">two_D_ones_and_zeros</span><span class="o">.</span><span class="n">dtype</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Another image from earlier.</span>
+<span class="n">two_D_other_integers</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>dtype(&#39;float64&#39;)
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([[ 0., 10.],
+       [ 5.,  3.]])
 </pre></div>
 </div>
 </div>
 </div>
-<p>Conversely, the array <code class="docutils literal notranslate"><span class="pre">two_D_other_integers</span></code> contains different integer values. Note that, though these <em>numbers</em> themselves are integers, they are represented by NumPy as <code class="docutils literal notranslate"><span class="pre">float64</span></code> values:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Another image from earlier.</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">two_D_other_integers</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">matshow</span><span class="p">(</span><span class="n">two_D_other_integers</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">matshow</span><span class="p">(</span><span class="n">two_D_other_integers</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">colorbar</span><span class="p">();</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[[ 0. 10.]
- [ 5.  3.]]
-</pre></div>
-</div>
 <img alt="_images/6c0e02b42eb999051e6b47b222c6f2c9b504fb7323180e897ead681833cb4942.png" src="_images/6c0e02b42eb999051e6b47b222c6f2c9b504fb7323180e897ead681833cb4942.png" />
 </div>
 </div>
-<p>The first image - with black and white squares only, no gray - is a <em>binary image</em>. This is an image where each array pixel contains only one of two values. In this case the two values are 0 or 1, with 0 corresponding to black pixels and 1 corresponding to white pixels.</p>
-<p>The second image - black, white and gray squares - is a <em>monochrome image</em>. This image contains more than two unique values. It has black pixels (the lowest pixel values, 0); white pixels (the highest pixel values, 1); and gray pixels (intermediate pixel values, &gt; 0 but &lt; 1).</p>
-<p><strong>This is important:</strong> for two-dimensional arrays like these each array pixel is just a <em>single number</em>. Because of this, we can refer to both of these arrays as <em>single-channel image arrays</em>. Each individual array pixel value determines the <em>intensity</em> of that pixel, e.g. the brightness or darkness of that pixel.</p>
-<p>As we saw on the <a class="reference internal" href="0_images_as_numpy_arrays.html"><span class="doc std std-doc">last page</span></a>, a colormap (e.g. <code class="docutils literal notranslate"><span class="pre">viridis</span></code> or <code class="docutils literal notranslate"><span class="pre">gray</span></code>) maps  each single-valued pixel intensity to a gradient of colors/shades. This is a black-gray-white gradient for the <code class="docutils literal notranslate"><span class="pre">gray</span></code> colormap and a purple-yellow gradient for the <code class="docutils literal notranslate"><span class="pre">viridis</span></code> colormap. Technically speaking, for single-channel image arrays, the intensity values only convey black-white-gray information - the <code class="docutils literal notranslate"><span class="pre">viridis</span></code> colormap merely <em>translates</em> this black-gray-white information into a colored presentation for the purposes of display.</p>
-<p>What <code class="docutils literal notranslate"><span class="pre">viridis</span></code> is doing is called <a class="reference external" href="https://www.spiedigitallibrary.org/conference-proceedings-of-spie/0048/0000/Digital-Image-Processing-With-Pseudo-Color/10.1117/12.954071.short"><em>pseudo-coloring</em></a> - it is mapping black-gray-white information to display colors. The plot below show’s both arrays, with both colormaps, for comparison:</p>
+<p>The first image - with black and white squares only, no gray - is a <em>binary image</em>. This is an image where each array pixel contains only one of two values. In this case the two values are 0 or 1.  The “gray” colormap tells Matplotlib to display the minimum value (0) as black pixels and the maximum value (1) as white.</p>
+<p>The second image - black, white and gray squares - is a <em>monochrome image</em>.
+This image contains more than two unique values. It has black pixels (the
+lowest pixel values, 0); white pixels (the highest pixel values, 1); and gray
+pixels (intermediate pixel values, &gt; 0 but &lt; 1).</p>
+<div class="admonition attention">
+<p class="admonition-title">Attention</p>
+<p>For two-dimensional arrays like these, each array pixel is just a <em>single
+number</em>. Because of this, we can refer to both of these arrays as
+<em>single-channel image arrays</em>.  By <em>single channel</em>, we mean there is just one
+value for each pixel.  Each individual array pixel value determines the
+<em>intensity</em> of that pixel, e.g. the brightness or darkness of that pixel.</p>
+<p>Later we will see three-dimensional arrays, where we think of the last axis as
+giving different channels of information, for each pixel.  These channels
+allow us to specify color as well as intensity.</p>
+</div>
+<p>As we saw on the <a class="reference internal" href="0_images_as_numpy_arrays.html"><span class="doc std std-doc">last page</span></a>, a colormap (e.g.
+<code class="docutils literal notranslate"><span class="pre">viridis</span></code> or <code class="docutils literal notranslate"><span class="pre">gray</span></code>) maps each single-valued pixel intensity onto a gradient
+(a map) of colors/shades. This map is black (low intensity)-gray (medium
+intensity)-white (high intensity) for the <code class="docutils literal notranslate"><span class="pre">gray</span></code> colormap.  For the viridis colormap, low intensity gives a purple color and high intensity gives a yellow color, with intermediate intensities giving intermediate colors.</p>
+<p>The colormap <em>translates</em> (maps) the intensity values to colors, where the
+<code class="docutils literal notranslate"><span class="pre">gray</span></code> colormap simply maps intensity to intensity of white, and the <code class="docutils literal notranslate"><span class="pre">viridis</span></code>
+colormap maps intensity to a color from the purple to yellow.</p>
+<p>We can think of the <code class="docutils literal notranslate"><span class="pre">gray</span></code> colormap as a straightforward map of image
+intensity to white intensity, whereas  <code class="docutils literal notranslate"><span class="pre">viridis</span></code> maps intensity to a range of
+color. The plot below shows both arrays, with both colormaps, for comparison:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># An image from earlier (using the `gray` colormap)</span>
@@ -642,7 +673,7 @@ document.write(`
 <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;`viridis` colormap </span><span class="se">\n</span><span class="s1">(binary image)&#39;</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">colorbar</span><span class="p">()</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">4</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">matshow</span><span class="p">(</span><span class="n">two_D_other_integers</span><span class="p">,</span> 
+<span class="n">plt</span><span class="o">.</span><span class="n">matshow</span><span class="p">(</span><span class="n">two_D_other_integers</span><span class="p">,</span>
             <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;viridis&#39;</span><span class="p">,</span>
             <span class="n">fignum</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;`viridis` colormap </span><span class="se">\n</span><span class="s1">(monochrome image)&#39;</span><span class="p">)</span>
@@ -655,7 +686,10 @@ document.write(`
 <img alt="_images/80ef768e41cd7f33fa79673d160887b3f863c6648bcae9796085b112bd01eb04.png" src="_images/80ef768e41cd7f33fa79673d160887b3f863c6648bcae9796085b112bd01eb04.png" />
 </div>
 </div>
-<p>We can say then, that the plots on the bottom row are <em>displayed using pseudo-color</em>. The original image arrays only contain black-white-gray information in their pixel intensity values; they do not contain <em>true color</em> information. <strong>This will be true of any two-dimensional image array</strong>, and both of these image arrays are two-dimensional:</p>
+<p>The original image arrays only contain one values-worth of information in
+their pixel values; they cannot themselves specify color information. <strong>This
+will be true of any two-dimensional image array</strong>, because there is only one
+value per pixel, and both of these image arrays are two-dimensional:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Show the dimensionality of our binary image array.</span>
@@ -682,10 +716,21 @@ document.write(`
 </div>
 </div>
 </div>
-<p>An image which has what we will call <em>true color</em> contains information in each array pixel about more than just <em>intensity</em> - it also contains information about <em>color</em>. So, to hammer this point home: grayscale and binary images displayed with the <code class="docutils literal notranslate"><span class="pre">viridis</span></code> colormap do not contain true color information in their array pixel values. Instead Matplotlib is <em>displaying</em> binary and grayscale information using colors. To introduce true color into the image, we need a spooky third dimension…</p>
-</section>
-<section class="tex2jax_ignore mathjax_ignore" id="true-color-in-3d">
-<h1>True Color in 3D<a class="headerlink" href="#true-color-in-3d" title="Link to this heading">#</a></h1>
+<p>A two-dimensional image has one value per pixel, so we will call this a <em>single-channel</em> image.</p>
+<p>However, it is common to have images that have three values per pixel — and
+these are <em>three-channel</em> images.  The three values represent the intensity of
+red, the intensity of green and the intensity of blue (RGB).  By giving the
+intensity of the three primary colors, the three pixel values encode the color
+at that pixel.</p>
+<p>To hammer this point home — although single-channel images can be displayed in
+color, the single value per pixel cannot itself specify the color; grayscale
+and binary images displayed with the <code class="docutils literal notranslate"><span class="pre">viridis</span></code> colormap do not contain color
+information in their array pixel values. Instead Matplotlib is <em>displaying</em>
+binary and intensity information using colors. To <em>specify</em> color at each
+pixel, we need at least three values.  To store the three values for each
+pixel, we need a spooky third dimension…</p>
+<section id="color-from-3d">
+<h2>Color from 3D<a class="headerlink" href="#color-from-3d" title="Link to this heading">#</a></h2>
 <p>Sounds Sci-Fi! But what does it mean?</p>
 <p>Let’s focus on our lowly 4-pixel binary array (4 <em>array pixels</em>, that is):</p>
 <div class="cell docutils container">
@@ -702,7 +747,7 @@ document.write(`
 </div>
 </div>
 </div>
-<p>Let’s visualise this array with Matplotlib:</p>
+<p>We visualise this array with Matplotlib:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Our 4-pixel, binary array.</span>
@@ -714,19 +759,27 @@ document.write(`
 <img alt="_images/68263706613df0ced43f23f905ac7be8e9515872ddb6fa5b76d169a7ed40469a.png" src="_images/68263706613df0ced43f23f905ac7be8e9515872ddb6fa5b76d169a7ed40469a.png" />
 </div>
 </div>
-<p>Now, picture this array as physical object, like a tray, standing on one side, in physical space:</p>
+<p>Now, picture this array as a physical object, like a tray, standing on one
+side, in physical space:</p>
 <p><img alt="" src="_images/one_slice.png" /></p>
-<p>Now, imagine “stacking” multiple copies of this array, and standing them in front of each other, like this:</p>
+<p>Now, imagine “stacking” another copy of this array <em>behind</em> the first, like this:</p>
 <p><img alt="" src="_images/two_slice.png" /></p>
-<p>Let’s refer to each of these objects as a <em>slice</em>. So we have two slices in the image above, one in the foreground, and one in the background.</p>
-<p>We can do the equivalent of this three-dimensional stacking - to our actual binary arrays - using the helpfully named <code class="docutils literal notranslate"><span class="pre">np.stack()</span></code> function. We can use <code class="docutils literal notranslate"><span class="pre">np.stack()</span></code> to - as the name implies - stack two 2D arrays into a 3D array, like in the image shown above. To do this, we stack over the third axis using the argument <code class="docutils literal notranslate"><span class="pre">axis=2</span></code>. This adds new arrays to the stack along the third dimension, when we count the dimensions from 0, as we do in Python indexing:</p>
+<p>Let’s refer to each of these trays as a <em>slice</em>. So we have two slices in the
+image above, one in the foreground, and one in the background.</p>
+<p>We can do the equivalent of this three-dimensional stacking — to our actual
+binary arrays — using the helpfully named <code class="docutils literal notranslate"><span class="pre">np.stack()</span></code> function. We can use
+<code class="docutils literal notranslate"><span class="pre">np.stack()</span></code> to — as the name implies — <em>stack</em> two 2D arrays into a 3D array,
+as in the image shown above. To do this, we stack over the third axis using
+the argument <code class="docutils literal notranslate"><span class="pre">axis=2</span></code>. This adds new arrays to the stack along the third
+dimension, when we count the dimensions (axes) from 0, as we do in Python
+indexing:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Stack the arrays in the third dimension.</span>
 <span class="n">three_D_stack_array</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">stack</span><span class="p">([</span><span class="n">two_D_ones_and_zeros</span><span class="p">,</span>
                                 <span class="n">two_D_ones_and_zeros</span><span class="p">],</span>
                                 <span class="n">axis</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
-<span class="n">three_D_stack_array</span> 
+<span class="n">three_D_stack_array</span>
 </pre></div>
 </div>
 </div>
@@ -740,8 +793,9 @@ document.write(`
 </div>
 </div>
 </div>
-<p>At first glance, the “raw” output from NumPy may not look like the “stacked” slices in the image above, but please bear with us.
-Our 3D stacked array is of the right shape:</p>
+<p>At first glance, the “raw” output from NumPy may not look like the “stacked”
+slices in the image above, but please bear with us. Our 3D stacked array is of
+the right shape:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">three_D_stack_array</span><span class="o">.</span><span class="n">shape</span>
@@ -754,14 +808,19 @@ Our 3D stacked array is of the right shape:</p>
 </div>
 </div>
 </div>
-<p>We can refer to each dimension in the <code class="docutils literal notranslate"><span class="pre">shape</span></code> of <code class="docutils literal notranslate"><span class="pre">(2,</span> <span class="pre">2,</span> <span class="pre">2)</span></code> as <code class="docutils literal notranslate"><span class="pre">(x,</span> <span class="pre">y,</span> <span class="pre">z)</span></code>. These dimensions map to the image as shown below:</p>
+<p>We can refer to each dimension in the <code class="docutils literal notranslate"><span class="pre">shape</span></code> of <code class="docutils literal notranslate"><span class="pre">(2,</span> <span class="pre">2,</span> <span class="pre">2)</span></code> as <code class="docutils literal notranslate"><span class="pre">(i,</span> <span class="pre">j,</span> <span class="pre">k)</span></code>.
+<code class="docutils literal notranslate"><span class="pre">i</span></code> is the vertical (or <em>row</em>) dimension, <code class="docutils literal notranslate"><span class="pre">j</span></code> is the horizontal (<em>column</em>)
+dimension, and <code class="docutils literal notranslate"><span class="pre">k</span></code> is the slice dimension.  (See the <a class="reference internal" href="0_images_as_numpy_arrays.html#on-rows-and-columns"><span class="std std-ref">note on rows and
+columns</span></a> for some discussion).  These dimensions map to
+the image as shown below:</p>
 <p><img alt="" src="_images/two_slice_dims.png" /></p>
 <p>We can read this shape as “two slices, each with two rows and two columns”, which now clearly corresponds to the image.</p>
-<p>Imagine being in the same physical space as these slices. Starting at the front of the image, you begin walking toward the first slice (nearest to the reader, in the foreground), then past it toward the second slice (furthest from the reader, in the background). So, in this imaginative exercise, you are walking along the <span class="math notranslate nohighlight">\(z\)</span> dimension.</p>
+<p>Imagine being in the same physical space as these slices. Starting at the front of the image, you begin walking toward the first slice (nearest to the reader, in the foreground), then past it toward the second slice (furthest from the reader, in the background). So, in this imaginative exercise, you are walking along the <span class="math notranslate nohighlight">\(k\)</span> dimension.</p>
 <p>We can use indexing operations to create the experience of this walk, in “Python space”. Because we are dealing with a three-dimensional array we use three elements for indexing, separated by commas. The first element is for rows, the second for columns, and the third for slices. We can retrieve the first slice using:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Get the first 2D slice from the 3D image.</span>
+<span class="c1"># All rows, all columns, first slice.</span>
 <span class="n">three_D_stack_array</span><span class="p">[:,</span> <span class="p">:,</span> <span class="mi">0</span><span class="p">]</span>
 </pre></div>
 </div>
@@ -777,6 +836,7 @@ Our 3D stacked array is of the right shape:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Get the second 2D slice from the 3D image.</span>
+<span class="c1"># All rows, all columns, second slice.</span>
 <span class="n">three_D_stack_array</span><span class="p">[:,</span> <span class="p">:,</span> <span class="mi">1</span><span class="p">]</span>
 </pre></div>
 </div>
@@ -790,13 +850,14 @@ Our 3D stacked array is of the right shape:</p>
 </div>
 <p>The image below shows these indexing operations represented in three-dimensional space:</p>
 <p><img alt="" src="_images/two_slice_annotated.png" /></p>
-<p>So far we have two slices in the third dimension. We can easily add a third slice, using <code class="docutils literal notranslate"><span class="pre">np.stack()</span></code>:</p>
+<p>So far we have two slices in the third dimension. We can easily add a third
+slice, using <code class="docutils literal notranslate"><span class="pre">np.stack()</span></code>:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Add a third slice.</span>
-<span class="n">three_D_stack_array</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">stack</span><span class="p">([</span><span class="n">two_D_ones_and_zeros</span><span class="p">,</span>
-                                <span class="n">two_D_ones_and_zeros</span><span class="p">,</span>
-                                <span class="n">two_D_ones_and_zeros</span><span class="p">],</span> <span class="c1"># Add a third slice in the third dimension.</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Add a third slice in the third dimension.</span>
+<span class="n">three_D_stack_array</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">stack</span><span class="p">([</span><span class="n">two_D_ones_and_zeros</span><span class="p">,</span>  <span class="c1"># first slice</span>
+                                <span class="n">two_D_ones_and_zeros</span><span class="p">,</span>  <span class="c1"># second slice</span>
+                                <span class="n">two_D_ones_and_zeros</span><span class="p">],</span>  <span class="c1"># third slice</span>
                                 <span class="n">axis</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
 <span class="n">three_D_stack_array</span>
 </pre></div>
@@ -827,7 +888,7 @@ Our 3D stacked array is of the right shape:</p>
 </div>
 <p>We can visualise this new array, in the same three-dimensional space:</p>
 <p><img alt="" src="_images/three_slice.png" /></p>
-<p>Again, we can use indexing to “walk” through the slices, along the <span class="math notranslate nohighlight">\(z\)</span> dimension:</p>
+<p>Again, we can use indexing to “walk” through the slices, along the <span class="math notranslate nohighlight">\(k\)</span> dimension:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># First 2D slice of the stack.</span>
@@ -871,9 +932,11 @@ Our 3D stacked array is of the right shape:</p>
 </div>
 </div>
 <p><img alt="" src="_images/three_slice_annotated.png" /></p>
-<p>So far we have visualised these slices using a similar graphic to depicting an individual slice using the <code class="docutils literal notranslate"><span class="pre">gray</span></code> Matplotlib colormap. We can just as well visualise the slices using the numbers they contain:</p>
+<p>So far we have visualised these slices using a similar graphic to depicting an individual slice using the <code class="docutils literal notranslate"><span class="pre">gray</span></code> Matplotlib colormap. We can just as well visualise the slices using the numbers they contain:<a class="footnote-reference brackets" href="#digits-decimal" id="id1" role="doc-noteref"><span class="fn-bracket">[</span>1<span class="fn-bracket">]</span></a></p>
 <p><img alt="" src="_images/three_slice_nums_only_annotated.png" /></p>
-<p>Remember, the actual numbers in each “slice” are of the <code class="docutils literal notranslate"><span class="pre">float64</span></code> <code class="docutils literal notranslate"><span class="pre">dtype</span></code> and so contain (empty) decimal places. However, we will show the numbers just as 0 or 1, to keep the image uncluttered. Above we said we wanted to introduce a third dimension to introduce “true” color information into the image. Well, now we have three dimensions surely plotting our image will render a vibrantly colored picture?:</p>
+<p>Above we said we wanted to introduce a third dimension to specify
+color information in the image itself. Well, now we have three dimensions
+surely plotting our image will render a vibrantly colored picture?:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Ooof...not what we wanted...</span>
@@ -885,14 +948,31 @@ Our 3D stacked array is of the right shape:</p>
 <img alt="_images/68263706613df0ced43f23f905ac7be8e9515872ddb6fa5b76d169a7ed40469a.png" src="_images/68263706613df0ced43f23f905ac7be8e9515872ddb6fa5b76d169a7ed40469a.png" />
 </div>
 </div>
-<p>Ok, that is not what we wanted - nothing has changed! Interestingly though, the 3D image array still renders as a 2D display image:</p>
+<div class="exercise dropdown admonition" id="why-no-color">
+
+<p class="admonition-title"><span class="caption-number">Exercise 2 </span></p>
+<section id="exercise-content">
+<p>Given what you’ve read above, why do you think that the image with the three channels is all white?</p>
+</section>
+</div>
+<div class="solution dropdown admonition" id="1_color_images_as_numpy_arrays-solution-1">
+
+<p class="admonition-title">Solution to<a class="reference internal" href="#why-no-color"> Exercise 2</a></p>
+<section id="solution-content">
+<p>We’ve said above that the first channel (first slice) specifies intensity Red,
+the second specifies Green, and the third specifies Blue (RGB).</p>
+<p>All the values are 1.</p>
+<p>An equal mix of Red, Green and Blue gives gray.  If the intensities are all maximum (1) then this gives white.</p>
+</section>
+</div>
+<p>Ok, that is not what we wanted — nothing has changed! Interestingly though, the 3D image array still renders as a 2D display image:</p>
 <p><img alt="" src="_images/three_slice_all_1s.png" /></p>
-<p>What happens if we set every element, in every slice, to equal 0? To do this, first we create a 2D, 4-pixel array containing only 0’s:</p>
+<p>What happens if we set every element, in every slice, to equal 0? To do this,
+first we create a 2D, 4-pixel array containing only 0’s:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Create a 4-pixel array containing only 0&#39;s.</span>
-<span class="n">two_D_zeros</span> <span class="o">=</span> <span class="n">two_D_ones_and_zeros</span> <span class="o">*</span> <span class="mf">0.</span>
-
+<span class="n">two_D_zeros</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">two_D_ones_and_zeros</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
 <span class="n">two_D_zeros</span>
 </pre></div>
 </div>
@@ -909,7 +989,7 @@ Our 3D stacked array is of the right shape:</p>
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Stack three of these arrays, making a 3D array containing only 0&#39;s.</span>
 <span class="n">three_D_zeros</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">stack</span><span class="p">([</span><span class="n">two_D_zeros</span><span class="p">,</span>
-                          <span class="n">two_D_zeros</span><span class="p">,</span> 
+                          <span class="n">two_D_zeros</span><span class="p">,</span>
                           <span class="n">two_D_zeros</span><span class="p">],</span>
                           <span class="n">axis</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
 <span class="n">three_D_zeros</span>
@@ -940,9 +1020,12 @@ Our 3D stacked array is of the right shape:</p>
 <img alt="_images/8c2bc57192e3d2e974f747d279b2c7834e6954e204e69604d6cd83a320f32d58.png" src="_images/8c2bc57192e3d2e974f747d279b2c7834e6954e204e69604d6cd83a320f32d58.png" />
 </div>
 </div>
-<p>Ok, so now we have a fully black 2D display image, from our 3D array which contains only 0’s:</p>
+<p>Ok, so now we have a fully black 2D display image, from our 3D array which
+contains only 0’s:</p>
 <p><img alt="" src="_images/three_slice_zeros_visualised.png" /></p>
-<p>As an experiment, let’s see what happens if put 1’s on the diagonal in the <em>first slice only</em>. To do this, we will stack the <code class="docutils literal notranslate"><span class="pre">two_D_ones_and_zeros</span></code> array as the first slice, and <code class="docutils literal notranslate"><span class="pre">two_D_zeros</span></code> as the other two slices:</p>
+<p>As an experiment, let’s see what happens if we put 1’s on the diagonal in the
+<em>first slice only</em>. To do this, we will stack the <code class="docutils literal notranslate"><span class="pre">two_D_ones_and_zeros</span></code> array
+as the first slice, and <code class="docutils literal notranslate"><span class="pre">two_D_zeros</span></code> as the other two slices:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Show the array (for the first slice).</span>
@@ -974,10 +1057,10 @@ Our 3D stacked array is of the right shape:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">three_D_stack_array_altered_first</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">stack</span><span class="p">([</span><span class="n">two_D_ones_and_zeros</span><span class="p">,</span> <span class="c1"># LOOK HERE!</span>
-                                              <span class="n">two_D_zeros</span><span class="p">,</span> 
-                                              <span class="n">two_D_zeros</span><span class="p">],</span> 
+                                              <span class="n">two_D_zeros</span><span class="p">,</span>
+                                              <span class="n">two_D_zeros</span><span class="p">],</span>
                                               <span class="n">axis</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
-<span class="n">three_D_stack_array_altered_first</span> 
+<span class="n">three_D_stack_array_altered_first</span>
 </pre></div>
 </div>
 </div>
@@ -993,7 +1076,7 @@ Our 3D stacked array is of the right shape:</p>
 </div>
 <p>More intuitively visualised, our new three dimensional array looks like this:</p>
 <p><img alt="" src="_images/three_slice_red.png" /></p>
-<p>You can see the values of 1 in the top-left and bottom-right elements of the first slice, all other elements are 0. Once more we can “walk” along the <span class="math notranslate nohighlight">\(z\)</span> dimension, using indexing operations:</p>
+<p>You can see the values of 1 in the top-left and bottom-right elements of the first slice, all other elements are 0. Once more we can “walk” along the <span class="math notranslate nohighlight">\(k\)</span> dimension, using indexing operations:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># First 2D slice of the stack.</span>
@@ -1047,17 +1130,24 @@ Our 3D stacked array is of the right shape:</p>
 <img alt="_images/26677f31560dc35c0238b5d3ceedf5aea493000dd2cb5f368a0d21fb1973347e.png" src="_images/26677f31560dc35c0238b5d3ceedf5aea493000dd2cb5f368a0d21fb1973347e.png" />
 </div>
 </div>
-<p>Great! We have now used the third dimension to introduce <em>true color information</em> into our image array. We can visualise this process using the graphic below:</p>
+<p>Great! We have now used the third dimension to introduce <em>color information</em>
+into our image array. We can visualise this process using the graphic below:</p>
 <p><img alt="" src="_images/three_slice_red_visualised.png" /></p>
-<p>Just to clarify, again our <em>array image</em> is three-dimensional, but our <em>display image</em> - e.g. the image rendered/displayed by Matplotlib - is two-dimensional, like the visualisations we saw earlier. In virtue of being 3D, the image array itself contains three values for each array pixel - with one value in each “slice” in the third dimension.</p>
+<p>Just to clarify, again our <em>array image</em> is three-dimensional, but our
+<em>display image</em> — e.g. the image rendered/displayed by Matplotlib — is
+two-dimensional, like the visualisations we saw earlier. In virtue of being
+3D, the image array itself contains three values for each array pixel - with
+one value in each “slice” in the third dimension.</p>
 <p>To produce this red and black square, we altered the <em>first slice</em> of the 3D array, such that it contains 1’s along its diagonal, but all other elements in the array are 0’s.</p>
-<p>The first slice of the third dimension - in our 3D image array - controls the amount of red in the image. We can therefore (for now) call this slice the <em>red slice</em>.</p>
+<p>The first slice of the third dimension - in our 3D image array - controls the
+amount of red in the image. We can therefore (for now) call this slice the
+<em>red slice</em>.</p>
 <p>What happens if we alter only the <em>second slice</em> in the third dimension, so that only it contains 1’s along its diagonal, and all other array elements equal 0?</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">three_D_stack_array_altered_second</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">stack</span><span class="p">([</span><span class="n">two_D_zeros</span><span class="p">,</span> 
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">three_D_stack_array_altered_second</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">stack</span><span class="p">([</span><span class="n">two_D_zeros</span><span class="p">,</span>
                                                <span class="n">two_D_ones_and_zeros</span><span class="p">,</span> <span class="c1"># LOOK HERE! Now we alter only the second slice.</span>
-                                               <span class="n">two_D_zeros</span><span class="p">],</span> 
+                                               <span class="n">two_D_zeros</span><span class="p">],</span>
                                                <span class="n">axis</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
 <span class="n">three_D_stack_array_altered_second</span>
 </pre></div>
@@ -1137,7 +1227,7 @@ Our 3D stacked array is of the right shape:</p>
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Put 1 values in the third slice only.</span>
 <span class="n">three_D_stack_array_altered_third</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">stack</span><span class="p">([</span><span class="n">two_D_zeros</span><span class="p">,</span>
-                                              <span class="n">two_D_zeros</span><span class="p">,</span> 
+                                              <span class="n">two_D_zeros</span><span class="p">,</span>
                                               <span class="n">two_D_ones_and_zeros</span> <span class="p">],</span> <span class="c1"># LOOK HERE!</span>
                                               <span class="n">axis</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
 <span class="n">three_D_stack_array_altered_third</span>
@@ -1212,6 +1302,7 @@ Our 3D stacked array is of the right shape:</p>
 </div>
 <p>So, this has given us:</p>
 <p><img alt="" src="_images/three_slice_blue_visualised.png" /></p>
+</section>
 <section id="color-channels">
 <h2>Color channels<a class="headerlink" href="#color-channels" title="Link to this heading">#</a></h2>
 <p>What is happening here?</p>
@@ -1232,16 +1323,14 @@ Our 3D stacked array is of the right shape:</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>X1 = 0.29
-X2 = 0.35
-X3 = 0.97
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>X1 = 0.59
+X2 = 0.55
+X3 = 0.91
 </pre></div>
 </div>
 </div>
 </div>
-<p>We will use the <code class="docutils literal notranslate"><span class="pre">X1</span></code> value from this random draw to set nonzero diagonal values in the <em>red</em> color channel (e.g. in the <em>first</em> slice of the stack).</p>
-<p>We will use the <code class="docutils literal notranslate"><span class="pre">X2</span></code> value from this random draw to set nonzero diagonal values in the <em>green</em> color channel (e.g. in the <em>second</em> slice of the stack).</p>
-<p>We will use the <code class="docutils literal notranslate"><span class="pre">X3</span></code> value from this random draw to set nonzero diagonal values in  the <em>blue</em> color channel (e.g. in the <em>third</em> slice of the stack).</p>
+<p>We will use the <code class="docutils literal notranslate"><span class="pre">X1</span></code> value from this random draw to set nonzero diagonal values in the <em>red</em> color channel (e.g. in the <em>first</em> slice of the stack).  In the same way we will use the <code class="docutils literal notranslate"><span class="pre">X2</span></code> value as the green value, and <code class="docutils literal notranslate"><span class="pre">X3</span></code> as the blue value.</p>
 <p>We will then view the resulting display image. Again, if you are using this tutorial interactively, run the cell a few times to see multiple random mixes across the color channels:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -1255,7 +1344,7 @@ X3 = 0.97
 <span class="c1"># random integers.</span>
 <span class="n">three_D_stack_array_altered_blend</span><span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">stack</span><span class="p">([</span><span class="n">two_D_ones_and_zeros</span> <span class="o">*</span> <span class="n">X1</span><span class="p">,</span>
                                              <span class="n">two_D_ones_and_zeros</span> <span class="o">*</span> <span class="n">X2</span><span class="p">,</span>
-                                             <span class="n">two_D_ones_and_zeros</span> <span class="o">*</span> <span class="n">X3</span><span class="p">],</span> 
+                                             <span class="n">two_D_ones_and_zeros</span> <span class="o">*</span> <span class="n">X3</span><span class="p">],</span>
                                              <span class="n">axis</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
 <span class="c1"># Visualise the 3D stack with Matplotlib</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">matshow</span><span class="p">(</span><span class="n">three_D_stack_array_altered_blend</span><span class="p">);</span>
@@ -1263,12 +1352,12 @@ X3 = 0.97
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Red (X1) = 0.03
-Green (X2) = 0.2
-Blue (X3) = 0.09
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Red (X1) = 0.06
+Green (X2) = 0.35
+Blue (X3) = 0.57
 </pre></div>
 </div>
-<img alt="_images/73d82294f69664360e0b760409f9e15f87a84972982ff1e1e207f51af734599f.png" src="_images/73d82294f69664360e0b760409f9e15f87a84972982ff1e1e207f51af734599f.png" />
+<img alt="_images/0f307b5d54e734d308a72250d5afcf656709483709ae90ca7e019d902e8397d8.png" src="_images/0f307b5d54e734d308a72250d5afcf656709483709ae90ca7e019d902e8397d8.png" />
 </div>
 </div>
 <p>So, each two-dimensional display image has a “hidden” three-dimensional array behind it. Each slice of the third dimension is a color channel. The mix of values at a given element in each color channel determines the color of that pixel in the rendered image. You may want to view this image in a new browser window, to see more clearly the exact mixes of the color channels, which are shown above each square on the right-hand side of the image:</p>
@@ -1284,10 +1373,12 @@ Blue (X3) = 0.09
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/8097a1768705e3ba5b0dc018612381fa31eb754a27af1cf8bc09a92f91f9bc54.png" src="_images/8097a1768705e3ba5b0dc018612381fa31eb754a27af1cf8bc09a92f91f9bc54.png" />
+<img alt="_images/8045d41f57ab69372f5b713a17ca4383d9e69f0a66ebdb043a0fef252b3f04a5.png" src="_images/8045d41f57ab69372f5b713a17ca4383d9e69f0a66ebdb043a0fef252b3f04a5.png" />
 </div>
 </div>
-<p>We have now completed our perilous expedition into the third dimension… We have seen that we can use 3D arrays to encode <em>true color</em> information. This means that the image array itself contains color information for each pixel, where we are <em>not</em> just pseudocoloring grayscale information using <code class="docutils literal notranslate"><span class="pre">viridis</span></code> or another colormap…</p>
+<p>We have now completed our perilous expedition into the third dimension… We
+have seen that we can use 3D arrays to encode <em>color</em> information at each
+pixel. The image array itself contains color information for each pixel.</p>
 <p>Let’s explore a color image of a real object. We will introduce Scikit-image (<code class="docutils literal notranslate"><span class="pre">skimage</span></code>) in more detail on the <a class="reference internal" href="2_skimage_intro.html"><span class="doc std std-doc">next page</span></a>, but for now we will again use the straightforwardly named <code class="docutils literal notranslate"><span class="pre">imread()</span></code> function to load an image from a file:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -1356,11 +1447,15 @@ Blue (X3) = 0.09
 </div>
 </div>
 </div>
-<p>The cell below defines a function to let us quickly view the attributes of any image array. You’ll noticed that this function just uses NumPy attributes, given that we are representing images as nothing but NumPy arrays:</p>
+<p>Notice that the <code class="docutils literal notranslate"><span class="pre">coffee</span></code> image is nothing but a Numpy array.</p>
+<p>The cell below defines a function to let us quickly view the attributes of any
+image array. You’ll notice that this function just uses NumPy attributes,
+given that we are representing images as nothing but NumPy arrays:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">show_attributes</span><span class="p">(</span><span class="n">img</span><span class="p">):</span>
-
+<span class="w">    </span><span class="sd">&quot;&quot;&quot; Print some attributes of an image array `img`</span>
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Type:&quot;</span><span class="p">,</span> <span class="nb">type</span><span class="p">(</span><span class="n">img</span><span class="p">))</span>
     <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;dtype:&quot;</span><span class="p">,</span> <span class="n">img</span><span class="o">.</span><span class="n">dtype</span><span class="p">)</span>
     <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Shape:&quot;</span><span class="p">,</span> <span class="n">img</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
@@ -1387,7 +1482,7 @@ Min Pixel Value: 0
 </div>
 </div>
 </div>
-<p>We can see that this image has three dimensions, with three slices in the third dimension. We are therefore dealing with a <em>true color</em> image with three color channels. We can also see that the image array represents the most intense pixel values with the number 255, and the least intense values with the number 0, in each color channel. The <code class="docutils literal notranslate"><span class="pre">dtype</span></code> is <code class="docutils literal notranslate"><span class="pre">uint8</span></code>, in contrast the <code class="docutils literal notranslate"><span class="pre">float64</span></code> <code class="docutils literal notranslate"><span class="pre">dtype</span></code> we have been using in our custom-made low-resolution image arrays.</p>
+<p>We can see that this image has three dimensions, with three slices in the third dimension. We are therefore dealing with a <em>color</em> image with three color channels. We can also see that the image array represents the most intense pixel values with the number 255, and the least intense values with the number 0, in each color channel. The <code class="docutils literal notranslate"><span class="pre">dtype</span></code> is <code class="docutils literal notranslate"><span class="pre">uint8</span></code>, in contrast the <code class="docutils literal notranslate"><span class="pre">float64</span></code> <code class="docutils literal notranslate"><span class="pre">dtype</span></code> we have been using in our custom-made low-resolution image arrays.</p>
 <p>Let’s view the image with <code class="docutils literal notranslate"><span class="pre">imshow()</span></code>:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -1402,20 +1497,32 @@ Min Pixel Value: 0
 </div>
 <p>Looks great! Though at the time of writing one of the authors is on their third coffee today…</p>
 </section>
-</section>
-<section class="tex2jax_ignore mathjax_ignore" id="pixels-and-dtype">
-<h1>Pixels and <code class="docutils literal notranslate"><span class="pre">dtype</span></code><a class="headerlink" href="#pixels-and-dtype" title="Link to this heading">#</a></h1>
-<p>Why is the highest pixel value in the <code class="docutils literal notranslate"><span class="pre">coffee</span></code> image the bizarrely specific integer value of 255? We will talk more about image data types <a class="reference internal" href="2_skimage_intro.html"><span class="doc std std-doc">later</span></a>, but other values/<code class="docutils literal notranslate"><span class="pre">dtypes</span></code> would work here as well. For the two <code class="docutils literal notranslate"><span class="pre">dtype</span></code>s we have seen, the conventions are:</p>
-<p>0 - 1: where 0 is the least intense, 1 is the most intense (<code class="docutils literal notranslate"><span class="pre">float64</span></code>).</p>
-<p>0 - 255: where 0 is the least intense, 255 is the most intense (<code class="docutils literal notranslate"><span class="pre">uint8</span></code>).</p>
-<p>You will see both conventions in images you encounter “in the wild”, and Sci-kit image supports both formats (as well as multiple other formats - see the table below). Neglecting to pay attention to <code class="docutils literal notranslate"><span class="pre">dtype</span></code> is a very common source of errors when dealing with image arrays, so keep track of it, and deliberately specify it as often as possible!</p>
-<p><img alt="" src="_images/dtypes_skimage.png" /></p>
-<p>The plot below shows how to get the primary colors (red, green, blue) using both the <code class="docutils literal notranslate"><span class="pre">float64</span></code> and <code class="docutils literal notranslate"><span class="pre">unint8</span></code> convention for the maximum and minimum pixel values:</p>
+<section id="pixels-and-dtype">
+<h2>Pixels and <code class="docutils literal notranslate"><span class="pre">dtype</span></code><a class="headerlink" href="#pixels-and-dtype" title="Link to this heading">#</a></h2>
+<p>Why is the highest pixel value in the <code class="docutils literal notranslate"><span class="pre">coffee</span></code> image the bizarrely specific
+integer value of 255? We will talk more about image data types
+<a class="reference internal" href="2_skimage_intro.html"><span class="doc std std-doc">later</span></a>, but other values/<code class="docutils literal notranslate"><span class="pre">dtypes</span></code> would work here as well.
+The display conventions are:</p>
+<ul class="simple">
+<li><p>0 - 1: where 0 is the least intense, 1 is the most intense (floating point
+arrays, such as <code class="docutils literal notranslate"><span class="pre">dtype=np.float64</span></code>;</p></li>
+<li><p>0 - 255: where 0 is the least intense, 255 is the most intense (integer
+arrays, such as <code class="docutils literal notranslate"><span class="pre">dtype=np.uint8</span></code>).</p></li>
+</ul>
+<p>You will see both conventions in images you encounter “in the wild”, and
+Sci-kit image supports both formats (as well as multiple other formats - see
+the table below). Neglecting to pay attention to <code class="docutils literal notranslate"><span class="pre">dtype</span></code> is a very common
+source of errors when dealing with image arrays, so keep track of it, and
+deliberately specify it as often as possible!</p>
+<p>The plot below shows how to get the primary colors (red, green, blue) using
+both the <code class="docutils literal notranslate"><span class="pre">float64</span></code> and <code class="docutils literal notranslate"><span class="pre">uint8</span></code> convention for the maximum and minimum pixel
+values:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Use a custom function to plot the maximum intensity values in the diagonals, for `int` and `float` data,</span>
-<span class="c1"># using our familiar 1&#39;s and 0&#39;s array.</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Use a custom function to plot the maximum intensity values in the diagonals,</span>
+<span class="c1"># for `int` and `float` data, using our familiar 1&#39;s and 0&#39;s array.</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">random_colors</span><span class="w"> </span><span class="kn">import</span> <span class="n">plot_int_float</span>
+
 <span class="n">plot_int_float</span><span class="p">();</span>
 </pre></div>
 </div>
@@ -1424,7 +1531,25 @@ Min Pixel Value: 0
 <img alt="_images/9159f0e5f1f40c662ca18a6bc7b2cf6a82b37e52ee75300e0c16f2d948bc3a71.png" src="_images/9159f0e5f1f40c662ca18a6bc7b2cf6a82b37e52ee75300e0c16f2d948bc3a71.png" />
 </div>
 </div>
-<p>Ok, now we have clarified the mystical 255 pixel value, let’s use a for loop to extract each color channel of <code class="docutils literal notranslate"><span class="pre">coffee</span></code> image. What do you think Matplotlib will show when we visualise each 2D slice of the 3D image separately?</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p><strong>Intensity and display</strong></p>
+<p>We haven’t made this explicit yet, but it is Matplotlib that determines the
+color from an image array.</p>
+<p>That is, it is Matplotlib that looks at a floating point image, and specifies
+that a pixel (or color channel) value of 1 is the maximum, and 0 is the
+minimum.  Therefore a pixel that is (1.0, 1.0, 1.0) displays as white, and
+(0.0, 0.0, 0.0) displays as black.  Matplotlib considers 0 or below 0, and
+1 or above as 1, so a pixel value of (2.0, 1.0, 99.0) will also display as
+white, and (-1.0, -99.0, 0) will display as black.</p>
+<p>It is Matplotlib that says that integer image values of &gt;=255 are the maximum,
+and &lt;=0 are the minimum; (255, 255, 255) and (1000, 2000, 3000) (in an integer
+<code class="docutils literal notranslate"><span class="pre">dtype</span></code> that allows those values) display as white; (0, 0, 0) and (-1, -100,
+-1000) display as black.</p>
+</div>
+<p>Ok, now we have clarified the mystical 255 pixel value, let’s use a <code class="docutils literal notranslate"><span class="pre">for</span></code> loop
+to extract each color channel of <code class="docutils literal notranslate"><span class="pre">coffee</span></code> image. What do you think Matplotlib
+will show when we visualise each 2D slice of the 3D image separately?</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># The name of each color channel.</span>
@@ -1434,15 +1559,14 @@ Min Pixel Value: 0
 
 <span class="c1"># Loop through, extract each channel as a 2D slice, and visualise.</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">15</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>
-<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">RGB_chan_names</span><span class="p">)):</span>
-        <span class="n">chan_name</span> <span class="o">=</span> <span class="n">RGB_chan_names</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
-        <span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span>
-        <span class="n">current_slice</span> <span class="o">=</span> <span class="n">coffee</span><span class="p">[:,</span> <span class="p">:,</span> <span class="n">i</span><span class="p">]</span>
-        <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">chan_name</span><span class="si">}</span><span class="s2">:&quot;</span><span class="p">)</span>
-        <span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">current_slice</span><span class="p">)</span>
-        <span class="n">plt</span><span class="o">.</span><span class="n">xticks</span><span class="p">([])</span>
-        <span class="n">plt</span><span class="o">.</span><span class="n">yticks</span><span class="p">([])</span>
-        <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n\n</span><span class="s2">Shape: </span><span class="si">{</span><span class="n">current_slice</span><span class="o">.</span><span class="n">shape</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">chan_name</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">RGB_chan_names</span><span class="p">):</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span>
+    <span class="n">current_slice</span> <span class="o">=</span> <span class="n">coffee</span><span class="p">[:,</span> <span class="p">:,</span> <span class="n">i</span><span class="p">]</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">chan_name</span><span class="si">}</span><span class="s2">:&quot;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">current_slice</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">xticks</span><span class="p">([])</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">yticks</span><span class="p">([])</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n\n</span><span class="s2">Shape: </span><span class="si">{</span><span class="n">current_slice</span><span class="o">.</span><span class="n">shape</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -1450,21 +1574,25 @@ Min Pixel Value: 0
 <img alt="_images/6bde7620b09f79fab7acb1ed5142fd056b12408e5367c13ff793027594410c12.png" src="_images/6bde7620b09f79fab7acb1ed5142fd056b12408e5367c13ff793027594410c12.png" />
 </div>
 </div>
-<p>Now we are viewing each slice/color channel separately, we are again visualising 2D arrays - you can see the <code class="docutils literal notranslate"><span class="pre">.shape</span></code> of each slice below each image.</p>
-<p>The image from each color channel, when visualised separately, is now essentially a single-channel image, and so Matplotlib is rendering it in grayscale. As we know, we could also use the <code class="docutils literal notranslate"><span class="pre">viridis</span></code> colormap to pseudocolor the grayscale information in the images for the purposes of the display. Though in this instance, <code class="docutils literal notranslate"><span class="pre">viridis</span></code> results in some slightly queasy-looking images:</p>
+<p>Now we are viewing each slice/color channel separately, we are again visualising 2D arrays — you can see the <code class="docutils literal notranslate"><span class="pre">.shape</span></code> of each slice below each image.</p>
+<p>The image from each color channel, when visualised separately, is now
+a single-channel image, and so Matplotlib is rendering it in grayscale. As we
+know, we could also use the <code class="docutils literal notranslate"><span class="pre">viridis</span></code> colormap to allocate particular colors
+to the intensity information in the images for the purposes of the display.
+Though in this instance, <code class="docutils literal notranslate"><span class="pre">viridis</span></code> results in some slightly queasy-looking
+images:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Pseudo-color with `viridis`.</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">15</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>
-<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">RGB_chan_names</span><span class="p">)):</span>
-        <span class="n">chan_name</span> <span class="o">=</span> <span class="n">RGB_chan_names</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
-        <span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span>
-        <span class="n">current_slice</span> <span class="o">=</span> <span class="n">coffee</span><span class="p">[:,</span> <span class="p">:,</span> <span class="n">i</span><span class="p">]</span>
-        <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">chan_name</span><span class="si">}</span><span class="s2">:&quot;</span><span class="p">)</span>
-        <span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">current_slice</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;viridis&#39;</span><span class="p">)</span>
-        <span class="n">plt</span><span class="o">.</span><span class="n">xticks</span><span class="p">([])</span>
-        <span class="n">plt</span><span class="o">.</span><span class="n">yticks</span><span class="p">([])</span>
-        <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n\n</span><span class="s2">Shape: </span><span class="si">{</span><span class="n">current_slice</span><span class="o">.</span><span class="n">shape</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">chan_name</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">RGB_chan_names</span><span class="p">):</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span>
+    <span class="n">current_slice</span> <span class="o">=</span> <span class="n">coffee</span><span class="p">[:,</span> <span class="p">:,</span> <span class="n">i</span><span class="p">]</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">chan_name</span><span class="si">}</span><span class="s2">:&quot;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">current_slice</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;viridis&#39;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">xticks</span><span class="p">([])</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">yticks</span><span class="p">([])</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n\n</span><span class="s2">Shape: </span><span class="si">{</span><span class="n">current_slice</span><span class="o">.</span><span class="n">shape</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -1485,56 +1613,41 @@ Min Pixel Value: 0
 </div>
 <div class="exercise dropdown admonition" id="true-blue">
 
-<p class="admonition-title"><span class="caption-number">Exercise 2 </span></p>
+<p class="admonition-title"><span class="caption-number">Exercise 3 </span></p>
 <section id="exercise-content">
 <p>Now over to you for some NumPy-fuelled color wizardry. Your job is take our binary <code class="docutils literal notranslate"><span class="pre">two_D_ones_and_zeros</span></code> array and to use numerical and/or NumPy operations <strong>only</strong> to manipulate the image so that it looks as follows, when displayed with <code class="docutils literal notranslate"><span class="pre">plt.matshow()</span></code>:</p>
 <p><img alt="" src="_images/all_blue.png" /></p>
-<p>An array called <code class="docutils literal notranslate"><span class="pre">all_blue</span></code> contains your raw materials…</p>
+<p>Start with an all-zeros array, of the same shape as <code class="docutils literal notranslate"><span class="pre">two_D_ones_and_zeros</span></code>:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Show `two_D_ones_and_zeros`.</span>
-<span class="n">two_D_ones_and_zeros</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">start_slice</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros_like</span><span class="p">(</span><span class="n">two_D_ones_and_zeros</span><span class="p">)</span>
+<span class="n">start_slice</span>
+<span class="c1"># YOUR CODE HERE</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([[1., 0.],
-       [0., 1.]])
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># YOUR CODE HERE</span>
-<span class="n">all_blue</span> <span class="o">=</span> <span class="n">two_D_ones_and_zeros</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([[0., 0.],
+       [0., 0.]])
 </pre></div>
 </div>
 </div>
 </div>
 </section>
 </div>
-<div class="solution dropdown admonition" id="1_color_images_as_numpy_arrays-solution-1">
+<div class="solution dropdown admonition" id="1_color_images_as_numpy_arrays-solution-3">
 
-<p class="admonition-title">Solution to<a class="reference internal" href="#true-blue"> Exercise 2</a></p>
+<p class="admonition-title">Solution to<a class="reference internal" href="#true-blue"> Exercise 3</a></p>
 <section id="solution-content">
-<p>The solution here is to <code class="docutils literal notranslate"><span class="pre">np.stack</span></code> a new three-channel array, and then to use some simple NumPy indexing to adjust the color of the image. You can “turn off” the Red and Green color channels by setting the pixel values in the first and second slice to 0. You can then “max out” the Blue color channel by setting <em>all</em> of the pixel values in the third slice to 1:</p>
+<p>The solution here is to <code class="docutils literal notranslate"><span class="pre">np.stack</span></code> a new three-channel array, where the first
+channel is all zero (Red), the second is all zero (Green), and the third channel has all one (Blue).</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Copy the original array.</span>
-<span class="n">all_blue_solution</span> <span class="o">=</span> <span class="n">two_D_ones_and_zeros</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
-
-<span class="c1"># Stack the array into 3D.</span>
-<span class="n">all_blue_solution</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">stack</span><span class="p">([</span><span class="n">all_blue_solution</span><span class="p">,</span>
-                              <span class="n">all_blue_solution</span><span class="p">,</span>
-                              <span class="n">all_blue_solution</span><span class="p">],</span>
-                              <span class="n">axis</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span> 
-
-<span class="c1"># &quot;Turn off&quot; the first two color channels, in all array pixels.</span>
-<span class="n">all_blue_solution</span><span class="p">[:,</span> <span class="p">:,</span> <span class="p">:</span><span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
-
-<span class="c1"># &quot;Max out&quot; the Blue color channel, in all array pixels.</span>
-<span class="n">all_blue_solution</span><span class="p">[:,</span> <span class="p">:,</span> <span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="mf">1.</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Stack the color channels, where blue is all 1.</span>
+<span class="n">all_blue_solution</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">stack</span><span class="p">([</span><span class="n">start_slice</span><span class="p">,</span>  <span class="c1"># Red - all 0</span>
+                              <span class="n">start_slice</span><span class="p">,</span>  <span class="c1"># Green - all 0</span>
+                              <span class="n">start_slice</span> <span class="o">+</span> <span class="mi">1</span><span class="p">],</span>  <span class="c1"># Blue - all 1.</span>
+                              <span class="n">axis</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
 
 <span class="c1"># Show the result.</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">matshow</span><span class="p">(</span><span class="n">all_blue_solution</span><span class="p">);</span>
@@ -1549,7 +1662,7 @@ Min Pixel Value: 0
 </div>
 <div class="exercise dropdown admonition" id="blood-smile">
 
-<p class="admonition-title"><span class="caption-number">Exercise 3 </span></p>
+<p class="admonition-title"><span class="caption-number">Exercise 4 </span></p>
 <section id="exercise-content">
 <p>Time for some more horrifying computer art. Your task now is to modify the <code class="docutils literal notranslate"><span class="pre">smiley</span></code> image from earlier, using only numerical and/or NumPy operations, to make a “blood smiley”. The new “blood smiley” should have a black background, and a red face, meaning that Matplotlib will render it as:</p>
 <p><img alt="" src="_images/blood_smile.png" /></p>
@@ -1564,19 +1677,23 @@ Min Pixel Value: 0
 </div>
 </section>
 </div>
-<div class="solution dropdown admonition" id="1_color_images_as_numpy_arrays-solution-3">
+<div class="solution dropdown admonition" id="1_color_images_as_numpy_arrays-solution-5">
 
-<p class="admonition-title">Solution to<a class="reference internal" href="#blood-smile"> Exercise 3</a></p>
+<p class="admonition-title">Solution to<a class="reference internal" href="#blood-smile"> Exercise 4</a></p>
 <section id="solution-content">
-<p>The solution here is simple. The background in the image is already black, meaning that for those pixels, the array pixels values are already 0. When we <code class="docutils literal notranslate"><span class="pre">np.stack()</span></code> the array into 3D, we just need to set the 1 values, corresponding to the “face” pixels, to be 1’s the Red channel only, and 0’s in the other slices:</p>
+<p>The solution here is simple. The background in the image is already black,
+meaning that for those pixels, the array pixel values are already 0. When we
+<code class="docutils literal notranslate"><span class="pre">np.stack()</span></code> the array into 3D, we just need to set the 1 values,
+corresponding to the “face” pixels, to be 1’s for the Red channel only, and
+0’s in the other channels (slices):</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Horrific!</span>
-<span class="n">smiley_red_solution</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">stack</span><span class="p">([</span><span class="n">smiley</span> <span class="o">*</span> <span class="mi">1</span><span class="p">,</span> 
+<span class="n">smiley_red_solution</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">stack</span><span class="p">([</span><span class="n">smiley</span> <span class="o">*</span> <span class="mi">1</span><span class="p">,</span>
                                 <span class="n">smiley</span> <span class="o">*</span> <span class="mi">0</span><span class="p">,</span>
-                                <span class="n">smiley</span> <span class="o">*</span> <span class="mi">0</span><span class="p">],</span> 
+                                <span class="n">smiley</span> <span class="o">*</span> <span class="mi">0</span><span class="p">],</span>
                                 <span class="n">axis</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
-    
+
 <span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">smiley_red_solution</span><span class="p">);</span>
 </pre></div>
 </div>
@@ -1589,10 +1706,11 @@ Min Pixel Value: 0
 </div>
 <div class="exercise dropdown admonition" id="inverted-blood-smile">
 
-<p class="admonition-title"><span class="caption-number">Exercise 4 </span></p>
+<p class="admonition-title"><span class="caption-number">Exercise 5 </span></p>
 <section id="exercise-content">
 <p>When we “invert” the color of an image this means we reverse the intensity values. So the highest values become the lowest, and the lowest values become the highest.</p>
-<p>Your job is to figure out how, again using only numerical or NumPy operations on the <code class="docutils literal notranslate"><span class="pre">smiley</span></code> image, to produce this final result:</p>
+<p>Your job is to figure out how to produce this final result, again using only
+numerical or NumPy operations on the <code class="docutils literal notranslate"><span class="pre">smiley</span></code> image.</p>
 <p><img alt="" src="_images/inverted_blood_smiley.png" /></p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -1604,46 +1722,56 @@ Min Pixel Value: 0
 </div>
 </section>
 </div>
-<div class="solution dropdown admonition" id="1_color_images_as_numpy_arrays-solution-5">
+<div class="solution dropdown admonition" id="1_color_images_as_numpy_arrays-solution-7">
 
-<p class="admonition-title">Solution to<a class="reference internal" href="#inverted-blood-smile"> Exercise 4</a></p>
+<p class="admonition-title">Solution to<a class="reference internal" href="#inverted-blood-smile"> Exercise 5</a></p>
 <section id="solution-content">
-<p>Because <code class="docutils literal notranslate"><span class="pre">smiley</span></code> is a binary array, we can invert the values with a simple numerical operation: subtracting 1 from the array so 0 becomes -1, and 1 becomes 0. Then by adding 1 to the result, -1 becomes 0 and zero becomes 1, we “invert” the original values.</p>
+<p>Because <code class="docutils literal notranslate"><span class="pre">smiley</span></code> is a binary array, we can invert the values with a simple numerical operation: subtracting the array from 1.</p>
 <p>Below is the solution to invert <code class="docutils literal notranslate"><span class="pre">smiley</span></code>:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Step 1 - invert the original array</span>
-<span class="n">inverted_blood_smiley_solution</span> <span class="o">=</span> <span class="p">(</span><span class="n">smiley</span> <span class="o">*</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">inverted_blood_smiley_solution</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">inverted_blood_smiley_solution</span><span class="p">);</span>
+<span class="n">inverted_smiley</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">-</span> <span class="n">smiley</span>
+<span class="n">inverted_smiley</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[[1. 1. 1. 1. 1. 1. 1. 1.]
- [1. 1. 1. 1. 1. 1. 1. 1.]
- [1. 1. 0. 1. 1. 0. 1. 1.]
- [1. 1. 0. 1. 1. 0. 1. 1.]
- [1. 1. 1. 1. 1. 1. 1. 1.]
- [1. 0. 1. 1. 1. 1. 0. 1.]
- [1. 0. 0. 1. 1. 0. 0. 1.]
- [1. 1. 0. 0. 0. 0. 1. 1.]
- [1. 1. 1. 0. 0. 1. 1. 1.]
- [1. 1. 1. 1. 1. 1. 1. 1.]
- [1. 1. 1. 1. 1. 1. 1. 1.]]
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([[1., 1., 1., 1., 1., 1., 1., 1.],
+       [1., 1., 1., 1., 1., 1., 1., 1.],
+       [1., 1., 0., 1., 1., 0., 1., 1.],
+       [1., 1., 0., 1., 1., 0., 1., 1.],
+       [1., 1., 1., 1., 1., 1., 1., 1.],
+       [1., 0., 1., 1., 1., 1., 0., 1.],
+       [1., 0., 0., 1., 1., 0., 0., 1.],
+       [1., 1., 0., 0., 0., 0., 1., 1.],
+       [1., 1., 1., 0., 0., 1., 1., 1.],
+       [1., 1., 1., 1., 1., 1., 1., 1.],
+       [1., 1., 1., 1., 1., 1., 1., 1.]])
 </pre></div>
 </div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">inverted_smiley</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
 <img alt="_images/a0f4ac1d7f1d1d2e08a770ef1fd9177e46a94e440d6390dd67438bd79d7e952c.png" src="_images/a0f4ac1d7f1d1d2e08a770ef1fd9177e46a94e440d6390dd67438bd79d7e952c.png" />
 </div>
 </div>
-<p>We can then stack the inverted array and “turn off” the green and blue channels by multiplying their pixel values by 0:</p>
+<p>We can then stack the inverted array and “turn off” the green and blue
+channels by multiplying their pixel values by 0:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Step 2 - add the color channels</span>
-<span class="n">inverted_blood_smiley_solution</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">stack</span><span class="p">([</span><span class="n">inverted_blood_smiley_solution</span><span class="p">,</span> 
-                                     <span class="n">inverted_blood_smiley_solution</span> <span class="o">*</span> <span class="mi">0</span><span class="p">,</span>
-                                     <span class="n">inverted_blood_smiley_solution</span> <span class="o">*</span> <span class="mi">0</span><span class="p">],</span> 
-                                     <span class="n">axis</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">inverted_blood_smiley_solution</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">stack</span><span class="p">([</span>
+    <span class="n">inverted_smiley</span><span class="p">,</span>  <span class="c1"># Red</span>
+    <span class="n">inverted_smiley</span> <span class="o">*</span> <span class="mi">0</span><span class="p">,</span>  <span class="c1"># Green</span>
+    <span class="n">inverted_smiley</span> <span class="o">*</span> <span class="mi">0</span><span class="p">],</span>  <span class="c1"># Blue</span>
+    <span class="n">axis</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
 
 <span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">inverted_blood_smiley_solution</span><span class="p">);</span>
 </pre></div>
@@ -1657,7 +1785,7 @@ Min Pixel Value: 0
 </div>
 <div class="exercise dropdown admonition" id="colorless-caffeine">
 
-<p class="admonition-title"><span class="caption-number">Exercise 5 </span></p>
+<p class="admonition-title"><span class="caption-number">Exercise 6 </span></p>
 <section id="exercise-content">
 <p>Ok, that was all scary. Now we need a coffee to relax (is coffee relaxing?!).</p>
 <p>Your next task is to take the <code class="docutils literal notranslate"><span class="pre">coffee</span></code> image and use only numerical or NumPy operations to convert it to a single-channel (e.g. monochrome image):</p>
@@ -1671,9 +1799,9 @@ Min Pixel Value: 0
 </div>
 </section>
 </div>
-<div class="solution dropdown admonition" id="1_color_images_as_numpy_arrays-solution-7">
+<div class="solution dropdown admonition" id="1_color_images_as_numpy_arrays-solution-9">
 
-<p class="admonition-title">Solution to<a class="reference internal" href="#colorless-caffeine"> Exercise 5</a></p>
+<p class="admonition-title">Solution to<a class="reference internal" href="#colorless-caffeine"> Exercise 6</a></p>
 <section id="solution-content">
 <p>There are several ways to do this. One way is to use the <code class="docutils literal notranslate"><span class="pre">.mean()</span></code> method of the <code class="docutils literal notranslate"><span class="pre">coffee</span></code> NumPy array, setting <code class="docutils literal notranslate"><span class="pre">axis=2</span></code> to average across the color channels in the third dimension.</p>
 <p>The resulting output is 2D, and therefore single-channel/monochrome:</p>
@@ -1724,15 +1852,17 @@ Min Pixel Value: 0
 </div>
 <div class="exercise dropdown admonition" id="corrupted-camera">
 
-<p class="admonition-title"><span class="caption-number">Exercise 6 </span></p>
+<p class="admonition-title"><span class="caption-number">Exercise 7 </span></p>
 <section id="exercise-content">
 <p>In image processing “signal” can very roughly be thought of as a meaningful visual representation of something, in pixel values. Conversely, noise can be thought of as meaningless randomness in pixel values.</p>
 <p>Your job now, like an aging memory card or broken file system, is to corrupt the <code class="docutils literal notranslate"><span class="pre">camera</span></code> image below with some noisy pixels.</p>
 <p>Here is the original image:</p>
 <p><img alt="" src="_images/camera_plot.png" /></p>
-<p>You should use NumPy and numerical operations only, to create the following image:</p>
+<p>You should use NumPy and numerical operations only, to create something like
+the following image (the exact image will depend on your random noise):</p>
 <p><img alt="" src="_images/corrupted_camera.png" /></p>
-<p>Your final image should have the following attributes:</p>
+<p>Your final image should have the following attributes (from the
+<code class="docutils literal notranslate"><span class="pre">show_attributes</span></code> function):</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>Type: &lt;class &#39;numpy.ndarray&#39;&gt;
 dtype: uint8
 Shape: (512, 512, 3)
@@ -1740,8 +1870,10 @@ Max Pixel Value: 255
 Min Pixel Value: 0
 </pre></div>
 </div>
-<p><em>Hint 1</em>: this sort of noise is <em>random</em>, you can think about functions in the <code class="docutils literal notranslate"><span class="pre">np.random</span></code> module which might be of use here…</p>
-<p><em>Hint 2</em>: to work out what values should random, it may help to pay attention to the color of the noisy region…</p>
+<p><em>Hint 1</em>: this sort of noise is <em>random</em>, you can think about functions in the
+<code class="docutils literal notranslate"><span class="pre">np.random</span></code> module which might be of use here…</p>
+<p><em>Hint 2</em>: to work out what values (pixels) should be random, it may help to
+pay attention to the color of the noisy region…</p>
 <p><em>Hint 3</em>: run the function <code class="docutils literal notranslate"><span class="pre">hint_corrupted_camera()</span></code> for additional help…</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -1768,17 +1900,17 @@ Min Pixel Value: 0
 </div>
 </section>
 </div>
-<div class="solution dropdown admonition" id="1_color_images_as_numpy_arrays-solution-9">
+<div class="solution dropdown admonition" id="1_color_images_as_numpy_arrays-solution-11">
 
-<p class="admonition-title">Solution to<a class="reference internal" href="#corrupted-camera"> Exercise 6</a></p>
+<p class="admonition-title">Solution to<a class="reference internal" href="#corrupted-camera"> Exercise 7</a></p>
 <section id="solution-content">
 <p>The way we did this was by stacking <code class="docutils literal notranslate"><span class="pre">camera</span></code> into a 3D array. We then used NumPy indexing to isolate a region around the cameraman’s face in the green color channel (second slice). We used the <code class="docutils literal notranslate"><span class="pre">np.random.permutation()</span></code> function to shuffle (e.g. randomize) the pixel values in this region:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution.</span>
-<span class="n">noisy_camera_solution</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">stack</span><span class="p">([</span><span class="n">camera</span><span class="p">,</span> 
+<span class="n">noisy_camera_solution</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">stack</span><span class="p">([</span><span class="n">camera</span><span class="p">,</span>
                                   <span class="n">camera</span><span class="p">,</span>
-                                  <span class="n">camera</span><span class="p">],</span> 
+                                  <span class="n">camera</span><span class="p">],</span>
                                   <span class="n">axis</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
 <span class="n">noisy_camera_solution</span><span class="p">[</span><span class="mi">100</span><span class="p">:</span><span class="mi">200</span><span class="p">,</span> <span class="mi">190</span><span class="p">:</span><span class="mi">260</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">permutation</span><span class="p">(</span><span class="n">noisy_camera_solution</span><span class="p">[</span><span class="mi">100</span><span class="p">:</span><span class="mi">200</span><span class="p">,</span> <span class="mi">190</span><span class="p">:</span><span class="mi">260</span><span class="p">,</span> <span class="mi">1</span><span class="p">])</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">noisy_camera_solution</span><span class="p">);</span>
@@ -1786,16 +1918,16 @@ Min Pixel Value: 0
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/413a252410fb4011b5f3f0cec459f1d80da540f8f4186dd78ce0bf1df3b615f0.png" src="_images/413a252410fb4011b5f3f0cec459f1d80da540f8f4186dd78ce0bf1df3b615f0.png" />
+<img alt="_images/2332af6319aebc01f95c492b7dfb738ede6e6595b78d2e430508feb2d87225b5.png" src="_images/2332af6319aebc01f95c492b7dfb738ede6e6595b78d2e430508feb2d87225b5.png" />
 </div>
 </div>
 </section>
 </div>
 </section>
-<section class="tex2jax_ignore mathjax_ignore" id="more-actually-complex-images">
-<h1>More (actually) complex images<a class="headerlink" href="#more-actually-complex-images" title="Link to this heading">#</a></h1>
+<section id="more-actually-complex-images">
+<h2>More (actually) complex images<a class="headerlink" href="#more-actually-complex-images" title="Link to this heading">#</a></h2>
 <p>So far we have looked at simple images - 2D binary and grayscale low-resolution image arrays, like <code class="docutils literal notranslate"><span class="pre">smiley</span></code> - or more complex color images with three color channels (like <code class="docutils literal notranslate"><span class="pre">coffee</span></code>). However, the principles we have seen extend to even more complex images, like the image arrays generated by <a class="reference external" href="https://en.wikipedia.org/wiki/Neuroimaging">brain imaging</a>, for instance.</p>
-<p>Here is an image of one “slice” of one of the authors brains, which was captured by a <a class="reference external" href="https://en.wikipedia.org/wiki/Magnetic_resonance_imaging">magnetic resonance imaging</a> scanner:</p>
+<p>Here is an image of one “slice” of one of the authors’ brains, which was captured by a <a class="reference external" href="https://en.wikipedia.org/wiki/Magnetic_resonance_imaging">magnetic resonance imaging</a> scanner:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># One author&#39;s own brain (a 2D slice).</span>
@@ -1809,7 +1941,9 @@ Min Pixel Value: 0
 <img alt="_images/f580db051889d6f63d24a3409b03470b6386f18f58434966ff9f0c4627a173a4.png" src="_images/f580db051889d6f63d24a3409b03470b6386f18f58434966ff9f0c4627a173a4.png" />
 </div>
 </div>
-<p>The physics of magnetic resonance imaging are very complicated, but the image arrays that it produces, as with our very simple low-resolution arrays, are nothing but arrays of numbers:</p>
+<p>The physics of magnetic resonance imaging is very complicated, but the image
+arrays that it produces, as with our very simple low-resolution arrays, are
+nothing but arrays of numbers:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Show the attributes of the brain image.</span>
@@ -1827,25 +1961,54 @@ Min Pixel Value: 0
 </div>
 </div>
 </div>
-<p>Note that this image is 2D, and it is actually a relatively simple brain image. Other brain images can also contain <em>time</em> information - e.g. an image of the brain through time, as it responds to different stimuli. Such images are actually 4-D, with an extra dimension for temporal information. However, all of these images can still be represented as NumPy arrays, with varying dimensionalities and various min/max pixel value conventions. Importantly, these higher-dimensional images do not always contain color information - the way we have seen above is just one way of using higher-dimensional image arrays, to encode color. We will investigate this topic more on the <a class="reference internal" href="2_skimage_intro.html"><span class="doc std std-doc">next page</span></a>.</p>
+<p>Note that this image is 2D, and it is actually a relatively simple brain image. Other brain images can also contain <em>time</em> information - e.g. an image of the brain through time, as it responds to different stimuli. Such images are actually 4-D, with an extra dimension for temporal information. However, all of these images can still be represented as NumPy arrays, with varying dimensionalities and various min/max pixel value conventions.  These higher-dimensional images do not always contain color information - the way we have seen above is just one way of using higher-dimensional image arrays, to encode color. We will investigate this topic more on the <a class="reference internal" href="2_skimage_intro.html"><span class="doc std std-doc">next page</span></a>.</p>
 </section>
-<section class="tex2jax_ignore mathjax_ignore" id="summary">
-<h1>Summary<a class="headerlink" href="#summary" title="Link to this heading">#</a></h1>
+<section id="summary">
+<h2>Summary<a class="headerlink" href="#summary" title="Link to this heading">#</a></h2>
 <p>On this page we have seen how color can be represented in NumPy array images:</p>
 <ul class="simple">
-<li><p>Images are (at least) two-dimensional arrays of numbers. Multiple <code class="docutils literal notranslate"><span class="pre">dtype</span></code>s in image arrays are supported by Sci-kit image.</p></li>
-<li><p>We have seen images where the number at each array pixel location determines the gray-level (in a 2D array) or color (in a 3D array) of that location when the image is displayed. For 3D color arrays the number in each slice/channel is summed to determine the color in the 2D displayed image.</p></li>
-<li><p>These methods of color encoding can apply to both to very simple and very complex images. Some types of image (e.g. brain images) use higher-dimensionality to encode information other than color (e.g. time).</p></li>
+<li><p>Images are (at least) two-dimensional arrays of numbers. Multiple <code class="docutils literal notranslate"><span class="pre">dtype</span></code>s
+in image arrays are supported by Sci-kit image.</p></li>
+<li><p>We have seen images where the number at each array pixel location determines
+the gray-level (in a 2D array) or color (in a 3D array) of that location
+when the image is displayed. For 3D color arrays the number in each
+slice/channel determines the intensity of Red of Green or Blue, and the
+resulting color intensities combine to determine the color in the 2D
+displayed image.</p></li>
+<li><p>These methods of color encoding can apply to both to very simple and very
+complex images. Some types of image (e.g. brain images) use
+higher-dimensionality to encode information other than color (e.g. time).</p></li>
 </ul>
-<p>On the <a class="reference internal" href="2_skimage_intro.html"><span class="doc std std-doc">next page</span></a> we will formally introduce Scikit-image, which uses NumPy image arrays as its fundamental representation of images.</p>
+<p>On the <a class="reference internal" href="2_skimage_intro.html"><span class="doc std std-doc">next page</span></a> we will formally introduce Scikit-image,
+which uses NumPy image arrays as its fundamental representation of images.</p>
+</section>
 </section>
 <section class="tex2jax_ignore mathjax_ignore" id="references">
 <h1>References<a class="headerlink" href="#references" title="Link to this heading">#</a></h1>
-<p>Adapted from: <a class="reference external" href="https://lectures.scientific-python.org/advanced/image_processing">https://lectures.scientific-python.org/advanced/image_processing</a></p>
-<p>Adapted from: <a class="reference external" href="https://lectures.scientific-python.org/packages/scikit-image/index.html">https://lectures.scientific-python.org/packages/scikit-image/index.html</a></p>
-<p>Reference: inspiration from Nipraxis also re: arrays/images.</p>
-<p>Reference: inspiration from <code class="docutils literal notranslate"><span class="pre">skimage</span></code> tutorials</p>
-<p>Reference: <a class="reference external" href="https://bic-berkeley.github.io/psych-214-fall-2016/arrays_and_images.html">https://bic-berkeley.github.io/psych-214-fall-2016/arrays_and_images.html</a></p>
+<ul class="simple">
+<li><p><a class="reference external" href="https://lectures.scientific-python.org/advanced/image_processing">Scientific Python Lecture Notes - image
+processing</a></p></li>
+<li><p>[Scientific Python Lecture Notes</p>
+<ul>
+<li><p>scikit-image](<a class="reference external" href="https://lectures.scientific-python.org/packages/scikit-image/index.html">https://lectures.scientific-python.org/packages/scikit-image/index.html</a>)</p></li>
+</ul>
+</li>
+<li><p><a class="reference external" href="https://textbook.nipraxis.org/arrays_and_images.html">Nipraxis course - arrays and
+images</a></p></li>
+<li><p><a class="reference external" href="https://textbook.nipraxis.org/arrays_3d.html">Nipraxis course - three-dimensional
+arrays</a></p></li>
+</ul>
+<p>with further inspiration from <code class="docutils literal notranslate"><span class="pre">skimage</span></code> tutorials.</p>
+<hr class="footnotes docutils" />
+<aside class="footnote-list brackets">
+<aside class="footnote brackets" id="digits-decimal" role="doc-footnote">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id1">1</a><span class="fn-bracket">]</span></span>
+<p>Remember, the actual numbers in each “slice” are of the
+<code class="docutils literal notranslate"><span class="pre">float64</span></code> <code class="docutils literal notranslate"><span class="pre">dtype</span></code> and so can (but here, do not) have digits after the
+decimal point. However, we will show the numbers just as 0 or 1, to keep the
+image uncluttered.</p>
+</aside>
+</aside>
 </section>
 
     <script type="text/x-thebe-config">
@@ -1912,14 +2075,14 @@ Min Pixel Value: 0
   </div>
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">What about color?</a></li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#true-color-in-3d">True Color in 3D</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">What about color?</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#color-from-3d">Color from 3D</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#color-channels">Color channels</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#pixels-and-dtype">Pixels and <code class="docutils literal notranslate"><span class="pre">dtype</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#more-actually-complex-images">More (actually) complex images</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#summary">Summary</a></li>
 </ul>
 </li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#pixels-and-dtype">Pixels and <code class="docutils literal notranslate"><span class="pre">dtype</span></code></a></li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#more-actually-complex-images">More (actually) complex images</a></li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#summary">Summary</a></li>
 <li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#references">References</a></li>
 </ul>
 

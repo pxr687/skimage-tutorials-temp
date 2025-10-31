@@ -182,10 +182,6 @@
 
 <li class="toctree-l1"><a class="reference internal" href="1_color_images_as_numpy_arrays.html">What about color?</a></li>
 
-
-
-
-
 <li class="toctree-l1"><a class="reference internal" href="2_skimage_intro.html">Introducing Scikit-image</a></li>
 
 
@@ -957,7 +953,7 @@ Min Pixel Value: 0
 </div>
 <div class="exercise dropdown admonition" id="krazy-kernel">
 
-<p class="admonition-title"><span class="caption-number">Exercise 22 </span></p>
+<p class="admonition-title"><span class="caption-number">Exercise 23 </span></p>
 <section id="exercise-content">
 <p>Here is another kernel which follows a roughly Gaussian-like pattern - e.g. pixels closer to the center are weighted more heavily, pixels towards the sides have less weight. However, it is only somewhat Gaussian-like, and in fact is a very strange kernel, as we will see when we view it on a 3D plot:</p>
 <p><img alt="" src="_images/almost_gaussian.png" /></p>
@@ -1086,7 +1082,7 @@ Min Pixel Value: 0
 </div>
 <div class="solution dropdown admonition" id="6_gaussian_sharpening_edge-solution-1">
 
-<p class="admonition-title">Solution to<a class="reference internal" href="#krazy-kernel"> Exercise 22</a></p>
+<p class="admonition-title">Solution to<a class="reference internal" href="#krazy-kernel"> Exercise 23</a></p>
 <section id="solution-content">
 <p>So, the problem here is <em>integer overflow</em>. Filtering <code class="docutils literal notranslate"><span class="pre">camera</span></code> with the <code class="docutils literal notranslate"><span class="pre">almost_gaussian_kernel</span></code> results in numbers that are too big for the original <code class="docutils literal notranslate"><span class="pre">uint8</span></code> <code class="docutils literal notranslate"><span class="pre">dtype</span></code> to handle. Let’s remind ourselves of the kernel values:</p>
 <div class="cell docutils container">
@@ -1220,7 +1216,7 @@ Min Pixel Value: 0
 </div>
 <div class="exercise dropdown admonition" id="DIY-gaussian">
 
-<p class="admonition-title"><span class="caption-number">Exercise 23 </span></p>
+<p class="admonition-title"><span class="caption-number">Exercise 24 </span></p>
 <section id="exercise-content">
 <p>Below is another way of writing the formula for generating a 2D Gaussian distribution, and therefore for generating a 2D Gaussian kernel.</p>
 <p><span class="math notranslate nohighlight">\( \Large \text{Gaussian}(x, y) = \frac{1}{\sqrt{2 \pi \sigma^2}} e^{- \frac{x^2 + y^2}{2\sigma^2}} \)</span></p>
@@ -1318,7 +1314,7 @@ Min Pixel Value: 0
 </div>
 <div class="solution dropdown admonition" id="6_gaussian_sharpening_edge-solution-3">
 
-<p class="admonition-title">Solution to<a class="reference internal" href="#DIY-gaussian"> Exercise 23</a></p>
+<p class="admonition-title">Solution to<a class="reference internal" href="#DIY-gaussian"> Exercise 24</a></p>
 <section id="solution-content">
 <p>The function you need, with the correct input arguments, is below. You need to use <code class="docutils literal notranslate"><span class="pre">np.arange(-3,</span> <span class="pre">4)</span></code> for the inputs to <code class="docutils literal notranslate"><span class="pre">np.meshgrid()</span></code> - the resulting 2D <code class="docutils literal notranslate"><span class="pre">x_solution</span></code> and <code class="docutils literal notranslate"><span class="pre">y_solution</span></code> arrays are printed out under the cell. A <code class="docutils literal notranslate"><span class="pre">sigma</span></code> of 1 will generate the target kernel.</p>
 <p>An important step here is <code class="docutils literal notranslate"><span class="pre">gauss</span> <span class="pre">=</span> <span class="pre">1/gauss.sum()</span> <span class="pre">*</span> <span class="pre">gauss</span></code> which ensures that the kernel elements sum to 1. As we noted in the solution to the last exercise, this step makes sure that the average pixel intensity of an image stays the same as the original image, when we filter the image with this kernel (this is called <em>normalising the kernel</em>).</p>
@@ -1716,7 +1712,7 @@ Same as the target? This array should contain on `True`s if so...:
 </div>
 <div class="exercise dropdown admonition" id="stay-sharp">
 
-<p class="admonition-title"><span class="caption-number">Exercise 24 </span></p>
+<p class="admonition-title"><span class="caption-number">Exercise 25 </span></p>
 <section id="exercise-content">
 <p>In keeping with the “sharp” topic, below we load in a picture of a very regal-looking eagle, from <code class="docutils literal notranslate"><span class="pre">ski.data</span></code>:</p>
 <div class="cell docutils container">
@@ -1776,7 +1772,7 @@ Min Pixel Value: 1
 </div>
 <div class="solution dropdown admonition" id="6_gaussian_sharpening_edge-solution-5">
 
-<p class="admonition-title">Solution to<a class="reference internal" href="#stay-sharp"> Exercise 24</a></p>
+<p class="admonition-title">Solution to<a class="reference internal" href="#stay-sharp"> Exercise 25</a></p>
 <section id="solution-content">
 <p>We got some pretty good performance from the following kernel:</p>
 <div class="cell docutils container">
@@ -2375,7 +2371,7 @@ Min Pixel Value: 0.0
 </div>
 <div class="exercise dropdown admonition" id="edgelord">
 
-<p class="admonition-title"><span class="caption-number">Exercise 25 </span></p>
+<p class="admonition-title"><span class="caption-number">Exercise 26 </span></p>
 <section id="exercise-content">
 <p>Think about all of the edge detection filter types we have seen above. You may have noticed that, for all of the final output images from each filter, the edges detected are two pixels wide. For instance the image below results from filtering <code class="docutils literal notranslate"><span class="pre">edgy</span></code> with the Sobel filter:</p>
 <div class="cell docutils container">
@@ -2408,7 +2404,7 @@ Min Pixel Value: 0.0
 </div>
 <div class="solution dropdown admonition" id="6_gaussian_sharpening_edge-solution-7">
 
-<p class="admonition-title">Solution to<a class="reference internal" href="#edgelord"> Exercise 25</a></p>
+<p class="admonition-title">Solution to<a class="reference internal" href="#edgelord"> Exercise 26</a></p>
 <section id="solution-content">
 <p>The solution here is to use smaller kernels, so they are searching for pixel intensity gradients in smaller pixel neighbourhoods. We used the following kernels:</p>
 <div class="cell docutils container">

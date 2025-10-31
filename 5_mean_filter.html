@@ -182,10 +182,6 @@
 
 <li class="toctree-l1"><a class="reference internal" href="1_color_images_as_numpy_arrays.html">What about color?</a></li>
 
-
-
-
-
 <li class="toctree-l1"><a class="reference internal" href="2_skimage_intro.html">Introducing Scikit-image</a></li>
 
 
@@ -753,7 +749,7 @@ Crude Mean filter:
 <p>Ok, so we can see that some of the non-black (non-zero) pixel intensity values have been “spread around” to neighbouring pixels, which is unsurprising, given what we know about how this operation works. We have literally, for each given pixel, “averaged out” between the pixels in the 3-by-3 neighbourhood around the pixel. This is a very crude mean filter, intended to show the foundational principles of how filtering via a kernel works. There is a better, less crude way to implement a mean filter, however, to which we will turn in the next section.</p>
 <div class="exercise dropdown admonition" id="dont-be-mean">
 
-<p class="admonition-title"><span class="caption-number">Exercise 20 </span></p>
+<p class="admonition-title"><span class="caption-number">Exercise 21 </span></p>
 <section id="exercise-content">
 <p>For this exercise, you should build a function which filters an image using a 3-by-3 kernel, like we did above. Your function should “walk” the 3-by-3 kernel through an image array, but it can ignore edge pixels, as we did above. E.g. you can just alter central pixels where the kernel “fits”, as in the image below:</p>
 <p><img alt="" src="_images/kernel_general_resize.png" /></p>
@@ -799,7 +795,7 @@ Min Pixel Value: 1
 </div>
 <div class="solution dropdown admonition" id="5_mean_filter-solution-1">
 
-<p class="admonition-title">Solution to<a class="reference internal" href="#dont-be-mean"> Exercise 20</a></p>
+<p class="admonition-title">Solution to<a class="reference internal" href="#dont-be-mean"> Exercise 21</a></p>
 <section id="solution-content">
 <p>Whilst we told you not to adjust the function from above, obviously you function needs to do something similar to the function from above. So that was a rule for you, not for us ;)</p>
 <p>Here we have adjusted the function to take the negative sum of the kernel elements, rather than the mean. We also <code class="docutils literal notranslate"><span class="pre">rescale_intensity()</span></code> in the final line, to ensure pixel values fall in a legal range, for the <code class="docutils literal notranslate"><span class="pre">float64</span></code> <code class="docutils literal notranslate"><span class="pre">dtype</span></code>:</p>
@@ -1116,7 +1112,7 @@ The input is extended by wrapping around to the opposite edge.</p></li>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/003e39fbddb4488f1c6a4f6fe5922d57865f91c47245c7ef688f4cd1a118d3fa.png" src="_images/003e39fbddb4488f1c6a4f6fe5922d57865f91c47245c7ef688f4cd1a118d3fa.png" />
+<img alt="_images/0279763296b4eeac2031f7e9f5ac09c742b970fafa97aae5ac292f9115e6c596.png" src="_images/0279763296b4eeac2031f7e9f5ac09c742b970fafa97aae5ac292f9115e6c596.png" />
 </div>
 </div>
 <p>The mean filter can remove some of the noise, restoring the clarity of the image:</p>
@@ -1141,7 +1137,7 @@ The input is extended by wrapping around to the opposite edge.</p></li>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/e037567de920c3d7bb8565fa5bc8f083212b854c9463bfd801ef144efd03bae2.png" src="_images/e037567de920c3d7bb8565fa5bc8f083212b854c9463bfd801ef144efd03bae2.png" />
+<img alt="_images/87986c141ad071532cb1aa79680c4c0a74b9564c0049864599cb15472e2c3926.png" src="_images/87986c141ad071532cb1aa79680c4c0a74b9564c0049864599cb15472e2c3926.png" />
 </div>
 </div>
 <p>We can see that the image is clearer, the noise has been reduced and some of the signal has been restored.</p>
@@ -1171,13 +1167,13 @@ The input is extended by wrapping around to the opposite edge.</p></li>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/8add126c131f2837d40fdadde82e88615055f2c3d448b3195f5914575b9bec02.png" src="_images/8add126c131f2837d40fdadde82e88615055f2c3d448b3195f5914575b9bec02.png" />
+<img alt="_images/30dae70b392e7238213d6308da5d744ed508efa6834579fdf73e01a3097ef0cf.png" src="_images/30dae70b392e7238213d6308da5d744ed508efa6834579fdf73e01a3097ef0cf.png" />
 </div>
 </div>
 <p>As with many filtering operations, the effect of altering aspects of the filtering process (like a threshold value or kernel size), is very context-dependent. It may take many iterations before finding a “sweet spot”, and where the sweet spot is may be somewhat subjective.</p>
 <div class="exercise dropdown admonition" id="strange-filter-coffee">
 
-<p class="admonition-title"><span class="caption-number">Exercise 21 </span></p>
+<p class="admonition-title"><span class="caption-number">Exercise 22 </span></p>
 <section id="exercise-content">
 <p>The nice thing about applying filtering via convolution kernels is that changing the kernel itself lets us implement a wide variety of functions, even strange ones. In this exercise, you will write a function called <code class="docutils literal notranslate"><span class="pre">strange_filter()</span></code>. You should apply it to <code class="docutils literal notranslate"><span class="pre">coffee_gray</span></code> to produce the following image:</p>
 <p><img alt="" src="_images/coffee_strange_kernel.png" /></p>
@@ -1219,7 +1215,7 @@ Min Pixel Value: 0.0
 </div>
 <div class="solution dropdown admonition" id="5_mean_filter-solution-3">
 
-<p class="admonition-title">Solution to<a class="reference internal" href="#strange-filter-coffee"> Exercise 21</a></p>
+<p class="admonition-title">Solution to<a class="reference internal" href="#strange-filter-coffee"> Exercise 22</a></p>
 <section id="solution-content">
 <p>The solution here involves making a kernel where every kernel element has the value of <span class="math notranslate nohighlight">\(-\frac{1}{2}\)</span> (e.g. -0.5). So, for a 3-by-3 kernel:</p>
 <p><img alt="" src="_images/strange_kernel.png" /></p>
