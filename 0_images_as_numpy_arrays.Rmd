@@ -68,6 +68,7 @@ more.
 
 ::: {note}
 :class: dropdown
+:name: on-rows-and-columns
 
 **On rows and columns**
 
@@ -221,7 +222,7 @@ So far so good. We have hand-crafted an image of something which looks like a ve
 ![](images/grey-colours.png)
 (Image from [here](https://www.pythoninformer.com/computer-science/colour/grey-colour)).
 
-Personally, we think a better term here would be "white-level", but the term "gray-level" is already established... 
+Personally, we think a better term here would be "white-level", but the term "gray-level" is already established...
 
 Our image array so far contains only 1's and 0's; you might naturally ask "what happens if we use other numbers, how does this affect the color/gray-level of the display image?". To demonstrate, in the cell below, we create a new two-dimensional array which contains decimal numbers 0 and 1.
 
