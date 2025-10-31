@@ -691,7 +691,7 @@ The display conventions are:
   arrays, such as `dtype=np.uint8`).
 
 You will see both conventions in images you encounter "in the wild", and
-Sci-kit image supports both formats (as well as multiple other formats - see
+Scikit image supports both formats (as well as multiple other formats - see
 the table below). Neglecting to pay attention to `dtype` is a very common
 source of errors when dealing with image arrays, so keep track of it, and
 deliberately specify it as often as possible!
@@ -1116,7 +1116,7 @@ the [next page](2_skimage_intro).
 On this page we have seen how color can be represented in NumPy array images:
 
 * Images are (at least) two-dimensional arrays of numbers. Multiple `dtype`s
-  in image arrays are supported by Sci-kit image.
+  in image arrays are supported by Scikit image.
 * We have seen images where the number at each array pixel location determines
   the gray-level (in a 2D array) or color (in a 3D array) of that location
   when the image is displayed. For 3D color arrays the number in each
