@@ -538,8 +538,7 @@ Adapted from:
 
 * [Scientific Python Lecture Notes - image
   processing](https://lectures.scientific-python.org/advanced/image_processing)
-* [Scientific Python Lecture Notes
-  - scikit-image](https://lectures.scientific-python.org/packages/scikit-image/index.html)
+* [Scientific Python Lecture Notes; scikit-image](https://lectures.scientific-python.org/packages/scikit-image/index.html)
 * [Nipraxis course - arrays and
   images](https://textbook.nipraxis.org/arrays_and_images.html)
 * [Nipraxis course - three-dimensional
