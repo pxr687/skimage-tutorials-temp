@@ -383,11 +383,14 @@ plt.savefig('images/noisy_camera.png')
 ::: {solution-end}
 :::
 
-# Colorspaces
 
-So far we have looked primarily at binary/monochrome single-channel image arrays and three-channel RGB color image arrays. We can use the `shape` conventions from NumPy to think about these image types. Single channel images have a `shape` of `(n, m)` where `n` is the number of rows and `m` is the number of columns. RGB images have a shape of `(n, m, 3)`, so `n` rows, `m` columns and `3` slices (the color channels).
+## Colorspaces
 
-RGB is the default, but color images of shape `(n, m, 3)` can use different representations of color to the RGB method we have seen. We call these different color representation formats *colorspaces*. `skimage` supports many of them, and contains many functions for converting image arrays between colorspaces. These functions are contained in the `ski.color` module:
+Colorspaces are different ways of mapping values to colors.
+
+So far we have looked primarily at binary/monochrome single-channel image arrays and three-channel Red-Green-Blue (RGB) color image arrays. We can use the `shape` conventions from NumPy to think about these image types. Single channel images have a `shape` of `(n, m)` where `n` is the number of rows and `m` is the number of columns.  RGB images have a shape of `(n, m, 3)`, so `n` rows, `m` columns and `3` slices (the color channels).
+
+RGB is a common standard, but color images of shape `(n, m, 3)` can use different representations of color to the RGB method we have seen. We call these different color representation formats *colorspaces*. `skimage` supports many of them, and contains many functions for converting image arrays between colorspaces. These functions are contained in the `ski.color` module:
 
 ```{python}
 # Show the functions in `ski.color`.
@@ -415,7 +418,7 @@ plt.imshow(gray_cat);
 This grayscale conversion is achieved by calculating the luminance of the image via a weighted sum of the information in each color channel:
 
 $$
-Y = 0.2126R + 0.7152G + 0.0722B
+L = 0.2126R + 0.7152G + 0.0722B
 $$
 
 This has the effect of removing the color channels, so the output array is 2D. Why do we use these specific numbers? You could go and knock on the door of your physicist friend to ask (don't worry, they'll be in...), or you can see [this page](https://stackoverflow.com/questions/596216/formula-to-determine-perceived-brightness-of-rgb-color) for a detailed explanation of where the weights come from.
@@ -435,7 +438,7 @@ Max Pixel Value: 1.0
 Min Pixel Value: 0.0
 ```
 
-*Hint:* you may want to investigate `ski.exposure.rescale_intensity()` to help ensure that you match the attributes of the target image...
+*Hint:* you may want to investigate `ski.exposure.rescale_intensity()` to help ensure that you match the attributes of the target image, above ...
 
 The `cat` image array is copied for you in the cell below:
 
@@ -451,21 +454,33 @@ cat_for_exercise = cat.copy()
 :class: dropdown
 :::
 
-This is a very simple operation! We can just "plug" each color channel of the `cat` array into the formula, using NumPy array indexing:
+This is a very simple operation! We can just "plug" each color channel of the
+`cat` array into the formula, using NumPy array indexing:
 
 ```{python}
 # Apply the formula.        Red channel.           Blue channel.          Green channel.
 cat_manual_gray = 0.2126 * cat[:, :, 0] + 0.7152 * cat[:, :, 1] + 0.0722 * cat[:, :, 2]
+# Or the same result using Numpy broadcasting.
+cat_manual_gray - np.sum(cat * [[[0.2126, 0.7152, 0.0722]]], axis=2)
 plt.imshow(cat_manual_gray);
 ```
 
-However, this leaves our image with an illegal pixel intensity range, given the `dtype`:
+However, this leaves our image with a not-standard pixel intensity range,
+given the `dtype`:
 
 ```{python}
 show_attributes(cat_manual_gray)
 ```
 
-`float64` images, to avoid errors, should have a pixel intensity range between 0 and 1 (or -1 to 1, but we digress). Matplotlib knows how to render this image, but the values themselves are technically illegal, and would likely cause errors with subsequent processing operations. We can use `ski.exposure.rescale_intensity()` to ensure our image adheres to the `skimage` conventions:
+It is fairly standard in `skimage` for `float64` images to have a pixel
+intensity range between 0 and 1 (or -1 to 1, but we digress).  Among other
+things, this matches the conventions that Matplotlib uses to display images;
+as [we have seen](color-and-matplotlib), Matplotlib will render single-channel
+images with any value range, using the colormap.  However, values outside the
+standard integer (0..255) or float (0, 1) range may be unexpected for
+subsequent processing operations. We can use
+`ski.exposure.rescale_intensity()` to ensure our image adheres to the
+`skimage` (0, 1) convention:
 
 ```{python}
 # Ensure the correct pixel intensity range.
@@ -481,7 +496,12 @@ plt.imshow(cat_manual_gray);
 :::
 
 
-We can also convert an image into a different colorspace (e.g. not grayscale). `ski.color.rgb2hsv()` will convert an RGB image to an image in the HSV colorspace. HSV stands for [Hue, Saturation, Value](https://en.wikipedia.org/wiki/HSL_and_HSV):
+We can also convert an image into a different colorspace (e.g. not grayscale).
+`ski.color.rgb2hsv()` will convert an RGB image to an image in the HSV
+colorspace. HSV stands for [Hue, Saturation,
+Value](https://en.wikipedia.org/wiki/HSL_and_HSV).  To get a feel for how HSV
+specifies color, have a look at the Wikipedia page link, and try the [HSV
+color picker](https://www.selecolor.com/en/hsv-color-picker).
 
 ```{python}
 # Convert `cat` to the HSV colorspcae
@@ -517,9 +537,12 @@ plt.title('Value Channel')
 plt.tight_layout();
 ```
 
-# Colorspaces 2: transparency in the 3rd dimension
+## Colorspaces 2: transparency in the 3rd dimension
 
 Now, other colorspaces involve arrays of different `shape`s. For instance, some image arrays are `(n, m, 4)` - so that's `n` rows, `m` columns and `4` slices in the third dimension.
+
+When we have four values in the third dimension, we can interpret these as
+Red-Green-Blue-Alpha (RGBA), where Alpha is the opacity of the color.
 
 Let's see what that extra slice does, using our tried and true `squares` image array:
 
@@ -543,7 +566,8 @@ plt.matshow(four_channel_stack);
 
 Ok, so we just get red nonzero pixels. So what does the 4th channel do?
 
-It controls *transparency*. Setting it to 1 gives maximum *opacity* e.g. solid, non-see through color.
+It controls *transparency*. Setting it to 1 gives maximum *opacity* e.g.
+solid, non-see through color.
 
 Let's set it lower:
 
@@ -607,16 +631,13 @@ Min Pixel Value: 0.0
 Here are some things to pay attention to, in the target image, to help you think about what operations you need here:
 
 - the `shape` of the target image.
-
 - the color of the target image in different regions.
-
 - the `dtype` of the target image.
 
 *Hint 1:* run the function `hint_camera()` for some additional help if you get stuck.
 
 ```{python}
 # YOUR CODE HERE
-camera = ski.data.camera()
 ```
 
 ::: {exercise-end}
@@ -628,7 +649,7 @@ camera = ski.data.camera()
 
 There are several steps here - this was not an easy task! First, we need to convert our image to the `float64`. We need the `ski.util.img_as_float()` function to do this. If you tried to use the NumPy `.astype(float)` method, you will have encountered a thorny error (more on this below).
 
-If you look at the target image, you will notice that it has a green-ish tone, but not so green as we would get if the other color channels were "switched off". As such, you can get the correct effect by reducing the impact of the red and blue channels, by halving their values.
+If you look at the target image, you will notice that it has a green-ish tone, but not so green as we would get if the other color channels were "switched off". As such, you can get the correct effect by reducing the impact of the red and blue channels, in fact by halving their values.
 
 The left-hand side of the image has variance in *transparency* - pixels where the image is darker are *more transparent*. This is because, in the target image, the alpha channel is a copy of the original 2D image.
 
@@ -642,10 +663,10 @@ camera_as_float = ski.util.img_as_float(camera)
 
 # Create a 4-D stack. Halve the values in the Red and Blue channels.
 # Duplicate the 2D image to get the alpha channel.
-camera_4D = np.stack([camera_as_float * 0.5,
-                      camera_as_float,
-                      camera_as_float * 0.5,
-                      camera_as_float],
+camera_4D = np.stack([camera_as_float * 0.5,  # Red
+                      camera_as_float,        # Green
+                      camera_as_float * 0.5,  # Blue
+                      camera_as_float],       # Alpha
                       axis=2)
 
 # Set roughly half of the pixels to have a uniform transparency value.
@@ -654,6 +675,19 @@ camera_4D[:, 240:512, 3] = 0.5
 # Show the result.
 show_attributes(camera_4D)
 plt.imshow(camera_4D);
+```
+
+```{python tags=c("remove-cell", "hide-output")}
+# We regenerate and store the output image for page generation, used above.
+# Check this code against the solution code above.
+# Another way of generating the 3D stack.
+c_4d = np.repeat(camera_as_float[..., None], 4, axis=2)
+# Scale red and blue using broadcasting
+c_4d = c_4d * [[[0.5, 1, 0.5, 1]]]
+# Halve alpha (opacity) for right half of image.
+c_4d[:, 240:512, 3] = 0.5
+plt.imshow(c_4d)
+plt.savefig('images/shoegaze.png')
 ```
 
 Now, if you tried to do the `float64` conversion using the `numpy` `.astype()` method, things will seem OK at first:
@@ -684,18 +718,18 @@ show_attributes(camera_4D_error)
 plt.imshow(camera_4D_error);
 ```
 
-Matplotlib complains that the maximum values (255.0) violate the required 0 to 1 range of `float64` images. It tries to clip the data to the valid range, but with horrible visual results. Always use `skimage` conversion functions, to ensure the proper pixel intensity range for the current `dtype`, to avoid these sorts of errors...
+Matplotlib complains that the maximum values (255.0) violate the required 0 to 1 range of `float64` images. It tries to clip the data to the valid range, but with horrible visual results. Use `skimage` conversion functions, to ensure the proper pixel intensity range for the current `dtype`, to avoid these sorts of errors...
 
 
 ::: {solution-end}
 :::
 
 
-# Not all 3D images are in color...
+## Not all 3D images are in color...
 
-We noted [earlier](brain-images) that it is important to know that not all 3D images contain color information. What sort of images are these? Typically, they are images obtained during [medical imaging](https://en.wikipedia.org/wiki/Medical_imaging) scans, like brain imaging. The "slices" in the third dimension, for these images, are literally slices of a 3D object (like a brain, chest, arm or leg!) rather than color channels.
+We noted [earlier](brain-images) that it is important to know that not all 3D images contain color information. What sort of images are these?  One set of examples are images obtained during [medical imaging](https://en.wikipedia.org/wiki/Medical_imaging) scans, like brain imaging. The "slices" in the third dimension, for these images, are literally slices of a 3D object (like a brain, chest, arm or leg!) rather than color channels.
 
-To show this, below we use `ski.io.imread()` to load in an image in one of these formats. The image is an X-ray of the head of a desert [iguana](https://github.com/neurolabusc/niivue-images/tree/main).
+To show this, below we use `ski.io.imread()` to load an image in one of these formats. The image is an X-ray of the head of a desert [iguana](https://github.com/neurolabusc/niivue-images/tree/main).
 
 *Note:* here we are loading in a `.png` image, this is a highly atypical format to store medical images, but we use it just for illustration of a 3D image that does not contain color, using a familiar image format... The original image file, in the more standard [Nifti format](https://brainder.org/2012/09/23/the-nifti-file-format), is [here](https://github.com/neurolabusc/niivue-images/blob/main/Iguana.nii.gz).
 
@@ -721,34 +755,40 @@ You can see that we are walking through the iguana's head, in the vertical direc
 
 Because this image file contains information about a literal 3D object (e.g. an iguana's head), we can refer to it as a *volumetric* image. In such images, the third dimension contains *spatial information*, and not *color information*.
 
-Both `skimage` and `matplotlib` know the slices in the third dimension are not color channels because there are many too many slices to function as color channels, so it is assumed that the image is volumetric.
+If you try and display these images that have more than four elements on the
+third dimension, Matplotlib will complain, because there too many elements for
+the third dimension values to function as color channels.
 
+```{python tags=c("raises-exception")}
+plt.imshow(iguana)
+```
 
-# Summary
+## Summary
 
 On this page we have seen that:
 
 - `skimage` represents images as NumPy arrays.
+- Many `skimage` functions take NumPy arrays as arguments.
+- The `ski.io` module handles input and output (e.g. reading and saving image
+  files).
+- `skimage` supports multiple `dtypes` in image arrays, and contains
+  convenience functions for converting between `dtypes`.
+- `skimage` supports multiple colorspaces — ways of mapping array values to
+  colors.
+- Matplotlib supports both three-channel color image arrays with shape `(n, m,
+  3)` and four-channel color image arrays with shape `(n, m, 4)`, where an
+  extra channel codes for transparency/opacity.
+- Some 3D images are volumetric, and do not contain color channels, despite
+  having a third dimension. `skimage` supports these image formats as well,
+  but you will often have to slice these images to display them in Matplotlib.
 
-- Most `skimage` functions take NumPy arrays as arguments.
+On the [next page](3_skimage_processing_from_numpy_and_scipy) we will look at
+how image processing can be performed using NumPy, SciPy and Scikit-image.
 
-- The `ski.io` module handles input and output (e.g. reading and saving image files).
+## References
 
-- `skimage` supports multiple `dtypes` in image arrays, and contains convenience functions for converting between `dtypes`.
-
-- `skimage` supports multiple colorspaces which use different color representations to the default RGB colorspace.
-
-- `skimage` supports both three-channel color image arrays with shape `(n, m, 3)` and four-channel color image arrays with shape `(n, m, 4)`, where an extra channel codes for transparency/opacity.
-
-- Some 3D images are volumetric, and do not contain color channels, despite having a third dimension. `skimage` supports these image formats as well.
-
-On the [next page](3_skimage_processing_from_numpy_and_scipy) we will look at how image processing can be performed using NumPy, SciPy and Scikit-image.
-
-
-# References
-
-Based on: https://lectures.scientific-python.org/packages/scikit-image/index.html
-
-Based on: https://github.com/scikit-image/skimage-tutorials/blob/main/lectures/
-
-Reference: https://jni.github.io/i2k-skimage-napari/lectures/1_image_filters.html
+* [Scientific Python Lecture Notes - image
+  processing](https://lectures.scientific-python.org/advanced/image_processing)
+* [Scientific Python Lecture Notes:
+  scikit-image](https://lectures.scientific-python.org/packages/scikit-image/index.html)
+* [Napari tutorial](https://jni.github.io/i2k-skimage-napari/lectures/1_image_filters.html)
