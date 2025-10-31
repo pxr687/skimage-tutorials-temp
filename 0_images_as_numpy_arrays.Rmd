@@ -422,7 +422,7 @@ Applying changes such as these to the numbers in the array is the fundamental me
 
 ![](images/processing_definition.png)
 
-So, remember this maxim: *"image processing" is when we do something which changes the numbers inside the image array, and therefore changes the corresponding visual image*. Such image processing operations are carried out by popular software, including that used to edit images for various social media platforms. They are also carried out in a scientific context in fields like medical imaging, where they are applied to the image arrays we get from CT scans and MRI scans, for example.
+So, remember this maxim: *"image processing" is when we do something that analyzes or changes the numbers inside the image array*. If we change the array, we change the corresponding visual image. Such image processing operations are carried out by popular software, including that used to edit images for various social media platforms. They are also carried out in a scientific context in fields like medical imaging, where they are applied to the image arrays we get from CT scans and MRI scans, for example.
 
 
 ## Even more complex images
