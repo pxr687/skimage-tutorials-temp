@@ -1066,9 +1066,10 @@ plt.imshow(noisy_camera_solution);
 # We regenerate and store the output image for page generation, used above.
 # Check this code against the solution code above.
 out_rng = np.random.default_rng(1939)  # Predictable output for predictable image.
-out_sol = np.stack([camera, camera, camera], axis=2)  # Regenerate solution
+out_sol = np.repeat(camera[..., None], 3, axis=2)  # Another way of generating 3D stack.
 out_face = out_sol[100:200, 190:260, :]
-out_sol[100:200, 190:260, :] = out_face + out_rng.integers(-100, 100, size=face.shape)
+# Use the fact that out_face is a view.
+out_face[:] = out_face + out_rng.integers(-100, 100, size=out_face.shape)
 plt.imshow(out_sol);
 plt.savefig('images/corrupted_camera.png')
 ```
