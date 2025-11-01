@@ -599,7 +599,7 @@ plt.imshow(astronaut);
 
 If we try to filter this image with our (3, 3) `mean_kernel` we will get an error:
 
-```{python}
+```{python tags=c("raises-exception")}
 # Oh dear.
 astronaut_mean_filtered = ndi.correlate(astronaut, weights=mean_kernel)
 ```
@@ -698,7 +698,7 @@ Pay attention here to the effect on the *color* of the image. How is it differen
 
 You'll notice that the colors have changed substantially, relative to when we filtered each channel separately. This is because the 3D kernel is averaging across the color channels. We may want this effect (it is somewhat retro), but if we do not want to affect the color of the image, then generally filtering the channels separately is the way to go...
 
-<!-- #region -->
+
 # Summary
 
 This page has showed how to perform mean filtering, using `numpy`, `scipy` and `skimage`. On the [next page](6_gaussian_sharpening_edge), we will look at using different convolution kernels to get different filtering effects.
