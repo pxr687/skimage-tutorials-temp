@@ -476,11 +476,9 @@ It is fairly standard in `skimage` for `float64` images to have a pixel
 intensity range between 0 and 1 (or -1 to 1, but we digress).  Among other
 things, this matches the conventions that Matplotlib uses to display images;
 as [we have seen](color-and-matplotlib), Matplotlib will render single-channel
-images with any value range, using the colormap.  However, values outside the
-standard integer (0..255) or float (0, 1) range may be unexpected for
-subsequent processing operations. We can use
-`ski.exposure.rescale_intensity()` to ensure our image adheres to the
-`skimage` (0, 1) convention:
+images with any value range, using the colormap.  We might therefore choose to
+rescale the image to have range 0 through 1. We can use
+`ski.exposure.rescale_intensity()` to do that.
 
 ```{python}
 # Ensure the correct pixel intensity range.
@@ -744,10 +742,10 @@ We can see now that there are 179 slices in the third dimension - however, we do
 ```{python}
 # Show multiple slices of the iguana's head...
 plt.figure(figsize=(16, 6))
-for count, i in enumerate(np.linspace(10, iguana.shape[2]-1, num=10, dtype=int)):
-    plt.subplot(2, 5, count+1)
-    plt.imshow(iguana[:, :, i])
-    plt.title(f"`iguana[:, :, {i}]`")
+for count, k in enumerate(range(10, 84, 8)):
+    plt.subplot(2, 5, count + 1)
+    plt.imshow(iguana[:, :, k])
+    plt.title(f"`iguana[:, :, {k}]`")
     plt.axis('off')
 ```
 
@@ -755,13 +753,10 @@ You can see that we are walking through the iguana's head, in the vertical direc
 
 Because this image file contains information about a literal 3D object (e.g. an iguana's head), we can refer to it as a *volumetric* image. In such images, the third dimension contains *spatial information*, and not *color information*.
 
-If you try and display these images that have more than four elements on the
-third dimension, Matplotlib will complain, because there too many elements for
-the third dimension values to function as color channels.
+If you try to display images that have more than four elements on the third
+dimension, Matplotlib will give an error "Invalid shape ... for image data",
+Make a new cell and try `plt.imshow(iguana)` to trigger this error.
 
-```{python tags=c("raises-exception")}
-plt.imshow(iguana)
-```
 
 ## Summary
 
