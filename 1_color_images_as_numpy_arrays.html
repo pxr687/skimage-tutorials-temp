@@ -183,17 +183,7 @@
 <li class="toctree-l1 current active"><a class="current reference internal" href="#">What about color?</a></li>
 
 <li class="toctree-l1"><a class="reference internal" href="2_skimage_intro.html">Introducing Scikit-image</a></li>
-
-
-
-
-
-
-
-
-
-
-<li class="toctree-l1"><a class="reference internal" href="3_skimage_processing_from_numpy_and_scipy.html">(Scikit) Image processing, via NumPy and SciPy</a></li>
+<li class="toctree-l1"><a class="reference internal" href="3_skimage_processing_from_numpy_and_scipy.html">(Scikit-) Image processing, via NumPy and SciPy</a></li>
 
 
 
@@ -1335,9 +1325,9 @@ interactively, to see the random draw a few times:</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>X1 = 0.69
-X2 = 0.15
-X3 = 0.37
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>X1 = 0.88
+X2 = 0.33
+X3 = 0.78
 </pre></div>
 </div>
 </div>
@@ -1364,12 +1354,12 @@ X3 = 0.37
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Red (X1) = 0.76
-Green (X2) = 0.06
-Blue (X3) = 0.35
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Red (X1) = 0.77
+Green (X2) = 0.26
+Blue (X3) = 0.77
 </pre></div>
 </div>
-<img alt="_images/64c59ee0a4b15371db4aad8899bc803e86b24ea7097007c3c139eae0f4434008.png" src="_images/64c59ee0a4b15371db4aad8899bc803e86b24ea7097007c3c139eae0f4434008.png" />
+<img alt="_images/62794a35e998997cfb93760584ae8ee22e535cd5b158fdf879a197f013683677.png" src="_images/62794a35e998997cfb93760584ae8ee22e535cd5b158fdf879a197f013683677.png" />
 </div>
 </div>
 <p>So, each two-dimensional display image has a “hidden” three-dimensional array behind it. Each slice of the third dimension is a color channel. The mix of values at a given element in each color channel determines the color of that pixel in the rendered image. You may want to view this image in a new browser window, to see more clearly the exact mixes of the color channels, which are shown above each square on the right-hand side of the image:</p>
@@ -1386,7 +1376,7 @@ Blue (X3) = 0.35
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/298b4e24d0aff5b007b4f17560b45555baadd27484319cd81c4158ea7469cb6f.png" src="_images/298b4e24d0aff5b007b4f17560b45555baadd27484319cd81c4158ea7469cb6f.png" />
+<img alt="_images/ecea532fa4c2f694fd6eb9bd684538072a3081a5b846d1034fc66274c64abb55.png" src="_images/ecea532fa4c2f694fd6eb9bd684538072a3081a5b846d1034fc66274c64abb55.png" />
 </div>
 </div>
 <p>We have now completed our perilous expedition into the third dimension… We
@@ -1544,21 +1534,25 @@ values:</p>
 <img alt="_images/9159f0e5f1f40c662ca18a6bc7b2cf6a82b37e52ee75300e0c16f2d948bc3a71.png" src="_images/9159f0e5f1f40c662ca18a6bc7b2cf6a82b37e52ee75300e0c16f2d948bc3a71.png" />
 </div>
 </div>
-<div class="admonition note">
+<div class="admonition note" id="color-and-matplotlib">
 <p class="admonition-title">Note</p>
-<p><strong>Intensity and display</strong></p>
+<p><strong>Matplotlib, channels, and colors</strong></p>
 <p>We haven’t made this explicit yet, but it is Matplotlib that determines the
 color from an image array.</p>
-<p>That is, it is Matplotlib that looks at a floating point image, and specifies
-that a pixel (or color channel) value of 1 is the maximum, and 0 is the
-minimum.  Therefore a pixel that is (1.0, 1.0, 1.0) displays as white, and
-(0.0, 0.0, 0.0) displays as black.  Matplotlib considers 0 or below 0, and
-1 or above as 1, so a pixel value of (2.0, 1.0, 99.0) will also display as
-white, and (-1.0, -99.0, 0) will display as black.</p>
-<p>It is Matplotlib that says that integer image values of &gt;=255 are the maximum,
-and &lt;=0 are the minimum; (255, 255, 255) and (1000, 2000, 3000) (in an integer
-<code class="docutils literal notranslate"><span class="pre">dtype</span></code> that allows those values) display as white; (0, 0, 0) and (-1, -100,
--1000) display as black.</p>
+<p>That is, it is Matplotlib that looks at a three-channel floating point image,
+and specifies that a color channel value of 1 is the maximum, and 0 is the
+minimum. Therefore a pixel that is (1.0, 1.0, 1.0) displays as white, and
+(0.0, 0.0, 0.0) displays as black.  Matplotlib considers &lt;= 0 as 0, and &gt;=
+1 as 1, so a pixel value of (2.0, 1.0, 99.0) will also display as white, and
+(-1.0, -99.0, 0) will display as black.</p>
+<p>It is Matplotlib that says that three-channel integer image values of &gt;=255
+are the maximum, and &lt;=0 are the minimum; (255, 255, 255) and (1000, 2000,
+3000) (in an integer <code class="docutils literal notranslate"><span class="pre">dtype</span></code> that allows those values) display as white; (0,
+0, 0) and (-1, -100, -1000) display as black.</p>
+<p>Note that Matplotlib behaves differently with a single-channel integer or
+floating point images.  It uses the colormap for single-channel images, mapping
+the minimum value to the first value in the colormap, and the maximum value to
+last.</p>
 </div>
 <p>Ok, now we have clarified the mystical 255 pixel value, let’s use a <code class="docutils literal notranslate"><span class="pre">for</span></code> loop
 to extract each color channel of <code class="docutils literal notranslate"><span class="pre">coffee</span></code> image. What do you think Matplotlib
@@ -1871,7 +1865,24 @@ channels by multiplying their pixel values by 0:</p>
 <p>One use of noise is to obscure or fuzz a part of the image.</p>
 <p>In this case, let’s assume that the person in the <code class="docutils literal notranslate"><span class="pre">camera</span></code> image wants to make it more difficult for someone to identify him from the image.  Accordingly, we are going to add some random noise to the region around his face.  To make that noise even more distracting, it should be random noise on all three color channels, to give a confusing mix of random color, added to the face area of the image.</p>
 <p>Here is the original image:</p>
-<p><img alt="" src="_images/camera_plot.png" /></p>
+<div class="cell tag_hide-input docutils container">
+<details class="admonition hide above-input">
+<summary aria-label="Toggle hidden content">
+<p class="collapsed admonition-title">Show code cell source</p>
+<p class="expanded admonition-title">Hide code cell source</p>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">skimage</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">ski</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">ski</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">camera</span><span class="p">());</span>
+</pre></div>
+</div>
+</div>
+</details>
+<div class="cell_output docutils container">
+<img alt="_images/50aff3d36362558deba307a37ae4682958e48d2b46c8fe49483f0733bf1123b0.png" src="_images/50aff3d36362558deba307a37ae4682958e48d2b46c8fe49483f0733bf1123b0.png" />
+</div>
+</div>
 <p>You should use NumPy and numerical operations only, to create something like
 the following image (the exact image will depend on your random noise):</p>
 <p><img alt="" src="_images/corrupted_camera.png" /></p>
@@ -1944,14 +1955,14 @@ Min Pixel Value: 0
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/b011f37b79137df4723f0d73f5d89c9317639e47cc1c6426a69f14fadc4cda2b.png" src="_images/b011f37b79137df4723f0d73f5d89c9317639e47cc1c6426a69f14fadc4cda2b.png" />
+<img alt="_images/e67a1fec03d28cdf4e5f3cf1d94aa40608c71be612abed86744d8462c2209420.png" src="_images/e67a1fec03d28cdf4e5f3cf1d94aa40608c71be612abed86744d8462c2209420.png" />
 </div>
 </div>
 </section>
 </div>
 </section>
 <section id="more-actually-complex-images">
-<h2>More (actually) complex images<a class="headerlink" href="#more-actually-complex-images" title="Link to this heading">#</a></h2>
+<span id="brain-images"></span><h2>More (actually) complex images<a class="headerlink" href="#more-actually-complex-images" title="Link to this heading">#</a></h2>
 <p>So far we have looked at simple images - 2D binary and grayscale low-resolution image arrays, like <code class="docutils literal notranslate"><span class="pre">smiley</span></code> - or more complex color images with three color channels (like <code class="docutils literal notranslate"><span class="pre">coffee</span></code>). However, the principles we have seen extend to even more complex images, like the image arrays generated by <a class="reference external" href="https://en.wikipedia.org/wiki/Neuroimaging">brain imaging</a>, for instance.</p>
 <p>Here is an image of one “slice” of one of the authors’ brains, which was captured by a <a class="reference external" href="https://en.wikipedia.org/wiki/Magnetic_resonance_imaging">magnetic resonance imaging</a> scanner:</p>
 <div class="cell docutils container">

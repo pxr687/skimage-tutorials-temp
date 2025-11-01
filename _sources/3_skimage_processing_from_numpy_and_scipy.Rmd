@@ -13,7 +13,7 @@ jupyter:
     name: python3
 ---
 
-# (Scikit) Image processing, via NumPy and SciPy
+# (Scikit-) Image processing, via NumPy and SciPy
 
 This page will explore foundational image processing techniques, as operations on the values in a NumPy image array. First, we will explore how to achieve specific effects using NumPy and SciPy. We will demonstrate what these operations are doing to an image at the level of the array pixels. After that, we will show how more sophisticated extensions of these techniques can be implemented with Scikit-image, focusing on how it is often the same NumPy and SciPy operations that Scikit image is using "under the hood".
 
@@ -585,14 +585,13 @@ Your mission now is to transform `camera` into this slightly brain-bending image
 
 For comparison, here is the original `camera` image and its attributes:
 
-![](images/camera_plot.png)
-
+```{python}
+camera = ski.data.camera()
+plt.imshow(camera)
 ```
-Type: <class 'numpy.ndarray'>
-dtype: uint8
-Shape: (512, 512)
-Max Pixel Value: 255
-Min Pixel Value: 0
+
+```{python}
+show_attributes(camera)
 ```
 
 Your final image should have the following attributes:
@@ -801,13 +800,16 @@ plt.imshow(i_img[0:8, :]);
 
 Take the original `camera` image:
 
-![](images/camera_plot.png)
+```{python}
+camera = ski.data.camera()
+plt.imshow(camera)
+```
 
 ...and crop it down to this target image, using only NumPy indexing:
 
 ![](images/camera_cropped.png)
 
-These are the attributes which your final image should possess:
+These are the attributes that your final image should possess:
 
 ```
 Type: <class 'numpy.ndarray'>

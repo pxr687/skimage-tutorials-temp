@@ -181,17 +181,7 @@
 <li class="toctree-l1"><a class="reference internal" href="1_color_images_as_numpy_arrays.html">What about color?</a></li>
 
 <li class="toctree-l1"><a class="reference internal" href="2_skimage_intro.html">Introducing Scikit-image</a></li>
-
-
-
-
-
-
-
-
-
-
-<li class="toctree-l1"><a class="reference internal" href="3_skimage_processing_from_numpy_and_scipy.html">(Scikit) Image processing, via NumPy and SciPy</a></li>
+<li class="toctree-l1"><a class="reference internal" href="3_skimage_processing_from_numpy_and_scipy.html">(Scikit-) Image processing, via NumPy and SciPy</a></li>
 
 
 
@@ -1095,7 +1085,7 @@ convention for the meaning of “row” and “column”.</p>
 <p>We hope you’ll agree that the image now better represents the exclamation mark symbol (“!”) than the English letter “i”. This change was achieved through altering the location of the numbers in the image array.</p>
 <p>Applying changes such as these to the numbers in the array is the fundamental mechanism of <em>image processing</em> - which can be defined as:</p>
 <p><img alt="" src="_images/processing_definition.png" /></p>
-<p>So, remember this maxim: <em>“image processing” is when we do something which changes the numbers inside the image array, and therefore changes the corresponding visual image</em>. Such image processing operations are carried out by popular software, including that used to edit images for various social media platforms. They are also carried out in a scientific context in fields like medical imaging, where they are applied to the image arrays we get from CT scans and MRI scans, for example.</p>
+<p id="ip-maxim">So, remember this maxim: <em>“image processing” is when we do something that analyzes or changes the numbers inside the image array</em>. If we change the array, we change the corresponding visual image. Such image processing operations are carried out by popular software, including that used to edit images for various social media platforms. They are also carried out in a scientific context in fields like medical imaging, where they are applied to the image arrays we get from CT scans and MRI scans, for example.</p>
 <section id="even-more-complex-images">
 <h2>Even more complex images<a class="headerlink" href="#even-more-complex-images" title="Link to this heading">#</a></h2>
 <p>All of the principles we have seen apply both to the very small, low-resolution images we looked at above, and also to more complex images. The cell below loads in a picture of a Xenomorph (a creature from the <a class="reference external" href="https://en.wikipedia.org/wiki/Alien_(franchise)">Alien film franchise</a>). We show the image with <code class="docutils literal notranslate"><span class="pre">plt.imshow()</span></code>:</p>

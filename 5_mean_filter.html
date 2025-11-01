@@ -183,17 +183,7 @@
 <li class="toctree-l1"><a class="reference internal" href="1_color_images_as_numpy_arrays.html">What about color?</a></li>
 
 <li class="toctree-l1"><a class="reference internal" href="2_skimage_intro.html">Introducing Scikit-image</a></li>
-
-
-
-
-
-
-
-
-
-
-<li class="toctree-l1"><a class="reference internal" href="3_skimage_processing_from_numpy_and_scipy.html">(Scikit) Image processing, via NumPy and SciPy</a></li>
+<li class="toctree-l1"><a class="reference internal" href="3_skimage_processing_from_numpy_and_scipy.html">(Scikit-) Image processing, via NumPy and SciPy</a></li>
 
 
 
@@ -1112,7 +1102,7 @@ The input is extended by wrapping around to the opposite edge.</p></li>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/8e0572260a0d5189ff10792820ebe575fa366d5ed6b37afc8646f715fb8ab285.png" src="_images/8e0572260a0d5189ff10792820ebe575fa366d5ed6b37afc8646f715fb8ab285.png" />
+<img alt="_images/c8989b8160932ebb6a14792098088d3381b4e7c7b659c3798488bb9c435db1ab.png" src="_images/c8989b8160932ebb6a14792098088d3381b4e7c7b659c3798488bb9c435db1ab.png" />
 </div>
 </div>
 <p>The mean filter can remove some of the noise, restoring the clarity of the image:</p>
@@ -1137,7 +1127,7 @@ The input is extended by wrapping around to the opposite edge.</p></li>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/c7995a645aa3778c8219840c0c793fa228e7532fa4d227e9b56865daa6452602.png" src="_images/c7995a645aa3778c8219840c0c793fa228e7532fa4d227e9b56865daa6452602.png" />
+<img alt="_images/9df868b5a9714514e5395094b63e2239de718a6ffa0fe6ab18a20c1157b351c0.png" src="_images/9df868b5a9714514e5395094b63e2239de718a6ffa0fe6ab18a20c1157b351c0.png" />
 </div>
 </div>
 <p>We can see that the image is clearer, the noise has been reduced and some of the signal has been restored.</p>
@@ -1167,7 +1157,7 @@ The input is extended by wrapping around to the opposite edge.</p></li>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/8b2bea983fd3c049016ecbf89f58b5924c3b46834f78175c44e982576c7237fd.png" src="_images/8b2bea983fd3c049016ecbf89f58b5924c3b46834f78175c44e982576c7237fd.png" />
+<img alt="_images/94eefb3bd7e8bd4df17f84a7d22cb1539a949cc27f5c16360ff53734dcdc9568.png" src="_images/94eefb3bd7e8bd4df17f84a7d22cb1539a949cc27f5c16360ff53734dcdc9568.png" />
 </div>
 </div>
 <p>As with many filtering operations, the effect of altering aspects of the filtering process (like a threshold value or kernel size), is very context-dependent. It may take many iterations before finding a “sweet spot”, and where the sweet spot is may be somewhat subjective.</p>
@@ -1372,7 +1362,7 @@ Min Pixel Value: 0
 <span class="g g-Whitespace">      </span><span class="mi">1</span> <span class="c1"># Oh dear.</span>
 <span class="ne">----&gt; </span><span class="mi">2</span> <span class="n">astronaut_mean_filtered</span> <span class="o">=</span> <span class="n">ndi</span><span class="o">.</span><span class="n">correlate</span><span class="p">(</span><span class="n">astronaut</span><span class="p">,</span> <span class="n">weights</span><span class="o">=</span><span class="n">mean_kernel</span><span class="p">)</span>
 
-<span class="nn">File /opt/hostedtoolcache/Python/3.12.11/x64/lib/python3.12/site-packages/scipy/ndimage/_filters.py:1375,</span> in <span class="ni">correlate</span><span class="nt">(input, weights, output, mode, cval, origin, axes)</span>
+<span class="nn">File /opt/hostedtoolcache/Python/3.12.12/x64/lib/python3.12/site-packages/scipy/ndimage/_filters.py:1375,</span> in <span class="ni">correlate</span><span class="nt">(input, weights, output, mode, cval, origin, axes)</span>
 <span class="g g-Whitespace">   </span><span class="mi">1309</span> <span class="nd">@_ni_docstrings</span><span class="o">.</span><span class="n">docfiller</span>
 <span class="g g-Whitespace">   </span><span class="mi">1310</span> <span class="k">def</span><span class="w"> </span><span class="nf">correlate</span><span class="p">(</span><span class="nb">input</span><span class="p">,</span> <span class="n">weights</span><span class="p">,</span> <span class="n">output</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s1">&#39;reflect&#39;</span><span class="p">,</span> <span class="n">cval</span><span class="o">=</span><span class="mf">0.0</span><span class="p">,</span>
 <span class="g g-Whitespace">   </span><span class="mi">1311</span>               <span class="n">origin</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">axes</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
@@ -1384,7 +1374,7 @@ Min Pixel Value: 0
 <span class="ne">-&gt; </span><span class="mi">1375</span>     <span class="k">return</span> <span class="n">_correlate_or_convolve</span><span class="p">(</span><span class="nb">input</span><span class="p">,</span> <span class="n">weights</span><span class="p">,</span> <span class="n">output</span><span class="p">,</span> <span class="n">mode</span><span class="p">,</span> <span class="n">cval</span><span class="p">,</span>
 <span class="g g-Whitespace">   </span><span class="mi">1376</span>                                   <span class="n">origin</span><span class="p">,</span> <span class="kc">False</span><span class="p">,</span> <span class="n">axes</span><span class="p">)</span>
 
-<span class="nn">File /opt/hostedtoolcache/Python/3.12.11/x64/lib/python3.12/site-packages/scipy/ndimage/_filters.py:1277,</span> in <span class="ni">_correlate_or_convolve</span><span class="nt">(input, weights, output, mode, cval, origin, convolution, axes)</span>
+<span class="nn">File /opt/hostedtoolcache/Python/3.12.12/x64/lib/python3.12/site-packages/scipy/ndimage/_filters.py:1277,</span> in <span class="ni">_correlate_or_convolve</span><span class="nt">(input, weights, output, mode, cval, origin, convolution, axes)</span>
 <span class="g g-Whitespace">   </span><span class="mi">1275</span> <span class="n">wshape</span> <span class="o">=</span> <span class="p">[</span><span class="n">ii</span> <span class="k">for</span> <span class="n">ii</span> <span class="ow">in</span> <span class="n">weights</span><span class="o">.</span><span class="n">shape</span> <span class="k">if</span> <span class="n">ii</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">]</span>
 <span class="g g-Whitespace">   </span><span class="mi">1276</span> <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">wshape</span><span class="p">)</span> <span class="o">!=</span> <span class="nb">input</span><span class="o">.</span><span class="n">ndim</span><span class="p">:</span>
 <span class="ne">-&gt; </span><span class="mi">1277</span>     <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;weights.ndim (</span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">wshape</span><span class="p">)</span><span class="si">}</span><span class="s2">) must match &quot;</span>

@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>(Scikit) Image processing, via NumPy and SciPy &#8212; Scikit-image via NumPy and SciPy</title>
+    <title>(Scikit-) Image processing, via NumPy and SciPy &#8212; Scikit-image via NumPy and SciPy</title>
   
   
   
@@ -183,17 +183,7 @@
 <li class="toctree-l1"><a class="reference internal" href="1_color_images_as_numpy_arrays.html">What about color?</a></li>
 
 <li class="toctree-l1"><a class="reference internal" href="2_skimage_intro.html">Introducing Scikit-image</a></li>
-
-
-
-
-
-
-
-
-
-
-<li class="toctree-l1 current active"><a class="current reference internal" href="#">(Scikit) Image processing, via NumPy and SciPy</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">(Scikit-) Image processing, via NumPy and SciPy</a></li>
 
 
 
@@ -477,7 +467,7 @@ document.write(`
               
 
 <div id="jb-print-docs-body" class="onlyprint">
-    <h1>(Scikit) Image processing, via NumPy and SciPy</h1>
+    <h1>(Scikit-) Image processing, via NumPy and SciPy</h1>
     <!-- Table of contents -->
     <div id="print-main-content">
         <div id="jb-print-toc">
@@ -487,7 +477,7 @@ document.write(`
             </div>
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">(Scikit) Image processing, via NumPy and SciPy</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">(Scikit-) Image processing, via NumPy and SciPy</a></li>
 <li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#resizing-an-image">Resizing an image</a></li>
 <li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#resizing-an-image-with-skimage">Resizing an image with <code class="docutils literal notranslate"><span class="pre">skimage</span></code></a></li>
 <li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#rotation">Rotation</a></li>
@@ -514,7 +504,7 @@ document.write(`
                 <article class="bd-article">
                   
   <section class="tex2jax_ignore mathjax_ignore" id="scikit-image-processing-via-numpy-and-scipy">
-<h1>(Scikit) Image processing, via NumPy and SciPy<a class="headerlink" href="#scikit-image-processing-via-numpy-and-scipy" title="Link to this heading">#</a></h1>
+<h1>(Scikit-) Image processing, via NumPy and SciPy<a class="headerlink" href="#scikit-image-processing-via-numpy-and-scipy" title="Link to this heading">#</a></h1>
 <p>This page will explore foundational image processing techniques, as operations on the values in a NumPy image array. First, we will explore how to achieve specific effects using NumPy and SciPy. We will demonstrate what these operations are doing to an image at the level of the array pixels. After that, we will show how more sophisticated extensions of these techniques can be implemented with Scikit-image, focusing on how it is often the same NumPy and SciPy operations that Scikit image is using “under the hood”.</p>
 <p>Remember that <em>image processing is when we do something which changes the numbers inside an image array, and therefore changes the corresponding visual image</em>? Well, in fact, all that even the fanciest image processing software is doing is just changing the pixel values inside image arrays, in various ways. This is true for image processing software with a graphical user interface, like <a class="reference external" href="https://www.adobe.com/th_en/products/photoshop">Adobe Photoshop</a>, as well as for code-based image processing software like Scikit-image.</p>
 <p>Let’s again build a simple image array, and look at how we can use NumPy alone to achieve some pretty radical changes to the original image. We will then look at the specific purposes that such changes are used for, with more complex images.</p>
@@ -1541,13 +1531,35 @@ Min Pixel Value: 0
 <p>Your mission now is to transform <code class="docutils literal notranslate"><span class="pre">camera</span></code> into this slightly brain-bending image:</p>
 <p><img alt="" src="_images/look_at_me.png" /></p>
 <p>For comparison, here is the original <code class="docutils literal notranslate"><span class="pre">camera</span></code> image and its attributes:</p>
-<p><img alt="" src="_images/camera_plot.png" /></p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>Type: &lt;class &#39;numpy.ndarray&#39;&gt;
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">camera</span> <span class="o">=</span> <span class="n">ski</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">camera</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">camera</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.image.AxesImage at 0x7f120513f950&gt;
+</pre></div>
+</div>
+<img alt="_images/50aff3d36362558deba307a37ae4682958e48d2b46c8fe49483f0733bf1123b0.png" src="_images/50aff3d36362558deba307a37ae4682958e48d2b46c8fe49483f0733bf1123b0.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">show_attributes</span><span class="p">(</span><span class="n">camera</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Type: &lt;class &#39;numpy.ndarray&#39;&gt;
 dtype: uint8
 Shape: (512, 512)
 Max Pixel Value: 255
 Min Pixel Value: 0
 </pre></div>
+</div>
+</div>
 </div>
 <p>Your final image should have the following attributes:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>Type: &lt;class &#39;numpy.ndarray&#39;&gt;
@@ -1844,10 +1856,23 @@ Min Pixel Value: 0.0
 <p class="admonition-title"><span class="caption-number">Exercise 15 </span></p>
 <section id="exercise-content">
 <p>Take the original <code class="docutils literal notranslate"><span class="pre">camera</span></code> image:</p>
-<p><img alt="" src="_images/camera_plot.png" /></p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">camera</span> <span class="o">=</span> <span class="n">ski</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">camera</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">camera</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.image.AxesImage at 0x7f120a7cc860&gt;
+</pre></div>
+</div>
+<img alt="_images/50aff3d36362558deba307a37ae4682958e48d2b46c8fe49483f0733bf1123b0.png" src="_images/50aff3d36362558deba307a37ae4682958e48d2b46c8fe49483f0733bf1123b0.png" />
+</div>
+</div>
 <p>…and crop it down to this target image, using only NumPy indexing:</p>
 <p><img alt="" src="_images/camera_cropped.png" /></p>
-<p>These are the attributes which your final image should possess:</p>
+<p>These are the attributes that your final image should possess:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>Type: &lt;class &#39;numpy.ndarray&#39;&gt;
 dtype: uint8
 Shape: (30, 80)
@@ -2232,7 +2257,7 @@ Min Pixel Value: 0
 <div class="cell_output docutils container">
 <div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
 <span class="ne">OverflowError</span><span class="g g-Whitespace">                             </span>Traceback (most recent call last)
-<span class="n">Cell</span> <span class="n">In</span><span class="p">[</span><span class="mi">70</span><span class="p">],</span> <span class="n">line</span> <span class="mi">2</span>
+<span class="n">Cell</span> <span class="n">In</span><span class="p">[</span><span class="mi">73</span><span class="p">],</span> <span class="n">line</span> <span class="mi">2</span>
 <span class="g g-Whitespace">      </span><span class="mi">1</span> <span class="c1"># Shortcut will not work for color images</span>
 <span class="ne">----&gt; </span><span class="mi">2</span> <span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">colorwheel</span> <span class="o">*</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span>
 
@@ -2656,11 +2681,11 @@ Min Pixel Value: 0.0
 <div class="cell_output docutils container">
 <div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
 <span class="ne">ValueError</span><span class="g g-Whitespace">                                </span>Traceback (most recent call last)
-<span class="n">Cell</span> <span class="n">In</span><span class="p">[</span><span class="mi">89</span><span class="p">],</span> <span class="n">line</span> <span class="mi">2</span>
+<span class="n">Cell</span> <span class="n">In</span><span class="p">[</span><span class="mi">92</span><span class="p">],</span> <span class="n">line</span> <span class="mi">2</span>
 <span class="g g-Whitespace">      </span><span class="mi">1</span> <span class="c1"># Ouch!</span>
 <span class="ne">----&gt; </span><span class="mi">2</span> <span class="n">ski</span><span class="o">.</span><span class="n">util</span><span class="o">.</span><span class="n">img_as_ubyte</span><span class="p">(</span><span class="n">gray_wheel</span><span class="p">)</span>
 
-<span class="nn">File /opt/hostedtoolcache/Python/3.12.11/x64/lib/python3.12/site-packages/skimage/util/dtype.py:576,</span> in <span class="ni">img_as_ubyte</span><span class="nt">(image, force_copy)</span>
+<span class="nn">File /opt/hostedtoolcache/Python/3.12.12/x64/lib/python3.12/site-packages/skimage/util/dtype.py:576,</span> in <span class="ni">img_as_ubyte</span><span class="nt">(image, force_copy)</span>
 <span class="g g-Whitespace">    </span><span class="mi">555</span> <span class="k">def</span><span class="w"> </span><span class="nf">img_as_ubyte</span><span class="p">(</span><span class="n">image</span><span class="p">,</span> <span class="n">force_copy</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
 <span class="g g-Whitespace">    </span><span class="mi">556</span><span class="w">     </span><span class="sd">&quot;&quot;&quot;Convert an image to 8-bit unsigned integer format.</span>
 <span class="g g-Whitespace">    </span><span class="mi">557</span><span class="sd"> </span>
@@ -2669,7 +2694,7 @@ Min Pixel Value: 0.0
 <span class="g g-Whitespace">    </span><span class="mi">575</span><span class="sd">     &quot;&quot;&quot;</span>
 <span class="ne">--&gt; </span><span class="mi">576</span>     <span class="k">return</span> <span class="n">_convert</span><span class="p">(</span><span class="n">image</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">uint8</span><span class="p">,</span> <span class="n">force_copy</span><span class="p">)</span>
 
-<span class="nn">File /opt/hostedtoolcache/Python/3.12.11/x64/lib/python3.12/site-packages/skimage/util/dtype.py:312,</span> in <span class="ni">_convert</span><span class="nt">(image, dtype, force_copy, uniform)</span>
+<span class="nn">File /opt/hostedtoolcache/Python/3.12.12/x64/lib/python3.12/site-packages/skimage/util/dtype.py:312,</span> in <span class="ni">_convert</span><span class="nt">(image, dtype, force_copy, uniform)</span>
 <span class="g g-Whitespace">    </span><span class="mi">309</span>     <span class="k">return</span> <span class="n">image</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">dtype_out</span><span class="p">)</span>
 <span class="g g-Whitespace">    </span><span class="mi">311</span> <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">min</span><span class="p">(</span><span class="n">image</span><span class="p">)</span> <span class="o">&lt;</span> <span class="o">-</span><span class="mf">1.0</span> <span class="ow">or</span> <span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">image</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mf">1.0</span><span class="p">:</span>
 <span class="ne">--&gt; </span><span class="mi">312</span>     <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Images of type float must be between -1 and 1.&quot;</span><span class="p">)</span>
@@ -2832,7 +2857,7 @@ Min Pixel Value: 0.0
   </div>
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">(Scikit) Image processing, via NumPy and SciPy</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">(Scikit-) Image processing, via NumPy and SciPy</a></li>
 <li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#resizing-an-image">Resizing an image</a></li>
 <li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#resizing-an-image-with-skimage">Resizing an image with <code class="docutils literal notranslate"><span class="pre">skimage</span></code></a></li>
 <li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#rotation">Rotation</a></li>
