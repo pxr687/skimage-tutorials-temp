@@ -638,7 +638,7 @@ plt.imshow(target_image_solution)
 plt.title('Gaussian Blur with `target_kernel`');
 ```
 
-```{python}
+```{python tags=c("remove-cell")}
 # This is not part of the solution, but here we save the resulting solution
 # image to display in the exercise introduction above.
 plt.imshow(target_image_solution)
@@ -1418,7 +1418,7 @@ plt.imshow(edgy_both_from_2by2_kernel );
 
 This page has showed how to use various convolution kernels to filter images, using `numpy`, `scipy` and `skimage`. We have seen how changing the convolutional kernel can alter the filtering process to achieve different aims, like blurring/smoothing and edge detection. On the [next page](7_median_nonlocal_filters) we will explore different types of filters, which do not use convolution to implement their filtering effects.
 
-<!-- #region -->
+
 # References
 
 Gulati, J. (2024) *NumPy for Image Processing*. KDnuggets. Available from: https://www.kdnuggets.com/numpy-for-image-processing 
