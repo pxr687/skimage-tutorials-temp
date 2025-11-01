@@ -850,17 +850,14 @@ ski.filters.try_all_threshold(camera,
 plt.tight_layout();
 ```
 
+<!-- #region -->
 # Summary
 
 This page has showed how to perform threshold filtering using `numpy`, `scipy` and `skimage`. On the [next page](5_mean_filter) we will look at convolutional filtering, where we modify pixel values based on the "local neighbourhood" of surrounding pixels.
 
 # References
 
-Based on 3.3.5 onward from: https://lectures.scientific-python.org/packages/scikit-image/index.html
-
-Based on: https://scikit-image.org/skimage-tutorials/lectures/1_image_filters.html
-
-Reference: https://www.kdnuggets.com/numpy-for-image-processing
+Gulati, J. (2024) *NumPy for Image Processing*. KDnuggets. Available from: https://www.kdnuggets.com/numpy-for-image-processing 
 
 Reference: https://setosa.io/ev/image-kernels
 
@@ -868,8 +865,13 @@ Reference: https://wiki.imindlabs.com.au/ds/aml/4_problem_domains/1-image-proces
 
 Reference: https://www.geeksforgeeks.org/deep-learning/types-of-convolution-kernels
 
-Reference: skimage tutorials (check versions), scipy lecture notes
 
-Reference: https://jni.github.io/i2k-skimage-napari/lectures/1_image_filters.html
+Adapted from:
 
-Reference: https://textbook.nipraxis.org/otsu_threshold.html
+* [Scientific Python Lecture Notes - image
+  processing](https://lectures.scientific-python.org/advanced/image_processing)
+* [Scientific Python Lecture Notes: scikit-image](https://lectures.scientific-python.org/packages/scikit-image/index.html)
+* [Nipraxis course - Otsu threshold](https://textbook.nipraxis.org/otsu_threshold.html)
+
+with further inspiration from [Napari tutorial](https://jni.github.io/i2k-skimage-napari/lectures/1_image_filters.html) and [`skimage`](https://github.com/scikit-image/skimage-tutorials) [tutorials](https://scipy-2024-image-analysis.github.io/tutorial/01_images_are_arrays.html).
+<!-- #endregion -->

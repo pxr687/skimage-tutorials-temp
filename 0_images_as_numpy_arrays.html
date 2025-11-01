@@ -58,6 +58,8 @@
     <script async="async" src="_static/sphinx-thebe.js?v=c100c467"></script>
     <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
     <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <script>DOCUMENTATION_OPTIONS.pagename = '0_images_as_numpy_arrays';</script>
     <link rel="canonical" href="https://pxr687.github.io/skimage-tutorials-temp/0_images_as_numpy_arrays.html" />
     <link rel="icon" href="_static/pandas_numpy.ico"/>
@@ -502,30 +504,67 @@ document.write(`
                   
   <section class="tex2jax_ignore mathjax_ignore" id="images-as-numpy-arrays">
 <h1>Images as NumPy arrays<a class="headerlink" href="#images-as-numpy-arrays" title="Link to this heading">#</a></h1>
-<p>This page explores how images can be represented as NumPy arrays. To get started, let’s think about the meaning of the word “image”.  The <em>intuitive meaning</em> is roughly “a picture of something”, or perhaps more broadly “a visual representation of something”. This is the familiar meaning which applies to images we encounter in everyday life, like advertisement posters, paintings, drawings, photographs and so on.</p>
-<p>The <em>technical meaning</em> of image - in scientific computing - is <em>an at least two dimensional array</em>. Depending on your background and familiarity with the topic, this definition may sound more or less strange. We assure you that each meaning is consistent with the other. However, each meaning refers to different, but overlapping, sets of things.</p>
-<p>Imagine an image - in the intuitive sense - printed on a piece of paper. The image has two dimensions, one dimensions runs along the <em>length</em> of the paper and one runs along the <em>width</em> of the paper. Now imagine the <em>computer file</em> that was used to print the image onto the paper (e.g. the image file that was sent to a run-of-the-mill printer to produce the printed image). The computer file must contain information which tells the printer what to put where along each dimension of the piece of paper. For instance, should that location contain black, white, gray or a color? By controlling these things, the information contained in the file will ultimately determine the look of the printed image (e.g. what it is a picture <em>of</em>).</p>
+<p>This page explores how images can be represented as NumPy arrays. To get
+started, let’s think about the meaning of the word “image”.  The <em>intuitive
+meaning</em> is roughly “a picture of something”, or perhaps more broadly “a
+visual representation of something”. This is the familiar meaning which
+applies to images we encounter in everyday life, like advertisement posters,
+paintings, drawings, photographs and so on.</p>
+<p>An image - in scientific computing - is <em>an array that has at least two dimensions</em>. Depending on your background and familiarity with the topic, this definition may sound more or less strange. We assure you that the two meanings are consistent with one other. However, each meaning refers to different, but overlapping, sets of things.</p>
+<p>Imagine an image — in the intuitive sense — printed on a piece of paper. The
+image has two dimensions, one dimension runs along the <em>length</em> of the paper
+and one runs along the <em>width</em> of the paper. Now imagine the <em>computer file</em>
+that was used to print the image onto the paper (e.g. the image file that was
+sent to a run-of-the-mill printer to produce the printed image). The computer
+file must contain information which tells the printer what to put where, along
+each dimension of the piece of paper. For instance, consider some location in
+the middle of the image.  Should that location contain black, white, grey or
+a colour? By controlling these things, the information contained in the file
+will ultimately determine the look of the printed image (e.g. what it is
+a picture <em>of</em>).</p>
 <p><img alt="" src="_images/printed_paper.png" /></p>
-<p>The file and resulting printed image might depict an object that was not originally created on a computer. The image may be of a hand painting, for example. Things like hand paintings fall under the intuitive meaning of “image”, but, until they are represented on a computer, they do not fall under the technical meaning of “image”. A hand painting is not an array of numbers, but the computer file which represents it is. The technical meaning of “image” refers to the computer representations of these things (e.g. a scan or photograph of a hand painting), as well as to other inherently digital images like digital photographs, CT scans, MRI scans etc. (more on these <a class="reference internal" href="2_skimage_intro.html"><span class="doc std std-doc">later</span></a>).</p>
-<p>Normally, we take an image (in the intuitive sense) and <em>then</em> represent it on a computer (by photographing or scanning it etc.). This can be referred to as <em>digitizing</em> an image. When digitizing, we take an image in the intuitive sense and convert it to an image in the technical sense, by representing it as an at least two-dimensional array of numbers.</p>
-<p>To get a deeper understanding of the computer representation of images, let’s do things the other way around to the normal procedure: let’s create an image, in the technical sense of a two-dimensional array, and then view it as an image, in the intuitive sense, as a visual representation that we can look at as we would any picture.</p>
+<p>The file and resulting printed image might depict an object that was not
+originally created on a computer. The image may be of an oil painting, for
+example. Things like paintings fall under the intuitive meaning of “image”,
+but, until they are represented on a computer, they do not fall under the
+technical meaning of “image”. A painting is not an array of numbers, but
+the computer file which represents it is. The technical meaning of “image”
+refers to the computer representations of these things (e.g. a scan or
+photograph of a painting), as well as to other inherently digital images like
+digital photographs, CT scans, MRI scans etc. (more on these
+<a class="reference internal" href="2_skimage_intro.html"><span class="doc std std-doc">later</span></a>).</p>
+<p>Normally, we take an image (in the intuitive sense) and <em>then</em> represent it on
+a computer (by taking a digital photograph or scanning it etc.). This can be
+referred to as <em>digitizing</em> an image. When digitizing, we take an image in the
+intuitive sense and convert it to an image in the technical sense, by
+representing it as an at least two-dimensional array of numbers.</p>
+<p>To get a deeper understanding of the computer representation of images, let’s
+create an image, in the technical sense of a two-dimensional array, and then
+<em>view it</em> as an image, in the intuitive sense, as a visual representation that
+we can look at as we would any picture.</p>
 <section id="the-simplest-images">
 <h2>The simplest images<a class="headerlink" href="#the-simplest-images" title="Link to this heading">#</a></h2>
 <p>First, we will import some Python libraries:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Library imports.</span>
+<span class="c1"># The Numpy library stores and manipulates arrays.</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="c1"># The Matplotlib library can display arrays as images.</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
 </pre></div>
 </div>
 </div>
 </div>
-<p>Let’s create a two-dimensional array using the familiar NumPy syntax. Notice  that we specify the <code class="docutils literal notranslate"><span class="pre">dtype</span></code>. For reasons we will discuss later, when dealing with images it is best to manually control the <code class="docutils literal notranslate"><span class="pre">dtype</span></code> we use, rather than letting NumPy or other libraries decide it for us:</p>
+<p>Let’s create a two-dimensional array using the familiar NumPy syntax. Notice
+that we specify the <code class="docutils literal notranslate"><span class="pre">dtype</span></code> — the type the numbers we store in the array. For
+reasons we will discuss later, when dealing with images it is best to manually
+control the <code class="docutils literal notranslate"><span class="pre">dtype</span></code> we use, rather than letting NumPy or other libraries
+decide it for us:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># A two-dimensional numpy array of 1&#39;s and 0&#39;s.</span>
-<span class="n">two_D_ones_and_zeros</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,],</span> 
+<span class="n">two_D_ones_and_zeros</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,],</span>
                                  <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,]],</span>
                                  <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">)</span>
 
@@ -541,7 +580,7 @@ document.write(`
 </div>
 </div>
 <p>Look at the output of the cell above. This is how NumPy shows us the contents of the array. For the rest of these tutorial pages, we will refer to this as the “raw” view of the array e.g. the default view that we see when we inspect the contents of the array without any fancy visualisation.</p>
-<p>This array is small enough that we can easily see it’s dimensionality. If we so wish, we can also use the <code class="docutils literal notranslate"><span class="pre">.shape</span></code> attribute to confirm the dimensions:</p>
+<p>This array is small enough that we can easily see its dimensionality. If we so wish, we can also use the <code class="docutils literal notranslate"><span class="pre">.shape</span></code> attribute to confirm the dimensions:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># The `.shape` attribute</span>
@@ -581,8 +620,21 @@ mean the values from <code class="docutils literal notranslate"><span class="pre
 second axis is the <em>column</em> axis.  We are therefore following the Numpy
 convention for the meaning of “row” and “column”.</p>
 </div>
-<p>You may (understandably) be thinking “that array does not look much like an image…”. This is a reasonable thought. So how can we view our array as an image in the intuitive sense - as a picture we can look at and appreciate with our high society friends at a gallery opening? One way is to use <code class="docutils literal notranslate"><span class="pre">plt.matshow()</span></code>, a function from the <a class="reference external" href="https://matplotlib.org">Matplotlib library</a>. The function name <code class="docutils literal notranslate"><span class="pre">plt.matshow()</span></code> stands for <code class="docutils literal notranslate"><span class="pre">mat</span></code>rix <code class="docutils literal notranslate"><span class="pre">show</span></code>. This function has this name because arrays are a representation of <a class="reference external" href="https://en.wikipedia.org/wiki/Matrix_(mathematics)">matrices</a>. As the name implies, it will display a two-dimensional array graphically.</p>
-<p>Let’s see how our <code class="docutils literal notranslate"><span class="pre">two_D_ones_and_zeros</span></code> looks when we pass it as an argument to <code class="docutils literal notranslate"><span class="pre">plt.matshow()</span></code>. We will use <code class="docutils literal notranslate"><span class="pre">plt.axis()</span></code> to keep the axes clear of numbers for now, to keep things uncluttered:</p>
+<p>You may (understandably) be thinking “that array does not look much like an
+image…”. This is a reasonable thought. So how can we view our array as an
+image in the intuitive sense — as a picture we can look at and appreciate with
+our high society friends at a gallery opening? One way is to use
+<code class="docutils literal notranslate"><span class="pre">plt.matshow()</span></code>, a function from the <a class="reference external" href="https://matplotlib.org">Matplotlib
+library</a>. The function name <code class="docutils literal notranslate"><span class="pre">plt.matshow()</span></code> stands for
+<code class="docutils literal notranslate"><span class="pre">mat</span></code>rix <code class="docutils literal notranslate"><span class="pre">show</span></code>. The function has this name because arrays are
+a representation of
+<a class="reference external" href="https://en.wikipedia.org/wiki/Matrix_(mathematics)">matrices</a>, where <em>matrix</em>
+is the mathematical name for a two-dimensional array. As the name implies, it
+will display a two-dimensional array graphically.</p>
+<p>Let’s see how our <code class="docutils literal notranslate"><span class="pre">two_D_ones_and_zeros</span></code> looks when we pass it as an argument
+to <code class="docutils literal notranslate"><span class="pre">plt.matshow()</span></code>. We will use <code class="docutils literal notranslate"><span class="pre">plt.axis('off')</span></code> to avoid some distracting
+labels on the image <em>axes</em>.  In our case the image axes are on the left and at
+the top of the image.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Show the array using `plt.matshow()`.</span>
@@ -595,8 +647,13 @@ convention for the meaning of “row” and “column”.</p>
 <img alt="_images/a7503772b2ec44885ce12ae0625739d1357d3075be33f26cbfdb8ced04c1a7c0.png" src="_images/a7503772b2ec44885ce12ae0625739d1357d3075be33f26cbfdb8ced04c1a7c0.png" />
 </div>
 </div>
-<p>Well, now it certainly is an image in the intuitive sense, albeit a strange one! Let’s break down what we see here.</p>
-<p>Each element of the array is shown as a colored square. The exact color of the square is determined by the number at the corresponding element of the array. Compare the “raw” array to the plot above - you’ll see that the yellow squares correspond to 1’s in the original array, and the blue squares correspond to 0’s:</p>
+<p>Well, now it certainly is an image in the intuitive sense, albeit a strange
+one! Let’s break down what we see here.</p>
+<p>Each element of the array is shown as a coloured square. The exact colour of
+the square is determined by the number at the corresponding element of the
+array. Compare the “raw” array to the plot above - you’ll see that the yellow
+squares correspond to 1’s in the original array, and the blue squares
+correspond to 0’s:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Show the array (&quot;raw&quot; NumPy output).</span>
@@ -611,7 +668,9 @@ convention for the meaning of “row” and “column”.</p>
 </div>
 </div>
 </div>
-<p>We will now create the same visualisation, but will allow Matplotlib to show us the default axis ticks, as we will not use <code class="docutils literal notranslate"><span class="pre">plt.xticks([])</span></code> and <code class="docutils literal notranslate"><span class="pre">plt.yticks([])</span></code> to clear the axes of the plot:</p>
+<p>We will now create the same visualisation, but will allow Matplotlib to show
+us the default axis ticks, as we will not use <code class="docutils literal notranslate"><span class="pre">plt.axis('off')</span></code> to clear the
+axes of the plot:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Show the array via `plt.matshow()`</span>
@@ -623,7 +682,10 @@ convention for the meaning of “row” and “column”.</p>
 <img alt="_images/893c4a3b0988c8fbea70cfc2eb32d254a493d7dea196b1c1b9c481aa769e9f2a.png" src="_images/893c4a3b0988c8fbea70cfc2eb32d254a493d7dea196b1c1b9c481aa769e9f2a.png" />
 </div>
 </div>
-<p>We can see the numbers 0 and 1 on the axes. These numbers refer to the the integer index location of each element. For instance, the element in the top-left corner is at row/column coordinate (0, 0), the element in the top-right corner is at (0, 1) and so on:</p>
+<p>We can see the numbers 0 and 1 on the axes. These numbers refer to the
+integer index location of each element. For instance, the element in the
+top-left corner is at row/column coordinate (0, 0), the element in the
+top-right corner is at (0, 1) and so on:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Get the element in the top-left (0, 0) location</span>
@@ -650,18 +712,83 @@ convention for the meaning of “row” and “column”.</p>
 </div>
 </div>
 </div>
-<p>Also notice that for now we are dealing with the <code class="docutils literal notranslate"><span class="pre">float64</span></code> <code class="docutils literal notranslate"><span class="pre">dtype</span></code>. You will find other <code class="docutils literal notranslate"><span class="pre">dtypes</span></code> in image arrays, and this can have big implications for how the image is displayed by Matplotlib. For now we will just deal with these <code class="docutils literal notranslate"><span class="pre">float64</span></code> numbers, and we will return to the topic of <code class="docutils literal notranslate"><span class="pre">dtype</span></code>s <a class="reference internal" href="1_color_images_as_numpy_arrays.html"><span class="doc std std-doc">later</span></a>.</p>
+<p>Also notice that for now we are dealing with the <code class="docutils literal notranslate"><span class="pre">float64</span></code> <code class="docutils literal notranslate"><span class="pre">dtype</span></code>. You will
+find other <code class="docutils literal notranslate"><span class="pre">dtypes</span></code> in image arrays, and this has a variety of important
+implications for how the image is displayed by Matplotlib. For now we will
+just deal with these <code class="docutils literal notranslate"><span class="pre">float64</span></code> numbers, and we will return to the topic of
+<code class="docutils literal notranslate"><span class="pre">dtype</span></code>s <a class="reference internal" href="1_color_images_as_numpy_arrays.html"><span class="doc std std-doc">later</span></a>.</p>
 </section>
 <section id="pixels-pixel-coordinates-and-interpolation">
 <h2>Pixels, pixel coordinates and interpolation<a class="headerlink" href="#pixels-pixel-coordinates-and-interpolation" title="Link to this heading">#</a></h2>
 <p>So far we have seen that each element in the image array controls what will be seen in each square of the image displayed by <code class="docutils literal notranslate"><span class="pre">plt.matshow()</span></code>. We can refer to each element in our image array as a <em>pixel</em>. This is an abbreviation of <em>picture element</em>. An image array, then, is a collection of pixels.</p>
-<p>Our image contains as many pixels as there are elements in the array. Since our image array contains 4 elements, it therefore has 4 pixels. Each pixel has either a 1 or a 0 value, in the <code class="docutils literal notranslate"><span class="pre">float64</span></code> <code class="docutils literal notranslate"><span class="pre">dtype</span></code>. This type of image, because it contains only two unique values, is called a <em>binary image</em>. When this array is displayed by <code class="docutils literal notranslate"><span class="pre">plt.matshow()</span></code>, by default, 1’s are shown as yellow squares and 0’s are shown as blue squares.</p>
-<p>It is important to distinguish between what we will call <em>array pixels</em> and <em>display pixels</em>. <em>Array pixels</em> are the pixel values in the image, considered as a two-dimensional array of numbers. However, the screen you are reading this tutorial on has a certain number of tiny “dots” which can be colored in different ways. The image you see on the screen is determined by the precise configuration and coloring of these dots. These dots are also called “pixels”, and because they are involved in the final display of image arrays, we will refer to them as <em>display pixels</em>.</p>
-<p>When we <em>display</em>, <em>visualise</em> or <em>render</em> an array image, our computer interprets our <em>array pixels</em> and then shows them as <em>display pixels</em>. <em>Display</em>, <em>visualise</em> and <em>render</em> are synonyms here for the process of taking an image, in the technical sense of an two-dimensional array, and showing it graphically using a visualisation tool like Matplotlib.</p>
-<p>Astute readers might reasonably say “hang on…if <em>display pixels</em> are tiny dots on my screen, then the image from <code class="docutils literal notranslate"><span class="pre">plt.matshow()</span></code> looks bigger than four pixels!”. This is correct. Matplotlib is drawing an image with many more pixels on your display screen than the array has values. Our image array contains 4 <em>array pixels</em>, but if Matplotlib displayed it with just 4 <em>display pixels</em>, the resulting visualisation would be tiny and impossible to view on whatever device you are reading this tutorial on.</p>
-<p>Thus, when our small (or <em>low-resolution</em>) image array is displayed/visualised on your screen by something like <code class="docutils literal notranslate"><span class="pre">plt.matshow()</span></code> the image array may be shown using a different, larger number of <em>display pixels</em> to the number of <em>array pixels</em> contained in the image array. What Matplotlib is doing here, behind the scenes, is something called <em>image interpolation</em>. This is defined as <a class="reference external" href="https://www.sciencedirect.com/topics/computer-science/image-interpolation#:~:text=Image%20interpolation%20is%20a%20technique,without%20degrading%20the%20visual%20quality.">“a technique by which a low-resolution image can be scaled up to a high-resolution image without degrading the visual quality”</a>.</p>
-<p>How does Matplotlib know what to show in the new, upscaled display pixels? It uses the original array pixels as a guide, to estimate what should go in the new display pixels, to give a good, albeit upscaled, representation of the information in the original image array. We will <a class="reference internal" href="3_skimage_processing_from_numpy_and_scipy.html"><span class="doc std std-doc">go into more detail about this later in this tutorial series</span></a>.</p>
-<p>To give a glimpse of what has happened behind the scenes we will save the <em>display image</em> to a new <code class="docutils literal notranslate"><span class="pre">.png</span></code> file, using <code class="docutils literal notranslate"><span class="pre">plt.savefig()</span></code>. We have saved the file in the following path in the directory this notebook is stored in: <code class="docutils literal notranslate"><span class="pre">images/two_D_ones_and_zeros_from_plot.png</span></code>.</p>
+<p>Our image contains as many pixels as there are elements in the array. Since
+our image array contains 4 elements, it therefore has 4 pixels. Each pixel has
+either a 1 or a 0 value, in the <code class="docutils literal notranslate"><span class="pre">float64</span></code> <code class="docutils literal notranslate"><span class="pre">dtype</span></code>. This type of image, because
+it contains only values of 0 and 1, is called a <em>binary image</em>. When this
+array is displayed by <code class="docutils literal notranslate"><span class="pre">plt.matshow()</span></code>, by default, 1’s are shown as yellow
+squares and 0’s are shown as blue squares.</p>
+<p>It is important to distinguish between what we will call <em>array pixels</em> and
+<em>display pixels</em>. <em>Array pixels</em> are the pixel values in the image, considered
+as a two-dimensional array of numbers. However, the screen (display) you are
+reading this tutorial on has a certain number of tiny “dots” which can be
+coloured in different ways. The image you see on the display is determined by
+the precise configuration and colouring of these dots. These dots are also
+called “pixels”, and because they are dots on the <em>display</em>, rather than in
+the original array, we will refer to them as <em>display pixels</em>.</p>
+<p>When we <em>visualise</em>, <em>render</em> or <em>display</em> an array image, our computer
+interprets our <em>array pixels</em> and then shows them as <em>display pixels</em>.
+<em>Visualise</em>, <em>render</em> and <em>display</em> are synonyms here for the process of
+taking an image, in the technical sense of an two-dimensional array, and
+showing it graphically using a visualisation tool like Matplotlib.</p>
+<p>Astute readers might reasonably say “hang on…if <em>display pixels</em> are tiny
+dots on my screen, then the image from <code class="docutils literal notranslate"><span class="pre">plt.matshow()</span></code> looks bigger than four
+pixels!”. This is correct. Matplotlib is drawing an image with many more
+pixels on your display screen than the array has values. Our image array
+contains 4 <em>array pixels</em>, but if Matplotlib displayed it with just 4 <em>display
+pixels</em>, the resulting visualisation would be tiny on your screen.  For
+example, the display on the (at time of writing) 13 inch Macbook Air laptop
+has 2560 pixels from left to right and 1664 from bottom to top, giving 224
+pixels per inch.  If we displayed our 2 by 2 array pixels as 2 by 2 display
+pixels, the displayed image would be <span class="math notranslate nohighlight">\(\frac{1}{112}\)</span> of an inch in each
+direction, and would be very difficult to see.</p>
+<p>Thus, when our small (or <em>low-resolution</em>) image array is displayed/visualised
+on your screen by something like <code class="docutils literal notranslate"><span class="pre">plt.matshow()</span></code>, Matplotlib has to:</p>
+<ol class="arabic simple">
+<li><p>work out what size the displayed image should be <em>on the monitor</em>;</p></li>
+<li><p>work out how many <em>monitor pixels</em> this will be.  In our case, with a tiny
+input array (2 x 2), there will be many more monitor pixel values than
+input array values;</p></li>
+<li><p>calculate the monitor pixels corresponding to make this much larger
+displayed image, and</p></li>
+<li><p>display the <em>monitor pixels</em> on the monitor.</p></li>
+</ol>
+<p>In working out the monitor pixels, Matplotlib is doing something called <em>image
+interpolation</em>. This is defined as <a class="reference external" href="https://www.sciencedirect.com/topics/computer-science/image-interpolation#:~:text=Image%20interpolation%20is%20a%20technique,without%20degrading%20the%20visual%20quality.">“a technique by which a low-resolution
+image can be scaled up to a high-resolution image without degrading the visual
+quality”</a>.
+We will <a class="reference internal" href="3_skimage_processing_from_numpy_and_scipy.html"><span class="doc std std-doc">go this process in more detail later in this tutorial
+series</span></a>.</p>
+<p>To give a glimpse of the kind of thing that has happened behind the scenes we
+can ask Matplotlib to do the same process of creating an output display image,
+by <em>saving</em> the image to a new <a class="reference external" href="https://en.wikipedia.org/wiki/PNG">Portable Network Graphics
+(PNG)</a> file, using <code class="docutils literal notranslate"><span class="pre">plt.savefig()</span></code>.  In
+doing so Matplotlib will do the same process as it did in displaying to the
+screen, but in this case, for saving to an output file.  Matplotlib will:</p>
+<ol class="arabic simple">
+<li><p>work out what size the displayed image should be <em>as stored in the file</em>,
+in physical units, such as inches;</p></li>
+<li><p>work out how many <em>pixels</em> this will be — in doing this, Matplotlib makes
+use of a setting called DPI (dots per inch — pixels per inch);</p></li>
+<li><p>calculate the saved pixels corresponding to make this much larger displayed
+image, and</p></li>
+<li><p>save the <em>output image pixels</em> to the image file.</p></li>
+</ol>
+<p>For example, in our case, we can work out (in ways that we won’t show here)
+that the desired (default) size will be 4.8 by 4.8 inches, that the DPI
+setting is 100, and therefore, the number of pixels in each dimension is 4.8
+x 100 = 480.</p>
+<p>We have saved the file in the following path in the directory this notebook is
+stored in: <code class="docutils literal notranslate"><span class="pre">images/two_D_ones_and_zeros_from_plot.png</span></code>.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Show the image.</span>
@@ -676,7 +803,8 @@ convention for the meaning of “row” and “column”.</p>
 <img alt="_images/893c4a3b0988c8fbea70cfc2eb32d254a493d7dea196b1c1b9c481aa769e9f2a.png" src="_images/893c4a3b0988c8fbea70cfc2eb32d254a493d7dea196b1c1b9c481aa769e9f2a.png" />
 </div>
 </div>
-<p>We will now read this new <code class="docutils literal notranslate"><span class="pre">.png</span></code> image back into this notebook as a NumPy array, to view it’s <code class="docutils literal notranslate"><span class="pre">shape</span></code> attribute.</p>
+<p>We will now read this new <code class="docutils literal notranslate"><span class="pre">.png</span></code> image back into this notebook as a NumPy
+array, to view its <code class="docutils literal notranslate"><span class="pre">shape</span></code> attribute.</p>
 <p>Loading files using Scikit-image (<code class="docutils literal notranslate"><span class="pre">skimage</span></code>) will be covered on <a class="reference internal" href="2_skimage_intro.html"><span class="doc std std-doc">later pages</span></a>, but for now we import the <code class="docutils literal notranslate"><span class="pre">.imread()</span></code> function from the input/output (<code class="docutils literal notranslate"><span class="pre">io</span></code>) module of <code class="docutils literal notranslate"><span class="pre">skimage</span></code>  to load the <code class="docutils literal notranslate"><span class="pre">.png</span></code> filter that we just saved via the code cell above.</p>
 <p><em>Note</em>: for reasons that will become clear later, we set the <code class="docutils literal notranslate"><span class="pre">as_gray</span></code> argument to <code class="docutils literal notranslate"><span class="pre">True</span></code> to ensure the image has the same number of dimensions as our original array.</p>
 <div class="cell docutils container">
@@ -685,7 +813,7 @@ convention for the meaning of “row” and “column”.</p>
 <span class="kn">from</span><span class="w"> </span><span class="nn">skimage</span><span class="w"> </span><span class="kn">import</span> <span class="n">io</span>
 
 <span class="c1"># Read in the image from the file we just saved.</span>
-<span class="n">from_file</span> <span class="o">=</span> <span class="n">io</span><span class="o">.</span><span class="n">imread</span><span class="p">(</span><span class="s2">&quot;images/two_D_ones_and_zeros_from_plot.png&quot;</span><span class="p">,</span> 
+<span class="n">from_file</span> <span class="o">=</span> <span class="n">io</span><span class="o">.</span><span class="n">imread</span><span class="p">(</span><span class="s2">&quot;images/two_D_ones_and_zeros_from_plot.png&quot;</span><span class="p">,</span>
                       <span class="n">as_gray</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 
 <span class="c1"># Show the shape of the image file.</span>
@@ -699,11 +827,11 @@ convention for the meaning of “row” and “column”.</p>
 </div>
 </div>
 </div>
-<p>You can see that the image we have saved, and then loaded back into this notebook, has a <code class="docutils literal notranslate"><span class="pre">shape</span></code> of <code class="docutils literal notranslate"><span class="pre">(480,</span> <span class="pre">480)</span></code>. This is much larger than our original <code class="docutils literal notranslate"><span class="pre">(4,</span> <span class="pre">4)</span></code> image array. We displayed our original 2-by-2 <em>array image</em> (<code class="docutils literal notranslate"><span class="pre">two_D_ones_and_zeros</span></code>) using Matplotlib, creating a <em>display image</em>. It is this display image that we saved using <code class="docutils literal notranslate"><span class="pre">plt.savefig()</span></code> as a <code class="docutils literal notranslate"><span class="pre">.png</span></code> file. Because it was upscaled for the purposes of display, the display image contains many more pixels than the original <code class="docutils literal notranslate"><span class="pre">two_d_ones_and_zeros</span></code> array.</p>
+<p>You can see that the image we have saved, and then loaded back into this notebook, has a <code class="docutils literal notranslate"><span class="pre">shape</span></code> of <code class="docutils literal notranslate"><span class="pre">(480,</span> <span class="pre">480)</span></code>. This is much larger than our original <code class="docutils literal notranslate"><span class="pre">(4,</span> <span class="pre">4)</span></code> image array. We displayed our original 2-by-2 <em>array image</em> (<code class="docutils literal notranslate"><span class="pre">two_D_ones_and_zeros</span></code>) using Matplotlib.  When saving this image to an image (PNG) file with <code class="docutils literal notranslate"><span class="pre">plt.savefig()</span></code>, Matplotlib decided this should be saved as a 480 by 480 array.  Because it was upscaled for the purposes of display, the display image contains many more pixels than the original <code class="docutils literal notranslate"><span class="pre">two_d_ones_and_zeros</span></code> array.</p>
 </section>
 <section id="more-on-array-pixels-vs-display-pixels">
 <h2>More on array pixels vs display pixels<a class="headerlink" href="#more-on-array-pixels-vs-display-pixels" title="Link to this heading">#</a></h2>
-<p>We have used <code class="docutils literal notranslate"><span class="pre">plt.matshow()</span></code> so far on this page. Perhaps more commonly, you will see another Matplotlib function used to visualise/display/render image arrays. This more commonly seen function is called <code class="docutils literal notranslate"><span class="pre">plt.imshow()</span></code> (for <code class="docutils literal notranslate"><span class="pre">im</span></code>age <code class="docutils literal notranslate"><span class="pre">show</span></code>). It is a more general purpose function than <code class="docutils literal notranslate"><span class="pre">plt.matshow()</span></code> and can be used to display a wider variety of image arrays. See the documentation for each function <a class="reference external" href="https://matplotlib.org/stable/api/_as_gen/matplotlib.pyplot.matshow.html">here</a> and <a class="reference external" href="https://matplotlib.org/stable/api/_as_gen/matplotlib.pyplot.imshow.html">here</a>.</p>
+<p>We have used <code class="docutils literal notranslate"><span class="pre">plt.matshow()</span></code> so far on this page. Perhaps more commonly, you will see another Matplotlib function used to visualise/display/render image arrays. This more commonly seen function is called <code class="docutils literal notranslate"><span class="pre">plt.imshow()</span></code> (for <code class="docutils literal notranslate"><span class="pre">im</span></code>age <code class="docutils literal notranslate"><span class="pre">show</span></code>). It is a more general purpose function than <code class="docutils literal notranslate"><span class="pre">plt.matshow()</span></code> and can be used to display a wider variety of image arrays. See the documentation for each function <a class="reference external" href="https://matplotlib.org/stable/api/_as_gen/matplotlib.pyplot.matshow.html">(matshow) here</a> and <a class="reference external" href="https://matplotlib.org/stable/api/_as_gen/matplotlib.pyplot.imshow.html">(imshow) here</a>.</p>
 <p>Using the (more common) <code class="docutils literal notranslate"><span class="pre">plt.imshow()</span></code> can lead to some different and potentially slightly confusing default axis tick labels, for very small (e.g. low-resolution) image arrays:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -717,7 +845,14 @@ convention for the meaning of “row” and “column”.</p>
 </div>
 </div>
 <p>When using <code class="docutils literal notranslate"><span class="pre">plt.imshow()</span></code> we now see some (possibly strange-seeming) information on the axes. The <code class="docutils literal notranslate"><span class="pre">plt.matshow()</span></code> function, by default shows us the integer index of each element in the array. For the new display output from <code class="docutils literal notranslate"><span class="pre">plt.imshow()</span></code> we see axis tick labels ranging from -0.5 to 1.5.</p>
-<p>These numbers refer to the <em>display pixel coordinates</em> of the displayed image, rather than the <em>array pixel coordinates</em> that <code class="docutils literal notranslate"><span class="pre">plt.matshow()</span></code> puts on the axis by default. Compare the output from the cell below (from <code class="docutils literal notranslate"><span class="pre">plt.matshow()</span></code>) to the output of the cell above (from <code class="docutils literal notranslate"><span class="pre">plt.imshow()</span></code>) to see the difference in the default axis values:</p>
+<p>These numbers refer to the scaled <em>display pixel coordinates</em> of the displayed
+image, where, for example, 0.50 on the left-right (x) axis refers to the
+display coordinate value half way between 0 (corresponding to the center of
+the first column in the original array) and 1 (corresponding to the center of
+second column in the original array).  In contrast, <code class="docutils literal notranslate"><span class="pre">plt.matshow</span></code> labels the
+axes with the <em>array pixel coordinates</em>. Compare the output from the cell
+below (from <code class="docutils literal notranslate"><span class="pre">plt.matshow()</span></code>) to the output of the cell above (from
+<code class="docutils literal notranslate"><span class="pre">plt.imshow()</span></code>) to see the difference in the default axis values:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Use `plt.matshow()` - the axis ticks now show the array pixel coordinates</span>
@@ -734,13 +869,13 @@ convention for the meaning of “row” and “column”.</p>
 </section>
 <section id="shades-of-gray-and-colormaps">
 <h2>Shades of gray and colormaps<a class="headerlink" href="#shades-of-gray-and-colormaps" title="Link to this heading">#</a></h2>
-<p>Why does our image array display in vibrant purple and yellow, you may ask? This is because both <code class="docutils literal notranslate"><span class="pre">plt.matshow()</span></code> - and it’s cousin <code class="docutils literal notranslate"><span class="pre">plt.imshow()</span></code> - have a default <em>colormap</em>. This is a mapping between the numbers in the array, and the colors that the plot will depict each number with when the array is visualised. The default colormap is called <a class="reference external" href="https://matplotlib.org/3.5.3/api/_as_gen/matplotlib.pyplot.viridis.html"><code class="docutils literal notranslate"><span class="pre">viridis</span></code></a>. This default colormap maps low array pixel values to purple, and high array pixel values to yellow.</p>
+<p>Why does our image array display in vibrant purple and yellow, you may ask? This is because both <code class="docutils literal notranslate"><span class="pre">plt.matshow()</span></code> - and its cousin <code class="docutils literal notranslate"><span class="pre">plt.imshow()</span></code> - have a default <em>colourmap</em>. This is a mapping between the numbers in the array, and the colours that the plot will depict each number with when the array is visualised. The default colourmap is called <a class="reference external" href="https://matplotlib.org/3.5.3/api/_as_gen/matplotlib.pyplot.viridis.html"><code class="docutils literal notranslate"><span class="pre">viridis</span></code></a>. This default colourmap maps low array pixel values to purple, and high array pixel values to yellow.</p>
 <p>We can adjust the color by changing the <code class="docutils literal notranslate"><span class="pre">cmap</span></code> argument of <code class="docutils literal notranslate"><span class="pre">plt.matshow()</span></code> - for instance, we can change the plot to visualise the array using a grayscale map:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Show the array, change the colormap.</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">matshow</span><span class="p">(</span><span class="n">two_D_ones_and_zeros</span><span class="p">,</span> 
-            <span class="n">cmap</span><span class="o">=</span><span class="s2">&quot;gray&quot;</span><span class="p">);</span> <span class="c1"># Specify the colormap</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Show the array, change the colourmap.</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">matshow</span><span class="p">(</span><span class="n">two_D_ones_and_zeros</span><span class="p">,</span>
+            <span class="n">cmap</span><span class="o">=</span><span class="s2">&quot;gray&quot;</span><span class="p">);</span> <span class="c1"># Specify the colourmap</span>
 </pre></div>
 </div>
 </div>
@@ -756,7 +891,7 @@ convention for the meaning of “row” and “column”.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># A two dimensional numpy array of numbers between 0 and 1.</span>
-<span class="n">two_D_other_numbers</span><span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">0</span><span class="p">,</span>  <span class="mi">1</span><span class="p">],</span> 
+<span class="n">two_D_other_numbers</span><span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">0</span><span class="p">,</span>  <span class="mi">1</span><span class="p">],</span>
                                <span class="p">[</span><span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.3</span><span class="p">]])</span>
 
 <span class="n">two_D_other_numbers</span>
@@ -1245,7 +1380,7 @@ images</a></p></li>
 <li><p><a class="reference external" href="https://textbook.nipraxis.org/arrays_3d.html">Nipraxis course - three-dimensional
 arrays</a></p></li>
 </ul>
-<p>with further inspiration from <code class="docutils literal notranslate"><span class="pre">skimage</span></code> tutorials.</p>
+<p>with further inspiration from <a class="reference external" href="https://github.com/scikit-image/skimage-tutorials"><code class="docutils literal notranslate"><span class="pre">skimage</span></code></a> <a class="reference external" href="https://scipy-2024-image-analysis.github.io/tutorial/01_images_are_arrays.html">tutorials</a>.</p>
 </section>
 </section>
 
