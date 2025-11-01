@@ -791,4 +791,5 @@ how image processing can be performed using NumPy, SciPy and Scikit-image.
   processing](https://lectures.scientific-python.org/advanced/image_processing)
 * [Scientific Python Lecture Notes:
   scikit-image](https://lectures.scientific-python.org/packages/scikit-image/index.html)
-* [Napari tutorial](https://jni.github.io/i2k-skimage-napari/lectures/1_image_filters.html)
+
+with further inspiration from and [`skimage`](https://github.com/scikit-image/skimage-tutorials) [tutorials](https://scipy-2024-image-analysis.github.io/tutorial/01_images_are_arrays.html).

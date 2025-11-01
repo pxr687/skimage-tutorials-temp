@@ -1349,10 +1349,12 @@ This page has shown how to implement some fundamental image processing operation
 
 # References
 
-Reference: https://www.kdnuggets.com/numpy-for-image-processing
+Gulati, J. (2024) *NumPy for Image Processing*. KDnuggets. Available from: https://www.kdnuggets.com/numpy-for-image-processing 
 
-Reference: skimage tutorials (check versions), scipy lecture notes
+Adapted from:
 
-Adapted from: https://lectures.scientific-python.org/advanced/image_processing
+* [Scientific Python Lecture Notes - image
+  processing](https://lectures.scientific-python.org/advanced/image_processing)
+* [Scientific Python Lecture Notes: scikit-image](https://lectures.scientific-python.org/packages/scikit-image/index.html)
 
-Adapted from: https://lectures.scientific-python.org/packages/scikit-image/index.html
+with further inspiration from [`skimage`](https://github.com/scikit-image/skimage-tutorials) [tutorials](https://scipy-2024-image-analysis.github.io/tutorial/01_images_are_arrays.html).
