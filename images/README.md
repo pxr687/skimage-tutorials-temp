@@ -18,3 +18,12 @@ same license as the original.
 
 `xeno_ex_1.png` similarly results from processing in the [page on
 morpology](../8_morphology), and has the same license as the original.
+
+## `*_camera.png`, `shoegaze.png`
+
+These images are all generated from Scikit-image standard `camera` image:
+
+- `corrupted_camera.png` from the [color
+  page](../1_color_images_as_numpy_arrays);
+- `noisy_camera.png` from the [skimage intro page](../2_skimage_intro);
+- `shoegaze.png` also from the [skimage intro page](../2_skimage_intro);

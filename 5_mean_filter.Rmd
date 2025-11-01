@@ -9,7 +9,7 @@ The mean filter is a *local filter*, because it alters a given pixel's value bas
 
 ![](images/smiley_neighbourhoods.png)
 
-The values within a pixel's local neighbourhood will influence the change that a local filter makes to the central pixel. The `size` and `shape` of the "neighborhood" are up to the user. We can synonomously refer to the neighborhood as a "kernel", "footprint" or "structuring element". As we will see later, Sci-kit image favours the term "footprint". For now, we will use the terms "kernel" and "neighborhood" interchangeably to refer to some set of pixels that surround a given pixel.
+The values within a pixel's local neighbourhood will influence the change that a local filter makes to the central pixel. The `size` and `shape` of the "neighborhood" are up to the user. We can synonomously refer to the neighborhood as a "kernel", "footprint" or "structuring element". As we will see later, Scikit image favours the term "footprint". For now, we will use the terms "kernel" and "neighborhood" interchangeably to refer to some set of pixels that surround a given pixel.
 
 The mean filter, as the name suggests, *averages* the pixel values within a kernel/neighbourhood. To see this in action, let's build a simple mean filter to filter an image array. First, we perform some imports:
 
@@ -34,7 +34,7 @@ from hints import hint_strange_coffee
 Next, we create the `random_i` image array:
 
 ```{python}
-# Create a greyscale image array.
+# Create a grayscale image array.
 random_i = np.array([[0, 0, 0, 0, 0, 0, 0, 0],
                      [0, 0, 0, 4, 8, 0, 0, 0],
                      [0, 0, 0, 3, 8, 0, 0, 0],
@@ -399,43 +399,41 @@ def mean_filter(image_array, kernel_shape):
                         output=float)
 ```
 
-We'll apply it to a greyscale `coffee` image, originally a color image from `ski.data`:
+We'll apply it to a grayscale `coffee` image, originally a color image from `ski.data`:
 
 ```{python}
-# Read in an image file.
-coffee_grey =  ski.io.imread("images/coffee_grey.png", 
-                             as_gray=True)
-plt.imshow(coffee_grey);
+coffee_gray = ski.color.rgb2gray(ski.data.coffee())
+plt.imshow(coffee_gray);
 ```
 
 But first, we will use `np.random.normal()` to add some normally distributed (Gaussian) noise to the image:
 
 ```{python}
 # Add some noise to the pixel values in `coffee`.
-noisy_coffee_grey = coffee_grey + np.random.normal(0,
+noisy_coffee_gray = coffee_gray + np.random.normal(0,
                                                    2,
-                                                   coffee_grey.shape)
+                                                   coffee_gray.shape)
 
-plt.imshow(noisy_coffee_grey);
+plt.imshow(noisy_coffee_gray);
 ```
 
 The mean filter can remove some of the noise, restoring the clarity of the image:
 
 ```{python}
 # Mean filter the noisy coffee image, and show the result.
-noisy_coffee_grey_mean_filtered = mean_filter(noisy_coffee_grey, (10, 10))
+noisy_coffee_gray_mean_filtered = mean_filter(noisy_coffee_gray, (10, 10))
 plt.figure(figsize=(20, 20))
 plt.subplot(1, 3, 1)
-plt.imshow(coffee_grey)
+plt.imshow(coffee_gray)
 plt.title("Original")
 plt.axis('off')
 plt.subplot(1, 3, 2)
 plt.title('Noisy')
-plt.imshow(noisy_coffee_grey)
+plt.imshow(noisy_coffee_gray)
 plt.axis('off')
 plt.subplot(1, 3, 3)
 plt.title('Mean Filtered')
-plt.imshow(noisy_coffee_grey_mean_filtered)
+plt.imshow(noisy_coffee_gray_mean_filtered)
 plt.axis('off');
 ```
 
@@ -448,18 +446,18 @@ Let's try out some different kernel sizes:
 n_cols = 3
 plt.figure(figsize=(12, 7))
 plt.subplot(2, n_cols, 1)
-plt.imshow(coffee_grey)
+plt.imshow(coffee_gray)
 plt.title("Original")
 plt.axis('off')
 plt.subplot(2, n_cols, 2)
 plt.title('Noisy')
-plt.imshow(noisy_coffee_grey)
+plt.imshow(noisy_coffee_gray)
 plt.axis('off')
 for i in np.arange(3, int(n_cols*2)+1):
     plt.subplot(2, n_cols, i)
     kernel_shape = (i+(i*3), i+(i*3))
     plt.title(f'Mean Filtered\nKernel = ({i+(i*3)},{i+(i*3)})')
-    plt.imshow(mean_filter(noisy_coffee_grey, kernel_shape))
+    plt.imshow(mean_filter(noisy_coffee_gray, kernel_shape))
     plt.axis('off')
 plt.subplots_adjust()
 plt.tight_layout();
@@ -473,7 +471,7 @@ As with many filtering operations, the effect of altering aspects of the filteri
 :class: dropdown
 :::
 
-The nice thing about applying filtering via convolution kernels is that changing the kernel itself lets us implement a wide variety of functions, even strange ones. In this exercise, you will write a function called `strange_filter()`. You should apply it to `coffe_grey` to produce the following image:
+The nice thing about applying filtering via convolution kernels is that changing the kernel itself lets us implement a wide variety of functions, even strange ones. In this exercise, you will write a function called `strange_filter()`. You should apply it to `coffee_gray` to produce the following image:
 
 ![](images/coffee_strange_kernel.png)
 
@@ -486,8 +484,8 @@ Your final image should have the following attributes (again, you may need to `r
 ```
 Type: <class 'numpy.ndarray'>
 dtype: int8
-Shape: (579, 867)
-Max Pixel Value: 0
+Shape: (400, 600)
+Max Pixel Value: -1
 Min Pixel Value: -49
 ```
 
@@ -497,7 +495,7 @@ Min Pixel Value: -49
 
 ```{python}
 # YOUR CODE HERE
-strange_coffee = coffee_grey.copy()
+strange_coffee = coffee_gray.copy()
 
 # Show `strange_coffee`.
 plt.imshow(strange_coffee)
@@ -531,7 +529,7 @@ To get the exact target image, we use a kernel of `shape` (10, 10):
 
 ```{python}
 # Apply the filter and show the result.
-strange_filter_coffee = strange_filter_solution(coffee_grey, (10, 10))
+strange_filter_coffee = strange_filter_solution(coffee_gray, (10, 10))
 show_attributes(strange_filter_coffee)
 plt.imshow(strange_filter_coffee);
 ```
@@ -540,7 +538,7 @@ Kernels of other sizes will lead to different (albeit cool!) effects:
 
 ```{python}
 # Apply the filter and show the result.
-strange_filter_coffee_other = strange_filter_solution(coffee_grey, (3, 3))
+strange_filter_coffee_other = strange_filter_solution(coffee_gray, (3, 3))
 plt.imshow(strange_filter_coffee_other);
 ```
 
