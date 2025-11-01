@@ -709,23 +709,29 @@ plot_int_float();
 ```
 
 ::: {note}
+:name: color-and-matplotlib
 
-**Intensity and display**
+**Matplotlib, channels, and colors**
 
 We haven't made this explicit yet, but it is Matplotlib that determines the
 color from an image array.
 
-That is, it is Matplotlib that looks at a floating point image, and specifies
-that a pixel (or color channel) value of 1 is the maximum, and 0 is the
-minimum.  Therefore a pixel that is (1.0, 1.0, 1.0) displays as white, and
-(0.0, 0.0, 0.0) displays as black.  Matplotlib considers 0 or below 0, and
-1 or above as 1, so a pixel value of (2.0, 1.0, 99.0) will also display as
-white, and (-1.0, -99.0, 0) will display as black.
+That is, it is Matplotlib that looks at a three-channel floating point image,
+and specifies that a color channel value of 1 is the maximum, and 0 is the
+minimum. Therefore a pixel that is (1.0, 1.0, 1.0) displays as white, and
+(0.0, 0.0, 0.0) displays as black.  Matplotlib considers <= 0 as 0, and >=
+1 as 1, so a pixel value of (2.0, 1.0, 99.0) will also display as white, and
+(-1.0, -99.0, 0) will display as black.
 
-It is Matplotlib that says that integer image values of >=255 are the maximum,
-and <=0 are the minimum; (255, 255, 255) and (1000, 2000, 3000) (in an integer
-`dtype` that allows those values) display as white; (0, 0, 0) and (-1, -100,
--1000) display as black.
+It is Matplotlib that says that three-channel integer image values of >=255
+are the maximum, and <=0 are the minimum; (255, 255, 255) and (1000, 2000,
+3000) (in an integer `dtype` that allows those values) display as white; (0,
+0, 0) and (-1, -100, -1000) display as black.
+
+Note that Matplotlib behaves differently with a single-channel integer or
+floating point images.  It uses the colormap for single-channel images, mapping
+the minimum value to the first value in the colormap, and the maximum value to
+last.
 
 :::
 
@@ -993,7 +999,11 @@ In this case, let's assume that the person in the `camera` image wants to make i
 
 Here is the original image:
 
-![](images/camera_plot.png)
+```{python tags=c("hide-input")}
+import skimage as ski
+
+plt.imshow(ski.data.camera());
+```
 
 You should use NumPy and numerical operations only, to create something like
 the following image (the exact image will depend on your random noise):
@@ -1077,6 +1087,7 @@ plt.savefig('images/corrupted_camera.png')
 ::: {solution-end}
 :::
 
+(brain-images)=
 
 ## More (actually) complex images
 
