@@ -197,7 +197,7 @@ Also notice that for now we are dealing with the `float64` `dtype`. You will
 find other `dtypes` in image arrays, and this has a variety of important
 implications for how the image is displayed by Matplotlib. For now we will
 just deal with these `float64` numbers, and we will return to the topic of
-`dtype`s [later](1_colour_images_as_numpy_arrays).
+`dtype`s [later](1_color_images_as_numpy_arrays).
 
 
 ## Pixels, pixel coordinates and interpolation
