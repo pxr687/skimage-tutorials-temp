@@ -1253,7 +1253,7 @@ Max Pixel Value: 1.0
 Min Pixel Value: 0.0
 </pre></div>
 </div>
-<img alt="_images/f9febaf56a5f4e5a7ff50e40f3f81fc7449ab7c47f6f393c6938202e23a5cbe6.png" src="_images/f9febaf56a5f4e5a7ff50e40f3f81fc7449ab7c47f6f393c6938202e23a5cbe6.png" />
+<img alt="_images/0cef55bc90323ba59cd472c2caf5aa9ba12267c51130c39ab0fc4929399f718b.png" src="_images/0cef55bc90323ba59cd472c2caf5aa9ba12267c51130c39ab0fc4929399f718b.png" />
 </div>
 </div>
 </section>
@@ -1454,11 +1454,9 @@ Min Pixel Value: 3.86
 intensity range between 0 and 1 (or -1 to 1, but we digress).  Among other
 things, this matches the conventions that Matplotlib uses to display images;
 as <a class="reference internal" href="1_color_images_as_numpy_arrays.html#color-and-matplotlib"><span class="std std-ref">we have seen</span></a>, Matplotlib will render single-channel
-images with any value range, using the colormap.  However, values outside the
-standard integer (0..255) or float (0, 1) range may be unexpected for
-subsequent processing operations. We can use
-<code class="docutils literal notranslate"><span class="pre">ski.exposure.rescale_intensity()</span></code> to ensure our image adheres to the
-<code class="docutils literal notranslate"><span class="pre">skimage</span></code> (0, 1) convention:</p>
+images with any value range, using the colormap.  We might therefore choose to
+rescale the image to have range 0 through 1. We can use
+<code class="docutils literal notranslate"><span class="pre">ski.exposure.rescale_intensity()</span></code> to do that.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Ensure the correct pixel intensity range.</span>
@@ -1624,7 +1622,7 @@ solid, non-see through color.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.image.AxesImage at 0x7f5aa28931a0&gt;
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.image.AxesImage at 0x7f3d28e99d60&gt;
 </pre></div>
 </div>
 <img alt="_images/50aff3d36362558deba307a37ae4682958e48d2b46c8fe49483f0733bf1123b0.png" src="_images/50aff3d36362558deba307a37ae4682958e48d2b46c8fe49483f0733bf1123b0.png" />
@@ -1782,7 +1780,10 @@ Min Pixel Value: 0.0
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Type: &lt;class &#39;numpy.ndarray&#39;&gt;
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Type:
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> &lt;class &#39;numpy.ndarray&#39;&gt;
 dtype: uint8
 Shape: (210, 256, 179)
 Max Pixel Value: 229
@@ -1796,108 +1797,23 @@ Min Pixel Value: 0
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Show multiple slices of the iguana&#39;s head...</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">16</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
-<span class="k">for</span> <span class="n">count</span><span class="p">,</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="n">iguana</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="n">num</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">int</span><span class="p">)):</span>
-    <span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="n">count</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span>
-    <span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">iguana</span><span class="p">[:,</span> <span class="p">:,</span> <span class="n">i</span><span class="p">])</span>
-    <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;`iguana[:, :, </span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2">]`&quot;</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">count</span><span class="p">,</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">84</span><span class="p">,</span> <span class="mi">8</span><span class="p">)):</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="n">count</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">iguana</span><span class="p">[:,</span> <span class="p">:,</span> <span class="n">k</span><span class="p">])</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;`iguana[:, :, </span><span class="si">{</span><span class="n">k</span><span class="si">}</span><span class="s2">]`&quot;</span><span class="p">)</span>
     <span class="n">plt</span><span class="o">.</span><span class="n">axis</span><span class="p">(</span><span class="s1">&#39;off&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/0da02e49583db8ba19a706f2d30bb4cbbefaa0b4544ae287abbd2a4b231689f8.png" src="_images/0da02e49583db8ba19a706f2d30bb4cbbefaa0b4544ae287abbd2a4b231689f8.png" />
+<img alt="_images/5df6d13815340aa063bb2168f3dc35fedac2e285bf0e5a86cb917118e7f324ad.png" src="_images/5df6d13815340aa063bb2168f3dc35fedac2e285bf0e5a86cb917118e7f324ad.png" />
 </div>
 </div>
 <p>You can see that we are walking through the iguana’s head, in the vertical direction.</p>
 <p>Because this image file contains information about a literal 3D object (e.g. an iguana’s head), we can refer to it as a <em>volumetric</em> image. In such images, the third dimension contains <em>spatial information</em>, and not <em>color information</em>.</p>
-<p>If you try and display these images that have more than four elements on the
-third dimension, Matplotlib will complain, because there too many elements for
-the third dimension values to function as color channels.</p>
-<div class="cell tag_raises-exception docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">iguana</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
-<span class="ne">TypeError</span><span class="g g-Whitespace">                                 </span>Traceback (most recent call last)
-<span class="n">Cell</span> <span class="n">In</span><span class="p">[</span><span class="mi">54</span><span class="p">],</span> <span class="n">line</span> <span class="mi">1</span>
-<span class="ne">----&gt; </span><span class="mi">1</span> <span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">iguana</span><span class="p">)</span>
-
-<span class="nn">File /opt/hostedtoolcache/Python/3.12.12/x64/lib/python3.12/site-packages/matplotlib/pyplot.py:3601,</span> in <span class="ni">imshow</span><span class="nt">(X, cmap, norm, aspect, interpolation, alpha, vmin, vmax, colorizer, origin, extent, interpolation_stage, filternorm, filterrad, resample, url, data, **kwargs)</span>
-<span class="g g-Whitespace">   </span><span class="mi">3579</span> <span class="nd">@_copy_docstring_and_deprecators</span><span class="p">(</span><span class="n">Axes</span><span class="o">.</span><span class="n">imshow</span><span class="p">)</span>
-<span class="g g-Whitespace">   </span><span class="mi">3580</span> <span class="k">def</span><span class="w"> </span><span class="nf">imshow</span><span class="p">(</span>
-<span class="g g-Whitespace">   </span><span class="mi">3581</span>     <span class="n">X</span><span class="p">:</span> <span class="n">ArrayLike</span> <span class="o">|</span> <span class="n">PIL</span><span class="o">.</span><span class="n">Image</span><span class="o">.</span><span class="n">Image</span><span class="p">,</span>
-   <span class="p">(</span><span class="o">...</span><span class="p">)</span>   <span class="mi">3599</span>     <span class="o">**</span><span class="n">kwargs</span><span class="p">,</span>
-<span class="g g-Whitespace">   </span><span class="mi">3600</span> <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">AxesImage</span><span class="p">:</span>
-<span class="ne">-&gt; </span><span class="mi">3601</span>     <span class="n">__ret</span> <span class="o">=</span> <span class="n">gca</span><span class="p">()</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span>
-<span class="g g-Whitespace">   </span><span class="mi">3602</span>         <span class="n">X</span><span class="p">,</span>
-<span class="g g-Whitespace">   </span><span class="mi">3603</span>         <span class="n">cmap</span><span class="o">=</span><span class="n">cmap</span><span class="p">,</span>
-<span class="g g-Whitespace">   </span><span class="mi">3604</span>         <span class="n">norm</span><span class="o">=</span><span class="n">norm</span><span class="p">,</span>
-<span class="g g-Whitespace">   </span><span class="mi">3605</span>         <span class="n">aspect</span><span class="o">=</span><span class="n">aspect</span><span class="p">,</span>
-<span class="g g-Whitespace">   </span><span class="mi">3606</span>         <span class="n">interpolation</span><span class="o">=</span><span class="n">interpolation</span><span class="p">,</span>
-<span class="g g-Whitespace">   </span><span class="mi">3607</span>         <span class="n">alpha</span><span class="o">=</span><span class="n">alpha</span><span class="p">,</span>
-<span class="g g-Whitespace">   </span><span class="mi">3608</span>         <span class="n">vmin</span><span class="o">=</span><span class="n">vmin</span><span class="p">,</span>
-<span class="g g-Whitespace">   </span><span class="mi">3609</span>         <span class="n">vmax</span><span class="o">=</span><span class="n">vmax</span><span class="p">,</span>
-<span class="g g-Whitespace">   </span><span class="mi">3610</span>         <span class="n">colorizer</span><span class="o">=</span><span class="n">colorizer</span><span class="p">,</span>
-<span class="g g-Whitespace">   </span><span class="mi">3611</span>         <span class="n">origin</span><span class="o">=</span><span class="n">origin</span><span class="p">,</span>
-<span class="g g-Whitespace">   </span><span class="mi">3612</span>         <span class="n">extent</span><span class="o">=</span><span class="n">extent</span><span class="p">,</span>
-<span class="g g-Whitespace">   </span><span class="mi">3613</span>         <span class="n">interpolation_stage</span><span class="o">=</span><span class="n">interpolation_stage</span><span class="p">,</span>
-<span class="g g-Whitespace">   </span><span class="mi">3614</span>         <span class="n">filternorm</span><span class="o">=</span><span class="n">filternorm</span><span class="p">,</span>
-<span class="g g-Whitespace">   </span><span class="mi">3615</span>         <span class="n">filterrad</span><span class="o">=</span><span class="n">filterrad</span><span class="p">,</span>
-<span class="g g-Whitespace">   </span><span class="mi">3616</span>         <span class="n">resample</span><span class="o">=</span><span class="n">resample</span><span class="p">,</span>
-<span class="g g-Whitespace">   </span><span class="mi">3617</span>         <span class="n">url</span><span class="o">=</span><span class="n">url</span><span class="p">,</span>
-<span class="g g-Whitespace">   </span><span class="mi">3618</span>         <span class="o">**</span><span class="p">({</span><span class="s2">&quot;data&quot;</span><span class="p">:</span> <span class="n">data</span><span class="p">}</span> <span class="k">if</span> <span class="n">data</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">else</span> <span class="p">{}),</span>
-<span class="g g-Whitespace">   </span><span class="mi">3619</span>         <span class="o">**</span><span class="n">kwargs</span><span class="p">,</span>
-<span class="g g-Whitespace">   </span><span class="mi">3620</span>     <span class="p">)</span>
-<span class="g g-Whitespace">   </span><span class="mi">3621</span>     <span class="n">sci</span><span class="p">(</span><span class="n">__ret</span><span class="p">)</span>
-<span class="g g-Whitespace">   </span><span class="mi">3622</span>     <span class="k">return</span> <span class="n">__ret</span>
-
-<span class="nn">File /opt/hostedtoolcache/Python/3.12.12/x64/lib/python3.12/site-packages/matplotlib/__init__.py:1524,</span> in <span class="ni">_preprocess_data.&lt;locals&gt;.inner</span><span class="nt">(ax, data, *args, **kwargs)</span>
-<span class="g g-Whitespace">   </span><span class="mi">1521</span> <span class="nd">@functools</span><span class="o">.</span><span class="n">wraps</span><span class="p">(</span><span class="n">func</span><span class="p">)</span>
-<span class="g g-Whitespace">   </span><span class="mi">1522</span> <span class="k">def</span><span class="w"> </span><span class="nf">inner</span><span class="p">(</span><span class="n">ax</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
-<span class="g g-Whitespace">   </span><span class="mi">1523</span>     <span class="k">if</span> <span class="n">data</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-<span class="ne">-&gt; </span><span class="mi">1524</span>         <span class="k">return</span> <span class="n">func</span><span class="p">(</span>
-<span class="g g-Whitespace">   </span><span class="mi">1525</span>             <span class="n">ax</span><span class="p">,</span>
-<span class="g g-Whitespace">   </span><span class="mi">1526</span>             <span class="o">*</span><span class="nb">map</span><span class="p">(</span><span class="n">cbook</span><span class="o">.</span><span class="n">sanitize_sequence</span><span class="p">,</span> <span class="n">args</span><span class="p">),</span>
-<span class="nn">   1527             **{k: cbook.sanitize_sequence(v) for k, v</span> in <span class="ni">kwargs.items</span><span class="nt">()})</span>
-<span class="g g-Whitespace">   </span><span class="mi">1529</span>     <span class="n">bound</span> <span class="o">=</span> <span class="n">new_sig</span><span class="o">.</span><span class="n">bind</span><span class="p">(</span><span class="n">ax</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
-<span class="g g-Whitespace">   </span><span class="mi">1530</span>     <span class="n">auto_label</span> <span class="o">=</span> <span class="p">(</span><span class="n">bound</span><span class="o">.</span><span class="n">arguments</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">label_namer</span><span class="p">)</span>
-<span class="g g-Whitespace">   </span><span class="mi">1531</span>                   <span class="ow">or</span> <span class="n">bound</span><span class="o">.</span><span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">label_namer</span><span class="p">))</span>
-
-<span class="nn">File /opt/hostedtoolcache/Python/3.12.12/x64/lib/python3.12/site-packages/matplotlib/axes/_axes.py:5982,</span> in <span class="ni">Axes.imshow</span><span class="nt">(self, X, cmap, norm, aspect, interpolation, alpha, vmin, vmax, colorizer, origin, extent, interpolation_stage, filternorm, filterrad, resample, url, **kwargs)</span>
-<span class="g g-Whitespace">   </span><span class="mi">5979</span> <span class="k">if</span> <span class="n">aspect</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-<span class="g g-Whitespace">   </span><span class="mi">5980</span>     <span class="bp">self</span><span class="o">.</span><span class="n">set_aspect</span><span class="p">(</span><span class="n">aspect</span><span class="p">)</span>
-<span class="ne">-&gt; </span><span class="mi">5982</span> <span class="n">im</span><span class="o">.</span><span class="n">set_data</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
-<span class="g g-Whitespace">   </span><span class="mi">5983</span> <span class="n">im</span><span class="o">.</span><span class="n">set_alpha</span><span class="p">(</span><span class="n">alpha</span><span class="p">)</span>
-<span class="g g-Whitespace">   </span><span class="mi">5984</span> <span class="k">if</span> <span class="n">im</span><span class="o">.</span><span class="n">get_clip_path</span><span class="p">()</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-<span class="g g-Whitespace">   </span><span class="mi">5985</span>     <span class="c1"># image does not already have clipping set, clip to Axes patch</span>
-
-<span class="nn">File /opt/hostedtoolcache/Python/3.12.12/x64/lib/python3.12/site-packages/matplotlib/image.py:685,</span> in <span class="ni">_ImageBase.set_data</span><span class="nt">(self, A)</span>
-<span class="g g-Whitespace">    </span><span class="mi">683</span> <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">A</span><span class="p">,</span> <span class="n">PIL</span><span class="o">.</span><span class="n">Image</span><span class="o">.</span><span class="n">Image</span><span class="p">):</span>
-<span class="g g-Whitespace">    </span><span class="mi">684</span>     <span class="n">A</span> <span class="o">=</span> <span class="n">pil_to_array</span><span class="p">(</span><span class="n">A</span><span class="p">)</span>  <span class="c1"># Needed e.g. to apply png palette.</span>
-<span class="ne">--&gt; </span><span class="mi">685</span> <span class="bp">self</span><span class="o">.</span><span class="n">_A</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_normalize_image_array</span><span class="p">(</span><span class="n">A</span><span class="p">)</span>
-<span class="g g-Whitespace">    </span><span class="mi">686</span> <span class="bp">self</span><span class="o">.</span><span class="n">_imcache</span> <span class="o">=</span> <span class="kc">None</span>
-<span class="g g-Whitespace">    </span><span class="mi">687</span> <span class="bp">self</span><span class="o">.</span><span class="n">stale</span> <span class="o">=</span> <span class="kc">True</span>
-
-<span class="nn">File /opt/hostedtoolcache/Python/3.12.12/x64/lib/python3.12/site-packages/matplotlib/image.py:653,</span> in <span class="ni">_ImageBase._normalize_image_array</span><span class="nt">(A)</span>
-<span class="g g-Whitespace">    </span><span class="mi">651</span>     <span class="n">A</span> <span class="o">=</span> <span class="n">A</span><span class="o">.</span><span class="n">squeeze</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>  <span class="c1"># If just (M, N, 1), assume scalar and apply colormap.</span>
-<span class="g g-Whitespace">    </span><span class="mi">652</span> <span class="k">if</span> <span class="ow">not</span> <span class="p">(</span><span class="n">A</span><span class="o">.</span><span class="n">ndim</span> <span class="o">==</span> <span class="mi">2</span> <span class="ow">or</span> <span class="n">A</span><span class="o">.</span><span class="n">ndim</span> <span class="o">==</span> <span class="mi">3</span> <span class="ow">and</span> <span class="n">A</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="ow">in</span> <span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">]):</span>
-<span class="ne">--&gt; </span><span class="mi">653</span>     <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Invalid shape </span><span class="si">{</span><span class="n">A</span><span class="o">.</span><span class="n">shape</span><span class="si">}</span><span class="s2"> for image data&quot;</span><span class="p">)</span>
-<span class="g g-Whitespace">    </span><span class="mi">654</span> <span class="k">if</span> <span class="n">A</span><span class="o">.</span><span class="n">ndim</span> <span class="o">==</span> <span class="mi">3</span><span class="p">:</span>
-<span class="g g-Whitespace">    </span><span class="mi">655</span>     <span class="c1"># If the input data has values outside the valid range (after</span>
-<span class="g g-Whitespace">    </span><span class="mi">656</span>     <span class="c1"># normalisation), we issue a warning and then clip X to the bounds</span>
-<span class="g g-Whitespace">    </span><span class="mi">657</span>     <span class="c1"># - otherwise casting wraps extreme values, hiding outliers and</span>
-<span class="g g-Whitespace">    </span><span class="mi">658</span>     <span class="c1"># making reliable interpretation impossible.</span>
-<span class="g g-Whitespace">    </span><span class="mi">659</span>     <span class="n">high</span> <span class="o">=</span> <span class="mi">255</span> <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">issubdtype</span><span class="p">(</span><span class="n">A</span><span class="o">.</span><span class="n">dtype</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">integer</span><span class="p">)</span> <span class="k">else</span> <span class="mi">1</span>
-
-<span class="ne">TypeError</span>: Invalid shape (210, 256, 179) for image data
-</pre></div>
-</div>
-<img alt="_images/660ddb79992f8cb2ae128b9488ae64b7110ddb196425aa48df4d7864cf776997.png" src="_images/660ddb79992f8cb2ae128b9488ae64b7110ddb196425aa48df4d7864cf776997.png" />
-</div>
-</div>
+<p>If you try to display images that have more than four elements on the third
+dimension, Matplotlib will give an error “Invalid shape … for image data”,
+Make a new cell and try <code class="docutils literal notranslate"><span class="pre">plt.imshow(iguana)</span></code> to trigger this error.</p>
 </section>
 <section id="summary">
 <h2>Summary<a class="headerlink" href="#summary" title="Link to this heading">#</a></h2>
