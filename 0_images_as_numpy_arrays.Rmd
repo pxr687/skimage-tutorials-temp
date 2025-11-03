@@ -90,7 +90,8 @@ two_D_ones_and_zeros
 
 Look at the output of the cell above. This is how NumPy shows us the contents of the array. For the rest of these tutorial pages, we will refer to this as the "raw" view of the array e.g. the default view that we see when we inspect the contents of the array without any fancy visualisation.
 
-This array is small enough that we can easily see its dimensionality. If we so wish, we can also use the `.shape` attribute to confirm the dimensions:
+This array is small enough that we can easily see its shape. If we so wish, we
+can also use the `.shape` attribute to confirm the dimensions:
 
 ```{python}
 # The `.shape` attribute

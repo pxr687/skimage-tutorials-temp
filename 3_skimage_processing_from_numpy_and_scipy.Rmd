@@ -480,7 +480,7 @@ The cell below will loop through some different rotation angles, the `shape` of 
 
 ```{python}
 # A for loop to show multiple rotations, and the effect on
-# the dimensionality of the resultant image array.
+# the shape of the resultant image array.
 plt.figure(figsize=(12, 4))
 for i, i_2 in enumerate(np.arange(361, step=45)):
     plt.subplot(1, 9, i+1)
@@ -499,7 +499,7 @@ We can disable this behaviour by settings `reshape=False`, however, then we risk
 
 ```{python}
 # A for loop to show multiple rotations, and the effect on
-# the dimensionality of the resultant image array., but this time
+# the shape of the resultant image array., but this time
 # we do not allow SciPy to reshape the output arrays.
 plt.figure(figsize=(12, 4))
 for i, i_2 in enumerate(np.arange(361, step=45)):

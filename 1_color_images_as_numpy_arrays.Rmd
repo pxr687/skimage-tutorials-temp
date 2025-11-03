@@ -169,12 +169,12 @@ will be true of any two-dimensional image array**, because there is only one
 value per pixel, and both of these image arrays are two-dimensional:
 
 ```{python}
-# Show the dimensionality of our binary image array.
+# Show the shape of our binary image array.
 two_D_ones_and_zeros.shape
 ```
 
 ```{python}
-# Show the dimensionality of our grayscale image array.
+# Show the shape of our grayscale image array.
 two_D_other_integers.shape
 ```
 
@@ -1136,7 +1136,7 @@ On this page we have seen how color can be represented in NumPy array images:
   displayed image.
 * These methods of color encoding can apply to both to very simple and very
   complex images. Some types of image (e.g. brain images) use
-  higher-dimensionality to encode information other than color (e.g. time).
+  third and higher dimensions (axes) to encode information other than color.
 
 On the [next page](2_skimage_intro) we will formally introduce Scikit-image,
 which uses NumPy image arrays as its fundamental representation of images.
