@@ -494,10 +494,10 @@ document.write(`
 </section>
 <section class="tex2jax_ignore mathjax_ignore" id="local-filtering-without-convolution">
 <h1>Local filtering without convolution<a class="headerlink" href="#local-filtering-without-convolution" title="Link to this heading">#</a></h1>
-<p>When compared to the other local filters we have seen, the median filter uses the same process of “walking” through the image with a small array which denfines the “local neighbourhood” of each pixel. In median filtering, you can <em>loosely</em> think of this small array as a kernel, but there are some major differences in the calculations, so let’s call it the “neighbourhood array” instead.</p>
-<p>Like with the other kernels we have seen, the “neighbourhood array” is centered on every pixel during the filtering operation. The central pixel value is replaced with a number computed from the other values in the local neighbourhood, e.g. the other pixel values under the “neighbourhood array”.  However, instead of <em>convolving</em> the neighbourhood array and the image, as we would for a mean filter or Gaussian filter etc., the median filter, shockingly, takes the median value of the pixels under the small array.</p>
+<p>When compared to the other local filters we have seen, the median filter uses the same process of “walking” through the image with a small array which denfines the “local neighborhood” of each pixel. In median filtering, you can <em>loosely</em> think of this small array as a kernel, but there are some major differences in the calculations, so let’s call it the “neighborhood array” instead.</p>
+<p>Like with the other kernels we have seen, the “neighborhood array” is centered on every pixel during the filtering operation. The central pixel value is replaced with a number computed from the other values in the local neighborhood, e.g. the other pixel values under the “neighborhood array”.  However, instead of <em>convolving</em> the neighborhood array and the image, as we would for a mean filter or Gaussian filter etc., the median filter, shockingly, takes the median value of the pixels under the small array.</p>
 <p><img alt="" src="_images/kernel_general.png" /></p>
-<p>There is no convolvable function to calculate the median, and this is why <a class="reference external" href="https://dsp.stackexchange.com/questions/13211/convolution-kernels-for-image-filtering">some people</a> will tell you not to call the “neighbourhood array” a “kernel”, when we are doing median filtering. Calculating the median utilizes ranking and indexing, and cannot be expressed as set of additions, subtractions, multiplications, divisions etc, in the way that calculating a mean can, for instance.</p>
+<p>There is no convolvable function to calculate the median, and this is why <a class="reference external" href="https://dsp.stackexchange.com/questions/13211/convolution-kernels-for-image-filtering">some people</a> will tell you not to call the “neighborhood array” a “kernel”, when we are doing median filtering. Calculating the median utilizes ranking and indexing, and cannot be expressed as set of additions, subtractions, multiplications, divisions etc, in the way that calculating a mean can, for instance.</p>
 <p>One way to think of this, is that when we write the formula for the mean, we can write it without reference to any Python indexing operations:</p>
 <p><span class="math notranslate nohighlight">\( \large \text{mean} = \frac{\sum X}{n} \)</span></p>
 <p>…we can read that as “to get the mean of a set of numbers (where <span class="math notranslate nohighlight">\(X\)</span> refers all of the numbers), add them up and divide by however many numbers there are (<span class="math notranslate nohighlight">\(n\)</span>)”.</p>
@@ -581,7 +581,7 @@ document.write(`
 </div>
 </div>
 </div>
-<p>There is no convolution kernel that can do this - instead we use the “neighbourhood array” to define a pixel neighbourhood, then replace the central value with the median from that neighbourhood, using the sorting and indexing we have seen above. So, the median filter <em>is</em> a local filter, because it alters pixel values based on other pixel values in the local neighbourhood. However, it is not a <em>convolution filter</em> because it does use the local neighbourhood in a convolution operation, in contrast to other local filters like the mean filter, Gaussian filter etc.</p>
+<p>There is no convolution kernel that can do this - instead we use the “neighborhood array” to define a pixel neighborhood, then replace the central value with the median from that neighborhood, using the sorting and indexing we have seen above. So, the median filter <em>is</em> a local filter, because it alters pixel values based on other pixel values in the local neighborhood. However, it is not a <em>convolution filter</em> because it does use the local neighborhood in a convolution operation, in contrast to other local filters like the mean filter, Gaussian filter etc.</p>
 </section>
 <section class="tex2jax_ignore mathjax_ignore" id="edge-preservation">
 <h1>Edge preservation<a class="headerlink" href="#edge-preservation" title="Link to this heading">#</a></h1>
@@ -614,13 +614,13 @@ document.write(`
 </div>
 </div>
 <p>Now, imagine we “walk” a 3-by-3 kernel (sorry pedants!) through the <code class="docutils literal notranslate"><span class="pre">nums_img</span></code> array, and replace the central pixel of each kernel (sorry again, pedants!) with the median of the pixels under the kernel.</p>
-<p>This process is shown below, for three kernels (OK, pedants, three “local neighbourhoods under a 3-by-3 array very much resembling a kernel”). The central pixel is highlighted in red, and the index of the current local neighbourhood is shown above the pixel values.</p>
-<p>The flattened and sorted values from each local neighbourhood are also shown, along with the median value of the neighbourhood:</p>
+<p>This process is shown below, for three kernels (OK, pedants, three “local neighborhoods under a 3-by-3 array very much resembling a kernel”). The central pixel is highlighted in red, and the index of the current local neighborhood is shown above the pixel values.</p>
+<p>The flattened and sorted values from each local neighborhood are also shown, along with the median value of the neighborhood:</p>
 <p><img alt="" src="_images/median_filter.png" /></p>
 <p>We can also show this in “Python space”, using a for loop:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Show some local neighbourhoods of `nums_img` and their medians.</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Show some local neighborhoods of `nums_img` and their medians.</span>
 <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">3</span><span class="p">):</span>
     <span class="n">i_row_start</span><span class="p">,</span> <span class="n">i_col_start</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="n">i</span>
     <span class="n">i_row_end</span><span class="p">,</span> <span class="n">i_col_end</span> <span class="o">=</span> <span class="mi">3</span><span class="p">,</span> <span class="n">i</span><span class="o">+</span><span class="mi">3</span>
@@ -658,7 +658,7 @@ Median = 7.0
 </div>
 </div>
 <p>Because the median is not a function which can be applied via convolution, we cannot apply it using <code class="docutils literal notranslate"><span class="pre">ndi.correlate()</span></code>, as we did with the other <a class="reference internal" href="5_mean_filter.html"><span class="doc std std-doc">local filters</span></a>.</p>
-<p>We can apply it in <code class="docutils literal notranslate"><span class="pre">skimage</span></code> using <code class="docutils literal notranslate"><span class="pre">ski.filters.median()</span></code>. Again,  we supply a <code class="docutils literal notranslate"><span class="pre">footprint</span></code> argument to determine the size of each pixel’s “local neighbourhood”:</p>
+<p>We can apply it in <code class="docutils literal notranslate"><span class="pre">skimage</span></code> using <code class="docutils literal notranslate"><span class="pre">ski.filters.median()</span></code>. Again,  we supply a <code class="docutils literal notranslate"><span class="pre">footprint</span></code> argument to determine the size of each pixel’s “local neighborhood”:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Median filter `nums_img`.</span>
@@ -789,8 +789,8 @@ Min Pixel Value: 63
 </section>
 <section class="tex2jax_ignore mathjax_ignore" id="non-local-filters">
 <h1>Non-local filters<a class="headerlink" href="#non-local-filters" title="Link to this heading">#</a></h1>
-<p>Whilst the median filter does not use convolution, it is still a local filter, because it filters pixels based on the values of other pixels in the local neighbourhood. Other filters use neither convolution nor a local pixel neighbourhood. These filters are called <em>non-local filters</em>.</p>
-<p>Non-local filters have their name because they filter all of the pixels in an image based on characteristics of a specific region of the image, or based upon characteristics of the entire image. As a result, a non-local filter might modify a given pixel’s value based on the values of pixels in a region of the image which is nowhere near the “local neighbourhood” of the pixel being modified.</p>
+<p>Whilst the median filter does not use convolution, it is still a local filter, because it filters pixels based on the values of other pixels in the local neighborhood. Other filters use neither convolution nor a local pixel neighborhood. These filters are called <em>non-local filters</em>.</p>
+<p>Non-local filters have their name because they filter all of the pixels in an image based on characteristics of a specific region of the image, or based upon characteristics of the entire image. As a result, a non-local filter might modify a given pixel’s value based on the values of pixels in a region of the image which is nowhere near the “local neighborhood” of the pixel being modified.</p>
 <p>One foundational non-local filter is a <a class="reference external" href="https://en.wikipedia.org/wiki/Histogram_equalization"><em>histogram equalisation filter</em></a>. This filter modifies pixels based on the histogram of the entire image. Essentially, this process “smoothes out” the histogram into a even “hill”, so that there is less variance between the pixel intensities. The image below illustrates this principle:</p>
 <p><img alt="" src="_images/hist_equal.png" /></p>
 <p>We will demonstrate the histogram equalisation filter with the <code class="docutils literal notranslate"><span class="pre">eagle</span></code> image from <code class="docutils literal notranslate"><span class="pre">ski.data</span></code>:</p>

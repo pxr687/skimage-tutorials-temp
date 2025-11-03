@@ -447,7 +447,7 @@ document.write(`
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
 <li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Convolution filters I - the mean filter</a><ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#kernels-and-pixel-neighbourhoods">Kernels and pixel neighbourhoods</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#kernels-and-pixel-neighborhoods">Kernels and pixel neighborhoods</a></li>
 </ul>
 </li>
 <li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#convolution">Convolution</a></li>
@@ -469,13 +469,13 @@ document.write(`
                   
   <section class="tex2jax_ignore mathjax_ignore" id="convolution-filters-i-the-mean-filter">
 <h1>Convolution filters I - the mean filter<a class="headerlink" href="#convolution-filters-i-the-mean-filter" title="Link to this heading">#</a></h1>
-<section id="kernels-and-pixel-neighbourhoods">
-<h2>Kernels and pixel neighbourhoods<a class="headerlink" href="#kernels-and-pixel-neighbourhoods" title="Link to this heading">#</a></h2>
+<section id="kernels-and-pixel-neighborhoods">
+<h2>Kernels and pixel neighborhoods<a class="headerlink" href="#kernels-and-pixel-neighborhoods" title="Link to this heading">#</a></h2>
 <p>On the last page we filtered images based on a single threshold value, or based on multiple threshold values. Other filters work differently to this: they work by adjusting a given pixel’s value based on the value of other pixels which surround it, in a specified area. The mean filter is one such filter that works in this manner.</p>
-<p>The mean filter is a <em>local filter</em>, because it alters a given pixel’s value based on the values of other pixels in the surrounding “local neighborhood”. The image below shows the pixel values in the <code class="docutils literal notranslate"><span class="pre">smiley</span></code> image array that we created on an earlier <a class="reference internal" href="0_images_as_numpy_arrays.html"><span class="doc std std-doc">page</span></a>. Two possible “local neighbourhoods” are shown for a given pixel, which is highlighted in red. One neighbourhood is 3-by-3, and the other is 5-by-5 - we could use either when using a local filter:</p>
-<p><img alt="" src="_images/smiley_neighbourhoods.png" /></p>
-<p>The values within a pixel’s local neighbourhood will influence the change that a local filter makes to the central pixel. The <code class="docutils literal notranslate"><span class="pre">size</span></code> and <code class="docutils literal notranslate"><span class="pre">shape</span></code> of the “neighborhood” are up to the user. We can synonomously refer to the neighborhood as a “kernel”, “footprint” or “structuring element”. As we will see later, Scikit image favours the term “footprint”. For now, we will use the terms “kernel” and “neighborhood” interchangeably to refer to some set of pixels that surround a given pixel.</p>
-<p>The mean filter, as the name suggests, <em>averages</em> the pixel values within a kernel/neighbourhood. To see this in action, let’s build a simple mean filter to filter an image array. First, we perform some imports:</p>
+<p>The mean filter is a <em>local filter</em>, because it alters a given pixel’s value based on the values of other pixels in the surrounding “local neighborhood”. The image below shows the pixel values in the <code class="docutils literal notranslate"><span class="pre">smiley</span></code> image array that we created on an earlier <a class="reference internal" href="0_images_as_numpy_arrays.html"><span class="doc std std-doc">page</span></a>. Two possible “local neighborhoods” are shown for a given pixel, which is highlighted in red. One neighborhood is 3-by-3, and the other is 5-by-5 - we could use either when using a local filter:</p>
+<p><img alt="" src="_images/smiley_neighborhoods.png" /></p>
+<p>The values within a pixel’s local neighborhood will influence the change that a local filter makes to the central pixel. The <code class="docutils literal notranslate"><span class="pre">size</span></code> and <code class="docutils literal notranslate"><span class="pre">shape</span></code> of the “neighborhood” are up to the user. We can synonomously refer to the neighborhood as a “kernel”, “footprint” or “structuring element”. As we will see later, Scikit image favours the term “footprint”. For now, we will use the terms “kernel” and “neighborhood” interchangeably to refer to some set of pixels that surround a given pixel.</p>
+<p>The mean filter, as the name suggests, <em>averages</em> the pixel values within a kernel/neighborhood. To see this in action, let’s build a simple mean filter to filter an image array. First, we perform some imports:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Library imports.</span>
@@ -532,10 +532,10 @@ document.write(`
 <img alt="_images/37b9b61360bba01248e577d239fe0e2f2d44e2d2dcd7222932d23a061dd125e1.png" src="_images/37b9b61360bba01248e577d239fe0e2f2d44e2d2dcd7222932d23a061dd125e1.png" />
 </div>
 </div>
-<p>Let’s use some indexing to go for a walk through the neighbourhoods (kernels) in this array. We will treat each <code class="docutils literal notranslate"><span class="pre">(3,3)</span></code> set of pixels as a separate neighbourhood. For now, we only walk through the neighborhoods at the “top” of the array. We will start our “walk” in the top-left corner of the array, so that each 3-by-3 slice is centered on a pixel in the second row of the image:</p>
+<p>Let’s use some indexing to go for a walk through the neighborhoods (kernels) in this array. We will treat each <code class="docutils literal notranslate"><span class="pre">(3,3)</span></code> set of pixels as a separate neighborhood. For now, we only walk through the neighborhoods at the “top” of the array. We will start our “walk” in the top-left corner of the array, so that each 3-by-3 slice is centered on a pixel in the second row of the image:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># The first neighbourhood.</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># The first neighborhood.</span>
 <span class="n">i_row_start</span><span class="p">,</span> <span class="n">i_col_start</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span>
 <span class="n">i_row_end</span><span class="p">,</span> <span class="n">i_col_end</span> <span class="o">=</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">3</span>
 <span class="n">random_i</span><span class="p">[</span><span class="n">i_row_start</span><span class="p">:</span><span class="n">i_row_end</span><span class="p">,</span> <span class="n">i_col_start</span><span class="p">:</span><span class="n">i_col_end</span><span class="p">]</span>
@@ -552,7 +552,7 @@ document.write(`
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># The second neighbourhood.</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># The second neighborhood.</span>
 <span class="n">i_row_start</span><span class="p">,</span> <span class="n">i_col_start</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span>
 <span class="n">i_row_end</span><span class="p">,</span> <span class="n">i_col_end</span> <span class="o">=</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span>
 <span class="n">random_i</span><span class="p">[</span><span class="n">i_row_start</span><span class="p">:</span><span class="n">i_row_end</span><span class="p">,</span> <span class="n">i_col_start</span><span class="p">:</span><span class="n">i_col_end</span><span class="p">]</span>
@@ -569,7 +569,7 @@ document.write(`
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># The third neighbourhood.</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># The third neighborhood.</span>
 <span class="n">i_row_start</span><span class="p">,</span> <span class="n">i_col_start</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">3</span>
 <span class="n">i_row_end</span><span class="p">,</span> <span class="n">i_col_end</span> <span class="o">=</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">6</span>
 <span class="n">random_i</span><span class="p">[</span><span class="n">i_row_start</span><span class="p">:</span><span class="n">i_row_end</span><span class="p">,</span> <span class="n">i_col_start</span><span class="p">:</span><span class="n">i_col_end</span><span class="p">]</span>
@@ -637,7 +637,7 @@ random_i[0:3, 5:8]
 </div>
 <p>We can visualise the “walk” we have just taken, with prettier graphics - (you may want to right click on these images and open them in a new tab/window, for easier viewing):</p>
 <p><img alt="" src="_images/kernel_1.png" /></p>
-<p>Now, imagine we calculate the mean within each neighbourhood (kernel) - the mean of each kernel is shown below the image of each indexing operation:</p>
+<p>Now, imagine we calculate the mean within each neighborhood (kernel) - the mean of each kernel is shown below the image of each indexing operation:</p>
 <p><img alt="" src="_images/kernel_2_mean.png" /></p>
 <p>…and now further imagine that we replace <em>central pixel value of the 3-by-3 kernel with the mean of all the values in the kernel</em>. The image below shows the central value being replaced with the mean of each kernel:</p>
 <p><img alt="" src="_images/kernel_3_replace_central_pixel.png" /></p>
@@ -653,7 +653,7 @@ random_i[0:3, 5:8]
 <p>Indeed, we need a strategy for this. There are actually many options for how a kernel should behave at the edges of an image array - we could “pad” the kernel elements that fall outside of the image with 0 values, for instance. Or we could duplicate values from the pixels at the edge of the array, to fill in kernel elements that fall outside of the array.</p>
 <p><strong>For now we will not worry about the edges, we just use the kernel only where it “fits” within the array.</strong> In effect, this just ignores pixels near the edges of the image. Presently, most of these pixels at the edges of the image are 0, and there is some distance between the “i” and the image edges, so ignoring the pixels near the edge will not affect the “i” shape too much itself. The image below illustrates this concept, for a generic array:</p>
 <p><img alt="" src="_images/kernel_general.png" /></p>
-<p>The cell below defines a function that will apply this mean kernel, step-by-step in a for loop to the whole image array, only for pixel neighbourhoods where the kernel “fits” over the central pixel, without extending outside of the image:</p>
+<p>The cell below defines a function that will apply this mean kernel, step-by-step in a for loop to the whole image array, only for pixel neighborhoods where the kernel “fits” over the central pixel, without extending outside of the image:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># A function to apply our crude mean kernel.</span>
@@ -736,7 +736,7 @@ Crude Mean filter:
 <img alt="_images/470ba2e9be9d67a710f556ad2845253b4a09050794216b37c82110abf3a5a967.png" src="_images/470ba2e9be9d67a710f556ad2845253b4a09050794216b37c82110abf3a5a967.png" />
 </div>
 </div>
-<p>Ok, so we can see that some of the non-black (non-zero) pixel intensity values have been “spread around” to neighbouring pixels, which is unsurprising, given what we know about how this operation works. We have literally, for each given pixel, “averaged out” between the pixels in the 3-by-3 neighbourhood around the pixel. This is a very crude mean filter, intended to show the foundational principles of how filtering via a kernel works. There is a better, less crude way to implement a mean filter, however, to which we will turn in the next section.</p>
+<p>Ok, so we can see that some of the non-black (non-zero) pixel intensity values have been “spread around” to neighboring pixels, which is unsurprising, given what we know about how this operation works. We have literally, for each given pixel, “averaged out” between the pixels in the 3-by-3 neighborhood around the pixel. This is a very crude mean filter, intended to show the foundational principles of how filtering via a kernel works. There is a better, less crude way to implement a mean filter, however, to which we will turn in the next section.</p>
 <div class="exercise dropdown admonition" id="dont-be-mean">
 
 <p class="admonition-title"><span class="caption-number">Exercise 21 </span></p>
@@ -867,7 +867,7 @@ Min Pixel Value: -1.0
 </section>
 <section class="tex2jax_ignore mathjax_ignore" id="convolution">
 <h1>Convolution<a class="headerlink" href="#convolution" title="Link to this heading">#</a></h1>
-<p>In normal practice, filtering operations which use kernels rely on <a class="reference external" href="https://en.wikipedia.org/wiki/Convolution">convolution</a>. In fact, one name for the kernel is “convolution kernel”. In image processing, convolution is similar to the process we saw with our crude mean filter - we “walk” a kernel across our whole image, centering it on every pixel, and perform a computation which modifies the central pixel based on the other values in the kernel/neighbourhood.</p>
+<p>In normal practice, filtering operations which use kernels rely on <a class="reference external" href="https://en.wikipedia.org/wiki/Convolution">convolution</a>. In fact, one name for the kernel is “convolution kernel”. In image processing, convolution is similar to the process we saw with our crude mean filter - we “walk” a kernel across our whole image, centering it on every pixel, and perform a computation which modifies the central pixel based on the other values in the kernel/neighborhood.</p>
 <p>Let’s implement a true mean filter, using convolution. Obviously, we start with our kernel. First, we define its shape:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -1102,7 +1102,7 @@ The input is extended by wrapping around to the opposite edge.</p></li>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/54ae8d5522c386b717e6384cd59e17f40ab76a7ce8c9579eae7dd58dcf55a5c2.png" src="_images/54ae8d5522c386b717e6384cd59e17f40ab76a7ce8c9579eae7dd58dcf55a5c2.png" />
+<img alt="_images/bdaad7ac9718f59a9b02ff00d8acb15bba5a4b6d3efbd1a5da9002767162df2b.png" src="_images/bdaad7ac9718f59a9b02ff00d8acb15bba5a4b6d3efbd1a5da9002767162df2b.png" />
 </div>
 </div>
 <p>The mean filter can remove some of the noise, restoring the clarity of the image:</p>
@@ -1127,7 +1127,7 @@ The input is extended by wrapping around to the opposite edge.</p></li>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/d8eaf9d905ab475ba462cc70fc45123931c3f9183d60c1191e87f27111ad497a.png" src="_images/d8eaf9d905ab475ba462cc70fc45123931c3f9183d60c1191e87f27111ad497a.png" />
+<img alt="_images/adc5a96551700695e1da2899e8b0f164d5fc7197d49f9a3534b54d6a8a4c3917.png" src="_images/adc5a96551700695e1da2899e8b0f164d5fc7197d49f9a3534b54d6a8a4c3917.png" />
 </div>
 </div>
 <p>We can see that the image is clearer, the noise has been reduced and some of the signal has been restored.</p>
@@ -1157,7 +1157,7 @@ The input is extended by wrapping around to the opposite edge.</p></li>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/6db401e8f77dc169eb66b47a7b229a405f0ff53f1831ab4ae70af5ee312c0b93.png" src="_images/6db401e8f77dc169eb66b47a7b229a405f0ff53f1831ab4ae70af5ee312c0b93.png" />
+<img alt="_images/0f311a78ec3a72b861abaa3dfd9551581c88f3e73bd8ace00539c60daf41a02c.png" src="_images/0f311a78ec3a72b861abaa3dfd9551581c88f3e73bd8ace00539c60daf41a02c.png" />
 </div>
 </div>
 <p>As with many filtering operations, the effect of altering aspects of the filtering process (like a threshold value or kernel size), is very context-dependent. It may take many iterations before finding a “sweet spot”, and where the sweet spot is may be somewhat subjective.</p>
@@ -1263,7 +1263,7 @@ Min Pixel Value: -49
 </section>
 <section class="tex2jax_ignore mathjax_ignore" id="mean-filtering-with-skimage">
 <h1>Mean filtering with <code class="docutils literal notranslate"><span class="pre">skimage</span></code><a class="headerlink" href="#mean-filtering-with-skimage" title="Link to this heading">#</a></h1>
-<p>We can implement a mean filter using the <code class="docutils literal notranslate"><span class="pre">ski.filters.rank.mean()</span></code> function. <code class="docutils literal notranslate"><span class="pre">skimage</span></code> prefers the term <code class="docutils literal notranslate"><span class="pre">footprint</span></code> to “kernel”, but the meaning is the same. We supply a small matrix with which to “walk” through the image, centering the kernel on every pixel, and modifying that central pixel’s value based on the values of the other pixels in it’s neighbourhood, with the size and shape of the neighbourhood being defined by the kernel (<code class="docutils literal notranslate"><span class="pre">footprint</span></code>).</p>
+<p>We can implement a mean filter using the <code class="docutils literal notranslate"><span class="pre">ski.filters.rank.mean()</span></code> function. <code class="docutils literal notranslate"><span class="pre">skimage</span></code> prefers the term <code class="docutils literal notranslate"><span class="pre">footprint</span></code> to “kernel”, but the meaning is the same. We supply a small matrix with which to “walk” through the image, centering the kernel on every pixel, and modifying that central pixel’s value based on the values of the other pixels in it’s neighborhood, with the size and shape of the neighborhood being defined by the kernel (<code class="docutils literal notranslate"><span class="pre">footprint</span></code>).</p>
 <p>Inspecting the <code class="docutils literal notranslate"><span class="pre">skimage</span></code> documentation will reveal that the format expected for the <code class="docutils literal notranslate"><span class="pre">footprint</span></code> should be <a class="reference external" href="https://scikit-image.org/docs/0.25.x/api/skimage.filters.rank.html#skimage.filters.rank.mean">“the [pixel] neighborhood expressed as an ndarray of 1’s and 0’s.”</a>. We will uses <code class="docutils literal notranslate"><span class="pre">np.ones()</span></code> to generate an array in this format. We use a (9, 9) kernel to achieve a stronger visual effect:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -1457,7 +1457,7 @@ Min Pixel Value: 0
 <img alt="_images/dca42a3c82eb4f39bb699b2bea7ecc9ccb084265e7f8aace2f15cf1c5d7055a2.png" src="_images/dca42a3c82eb4f39bb699b2bea7ecc9ccb084265e7f8aace2f15cf1c5d7055a2.png" />
 </div>
 </div>
-<p>We got a blurrier output image via <code class="docutils literal notranslate"><span class="pre">skimage</span></code> here, than in the manual convolution using <code class="docutils literal notranslate"><span class="pre">ndi.correlate()</span></code>. This is because we used a larger kernel for the <code class="docutils literal notranslate"><span class="pre">skimage</span></code> filtering, and so are averaging over larger pixel neighbourhoods.</p>
+<p>We got a blurrier output image via <code class="docutils literal notranslate"><span class="pre">skimage</span></code> here, than in the manual convolution using <code class="docutils literal notranslate"><span class="pre">ndi.correlate()</span></code>. This is because we used a larger kernel for the <code class="docutils literal notranslate"><span class="pre">skimage</span></code> filtering, and so are averaging over larger pixel neighborhoods.</p>
 <p>Scikit-image will also handle this using a 3D kernel. Below we adjust our <code class="docutils literal notranslate"><span class="pre">footprint_9_by_9</span></code> kernel by <code class="docutils literal notranslate"><span class="pre">np.stack()</span></code>-ing it into 3D:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -1587,7 +1587,7 @@ processing</a></p></li>
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
 <li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Convolution filters I - the mean filter</a><ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#kernels-and-pixel-neighbourhoods">Kernels and pixel neighbourhoods</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#kernels-and-pixel-neighborhoods">Kernels and pixel neighborhoods</a></li>
 </ul>
 </li>
 <li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#convolution">Convolution</a></li>

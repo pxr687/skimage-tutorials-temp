@@ -17,9 +17,9 @@ jupyter:
 
 [Morphology](https://en.wikipedia.org/wiki/Mathematical_morphology) is the mathematical study of shapes and has numerous applications in image processing. As such, Scikit-image has a dedicated module (`ski.morphology`) for associated functions. 
 
-We already encountered structuring elements - (of which kernels are one type) - on [earlier](4_threshold_filters) [pages](5_mean_filter). A structuring element is a grid of a certain shape - you can think of it as a "template" - which is used to define the "neighbourhood" of pixels which an image processing operation affects. 
+We already encountered structuring elements - (of which kernels are one type) - on [earlier](4_threshold_filters) [pages](5_mean_filter). A structuring element is a grid of a certain shape - you can think of it as a "template" - which is used to define the "neighborhood" of pixels which an image processing operation affects. 
 
-A (3, 3) structuring element can be applied as a square which affects 9 pixels - we might alter the image by centering this structuring element over every pixel, and replacing each pixel with the mean of the other pixels in its "neighbourhood", for instance:
+A (3, 3) structuring element can be applied as a square which affects 9 pixels - we might alter the image by centering this structuring element over every pixel, and replacing each pixel with the mean of the other pixels in its "neighborhood", for instance:
 
 ![](images/kernel_general.png)
 
@@ -31,13 +31,13 @@ Options here including "padding" the empty structuring element locations with a 
 
 We have seen structuring elements applied during filtering operations, courtesy of the `ski.filters` module. Morphological operations also make use of structuring elements, though in morphological operations, structuring elements are binary (contain only 0s and 1s). 
 
-Morphological operations differ from the filtering operations we have seen previously because they are specifically related to the shape (...or, well, [*morphology*](https://www.cs.auckland.ac.nz/courses/compsci773s1c/lectures/ImageProcessing-html/topic4.htm)) of features with in the image. This contrasts with operations like [mean filtering](5_mean_filter) which "spread" pixel values around within a neighbourhood, rather than identifying and altering features with a specific shape/morphology.
+Morphological operations differ from the filtering operations we have seen previously because they are specifically related to the shape (...or, well, [*morphology*](https://www.cs.auckland.ac.nz/courses/compsci773s1c/lectures/ImageProcessing-html/topic4.htm)) of features with in the image. This contrasts with operations like [mean filtering](5_mean_filter) which "spread" pixel values around within a neighborhood, rather than identifying and altering features with a specific shape/morphology.
 
 # Structuring elements
 
-Because morphological operations are part of image processing, they involve the modification of array pixel values, which is [all image processing is](3_skimage_processing_from_numpy_and_scipy). In morphological operations, the structural element will alter pixel values *depending upon the match between the shape of the structural element and the shape of the pixels in the "neighbourhood" of the structural element*.
+Because morphological operations are part of image processing, they involve the modification of array pixel values, which is [all image processing is](3_skimage_processing_from_numpy_and_scipy). In morphological operations, the structural element will alter pixel values *depending upon the match between the shape of the structural element and the shape of the pixels in the "neighborhood" of the structural element*.
 
-The structural element, typically, is centered once on every pixel in an image, and this central pixel is modified (or not) depending upon the match between the shape of the structural element and the shape depicted by the pixels in that neighbourhood.
+The structural element, typically, is centered once on every pixel in an image, and this central pixel is modified (or not) depending upon the match between the shape of the structural element and the shape depicted by the pixels in that neighborhood.
 
 Let's make ourselves a simple binary image, so we can clearly see the effect of the foundational morphological operations:
 
@@ -98,9 +98,9 @@ diamond.shape
 
 The fundamental operations of morphological image processing are *erosion* and *dilation*. These affect bright and dark regions in an image. We will consider erosion first.
 
-Much like when bad behaviour spreads through a social group, erosion will lower a given pixels value down to lowest value within its neighbourhood - which is to say the lowest pixel value under the structuring element. The structuring element is centered on a pixel, and it is this central pixel that is altered and set to the lowest value in the neighbourhood. However, it will only perform this lowering *if the pixels in the neighbourhood do not match the shape of the structuring element*, else it will leave the central pixel unchanged.
+Much like when bad behaviour spreads through a social group, erosion will lower a given pixels value down to lowest value within its neighborhood - which is to say the lowest pixel value under the structuring element. The structuring element is centered on a pixel, and it is this central pixel that is altered and set to the lowest value in the neighborhood. However, it will only perform this lowering *if the pixels in the neighborhood do not match the shape of the structuring element*, else it will leave the central pixel unchanged.
 
-As mentioned above, a full morphological operation involves centering the structuring element on *every pixel in the image*, so every pixel gets assessed for alteration with reference to the other pixels in its neighbourhood. Like most (efficient) processes in computing, the operation is done in parallel (at the same time to all pixels in the images, rather than sequentially). 
+As mentioned above, a full morphological operation involves centering the structuring element on *every pixel in the image*, so every pixel gets assessed for alteration with reference to the other pixels in its neighborhood. Like most (efficient) processes in computing, the operation is done in parallel (at the same time to all pixels in the images, rather than sequentially). 
 
 We can erode our binary square using `ski.morphology.erosion()`, we use the `footprint` argument to specify our structuring element:
 
@@ -114,13 +114,13 @@ print(eroded_square)
 plt.imshow(eroded_square);
 ```
 
-What has happened here? We can think of our `diamond` structing element as being a bit like a weird [crosshair/reticle](https://en.wikipedia.org/wiki/Reticle) of a gun. In a morphological operation, we "target" the crosshair on a given array pixel. Because we are eroding, the central pixel will be *lowered to the value of the lowest pixel in its neighbourhood* if the pixels in the neighbourhood do not "match" the shape of the structuring element. This is illustrated below. 
+What has happened here? We can think of our `diamond` structing element as being a bit like a weird [crosshair/reticle](https://en.wikipedia.org/wiki/Reticle) of a gun. In a morphological operation, we "target" the crosshair on a given array pixel. Because we are eroding, the central pixel will be *lowered to the value of the lowest pixel in its neighborhood* if the pixels in the neighborhood do not "match" the shape of the structuring element. This is illustrated below. 
 
 Now, because our `square` array contains only 1s and 0s, central pixels "match" the structuring element if the pixels under the structuring element are 1 where the values in the structuring element are 1. The image below shows the `diamond` structuring element being applied to three different central pixels. "Matches" between the structuring element and the array pixels are depicted with a green tick; "clashes" between the structuring element and the array pixels are depicted with a red X. "Clashes" occur where the structuring element value is 1 and the array pixel value is 0. 
 
 If a "clash" occurs, then the central pixel gets lowered to the lowest value under the structuring element (0). (We call this, loosely, the central pixel "dying").
 
-If a full "match" occurs between the neighbourhood values and the structuring element, then the central pixel is left altered (we say that it "survives"):
+If a full "match" occurs between the neighborhood values and the structuring element, then the central pixel is left altered (we say that it "survives"):
 
 ![](images/hit_n_miss_with_text.png)
 
@@ -152,7 +152,7 @@ What happened here? Well, again a "match" only occurs for two pixels in the imag
 ![](images/hit_n_miss_with_text_2.png)
 
 
-All other "neighbourhoods" did not match the structuring element, and so the values in the neighbourhood were lowered to 0, 0 being the lowest value in each neighbourhood. This has the effect, if a non-matching pixel has the value of 1, of setting it to 0. If a non-matching pixel has a value of 0, it also gets set to 0, but it was already 0, so there is no appreciable change.
+All other "neighborhoods" did not match the structuring element, and so the values in the neighborhood were lowered to 0, 0 being the lowest value in each neighborhood. This has the effect, if a non-matching pixel has the value of 1, of setting it to 0. If a non-matching pixel has a value of 0, it also gets set to 0, but it was already 0, so there is no appreciable change.
 
 Let's alter our image array slightly, to see how this affects the erosion operation with our `diamond` structuring element. We will place a black array pixel inside the right-hand white square:
 
@@ -182,7 +182,7 @@ plt.imshow(eroded_square_the_circle);
 
 Ok, so now the whole right-hand square got taken out. Brutal.
 
-Why did this happen? The cell below illustrates, again using green ticks for "matches" between the structuring element and the pixel "neighbourhood", and red X's for "clashes" between the structuring element and the pixel "neighbourhood".
+Why did this happen? The cell below illustrates, again using green ticks for "matches" between the structuring element and the pixel "neighborhood", and red X's for "clashes" between the structuring element and the pixel "neighborhood".
 
 Remember that a "clash" means the central pixel "dies"; a "match" means the central pixel "survives":
 
@@ -191,7 +191,7 @@ Remember that a "clash" means the central pixel "dies"; a "match" means the cent
 
 # Dilation
 
-The other foundational operation in morphological image processing is *dilation*. Dilation works the same as erosion in terms of centering a structuring element on each pixel and looking for "matches" or "clashes". However, it does exactly the opposite thing for pixels where it finds a "clash". Where, in the event of a "clash", erosion *lowers* central pixel values down to the neighbourhood minimum, dilation instead *raises* central pixel to the value of the neighbourhood maximum.
+The other foundational operation in morphological image processing is *dilation*. Dilation works the same as erosion in terms of centering a structuring element on each pixel and looking for "matches" or "clashes". However, it does exactly the opposite thing for pixels where it finds a "clash". Where, in the event of a "clash", erosion *lowers* central pixel values down to the neighborhood minimum, dilation instead *raises* central pixel to the value of the neighborhood maximum.
 
 Let's dilate the `square` array:
 
@@ -244,9 +244,9 @@ Why did this happen? The image below explains:
 ![](images/hit_n_miss_with_text_3_dilation.png)
 <!-- #endregion -->
 
-For erosion, all of the "clashing" pixels in the right-hand square get *lowered* to their neighbourhood minimum, in this case 0, and so they "die" and fade into the black background.
+For erosion, all of the "clashing" pixels in the right-hand square get *lowered* to their neighborhood minimum, in this case 0, and so they "die" and fade into the black background.
 
-For dilation, clashing central pixels get *raised* to the neighbourhood maximum, which in this case is 1. 
+For dilation, clashing central pixels get *raised* to the neighborhood maximum, which in this case is 1. 
 
 So, [remember](https://scikit-image.org/docs/0.25.x/auto_examples/applications/plot_morphology.html):
 
@@ -322,7 +322,7 @@ xeno_binary_ero_rad_6_diamond = ski.morphology.erosion(xenomorph,
 show_both(xenomorph, xeno_binary_ero_rad_6_diamond, "Eroded \n(13, 13) Diamond SE");
 ```
 
-There are less "matches" between the large structuring element and pixel neighbourhoods in the image - this leaves less central pixels unchanged, than for a smaller structuring element of the same shape. Thus, because in erorison we are *lowering* central pixel values in the event of a "clash", the darker regions have expanded substantially more than when we used a smaller `diamond`, which gave more "matches".
+There are less "matches" between the large structuring element and pixel neighborhoods in the image - this leaves less central pixels unchanged, than for a smaller structuring element of the same shape. Thus, because in erorison we are *lowering* central pixel values in the event of a "clash", the darker regions have expanded substantially more than when we used a smaller `diamond`, which gave more "matches".
 
 Dilation, again has the opposite effect of increasing brighter regions, in the event of "clashes":
 

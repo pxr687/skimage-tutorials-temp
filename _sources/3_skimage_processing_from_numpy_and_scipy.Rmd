@@ -334,7 +334,7 @@ The array pixels highlighted in red are the original pixels from the `(2, 2)` or
 
 All the other pixels have been added by `skimage` during the `resize`-ing process. Pixels closer to the original pixels share closer intensity values to the original pixel (meaning they are more black or more white, depending on the original pixel). Images further from the original pixels become more gray.
 
-We can control the type of interpolation that `skimage` uses by changing the (somewhat cryptically named) `order` argument. Setting this to 0 will activate [nearest neighbour interpolation](https://en.wikipedia.org/wiki/Nearest-neighbor_interpolation):
+We can control the type of interpolation that `skimage` uses by changing the (somewhat cryptically named) `order` argument. Setting this to 0 will activate [nearest neighbor interpolation](https://en.wikipedia.org/wiki/Nearest-neighbor_interpolation):
 
 ```{python}
 # Pass our `squares` array to the `ski.transform.resize()` function.

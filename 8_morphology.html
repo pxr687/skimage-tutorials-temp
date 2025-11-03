@@ -497,19 +497,19 @@ document.write(`
   <section class="tex2jax_ignore mathjax_ignore" id="morphology">
 <h1>Morphology<a class="headerlink" href="#morphology" title="Link to this heading">#</a></h1>
 <p><a class="reference external" href="https://en.wikipedia.org/wiki/Mathematical_morphology">Morphology</a> is the mathematical study of shapes and has numerous applications in image processing. As such, Scikit-image has a dedicated module (<code class="docutils literal notranslate"><span class="pre">ski.morphology</span></code>) for associated functions.</p>
-<p>We already encountered structuring elements - (of which kernels are one type) - on <a class="reference internal" href="4_threshold_filters.html"><span class="doc std std-doc">earlier</span></a> <a class="reference internal" href="5_mean_filter.html"><span class="doc std std-doc">pages</span></a>. A structuring element is a grid of a certain shape - you can think of it as a “template” - which is used to define the “neighbourhood” of pixels which an image processing operation affects.</p>
-<p>A (3, 3) structuring element can be applied as a square which affects 9 pixels - we might alter the image by centering this structuring element over every pixel, and replacing each pixel with the mean of the other pixels in its “neighbourhood”, for instance:</p>
+<p>We already encountered structuring elements - (of which kernels are one type) - on <a class="reference internal" href="4_threshold_filters.html"><span class="doc std std-doc">earlier</span></a> <a class="reference internal" href="5_mean_filter.html"><span class="doc std std-doc">pages</span></a>. A structuring element is a grid of a certain shape - you can think of it as a “template” - which is used to define the “neighborhood” of pixels which an image processing operation affects.</p>
+<p>A (3, 3) structuring element can be applied as a square which affects 9 pixels - we might alter the image by centering this structuring element over every pixel, and replacing each pixel with the mean of the other pixels in its “neighborhood”, for instance:</p>
 <p><img alt="" src="_images/kernel_general.png" /></p>
 <p>You will also recall that we need a strategy for pixels at the edge of the image, where we center the structuring element on a pixel where part of the structuring element “falls off” the edge of the image:</p>
 <p><img alt="" src="_images/kernel_hit_the_edge.png" /></p>
 <p>Options here including “padding” the empty structuring element locations with a repeated value (like 0), or just duplicating the existing pixels at the edge of the image.</p>
 <p>We have seen structuring elements applied during filtering operations, courtesy of the <code class="docutils literal notranslate"><span class="pre">ski.filters</span></code> module. Morphological operations also make use of structuring elements, though in morphological operations, structuring elements are binary (contain only 0s and 1s).</p>
-<p>Morphological operations differ from the filtering operations we have seen previously because they are specifically related to the shape (…or, well, <a class="reference external" href="https://www.cs.auckland.ac.nz/courses/compsci773s1c/lectures/ImageProcessing-html/topic4.htm"><em>morphology</em></a>) of features with in the image. This contrasts with operations like <a class="reference internal" href="5_mean_filter.html"><span class="doc std std-doc">mean filtering</span></a> which “spread” pixel values around within a neighbourhood, rather than identifying and altering features with a specific shape/morphology.</p>
+<p>Morphological operations differ from the filtering operations we have seen previously because they are specifically related to the shape (…or, well, <a class="reference external" href="https://www.cs.auckland.ac.nz/courses/compsci773s1c/lectures/ImageProcessing-html/topic4.htm"><em>morphology</em></a>) of features with in the image. This contrasts with operations like <a class="reference internal" href="5_mean_filter.html"><span class="doc std std-doc">mean filtering</span></a> which “spread” pixel values around within a neighborhood, rather than identifying and altering features with a specific shape/morphology.</p>
 </section>
 <section class="tex2jax_ignore mathjax_ignore" id="structuring-elements">
 <h1>Structuring elements<a class="headerlink" href="#structuring-elements" title="Link to this heading">#</a></h1>
-<p>Because morphological operations are part of image processing, they involve the modification of array pixel values, which is <a class="reference internal" href="3_skimage_processing_from_numpy_and_scipy.html"><span class="doc std std-doc">all image processing is</span></a>. In morphological operations, the structural element will alter pixel values <em>depending upon the match between the shape of the structural element and the shape of the pixels in the “neighbourhood” of the structural element</em>.</p>
-<p>The structural element, typically, is centered once on every pixel in an image, and this central pixel is modified (or not) depending upon the match between the shape of the structural element and the shape depicted by the pixels in that neighbourhood.</p>
+<p>Because morphological operations are part of image processing, they involve the modification of array pixel values, which is <a class="reference internal" href="3_skimage_processing_from_numpy_and_scipy.html"><span class="doc std std-doc">all image processing is</span></a>. In morphological operations, the structural element will alter pixel values <em>depending upon the match between the shape of the structural element and the shape of the pixels in the “neighborhood” of the structural element</em>.</p>
+<p>The structural element, typically, is centered once on every pixel in an image, and this central pixel is modified (or not) depending upon the match between the shape of the structural element and the shape depicted by the pixels in that neighborhood.</p>
 <p>Let’s make ourselves a simple binary image, so we can clearly see the effect of the foundational morphological operations:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -591,8 +591,8 @@ document.write(`
 <section class="tex2jax_ignore mathjax_ignore" id="erosion">
 <h1>Erosion<a class="headerlink" href="#erosion" title="Link to this heading">#</a></h1>
 <p>The fundamental operations of morphological image processing are <em>erosion</em> and <em>dilation</em>. These affect bright and dark regions in an image. We will consider erosion first.</p>
-<p>Much like when bad behaviour spreads through a social group, erosion will lower a given pixels value down to lowest value within its neighbourhood - which is to say the lowest pixel value under the structuring element. The structuring element is centered on a pixel, and it is this central pixel that is altered and set to the lowest value in the neighbourhood. However, it will only perform this lowering <em>if the pixels in the neighbourhood do not match the shape of the structuring element</em>, else it will leave the central pixel unchanged.</p>
-<p>As mentioned above, a full morphological operation involves centering the structuring element on <em>every pixel in the image</em>, so every pixel gets assessed for alteration with reference to the other pixels in its neighbourhood. Like most (efficient) processes in computing, the operation is done in parallel (at the same time to all pixels in the images, rather than sequentially).</p>
+<p>Much like when bad behaviour spreads through a social group, erosion will lower a given pixels value down to lowest value within its neighborhood - which is to say the lowest pixel value under the structuring element. The structuring element is centered on a pixel, and it is this central pixel that is altered and set to the lowest value in the neighborhood. However, it will only perform this lowering <em>if the pixels in the neighborhood do not match the shape of the structuring element</em>, else it will leave the central pixel unchanged.</p>
+<p>As mentioned above, a full morphological operation involves centering the structuring element on <em>every pixel in the image</em>, so every pixel gets assessed for alteration with reference to the other pixels in its neighborhood. Like most (efficient) processes in computing, the operation is done in parallel (at the same time to all pixels in the images, rather than sequentially).</p>
 <p>We can erode our binary square using <code class="docutils literal notranslate"><span class="pre">ski.morphology.erosion()</span></code>, we use the <code class="docutils literal notranslate"><span class="pre">footprint</span></code> argument to specify our structuring element:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -619,10 +619,10 @@ document.write(`
 <img alt="_images/bda0609e9ab49e5814ee3fbfa1bd51fbb9b4c23984918a5c2328052f749118eb.png" src="_images/bda0609e9ab49e5814ee3fbfa1bd51fbb9b4c23984918a5c2328052f749118eb.png" />
 </div>
 </div>
-<p>What has happened here? We can think of our <code class="docutils literal notranslate"><span class="pre">diamond</span></code> structing element as being a bit like a weird <a class="reference external" href="https://en.wikipedia.org/wiki/Reticle">crosshair/reticle</a> of a gun. In a morphological operation, we “target” the crosshair on a given array pixel. Because we are eroding, the central pixel will be <em>lowered to the value of the lowest pixel in its neighbourhood</em> if the pixels in the neighbourhood do not “match” the shape of the structuring element. This is illustrated below.</p>
+<p>What has happened here? We can think of our <code class="docutils literal notranslate"><span class="pre">diamond</span></code> structing element as being a bit like a weird <a class="reference external" href="https://en.wikipedia.org/wiki/Reticle">crosshair/reticle</a> of a gun. In a morphological operation, we “target” the crosshair on a given array pixel. Because we are eroding, the central pixel will be <em>lowered to the value of the lowest pixel in its neighborhood</em> if the pixels in the neighborhood do not “match” the shape of the structuring element. This is illustrated below.</p>
 <p>Now, because our <code class="docutils literal notranslate"><span class="pre">square</span></code> array contains only 1s and 0s, central pixels “match” the structuring element if the pixels under the structuring element are 1 where the values in the structuring element are 1. The image below shows the <code class="docutils literal notranslate"><span class="pre">diamond</span></code> structuring element being applied to three different central pixels. “Matches” between the structuring element and the array pixels are depicted with a green tick; “clashes” between the structuring element and the array pixels are depicted with a red X. “Clashes” occur where the structuring element value is 1 and the array pixel value is 0.</p>
 <p>If a “clash” occurs, then the central pixel gets lowered to the lowest value under the structuring element (0). (We call this, loosely, the central pixel “dying”).</p>
-<p>If a full “match” occurs between the neighbourhood values and the structuring element, then the central pixel is left altered (we say that it “survives”):</p>
+<p>If a full “match” occurs between the neighborhood values and the structuring element, then the central pixel is left altered (we say that it “survives”):</p>
 <p><img alt="" src="_images/hit_n_miss_with_text.png" /></p>
 <p>Let’s repeat this erosion process with two <code class="docutils literal notranslate"><span class="pre">square</span></code> arrays <code class="docutils literal notranslate"><span class="pre">concatenate</span></code>d together.</p>
 <p>What do you think will happen when we erode them using the <code class="docutils literal notranslate"><span class="pre">diamond</span></code> structuring element? Try to predict before you check:</p>
@@ -672,7 +672,7 @@ document.write(`
 </div>
 <p>What happened here? Well, again a “match” only occurs for two pixels in the image, the pixels at the center of each white square. This illustration below shows what happened:</p>
 <p><img alt="" src="_images/hit_n_miss_with_text_2.png" /></p>
-<p>All other “neighbourhoods” did not match the structuring element, and so the values in the neighbourhood were lowered to 0, 0 being the lowest value in each neighbourhood. This has the effect, if a non-matching pixel has the value of 1, of setting it to 0. If a non-matching pixel has a value of 0, it also gets set to 0, but it was already 0, so there is no appreciable change.</p>
+<p>All other “neighborhoods” did not match the structuring element, and so the values in the neighborhood were lowered to 0, 0 being the lowest value in each neighborhood. This has the effect, if a non-matching pixel has the value of 1, of setting it to 0. If a non-matching pixel has a value of 0, it also gets set to 0, but it was already 0, so there is no appreciable change.</p>
 <p>Let’s alter our image array slightly, to see how this affects the erosion operation with our <code class="docutils literal notranslate"><span class="pre">diamond</span></code> structuring element. We will place a black array pixel inside the right-hand white square:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -709,13 +709,13 @@ document.write(`
 </div>
 </div>
 <p>Ok, so now the whole right-hand square got taken out. Brutal.</p>
-<p>Why did this happen? The cell below illustrates, again using green ticks for “matches” between the structuring element and the pixel “neighbourhood”, and red X’s for “clashes” between the structuring element and the pixel “neighbourhood”.</p>
+<p>Why did this happen? The cell below illustrates, again using green ticks for “matches” between the structuring element and the pixel “neighborhood”, and red X’s for “clashes” between the structuring element and the pixel “neighborhood”.</p>
 <p>Remember that a “clash” means the central pixel “dies”; a “match” means the central pixel “survives”:</p>
 <p><img alt="" src="_images/hit_n_miss_with_text_3.png" /></p>
 </section>
 <section class="tex2jax_ignore mathjax_ignore" id="dilation">
 <h1>Dilation<a class="headerlink" href="#dilation" title="Link to this heading">#</a></h1>
-<p>The other foundational operation in morphological image processing is <em>dilation</em>. Dilation works the same as erosion in terms of centering a structuring element on each pixel and looking for “matches” or “clashes”. However, it does exactly the opposite thing for pixels where it finds a “clash”. Where, in the event of a “clash”, erosion <em>lowers</em> central pixel values down to the neighbourhood minimum, dilation instead <em>raises</em> central pixel to the value of the neighbourhood maximum.</p>
+<p>The other foundational operation in morphological image processing is <em>dilation</em>. Dilation works the same as erosion in terms of centering a structuring element on each pixel and looking for “matches” or “clashes”. However, it does exactly the opposite thing for pixels where it finds a “clash”. Where, in the event of a “clash”, erosion <em>lowers</em> central pixel values down to the neighborhood minimum, dilation instead <em>raises</em> central pixel to the value of the neighborhood maximum.</p>
 <p>Let’s dilate the <code class="docutils literal notranslate"><span class="pre">square</span></code> array:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -805,8 +805,8 @@ document.write(`
 </div>
 <p>Why did this happen? The image below explains:</p>
 <p><img alt="" src="_images/hit_n_miss_with_text_3_dilation.png" /></p>
-<p>For erosion, all of the “clashing” pixels in the right-hand square get <em>lowered</em> to their neighbourhood minimum, in this case 0, and so they “die” and fade into the black background.</p>
-<p>For dilation, clashing central pixels get <em>raised</em> to the neighbourhood maximum, which in this case is 1.</p>
+<p>For erosion, all of the “clashing” pixels in the right-hand square get <em>lowered</em> to their neighborhood minimum, in this case 0, and so they “die” and fade into the black background.</p>
+<p>For dilation, clashing central pixels get <em>raised</em> to the neighborhood maximum, which in this case is 1.</p>
 <p>So, <a class="reference external" href="https://scikit-image.org/docs/0.25.x/auto_examples/applications/plot_morphology.html">remember</a>:</p>
 <p><em>Erosion enlarges dark regions and shrinks bright regions.</em></p>
 <p><em>Dilation enlarges bright regions and shrinks dark regions.</em></p>
@@ -938,7 +938,7 @@ Min Pixel Value: 0
 <img alt="_images/e3878b7301cbc6101a6fb24fbf1bf8453c57404f497990ff7da1a31edf578464.png" src="_images/e3878b7301cbc6101a6fb24fbf1bf8453c57404f497990ff7da1a31edf578464.png" />
 </div>
 </div>
-<p>There are less “matches” between the large structuring element and pixel neighbourhoods in the image - this leaves less central pixels unchanged, than for a smaller structuring element of the same shape. Thus, because in erorison we are <em>lowering</em> central pixel values in the event of a “clash”, the darker regions have expanded substantially more than when we used a smaller <code class="docutils literal notranslate"><span class="pre">diamond</span></code>, which gave more “matches”.</p>
+<p>There are less “matches” between the large structuring element and pixel neighborhoods in the image - this leaves less central pixels unchanged, than for a smaller structuring element of the same shape. Thus, because in erorison we are <em>lowering</em> central pixel values in the event of a “clash”, the darker regions have expanded substantially more than when we used a smaller <code class="docutils literal notranslate"><span class="pre">diamond</span></code>, which gave more “matches”.</p>
 <p>Dilation, again has the opposite effect of increasing brighter regions, in the event of “clashes”:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
