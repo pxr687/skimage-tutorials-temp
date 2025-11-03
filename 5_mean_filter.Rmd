@@ -1,17 +1,17 @@
 # Convolution filters I - the mean filter
 
-## Kernels and pixel neighbourhoods
+## Kernels and pixel neighborhoods
 
 
 On the last page we filtered images based on a single threshold value, or based on multiple threshold values. Other filters work differently to this: they work by adjusting a given pixel's value based on the value of other pixels which surround it, in a specified area. The mean filter is one such filter that works in this manner.
 
-The mean filter is a *local filter*, because it alters a given pixel's value based on the values of other pixels in the surrounding "local neighborhood". The image below shows the pixel values in the `smiley` image array that we created on an earlier [page](0_images_as_numpy_arrays). Two possible "local neighbourhoods" are shown for a given pixel, which is highlighted in red. One neighbourhood is 3-by-3, and the other is 5-by-5 - we could use either when using a local filter:
+The mean filter is a *local filter*, because it alters a given pixel's value based on the values of other pixels in the surrounding "local neighborhood". The image below shows the pixel values in the `smiley` image array that we created on an earlier [page](0_images_as_numpy_arrays). Two possible "local neighborhoods" are shown for a given pixel, which is highlighted in red. One neighborhood is 3-by-3, and the other is 5-by-5 - we could use either when using a local filter:
 
-![](images/smiley_neighbourhoods.png)
+![](images/smiley_neighborhoods.png)
 
-The values within a pixel's local neighbourhood will influence the change that a local filter makes to the central pixel. The `size` and `shape` of the "neighborhood" are up to the user. We can synonomously refer to the neighborhood as a "kernel", "footprint" or "structuring element". As we will see later, Scikit image favours the term "footprint". For now, we will use the terms "kernel" and "neighborhood" interchangeably to refer to some set of pixels that surround a given pixel.
+The values within a pixel's local neighborhood will influence the change that a local filter makes to the central pixel. The `size` and `shape` of the "neighborhood" are up to the user. We can synonomously refer to the neighborhood as a "kernel", "footprint" or "structuring element". As we will see later, Scikit image favours the term "footprint". For now, we will use the terms "kernel" and "neighborhood" interchangeably to refer to some set of pixels that surround a given pixel.
 
-The mean filter, as the name suggests, *averages* the pixel values within a kernel/neighbourhood. To see this in action, let's build a simple mean filter to filter an image array. First, we perform some imports:
+The mean filter, as the name suggests, *averages* the pixel values within a kernel/neighborhood. To see this in action, let's build a simple mean filter to filter an image array. First, we perform some imports:
 
 ```{python}
 # Library imports.
@@ -49,24 +49,24 @@ print(random_i)
 plt.imshow(random_i);
 ```
 
-Let's use some indexing to go for a walk through the neighbourhoods (kernels) in this array. We will treat each `(3,3)` set of pixels as a separate neighbourhood. For now, we only walk through the neighborhoods at the "top" of the array. We will start our "walk" in the top-left corner of the array, so that each 3-by-3 slice is centered on a pixel in the second row of the image:
+Let's use some indexing to go for a walk through the neighborhoods (kernels) in this array. We will treat each `(3,3)` set of pixels as a separate neighborhood. For now, we only walk through the neighborhoods at the "top" of the array. We will start our "walk" in the top-left corner of the array, so that each 3-by-3 slice is centered on a pixel in the second row of the image:
 
 ```{python}
-# The first neighbourhood.
+# The first neighborhood.
 i_row_start, i_col_start = 0, 0
 i_row_end, i_col_end = 3, 3
 random_i[i_row_start:i_row_end, i_col_start:i_col_end]
 ```
 
 ```{python}
-# The second neighbourhood.
+# The second neighborhood.
 i_row_start, i_col_start = 0, 1
 i_row_end, i_col_end = 3, 4
 random_i[i_row_start:i_row_end, i_col_start:i_col_end]
 ```
 
 ```{python}
-# The third neighbourhood.
+# The third neighborhood.
 i_row_start, i_col_start = 0, 3
 i_row_end, i_col_end = 3, 6
 random_i[i_row_start:i_row_end, i_col_start:i_col_end]
@@ -85,7 +85,7 @@ We can visualise the "walk" we have just taken, with prettier graphics - (you ma
 
 ![](images/kernel_1.png)
 
-Now, imagine we calculate the mean within each neighbourhood (kernel) - the mean of each kernel is shown below the image of each indexing operation:
+Now, imagine we calculate the mean within each neighborhood (kernel) - the mean of each kernel is shown below the image of each indexing operation:
 
 ![](images/kernel_2_mean.png)
 
@@ -113,7 +113,7 @@ Indeed, we need a strategy for this. There are actually many options for how a k
 
 ![](images/kernel_general.png)
 
-The cell below defines a function that will apply this mean kernel, step-by-step in a for loop to the whole image array, only for pixel neighbourhoods where the kernel "fits" over the central pixel, without extending outside of the image:
+The cell below defines a function that will apply this mean kernel, step-by-step in a for loop to the whole image array, only for pixel neighborhoods where the kernel "fits" over the central pixel, without extending outside of the image:
 
 ```{python}
 # A function to apply our crude mean kernel.
@@ -162,7 +162,7 @@ plt.imshow(mean_filtered_i)
 plt.title("Crude Mean Filter");
 ```
 
-Ok, so we can see that some of the non-black (non-zero) pixel intensity values have been "spread around" to neighbouring pixels, which is unsurprising, given what we know about how this operation works. We have literally, for each given pixel, "averaged out" between the pixels in the 3-by-3 neighbourhood around the pixel. This is a very crude mean filter, intended to show the foundational principles of how filtering via a kernel works. There is a better, less crude way to implement a mean filter, however, to which we will turn in the next section.
+Ok, so we can see that some of the non-black (non-zero) pixel intensity values have been "spread around" to neighboring pixels, which is unsurprising, given what we know about how this operation works. We have literally, for each given pixel, "averaged out" between the pixels in the 3-by-3 neighborhood around the pixel. This is a very crude mean filter, intended to show the foundational principles of how filtering via a kernel works. There is a better, less crude way to implement a mean filter, however, to which we will turn in the next section.
 
 ::: {exercise-start}
 :label: dont-be-mean
@@ -271,7 +271,7 @@ show_attributes(neg_sum_filter_coins)
 
 # Convolution
 
-In normal practice, filtering operations which use kernels rely on [convolution](https://en.wikipedia.org/wiki/Convolution). In fact, one name for the kernel is "convolution kernel". In image processing, convolution is similar to the process we saw with our crude mean filter - we "walk" a kernel across our whole image, centering it on every pixel, and perform a computation which modifies the central pixel based on the other values in the kernel/neighbourhood.
+In normal practice, filtering operations which use kernels rely on [convolution](https://en.wikipedia.org/wiki/Convolution). In fact, one name for the kernel is "convolution kernel". In image processing, convolution is similar to the process we saw with our crude mean filter - we "walk" a kernel across our whole image, centering it on every pixel, and perform a computation which modifies the central pixel based on the other values in the kernel/neighborhood.
 
 Let's implement a true mean filter, using convolution. Obviously, we start with our kernel. First, we define its shape:
 
@@ -550,7 +550,7 @@ This is quite a strange kernel to apply! But it shows us how easy it is to achie
 
 # Mean filtering with `skimage`
 
-We can implement a mean filter using the `ski.filters.rank.mean()` function. `skimage` prefers the term `footprint` to "kernel", but the meaning is the same. We supply a small matrix with which to "walk" through the image, centering the kernel on every pixel, and modifying that central pixel's value based on the values of the other pixels in it's neighbourhood, with the size and shape of the neighbourhood being defined by the kernel (`footprint`). 
+We can implement a mean filter using the `ski.filters.rank.mean()` function. `skimage` prefers the term `footprint` to "kernel", but the meaning is the same. We supply a small matrix with which to "walk" through the image, centering the kernel on every pixel, and modifying that central pixel's value based on the values of the other pixels in it's neighborhood, with the size and shape of the neighborhood being defined by the kernel (`footprint`). 
 
 Inspecting the `skimage` documentation will reveal that the format expected for the `footprint` should be ["the [pixel] neighborhood expressed as an ndarray of 1’s and 0’s."](https://scikit-image.org/docs/0.25.x/api/skimage.filters.rank.html#skimage.filters.rank.mean). We will uses `np.ones()` to generate an array in this format. We use a (9, 9) kernel to achieve a stronger visual effect:
 
@@ -664,7 +664,7 @@ plt.imshow(astronaut_mean_filtered)
 plt.tight_layout();
 ```
 
-We got a blurrier output image via `skimage` here, than in the manual convolution using `ndi.correlate()`. This is because we used a larger kernel for the `skimage` filtering, and so are averaging over larger pixel neighbourhoods.
+We got a blurrier output image via `skimage` here, than in the manual convolution using `ndi.correlate()`. This is because we used a larger kernel for the `skimage` filtering, and so are averaging over larger pixel neighborhoods.
 
 Scikit-image will also handle this using a 3D kernel. Below we adjust our `footprint_9_by_9` kernel by `np.stack()`-ing it into 3D:
 
