@@ -374,7 +374,12 @@ original array:
 
 All the other pixels have been added by `skimage` during the `resize`-ing process. Pixels closer to the original pixels share closer intensity values to the original pixel (meaning they are more black or more white, depending on the original pixel). Images further from the original pixels become more gray.
 
-We can control the type of interpolation that `skimage` uses by changing the (somewhat cryptically named) `order` argument. Setting this to 0 will activate [nearest neighbor interpolation](https://en.wikipedia.org/wiki/Nearest-neighbor_interpolation).  This method of interpolation (estimation) merely uses the nearest existing pixel to give the value for any new pixel in the output image.
+We can control the type of interpolation that `skimage` uses by changing the
+(somewhat cryptically named) `order` argument. Setting `order=0` will activate
+[nearest neighbor
+interpolation](https://en.wikipedia.org/wiki/Nearest-neighbor_interpolation).
+This method of interpolation (estimation) merely uses the nearest existing
+pixel to give the value for any new pixel in the output image.
 
 ```{python}
 # Pass our `squares` array to the `ski.transform.resize()` function.
@@ -390,16 +395,23 @@ plt.imshow(squares_ten_by_ten);
 This seems much closer to what we want when we `resize` the image. However, the results of image processing are highly context-dependent, and there may be images for which the default interpolation setting works better...
 
 
-# Rotation
+## Rotation
 
-Another common image manipulation we may want to do is to rotate an image. Should we only want to rotate by increments of 90 degrees, we can use the helpfully named `np.rot90()` function:
+Another common image manipulation we may want to do is to rotate an image.
+
+### Rotations in 90 degree increments
+
+Should we only want to rotate by increments of 90 degrees, we can use the
+helpfully named `np.rot90()` function:
+
 
 ```{python}
 # Rotate the image.
 rotated_i = np.rot90(i_img)
+rotated_i
+```
 
-# Show the result.
-print(rotated_i)
+```{python}
 plt.imshow(rotated_i);
 ```
 
@@ -407,15 +419,16 @@ We can control the number of rotations with the `k` argument:
 
 ```{python}
 # Rotate the image, twice!
-rotated_i_180 = np.rot90(i_img, 
+rotated_i_180 = np.rot90(i_img,
                          k=2) # Two 90 degree rotations.
+rotated_i_180
+```
 
-# Show the result.
-print(rotated_i_180)
+```{python}
 plt.imshow(rotated_i_180);
 ```
 
-Again, with NumPy there are many routes to the same destination, and you can see that has achieved (visually) the same result as using `np.flip()` as we saw above. Rotating in increments of 90 degrees will not change the *size* (e.g. number of pixels) in the array, however it will change the integer index location of the pixel values:
+Rotating in increments of 90 degrees will not change the *size* (e.g. number of pixels) in the array, however it will change the integer index location of the pixel values:
 
 ```{python}
 # Show the shape of the original image and both 90 degree rotated images.
@@ -435,38 +448,26 @@ plt.imshow(rotated_i_180);
 i_img.size == rotated_i.size == rotated_i_180.size
 ```
 
-The cell below demonstrates `np.flip`-ping an image, as well as `np.rot`-ating an image by 180 degrees:
+### Rotations by arbitrary angles with Scipy
 
-```{python}
-# Load in `camera`
-camera = ski.data.camera()
-
-# Rotate, flip 'n' plot!
-plt.figure(figsize=(14, 4))
-plt.subplot(1, 3, 1)
-plt.imshow(camera)
-plt.title('Original')
-plt.subplot(1, 3, 2)
-plt.imshow(np.rot90(camera, k=2))
-plt.title('np.rot90(k=2)')
-plt.subplot(1, 3, 3)
-plt.imshow(np.flip(camera))
-plt.title('np.flip()');
-```
-
-To rotate an image by more flexible increments, we need to bring in SciPy, another foundational component library of Scikit-image. The SciPy function `ndimage.rotate()` offers more flexible rotation. However, rotating by other angles will alter both the `shape` and `size` of the output image:
+To rotate an image by more flexible increments than 90 degrees, we need to
+bring in SciPy, another foundation library for Scikit-image. The SciPy
+function `ndimage.rotate()` offers more flexible rotation. However, rotating
+by other angles will alter both the `shape` and `size` of the output image:
 
 ```{python}
 # Import SciPy using the conventional name (`sp`).
 import scipy as sp
 
 # Rotate the image by 193 degrees.
-rotated_i_193 = sp.ndimage.rotate(i_img, 
+rotated_i_193 = sp.ndimage.rotate(i_img,
                                   angle=193) # Specify the rotation angle.
 
 # Show the "raw" array.
-print(rotated_i_193)
+rotated_i_193
+```
 
+```{python}
 # Render the image graphically.
 plt.imshow(rotated_i_193);
 ```
@@ -493,20 +494,23 @@ for i, i_2 in enumerate(np.arange(361, step=45)):
     plt.yticks([])
 ```
 
-By default, the `shape` is altered so that the original array is shown within the output array. SciPy uses interpolation to estimate the values of the pixels it adds, where the `shape` of the output image is larger than the `shape` of the input image.
+By default, the `shape` is altered so that the rotated original array is shown
+within the output array. SciPy uses interpolation to estimate the values of
+the pixels it adds, where the `shape` of the output image is larger than the
+`shape` of the input image.
 
-We can disable this behaviour by settings `reshape=False`, however, then we risk "cutting" off aspects of what our original image depicts:
+We can disable this behaviour by settings `reshape=False`, however, this means that we will clip any parts of the array that have been rotated out of the field of view of the original array shape.
 
 ```{python}
 # A for loop to show multiple rotations, and the effect on
-# the shape of the resultant image array., but this time
+# the shape of the resultant image array, but this time
 # we do not allow SciPy to reshape the output arrays.
 plt.figure(figsize=(12, 4))
 for i, i_2 in enumerate(np.arange(361, step=45)):
     plt.subplot(1, 9, i+1)
-    current_rot = sp.ndimage.rotate(i_img, 
+    current_rot = sp.ndimage.rotate(i_img,
                                     angle=i_2,
-                                    reshape=False) # Do not reshape the output images.
+                                    reshape=False) # Don't reshape output.
     plt.imshow(current_rot)
     plt.title(f"{i_2}°")
     plt.xlabel(f"{current_rot.shape}")
@@ -514,7 +518,7 @@ for i, i_2 in enumerate(np.arange(361, step=45)):
     plt.yticks([])
 ```
 
-# Rotating an image with `skimage`
+## Rotating with `skimage`
 
 Let's now look now at how rotating image arrays is handled in `skimage`. Image rotation, which we saw above using `np.rot90` and `scipy.ndimage.rotate()` can be achieved using the straightforwardly named `ski.transform.rotate()`, and the syntax works identically to `scipy.ndimage.rotate()`. All this rotating has left us thirsty and caffeine-deprived, so let's get some `coffee`:
 
@@ -528,29 +532,54 @@ We can achieve easy and flexible rotation with `ski.transform.rotate()`:
 
 ```{python}
 # Rotate the `coffee` image with `skimage`.
-rotated_coffee = ski.transform.rotate(coffee, 
+# resize=True ensures all the original image fits inside the output.
+rotated_coffee = ski.transform.rotate(coffee,
                                       angle=75,
-                                      resize=True) # Ensure the original image fits in side the
-                                                   # output image.
+                                      resize=True)
 
 plt.imshow(rotated_coffee);
 ```
 
-The cell below plots a variety of rotations, using `skimage.transform.rotate()` to perform each rotation:
+The cell below plots a variety of rotations, using `skimage.transform.rotate()` to perform each rotation, this time disabling resize of the output to fit the rotated input.
 
 ```{python}
 # Many rotations...
 plt.figure(figsize=(16, 10))
 for i, i_2 in enumerate(np.arange(361, step=45)):
     plt.subplot(3, 3, i+1)
-    current_rot = ski.transform.rotate(coffee, 
-                                    angle=i_2,
-                                    resize=False) # Do not reshape the output images.
+    current_rot = ski.transform.rotate(coffee,
+                                       angle=i_2,
+                                       resize=False)
     plt.imshow(current_rot)
     plt.title(f"{i_2}°")
     plt.xticks([])
     plt.yticks([])
 ```
+
+## Rotation compared to flips and transpos
+
+Rotating is a different operation that flipping the image with `np.flip`.  Flipping causes a reflection in the image around its center.  The difference between rotation and applying a flip becomes obvious with an image that is not left-right symmetrical.
+
+The cell below demonstrates `np.flip`-ping an image, as well as `np.rot`-ating an image by 180 degrees:
+
+```{python}
+# Load in `camera`
+camera = ski.data.camera()
+
+# Rotate, flip 'n' plot!
+plt.figure(figsize=(14, 4))
+plt.subplot(1, 3, 1)
+plt.imshow(camera)
+plt.title('Original')
+plt.subplot(1, 3, 2)
+plt.imshow(np.rot90(camera, k=2))
+plt.title('np.rot90(k=2)')
+plt.subplot(1, 3, 3)
+plt.imshow(np.flip(camera))
+plt.title('np.flip()');
+```
+
+Similarly, rotations differ from transpose operations on the array.
 
 Specifically for 90 degree rotations, you might be tempted to use a NumPy shortcut, and use the `.T` (transpose) method. This however, will do something different to rotation. The cell below demonstrates the `.T` method, with the `camera` image:
 
@@ -571,7 +600,7 @@ plt.imshow(ski.transform.rotate(camera,
 plt.title('ski.transform.rotate()');
 ```
 
-We can see that the cameraman is facing a different direction in each image (taking a photo of the bottom of the image for the `.T` method, and taking a photo of the top of the image for a 90 degree rotation via `skimage`). 
+We can see that the cameraman is facing a different direction in each image (taking a photo of the bottom of the image for the `.T` method, and taking a photo of the top of the image for a 90 degree rotation via `skimage`).
 
 The difference here is that transposing an image switches the rows and columns, such that the first row becomes the first column etc. Conversely, `skimage.transform.rotate()` pivots the pixels around a central point. Essentially, transposing gives a *mirroring effect* which is different from a rotation.
 
@@ -589,15 +618,18 @@ coffee.T.shape
 ```
 
 ```{python}
-coffee_transposed = coffee.transpose((1, 0, 2)) # Move the columns into the rows, the rows into the columns, 
-                                               # and leave the color channels in the third dimension.
-plt.imshow(coffee_transposed); 
- 
-# Show the attributes (not that the `shape` is still correct for a color image).
+# Move the columns into the rows, the rows into the columns, and leave the
+# color channels in the third dimension.
+coffee_transposed = coffee.transpose((1, 0, 2))
+plt.imshow(coffee_transposed)
+
+# Show the attributes (not that the `shape` is still correct for a color
+# image).
 show_attributes(coffee_transposed)
 ```
 
-Compare this to a 90 degree rotation via `skimage`, pay attention to the spoon!
+Compare this to a 90 degree rotation via `skimage`; pay attention to the
+spoon!
 
 ```{python}
 # Show the difference between rotating and transposing.
@@ -644,9 +676,12 @@ Max Pixel Value: 255
 Min Pixel Value: 0
 ```
 
-*Hint*: if you did not complete the earlier exercise involving combining two `i_img` arrays, then you may want to investigate NumPy functions for combining arrays together to complete the current exercise...
+*Hint*: if you did not complete the earlier exercise involving combining two
+`i_img` arrays, then you may want to investigate NumPy functions for combining
+arrays together to complete the current exercise...
 
-*Caution:* you may run into some errors/odd outcomes because of `dtype`s here... so use the `ski.util` conversion functions if you need to...
+*Caution:* you may run into some errors/odd outcomes because of `dtype`s
+here... so use the `ski.util` conversion functions if you need to...
 
 ```{python}
 # YOUR CODE HERE
@@ -677,7 +712,7 @@ Now the image is transposed, we have achieved our "mirror" effect. To get this m
 # Rotate and show.
 rotated_mirror_camera = ski.transform.rotate(mirror_camera,
                                              angle=270,
-                                             resize=True) # Preserve the dimensions to match the original.
+                                             resize=True) # Preserve shape.
 plt.imshow(rotated_mirror_camera);
 ```
 
@@ -725,16 +760,15 @@ If in doubt, check the `dtype`!
 
 For this exercise, you should load in the `cat` image from `ski.data`. Here is the original `cat` image:
 
-![](images/cat.png)
+```{python}
+cat = ski.data.cat()
+plt.imshow(cat)
+```
 
 The original image has the following attributes:
 
-```
-Type: <class 'numpy.ndarray'>
-dtype: uint8
-Shape: (300, 451, 3)
-Max Pixel Value: 231
-Min Pixel Value: 0
+```{python}
+show_attributes(cat)
 ```
 
 Now, using only `numpy` and `skimage`, try to recreate this target image:
@@ -752,6 +786,8 @@ Shape: (30, 30, 3)
 Max Pixel Value: 0.76
 Min Pixel Value: 0.0
 ```
+
+*Hint*: Note the yellow tinge to the image.  You can achieve this tinge by modifying the weights of the colors in the image.
 
 ```{python}
 # YOUR CODE HERE
@@ -794,7 +830,7 @@ show_attributes(cat_solution)
 plt.imshow(cat_solution);
 ```
 
-You'll notice that downsizing the image has seriously downgraded the quality. This makes sense, because the original high-resolution image utilized its many pixels to depict intricate details. After resizing to a lower-resolution, this detail is lost, because now we are trying to show the same image using subtantially fewer pixels. `skimage` has done some averaging behind the scenes, to work out what should go in the remaining pixels. At least we can still see the image is of a cat...
+You'll notice that downsizing the image has seriously downgraded the quality. This makes sense, because the original high-resolution image utilized its many pixels to depict intricate details. After resizing to a lower-resolution, this detail is lost, because now we are trying to show the same image using substantially fewer pixels. `skimage` has done some averaging behind the scenes, to work out what should go in the remaining pixels. At least we can still see the image is of a cat...
 
 Now, we can see that the target image requires a rotation, through good judgment, or just trial and error, we can work out that this needs to be 45 degrees. We can also see that the image of the downscaled cat does not "fit" inside the final image. As such, we need to rotate *without resizing* the image. By default, `resize=False` so we can leave it on the default setting:
 
@@ -808,11 +844,22 @@ plt.imshow(cat_solution);
 
 We will leave it to you to use this image as a logo for your "Pixel Cat" [meme coin](https://en.wikipedia.org/wiki/Meme_coin).
 
+```{python tags=c("remove-cell", "hide-output")}
+# We regenerate and store the output image for page generation, used above.
+# Check this code against the solution code above.
+cat_out = ski.data.cat()
+cat_out[:, :, 2] = 0  # Apply yellow tinge.
+small_cat = ski.transform.resize(cat_out, output_shape=(30, 30, 3))
+rot_cat = ski.transform.rotate(cat_solution, angle=45)
+plt.imshow(rot_cat);
+plt.savefig('images/poor_cat.png')
+```
 
 ::: {solution-end}
 :::
 
-# Cropping
+
+## Cropping
 
 The process of "cropping" is the removal areas of pixels from an image.
 
