@@ -26,13 +26,13 @@ from show_attributes import show_attributes
 
 # Local filtering without convolution
 
-When compared to the other local filters we have seen, the median filter uses the same process of "walking" through the image with a small array which denfines the "local neighbourhood" of each pixel. In median filtering, you can *loosely* think of this small array as a kernel, but there are some major differences in the calculations, so let's call it the "neighbourhood array" instead. 
+When compared to the other local filters we have seen, the median filter uses the same process of "walking" through the image with a small array which denfines the "local neighborhood" of each pixel. In median filtering, you can *loosely* think of this small array as a kernel, but there are some major differences in the calculations, so let's call it the "neighborhood array" instead. 
 
-Like with the other kernels we have seen, the "neighbourhood array" is centered on every pixel during the filtering operation. The central pixel value is replaced with a number computed from the other values in the local neighbourhood, e.g. the other pixel values under the "neighbourhood array".  However, instead of *convolving* the neighbourhood array and the image, as we would for a mean filter or Gaussian filter etc., the median filter, shockingly, takes the median value of the pixels under the small array. 
+Like with the other kernels we have seen, the "neighborhood array" is centered on every pixel during the filtering operation. The central pixel value is replaced with a number computed from the other values in the local neighborhood, e.g. the other pixel values under the "neighborhood array".  However, instead of *convolving* the neighborhood array and the image, as we would for a mean filter or Gaussian filter etc., the median filter, shockingly, takes the median value of the pixels under the small array. 
 
 ![](images/kernel_general.png)
 
-There is no convolvable function to calculate the median, and this is why [some people](https://dsp.stackexchange.com/questions/13211/convolution-kernels-for-image-filtering) will tell you not to call the "neighbourhood array" a "kernel", when we are doing median filtering. Calculating the median utilizes ranking and indexing, and cannot be expressed as set of additions, subtractions, multiplications, divisions etc, in the way that calculating a mean can, for instance.
+There is no convolvable function to calculate the median, and this is why [some people](https://dsp.stackexchange.com/questions/13211/convolution-kernels-for-image-filtering) will tell you not to call the "neighborhood array" a "kernel", when we are doing median filtering. Calculating the median utilizes ranking and indexing, and cannot be expressed as set of additions, subtractions, multiplications, divisions etc, in the way that calculating a mean can, for instance.
 
 One way to think of this, is that when we write the formula for the mean, we can write it without reference to any Python indexing operations:
 
@@ -82,7 +82,7 @@ median
 np.median(nums)
 ```
 
-There is no convolution kernel that can do this - instead we use the "neighbourhood array" to define a pixel neighbourhood, then replace the central value with the median from that neighbourhood, using the sorting and indexing we have seen above. So, the median filter *is* a local filter, because it alters pixel values based on other pixel values in the local neighbourhood. However, it is not a *convolution filter* because it does use the local neighbourhood in a convolution operation, in contrast to other local filters like the mean filter, Gaussian filter etc. 
+There is no convolution kernel that can do this - instead we use the "neighborhood array" to define a pixel neighborhood, then replace the central value with the median from that neighborhood, using the sorting and indexing we have seen above. So, the median filter *is* a local filter, because it alters pixel values based on other pixel values in the local neighborhood. However, it is not a *convolution filter* because it does use the local neighborhood in a convolution operation, in contrast to other local filters like the mean filter, Gaussian filter etc. 
 
 # Edge preservation
 
@@ -101,9 +101,9 @@ plt.matshow(nums_img);
 
 Now, imagine we "walk" a 3-by-3 kernel (sorry pedants!) through the `nums_img` array, and replace the central pixel of each kernel (sorry again, pedants!) with the median of the pixels under the kernel.
 
-This process is shown below, for three kernels (OK, pedants, three "local neighbourhoods under a 3-by-3 array very much resembling a kernel"). The central pixel is highlighted in red, and the index of the current local neighbourhood is shown above the pixel values.
+This process is shown below, for three kernels (OK, pedants, three "local neighborhoods under a 3-by-3 array very much resembling a kernel"). The central pixel is highlighted in red, and the index of the current local neighborhood is shown above the pixel values.
 
-The flattened and sorted values from each local neighbourhood are also shown, along with the median value of the neighbourhood:
+The flattened and sorted values from each local neighborhood are also shown, along with the median value of the neighborhood:
 
 ![](images/median_filter.png)
 
@@ -111,7 +111,7 @@ The flattened and sorted values from each local neighbourhood are also shown, al
 We can also show this in "Python space", using a for loop:
 
 ```{python}
-# Show some local neighbourhoods of `nums_img` and their medians.
+# Show some local neighborhoods of `nums_img` and their medians.
 for i in np.arange(3):
     i_row_start, i_col_start = 0, i
     i_row_end, i_col_end = 3, i+3
@@ -124,7 +124,7 @@ for i in np.arange(3):
 
 Because the median is not a function which can be applied via convolution, we cannot apply it using `ndi.correlate()`, as we did with the other [local filters](5_mean_filter). 
 
-We can apply it in `skimage` using `ski.filters.median()`. Again,  we supply a `footprint` argument to determine the size of each pixel's "local neighbourhood":
+We can apply it in `skimage` using `ski.filters.median()`. Again,  we supply a `footprint` argument to determine the size of each pixel's "local neighborhood":
 
 ```{python}
 # Median filter `nums_img`.
@@ -208,9 +208,9 @@ You can see that the edges in the images (transitions between pixels of very dif
 
 # Non-local filters
 
-Whilst the median filter does not use convolution, it is still a local filter, because it filters pixels based on the values of other pixels in the local neighbourhood. Other filters use neither convolution nor a local pixel neighbourhood. These filters are called *non-local filters*. 
+Whilst the median filter does not use convolution, it is still a local filter, because it filters pixels based on the values of other pixels in the local neighborhood. Other filters use neither convolution nor a local pixel neighborhood. These filters are called *non-local filters*. 
 
-Non-local filters have their name because they filter all of the pixels in an image based on characteristics of a specific region of the image, or based upon characteristics of the entire image. As a result, a non-local filter might modify a given pixel's value based on the values of pixels in a region of the image which is nowhere near the "local neighbourhood" of the pixel being modified.
+Non-local filters have their name because they filter all of the pixels in an image based on characteristics of a specific region of the image, or based upon characteristics of the entire image. As a result, a non-local filter might modify a given pixel's value based on the values of pixels in a region of the image which is nowhere near the "local neighborhood" of the pixel being modified.
 
 One foundational non-local filter is a [*histogram equalisation filter*](https://en.wikipedia.org/wiki/Histogram_equalization). This filter modifies pixels based on the histogram of the entire image. Essentially, this process "smoothes out" the histogram into a even "hill", so that there is less variance between the pixel intensities. The image below illustrates this principle:
 

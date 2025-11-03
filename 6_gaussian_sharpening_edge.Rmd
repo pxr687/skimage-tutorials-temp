@@ -122,7 +122,7 @@ gaussian_like_kernel[1, 1]
 Essentially, if we filter using this kernel, we "walk" this kernel through the
 image, with the top of the "crimson peak" centered on a given pixel. The
 central pixel value is then replaced with an average of the pixels in the
-neighbourhood, but the contribution of the other pixels in the neighbourhood
+neighborhood, but the contribution of the other pixels in the neighborhood
 to the average is *weighted by the height of the "red mountain" at that
 pixel*.
 
@@ -155,7 +155,7 @@ plt.title('Gaussian-like Filter \n(3, 3) Kernel')
 plt.imshow(gaussian_like_filtered_small_square);
 ```
 
-Blurry! So to recap, we have averaged within a 3-by-3 pixel neighbourhood, replacing the central pixel value with a weighted average of all the pixel values in the neighbourhood. The weights are larger for pixels closer to the central value of the kernel (e.g. closer to the center of the "crimson peak" on the plot above).
+Blurry! So to recap, we have averaged within a 3-by-3 pixel neighborhood, replacing the central pixel value with a weighted average of all the pixel values in the neighborhood. The weights are larger for pixels closer to the central value of the kernel (e.g. closer to the center of the "crimson peak" on the plot above).
 
 This type of filtering is called *Gaussian filtering* because the kernel element values approximate a [Gaussian (e.g. normal) distribution](https://en.wikipedia.org/wiki/Normal_distribution). The plot of the kernel above, with the "red mountain" may not look much like the normal distribution to you at the moment, but bear with us.
 
@@ -239,7 +239,7 @@ When comparing to the `big_gaussian_kernel`, shown below, you can see that the p
 
 ![](images/big_gaussian_kernel_array.png)
 
-As we said above, when we filter using these Gaussian kernels, we "walk" the kernel through the image, with the top of the "mountain", the crimson peak, centered on a given pixel at each step. The central pixel value is then replaced with an average of the pixels in the neighbourhood, but each pixels contribution to the average is weighted by how close it is to the central pixel. E.g. by how close it falls to the crimson peak of the Gaussian surfaces we showed above. Pixels closer to the central pixel, under the crimson peak, will exert more influence, pixels further away will exert a weaker influence.
+As we said above, when we filter using these Gaussian kernels, we "walk" the kernel through the image, with the top of the "mountain", the crimson peak, centered on a given pixel at each step. The central pixel value is then replaced with an average of the pixels in the neighborhood, but each pixels contribution to the average is weighted by how close it is to the central pixel. E.g. by how close it falls to the crimson peak of the Gaussian surfaces we showed above. Pixels closer to the central pixel, under the crimson peak, will exert more influence, pixels further away will exert a weaker influence.
 
 Let's convolve `big_gaussian_kernel` with the `camera` image, using `ndi.correlate()`, as we used for the mean filter:
 
@@ -261,7 +261,7 @@ plt.title('Gaussian filter \n(9, 9) kernel')
 plt.matshow(big_gaussian_filtered_small_square, fignum=0);
 ```
 
-It is apparent that the larger kernel has "spread" the intensity of higher-valued pixels further than the small kernel. This makes sense, because it is averaging across bigger pixel neighbourhoods. 
+It is apparent that the larger kernel has "spread" the intensity of higher-valued pixels further than the small kernel. This makes sense, because it is averaging across bigger pixel neighborhoods. 
 
 Both of these kernels, in relative terms, are quite small. As such, it is easier to see their effect in lower-resolution images. Higher resolution images will typically require larger kernels for the same results.
 
@@ -755,9 +755,9 @@ ndi.correlate(no_diff,
               weights=sharpening_kernel)
 ```
 
-Conversely, the array below contains a repeating pattern of 2's and 3's in the first three rows, so the differences between pixel neighbourhoods in the early rows are fairly consistent. 
+Conversely, the array below contains a repeating pattern of 2's and 3's in the first three rows, so the differences between pixel neighborhoods in the early rows are fairly consistent. 
 
-In the last three rows, the same pattern is repeated, only now the 3's are negative, increasing the difference between the pixels in each neighbourhood:
+In the last three rows, the same pattern is repeated, only now the 3's are negative, increasing the difference between the pixels in each neighborhood:
 
 ```{python}
 diffs = np.array([[2, 3, 2, 3, 2, 3],
@@ -1360,7 +1360,7 @@ Please note that you will "pass" this exercise if you make kernels which detect 
 :class: dropdown
 :::
 
-The solution here is to use smaller kernels, so they are searching for pixel intensity gradients in smaller pixel neighbourhoods. We used the following kernels:
+The solution here is to use smaller kernels, so they are searching for pixel intensity gradients in smaller pixel neighborhoods. We used the following kernels:
 
 ```{python}
 # Detect horizontal edges.

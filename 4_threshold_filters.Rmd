@@ -1,6 +1,6 @@
 # Threshold filtering
 
-A common operation we will want to perform on images is *filtering*. This is where we modify all of the pixels in an image according to a certain rule or algorithm, often based on a specific pixel intensity value, or the pixel intensity values of other pixels within the "local neighbourhood" of a given pixel. Filtering techniques can be used to remove noise from an image, or to achieve specific visual effects, amongst other purposes.
+A common operation we will want to perform on images is *filtering*. This is where we modify all of the pixels in an image according to a certain rule or algorithm, often based on a specific pixel intensity value, or the pixel intensity values of other pixels within the "local neighborhood" of a given pixel. Filtering techniques can be used to remove noise from an image, or to achieve specific visual effects, amongst other purposes.
 
 Here we will look at *threshold filtering* where we filter an image based on specific pixel intensity values. We will show how threshold filtering works at the pixel-level, using `numpy` and `scipy`, and then we will show how to implement it in `skimage`.
 
@@ -853,7 +853,7 @@ plt.tight_layout();
 <!-- #region -->
 # Summary
 
-This page has showed how to perform threshold filtering using `numpy`, `scipy` and `skimage`. On the [next page](5_mean_filter) we will look at convolutional filtering, where we modify pixel values based on the "local neighbourhood" of surrounding pixels.
+This page has showed how to perform threshold filtering using `numpy`, `scipy` and `skimage`. On the [next page](5_mean_filter) we will look at convolutional filtering, where we modify pixel values based on the "local neighborhood" of surrounding pixels.
 
 # References
 

@@ -1,0 +1,6 @@
+# Test requirements
+-r requirements.txt
+sphinx
+myst_parser
+linkify-it-py
+pytest
