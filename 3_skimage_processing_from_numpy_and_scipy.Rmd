@@ -92,14 +92,17 @@ flipped_i
 plt.imshow(flipped_i);
 ```
 
-## Resizing an image
+## Resizing by repeating
 
 Now, *any operation that changes the numbers in the array* is a form of image manipulation. The term *image processing* generally means we are applying image manipulations *to achieve a specific purpose* - such as improving image quality or clarity.
 
-Let's say we want to *resize* our image array. Using NumPy, there are many ways to this same destination. Provided we want to *double* the size along a given dimension, we can achieve what we want using `np.repeat()`. 
+Let's say we want to *resize* our image array. Using NumPy, there are many
+ways to this same destination. Provided we want to *double* (or triple, or
+quadruple) the size along a given dimension, we can achieve what we want using
+`np.repeat()`.
 
 ```{python}
-# Double the image, along the rows.
+# Double the image, by repeating each row.
 doubled_i_rows = np.repeat(i_img,
                            repeats=2,
                            axis=0)
@@ -151,18 +154,19 @@ By combining these operations, we can double along both the rows and the columns
 doubled_i =  np.repeat(i_img,
                        repeats=2,
                        axis=0)
-doubled_i =  np.repeat(doubled_i,
-                       repeats=2,
-                       axis=1)
+double_doubled_i =  np.repeat(doubled_i,
+                              repeats=2,
+                              axis=1)
+double_doubled_i
+```
 
-# Show the result.
-print(doubled_i)
+```{python}
 plt.imshow(doubled_i);
 ```
 
 ```{python}
 # The original image size was (15, 8).
-show_attributes(doubled_i)
+show_attributes(double_doubled_i)
 ```
 
 ::: {exercise-start}
@@ -170,7 +174,8 @@ show_attributes(doubled_i)
 :class: dropdown
 :::
 
-Your job now is to use NumPy operations *only* to create the following image array, using the `i_img` array as your starting point:
+Use NumPy operations *only* to create the following image array, using the
+`i_img` array as your starting point:
 
 ![](images/eye-!.png)
 
@@ -184,11 +189,11 @@ Max Pixel Value: 1.0
 Min Pixel Value: 0.0
 ```
 
-*Hint*: you may want to investigate NumPy functions for combining arrays together...
+*Hint*: you may want to investigate NumPy functions for combining arrays
 
 ```{python}
-# YOUR CODE HERE
 i_exclam = i_img.copy()
+# YOUR CODE HERE
 ```
 
 ::: {exercise-end}
@@ -198,7 +203,7 @@ i_exclam = i_img.copy()
 :class: dropdown
 :::
 
-You can do this in one line of code by using a combination of `np.concat()`, `np.flip()` and `plt.imshow()`. Notably,`np.concat()` will "stick" arrays together, rather than `np.repeat()`-ing the values... 
+You can do this in one line of code by using a combination of `np.concat()`, `np.flip()` and `plt.imshow()`. Notably,`np.concat()` will "stick" (concatenate) arrays together, rather than `np.repeat()`-ing the values... 
 
 Combined with `np.flip()` we can produce the desired result in one line of code:
 
@@ -223,7 +228,7 @@ plt.imshow(i_img)
 show_attributes(i_img);
 ```
 
-Now, your task is to find a way, again using only NumPy, to alter the `i_img` array so it becomes this target image:
+Your task is to find a way, again using only NumPy, to alter the `i_img` array so it becomes this target image:
 
 ![](images/split_i.png)
 
@@ -237,9 +242,12 @@ Max Pixel Value: 1.0
 Min Pixel Value: -1.0
 ```
 
-*Note*: notice how we have lost a column, relative to the original `i_img` array...We also now have -1 values in the array, have a think about which colors in the displayed image you think that these negative values will correspond to.
+*Note*: notice how we have lost a column, relative to the original `i_img` array...  We also now have -1 values in the array. Have a think about which colors in the displayed image you think that these negative values will correspond to.
 
-*Hint:* run the function `hint_split_i()`, which was imported at the beginning of this notebook, to see a helpful hint.
+*Hint:* there are various ways to do this, but the most efficient way we could think of is one short line of Numpy processing.  You might consider having a look at [Functions on arrays](https://inferentialthinking.com/chapters/05/1/Arrays.html#functions-on-arrays) for inspiration.
+
+*Hint:* run the function `hint_split_i()`, which was imported at the beginning
+of this notebook, to see a helpful hint.
 
 ```{python}
 # YOUR CODE HERE
@@ -266,7 +274,11 @@ print(split_i_solution)
 plt.imshow(split_i_solution);
 ```
 
-Why is the background now gray? Well, remember that, for a monochrome image visualised with the `gray` colormap: the most intense (highest value) pixels are white, and the least intense (lowest value) pixels are black, and intermediate values are a shade of gray.
+Why is the background now gray? Well, [remember that](color-and-matplotlib),
+for a single-channel image, colors arise from applying the current colormap.
+Visualised with the `gray` colormap: the most intense (highest value) pixels
+are white, and the least intense (lowest value) pixels are black, and
+intermediate values are a shade of gray.
 
 When we subtract along the column, with `np.diff()` the third value is subtracted from the fourth value etc., and so the resulting differences are calculated as:
 
@@ -291,7 +303,7 @@ White areas (pixel = 1) indicate a change between pixels in the horizontal direc
 We can detect big changes (edges) in the *vertical* direction by telling `np.diff()` to operate along the rows, rather than along the columns:
 
 ```{python}
-vertical_gradients = np.diff(i_img, 
+vertical_gradients = np.diff(i_img,
                              axis=0) # Subtract along the rows, not the columns.
 
 plt.imshow(vertical_gradients);
@@ -301,24 +313,30 @@ plt.imshow(vertical_gradients);
 :::
 
 
-# Resizing an image with `skimage`
+## Resizing an image with `skimage`
 
-The `ski.transform` module contains a function called `resize`. It is probably easy to guess what `ski.transform.resize()` does. It takes an input image and changes its size (obviously!). Because all computer images are at least 2D arrays, this involves changing the dimensionality of the image. Let's demonstrate this with the following image array:
+The `ski.transform` module contains a function called `resize`.  Somewhat
+obviously, `ski.transform.resize()` takes an input image and a requested image
+shape, and returns an output image of the requested size.  Because all
+computer images are at least 2D arrays, this involves changing the shape of
+the image. Let's demonstrate this with the following image array:
 
 ```{python}
 # Create an image array.
-squares = np.array([[1, 0,], 
-                    [0, 1,]], 
+squares = np.array([[1, 0,],
+                    [0, 1,]],
                    dtype=float)
 
 # Show the array ("raw" output from NumPy)
-print(squares)
+squares
+```
 
+```{python}
 # Show the array, visualised with Matplotlib
 plt.matshow(squares);
 ```
 
-What happens if we resize `squares` to (10, 10)? We will use the optional Boolean `preserve_range` argument which ensures the numbers in the output image stay within the range of those we give to the function:
+What happens if we resize `squares` to (10, 10)? We will use the optional Boolean `preserve_range` argument for forward compatibility with the next big release of the Scikit-image package.  It has the effect of preventing some automatic processing of the range of values in the image array on input.
 
 ```{python}
 # Pass our `squares` array to the `ski.transform.resize()` function.
@@ -342,27 +360,28 @@ plt.imshow(squares_ten_by_ten);
 
 Well, that is certainly more artistic than the original!
 
-We now have many more `unique` values in the output array than there were in the input array (the input array contained only 0's and 1's), because `skimage` is interpolating for many new pixels. This means that it is estimating values for the new pixels which fall in between the array pixels from the original array image, based on the a weighted average of the values of the original pixels which they are nearest to:
+We now have many more `unique` values in the output array than there were in the input array (the input array contained only 0's and 1's), because `skimage` is *interpolating* for many new pixels.  *Interpolation* is the process of estimating values for the new pixels which fall in between the array pixels from the original array image, based on the weighted average of the values of the original pixels to which they are nearest.
 
 ```{python}
 # Show the `unique` values.
 np.unique(squares_ten_by_ten)
 ```
 
-The array pixels highlighted in red are the original pixels from the `(2, 2)` original array:
+The array pixels highlighted in red are the original pixels from the `(2, 2)`
+original array:
 
 ![](images/resize_interpolation.png)
 
 All the other pixels have been added by `skimage` during the `resize`-ing process. Pixels closer to the original pixels share closer intensity values to the original pixel (meaning they are more black or more white, depending on the original pixel). Images further from the original pixels become more gray.
 
-We can control the type of interpolation that `skimage` uses by changing the (somewhat cryptically named) `order` argument. Setting this to 0 will activate [nearest neighbor interpolation](https://en.wikipedia.org/wiki/Nearest-neighbor_interpolation):
+We can control the type of interpolation that `skimage` uses by changing the (somewhat cryptically named) `order` argument. Setting this to 0 will activate [nearest neighbor interpolation](https://en.wikipedia.org/wiki/Nearest-neighbor_interpolation).  This method of interpolation (estimation) merely uses the nearest existing pixel to give the value for any new pixel in the output image.
 
 ```{python}
 # Pass our `squares` array to the `ski.transform.resize()` function.
 squares_ten_by_ten = ski.transform.resize(squares,
                                           output_shape=(10, 10),
                                           preserve_range=True,
-                                          order=0) # Change the interpolation method.
+                                          order=0) # Nearest neighbor
 
 # Show the resized array.
 plt.imshow(squares_ten_by_ten);

@@ -8,8 +8,9 @@ def hint_corrupted_camera():
 
 
 def hint_split_i():
-    print("""You may want to look for a NumPy function that calculates the
-differences between the adjacent values in an array.""")
+    print("""For the most efficient solution, you may want to look for a
+NumPy function that calculates the differences between the adjacent values
+in an array.""")
 
 
 def hint_cat():
