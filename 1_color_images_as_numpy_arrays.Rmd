@@ -644,6 +644,12 @@ coffee = io.imread("images/coffee.png")
 coffee
 ```
 
+```{python tags=c("remove-cell")}
+# Write out image used above.
+import skimage as ski
+ski.io.imsave('images/coffee.png', ski.data.coffee())
+```
+
 Notice that the `coffee` image is nothing but a Numpy array.
 
 The cell below defines a function to let us quickly view the attributes of any
@@ -1072,9 +1078,10 @@ noisy_camera_solution = np.clip(noisy_camera_solution, 0, 255)
 plt.imshow(noisy_camera_solution);
 ```
 
-```{python tags=c("remove-cell", "hide-output")}
+```{python tags=c("remove-cell")}
 # We regenerate and store the output image for page generation, used above.
 # Check this code against the solution code above.
+# We have to regenerate the solution, because we need predictable randomness.
 out_rng = np.random.default_rng(1939)  # Predictable output for predictable image.
 out_sol = np.repeat(camera[..., None], 3, axis=2)  # Another way of generating 3D stack.
 out_face = out_sol[100:200, 190:260, :]
@@ -1141,8 +1148,9 @@ On this page we have seen how color can be represented in NumPy array images:
 On the [next page](2_skimage_intro) we will formally introduce Scikit-image,
 which uses NumPy image arrays as its fundamental representation of images.
 
+(color-references)=
 
-# References
+## References
 
 Adapted from:
 

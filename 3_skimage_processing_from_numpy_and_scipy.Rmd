@@ -844,14 +844,9 @@ plt.imshow(cat_solution);
 
 We will leave it to you to use this image as a logo for your "Pixel Cat" [meme coin](https://en.wikipedia.org/wiki/Meme_coin).
 
-```{python tags=c("remove-cell", "hide-output")}
+```{python tags=c("remove-cell")}
 # We regenerate and store the output image for page generation, used above.
-# Check this code against the solution code above.
-cat_out = ski.data.cat()
-cat_out[:, :, 2] = 0  # Apply yellow tinge.
-small_cat = ski.transform.resize(cat_out, output_shape=(30, 30, 3))
-rot_cat = ski.transform.rotate(cat_solution, angle=45)
-plt.imshow(rot_cat);
+plt.imshow(cat_solution)
 plt.savefig('images/poor_cat.png')
 ```
 
@@ -911,7 +906,8 @@ Max Pixel Value: 250
 Min Pixel Value: 23
 ```
 
-*Hint:* using `plt.grid()` might be of use here...
+*Hint:* using `plt.grid()` might be of use in identifying the part of the
+image you need.
 
 ```{python}
 # YOUR CODE HERE
@@ -1085,7 +1081,7 @@ camera_masked_solution[mask_camera] = 1
 plt.imshow(camera_masked_solution);
 ```
 
-```{python tags=c("remove-cell", "hide-output")}
+```{python tags=c("remove-cell")}
 # Regenerate and store the output image for page build, used above.
 plt.imshow(camera_masked_solution);
 plt.savefig('images/masked_camera.png')
@@ -1095,7 +1091,7 @@ plt.savefig('images/masked_camera.png')
 :::
 
 
-# Inverting image colors
+## Inverting image colors with Numpy
 
 We saw *color inversion* on an [earlier page](0_images_as_numpy_arrays). This is where all the pixel values in an image are, shockingly, inverted: high numbers become low numbers and vice versa:
 
@@ -1103,48 +1099,47 @@ For a binary image, this involves swapping 1s and 0s...
 
 ```{python}
 # Original image
-print(i_img)
+i_img
+```
+
+```{python}
 plt.imshow(i_img);
 ```
 
 ...which can be accomplished with some simple numeric operations:
 
 ```{python}
-inverted_i = (i_img * -1) + 1
-print(inverted_i)
+inverted_i = 1 - i_img
+inverted_i
+```
+
+```{python}
 plt.imshow(inverted_i);
 ```
 
-What about a color image? 
+What about a color image?
 
 ```{python}
-# Read in a color image.
-colorwheel = ski.io.imread("images/colorwheel.png")
+colorwheel = ski.data.colorwheel()
 show_attributes(colorwheel)
 plt.imshow(colorwheel);
 ```
 
-The numerical trick that we used with the binary image will not work for a color image like this, because the pixel values range from 0 to 255. -255 is not allowed within the acceptable range for `uint8` image data and will produce an error!
-
-```{python tags=c("raises-exception")}
-# Shortcut will not work for color images
-plt.imshow(colorwheel * -1)
-```
-
-But remember that inversion means we, well, "invert" the pixel values. Because the maximum value is now 255, we can subtract each array pixel value in each color channel from 255 to "reverse" the values:
+Because the maximum value is now 255, we can subtract each array pixel value
+in each color channel from 255 to "reverse" the values:
 
 ```{python}
 # Invert the color image, manually.
 inverted_colorwheel = colorwheel.copy()
 for i in np.arange(3):
     inverted_colorwheel[:, :, i] = 255 - inverted_colorwheel[:, :, i] 
-    
+
 plt.imshow(inverted_colorwheel);
 ```
 
-# Inverting colors with `skimage`
+## Inverting colors with `skimage`
 
-`ski.util.invert()` handles color inversion, we simply pass it a color NumPy image array and voilà!:
+`ski.util.invert()` handles color inversion, we simply pass it a color NumPy image array and *voilà!*:
 
 ```{python}
 # Invert the color image, with `skimage`.
@@ -1157,25 +1152,17 @@ plt.imshow(invert_colorwheel_with_skimage);
 :class: dropdown
 :::
 
-Now over to you. Your task here is to load the `brick` image from `ski.data.image`.
+Now over to you. You will be working on the `brick` image from `ski.data`:
+
+```{python}
+brick = ski.data.brick()
+show_attributes(brick)
+plt.imshow(brick)
+```
 
 You should then invert every 2nd element on even numbered rows...
 
 So on *even* numbered rows (row 0, 2, 4, 6, etc.), if you went through the elements in pairs along the row, the *second* element in each pair should be inverted, vs the original image.
-
-The original `brick` image looks like this:
-
-![](images/bricks.png)
-
-The original image has the following attributes:
-
-```
-Type: <class 'numpy.ndarray'>
-dtype: uint8
-Shape: (512, 512)
-Max Pixel Value: 207
-Min Pixel Value: 63 
-```
 
 Your final image should look like this:
 
@@ -1193,7 +1180,9 @@ Min Pixel Value: 48
 
 Use only NumPy indexing and Scikit-image functions to do this...
 
-*Hint:* remember that smaller NumPy arrays indexed out of larger NumPy arrays are still NumPy arrays, and so can be passed as arguments to most `skimage` functions.
+*Hint:* remember that smaller NumPy arrays indexed out of larger NumPy arrays
+are still NumPy arrays, and so can be passed as arguments to most `skimage`
+functions.
 
 ```{python}
 # YOUR CODE HERE
@@ -1207,7 +1196,8 @@ Use only NumPy indexing and Scikit-image functions to do this...
 :::
 
 
-The solution here is just to use slicing to select the elements we need, and `ski.util.invert()` just these elements, using array indexing.
+The solution here is just to use slicing to select the elements we need, and
+`ski.util.invert()` just these elements, using array indexing.
 
 To get every 2nd element on even numbered rows, we can use `brick[0::2, 1::2]`.
 
@@ -1241,6 +1231,11 @@ show_attributes(brick_solution)
 plt.imshow(brick_solution);
 ```
 
+```{python tags=c("remove-cell")}
+plt.imshow(brick_solution);
+plt.savefig('images/inverted_bricks.png')
+```
+
 ::: {solution-end}
 :::
 
@@ -1262,6 +1257,8 @@ Shape: (300, 451, 3)
 Max Pixel Value: 255
 Min Pixel Value: 24
 ```
+
+Notice the color change from the standard `cat` image.
 
 ```{python}
 # YOUR CODE HERE
@@ -1298,39 +1295,58 @@ Now, when we invert the purple `cat` image, we get the target image:
 
 ```{python}
 # Solution.
-plt.imshow(ski.util.invert(cat_purple));
+inverted_cat_purple = ski.util.invert(cat_purple)
+plt.imshow(inverted_cat_purple)
+```
+
+```{python tags=c("remove-cell")}
+# Save figure for use in page above.
+plt.imshow(inverted_cat_purple);
+plt.savefig('images/purple_inverted_cat.png')
 ```
 
 ::: {solution-end}
 :::
 
-# Greyscale to binary conversion
+## Greyscale to binary conversion
 
-Greyscale to binary conversion can be achieved using comparison operators (`<`, `>`, `<=`, `>=`, `==`). The resulting Boolean array will always be binary.
+Greyscale to binary conversion can be achieved using comparison operators
+(`<`, `>`, `<=`, `>=`, `==`). The resulting Boolean array will always be
+binary (True or False, 1 or 0).
 
 Let's demonstrate with a grayscale image:
 
 ```{python}
 # Create a grayscale image.
-np.random.seed(10)
-random_check = np.array([[1, 0, 1, 0], 
+# Make a random number generator, with predictable outputs.
+rng = np.random.default_rng(10)
+random_check = np.array([[1, 0, 1, 0],
                          [0, 1, 0, 1],
                          [1, 0, 1, 0],
                          [0, 1, 0, 1]], dtype=int)
-random_check[random_check == 1] = np.random.randint(low=3,
-                                                    high=11,
-                                                    size=np.sum(random_check == 1))
+# Replace ones with random integers.
+n_checks = np.count_nonzero(random_check)
+random_check[random_check == 1] = rng.integers(3, 12,  # From 3 through 11.
+                                               size=n_checks)
 plt.matshow(random_check);
 ```
 
 ```{python}
 # Convert to a binary image:
 binary_check = random_check > np.median(random_check)
-print(binary_check)
+binary_check
+```
+
+```{python}
 plt.matshow(binary_check);
 ```
 
-We can also easily achieve this conversion in `skimage` - see the [filtering page](5_mean_filter) for more detail. For now, we can use the `ski.filters.threshold_minimum()` function. This supplies us a recommended threshold value to attempt to divide the array pixels into two classes e.g. two classes where the pixels in each class are maximally different from pixels in the other class:
+We can also use `skimage` to do this work - see the [filtering
+page](5_mean_filter) for more detail. For now, we can use the
+`ski.filters.threshold_minimum()` function. This supplies us a recommended
+threshold value to attempt to divide the array pixels into two classes e.g.
+two classes where the pixels in each class are maximally different from pixels
+in the other class:
 
 ```{python}
 # Get a recommended threshold from `skimage`.
@@ -1338,7 +1354,8 @@ threshold = ski.filters.threshold_minimum(random_check)
 threshold
 ```
 
-We can then use this threshold to create a binary array, successfully binarizing our grayscale image:
+We can then use this threshold to create a binary array, successfully
+binarizing our grayscale image:
 
 ```{python}
 # Binarize the array, based on the threshold.
@@ -1347,24 +1364,26 @@ show_attributes(binary_check_from_ski)
 plt.matshow(binary_check_from_ski);
 ```
 
-# Color to grayscale conversion
+## Color to grayscale conversion with Numpy
 
-To downgrade a color image to grayscale we can use a brute force method of taking the mean of the three color channels, to produce a 2D monochrome image array:
+To downgrade a color image to grayscale we can use a brute force method of
+taking the mean of the three color channels, to produce a 2D monochrome image
+array:
 
 ```{python}
-gray_wheel = np.mean(colorwheel, 
-                     axis=2)
-
+gray_wheel = np.mean(colorwheel, axis=2)
 plt.imshow(gray_wheel);
 ```
 
-A better option here, that we encountered on the [previous page](2_skimage_intro), is to use the *luminance formula*:
+A better option, that we encountered on the [previous
+page](luminance-formula), is to use the *luminance formula*:
 
 $$
 Y = 0.2126R + 0.7152G + 0.0722B
 $$
 
-This "collapses" a 3D color image into a 2D grayscale image via a weighted sum of the channels.
+This collapses a 3D color image into a 2D grayscale image via a weighted sum
+of the channels.
 
 ::: {exercise-start}
 :label: gray-wheel
@@ -1373,19 +1392,20 @@ This "collapses" a 3D color image into a 2D grayscale image via a weighted sum o
 
 Here is the original `colorwheel` image:
 
-![](images/colorwheel.png)
+```{python}
+colorwheel = ski.data.colorwheel()
+plt.imshow(colorwheel)
+```
 
 It has the following attributes:
 
-```
-Type: <class 'numpy.ndarray'>
-dtype: uint8
-Shape: (370, 371, 3)
-Max Pixel Value: 255
-Min Pixel Value: 0
+```{python}
+show_attributes(colorwheel)
 ```
 
-Using the luminance formula, and any other required `numpy`, `scipy` or `skimage` operations, recreate the target image below, starting from the `colorwheel` array:
+Using the [luminance formula](luminance-formula), and any other required
+`numpy`, `scipy` or `skimage` operations, recreate the target image below,
+starting from the `colorwheel` array:
 
 ![](images/gray_wheel.png)
 
@@ -1399,7 +1419,8 @@ Max Pixel Value: 255
 Min Pixel Value: 0
 ```
 
-Try to use `np.dot()` rather than slicing, when you complete this exercise.
+*Hint*: For Numpy practice, try to use array multiplication `@`, or `np.dot()`
+or Numpy broadcasting, to apply the luminance formula, rather than slicing.
 
 *Hint*: you may need to rescale the intensity values to match the target image attributes. You may recall there is a `ski.exposure` function which can help you do this...
 
@@ -1423,21 +1444,26 @@ The solution here requires some close attention to `dtype`. To apply the luminan
 weights = np.array([0.2126, 0.7152, 0.0722])
 
 # Run the numbers...
-gray_wheel = np.dot(colorwheel, weights)
+gray_wheel = colorwheel @ weights
 
 # Show the result.
 show_attributes(gray_wheel)
 plt.imshow(gray_wheel);
 ```
 
-But this gives us min/max pixel intensity values which are illegal for the `float64` dtype, and will generate an error when we try to convert to `uint8` to match the target image:
+Notice that the matrix multiplication above left us with float values, as the
+weights in the luminance formula are floating point numbers.
+
+But this gives us min/max pixel intensity values which are not standard for
+the `float64` dtype, and will generate an error when we try to convert to
+`uint8` to match the target image:
 
 ```{python tags=c("raises-exception")}
 # Ouch!
 ski.util.img_as_ubyte(gray_wheel)
 ```
 
-The `ski.exposure.rescale_intensity()` function can save us again here. First, we make the values legal for a `float64` image (`np.dot()` left us with float values, as the weights in the luminance formula are decimal numbers):
+The `ski.exposure.rescale_intensity()` function can save us again here. First, we make the values standard for a `float64` image.
 
 ```{python}
 # Rescale the pixel intensity values into a legal range, for the current `dtype`.
@@ -1459,11 +1485,17 @@ show_attributes(gray_wheel)
 plt.imshow(gray_wheel);
 ```
 
+```{python tags=c("remove-cell")}
+# Regenerate and store the output image for page generation, used above.
+plt.imshow(gray_wheel)
+plt.savefig('images/gray_wheel.png')
+```
+
 ::: {solution-end}
 :::
 
 
-# Color to grayscale conversion with `skimage`
+## Color to grayscale conversion with `skimage`
 
 As always, the `ski.color` module has us covered here with the `rgb2gray()` function. We simply pass it the color array that we want to convert to grayscale, without the direct need for the luminance formula:
 
@@ -1474,19 +1506,16 @@ show_attributes(gray_colorwheel_from_ski)
 plt.imshow(gray_colorwheel_from_ski);
 ```
 
-# Summary
+## Summary
 
-This page has shown how to implement some fundamental image processing operations with NumPy, SciPy and Scikit-image. The next page will delve into [image filtering](5_mean_filter).
+This page has shown how to implement some fundamental image processing
+operations with NumPy, SciPy and Scikit-image. The next page will delve into
+[image filtering](5_mean_filter).
 
 
-# References
+## References
 
-Gulati, J. (2024) *NumPy for Image Processing*. KDnuggets. Available from: https://www.kdnuggets.com/numpy-for-image-processing 
+Gulati, J. (2024) *NumPy for Image Processing*. KDnuggets. Available from:
+https://www.kdnuggets.com/numpy-for-image-processing 
 
-Adapted from:
-
-* [Scientific Python Lecture Notes - image
-  processing](https://lectures.scientific-python.org/advanced/image_processing)
-* [Scientific Python Lecture Notes: scikit-image](https://lectures.scientific-python.org/packages/scikit-image/index.html)
-
-with further inspiration from [`skimage`](https://github.com/scikit-image/skimage-tutorials) [tutorials](https://scipy-2024-image-analysis.github.io/tutorial/01_images_are_arrays.html).
+Also see [color images page references](color-references).

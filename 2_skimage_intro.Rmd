@@ -369,9 +369,10 @@ plt.imshow(camera_with_noise)
 show_attributes(camera_with_noise);
 ```
 
-```{python tags=c("remove-cell", "hide-output")}
+```{python tags=c("remove-cell")}
 # We regenerate and store the output image for page generation, used above.
 # Check this code against the solution code above.
+# We have to regenerate the solution, because we need predictable randomness.
 out_rng = np.random.default_rng(1939)  # Predictable output for predictable image.
 out_sol = np.repeat(camera[..., None], 3, axis=2)  # Another way of generating 3D stack.
 # Generate noise predictably.
@@ -416,6 +417,8 @@ plt.imshow(gray_cat);
 ```
 
 This grayscale conversion is achieved by calculating the luminance of the image via a weighted sum of the information in each color channel:
+
+(luminance-formula)=
 
 $$
 L = 0.2126R + 0.7152G + 0.0722B
@@ -675,16 +678,9 @@ show_attributes(camera_4D)
 plt.imshow(camera_4D);
 ```
 
-```{python tags=c("remove-cell", "hide-output")}
-# We regenerate and store the output image for page generation, used above.
-# Check this code against the solution code above.
-# Another way of generating the 3D stack.
-c_4d = np.repeat(camera_as_float[..., None], 4, axis=2)
-# Scale red and blue using broadcasting
-c_4d = c_4d * [[[0.5, 1, 0.5, 1]]]
-# Halve alpha (opacity) for right half of image.
-c_4d[:, 240:512, 3] = 0.5
-plt.imshow(c_4d)
+```{python tags=c("remove-cell")}
+# Regenerate and store the output image for page generation, used above.
+plt.imshow(camera_4D)
 plt.savefig('images/shoegaze.png')
 ```
 
@@ -782,9 +778,4 @@ how image processing can be performed using NumPy, SciPy and Scikit-image.
 
 ## References
 
-* [Scientific Python Lecture Notes - image
-  processing](https://lectures.scientific-python.org/advanced/image_processing)
-* [Scientific Python Lecture Notes:
-  scikit-image](https://lectures.scientific-python.org/packages/scikit-image/index.html)
-
-with further inspiration from and [`skimage`](https://github.com/scikit-image/skimage-tutorials) [tutorials](https://scipy-2024-image-analysis.github.io/tutorial/01_images_are_arrays.html).
+See [color images page references](color-references).
