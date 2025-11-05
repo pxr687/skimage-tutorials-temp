@@ -861,16 +861,21 @@ plt.savefig('images/poor_cat.png')
 
 ## Cropping
 
-The process of "cropping" is the removal areas of pixels from an image.
+The process of *cropping* is the removal of areas of pixels from an image.
 
-Because our images are just NumPy arrays, cropping is just NumPy indexing (duh!). As such, we can crop images just with indexing operations, without using specific NumPy (or `skimage`) functions.
+Because our images are just NumPy arrays, cropping is just NumPy indexing
+(duh!). As such, we can crop images just with indexing operations, without
+using specific NumPy (or `skimage`) functions.
 
 For instance, we can "shave" our `i_img` array in half, along the columns by slicing along the columns:
 
 ```{python}
 # Cut in half.
 half_i = i_img[:, 4:8]
-print(half_i)
+half_i
+```
+
+```{python}
 plt.imshow(half_i);
 ```
 
@@ -921,7 +926,7 @@ plt.imshow(camera);
 :class: dropdown
 :::
 
-This is a simple task once you know what indexes you need. Using `plt.grid()` can make this information easier to obtain:
+This is a simple task once you know what indices you need. Using `plt.grid()` can make this information easier to obtain:
 
 ```{python}
 # Show `camera`, with a helpful grid.
@@ -945,57 +950,79 @@ show_attributes(camera[130:160, 240:320])
 :::
 
 
-# Masks
+## Masks
 
-In image processing, a mask is a matrix/array containing a collection of elements in a certain shape. A mask is "placed" on an image, and pixel values under the mask are all replaced with a specific value. Let's demonstrate with a real image — a grayscale version of the standard `coffee` image:
+In image processing, a mask is an array where the elements express weights or binary (0 or 1) values to select areas in another image (array).
+
+A mask is "placed" on an image, and one typically then applies operations to
+the pixels indicated by the mask.  For example, one might use the mask with an
+image array to replace pixels indicated by the mask with a specific value.
+Let's demonstrate with a real image — a grayscale version of the standard
+`coffee` image:
 
 ```{python}
+# Make coffee RGB image into single-channel image.
 coffee_gray = ski.color.rgb2gray(ski.data.coffee())
 show_attributes(coffee_gray)
 plt.imshow(coffee_gray);
 ```
 
-First, we extract the `shape` of the image, and store each element as a separate variable. In this case, the image is 2D (e.g. single-channel, monochrome) and so we extract the number of rows and the number of columns:
+In this case we are going to create a new mask image, that corresponds to the
+`coffee_gray` image (has the same shape), but where we will create the mask
+values with a mathematical formula using the row and column indices.  In fact
+we'll do this to create a circular mask.  Bear with us, all should be come
+clear as we go.
 
 ```{python}
 # Unpack and store the number of rows and number of columns.
-dim_1, dim_2 = coffee_gray.shape
-
-# Show the values.
-dim_1, dim_2
+dim_0, dim_1 = coffee_gray.shape
+dim_0, dim_1
 ```
 
-Then we can use these elements (400 and 600) via `np.orgid()` to create one array with 400 rows, and 1 column, and another array with 1 row and 600 columns. These elements can be used to make a 2D mask, in a specific shape:
+We are going to create a circular mask, using the formula for a circle.
+
+That formula needs the `i` (row) and `j` coordinates for each pixel, the center coordinate of the circle, and the radius `r` of the desired circle.
+
+Call the row and column center coordinates $c_i, c_j$ respectively.
+
+We can tell if a particular pixel at (`i`, `j`) is _outside_ the circle by testing whether the Euclidean distance of the pixel position (`i`, `j`) from the center is greater than $r$.
+
+$$
+\sqrt{(i - c_i)^2 + (j - c_j)^2} > r
+$$
+
+
+First we use the Numpy `meshgrid` function to return two arrays, one containing all the `i` (row) coordinates at each pixel, and another containing all the `j` (column) coordinates at each pixel.
 
 ```{python}
-# Create a grid, based on the image `shape`.
-X, Y = np.ogrid[0:dim_1, 0:dim_2]
-
-# Show the `shape` of the X elements.
-print(X.shape)
-
-# Show the first 10 elements of X.
-X[:10, :]
+# indexing='ij' tells meshgrid to return `i` and `j` coordinates.  There are other modes, not relevant here.
+i_coords, j_coords = np.meshgrid(np.arange(dim_0), np.arange(dim_1), indexing='ij')
+# i coordinate for each element.
+i_coords
 ```
 
 ```{python}
-# Show the `shape` of the Y elements.
-print(Y.shape)
-
-# Show Y
-Y
+# j coordinate for each element.
+j_coords
 ```
 
-We can then use a geometric formula to generate a 2D grid of a specific shape, as in the cell below:
+```{python}
+# The image center in pixels
+c_i, c_j = dim_0 / 2, dim_1 / 2
+# Radius
+r = 275
+```
+
+We can then use the formula above to generate a 2D array where True (== 1) means outside the circle and False (== 0) means inside the circle.
 
 ```{python}
-# Create a circulat mask.
-mask = (X - dim_1/ 2) ** 2 + (Y - dim_2 / 2) ** 2 > dim_1 * dim_2 / 4
+# Create a circular mask.
+mask = np.sqrt((i_coords - c_i) ** 2 + (j_coords - c_j) ** 2) > r
 show_attributes(mask)
 plt.imshow(mask);
 ```
 
-Once we have our mask - which is just a Boolean array - it is just a matter of Boolean indexing to use it set all the pixel values underneath it to be equal to the same value:
+Once we have our mask - which is just a Boolean array - it is just a matter of Boolean indexing to set all the pixel values in the image to the same value, where there is a True in the corresponding element in the mask:
 
 ```{python}
 # Apply the mask.
@@ -1011,11 +1038,24 @@ plt.matshow(coffee_gray_masked);
 :::
 
 
-Your mission now is to use a mask, similar to the one we have just seen, to transform `camera` into the following image:
-    
-![](images/masked_camera.png)
+Start with the `camera` image:
 
-This is easier than you think...you can use the formula for the last mask as a guide. Try running the function `hint_cryptic_camera()` for a hint if you get stuck...
+```{python}
+camera = ski.data.camera()
+plt.imshow(camera);
+```
+
+Now consider this formula, where $p$ is some constant:
+
+$$
+((i - c_i)^3 + (j - c_j)^3)^{1/3} > p
+$$
+
+(where $x^{1/3}$ is the cube-root of $x$).
+
+Use that formula, with some suitable value for `p`, and masking as above, to create the following image:
+
+![](images/masked_camera.png)
 
 
 ::: {exercise-end}
@@ -1025,25 +1065,30 @@ This is easier than you think...you can use the formula for the last mask as a g
 :class: dropdown
 :::
 
-The circular mask we used above was generated via the following:
-
-`mask = (X - dim_1/ 2) ** 2 + (Y - dim_2 / 2) ** 2 > dim_1 * dim_2 / 4`
-
-To obtain the mask you need for this exercise, we simply change the square exponents (`**2`) to cubes (`**3`), altering the geometry of the mask:
+We apply the formula above to the `i` and `j` coordinates of the `camera`
+image:
 
 ```{python}
 # Solution pt 1.
-dim_1, dim_2 = camera.shape
-X, Y = np.ogrid[0:dim_1, 0:dim_2]
-mask_solution = (X - dim_1/ 2) ** 3 + (Y - dim_2 / 2) ** 3 > dim_1 * dim_2 / 4
-plt.imshow(mask_solution);
+cam_c_i, cam_c_j = np.array(camera.shape) / 2
+p = 55  # By experiment.
+i_camera, j_camera = np.meshgrid(np.arange(camera.shape[0]), np.arange(camera.shape[1]))
+# Apply formula to make mask.
+mask_camera = ((i_camera - cam_c_i) ** 3 + (j_camera - cam_c_j) ** 3) ** (1 / 3) > p
+plt.imshow(mask_camera);
 ```
 
 ```{python}
 # Solution pt 2.
 camera_masked_solution = camera.copy()
-camera_masked_solution[mask_solution] = 1
+camera_masked_solution[mask_camera] = 1
 plt.imshow(camera_masked_solution);
+```
+
+```{python tags=c("remove-cell", "hide-output")}
+# Regenerate and store the output image for page build, used above.
+plt.imshow(camera_masked_solution);
+plt.savefig('images/masked_camera.png')
 ```
 
 ::: {solution-end}
