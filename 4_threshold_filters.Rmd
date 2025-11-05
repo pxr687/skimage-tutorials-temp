@@ -669,7 +669,28 @@ plot_thresh_mean_and_spread(49)
 plt.legend(bbox_to_anchor=(1, 1));
 ```
 
-Different threshold values change the mean and the spread (`ssd`) of each histogram. For each different split visualised below, pay attention to the width of the spread around each mean (e.g. the horizontal lines coming off the vertical line for each mean). This will let you see how the different splits influence the mean and the `ssd` of each histogram, when we compare the left histogram vs right histogram, for a given split:
+Different threshold values change the mean and the spread (`ssd`) of each histogram. For each different split visualised below, pay attention to the width of the spread around each mean (e.g. the horizontal lines coming off the vertical line for each mean). This will let you see how the different splits influence the mean and the `ssd` of each histogram, when we compare the left histogram vs right histogram, for a given split.
+
+::: {note}
+
+**Spread, standard deviation and SSD**
+
+Bear in mind that we represent the *spread* around the mean in these plots as
+the *standard deviation* (SD) of the values either side of the split, around
+their respective means.  The SD gives you an idea of the *average* spread of
+each of the two histograms.
+
+However, remember that the actual metric used to evaluate the split is not the
+SD of the two histograms, but the *sum of squared deviation* (SSD). You can
+think of the SSD for each histogram, as the standard deviation (shown with the
+horizontal bar), squared (to give the variance) and then multiplied by the
+number of image values in the individual histogram.  Thus even if the two
+histograms (left and right) have the same standard deviation, a tall histogram
+(with many values) will contribute a higher SSD than a shorter histogram (with
+fewer values).  The metric used is the total SSD — that is the sum of the SSDs
+for the left and right histograms.
+
+:::
 
 ```{python}
 # Visualise multiple thresholds.
