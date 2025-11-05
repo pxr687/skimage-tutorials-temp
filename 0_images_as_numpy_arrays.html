@@ -181,25 +181,9 @@
 <li class="toctree-l1 current active"><a class="current reference internal" href="#">Images as NumPy arrays</a></li>
 
 <li class="toctree-l1"><a class="reference internal" href="1_color_images_as_numpy_arrays.html">What about color?</a></li>
-
 <li class="toctree-l1"><a class="reference internal" href="2_skimage_intro.html">Introducing Scikit-image</a></li>
 <li class="toctree-l1"><a class="reference internal" href="3_skimage_processing_from_numpy_and_scipy.html">(Scikit-) Image processing, via NumPy and SciPy</a></li>
-
-
-
-
-
-
-
-
-
-
-
-
-
 <li class="toctree-l1"><a class="reference internal" href="4_threshold_filters.html">Threshold filtering</a></li>
-
-
 
 
 
@@ -580,7 +564,8 @@ decide it for us:</p>
 </div>
 </div>
 <p>Look at the output of the cell above. This is how NumPy shows us the contents of the array. For the rest of these tutorial pages, we will refer to this as the “raw” view of the array e.g. the default view that we see when we inspect the contents of the array without any fancy visualisation.</p>
-<p>This array is small enough that we can easily see its dimensionality. If we so wish, we can also use the <code class="docutils literal notranslate"><span class="pre">.shape</span></code> attribute to confirm the dimensions:</p>
+<p>This array is small enough that we can easily see its shape. If we so wish, we
+can also use the <code class="docutils literal notranslate"><span class="pre">.shape</span></code> attribute to confirm the dimensions:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># The `.shape` attribute</span>
@@ -1173,7 +1158,13 @@ below (from <code class="docutils literal notranslate"><span class="pre">plt.mat
 </div>
 </div>
 <p>We hope you agree that this image is a pretty good representation of the English letter “i”. We now have an image which represents a <em>symbol</em> e.g. as opposed to representing a visual scene or object. For any image, which is to say on any array of at least two dimensions, we can do something called <em>image manipulation</em>. This might sound like we are deceiving someone about our appearance or character, but in fact what it means is that we <em>do something which changes the numbers inside the array, and therefore changes the corresponding visual image</em>.</p>
-<p>Let’s use the helpfully named NumPy function <a class="reference external" href="https://numpy.org/doc/2.1/reference/generated/numpy.flip.html"><code class="docutils literal notranslate"><span class="pre">np.flip()</span></code></a>. This function, by default, will “flip” an array along the rows. Somewhat biblically, the first row will become the last row, and the last row will become the first row. Let’s apply this function to our present image, and inspect the corresponding “raw” output:</p>
+<p id="np-flip">Let’s use the helpfully named NumPy function
+<a class="reference external" href="https://numpy.org/doc/2.1/reference/generated/numpy.flip.html"><code class="docutils literal notranslate"><span class="pre">np.flip()</span></code></a>.
+This function, by default, will “flip” an array along the rows. Somewhat
+<a class="reference external" href="https://biblehub.com/matthew/20-16.htm">biblically</a>, the first row will
+become the last row, and the last row will become the first row. Let’s apply
+this function to our present image, and inspect the corresponding “raw”
+output:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Flip the array.</span>

@@ -15,13 +15,26 @@ jupyter:
 
 # (Scikit-) Image processing, via NumPy and SciPy
 
-This page will explore foundational image processing techniques, as operations on the values in a NumPy image array. First, we will explore how to achieve specific effects using NumPy and SciPy. We will demonstrate what these operations are doing to an image at the level of the array pixels. After that, we will show how more sophisticated extensions of these techniques can be implemented with Scikit-image, focusing on how it is often the same NumPy and SciPy operations that Scikit image is using "under the hood".
+This page will explore foundational image processing techniques, as operations
+on the values in a NumPy image array. First, we will explore how to achieve
+specific effects using NumPy and SciPy. We will demonstrate what these
+operations are doing to an image at the level of the array pixels. After that,
+we will show how more sophisticated extensions of these techniques can be
+implemented with Scikit-image. We will focus on the way that Scikit image
+often uses NumPy and SciPy operations "under the hood".
 
-Remember that *image processing is when we do something which changes the numbers inside an image array, and therefore changes the corresponding visual image*? Well, in fact, all that even the fanciest image processing software is doing is just changing the pixel values inside image arrays, in various ways. This is true for image processing software with a graphical user interface, like [Adobe Photoshop](https://www.adobe.com/th_en/products/photoshop), as well as for code-based image processing software like Scikit-image.
+[Remember that](ip-maxim) *"image processing" is when we do something that
+analyzes or changes the numbers inside the image array*? Well, in fact, all
+that even the fanciest image processing software is doing is changing the
+pixel values inside image arrays, in various ways. This is true for image
+processing software with a graphical user interface, like [Adobe
+Photoshop](https://www.adobe.com/th_en/products/photoshop) and [the GNU Image
+Manipulation Program](https://www.gimp.org), as well as for code-based image
+processing software like Scikit-image.
 
-Let's again build a simple image array, and look at how we can use NumPy alone to achieve some pretty radical changes to the original image. We will then look at the specific purposes that such changes are used for, with more complex images.
+Let's again build a simple image array, and look at the ways we can use NumPy alone to achieve some pretty radical changes to the original image. We will then look at the specific purposes that such changes are used for, with more complex images.
 
-First, we create our image array:
+First, we create do our usual imports, and create our image array:
 
 ```{python}
 import numpy as np
@@ -62,34 +75,43 @@ i_img = np.array([[0, 0, 0, 0, 0, 0, 0, 0],
 plt.imshow(i_img);
 ```
 
-We have already encountered the use of `np.flip()` as a tool for rudimentary image manipulation. We use it to, well, flip an image array on its head:
+We have [already encountered](np-flip) the use of `np.flip()` as a tool for
+rudimentary image manipulation. We use it to, well, flip an image array on its
+head:
 
 ```{python}
 # Flip the array.
 flipped_i = np.flip(i_img)
 
 # Show the "raw" array pixel values.
-print(flipped_i)
+flipped_i
+```
 
+```{python}
 # Display the array with Matplotlib.
 plt.imshow(flipped_i);
 ```
 
-# Resizing an image
+## Resizing by repeating
 
-Now, *any operation that changes the numbers in the array* is a form of image manipulation. The term *image processing* generally means we are applying image manipulations *to achieve a specific purpose* - like improving image quality or clarity, for instance.
+Now, *any operation that changes the numbers in the array* is a form of image manipulation. The term *image processing* generally means we are applying image manipulations *to achieve a specific purpose* - such as improving image quality or clarity.
 
-Let's say we want to *resize* our image array. Using NumPy, there are many ways to the same destination. Provided we want to *double* the size along a given dimension, we can achieve what we want using `np.repeat()`. 
+Let's say we want to *resize* our image array. Using NumPy, there are many
+ways to this same destination. Provided we want to *double* (or triple, or
+quadruple) the size along a given dimension, we can achieve what we want using
+`np.repeat()`.
 
 ```{python}
-# Double the image, along the rows.
-doubled_i_rows = np.repeat(i_img, 
+# Double the image, by repeating each row.
+doubled_i_rows = np.repeat(i_img,
                            repeats=2,
                            axis=0)
 
 # Show the "raw" array pixel values.
-print(doubled_i_rows)
+doubled_i_rows
+```
 
+```{python}
 # Display the array with Matplotlib.
 plt.imshow(doubled_i_rows);
 ```
@@ -106,15 +128,17 @@ show_attributes(doubled_i_rows)
 
 We can see that we have twice the number of rows in the `doubled_i_rows` image.
 
-We can also double along the columns, by setting `axis = 1`:
+We can also double along the columns, by setting `axis=1`:
 
 ```{python}
 # Double along the columns.
-doubled_i_cols = np.repeat(i_img, 
+doubled_i_cols = np.repeat(i_img,
                            repeats=2,
                            axis=1)
-# Show the result.
-print(doubled_i_cols)
+doubled_i_cols
+```
+
+```{python}
 plt.imshow(doubled_i_cols);
 ```
 
@@ -127,21 +151,22 @@ By combining these operations, we can double along both the rows and the columns
 
 ```{python}
 # Double the whole image.
-doubled_i =  np.repeat(i_img, 
-                       repeats=2, 
-                       axis=0)
-doubled_i =  np.repeat(doubled_i, 
+doubled_i =  np.repeat(i_img,
                        repeats=2,
-                       axis=1)
+                       axis=0)
+double_doubled_i =  np.repeat(doubled_i,
+                              repeats=2,
+                              axis=1)
+double_doubled_i
+```
 
-# Show the result.
-print(doubled_i)
+```{python}
 plt.imshow(doubled_i);
 ```
 
 ```{python}
 # The original image size was (15, 8).
-show_attributes(doubled_i)
+show_attributes(double_doubled_i)
 ```
 
 ::: {exercise-start}
@@ -149,7 +174,8 @@ show_attributes(doubled_i)
 :class: dropdown
 :::
 
-Your job now is to use NumPy operations *only* to create the following image array, using the `i_img` array as your starting point:
+Use NumPy operations *only* to create the following image array, using the
+`i_img` array as your starting point:
 
 ![](images/eye-!.png)
 
@@ -163,11 +189,11 @@ Max Pixel Value: 1.0
 Min Pixel Value: 0.0
 ```
 
-*Hint*: you may want to investigate NumPy functions for combining arrays together...
+*Hint*: you may want to investigate NumPy functions for combining arrays
 
 ```{python}
-# YOUR CODE HERE
 i_exclam = i_img.copy()
+# YOUR CODE HERE
 ```
 
 ::: {exercise-end}
@@ -177,7 +203,7 @@ i_exclam = i_img.copy()
 :class: dropdown
 :::
 
-You can do this in one line of code by using a combination of `np.concat()`, `np.flip()` and `plt.imshow()`. Notably,`np.concat()` will "stick" arrays together, rather than `np.repeat()`-ing the values... 
+You can do this in one line of code by using a combination of `np.concat()`, `np.flip()` and `plt.imshow()`. Notably,`np.concat()` will "stick" (concatenate) arrays together, rather than `np.repeat()`-ing the values... 
 
 Combined with `np.flip()` we can produce the desired result in one line of code:
 
@@ -202,7 +228,7 @@ plt.imshow(i_img)
 show_attributes(i_img);
 ```
 
-Now, your task is to find a way, again using only NumPy, to alter the `i_img` array so it becomes this target image:
+Your task is to find a way, again using only NumPy, to alter the `i_img` array so it becomes this target image:
 
 ![](images/split_i.png)
 
@@ -216,9 +242,12 @@ Max Pixel Value: 1.0
 Min Pixel Value: -1.0
 ```
 
-*Note*: notice how we have lost a column, relative to the original `i_img` array...We also now have -1 values in the array, have a think about which colors in the displayed image you think that these negative values will correspond to.
+*Note*: notice how we have lost a column, relative to the original `i_img` array...  We also now have -1 values in the array. Have a think about which colors in the displayed image you think that these negative values will correspond to.
 
-*Hint:* run the function `hint_split_i()`, which was imported at the beginning of this notebook, to see a helpful hint.
+*Hint:* there are various ways to do this, but the most efficient way we could think of is one short line of Numpy processing.  You might consider having a look at [Functions on arrays](https://inferentialthinking.com/chapters/05/1/Arrays.html#functions-on-arrays) for inspiration.
+
+*Hint:* run the function `hint_split_i()`, which was imported at the beginning
+of this notebook, to see a helpful hint.
 
 ```{python}
 # YOUR CODE HERE
@@ -245,7 +274,11 @@ print(split_i_solution)
 plt.imshow(split_i_solution);
 ```
 
-Why is the background now gray? Well, remember that, for a monochrome image visualised with the `gray` colormap: the most intense (highest value) pixels are white, and the least intense (lowest value) pixels are black, and intermediate values are a shade of gray.
+Why is the background now gray? Well, [remember that](color-and-matplotlib),
+for a single-channel image, colors arise from applying the current colormap.
+Visualised with the `gray` colormap: the most intense (highest value) pixels
+are white, and the least intense (lowest value) pixels are black, and
+intermediate values are a shade of gray.
 
 When we subtract along the column, with `np.diff()` the third value is subtracted from the fourth value etc., and so the resulting differences are calculated as:
 
@@ -270,7 +303,7 @@ White areas (pixel = 1) indicate a change between pixels in the horizontal direc
 We can detect big changes (edges) in the *vertical* direction by telling `np.diff()` to operate along the rows, rather than along the columns:
 
 ```{python}
-vertical_gradients = np.diff(i_img, 
+vertical_gradients = np.diff(i_img,
                              axis=0) # Subtract along the rows, not the columns.
 
 plt.imshow(vertical_gradients);
@@ -280,24 +313,30 @@ plt.imshow(vertical_gradients);
 :::
 
 
-# Resizing an image with `skimage`
+## Resizing an image with `skimage`
 
-The `ski.transform` module contains a function called `resize`. It is probably easy to guess what `ski.transform.resize()` does. It takes an input image and changes its size (obviously!). Because all computer images are at least 2D arrays, this involves changing the dimensionality of the image. Let's demonstrate this with the following image array:
+The `ski.transform` module contains a function called `resize`.  Somewhat
+obviously, `ski.transform.resize()` takes an input image and a requested image
+shape, and returns an output image of the requested size.  Because all
+computer images are at least 2D arrays, this involves changing the shape of
+the image. Let's demonstrate this with the following image array:
 
 ```{python}
 # Create an image array.
-squares = np.array([[1, 0,], 
-                    [0, 1,]], 
+squares = np.array([[1, 0,],
+                    [0, 1,]],
                    dtype=float)
 
 # Show the array ("raw" output from NumPy)
-print(squares)
+squares
+```
 
+```{python}
 # Show the array, visualised with Matplotlib
 plt.matshow(squares);
 ```
 
-What happens if we resize `squares` to (10, 10)? We will use the optional Boolean `preserve_range` argument which ensures the numbers in the output image stay within the range of those we give to the function:
+What happens if we resize `squares` to (10, 10)? We will use the optional Boolean `preserve_range` argument for forward compatibility with the next big release of the Scikit-image package.  It has the effect of preventing some automatic processing of the range of values in the image array on input.
 
 ```{python}
 # Pass our `squares` array to the `ski.transform.resize()` function.
@@ -321,27 +360,33 @@ plt.imshow(squares_ten_by_ten);
 
 Well, that is certainly more artistic than the original!
 
-We now have many more `unique` values in the output array than there were in the input array (the input array contained only 0's and 1's), because `skimage` is interpolating for many new pixels. This means that it is estimating values for the new pixels which fall in between the array pixels from the original array image, based on the a weighted average of the values of the original pixels which they are nearest to:
+We now have many more `unique` values in the output array than there were in the input array (the input array contained only 0's and 1's), because `skimage` is *interpolating* for many new pixels.  *Interpolation* is the process of estimating values for the new pixels which fall in between the array pixels from the original array image, based on the weighted average of the values of the original pixels to which they are nearest.
 
 ```{python}
 # Show the `unique` values.
 np.unique(squares_ten_by_ten)
 ```
 
-The array pixels highlighted in red are the original pixels from the `(2, 2)` original array:
+The array pixels highlighted in red are the original pixels from the `(2, 2)`
+original array:
 
 ![](images/resize_interpolation.png)
 
 All the other pixels have been added by `skimage` during the `resize`-ing process. Pixels closer to the original pixels share closer intensity values to the original pixel (meaning they are more black or more white, depending on the original pixel). Images further from the original pixels become more gray.
 
-We can control the type of interpolation that `skimage` uses by changing the (somewhat cryptically named) `order` argument. Setting this to 0 will activate [nearest neighbor interpolation](https://en.wikipedia.org/wiki/Nearest-neighbor_interpolation):
+We can control the type of interpolation that `skimage` uses by changing the
+(somewhat cryptically named) `order` argument. Setting `order=0` will activate
+[nearest neighbor
+interpolation](https://en.wikipedia.org/wiki/Nearest-neighbor_interpolation).
+This method of interpolation (estimation) merely uses the nearest existing
+pixel to give the value for any new pixel in the output image.
 
 ```{python}
 # Pass our `squares` array to the `ski.transform.resize()` function.
 squares_ten_by_ten = ski.transform.resize(squares,
                                           output_shape=(10, 10),
                                           preserve_range=True,
-                                          order=0) # Change the interpolation method.
+                                          order=0) # Nearest neighbor
 
 # Show the resized array.
 plt.imshow(squares_ten_by_ten);
@@ -350,16 +395,23 @@ plt.imshow(squares_ten_by_ten);
 This seems much closer to what we want when we `resize` the image. However, the results of image processing are highly context-dependent, and there may be images for which the default interpolation setting works better...
 
 
-# Rotation
+## Rotation
 
-Another common image manipulation we may want to do is to rotate an image. Should we only want to rotate by increments of 90 degrees, we can use the helpfully named `np.rot90()` function:
+Another common image manipulation we may want to do is to rotate an image.
+
+### Rotations in 90 degree increments
+
+Should we only want to rotate by increments of 90 degrees, we can use the
+helpfully named `np.rot90()` function:
+
 
 ```{python}
 # Rotate the image.
 rotated_i = np.rot90(i_img)
+rotated_i
+```
 
-# Show the result.
-print(rotated_i)
+```{python}
 plt.imshow(rotated_i);
 ```
 
@@ -367,15 +419,16 @@ We can control the number of rotations with the `k` argument:
 
 ```{python}
 # Rotate the image, twice!
-rotated_i_180 = np.rot90(i_img, 
+rotated_i_180 = np.rot90(i_img,
                          k=2) # Two 90 degree rotations.
+rotated_i_180
+```
 
-# Show the result.
-print(rotated_i_180)
+```{python}
 plt.imshow(rotated_i_180);
 ```
 
-Again, with NumPy there are many routes to the same destination, and you can see that has achieved (visually) the same result as using `np.flip()` as we saw above. Rotating in increments of 90 degrees will not change the *size* (e.g. number of pixels) in the array, however it will change the integer index location of the pixel values:
+Rotating in increments of 90 degrees will not change the *size* (e.g. number of pixels) in the array, however it will change the integer index location of the pixel values:
 
 ```{python}
 # Show the shape of the original image and both 90 degree rotated images.
@@ -394,6 +447,118 @@ plt.imshow(rotated_i_180);
 # Original image and 90 degree rotations all have the same number of elements (15*8 = 120)
 i_img.size == rotated_i.size == rotated_i_180.size
 ```
+
+### Rotations by arbitrary angles with Scipy
+
+To rotate an image by more flexible increments than 90 degrees, we need to
+bring in SciPy, another foundation library for Scikit-image. The SciPy
+function `ndimage.rotate()` offers more flexible rotation. However, rotating
+by other angles will alter both the `shape` and `size` of the output image:
+
+```{python}
+# Import SciPy using the conventional name (`sp`).
+import scipy as sp
+
+# Rotate the image by 193 degrees.
+rotated_i_193 = sp.ndimage.rotate(i_img,
+                                  angle=193) # Specify the rotation angle.
+
+# Show the "raw" array.
+rotated_i_193
+```
+
+```{python}
+# Render the image graphically.
+plt.imshow(rotated_i_193);
+```
+
+```{python}
+# Show the attributes of the rotated image.
+show_attributes(rotated_i_193)
+```
+
+The cell below will loop through some different rotation angles, the `shape` of each image is shown below each plot:
+
+```{python}
+# A for loop to show multiple rotations, and the effect on
+# the shape of the resultant image array.
+plt.figure(figsize=(12, 4))
+for i, i_2 in enumerate(np.arange(361, step=45)):
+    plt.subplot(1, 9, i+1)
+    current_rot = sp.ndimage.rotate(i_img, 
+                                    angle=i_2)
+    plt.imshow(current_rot)
+    plt.title(f"{i_2}°")
+    plt.xlabel(f"{current_rot.shape}")
+    plt.xticks([])
+    plt.yticks([])
+```
+
+By default, the `shape` is altered so that the rotated original array is shown
+within the output array. SciPy uses interpolation to estimate the values of
+the pixels it adds, where the `shape` of the output image is larger than the
+`shape` of the input image.
+
+We can disable this behaviour by settings `reshape=False`, however, this means that we will clip any parts of the array that have been rotated out of the field of view of the original array shape.
+
+```{python}
+# A for loop to show multiple rotations, and the effect on
+# the shape of the resultant image array, but this time
+# we do not allow SciPy to reshape the output arrays.
+plt.figure(figsize=(12, 4))
+for i, i_2 in enumerate(np.arange(361, step=45)):
+    plt.subplot(1, 9, i+1)
+    current_rot = sp.ndimage.rotate(i_img,
+                                    angle=i_2,
+                                    reshape=False) # Don't reshape output.
+    plt.imshow(current_rot)
+    plt.title(f"{i_2}°")
+    plt.xlabel(f"{current_rot.shape}")
+    plt.xticks([])
+    plt.yticks([])
+```
+
+## Rotating with `skimage`
+
+Let's now look now at how rotating image arrays is handled in `skimage`. Image rotation, which we saw above using `np.rot90` and `scipy.ndimage.rotate()` can be achieved using the straightforwardly named `ski.transform.rotate()`, and the syntax works identically to `scipy.ndimage.rotate()`. All this rotating has left us thirsty and caffeine-deprived, so let's get some `coffee`:
+
+```{python}
+# Import and show an image.
+coffee = ski.data.coffee()
+plt.imshow(coffee);
+```
+
+We can achieve easy and flexible rotation with `ski.transform.rotate()`:
+
+```{python}
+# Rotate the `coffee` image with `skimage`.
+# resize=True ensures all the original image fits inside the output.
+rotated_coffee = ski.transform.rotate(coffee,
+                                      angle=75,
+                                      resize=True)
+
+plt.imshow(rotated_coffee);
+```
+
+The cell below plots a variety of rotations, using `skimage.transform.rotate()` to perform each rotation, this time disabling resize of the output to fit the rotated input.
+
+```{python}
+# Many rotations...
+plt.figure(figsize=(16, 10))
+for i, i_2 in enumerate(np.arange(361, step=45)):
+    plt.subplot(3, 3, i+1)
+    current_rot = ski.transform.rotate(coffee,
+                                       angle=i_2,
+                                       resize=False)
+    plt.imshow(current_rot)
+    plt.title(f"{i_2}°")
+    plt.xticks([])
+    plt.yticks([])
+```
+
+## Rotation compared to flips and transpos
+
+Rotating is a different operation that flipping the image with `np.flip`.  Flipping causes a reflection in the image around its center.  The difference between rotation and applying a flip becomes obvious with an image that is not left-right symmetrical.
 
 The cell below demonstrates `np.flip`-ping an image, as well as `np.rot`-ating an image by 180 degrees:
 
@@ -414,103 +579,7 @@ plt.imshow(np.flip(camera))
 plt.title('np.flip()');
 ```
 
-To rotate an image by more flexible increments, we need to bring in SciPy, another foundational component library of Scikit-image. The SciPy function `ndimage.rotate()` offers more flexible rotation. However, rotating by other angles will alter both the `shape` and `size` of the output image:
-
-```{python}
-# Import SciPy using the conventional name (`sp`).
-import scipy as sp
-
-# Rotate the image by 193 degrees.
-rotated_i_193 = sp.ndimage.rotate(i_img, 
-                                  angle=193) # Specify the rotation angle.
-
-# Show the "raw" array.
-print(rotated_i_193)
-
-# Render the image graphically.
-plt.imshow(rotated_i_193);
-```
-
-```{python}
-# Show the attributes of the rotated image.
-show_attributes(rotated_i_193)
-```
-
-The cell below will loop through some different rotation angles, the `shape` of each image is shown below each plot:
-
-```{python}
-# A for loop to show multiple rotations, and the effect on
-# the dimensionality of the resultant image array.
-plt.figure(figsize=(12, 4))
-for i, i_2 in enumerate(np.arange(361, step=45)):
-    plt.subplot(1, 9, i+1)
-    current_rot = sp.ndimage.rotate(i_img, 
-                                    angle=i_2)
-    plt.imshow(current_rot)
-    plt.title(f"{i_2}°")
-    plt.xlabel(f"{current_rot.shape}")
-    plt.xticks([])
-    plt.yticks([])
-```
-
-By default, the `shape` is altered so that the original array is shown within the output array. SciPy uses interpolation to estimate the values of the pixels it adds, where the `shape` of the output image is larger than the `shape` of the input image.
-
-We can disable this behaviour by settings `reshape=False`, however, then we risk "cutting" off aspects of what our original image depicts:
-
-```{python}
-# A for loop to show multiple rotations, and the effect on
-# the dimensionality of the resultant image array., but this time
-# we do not allow SciPy to reshape the output arrays.
-plt.figure(figsize=(12, 4))
-for i, i_2 in enumerate(np.arange(361, step=45)):
-    plt.subplot(1, 9, i+1)
-    current_rot = sp.ndimage.rotate(i_img, 
-                                    angle=i_2,
-                                    reshape=False) # Do not reshape the output images.
-    plt.imshow(current_rot)
-    plt.title(f"{i_2}°")
-    plt.xlabel(f"{current_rot.shape}")
-    plt.xticks([])
-    plt.yticks([])
-```
-
-# Rotating an image with `skimage`
-
-Let's now look now at how rotating image arrays is handled in `skimage`. Image rotation, which we saw above using `np.rot90` and `scipy.ndimage.rotate()` can be achieved using the straightforwardly named `ski.transform.rotate()`, and the syntax works identically to `scipy.ndimage.rotate()`. All this rotating has left us thirsty and caffeine-deprived, so let's get some `coffee`:
-
-```{python}
-# Import and show an image.
-coffee = ski.data.coffee()
-plt.imshow(coffee);
-```
-
-We can achieve easy and flexible rotation with `ski.transform.rotate()`:
-
-```{python}
-# Rotate the `coffee` image with `skimage`.
-rotated_coffee = ski.transform.rotate(coffee, 
-                                      angle=75,
-                                      resize=True) # Ensure the original image fits in side the
-                                                   # output image.
-
-plt.imshow(rotated_coffee);
-```
-
-The cell below plots a variety of rotations, using `skimage.transform.rotate()` to perform each rotation:
-
-```{python}
-# Many rotations...
-plt.figure(figsize=(16, 10))
-for i, i_2 in enumerate(np.arange(361, step=45)):
-    plt.subplot(3, 3, i+1)
-    current_rot = ski.transform.rotate(coffee, 
-                                    angle=i_2,
-                                    resize=False) # Do not reshape the output images.
-    plt.imshow(current_rot)
-    plt.title(f"{i_2}°")
-    plt.xticks([])
-    plt.yticks([])
-```
+Similarly, rotations differ from transpose operations on the array.
 
 Specifically for 90 degree rotations, you might be tempted to use a NumPy shortcut, and use the `.T` (transpose) method. This however, will do something different to rotation. The cell below demonstrates the `.T` method, with the `camera` image:
 
@@ -531,7 +600,7 @@ plt.imshow(ski.transform.rotate(camera,
 plt.title('ski.transform.rotate()');
 ```
 
-We can see that the cameraman is facing a different direction in each image (taking a photo of the bottom of the image for the `.T` method, and taking a photo of the top of the image for a 90 degree rotation via `skimage`). 
+We can see that the cameraman is facing a different direction in each image (taking a photo of the bottom of the image for the `.T` method, and taking a photo of the top of the image for a 90 degree rotation via `skimage`).
 
 The difference here is that transposing an image switches the rows and columns, such that the first row becomes the first column etc. Conversely, `skimage.transform.rotate()` pivots the pixels around a central point. Essentially, transposing gives a *mirroring effect* which is different from a rotation.
 
@@ -549,15 +618,18 @@ coffee.T.shape
 ```
 
 ```{python}
-coffee_transposed = coffee.transpose((1, 0, 2)) # Move the columns into the rows, the rows into the columns, 
-                                               # and leave the color channels in the third dimension.
-plt.imshow(coffee_transposed); 
- 
-# Show the attributes (not that the `shape` is still correct for a color image).
+# Move the columns into the rows, the rows into the columns, and leave the
+# color channels in the third dimension.
+coffee_transposed = coffee.transpose((1, 0, 2))
+plt.imshow(coffee_transposed)
+
+# Show the attributes (not that the `shape` is still correct for a color
+# image).
 show_attributes(coffee_transposed)
 ```
 
-Compare this to a 90 degree rotation via `skimage`, pay attention to the spoon!
+Compare this to a 90 degree rotation via `skimage`; pay attention to the
+spoon!
 
 ```{python}
 # Show the difference between rotating and transposing.
@@ -604,9 +676,12 @@ Max Pixel Value: 255
 Min Pixel Value: 0
 ```
 
-*Hint*: if you did not complete the earlier exercise involving combining two `i_img` arrays, then you may want to investigate NumPy functions for combining arrays together to complete the current exercise...
+*Hint*: if you did not complete the earlier exercise involving combining two
+`i_img` arrays, then you may want to investigate NumPy functions for combining
+arrays together to complete the current exercise...
 
-*Caution:* you may run into some errors/odd outcomes because of `dtype`s here... so use the `ski.util` conversion functions if you need to...
+*Caution:* you may run into some errors/odd outcomes because of `dtype`s
+here... so use the `ski.util` conversion functions if you need to...
 
 ```{python}
 # YOUR CODE HERE
@@ -637,7 +712,7 @@ Now the image is transposed, we have achieved our "mirror" effect. To get this m
 # Rotate and show.
 rotated_mirror_camera = ski.transform.rotate(mirror_camera,
                                              angle=270,
-                                             resize=True) # Preserve the dimensions to match the original.
+                                             resize=True) # Preserve shape.
 plt.imshow(rotated_mirror_camera);
 ```
 
@@ -685,16 +760,15 @@ If in doubt, check the `dtype`!
 
 For this exercise, you should load in the `cat` image from `ski.data`. Here is the original `cat` image:
 
-![](images/cat.png)
+```{python}
+cat = ski.data.cat()
+plt.imshow(cat)
+```
 
 The original image has the following attributes:
 
-```
-Type: <class 'numpy.ndarray'>
-dtype: uint8
-Shape: (300, 451, 3)
-Max Pixel Value: 231
-Min Pixel Value: 0
+```{python}
+show_attributes(cat)
 ```
 
 Now, using only `numpy` and `skimage`, try to recreate this target image:
@@ -712,6 +786,8 @@ Shape: (30, 30, 3)
 Max Pixel Value: 0.76
 Min Pixel Value: 0.0
 ```
+
+*Hint*: Note the yellow tinge to the image.  You can achieve this tinge by modifying the weights of the colors in the image.
 
 ```{python}
 # YOUR CODE HERE
@@ -754,7 +830,7 @@ show_attributes(cat_solution)
 plt.imshow(cat_solution);
 ```
 
-You'll notice that downsizing the image has seriously downgraded the quality. This makes sense, because the original high-resolution image utilized its many pixels to depict intricate details. After resizing to a lower-resolution, this detail is lost, because now we are trying to show the same image using subtantially fewer pixels. `skimage` has done some averaging behind the scenes, to work out what should go in the remaining pixels. At least we can still see the image is of a cat...
+You'll notice that downsizing the image has seriously downgraded the quality. This makes sense, because the original high-resolution image utilized its many pixels to depict intricate details. After resizing to a lower-resolution, this detail is lost, because now we are trying to show the same image using substantially fewer pixels. `skimage` has done some averaging behind the scenes, to work out what should go in the remaining pixels. At least we can still see the image is of a cat...
 
 Now, we can see that the target image requires a rotation, through good judgment, or just trial and error, we can work out that this needs to be 45 degrees. We can also see that the image of the downscaled cat does not "fit" inside the final image. As such, we need to rotate *without resizing* the image. By default, `resize=False` so we can leave it on the default setting:
 
@@ -768,22 +844,33 @@ plt.imshow(cat_solution);
 
 We will leave it to you to use this image as a logo for your "Pixel Cat" [meme coin](https://en.wikipedia.org/wiki/Meme_coin).
 
+```{python tags=c("remove-cell")}
+# We regenerate and store the output image for page generation, used above.
+plt.imshow(cat_solution)
+plt.savefig('images/poor_cat.png')
+```
 
 ::: {solution-end}
 :::
 
-# Cropping
 
-The process of "cropping" is the removal areas of pixels from an image.
+## Cropping
 
-Because our images are just NumPy arrays, cropping is just NumPy indexing (duh!). As such, we can crop images just with indexing operations, without using specific NumPy (or `skimage`) functions.
+The process of *cropping* is the removal of areas of pixels from an image.
+
+Because our images are just NumPy arrays, cropping is just NumPy indexing
+(duh!). As such, we can crop images just with indexing operations, without
+using specific NumPy (or `skimage`) functions.
 
 For instance, we can "shave" our `i_img` array in half, along the columns by slicing along the columns:
 
 ```{python}
 # Cut in half.
 half_i = i_img[:, 4:8]
-print(half_i)
+half_i
+```
+
+```{python}
 plt.imshow(half_i);
 ```
 
@@ -819,7 +906,8 @@ Max Pixel Value: 250
 Min Pixel Value: 23
 ```
 
-*Hint:* using `plt.grid()` might be of use here...
+*Hint:* using `plt.grid()` might be of use in identifying the part of the
+image you need.
 
 ```{python}
 # YOUR CODE HERE
@@ -834,7 +922,7 @@ plt.imshow(camera);
 :class: dropdown
 :::
 
-This is a simple task once you know what indexes you need. Using `plt.grid()` can make this information easier to obtain:
+This is a simple task once you know what indices you need. Using `plt.grid()` can make this information easier to obtain:
 
 ```{python}
 # Show `camera`, with a helpful grid.
@@ -858,57 +946,79 @@ show_attributes(camera[130:160, 240:320])
 :::
 
 
-# Masks
+## Masks
 
-In image processing, a mask is a matrix/array containing a collection of elements in a certain shape. A mask is "placed" on an image, and pixel values under the mask are all replaced with a specific value. Let's demonstrate with a real image — a grayscale version of the standard `coffee` image:
+In image processing, a mask is an array where the elements express weights or binary (0 or 1) values to select areas in another image (array).
+
+A mask is "placed" on an image, and one typically then applies operations to
+the pixels indicated by the mask.  For example, one might use the mask with an
+image array to replace pixels indicated by the mask with a specific value.
+Let's demonstrate with a real image — a grayscale version of the standard
+`coffee` image:
 
 ```{python}
+# Make coffee RGB image into single-channel image.
 coffee_gray = ski.color.rgb2gray(ski.data.coffee())
 show_attributes(coffee_gray)
 plt.imshow(coffee_gray);
 ```
 
-First, we extract the `shape` of the image, and store each element as a separate variable. In this case, the image is 2D (e.g. single-channel, monochrome) and so we extract the number of rows and the number of columns:
+In this case we are going to create a new mask image, that corresponds to the
+`coffee_gray` image (has the same shape), but where we will create the mask
+values with a mathematical formula using the row and column indices.  In fact
+we'll do this to create a circular mask.  Bear with us, all should be come
+clear as we go.
 
 ```{python}
 # Unpack and store the number of rows and number of columns.
-dim_1, dim_2 = coffee_gray.shape
-
-# Show the values.
-dim_1, dim_2
+dim_0, dim_1 = coffee_gray.shape
+dim_0, dim_1
 ```
 
-Then we can use these elements (400 and 600) via `np.orgid()` to create one array with 400 rows, and 1 column, and another array with 1 row and 600 columns. These elements can be used to make a 2D mask, in a specific shape:
+We are going to create a circular mask, using the formula for a circle.
+
+That formula needs the `i` (row) and `j` coordinates for each pixel, the center coordinate of the circle, and the radius `r` of the desired circle.
+
+Call the row and column center coordinates $c_i, c_j$ respectively.
+
+We can tell if a particular pixel at (`i`, `j`) is _outside_ the circle by testing whether the Euclidean distance of the pixel position (`i`, `j`) from the center is greater than $r$.
+
+$$
+\sqrt{(i - c_i)^2 + (j - c_j)^2} > r
+$$
+
+
+First we use the Numpy `meshgrid` function to return two arrays, one containing all the `i` (row) coordinates at each pixel, and another containing all the `j` (column) coordinates at each pixel.
 
 ```{python}
-# Create a grid, based on the image `shape`.
-X, Y = np.ogrid[0:dim_1, 0:dim_2]
-
-# Show the `shape` of the X elements.
-print(X.shape)
-
-# Show the first 10 elements of X.
-X[:10, :]
+# indexing='ij' tells meshgrid to return `i` and `j` coordinates.  There are other modes, not relevant here.
+i_coords, j_coords = np.meshgrid(np.arange(dim_0), np.arange(dim_1), indexing='ij')
+# i coordinate for each element.
+i_coords
 ```
 
 ```{python}
-# Show the `shape` of the Y elements.
-print(Y.shape)
-
-# Show Y
-Y
+# j coordinate for each element.
+j_coords
 ```
 
-We can then use a geometric formula to generate a 2D grid of a specific shape, as in the cell below:
+```{python}
+# The image center in pixels
+c_i, c_j = dim_0 / 2, dim_1 / 2
+# Radius
+r = 275
+```
+
+We can then use the formula above to generate a 2D array where True (== 1) means outside the circle and False (== 0) means inside the circle.
 
 ```{python}
-# Create a circulat mask.
-mask = (X - dim_1/ 2) ** 2 + (Y - dim_2 / 2) ** 2 > dim_1 * dim_2 / 4
+# Create a circular mask.
+mask = np.sqrt((i_coords - c_i) ** 2 + (j_coords - c_j) ** 2) > r
 show_attributes(mask)
 plt.imshow(mask);
 ```
 
-Once we have our mask - which is just a Boolean array - it is just a matter of Boolean indexing to use it set all the pixel values underneath it to be equal to the same value:
+Once we have our mask - which is just a Boolean array - it is just a matter of Boolean indexing to set all the pixel values in the image to the same value, where there is a True in the corresponding element in the mask:
 
 ```{python}
 # Apply the mask.
@@ -924,11 +1034,24 @@ plt.matshow(coffee_gray_masked);
 :::
 
 
-Your mission now is to use a mask, similar to the one we have just seen, to transform `camera` into the following image:
-    
-![](images/masked_camera.png)
+Start with the `camera` image:
 
-This is easier than you think...you can use the formula for the last mask as a guide. Try running the function `hint_cryptic_camera()` for a hint if you get stuck...
+```{python}
+camera = ski.data.camera()
+plt.imshow(camera);
+```
+
+Now consider this formula, where $p$ is some constant:
+
+$$
+((i - c_i)^3 + (j - c_j)^3)^{1/3} > p
+$$
+
+(where $x^{1/3}$ is the cube-root of $x$).
+
+Use that formula, with some suitable value for `p`, and masking as above, to create the following image:
+
+![](images/masked_camera.png)
 
 
 ::: {exercise-end}
@@ -938,32 +1061,37 @@ This is easier than you think...you can use the formula for the last mask as a g
 :class: dropdown
 :::
 
-The circular mask we used above was generated via the following:
-
-`mask = (X - dim_1/ 2) ** 2 + (Y - dim_2 / 2) ** 2 > dim_1 * dim_2 / 4`
-
-To obtain the mask you need for this exercise, we simply change the square exponents (`**2`) to cubes (`**3`), altering the geometry of the mask:
+We apply the formula above to the `i` and `j` coordinates of the `camera`
+image:
 
 ```{python}
 # Solution pt 1.
-dim_1, dim_2 = camera.shape
-X, Y = np.ogrid[0:dim_1, 0:dim_2]
-mask_solution = (X - dim_1/ 2) ** 3 + (Y - dim_2 / 2) ** 3 > dim_1 * dim_2 / 4
-plt.imshow(mask_solution);
+cam_c_i, cam_c_j = np.array(camera.shape) / 2
+p = 55  # By experiment.
+i_camera, j_camera = np.meshgrid(np.arange(camera.shape[0]), np.arange(camera.shape[1]))
+# Apply formula to make mask.
+mask_camera = ((i_camera - cam_c_i) ** 3 + (j_camera - cam_c_j) ** 3) ** (1 / 3) > p
+plt.imshow(mask_camera);
 ```
 
 ```{python}
 # Solution pt 2.
 camera_masked_solution = camera.copy()
-camera_masked_solution[mask_solution] = 1
+camera_masked_solution[mask_camera] = 1
 plt.imshow(camera_masked_solution);
+```
+
+```{python tags=c("remove-cell")}
+# Regenerate and store the output image for page build, used above.
+plt.imshow(camera_masked_solution);
+plt.savefig('images/masked_camera.png')
 ```
 
 ::: {solution-end}
 :::
 
 
-# Inverting image colors
+## Inverting image colors with Numpy
 
 We saw *color inversion* on an [earlier page](0_images_as_numpy_arrays). This is where all the pixel values in an image are, shockingly, inverted: high numbers become low numbers and vice versa:
 
@@ -971,48 +1099,47 @@ For a binary image, this involves swapping 1s and 0s...
 
 ```{python}
 # Original image
-print(i_img)
+i_img
+```
+
+```{python}
 plt.imshow(i_img);
 ```
 
 ...which can be accomplished with some simple numeric operations:
 
 ```{python}
-inverted_i = (i_img * -1) + 1
-print(inverted_i)
+inverted_i = 1 - i_img
+inverted_i
+```
+
+```{python}
 plt.imshow(inverted_i);
 ```
 
-What about a color image? 
+What about a color image?
 
 ```{python}
-# Read in a color image.
-colorwheel = ski.io.imread("images/colorwheel.png")
+colorwheel = ski.data.colorwheel()
 show_attributes(colorwheel)
 plt.imshow(colorwheel);
 ```
 
-The numerical trick that we used with the binary image will not work for a color image like this, because the pixel values range from 0 to 255. -255 is not allowed within the acceptable range for `uint8` image data and will produce an error!
-
-```{python tags=c("raises-exception")}
-# Shortcut will not work for color images
-plt.imshow(colorwheel * -1)
-```
-
-But remember that inversion means we, well, "invert" the pixel values. Because the maximum value is now 255, we can subtract each array pixel value in each color channel from 255 to "reverse" the values:
+Because the maximum value is now 255, we can subtract each array pixel value
+in each color channel from 255 to "reverse" the values:
 
 ```{python}
 # Invert the color image, manually.
 inverted_colorwheel = colorwheel.copy()
 for i in np.arange(3):
     inverted_colorwheel[:, :, i] = 255 - inverted_colorwheel[:, :, i] 
-    
+
 plt.imshow(inverted_colorwheel);
 ```
 
-# Inverting colors with `skimage`
+## Inverting colors with `skimage`
 
-`ski.util.invert()` handles color inversion, we simply pass it a color NumPy image array and voilà!:
+`ski.util.invert()` handles color inversion, we simply pass it a color NumPy image array and *voilà!*:
 
 ```{python}
 # Invert the color image, with `skimage`.
@@ -1025,25 +1152,17 @@ plt.imshow(invert_colorwheel_with_skimage);
 :class: dropdown
 :::
 
-Now over to you. Your task here is to load the `brick` image from `ski.data.image`.
+Now over to you. You will be working on the `brick` image from `ski.data`:
+
+```{python}
+brick = ski.data.brick()
+show_attributes(brick)
+plt.imshow(brick)
+```
 
 You should then invert every 2nd element on even numbered rows...
 
 So on *even* numbered rows (row 0, 2, 4, 6, etc.), if you went through the elements in pairs along the row, the *second* element in each pair should be inverted, vs the original image.
-
-The original `brick` image looks like this:
-
-![](images/bricks.png)
-
-The original image has the following attributes:
-
-```
-Type: <class 'numpy.ndarray'>
-dtype: uint8
-Shape: (512, 512)
-Max Pixel Value: 207
-Min Pixel Value: 63 
-```
 
 Your final image should look like this:
 
@@ -1061,7 +1180,9 @@ Min Pixel Value: 48
 
 Use only NumPy indexing and Scikit-image functions to do this...
 
-*Hint:* remember that smaller NumPy arrays indexed out of larger NumPy arrays are still NumPy arrays, and so can be passed as arguments to most `skimage` functions.
+*Hint:* remember that smaller NumPy arrays indexed out of larger NumPy arrays
+are still NumPy arrays, and so can be passed as arguments to most `skimage`
+functions.
 
 ```{python}
 # YOUR CODE HERE
@@ -1075,7 +1196,8 @@ Use only NumPy indexing and Scikit-image functions to do this...
 :::
 
 
-The solution here is just to use slicing to select the elements we need, and `ski.util.invert()` just these elements, using array indexing.
+The solution here is just to use slicing to select the elements we need, and
+`ski.util.invert()` just these elements, using array indexing.
 
 To get every 2nd element on even numbered rows, we can use `brick[0::2, 1::2]`.
 
@@ -1109,6 +1231,11 @@ show_attributes(brick_solution)
 plt.imshow(brick_solution);
 ```
 
+```{python tags=c("remove-cell")}
+plt.imshow(brick_solution);
+plt.savefig('images/inverted_bricks.png')
+```
+
 ::: {solution-end}
 :::
 
@@ -1130,6 +1257,8 @@ Shape: (300, 451, 3)
 Max Pixel Value: 255
 Min Pixel Value: 24
 ```
+
+Notice the color change from the standard `cat` image.
 
 ```{python}
 # YOUR CODE HERE
@@ -1166,39 +1295,58 @@ Now, when we invert the purple `cat` image, we get the target image:
 
 ```{python}
 # Solution.
-plt.imshow(ski.util.invert(cat_purple));
+inverted_cat_purple = ski.util.invert(cat_purple)
+plt.imshow(inverted_cat_purple)
+```
+
+```{python tags=c("remove-cell")}
+# Save figure for use in page above.
+plt.imshow(inverted_cat_purple);
+plt.savefig('images/purple_inverted_cat.png')
 ```
 
 ::: {solution-end}
 :::
 
-# Greyscale to binary conversion
+## Greyscale to binary conversion
 
-Greyscale to binary conversion can be achieved using comparison operators (`<`, `>`, `<=`, `>=`, `==`). The resulting Boolean array will always be binary.
+Greyscale to binary conversion can be achieved using comparison operators
+(`<`, `>`, `<=`, `>=`, `==`). The resulting Boolean array will always be
+binary (True or False, 1 or 0).
 
 Let's demonstrate with a grayscale image:
 
 ```{python}
 # Create a grayscale image.
-np.random.seed(10)
-random_check = np.array([[1, 0, 1, 0], 
+# Make a random number generator, with predictable outputs.
+rng = np.random.default_rng(10)
+random_check = np.array([[1, 0, 1, 0],
                          [0, 1, 0, 1],
                          [1, 0, 1, 0],
                          [0, 1, 0, 1]], dtype=int)
-random_check[random_check == 1] = np.random.randint(low=3,
-                                                    high=11,
-                                                    size=np.sum(random_check == 1))
+# Replace ones with random integers.
+n_checks = np.count_nonzero(random_check)
+random_check[random_check == 1] = rng.integers(3, 12,  # From 3 through 11.
+                                               size=n_checks)
 plt.matshow(random_check);
 ```
 
 ```{python}
 # Convert to a binary image:
 binary_check = random_check > np.median(random_check)
-print(binary_check)
+binary_check
+```
+
+```{python}
 plt.matshow(binary_check);
 ```
 
-We can also easily achieve this conversion in `skimage` - see the [filtering page](5_mean_filter) for more detail. For now, we can use the `ski.filters.threshold_minimum()` function. This supplies us a recommended threshold value to attempt to divide the array pixels into two classes e.g. two classes where the pixels in each class are maximally different from pixels in the other class:
+We can also use `skimage` to do this work - see the [filtering
+page](5_mean_filter) for more detail. For now, we can use the
+`ski.filters.threshold_minimum()` function. This supplies us a recommended
+threshold value to attempt to divide the array pixels into two classes e.g.
+two classes where the pixels in each class are maximally different from pixels
+in the other class:
 
 ```{python}
 # Get a recommended threshold from `skimage`.
@@ -1206,7 +1354,8 @@ threshold = ski.filters.threshold_minimum(random_check)
 threshold
 ```
 
-We can then use this threshold to create a binary array, successfully binarizing our grayscale image:
+We can then use this threshold to create a binary array, successfully
+binarizing our grayscale image:
 
 ```{python}
 # Binarize the array, based on the threshold.
@@ -1215,24 +1364,26 @@ show_attributes(binary_check_from_ski)
 plt.matshow(binary_check_from_ski);
 ```
 
-# Color to grayscale conversion
+## Color to grayscale conversion with Numpy
 
-To downgrade a color image to grayscale we can use a brute force method of taking the mean of the three color channels, to produce a 2D monochrome image array:
+To downgrade a color image to grayscale we can use a brute force method of
+taking the mean of the three color channels, to produce a 2D monochrome image
+array:
 
 ```{python}
-gray_wheel = np.mean(colorwheel, 
-                     axis=2)
-
+gray_wheel = np.mean(colorwheel, axis=2)
 plt.imshow(gray_wheel);
 ```
 
-A better option here, that we encountered on the [previous page](2_skimage_intro), is to use the *luminance formula*:
+A better option, that we encountered on the [previous
+page](luminance-formula), is to use the *luminance formula*:
 
 $$
 Y = 0.2126R + 0.7152G + 0.0722B
 $$
 
-This "collapses" a 3D color image into a 2D grayscale image via a weighted sum of the channels.
+This collapses a 3D color image into a 2D grayscale image via a weighted sum
+of the channels.
 
 ::: {exercise-start}
 :label: gray-wheel
@@ -1241,19 +1392,20 @@ This "collapses" a 3D color image into a 2D grayscale image via a weighted sum o
 
 Here is the original `colorwheel` image:
 
-![](images/colorwheel.png)
+```{python}
+colorwheel = ski.data.colorwheel()
+plt.imshow(colorwheel)
+```
 
 It has the following attributes:
 
-```
-Type: <class 'numpy.ndarray'>
-dtype: uint8
-Shape: (370, 371, 3)
-Max Pixel Value: 255
-Min Pixel Value: 0
+```{python}
+show_attributes(colorwheel)
 ```
 
-Using the luminance formula, and any other required `numpy`, `scipy` or `skimage` operations, recreate the target image below, starting from the `colorwheel` array:
+Using the [luminance formula](luminance-formula), and any other required
+`numpy`, `scipy` or `skimage` operations, recreate the target image below,
+starting from the `colorwheel` array:
 
 ![](images/gray_wheel.png)
 
@@ -1267,7 +1419,8 @@ Max Pixel Value: 255
 Min Pixel Value: 0
 ```
 
-Try to use `np.dot()` rather than slicing, when you complete this exercise.
+*Hint*: For Numpy practice, try to use array multiplication `@`, or `np.dot()`
+or Numpy broadcasting, to apply the luminance formula, rather than slicing.
 
 *Hint*: you may need to rescale the intensity values to match the target image attributes. You may recall there is a `ski.exposure` function which can help you do this...
 
@@ -1291,21 +1444,26 @@ The solution here requires some close attention to `dtype`. To apply the luminan
 weights = np.array([0.2126, 0.7152, 0.0722])
 
 # Run the numbers...
-gray_wheel = np.dot(colorwheel, weights)
+gray_wheel = colorwheel @ weights
 
 # Show the result.
 show_attributes(gray_wheel)
 plt.imshow(gray_wheel);
 ```
 
-But this gives us min/max pixel intensity values which are illegal for the `float64` dtype, and will generate an error when we try to convert to `uint8` to match the target image:
+Notice that the matrix multiplication above left us with float values, as the
+weights in the luminance formula are floating point numbers.
+
+But this gives us min/max pixel intensity values which are not standard for
+the `float64` dtype, and will generate an error when we try to convert to
+`uint8` to match the target image:
 
 ```{python tags=c("raises-exception")}
 # Ouch!
 ski.util.img_as_ubyte(gray_wheel)
 ```
 
-The `ski.exposure.rescale_intensity()` function can save us again here. First, we make the values legal for a `float64` image (`np.dot()` left us with float values, as the weights in the luminance formula are decimal numbers):
+The `ski.exposure.rescale_intensity()` function can save us again here. First, we make the values standard for a `float64` image.
 
 ```{python}
 # Rescale the pixel intensity values into a legal range, for the current `dtype`.
@@ -1327,11 +1485,17 @@ show_attributes(gray_wheel)
 plt.imshow(gray_wheel);
 ```
 
+```{python tags=c("remove-cell")}
+# Regenerate and store the output image for page generation, used above.
+plt.imshow(gray_wheel)
+plt.savefig('images/gray_wheel.png')
+```
+
 ::: {solution-end}
 :::
 
 
-# Color to grayscale conversion with `skimage`
+## Color to grayscale conversion with `skimage`
 
 As always, the `ski.color` module has us covered here with the `rgb2gray()` function. We simply pass it the color array that we want to convert to grayscale, without the direct need for the luminance formula:
 
@@ -1342,19 +1506,16 @@ show_attributes(gray_colorwheel_from_ski)
 plt.imshow(gray_colorwheel_from_ski);
 ```
 
-# Summary
+## Summary
 
-This page has shown how to implement some fundamental image processing operations with NumPy, SciPy and Scikit-image. The next page will delve into [image filtering](5_mean_filter).
+This page has shown how to implement some fundamental image processing
+operations with NumPy, SciPy and Scikit-image. The next page will delve into
+[image filtering](5_mean_filter).
 
 
-# References
+## References
 
-Gulati, J. (2024) *NumPy for Image Processing*. KDnuggets. Available from: https://www.kdnuggets.com/numpy-for-image-processing 
+Gulati, J. (2024) *NumPy for Image Processing*. KDnuggets. Available from:
+https://www.kdnuggets.com/numpy-for-image-processing 
 
-Adapted from:
-
-* [Scientific Python Lecture Notes - image
-  processing](https://lectures.scientific-python.org/advanced/image_processing)
-* [Scientific Python Lecture Notes: scikit-image](https://lectures.scientific-python.org/packages/scikit-image/index.html)
-
-with further inspiration from [`skimage`](https://github.com/scikit-image/skimage-tutorials) [tutorials](https://scipy-2024-image-analysis.github.io/tutorial/01_images_are_arrays.html).
+Also see [color images page references](color-references).

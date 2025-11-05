@@ -181,25 +181,9 @@
 <li class="toctree-l1"><a class="reference internal" href="0_images_as_numpy_arrays.html">Images as NumPy arrays</a></li>
 
 <li class="toctree-l1"><a class="reference internal" href="1_color_images_as_numpy_arrays.html">What about color?</a></li>
-
 <li class="toctree-l1"><a class="reference internal" href="2_skimage_intro.html">Introducing Scikit-image</a></li>
 <li class="toctree-l1"><a class="reference internal" href="3_skimage_processing_from_numpy_and_scipy.html">(Scikit-) Image processing, via NumPy and SciPy</a></li>
-
-
-
-
-
-
-
-
-
-
-
-
-
 <li class="toctree-l1 current active"><a class="current reference internal" href="#">Threshold filtering</a></li>
-
-
 
 
 
@@ -275,6 +259,37 @@
         <div class="header-article-item">
 
 <div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-launch-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Launch interactive content">
+    <i class="fas fa-rocket"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="interact/lab/index.html?path=4_threshold_filters.ipynb" target="_blank"
+   class="btn btn-sm dropdown-item"
+   title="Launch via JupyterLite"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  
+    <img alt="JupyterLite logo" src="_static/images/logo_jupyterlite.svg">
+  </span>
+<span class="btn__text-container">JupyterLite</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
 
 
 
@@ -446,13 +461,17 @@ document.write(`
             </div>
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Threshold filtering</a></li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#what-is-signal-what-is-noise">What is signal? What is noise?</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Threshold filtering</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#what-is-signal-what-is-noise">What is signal? What is noise?</a></li>
+</ul>
+</li>
 <li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#threshold-filtering-is-just-boolean-filtering">Threshold filtering is just Boolean filtering</a></li>
 <li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#image-segmentation-via-threshold-filtering">Image segmentation via threshold filtering</a></li>
 <li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#threshold-filters-in-skimage-the-otsu-method">Threshold filters in <code class="docutils literal notranslate"><span class="pre">skimage</span></code> - the Otsu method</a></li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#summary">Summary</a></li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#references">References</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#summary">Summary</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#references">References</a></li>
+</ul>
+</li>
 </ul>
 
             </nav>
@@ -467,8 +486,16 @@ document.write(`
                   
   <section class="tex2jax_ignore mathjax_ignore" id="threshold-filtering">
 <h1>Threshold filtering<a class="headerlink" href="#threshold-filtering" title="Link to this heading">#</a></h1>
-<p>A common operation we will want to perform on images is <em>filtering</em>. This is where we modify all of the pixels in an image according to a certain rule or algorithm, often based on a specific pixel intensity value, or the pixel intensity values of other pixels within the “local neighborhood” of a given pixel. Filtering techniques can be used to remove noise from an image, or to achieve specific visual effects, amongst other purposes.</p>
-<p>Here we will look at <em>threshold filtering</em> where we filter an image based on specific pixel intensity values. We will show how threshold filtering works at the pixel-level, using <code class="docutils literal notranslate"><span class="pre">numpy</span></code> and <code class="docutils literal notranslate"><span class="pre">scipy</span></code>, and then we will show how to implement it in <code class="docutils literal notranslate"><span class="pre">skimage</span></code>.</p>
+<p>A common operation we will want to perform on images is <em>filtering</em>. This is
+where we modify the pixels in an image according to a certain rule or
+algorithm, often based on a specific pixel intensity value, or the pixel
+intensity values of other pixels within the “local neighborhood” of a given
+pixel. Filtering techniques can be used to remove noise from an image, or to
+achieve specific visual effects, amongst other purposes.</p>
+<p>Here we will look at <em>threshold filtering</em> where we filter an image based on
+specific pixel intensity values. We will show how threshold filtering works at
+the pixel-level, using <code class="docutils literal notranslate"><span class="pre">numpy</span></code> and <code class="docutils literal notranslate"><span class="pre">scipy</span></code>, and then we will show how to apply
+it in <code class="docutils literal notranslate"><span class="pre">skimage</span></code>.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Library imports.</span>
@@ -490,16 +517,21 @@ document.write(`
 </div>
 </div>
 </div>
-</section>
-<section class="tex2jax_ignore mathjax_ignore" id="what-is-signal-what-is-noise">
-<h1>What is signal? What is noise?<a class="headerlink" href="#what-is-signal-what-is-noise" title="Link to this heading">#</a></h1>
-<p>Imagine that I want to send you a picture message. Let’s use “the signal” as the name for the message before I send it to you. Before transmission, the signal has a clear meaning which I am confident you will be able to interpret. However, imagine that I am sending you the message via an unreliable medium; a messaging system that is prone to corrupting messages when transmitting them.</p>
+<section id="what-is-signal-what-is-noise">
+<h2>What is signal? What is noise?<a class="headerlink" href="#what-is-signal-what-is-noise" title="Link to this heading">#</a></h2>
+<p>Imagine that I want to send you a picture message. Let’s use “the signal” as
+the name for the image before I send it to you. Before transmission, <em>the
+signal</em> (image) has a clear meaning which I am confident you will be able to
+interpret. However, imagine that I am sending you the message via an
+unreliable medium; a messaging system that is prone to corrupting messages
+when transmitting them.</p>
 <p>When I send you the message, there is a decent chance that unwanted randomness will be added to the image file, because of technical problems with the transmission medium. This might result in an image which contains so much randomness that it is hard to discern the original signal.</p>
 <p>Imagine that the cell below attempts to send my picture message - can you see what the signal is?</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Generate a noisy image array.</span>
-<span class="n">noisy</span> <span class="o">=</span> <span class="n">generate_image</span><span class="p">()</span>  
+<span class="c1"># generate_image is our own function to generate the image and add noise.</span>
+<span class="n">noisy</span> <span class="o">=</span> <span class="n">generate_image</span><span class="p">()</span>
 <span class="n">show_attributes</span><span class="p">(</span><span class="n">noisy</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">noisy</span><span class="p">);</span>
 </pre></div>
@@ -516,8 +548,13 @@ Min Pixel Value: -0.95
 <img alt="_images/759bf18cc82ec27649f56c3d6d49a010a38b4a78c2962a3dd4f6ef848db86e40.png" src="_images/759bf18cc82ec27649f56c3d6d49a010a38b4a78c2962a3dd4f6ef848db86e40.png" />
 </div>
 </div>
-<p>Any ideas? Maybe you can determine what signal is in there, but we trust that it is at least somewhat ambiguous, to most readers.</p>
-<p>We saw simple threshold filtering on an <a class="reference internal" href="3_skimage_processing_from_numpy_and_scipy.html"><span class="doc std std-doc">earlier page</span></a>. This is where we select a threshold value, and binarize the image using that value. So a given pixel becomes <code class="docutils literal notranslate"><span class="pre">True</span></code> if a pixel is more intense than the threshold, and <code class="docutils literal notranslate"><span class="pre">False</span></code> if it is lower (or vice versa, depending on the comparison operator).</p>
+<p>Any ideas? Maybe you can determine what signal is in there, but we trust that
+it is at least somewhat ambiguous, to most readers.</p>
+<p>We saw simple threshold filtering on an <a class="reference internal" href="3_skimage_processing_from_numpy_and_scipy.html"><span class="doc std std-doc">earlier
+page</span></a>. This is where we select
+a threshold value, and binarize the image using that value. So a given pixel
+becomes <code class="docutils literal notranslate"><span class="pre">True</span></code> if a pixel is more intense than the threshold, and <code class="docutils literal notranslate"><span class="pre">False</span></code> if
+it is lower (or vice versa, depending on the comparison operator).</p>
 <p>The aim here is typically to split the pixels into distinct classes, based on their intensity values. We can use the <code class="docutils literal notranslate"><span class="pre">ndarray</span></code> <code class="docutils literal notranslate"><span class="pre">.ravel()</span></code> method to view a histogram of the pixel intensities, in order to find a threshold that might be useful to use in a filter. The <code class="docutils literal notranslate"><span class="pre">.ravel()</span></code> method “flattens” the image array to 1-D, so that it can be displayed as a histogram:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -567,7 +604,7 @@ Min Pixel Value: -0.95
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Show a histogram of the pixel intensity values, from the &quot;flattened&quot; `noisy` array.</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">noisy</span><span class="o">.</span><span class="n">ravel</span><span class="p">(),</span> 
+<span class="n">plt</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">noisy</span><span class="o">.</span><span class="n">ravel</span><span class="p">(),</span>
          <span class="n">bins</span><span class="o">=</span><span class="mi">13</span><span class="p">)</span> <span class="c1"># Set a reasonable number of x-axis intervals.</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Pixel Intensity Value&#39;</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Pixel Count&#39;</span><span class="p">);</span>
@@ -662,8 +699,8 @@ Min Pixel Value: -0.95
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Loop through some different threshold values, and plot the results.</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">16</span><span class="p">,</span> <span class="mi">8</span><span class="p">))</span>
 <span class="n">n_plots</span><span class="o">=</span><span class="mi">6</span>
-<span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">val</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="n">start</span><span class="o">=-</span><span class="mf">0.1</span><span class="p">,</span> 
-                                    <span class="n">stop</span><span class="o">=</span><span class="mf">0.25</span><span class="p">,</span> 
+<span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">val</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="n">start</span><span class="o">=-</span><span class="mf">0.1</span><span class="p">,</span>
+                                    <span class="n">stop</span><span class="o">=</span><span class="mf">0.25</span><span class="p">,</span>
                                     <span class="n">num</span><span class="o">=</span><span class="n">n_plots</span><span class="p">)):</span>
     <span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="nb">int</span><span class="p">(</span><span class="n">n_plots</span><span class="o">/</span><span class="mi">2</span><span class="p">),</span> <span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span>
     <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Threshold =</span><span class="se">\n</span><span class="s2"> </span><span class="si">{</span><span class="n">val</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
@@ -691,6 +728,7 @@ Min Pixel Value: -0.95
 </div>
 </div>
 <p>Reducing noise and enhancing image features are both common aims in image filtering. Both processes often require some trial and error with different values for optional arguments that go into the filtering operation, as it did here. We will now turn to some other common methods for threshold filtering, using a variety of other images.</p>
+</section>
 </section>
 <section class="tex2jax_ignore mathjax_ignore" id="threshold-filtering-is-just-boolean-filtering">
 <h1>Threshold filtering is just Boolean filtering<a class="headerlink" href="#threshold-filtering-is-just-boolean-filtering" title="Link to this heading">#</a></h1>
@@ -948,7 +986,7 @@ Min Pixel Value: -0.95
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Pass our `camera` array to the `threshold_otsu()` function.</span>
-<span class="n">otsu_thresh</span> <span class="o">=</span> <span class="n">ski</span><span class="o">.</span><span class="n">filters</span><span class="o">.</span><span class="n">threshold_otsu</span><span class="p">(</span><span class="n">camera</span><span class="p">,</span> 
+<span class="n">otsu_thresh</span> <span class="o">=</span> <span class="n">ski</span><span class="o">.</span><span class="n">filters</span><span class="o">.</span><span class="n">threshold_otsu</span><span class="p">(</span><span class="n">camera</span><span class="p">,</span>
                                          <span class="n">nbins</span><span class="o">=</span><span class="n">n_bins</span><span class="p">)</span>
 
 <span class="c1"># Show the Otsu threshold</span>
@@ -1016,7 +1054,7 @@ Min Pixel Value: -0.95
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Get `counts` and `edges`.</span>
-<span class="n">counts</span><span class="p">,</span> <span class="n">edges</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">histogram</span><span class="p">(</span><span class="n">camera</span><span class="o">.</span><span class="n">ravel</span><span class="p">(),</span> 
+<span class="n">counts</span><span class="p">,</span> <span class="n">edges</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">histogram</span><span class="p">(</span><span class="n">camera</span><span class="o">.</span><span class="n">ravel</span><span class="p">(),</span>
                              <span class="n">bins</span><span class="o">=</span><span class="n">n_bins</span><span class="p">)</span>
 </pre></div>
 </div>
@@ -1309,7 +1347,7 @@ Min Pixel Value: -0.95
              <span class="n">marker</span><span class="o">=</span><span class="s1">&#39;X&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Left Side Histogram&#39;</span><span class="p">)</span>
     <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">bin_centers</span><span class="p">[</span><span class="n">threshold_bin_number</span><span class="p">:],</span> <span class="n">counts</span><span class="p">[</span><span class="n">threshold_bin_number</span><span class="p">:],</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;green&#39;</span><span class="p">,</span>
              <span class="n">marker</span><span class="o">=</span><span class="s1">&#39;X&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Right Side Histogram&#39;</span><span class="p">)</span>
-    <span class="n">plt</span><span class="o">.</span><span class="n">axvline</span><span class="p">(</span><span class="n">bin_centers</span><span class="p">[</span><span class="n">threshold_bin_number</span><span class="p">],</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;black&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Threshold&#39;</span><span class="p">,</span> 
+    <span class="n">plt</span><span class="o">.</span><span class="n">axvline</span><span class="p">(</span><span class="n">bin_centers</span><span class="p">[</span><span class="n">threshold_bin_number</span><span class="p">],</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;black&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Threshold&#39;</span><span class="p">,</span>
                 <span class="n">linestyle</span><span class="o">=</span><span class="s2">&quot;--&quot;</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
     <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Bin Centers&#39;</span><span class="p">)</span>
     <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Pixel Count&#39;</span><span class="p">)</span>
@@ -1401,14 +1439,14 @@ SSD of histogram above the 50th bin: 174551091.73
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># A convenience plotting function.</span>
 <span class="k">def</span><span class="w"> </span><span class="nf">plot_thresh_mean_and_spread</span><span class="p">(</span><span class="n">threshold_bin_num</span><span class="p">,</span> <span class="n">show_total_SSD</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">legend</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
     <span class="n">plot_bins_with_threshold</span><span class="p">(</span><span class="n">threshold_bin_num</span><span class="p">,</span> <span class="n">legend</span><span class="o">=</span><span class="n">legend</span><span class="p">)</span>
-    
+
     <span class="c1"># Histogram 1</span>
     <span class="n">color</span><span class="o">=</span><span class="s1">&#39;red&#39;</span>
     <span class="n">mean_1</span><span class="p">,</span> <span class="n">ssd_1</span><span class="p">,</span> <span class="n">n_1</span> <span class="o">=</span> <span class="n">ssd</span><span class="p">(</span><span class="n">counts</span><span class="p">[:</span><span class="n">threshold_bin_num</span><span class="p">],</span> <span class="n">bin_centers</span><span class="p">[:</span><span class="n">threshold_bin_num</span><span class="p">])</span>
     <span class="n">std_1</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">ssd_1</span><span class="o">/</span><span class="n">n_1</span><span class="p">)</span>
     <span class="n">plt</span><span class="o">.</span><span class="n">axvline</span><span class="p">(</span><span class="n">mean_1</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;dark&#39;</span><span class="o">+</span><span class="n">color</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="sa">f</span><span class="s1">&#39;Mean and Spread (Left Histogram)&#39;</span><span class="p">)</span>
     <span class="n">plt</span><span class="o">.</span><span class="n">hlines</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="n">mean_1</span> <span class="o">-</span> <span class="n">std_1</span><span class="p">,</span> <span class="n">mean_1</span> <span class="o">+</span> <span class="n">std_1</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;dark&#39;</span><span class="o">+</span><span class="n">color</span><span class="p">)</span>
-    
+
     <span class="c1"># Histogram 2</span>
     <span class="n">hist_number</span> <span class="o">=</span> <span class="mi">2</span>
     <span class="n">color</span><span class="o">=</span><span class="s1">&#39;green&#39;</span>
@@ -1416,11 +1454,11 @@ SSD of histogram above the 50th bin: 174551091.73
     <span class="n">std_2</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">ssd_2</span><span class="o">/</span><span class="n">n_2</span><span class="p">)</span>
     <span class="n">plt</span><span class="o">.</span><span class="n">axvline</span><span class="p">(</span><span class="n">mean_2</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;dark&#39;</span><span class="o">+</span><span class="n">color</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="sa">f</span><span class="s1">&#39;Mean and Spread (Right Histogram)&#39;</span><span class="p">)</span>
     <span class="n">plt</span><span class="o">.</span><span class="n">hlines</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="n">mean_2</span> <span class="o">-</span> <span class="n">std_2</span><span class="p">,</span> <span class="n">mean_2</span> <span class="o">+</span> <span class="n">std_2</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;dark&#39;</span><span class="o">+</span><span class="n">color</span><span class="p">)</span>
-    
+
     <span class="k">if</span> <span class="n">show_total_SSD</span> <span class="o">==</span> <span class="kc">True</span><span class="p">:</span>
         <span class="n">total_SSD</span> <span class="o">=</span> <span class="n">ssd_1</span> <span class="o">+</span> <span class="n">ssd_2</span>
         <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Threshold Pixel Intensity = </span><span class="si">{</span><span class="n">bin_centers</span><span class="p">[</span><span class="n">threshold_bin_num</span><span class="p">]</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span><span class="si">}</span><span class="se">\n</span><span class="s1">Total SSD: </span><span class="si">{</span><span class="n">total_SSD</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span><span class="si">:</span><span class="s1">.2e</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
-    
+
 <span class="c1"># Add both means to the plot.</span>
 <span class="n">plot_thresh_mean_and_spread</span><span class="p">(</span><span class="mi">49</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">bbox_to_anchor</span><span class="o">=</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">));</span>
@@ -1464,10 +1502,10 @@ SSD of histogram above the 50th bin: 174551091.73
 <span class="k">for</span> <span class="n">bin_no</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">n_bins</span><span class="p">):</span>
     <span class="n">left_mean</span><span class="p">,</span> <span class="n">left_ssd</span><span class="p">,</span> <span class="n">left_n</span> <span class="o">=</span> <span class="n">ssd</span><span class="p">(</span><span class="n">counts</span><span class="p">[:</span><span class="n">bin_no</span><span class="p">],</span> <span class="n">bin_centers</span><span class="p">[:</span><span class="n">bin_no</span><span class="p">])</span>
     <span class="n">right_mean</span><span class="p">,</span> <span class="n">right_ssd</span><span class="p">,</span> <span class="n">right_n</span> <span class="o">=</span> <span class="n">ssd</span><span class="p">(</span><span class="n">counts</span><span class="p">[</span><span class="n">bin_no</span><span class="p">:],</span> <span class="n">bin_centers</span><span class="p">[</span><span class="n">bin_no</span><span class="p">:])</span>
-    
+
     <span class="c1"># Calculate and store the total `ssd`, for the current threshold.</span>
     <span class="n">total_ssds</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">left_ssd</span> <span class="o">+</span> <span class="n">right_ssd</span><span class="p">)</span>
-    
+
 <span class="c1"># Find the threshold which gives the smallest `ssd`. This is the Otsu threshold.</span>
 <span class="n">otsu_bin</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">argmin</span><span class="p">(</span><span class="n">total_ssds</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Otsu bin :&#39;</span><span class="p">,</span> <span class="n">otsu_bin</span><span class="p">)</span>
@@ -1722,7 +1760,7 @@ bin <span class="math notranslate nohighlight">\(z\)</span>:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Multi-Otsu filter.</span>
-<span class="n">otsu_cam3_solution</span> <span class="o">=</span> <span class="n">ski</span><span class="o">.</span><span class="n">filters</span><span class="o">.</span><span class="n">threshold_multiotsu</span><span class="p">(</span><span class="n">camera</span><span class="p">,</span> 
+<span class="n">otsu_cam3_solution</span> <span class="o">=</span> <span class="n">ski</span><span class="o">.</span><span class="n">filters</span><span class="o">.</span><span class="n">threshold_multiotsu</span><span class="p">(</span><span class="n">camera</span><span class="p">,</span>
                                                      <span class="n">classes</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span> <span class="c1"># How many pixel classes?</span>
 <span class="c1"># Show the thresholds.</span>
 <span class="n">otsu_cam3_solution</span>
@@ -1780,7 +1818,7 @@ bin <span class="math notranslate nohighlight">\(z\)</span>:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Another route to the target image.</span>
-<span class="n">cam3_regions_hack</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">digitize</span><span class="p">(</span><span class="n">camera</span><span class="p">,</span> 
+<span class="n">cam3_regions_hack</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">digitize</span><span class="p">(</span><span class="n">camera</span><span class="p">,</span>
                            <span class="n">bins</span><span class="o">=</span><span class="n">otsu_cam3_solution</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">cam3_regions_hack</span><span class="p">);</span>
 </pre></div>
@@ -1813,13 +1851,17 @@ bin <span class="math notranslate nohighlight">\(z\)</span>:</p>
 <section class="tex2jax_ignore mathjax_ignore" id="summary">
 <h1>Summary<a class="headerlink" href="#summary" title="Link to this heading">#</a></h1>
 <p>This page has showed how to perform threshold filtering using <code class="docutils literal notranslate"><span class="pre">numpy</span></code>, <code class="docutils literal notranslate"><span class="pre">scipy</span></code> and <code class="docutils literal notranslate"><span class="pre">skimage</span></code>. On the <a class="reference internal" href="5_mean_filter.html"><span class="doc std std-doc">next page</span></a> we will look at convolutional filtering, where we modify pixel values based on the “local neighborhood” of surrounding pixels.</p>
-</section>
-<section class="tex2jax_ignore mathjax_ignore" id="references">
-<h1>References<a class="headerlink" href="#references" title="Link to this heading">#</a></h1>
-<p>Gulati, J. (2024) <em>NumPy for Image Processing</em>. KDnuggets. Available from: <a class="reference external" href="https://www.kdnuggets.com/numpy-for-image-processing">https://www.kdnuggets.com/numpy-for-image-processing</a></p>
-<p>Reference: <a class="reference external" href="https://setosa.io/ev/image-kernels">https://setosa.io/ev/image-kernels</a></p>
-<p>Reference: <a class="reference external" href="https://wiki.imindlabs.com.au/ds/aml/4_problem_domains/1-image-processing/3_edge_detectors">https://wiki.imindlabs.com.au/ds/aml/4_problem_domains/1-image-processing/3_edge_detectors</a></p>
-<p>Reference: <a class="reference external" href="https://www.geeksforgeeks.org/deep-learning/types-of-convolution-kernels">https://www.geeksforgeeks.org/deep-learning/types-of-convolution-kernels</a></p>
+<section id="references">
+<h2>References<a class="headerlink" href="#references" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>Gulati, J. (2024) <em>NumPy for Image Processing</em>. KDnuggets. Available from:
+<a class="reference external" href="https://www.kdnuggets.com/numpy-for-image-processing">https://www.kdnuggets.com/numpy-for-image-processing</a></p></li>
+<li><p><a class="reference external" href="https://setosa.io/ev/image-kernels">https://setosa.io/ev/image-kernels</a></p></li>
+<li><p><a class="reference external" href="https://wiki.imindlabs.com.au/ds/aml/4_problem_domains/1-image-processing/3_edge_detectors">imindlabs on edge
+detectors</a>.</p></li>
+<li><p><a class="reference external" href="https://www.geeksforgeeks.org/deep-learning/types-of-convolution-kernels">Types of convolution
+kernels</a>.</p></li>
+</ul>
 <p>Adapted from:</p>
 <ul class="simple">
 <li><p><a class="reference external" href="https://lectures.scientific-python.org/advanced/image_processing">Scientific Python Lecture Notes - image
@@ -1828,6 +1870,7 @@ processing</a></p></li>
 <li><p><a class="reference external" href="https://textbook.nipraxis.org/otsu_threshold.html">Nipraxis course - Otsu threshold</a></p></li>
 </ul>
 <p>with further inspiration from <a class="reference external" href="https://jni.github.io/i2k-skimage-napari/lectures/1_image_filters.html">Napari tutorial</a> and <a class="reference external" href="https://github.com/scikit-image/skimage-tutorials"><code class="docutils literal notranslate"><span class="pre">skimage</span></code></a> <a class="reference external" href="https://scipy-2024-image-analysis.github.io/tutorial/01_images_are_arrays.html">tutorials</a>.</p>
+</section>
 </section>
 
     <script type="text/x-thebe-config">
@@ -1894,13 +1937,17 @@ processing</a></p></li>
   </div>
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Threshold filtering</a></li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#what-is-signal-what-is-noise">What is signal? What is noise?</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Threshold filtering</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#what-is-signal-what-is-noise">What is signal? What is noise?</a></li>
+</ul>
+</li>
 <li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#threshold-filtering-is-just-boolean-filtering">Threshold filtering is just Boolean filtering</a></li>
 <li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#image-segmentation-via-threshold-filtering">Image segmentation via threshold filtering</a></li>
 <li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#threshold-filters-in-skimage-the-otsu-method">Threshold filters in <code class="docutils literal notranslate"><span class="pre">skimage</span></code> - the Otsu method</a></li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#summary">Summary</a></li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#references">References</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#summary">Summary</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#references">References</a></li>
+</ul>
+</li>
 </ul>
 
   </nav></div>

@@ -181,25 +181,9 @@
 <li class="toctree-l1"><a class="reference internal" href="0_images_as_numpy_arrays.html">Images as NumPy arrays</a></li>
 
 <li class="toctree-l1"><a class="reference internal" href="1_color_images_as_numpy_arrays.html">What about color?</a></li>
-
 <li class="toctree-l1 current active"><a class="current reference internal" href="#">Introducing Scikit-image</a></li>
 <li class="toctree-l1"><a class="reference internal" href="3_skimage_processing_from_numpy_and_scipy.html">(Scikit-) Image processing, via NumPy and SciPy</a></li>
-
-
-
-
-
-
-
-
-
-
-
-
-
 <li class="toctree-l1"><a class="reference internal" href="4_threshold_filters.html">Threshold filtering</a></li>
-
-
 
 
 
@@ -1031,18 +1015,18 @@ Min Pixel Value: 0.0
 <span class="g g-Whitespace">    </span><span class="mi">366</span> <span class="k">def</span><span class="w"> </span><span class="fm">__exit__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">type</span><span class="p">,</span> <span class="n">value</span><span class="p">,</span> <span class="n">traceback</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 <span class="ne">--&gt; </span><span class="mi">367</span>     <span class="bp">self</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
 
-<span class="nn">File /opt/hostedtoolcache/Python/3.12.12/x64/lib/python3.12/site-packages/imageio/plugins/pillow.py:144,</span> in <span class="ni">PillowPlugin.close</span><span class="nt">(self)</span>
-<span class="g g-Whitespace">    </span><span class="mi">143</span> <span class="k">def</span><span class="w"> </span><span class="nf">close</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-<span class="ne">--&gt; </span><span class="mi">144</span>     <span class="bp">self</span><span class="o">.</span><span class="n">_flush_writer</span><span class="p">()</span>
-<span class="g g-Whitespace">    </span><span class="mi">146</span>     <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_image</span><span class="p">:</span>
-<span class="g g-Whitespace">    </span><span class="mi">147</span>         <span class="bp">self</span><span class="o">.</span><span class="n">_image</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+<span class="nn">File /opt/hostedtoolcache/Python/3.12.12/x64/lib/python3.12/site-packages/imageio/plugins/pillow.py:145,</span> in <span class="ni">PillowPlugin.close</span><span class="nt">(self)</span>
+<span class="g g-Whitespace">    </span><span class="mi">144</span> <span class="k">def</span><span class="w"> </span><span class="nf">close</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="ne">--&gt; </span><span class="mi">145</span>     <span class="bp">self</span><span class="o">.</span><span class="n">_flush_writer</span><span class="p">()</span>
+<span class="g g-Whitespace">    </span><span class="mi">147</span>     <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_image</span><span class="p">:</span>
+<span class="g g-Whitespace">    </span><span class="mi">148</span>         <span class="bp">self</span><span class="o">.</span><span class="n">_image</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
 
-<span class="nn">File /opt/hostedtoolcache/Python/3.12.12/x64/lib/python3.12/site-packages/imageio/plugins/pillow.py:485,</span> in <span class="ni">PillowPlugin._flush_writer</span><span class="nt">(self)</span>
-<span class="g g-Whitespace">    </span><span class="mi">482</span>     <span class="bp">self</span><span class="o">.</span><span class="n">save_args</span><span class="p">[</span><span class="s2">&quot;save_all&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">True</span>
-<span class="g g-Whitespace">    </span><span class="mi">483</span>     <span class="bp">self</span><span class="o">.</span><span class="n">save_args</span><span class="p">[</span><span class="s2">&quot;append_images&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">images_to_write</span>
-<span class="ne">--&gt; </span><span class="mi">485</span> <span class="n">primary_image</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_request</span><span class="o">.</span><span class="n">get_file</span><span class="p">(),</span> <span class="o">**</span><span class="bp">self</span><span class="o">.</span><span class="n">save_args</span><span class="p">)</span>
-<span class="g g-Whitespace">    </span><span class="mi">486</span> <span class="bp">self</span><span class="o">.</span><span class="n">images_to_write</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
-<span class="g g-Whitespace">    </span><span class="mi">487</span> <span class="bp">self</span><span class="o">.</span><span class="n">save_args</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
+<span class="nn">File /opt/hostedtoolcache/Python/3.12.12/x64/lib/python3.12/site-packages/imageio/plugins/pillow.py:486,</span> in <span class="ni">PillowPlugin._flush_writer</span><span class="nt">(self)</span>
+<span class="g g-Whitespace">    </span><span class="mi">483</span>     <span class="bp">self</span><span class="o">.</span><span class="n">save_args</span><span class="p">[</span><span class="s2">&quot;save_all&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">True</span>
+<span class="g g-Whitespace">    </span><span class="mi">484</span>     <span class="bp">self</span><span class="o">.</span><span class="n">save_args</span><span class="p">[</span><span class="s2">&quot;append_images&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">images_to_write</span>
+<span class="ne">--&gt; </span><span class="mi">486</span> <span class="n">primary_image</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_request</span><span class="o">.</span><span class="n">get_file</span><span class="p">(),</span> <span class="o">**</span><span class="bp">self</span><span class="o">.</span><span class="n">save_args</span><span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">487</span> <span class="bp">self</span><span class="o">.</span><span class="n">images_to_write</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
+<span class="g g-Whitespace">    </span><span class="mi">488</span> <span class="bp">self</span><span class="o">.</span><span class="n">save_args</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
 
 <span class="nn">File /opt/hostedtoolcache/Python/3.12.12/x64/lib/python3.12/site-packages/PIL/Image.py:2571,</span> in <span class="ni">Image.save</span><span class="nt">(self, fp, format, **params)</span>
 <span class="g g-Whitespace">   </span><span class="mi">2568</span>     <span class="n">fp</span> <span class="o">=</span> <span class="n">cast</span><span class="p">(</span><span class="n">IO</span><span class="p">[</span><span class="nb">bytes</span><span class="p">],</span> <span class="n">fp</span><span class="p">)</span>
@@ -1253,7 +1237,7 @@ Max Pixel Value: 1.0
 Min Pixel Value: 0.0
 </pre></div>
 </div>
-<img alt="_images/26777ad31d2ae514e104baab652c13b66bf7f136c43c934c31db916d918d0fd9.png" src="_images/26777ad31d2ae514e104baab652c13b66bf7f136c43c934c31db916d918d0fd9.png" />
+<img alt="_images/a1d75bed22fa6c0c7fcf00dee4079ce401dcabe6c469664e4efd91f01caae76a.png" src="_images/a1d75bed22fa6c0c7fcf00dee4079ce401dcabe6c469664e4efd91f01caae76a.png" />
 </div>
 </div>
 </section>
@@ -1383,7 +1367,7 @@ Min Pixel Value: 0.02
 </div>
 </div>
 <p>This grayscale conversion is achieved by calculating the luminance of the image via a weighted sum of the information in each color channel:</p>
-<div class="math notranslate nohighlight">
+<div class="math notranslate nohighlight" id="luminance-formula">
 \[
 L = 0.2126R + 0.7152G + 0.0722B
 \]</div>
@@ -1622,7 +1606,7 @@ solid, non-see through color.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.image.AxesImage at 0x7f450efa1a00&gt;
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.image.AxesImage at 0x7f8bc0460f20&gt;
 </pre></div>
 </div>
 <img alt="_images/50aff3d36362558deba307a37ae4682958e48d2b46c8fe49483f0733bf1123b0.png" src="_images/50aff3d36362558deba307a37ae4682958e48d2b46c8fe49483f0733bf1123b0.png" />
@@ -1835,13 +1819,7 @@ how image processing can be performed using NumPy, SciPy and Scikit-image.</p>
 </section>
 <section id="references">
 <h2>References<a class="headerlink" href="#references" title="Link to this heading">#</a></h2>
-<ul class="simple">
-<li><p><a class="reference external" href="https://lectures.scientific-python.org/advanced/image_processing">Scientific Python Lecture Notes - image
-processing</a></p></li>
-<li><p><a class="reference external" href="https://lectures.scientific-python.org/packages/scikit-image/index.html">Scientific Python Lecture Notes:
-scikit-image</a></p></li>
-</ul>
-<p>with further inspiration from and <a class="reference external" href="https://github.com/scikit-image/skimage-tutorials"><code class="docutils literal notranslate"><span class="pre">skimage</span></code></a> <a class="reference external" href="https://scipy-2024-image-analysis.github.io/tutorial/01_images_are_arrays.html">tutorials</a>.</p>
+<p>See <a class="reference internal" href="1_color_images_as_numpy_arrays.html#color-references"><span class="std std-ref">color images page references</span></a>.</p>
 </section>
 </section>
 

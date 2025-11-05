@@ -179,25 +179,9 @@
 <li class="toctree-l1"><a class="reference internal" href="../0_images_as_numpy_arrays.html">Images as NumPy arrays</a></li>
 
 <li class="toctree-l1"><a class="reference internal" href="../1_color_images_as_numpy_arrays.html">What about color?</a></li>
-
 <li class="toctree-l1"><a class="reference internal" href="../2_skimage_intro.html">Introducing Scikit-image</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../3_skimage_processing_from_numpy_and_scipy.html">(Scikit-) Image processing, via NumPy and SciPy</a></li>
-
-
-
-
-
-
-
-
-
-
-
-
-
 <li class="toctree-l1"><a class="reference internal" href="../4_threshold_filters.html">Threshold filtering</a></li>
-
-
 
 
 
@@ -445,7 +429,10 @@ document.write(`
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#xeno-images"><code class="docutils literal notranslate"><span class="pre">xeno</span></code> images</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#camera-png-shoegaze-png"><code class="docutils literal notranslate"><span class="pre">*_camera.png</span></code>, <code class="docutils literal notranslate"><span class="pre">shoegaze.png</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#camera-png-camera-png-shoegaze-png"><code class="docutils literal notranslate"><span class="pre">camera.png</span></code>, <code class="docutils literal notranslate"><span class="pre">*_camera.png</span></code>, <code class="docutils literal notranslate"><span class="pre">shoegaze.png</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#interverted-bricks-png"><code class="docutils literal notranslate"><span class="pre">interverted_bricks.png</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#inverted-cat-purple-png"><code class="docutils literal notranslate"><span class="pre">inverted_cat_purple.png</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#colorwheel-png-gray-wheel-png"><code class="docutils literal notranslate"><span class="pre">colorwheel.png</span></code>, <code class="docutils literal notranslate"><span class="pre">gray_wheel.png</span></code></a></li>
 </ul>
             </nav>
         </div>
@@ -471,14 +458,36 @@ same license as the original.</p>
 <p><code class="docutils literal notranslate"><span class="pre">xeno_ex_1.png</span></code> similarly results from processing in the <a class="reference internal" href="../8_morphology.html"><span class="doc std std-doc">page on
 morpology</span></a>, and has the same license as the original.</p>
 </section>
-<section id="camera-png-shoegaze-png">
-<h2><code class="docutils literal notranslate"><span class="pre">*_camera.png</span></code>, <code class="docutils literal notranslate"><span class="pre">shoegaze.png</span></code><a class="headerlink" href="#camera-png-shoegaze-png" title="Link to this heading">#</a></h2>
+<section id="camera-png-camera-png-shoegaze-png">
+<h2><code class="docutils literal notranslate"><span class="pre">camera.png</span></code>, <code class="docutils literal notranslate"><span class="pre">*_camera.png</span></code>, <code class="docutils literal notranslate"><span class="pre">shoegaze.png</span></code><a class="headerlink" href="#camera-png-camera-png-shoegaze-png" title="Link to this heading">#</a></h2>
 <p>These images are all generated from Scikit-image standard <code class="docutils literal notranslate"><span class="pre">camera</span></code> image:</p>
 <ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">camera.png</span></code> results from a simple save of the Sckit-image standard <code class="docutils literal notranslate"><span class="pre">coffee</span></code>
+dataset; <code class="docutils literal notranslate"><span class="pre">ski.io.imsave('images/coffee.png',</span> <span class="pre">ski.data.coffee())</span></code></p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">corrupted_camera.png</span></code> from the <a class="reference internal" href="../1_color_images_as_numpy_arrays.html"><span class="doc std std-doc">color
 page</span></a>;</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">noisy_camera.png</span></code> from the <a class="reference internal" href="../2_skimage_intro.html"><span class="doc std std-doc">skimage intro page</span></a>;</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">shoegaze.png</span></code> also from the <a class="reference internal" href="../2_skimage_intro.html"><span class="doc std std-doc">skimage intro page</span></a>;</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">masked_camera.png</span></code> from the [Numpy / Scipy page](../ 3_skimage_processing_from_numpy_and_scipy).</p></li>
+</ul>
+</section>
+<section id="interverted-bricks-png">
+<h2><code class="docutils literal notranslate"><span class="pre">interverted_bricks.png</span></code><a class="headerlink" href="#interverted-bricks-png" title="Link to this heading">#</a></h2>
+<p>These images are all derived from the standard <code class="docutils literal notranslate"><span class="pre">ski.data.bricks()</span></code> dataset.</p>
+<p>From the [Numpy / Scipy page](../ 3_skimage_processing_from_numpy_and_scipy).</p>
+</section>
+<section id="inverted-cat-purple-png">
+<h2><code class="docutils literal notranslate"><span class="pre">inverted_cat_purple.png</span></code><a class="headerlink" href="#inverted-cat-purple-png" title="Link to this heading">#</a></h2>
+<p>Derived from <code class="docutils literal notranslate"><span class="pre">ski.data.cat()</span></code>.</p>
+<p>From the [Numpy / Scipy page](../ 4_skimage_processing_from_numpy_and_scipy).</p>
+</section>
+<section id="colorwheel-png-gray-wheel-png">
+<h2><code class="docutils literal notranslate"><span class="pre">colorwheel.png</span></code>, <code class="docutils literal notranslate"><span class="pre">gray_wheel.png</span></code><a class="headerlink" href="#colorwheel-png-gray-wheel-png" title="Link to this heading">#</a></h2>
+<p>Derived from <code class="docutils literal notranslate"><span class="pre">ski.data.colorwheel()</span></code>.</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">colorwheel.png</span></code>: result of <code class="docutils literal notranslate"><span class="pre">ski.io.imsave('images/colorwheel.png',</span> <span class="pre">ski.data.colorwheel())</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">gray_wheel.png</span></code> from the [Numpy / Scipy page](../
+3_skimage_processing_from_numpy_and_scipy).</p></li>
 </ul>
 </section>
 </section>
@@ -530,7 +539,10 @@ page</span></a>;</p></li>
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#xeno-images"><code class="docutils literal notranslate"><span class="pre">xeno</span></code> images</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#camera-png-shoegaze-png"><code class="docutils literal notranslate"><span class="pre">*_camera.png</span></code>, <code class="docutils literal notranslate"><span class="pre">shoegaze.png</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#camera-png-camera-png-shoegaze-png"><code class="docutils literal notranslate"><span class="pre">camera.png</span></code>, <code class="docutils literal notranslate"><span class="pre">*_camera.png</span></code>, <code class="docutils literal notranslate"><span class="pre">shoegaze.png</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#interverted-bricks-png"><code class="docutils literal notranslate"><span class="pre">interverted_bricks.png</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#inverted-cat-purple-png"><code class="docutils literal notranslate"><span class="pre">inverted_cat_purple.png</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#colorwheel-png-gray-wheel-png"><code class="docutils literal notranslate"><span class="pre">colorwheel.png</span></code>, <code class="docutils literal notranslate"><span class="pre">gray_wheel.png</span></code></a></li>
 </ul>
   </nav></div>
 

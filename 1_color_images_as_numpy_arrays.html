@@ -181,25 +181,9 @@
 <li class="toctree-l1"><a class="reference internal" href="0_images_as_numpy_arrays.html">Images as NumPy arrays</a></li>
 
 <li class="toctree-l1 current active"><a class="current reference internal" href="#">What about color?</a></li>
-
 <li class="toctree-l1"><a class="reference internal" href="2_skimage_intro.html">Introducing Scikit-image</a></li>
 <li class="toctree-l1"><a class="reference internal" href="3_skimage_processing_from_numpy_and_scipy.html">(Scikit-) Image processing, via NumPy and SciPy</a></li>
-
-
-
-
-
-
-
-
-
-
-
-
-
 <li class="toctree-l1"><a class="reference internal" href="4_threshold_filters.html">Threshold filtering</a></li>
-
-
 
 
 
@@ -477,17 +461,13 @@ document.write(`
             </div>
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">What about color?</a><ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#color-from-3d">Color from 3D</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#color-channels">Color channels</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#pixels-and-dtype">Pixels and <code class="docutils literal notranslate"><span class="pre">dtype</span></code></a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#more-actually-complex-images">More (actually) complex images</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#summary">Summary</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#references">References</a></li>
 </ul>
-</li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#references">References</a></li>
-</ul>
-
             </nav>
         </div>
     </div>
@@ -682,7 +662,7 @@ will be true of any two-dimensional image array</strong>, because there is only 
 value per pixel, and both of these image arrays are two-dimensional:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Show the dimensionality of our binary image array.</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Show the shape of our binary image array.</span>
 <span class="n">two_D_ones_and_zeros</span><span class="o">.</span><span class="n">shape</span>
 </pre></div>
 </div>
@@ -695,7 +675,7 @@ value per pixel, and both of these image arrays are two-dimensional:</p>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Show the dimensionality of our grayscale image array.</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Show the shape of our grayscale image array.</span>
 <span class="n">two_D_other_integers</span><span class="o">.</span><span class="n">shape</span>
 </pre></div>
 </div>
@@ -1325,9 +1305,9 @@ interactively, to see the random draw a few times:</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>X1 = 0.06
-X2 = 0.36
-X3 = 0.71
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>X1 = 0.52
+X2 = 0.82
+X3 = 0.07
 </pre></div>
 </div>
 </div>
@@ -1354,12 +1334,12 @@ X3 = 0.71
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Red (X1) = 0.83
-Green (X2) = 0.57
-Blue (X3) = 0.6
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Red (X1) = 0.09
+Green (X2) = 0.04
+Blue (X3) = 0.54
 </pre></div>
 </div>
-<img alt="_images/0deb560666f9f86eb633f6464aa561c959aabd4b51bd60924ca768255889545d.png" src="_images/0deb560666f9f86eb633f6464aa561c959aabd4b51bd60924ca768255889545d.png" />
+<img alt="_images/4636d0fa1fb37bdd6ca6885cb58ff88ab7999cf40b7a8386eeb123633ab25c3e.png" src="_images/4636d0fa1fb37bdd6ca6885cb58ff88ab7999cf40b7a8386eeb123633ab25c3e.png" />
 </div>
 </div>
 <p>So, each two-dimensional display image has a “hidden” three-dimensional array behind it. Each slice of the third dimension is a color channel. The mix of values at a given element in each color channel determines the color of that pixel in the rendered image. You may want to view this image in a new browser window, to see more clearly the exact mixes of the color channels, which are shown above each square on the right-hand side of the image:</p>
@@ -1376,7 +1356,7 @@ Blue (X3) = 0.6
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/acd5ab0dad470bdcba86c20618beb78a80219789dadc13789aaf4f8cde78c6d3.png" src="_images/acd5ab0dad470bdcba86c20618beb78a80219789dadc13789aaf4f8cde78c6d3.png" />
+<img alt="_images/76e763596df1c630c346754f02e1c53ba8b241a0dc1b08ed9633cc76e0cb513c.png" src="_images/76e763596df1c630c346754f02e1c53ba8b241a0dc1b08ed9633cc76e0cb513c.png" />
 </div>
 </div>
 <p>We have now completed our perilous expedition into the third dimension… We
@@ -1955,7 +1935,7 @@ Min Pixel Value: 0
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/b9db821dc0aafe658479da638674e7a98855b836b09e7dc247cb6a2f238a9eec.png" src="_images/b9db821dc0aafe658479da638674e7a98855b836b09e7dc247cb6a2f238a9eec.png" />
+<img alt="_images/bfac358a2b40b864daa9619157b12d020f439afedd57872e1a7c754e02c96986.png" src="_images/bfac358a2b40b864daa9619157b12d020f439afedd57872e1a7c754e02c96986.png" />
 </div>
 </div>
 </section>
@@ -2022,14 +2002,13 @@ resulting color intensities combine to determine the color in the 2D
 displayed image.</p></li>
 <li><p>These methods of color encoding can apply to both to very simple and very
 complex images. Some types of image (e.g. brain images) use
-higher-dimensionality to encode information other than color (e.g. time).</p></li>
+third and higher dimensions (axes) to encode information other than color.</p></li>
 </ul>
 <p>On the <a class="reference internal" href="2_skimage_intro.html"><span class="doc std std-doc">next page</span></a> we will formally introduce Scikit-image,
 which uses NumPy image arrays as its fundamental representation of images.</p>
 </section>
-</section>
-<section class="tex2jax_ignore mathjax_ignore" id="references">
-<h1>References<a class="headerlink" href="#references" title="Link to this heading">#</a></h1>
+<section id="references">
+<span id="color-references"></span><h2>References<a class="headerlink" href="#references" title="Link to this heading">#</a></h2>
 <p>Adapted from:</p>
 <ul class="simple">
 <li><p><a class="reference external" href="https://lectures.scientific-python.org/advanced/image_processing">Scientific Python Lecture Notes - image
@@ -2051,6 +2030,7 @@ decimal point. However, we will show the numbers just as 0 or 1, to keep the
 image uncluttered.</p>
 </aside>
 </aside>
+</section>
 </section>
 
     <script type="text/x-thebe-config">
@@ -2117,17 +2097,13 @@ image uncluttered.</p>
   </div>
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">What about color?</a><ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#color-from-3d">Color from 3D</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#color-channels">Color channels</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#pixels-and-dtype">Pixels and <code class="docutils literal notranslate"><span class="pre">dtype</span></code></a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#more-actually-complex-images">More (actually) complex images</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#summary">Summary</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#references">References</a></li>
 </ul>
-</li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#references">References</a></li>
-</ul>
-
   </nav></div>
 
 </div></div>
