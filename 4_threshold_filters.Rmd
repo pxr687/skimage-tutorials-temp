@@ -112,7 +112,8 @@ plt.xlabel('Pixel Intensity Value')
 plt.ylabel('Pixel Count');
 ```
 
-The filters are created, using the `>` comparison operator, in the next two cells:
+The filters are applied into binary images, using the `>` comparison operator,
+in the next two cells:
 
 ```{python}
 # The first simple, Boolean threshold filter.
@@ -159,7 +160,9 @@ for i, val in enumerate(np.linspace(start=-0.1,
 plt.tight_layout();
 ```
 
-We hope you feel suitably greeted! The threshold of 0.18 seems to reveal what signal was originally in this image, before the unwanted random noise was added, by the faulty transmission system.
+We hope you feel suitably greeted! The threshold of 0.18 seems to reveal the
+original signal in this image, before the unwanted random noise was added, by
+the faulty transmission system.
 
 Here we have recovered a signal from a noisy image, and made the features in the image easier to discern. You'll notice that we had to try numerous threshold values to find the "sweet spot" with the best results. Other values "overshoot" and "undershoot" the optimum value.
 
@@ -171,7 +174,8 @@ plt.imshow(original_image());
 
 Reducing noise and enhancing image features are both common aims in image filtering. Both processes often require some trial and error with different values for optional arguments that go into the filtering operation, as it did here. We will now turn to some other common methods for threshold filtering, using a variety of other images.
 
-# Threshold filtering is just Boolean filtering
+
+## Threshold filtering is just Boolean filtering
 
 As we have seen, threshold filtering involves modifying pixel values based on a threshold value. Let's investigate other thresholding methods using a grayscale image:
 
@@ -187,11 +191,15 @@ random_i = np.array([[0, 0, 0, 0, 0, 0, 0, 0],
                      [0, 0, 0, 3, 9, 0, 0, 0],
                      [0, 0, 0, 7, 6, 0, 0, 0],
                      [0, 0, 0, 0, 0, 0, 0, 0]])
-print(random_i)
+random_i
+```
+
+```{python}
 plt.imshow(random_i);
 ```
 
-As we saw above, it is simple to create a Boolean filter, using the `>` comparison operator:
+As we saw above, it is simple to create a Boolean mask filter, using the `>`
+comparison operator:
 
 ```{python}
 # Create a Boolean array using a comparison operator.
@@ -209,15 +217,19 @@ print(random_i_filtered_9)
 plt.matshow(random_i_filtered_9);
 ```
 
-# Image segmentation via threshold filtering
+## Image segmentation via threshold filtering
 
-This threshold filtering technique can be useful for segregating the foreground from the background of real images, like `camera`:
+This threshold filtering technique can be useful for segregating the
+foreground from the background of real images, like `camera`:
 
 ```{python}
-# Import the `camera` image from `ski.data`.
+# Get the `camera` image from `ski.data`.
 camera = ski.data.camera()
 # Show the "raw" `camera` array.
-print(camera)
+camera
+```
+
+```{python}
 # Show `camera` graphically.
 plt.imshow(camera);
 ```
@@ -226,13 +238,18 @@ We can again use the NumPy `.ravel()` method of the `camera` array to allow us t
 
 ```{python}
 # Plot a histogram of the `camera` pixel intensities, with 128 bins.
-n_bins = 128
-histogram = plt.hist(camera.ravel(), bins=n_bins)
+histogram = plt.hist(camera.ravel(), bins=128)
 plt.xlabel('Pixel Intensity Value')
 plt.ylabel('Pixel Count');
 ```
 
-The "bins" are the intervals along the $x$-axis in which pixel intensity values are counted to determine the height of the blue "hills" in the histogram above, within a given interval. It is important, when thresholding, to choose a sensible number of bins. Too few bins we miss important information, because we are cramming many disparate pixel intensity values into one bin. Too many bins and we clutter our histogram with lots of spikes which occlude the general pattern.
+The "bins" are the intervals along the $x$-axis in which pixel intensity
+values are counted to determine the height of the blue "hills" in the
+histogram above, within a given interval. It is important, when thresholding,
+to choose a sensible number of bins. With too few bins, we miss important
+information, because we are cramming many disparate pixel intensity values
+into one bin. Too many bins and we clutter our histogram with lots of spikes
+which occlude the general pattern.
 
 To illustrate this, the plot below shows the `camera` pixel intensity histograms, with too few and too many bins. The bin interval starts and ends are indicated with vertical red lines. The height on the histogram, for a given bin, is determined by the `Pixel Count` falling with the range of intensities for that bin:
 
@@ -267,7 +284,12 @@ for val in histogram[1]:
     plt.plot(val, 0, marker=marker, color = "red", markersize=markersize);
 ```
 
-128 bins gives us a good middle ground, where we can see patterns in the distribution easily, without losing information or overemphasising unrepresentative values. Using the sensible number of bins, the distribution is clearly trimodal, with a clear dip/separation around between 50 and 100-ish, and another just before 200-ish. This locations are indicated on the plot with vertical lines:
+128 bins gives us a good middle ground, where we can see patterns in the
+distribution easily, without losing information or overemphasising
+unrepresentative values. Using the sensible number of bins, the distribution
+is clearly trimodal, with a clear dip/separation around around 50-100, and
+another just before 200. These locations are indicated on the plot with
+vertical lines:
 
 ```{python}
 # Show some "by eye" thresholds.
@@ -278,7 +300,10 @@ plt.xlabel('Pixel Intensity Value')
 plt.ylabel('Pixel Count');
 ```
 
-Let's use these "by eye" crude threshold values and apply a threshold filter using them. Remember, our aim here is to separate the pixels into distinct classes; these two distinct pixel classes will hopefully correspond to the foreground and background of the image:
+Let's use these "by eye" crude threshold values and apply a threshold filter
+using them. Remember, our aim here is to separate the pixels into distinct
+classes; we hope these two distinct pixel classes will correspond to the
+foreground and background of the image:
 
 ```{python}
 # Define a threshold, "by eye".
@@ -294,7 +319,8 @@ plt.imshow(camera_threshold_filtered);
 
 That has worked fairly well, as far as it goes, for segmenting the foreground (the cameraman) away from the background (the field and buildings behind the cameraman).
 
-We can show the "opposite" binary image, by reversing the comparison operation:
+We can show the "opposite" binary image, by reversing the comparison
+operation:
 
 ```{python}
 # Using the "opposite" comparison operator.
@@ -304,7 +330,7 @@ plt.imshow(camera > crude_threshold);
 Stylish! Someone should put that on a t-shirt...
 
 
-# Threshold filters in `skimage` - the Otsu method
+## Threshold filters in `skimage` - the Otsu method
 
 `skimage` contains many threshold filters, the cell below uses the `dir()` function to show the available selection:
 
