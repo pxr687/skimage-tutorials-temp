@@ -1,17 +1,41 @@
+---
+jupyter:
+  jupytext:
+    formats: ipynb,Rmd
+    text_representation:
+      extension: .Rmd
+      format_name: rmarkdown
+      format_version: '1.2'
+      jupytext_version: 1.17.3
+  kernelspec:
+    display_name: Python 3 (ipykernel)
+    language: python
+    name: python3
+---
+
 # Convolution filters I - the mean filter
 
 ## Kernels and pixel neighborhoods
 
 
-On the last page we filtered images based on a single threshold value, or based on multiple threshold values. Other filters work differently to this: they work by adjusting a given pixel's value based on the value of other pixels which surround it, in a specified area. The mean filter is one such filter that works in this manner.
+On the last page we filtered images based on a single threshold value, or based on multiple threshold values. Other filters work differently: they work by adjusting a given pixel's value based on the value of other pixels which surround it, in a specified area. The mean filter is one such filter.
 
 The mean filter is a *local filter*, because it alters a given pixel's value based on the values of other pixels in the surrounding "local neighborhood". The image below shows the pixel values in the `smiley` image array that we created on an earlier [page](0_images_as_numpy_arrays). Two possible "local neighborhoods" are shown for a given pixel, which is highlighted in red. One neighborhood is 3-by-3, and the other is 5-by-5 - we could use either when using a local filter:
 
 ![](images/smiley_neighborhoods.png)
 
-The values within a pixel's local neighborhood will influence the change that a local filter makes to the central pixel. The `size` and `shape` of the "neighborhood" are up to the user. We can synonomously refer to the neighborhood as a "kernel", "footprint" or "structuring element". As we will see later, Scikit image favours the term "footprint". For now, we will use the terms "kernel" and "neighborhood" interchangeably to refer to some set of pixels that surround a given pixel.
+The values within a pixel's local neighborhood affects the value that a local
+filter calculates when applied to given pixel. The `size` and `shape` of the
+"neighborhood" are up to the user. We can also refer to the neighborhood as
+a "kernel", "footprint" or "structuring element". As we will see later, Scikit
+image favors the term "footprint". For now, we will use the terms "kernel" and
+"neighborhood" interchangeably to refer to some set of pixels that surround
+a given pixel.
 
-The mean filter, as the name suggests, *averages* the pixel values within a kernel/neighborhood. To see this in action, let's build a simple mean filter to filter an image array. First, we perform some imports:
+The mean filter, as the name suggests, *averages* the pixel values within
+a kernel/neighborhood. To see this in action, let's build a simple mean filter
+to filter an image array. First, we perform some imports, and change some
+defaults.
 
 ```{python}
 # Library imports.
@@ -49,7 +73,11 @@ print(random_i)
 plt.imshow(random_i);
 ```
 
-Let's use some indexing to go for a walk through the neighborhoods (kernels) in this array. We will treat each `(3,3)` set of pixels as a separate neighborhood. For now, we only walk through the neighborhoods at the "top" of the array. We will start our "walk" in the top-left corner of the array, so that each 3-by-3 slice is centered on a pixel in the second row of the image:
+Let's use some indexing to go for a walk through the neighborhoods (kernels) in
+this array. We will treat each `(3,3)` set of pixels as a separate
+neighborhood. For now, we only walk through the neighborhoods at the "top" of
+the array. We will start our "walk" in the top-left corner of the array, so
+that each 3-by-3 slice is centered on a pixel in the second row of the image:
 
 ```{python}
 # The first neighborhood.
@@ -118,18 +146,18 @@ The cell below defines a function that will apply this mean kernel, step-by-step
 ```{python}
 # A function to apply our crude mean kernel.
 def three_by_three_mean_kernel(image):
-    
+
     # Convert to float `dtype`.
-    image = np.array(image, 
+    image = np.array(image,
                      dtype=float)
-    
+
     # Get the image shape.
     n_rows, n_cols = image.shape
-    
+
     # Create an empty image array (for the result of the
     # filtering operation)
     filtered_image = np.zeros(image.shape)
-    
+
     # Loop through the pixels and get the mean of each kernel.
     for i in np.arange(1, n_rows-1):
         for j in np.arange(1, n_cols-1):
@@ -138,7 +166,7 @@ def three_by_three_mean_kernel(image):
             row_end = i+2
             col_end = j+2
             kernel = image[row_start:row_end, col_start:col_end].copy()
-            filtered_image[i, j] = kernel.mean()           
+            filtered_image[i, j] = kernel.mean()
     return filtered_image
 ```
 
@@ -148,7 +176,7 @@ Let's apply our crude mean filter to the image array, and compare it to the orig
 # Apply our mean filtering function.
 mean_filtered_i = three_by_three_mean_kernel(random_i)
 
-# Show the original array and the filtered array, from the 
+# Show the original array and the filtered array, from the
 # "raw" NumPy perspective.
 print(f"Original:\n\n {random_i}")
 print(f"\nCrude Mean filter:\n\n {mean_filtered_i}")
@@ -219,18 +247,18 @@ Here we have adjusted the function to take the negative sum of the kernel elemen
 
 ```{python}
 def three_by_three_negative_sum_kernel_solution(image):
-    
+
     # Convert to float `dtype`.
-    image = np.array(image, 
+    image = np.array(image,
                      dtype=float)
-    
+
     # Get the image shape.
     n_rows, n_cols = image.shape
-    
+
     # Create an empty image array (for the result of the
     # filtering operation)
     filtered_image = np.zeros(image.shape)
-    
+
     # Loop through the pixels and get the mean of each kernel.
     for i in np.arange(1, n_rows-1):
         for j in np.arange(1, n_cols-1):
@@ -292,7 +320,7 @@ kernel_size
 We can then construct our kernel, using `np.full()` which allows us to fill an array with a given value. In this case we will fill it with $\frac{1}{n}$, where $n$ is the number of elements in our kernel (9 kernel elements - so $\frac{1}{9}$ = 0.11):
 
 ```{python}
-mean_kernel = np.full(shape=kernel_shape, 
+mean_kernel = np.full(shape=kernel_shape,
                       fill_value=1/kernel_size)
 
 mean_kernel
@@ -371,19 +399,19 @@ You can see that the values differ only near the top and bottom edges of the ima
 >
 > The `mode` parameter determines how the input array is extended beyond its boundaries. Default is `'reflect'`. Behavior for each valid value is as follows:
 >
-> - **`reflect`** *(d c b a | a b c d | d c b a)*  
+> - **`reflect`** *(d c b a | a b c d | d c b a)*
 >   The input is extended by reflecting about the edge of the last pixel. This mode is also sometimes referred to as half-sample symmetric.
 >
-> - **`constant`** *(k k k k | a b c d | k k k k)*  
+> - **`constant`** *(k k k k | a b c d | k k k k)*
 >   The input is extended by filling all values beyond the edge with the same constant value, defined by the `cval` parameter.
 >
-> - **`nearest`** *(a a a a | a b c d | d d d d)*  
+> - **`nearest`** *(a a a a | a b c d | d d d d)*
 >   The input is extended by replicating the last pixel.
 >
-> - **`mirror`** *(d c b | a b c d | c b a)*  
+> - **`mirror`** *(d c b | a b c d | c b a)*
 >   The input is extended by reflecting about the center of the last pixel. This mode is also sometimes referred to as whole-sample symmetric.
 >
-> - **`wrap`** *(a b c d | a b c d | a b c d)*  
+> - **`wrap`** *(a b c d | a b c d | a b c d)*
 >   The input is extended by wrapping around to the opposite edge.
 
 Let's define a function so that we can apply the mean filter to any image, using the proper `scipy.ndimage.correlate()` machinery, so we no longer ignore edge pixels (poor pixels!):
@@ -392,9 +420,9 @@ Let's define a function so that we can apply the mean filter to any image, using
 ```{python}
 def mean_filter(image_array, kernel_shape):
     kernel_size = np.prod(kernel_shape) # Get the kernel size (n).
-    mean_kernel = np.full(kernel_shape, # Make the mean kernel in the desired shape... 
+    mean_kernel = np.full(kernel_shape, # Make the mean kernel in the desired shape...
                           1/kernel_size)# ...each each element in the mean kernel is 1/n.
-    return ndi.correlate(image_array, 
+    return ndi.correlate(image_array,
                         mean_kernel,
                         output=float)
 ```
@@ -475,7 +503,7 @@ The nice thing about applying filtering via convolution kernels is that changing
 
 ![](images/coffee_strange_kernel.png)
 
-For a given pixel value, when the value is multiplied by it's corresponding kernel element, the *absolute* value of the result should be *half as big as the absolute original pixel value*.
+For a given pixel value, when the value is multiplied by its corresponding kernel element, the *absolute* value of the result should be *half as big as the absolute original pixel value*.
 
 Write your function so that it can be used with kernels of different `shape`s, so you can work out what kernel `shape` you need to recreate the target image, by trial and error.
 
@@ -519,10 +547,10 @@ We define our `strange_filter()` function in the cell below:
 def strange_filter_solution(image_array, kernel_shape):
     kernel_size = np.prod(kernel_shape)
     strange_kernel = np.full(kernel_shape, -0.5)
-    output_img = ndi.correlate(image_array, 
+    output_img = ndi.correlate(image_array,
                                strange_kernel,
                                output="int8") # Avoid illegal pixel values.
-    return output_img 
+    return output_img
 ```
 
 To get the exact target image, we use a kernel of `shape` (10, 10):
@@ -550,7 +578,7 @@ This is quite a strange kernel to apply! But it shows us how easy it is to achie
 
 # Mean filtering with `skimage`
 
-We can implement a mean filter using the `ski.filters.rank.mean()` function. `skimage` prefers the term `footprint` to "kernel", but the meaning is the same. We supply a small matrix with which to "walk" through the image, centering the kernel on every pixel, and modifying that central pixel's value based on the values of the other pixels in it's neighborhood, with the size and shape of the neighborhood being defined by the kernel (`footprint`). 
+We can implement a mean filter using the `ski.filters.rank.mean()` function. `skimage` prefers the term `footprint` to "kernel", but the meaning is the same. We supply a small matrix with which to "walk" through the image, centering the kernel on every pixel, and modifying that central pixel's value based on the values of the other pixels in its neighborhood, with the size and shape of the neighborhood being defined by the kernel (`footprint`).
 
 Inspecting the `skimage` documentation will reveal that the format expected for the `footprint` should be ["the [pixel] neighborhood expressed as an ndarray of 1’s and 0’s."](https://scikit-image.org/docs/0.25.x/api/skimage.filters.rank.html#skimage.filters.rank.mean). We will uses `np.ones()` to generate an array in this format. We use a (9, 9) kernel to achieve a stronger visual effect:
 
@@ -620,7 +648,7 @@ for i in np.arange(astronaut.shape[2]):
 # Stack back to 3D.
 astronaut_mean_filtered = np.stack([filtered_channels[0],
                                     filtered_channels[1],
-                                    filtered_channels[2]], 
+                                    filtered_channels[2]],
                                    axis=2)
 
 # Show the result.
@@ -650,7 +678,7 @@ for i in np.arange(astronaut.shape[2]):
 # Stack back to 3D.
 astronaut_mean_filtered = np.stack([filtered_channels[0],
                                     filtered_channels[1],
-                                    filtered_channels[2]], 
+                                    filtered_channels[2]],
                                    axis=2)
 
 # Show the result.
@@ -705,14 +733,13 @@ This page has showed how to perform mean filtering, using `numpy`, `scipy` and `
 
 # References
 
-Gulati, J. (2024) *NumPy for Image Processing*. KDnuggets. Available from: https://www.kdnuggets.com/numpy-for-image-processing 
-
-Reference: https://setosa.io/ev/image-kernels
-
-Reference: https://wiki.imindlabs.com.au/ds/aml/4_problem_domains/1-image-processing/3_edge_detectors
-
-Reference: https://www.geeksforgeeks.org/deep-learning/types-of-convolution-kernels
-
+* Gulati, J. (2024) *NumPy for Image Processing*. KDnuggets. Available from:
+  <https://www.kdnuggets.com/numpy-for-image-processing>
+* <https://setosa.io/ev/image-kernels>
+* [imindlabs on edge
+  detectors](https://wiki.imindlabs.com.au/ds/aml/4_problem_domains/1-image-processing/3_edge_detectors).
+* [Types of convolution
+  kernels](https://www.geeksforgeeks.org/deep-learning/types-of-convolution-kernels).
 
 Adapted from:
 
