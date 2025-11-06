@@ -184,10 +184,6 @@
 <li class="toctree-l1"><a class="reference internal" href="2_skimage_intro.html">Introducing Scikit-image</a></li>
 <li class="toctree-l1"><a class="reference internal" href="3_skimage_processing_from_numpy_and_scipy.html">(Scikit-) Image processing, via NumPy and SciPy</a></li>
 <li class="toctree-l1 current active"><a class="current reference internal" href="#">Threshold filtering</a></li>
-
-
-
-
 <li class="toctree-l1"><a class="reference internal" href="5_mean_filter.html">Convolution filters I - the mean filter</a></li>
 
 
@@ -461,19 +457,13 @@ document.write(`
             </div>
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Threshold filtering</a><ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#what-is-signal-what-is-noise">What is signal? What is noise?</a></li>
-</ul>
-</li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#threshold-filtering-is-just-boolean-filtering">Threshold filtering is just Boolean filtering</a></li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#image-segmentation-via-threshold-filtering">Image segmentation via threshold filtering</a></li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#threshold-filters-in-skimage-the-otsu-method">Threshold filters in <code class="docutils literal notranslate"><span class="pre">skimage</span></code> - the Otsu method</a></li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#summary">Summary</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#threshold-filtering-is-just-boolean-filtering">Threshold filtering is just Boolean filtering</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#image-segmentation-via-threshold-filtering">Image segmentation via threshold filtering</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#threshold-filters-in-skimage-the-otsu-method">Threshold filters in <code class="docutils literal notranslate"><span class="pre">skimage</span></code> - the Otsu method</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#summary">Summary</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#references">References</a></li>
 </ul>
-</li>
-</ul>
-
             </nav>
         </div>
     </div>
@@ -632,7 +622,8 @@ it is lower (or vice versa, depending on the comparison operator).</p>
 <img alt="_images/2de0250110e3630fe944d23a757d0cba0363db2dcfc88ee740d5ddba652fbe5c.png" src="_images/2de0250110e3630fe944d23a757d0cba0363db2dcfc88ee740d5ddba652fbe5c.png" />
 </div>
 </div>
-<p>The filters are created, using the <code class="docutils literal notranslate"><span class="pre">&gt;</span></code> comparison operator, in the next two cells:</p>
+<p>The filters are applied into binary images, using the <code class="docutils literal notranslate"><span class="pre">&gt;</span></code> comparison operator,
+in the next two cells:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># The first simple, Boolean threshold filter.</span>
@@ -714,7 +705,9 @@ it is lower (or vice versa, depending on the comparison operator).</p>
 <img alt="_images/a359858298c9f3971ff3852e424b07b8883f6909ef67d9c3109275c2ce6d87dc.png" src="_images/a359858298c9f3971ff3852e424b07b8883f6909ef67d9c3109275c2ce6d87dc.png" />
 </div>
 </div>
-<p>We hope you feel suitably greeted! The threshold of 0.18 seems to reveal what signal was originally in this image, before the unwanted random noise was added, by the faulty transmission system.</p>
+<p>We hope you feel suitably greeted! The threshold of 0.18 seems to reveal the
+original signal in this image, before the unwanted random noise was added, by
+the faulty transmission system.</p>
 <p>Here we have recovered a signal from a noisy image, and made the features in the image easier to discern. You’ll notice that we had to try numerous threshold values to find the “sweet spot” with the best results. Other values “overshoot” and “undershoot” the optimum value.</p>
 <p>Here was the original image, before the noise was added:</p>
 <div class="cell docutils container">
@@ -729,9 +722,8 @@ it is lower (or vice versa, depending on the comparison operator).</p>
 </div>
 <p>Reducing noise and enhancing image features are both common aims in image filtering. Both processes often require some trial and error with different values for optional arguments that go into the filtering operation, as it did here. We will now turn to some other common methods for threshold filtering, using a variety of other images.</p>
 </section>
-</section>
-<section class="tex2jax_ignore mathjax_ignore" id="threshold-filtering-is-just-boolean-filtering">
-<h1>Threshold filtering is just Boolean filtering<a class="headerlink" href="#threshold-filtering-is-just-boolean-filtering" title="Link to this heading">#</a></h1>
+<section id="threshold-filtering-is-just-boolean-filtering">
+<h2>Threshold filtering is just Boolean filtering<a class="headerlink" href="#threshold-filtering-is-just-boolean-filtering" title="Link to this heading">#</a></h2>
 <p>As we have seen, threshold filtering involves modifying pixel values based on a threshold value. Let’s investigate other thresholding methods using a grayscale image:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -746,28 +738,37 @@ it is lower (or vice versa, depending on the comparison operator).</p>
                      <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span>
                      <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span>
                      <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]])</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">random_i</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">random_i</span><span class="p">);</span>
+<span class="n">random_i</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[[0 0 0 0 0 0 0 0]
- [0 0 0 4 8 0 0 0]
- [0 0 0 3 8 0 0 0]
- [0 0 0 0 0 0 0 0]
- [0 0 0 4 5 0 0 0]
- [0 0 0 3 4 0 0 0]
- [0 0 0 3 5 0 0 0]
- [0 0 0 3 9 0 0 0]
- [0 0 0 7 6 0 0 0]
- [0 0 0 0 0 0 0 0]]
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([[0, 0, 0, 0, 0, 0, 0, 0],
+       [0, 0, 0, 4, 8, 0, 0, 0],
+       [0, 0, 0, 3, 8, 0, 0, 0],
+       [0, 0, 0, 0, 0, 0, 0, 0],
+       [0, 0, 0, 4, 5, 0, 0, 0],
+       [0, 0, 0, 3, 4, 0, 0, 0],
+       [0, 0, 0, 3, 5, 0, 0, 0],
+       [0, 0, 0, 3, 9, 0, 0, 0],
+       [0, 0, 0, 7, 6, 0, 0, 0],
+       [0, 0, 0, 0, 0, 0, 0, 0]])
 </pre></div>
 </div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">random_i</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
 <img alt="_images/37b9b61360bba01248e577d239fe0e2f2d44e2d2dcd7222932d23a061dd125e1.png" src="_images/37b9b61360bba01248e577d239fe0e2f2d44e2d2dcd7222932d23a061dd125e1.png" />
 </div>
 </div>
-<p>As we saw above, it is simple to create a Boolean filter, using the <code class="docutils literal notranslate"><span class="pre">&gt;</span></code> comparison operator:</p>
+<p>As we saw above, it is simple to create a Boolean mask filter, using the <code class="docutils literal notranslate"><span class="pre">&gt;</span></code>
+comparison operator:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Create a Boolean array using a comparison operator.</span>
@@ -820,30 +821,39 @@ it is lower (or vice versa, depending on the comparison operator).</p>
 </div>
 </div>
 </section>
-<section class="tex2jax_ignore mathjax_ignore" id="image-segmentation-via-threshold-filtering">
-<h1>Image segmentation via threshold filtering<a class="headerlink" href="#image-segmentation-via-threshold-filtering" title="Link to this heading">#</a></h1>
-<p>This threshold filtering technique can be useful for segregating the foreground from the background of real images, like <code class="docutils literal notranslate"><span class="pre">camera</span></code>:</p>
+<section id="image-segmentation-via-threshold-filtering">
+<h2>Image segmentation via threshold filtering<a class="headerlink" href="#image-segmentation-via-threshold-filtering" title="Link to this heading">#</a></h2>
+<p>This threshold filtering technique can be useful for segregating the
+foreground from the background of real images, like <code class="docutils literal notranslate"><span class="pre">camera</span></code>:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Import the `camera` image from `ski.data`.</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Get the `camera` image from `ski.data`.</span>
 <span class="n">camera</span> <span class="o">=</span> <span class="n">ski</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">camera</span><span class="p">()</span>
 <span class="c1"># Show the &quot;raw&quot; `camera` array.</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">camera</span><span class="p">)</span>
-<span class="c1"># Show `camera` graphically.</span>
+<span class="n">camera</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([[200, 200, 200, ..., 189, 190, 190],
+       [200, 199, 199, ..., 190, 190, 190],
+       [199, 199, 199, ..., 190, 190, 190],
+       ...,
+       [ 25,  25,  27, ..., 139, 122, 147],
+       [ 25,  25,  26, ..., 158, 141, 168],
+       [ 25,  25,  27, ..., 151, 152, 149]], shape=(512, 512), dtype=uint8)
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Show `camera` graphically.</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">camera</span><span class="p">);</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[[200 200 200 ... 189 190 190]
- [200 199 199 ... 190 190 190]
- [199 199 199 ... 190 190 190]
- ...
- [ 25  25  27 ... 139 122 147]
- [ 25  25  26 ... 158 141 168]
- [ 25  25  27 ... 151 152 149]]
-</pre></div>
-</div>
 <img alt="_images/50aff3d36362558deba307a37ae4682958e48d2b46c8fe49483f0733bf1123b0.png" src="_images/50aff3d36362558deba307a37ae4682958e48d2b46c8fe49483f0733bf1123b0.png" />
 </div>
 </div>
@@ -851,8 +861,7 @@ it is lower (or vice versa, depending on the comparison operator).</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Plot a histogram of the `camera` pixel intensities, with 128 bins.</span>
-<span class="n">n_bins</span> <span class="o">=</span> <span class="mi">128</span>
-<span class="n">histogram</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">camera</span><span class="o">.</span><span class="n">ravel</span><span class="p">(),</span> <span class="n">bins</span><span class="o">=</span><span class="n">n_bins</span><span class="p">)</span>
+<span class="n">histogram</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">camera</span><span class="o">.</span><span class="n">ravel</span><span class="p">(),</span> <span class="n">bins</span><span class="o">=</span><span class="mi">128</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Pixel Intensity Value&#39;</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Pixel Count&#39;</span><span class="p">);</span>
 </pre></div>
@@ -862,7 +871,13 @@ it is lower (or vice versa, depending on the comparison operator).</p>
 <img alt="_images/64e4583f712601b36c5edee6bde5307b656014811364fdc1d14cdbaa685e8bb0.png" src="_images/64e4583f712601b36c5edee6bde5307b656014811364fdc1d14cdbaa685e8bb0.png" />
 </div>
 </div>
-<p>The “bins” are the intervals along the <span class="math notranslate nohighlight">\(x\)</span>-axis in which pixel intensity values are counted to determine the height of the blue “hills” in the histogram above, within a given interval. It is important, when thresholding, to choose a sensible number of bins. Too few bins we miss important information, because we are cramming many disparate pixel intensity values into one bin. Too many bins and we clutter our histogram with lots of spikes which occlude the general pattern.</p>
+<p>The “bins” are the intervals along the <span class="math notranslate nohighlight">\(x\)</span>-axis in which pixel intensity
+values are counted to determine the height of the blue “hills” in the
+histogram above, within a given interval. It is important, when thresholding,
+to choose a sensible number of bins. With too few bins, we miss important
+information, because we are cramming many disparate pixel intensity values
+into one bin. Too many bins and we clutter our histogram with lots of spikes
+which occlude the general pattern.</p>
 <p>To illustrate this, the plot below shows the <code class="docutils literal notranslate"><span class="pre">camera</span></code> pixel intensity histograms, with too few and too many bins. The bin interval starts and ends are indicated with vertical red lines. The height on the histogram, for a given bin, is determined by the <code class="docutils literal notranslate"><span class="pre">Pixel</span> <span class="pre">Count</span></code> falling with the range of intensities for that bin:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -901,11 +916,16 @@ it is lower (or vice versa, depending on the comparison operator).</p>
 <img alt="_images/2755b33e55eca66f2fb2c9d20780789cdfad1828e40af8e88f34f220ca8c08b7.png" src="_images/2755b33e55eca66f2fb2c9d20780789cdfad1828e40af8e88f34f220ca8c08b7.png" />
 </div>
 </div>
-<p>128 bins gives us a good middle ground, where we can see patterns in the distribution easily, without losing information or overemphasising unrepresentative values. Using the sensible number of bins, the distribution is clearly trimodal, with a clear dip/separation around between 50 and 100-ish, and another just before 200-ish. This locations are indicated on the plot with vertical lines:</p>
+<p>128 bins gives us a good middle ground, where we can see patterns in the
+distribution easily, without losing information or overemphasising
+unrepresentative values. Using the sensible number of bins, the distribution
+is clearly trimodal, with a clear dip/separation around around 50-100, and
+another just before 200. These locations are indicated on the plot with
+vertical lines:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Show some &quot;by eye&quot; thresholds.</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">camera</span><span class="o">.</span><span class="n">ravel</span><span class="p">(),</span> <span class="n">bins</span><span class="o">=</span><span class="n">n_bins</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">camera</span><span class="o">.</span><span class="n">ravel</span><span class="p">(),</span> <span class="n">bins</span><span class="o">=</span><span class="mi">128</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">axvline</span><span class="p">(</span><span class="mi">80</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;red&#39;</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">axvline</span><span class="p">(</span><span class="mi">190</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;darkred&#39;</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Pixel Intensity Value&#39;</span><span class="p">)</span>
@@ -917,7 +937,10 @@ it is lower (or vice versa, depending on the comparison operator).</p>
 <img alt="_images/48692435354b7faa2de4941f97cbdaa7a4fd5bd8200840ec9ea77239b1bd50f7.png" src="_images/48692435354b7faa2de4941f97cbdaa7a4fd5bd8200840ec9ea77239b1bd50f7.png" />
 </div>
 </div>
-<p>Let’s use these “by eye” crude threshold values and apply a threshold filter using them. Remember, our aim here is to separate the pixels into distinct classes; these two distinct pixel classes will hopefully correspond to the foreground and background of the image:</p>
+<p>Let’s use these “by eye” crude threshold values and apply a threshold filter
+using them. Remember, our aim here is to separate the pixels into distinct
+classes; we hope these two distinct pixel classes will correspond to the
+foreground and background of the image:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Define a threshold, &quot;by eye&quot;.</span>
@@ -940,7 +963,8 @@ it is lower (or vice versa, depending on the comparison operator).</p>
 </div>
 </div>
 <p>That has worked fairly well, as far as it goes, for segmenting the foreground (the cameraman) away from the background (the field and buildings behind the cameraman).</p>
-<p>We can show the “opposite” binary image, by reversing the comparison operation:</p>
+<p>We can show the “opposite” binary image, by reversing the comparison
+operation:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Using the &quot;opposite&quot; comparison operator.</span>
@@ -954,8 +978,8 @@ it is lower (or vice versa, depending on the comparison operator).</p>
 </div>
 <p>Stylish! Someone should put that on a t-shirt…</p>
 </section>
-<section class="tex2jax_ignore mathjax_ignore" id="threshold-filters-in-skimage-the-otsu-method">
-<h1>Threshold filters in <code class="docutils literal notranslate"><span class="pre">skimage</span></code> - the Otsu method<a class="headerlink" href="#threshold-filters-in-skimage-the-otsu-method" title="Link to this heading">#</a></h1>
+<section id="threshold-filters-in-skimage-the-otsu-method">
+<h2>Threshold filters in <code class="docutils literal notranslate"><span class="pre">skimage</span></code> - the Otsu method<a class="headerlink" href="#threshold-filters-in-skimage-the-otsu-method" title="Link to this heading">#</a></h2>
 <p><code class="docutils literal notranslate"><span class="pre">skimage</span></code> contains many threshold filters, the cell below uses the <code class="docutils literal notranslate"><span class="pre">dir()</span></code> function to show the available selection:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -980,14 +1004,24 @@ it is lower (or vice versa, depending on the comparison operator).</p>
 </div>
 </div>
 </div>
-<p>These filters typically, when passed an image array, find a threshold value automatically - e.g. at value at which to binarize the image to split the pixels into distinct classes. These distinct pixel classes often correspond to distinct <em>features</em> or <em>regions</em> in the image (cameraman vs field, foreground vs background etc.). The threshold value search performed by the <code class="docutils literal notranslate"><span class="pre">ski.filter.threshold*</span></code> functions aims to maximize the separation between pixel classes, and the different available functions use different algorithms to identify the “best” threshold value(s).</p>
-<p>One simple method, similar to the “look at the histogram” method we just used above, is the <a class="reference external" href="https://en.wikipedia.org/wiki/Otsu%27s_method">Otsu method</a>. This aims to divide pixels into <em>two</em> distinct classes, by mathematically analysing a histogram of the pixel intensities. Below we use the <code class="docutils literal notranslate"><span class="pre">ski.filters.threshold_otsu()</span></code> function to recommend a threshold value, to segment our image into two separate pixel classes.</p>
+<p>These filters typically, when passed an image array, find threshold values
+automatically - e.g. threshold values at which to divide the pixels into
+distinct classes. These distinct pixel classes often correspond to distinct
+<em>features</em> or <em>regions</em> in the image (cameraman vs field, foreground vs
+background etc.). The threshold value searches performed by the
+<code class="docutils literal notranslate"><span class="pre">ski.filter.threshold*</span></code> functions aim to maximize the separation between pixel
+classes, and the different available functions use different algorithms to
+identify the “best” threshold value(s).</p>
+<p>One simple method, similar to the “look at the histogram” method we just used
+above, is the <a class="reference external" href="https://en.wikipedia.org/wiki/Otsu%27s_method">Otsu method</a>.
+This aims to divide pixels into <em>two</em> distinct classes, by mathematically
+analyzing a histogram of the pixel intensities. Below we use the
+<code class="docutils literal notranslate"><span class="pre">ski.filters.threshold_otsu()</span></code> function to recommend a threshold value, at which to segment our image into two separate pixel classes.</p>
 <p>By specifying the <code class="docutils literal notranslate"><span class="pre">nbins</span></code> argument, we instruct the <code class="docutils literal notranslate"><span class="pre">.threshold_otsu()</span></code> function to analyse a histogram which has the same number of bins as the one we were using above:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Pass our `camera` array to the `threshold_otsu()` function.</span>
-<span class="n">otsu_thresh</span> <span class="o">=</span> <span class="n">ski</span><span class="o">.</span><span class="n">filters</span><span class="o">.</span><span class="n">threshold_otsu</span><span class="p">(</span><span class="n">camera</span><span class="p">,</span>
-                                         <span class="n">nbins</span><span class="o">=</span><span class="n">n_bins</span><span class="p">)</span>
+<span class="n">otsu_thresh</span> <span class="o">=</span> <span class="n">ski</span><span class="o">.</span><span class="n">filters</span><span class="o">.</span><span class="n">threshold_otsu</span><span class="p">(</span><span class="n">camera</span><span class="p">,</span> <span class="n">nbins</span><span class="o">=</span><span class="mi">128</span><span class="p">)</span>
 
 <span class="c1"># Show the Otsu threshold</span>
 <span class="n">otsu_thresh</span>
@@ -1004,7 +1038,7 @@ it is lower (or vice versa, depending on the comparison operator).</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Plot the pixel intensities, and the Otsu threshold.</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">camera</span><span class="o">.</span><span class="n">ravel</span><span class="p">(),</span> <span class="n">bins</span><span class="o">=</span><span class="n">n_bins</span><span class="p">);</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">camera</span><span class="o">.</span><span class="n">ravel</span><span class="p">(),</span> <span class="n">bins</span><span class="o">=</span><span class="mi">128</span><span class="p">);</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">axvline</span><span class="p">(</span><span class="n">otsu_thresh</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;red&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Otsu Threshold&#39;</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Pixel Intensity Value&#39;</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Pixel Count&#39;</span><span class="p">)</span>
@@ -1028,7 +1062,7 @@ it is lower (or vice versa, depending on the comparison operator).</p>
 <span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">camera</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Original&#39;</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">camera</span><span class="o">.</span><span class="n">ravel</span><span class="p">(),</span> <span class="n">bins</span><span class="o">=</span><span class="n">n_bins</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">camera</span><span class="o">.</span><span class="n">ravel</span><span class="p">(),</span> <span class="n">bins</span><span class="o">=</span><span class="mi">128</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Pixel Intensity Value&#39;</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Pixel Count&#39;</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">axvline</span><span class="p">(</span><span class="n">otsu_thresh</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;red&#39;</span><span class="p">)</span>
@@ -1044,18 +1078,35 @@ it is lower (or vice versa, depending on the comparison operator).</p>
 <img alt="_images/5e1aff69915abdc07bb90305db15090d73326d675989016fd06a323964021572.png" src="_images/5e1aff69915abdc07bb90305db15090d73326d675989016fd06a323964021572.png" />
 </div>
 </div>
-<p>If you look at the filtered image (on the right-hand side of the plot), it seems to have achieved pretty good foreground/background segmentation…</p>
-<p>How does the Otsu threshold filter work? Conceptually, the Otsu method involves splitting the histogram into two parts, lots of times, and comparing different splits for how well they separate pixels into two classes, based on a specific numeric metric. The histogram, for each threshold, is split at the center one of the bin intervals.</p>
-<p>The aim is to find which bin interval center gives a split that yields two classes of pixels which are maximally different from one another, by the aforementioned numeric metric. Hopefully this corresponds to pixels forming the background of the image vs pixels forming the foreground of the image.</p>
-<p>Since the Otsu method relies on some the “mechanics” of histograms, let’s “deconstruct” the histogram in the center of the plot above, to see how the method works. To perform this deconstruction, we can use the <code class="docutils literal notranslate"><span class="pre">np.histogram()</span></code> function. We give it a flattened 1-D image array (e.g. flattened with the <code class="docutils literal notranslate"><span class="pre">.ravel()</span></code> method), and we tell it a number of bins to use. Again, we will use the sensible value of 128 bins. (<em>Note</em>: you could also use <code class="docutils literal notranslate"><span class="pre">ski.exposure.histogram()</span></code> here, for similar results).</p>
+<p>If you look at the filtered image (on the right-hand side of the plot), it
+seems to have achieved pretty good foreground/background segmentation…</p>
+<p>How does the Otsu threshold filter work? Conceptually, the Otsu method
+involves splitting the histogram into two parts, at many different thresholds,
+and comparing different splits for how well they separate pixels into two
+classes, based on a specific numeric metric. The histogram, for each
+threshold, is split at the center one of the bin intervals.</p>
+<p>The aim is to find which bin interval center gives a split that yields two
+classes of pixels which are maximally different from one another, by the
+aforementioned numeric metric.  If we are lucky, this corresponds to pixels
+forming the background of the image vs pixels forming the foreground of the
+image.</p>
+<p>Since the Otsu method relies on some of the <em>mechanics</em> of histograms, let’s
+<em>deconstruct</em> the histogram in the center of the plot above, to see how the
+method works. To perform this deconstruction, we can use the <code class="docutils literal notranslate"><span class="pre">np.histogram()</span></code>
+function. We give it a flattened (1-D) image array (e.g. flattened with the
+<code class="docutils literal notranslate"><span class="pre">.ravel()</span></code> method), and we give it a number of bins to use. Again, we will use
+the sensible value of 128 bins. (<em>Note</em>: you could also use
+<code class="docutils literal notranslate"><span class="pre">ski.exposure.histogram()</span></code> here, for similar results).</p>
 <p><code class="docutils literal notranslate"><span class="pre">np.histogram()</span></code> will return two arrays. The first is the pixel count within each bin, so in this case we will get 128 individual numbers, because there are 128 bins. We will call this array <code class="docutils literal notranslate"><span class="pre">counts</span></code>. These <code class="docutils literal notranslate"><span class="pre">counts</span></code> determine the height of the histogram over each bin. The first <code class="docutils literal notranslate"><span class="pre">count</span></code> is for the first bin, the second <code class="docutils literal notranslate"><span class="pre">count</span></code> is for the second bin, and so on, as we move along the <span class="math notranslate nohighlight">\(x\)</span>-axis from left to right.</p>
-<p>The second array returned by <code class="docutils literal notranslate"><span class="pre">np.histogram()</span></code> contains the start point of each bin (e.g. each <span class="math notranslate nohighlight">\(x\)</span>-axis interval within which we get the <code class="docutils literal notranslate"><span class="pre">Pixel</span> <span class="pre">Count</span></code>). We will call this array <code class="docutils literal notranslate"><span class="pre">edges</span></code>.</p>
+<p>The second array returned by <code class="docutils literal notranslate"><span class="pre">np.histogram()</span></code> contains the start point of each
+bin (e.g. each <span class="math notranslate nohighlight">\(x\)</span>-axis interval within which we get the <code class="docutils literal notranslate"><span class="pre">Pixel</span> <span class="pre">Count</span></code>),
+followed by the end-point of the last bin. We will call this array <code class="docutils literal notranslate"><span class="pre">edges</span></code>.</p>
 <p>The size of each array will vary, based on the number of bins we ask NumPy to use to make the histogram:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Get `counts` and `edges`.</span>
 <span class="n">counts</span><span class="p">,</span> <span class="n">edges</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">histogram</span><span class="p">(</span><span class="n">camera</span><span class="o">.</span><span class="n">ravel</span><span class="p">(),</span>
-                             <span class="n">bins</span><span class="o">=</span><span class="n">n_bins</span><span class="p">)</span>
+                             <span class="n">bins</span><span class="o">=</span><span class="mi">128</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -1113,12 +1164,25 @@ it is lower (or vice versa, depending on the comparison operator).</p>
 </div>
 </div>
 </div>
-<p>Look at the first two values in the <code class="docutils literal notranslate"><span class="pre">edges</span></code> array, they form the interval for the first bin. So the first bin interval runs between 0 and 1.99, the second interval runs between the next two values of 1.99 and 3.98 and so on.</p>
-<p>Each value in <code class="docutils literal notranslate"><span class="pre">counts</span></code> is the count of pixel intensity values in <code class="docutils literal notranslate"><span class="pre">camera</span></code> which fall within the corresponding interval. Let’s check this is correct by Boolean indexing <code class="docutils literal notranslate"><span class="pre">camera</span></code> to see how many pixels fall within the first interval (0 to 1.99):</p>
+<p>Look at the first two values in the <code class="docutils literal notranslate"><span class="pre">edges</span></code> array; they form the interval for
+the first bin. So the first bin interval runs from 0 up to <em>but not including</em>
+1.99, the second interval runs between the next two values of 1.99 up to (not
+including 3.98 and so on.  The last two elements in the <code class="docutils literal notranslate"><span class="pre">edges</span></code> array are the
+start and <em>inclusive</em> end of the last bin — in this case from 253.01 up to
+<em>and including</em> 255.</p>
+<p>Let’s state that again in a different way.   Say there are <span class="math notranslate nohighlight">\(n\)</span> bins (here
+128).  For all bins from <span class="math notranslate nohighlight">\(i = 0..n - 1\)</span> (here <span class="math notranslate nohighlight">\(i = 0..127\)</span>), the start value is
+<code class="docutils literal notranslate"><span class="pre">edges[i]</span></code>.  For all bins but the last <code class="docutils literal notranslate"><span class="pre">edges[i</span> <span class="pre">+</span> <span class="pre">1]</span></code> gives the <em>exclusive</em>
+end of the bin.  For the last bin (<span class="math notranslate nohighlight">\(i = n - 2\)</span>), the last value in <code class="docutils literal notranslate"><span class="pre">edges</span></code>
+gives the <em>inclusive</em> end of the last bin.</p>
+<p>Each value in <code class="docutils literal notranslate"><span class="pre">counts</span></code> is the count of pixel intensity values in <code class="docutils literal notranslate"><span class="pre">camera</span></code>
+which fall within the corresponding interval. Let’s check this is correct by
+Boolean indexing <code class="docutils literal notranslate"><span class="pre">camera</span></code> to see how many pixels fall within the first
+interval (0 up to, not including 1.99):</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># For the first bin interval.</span>
-<span class="n">camera</span><span class="p">[(</span><span class="n">camera</span> <span class="o">&gt;=</span> <span class="mi">0</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">camera</span> <span class="o">&lt;=</span> <span class="mf">1.99</span><span class="p">)]</span>
+<span class="n">camera</span><span class="p">[(</span><span class="n">camera</span> <span class="o">&gt;=</span> <span class="mi">0</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">camera</span> <span class="o">&lt;</span> <span class="mf">1.99</span><span class="p">)]</span>
 </pre></div>
 </div>
 </div>
@@ -1142,7 +1206,7 @@ it is lower (or vice versa, depending on the comparison operator).</p>
 </div>
 </div>
 </div>
-<p>The second interval (e.g. the next two <code class="docutils literal notranslate"><span class="pre">edges</span></code> values) runs between 1.99 and 3.98. The second value of the <code class="docutils literal notranslate"><span class="pre">counts</span></code> array is 628, so there should be 628 pixels within this interval:</p>
+<p>The second interval (e.g. the next two <code class="docutils literal notranslate"><span class="pre">edges</span></code> values) runs from 1.99 up to (not including) 3.98. The second value of the <code class="docutils literal notranslate"><span class="pre">counts</span></code> array is 628, so there should be 628 pixels within this interval:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># The second value in `counts`.</span>
@@ -1160,7 +1224,7 @@ it is lower (or vice versa, depending on the comparison operator).</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># For the second bin interval.</span>
-<span class="n">camera</span><span class="p">[(</span><span class="n">camera</span> <span class="o">&gt;</span> <span class="mf">1.99</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">camera</span> <span class="o">&lt;=</span> <span class="mf">3.98</span><span class="p">)]</span>
+<span class="n">camera</span><span class="p">[(</span><span class="n">camera</span> <span class="o">&gt;=</span> <span class="mf">1.99</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">camera</span> <span class="o">&lt;</span> <span class="mf">3.98</span><span class="p">)]</span>
 </pre></div>
 </div>
 </div>
@@ -1202,7 +1266,7 @@ it is lower (or vice versa, depending on the comparison operator).</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Count the pixels in the second bin interval.</span>
-<span class="nb">len</span><span class="p">(</span><span class="n">camera</span><span class="p">[(</span><span class="n">camera</span> <span class="o">&gt;</span> <span class="mf">1.99</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">camera</span> <span class="o">&lt;=</span> <span class="mf">3.98</span><span class="p">)])</span>
+<span class="nb">len</span><span class="p">(</span><span class="n">camera</span><span class="p">[(</span><span class="n">camera</span> <span class="o">&gt;=</span> <span class="mf">1.99</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">camera</span> <span class="o">&lt;</span> <span class="mf">3.98</span><span class="p">)])</span>
 </pre></div>
 </div>
 </div>
@@ -1212,7 +1276,10 @@ it is lower (or vice versa, depending on the comparison operator).</p>
 </div>
 </div>
 </div>
-<p>So, each adjacent pair of numbers in <code class="docutils literal notranslate"><span class="pre">edges</span></code> tells us the range of each bin interval, and the corresponding value in <code class="docutils literal notranslate"><span class="pre">counts</span></code> tells us the height on the histogram within that interval. The image below shows the first, second, third and final (128th) interval in the <code class="docutils literal notranslate"><span class="pre">edges</span></code> array:</p>
+<p>So, each adjacent pair of numbers in <code class="docutils literal notranslate"><span class="pre">edges</span></code> tells us the range of each bin
+interval, and the corresponding value in <code class="docutils literal notranslate"><span class="pre">counts</span></code> tells us the height on the
+histogram within that interval. The image below shows the first, second, third
+and final (128th) interval in the <code class="docutils literal notranslate"><span class="pre">edges</span></code> array:</p>
 <p><img alt="" src="_images/hist_bins.png" /></p>
 <p>Ok, so we now have our deconstructed histogram. To implement the Otsu method, we next need to find the center of each bin interval (e.g. the middle point between the lower and higher number in each pair). Once we have the bin centers, we can use those to start splitting the histogram in two, to find the split that gives us the two most distinct groupings of pixels, on either side of the split. This is a simple calculation, we can get the start value of each bin interval with the following slicing operation:</p>
 <div class="cell docutils container">
@@ -1272,12 +1339,17 @@ it is lower (or vice versa, depending on the comparison operator).</p>
 </div>
 </div>
 </div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p><strong>Last values of <code class="docutils literal notranslate"><span class="pre">edges</span></code></strong></p>
+<p>Remember, the last value in <code class="docutils literal notranslate"><span class="pre">edges</span></code> (<code class="docutils literal notranslate"><span class="pre">edges[-1]</span></code>) is the <em>inclusive</em> end of
+the last bin.  <code class="docutils literal notranslate"><span class="pre">edges[1:-1]</span></code> give the <em>exclusive</em> ends of the other bins.</p>
+</div>
 <p>Check the numbers in these two arrays against the image above (of the bin intervals) to verify they are correct. To get the bin center points, we just take the average of each pair:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Get the center of each bin.</span>
 <span class="n">bin_centers</span> <span class="o">=</span> <span class="p">(</span><span class="n">edges</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span> <span class="o">+</span> <span class="n">edges</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span> <span class="o">/</span> <span class="mi">2</span>
-
 <span class="n">bin_centers</span>
 </pre></div>
 </div>
@@ -1309,7 +1381,7 @@ it is lower (or vice versa, depending on the comparison operator).</p>
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Generate a plot.</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">14</span><span class="p">,</span> <span class="mi">4</span><span class="p">))</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">camera</span><span class="o">.</span><span class="n">ravel</span><span class="p">(),</span> <span class="n">bins</span><span class="o">=</span><span class="n">n_bins</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">camera</span><span class="o">.</span><span class="n">ravel</span><span class="p">(),</span> <span class="n">bins</span><span class="o">=</span><span class="mi">128</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Pixel Intensity Value&#39;</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Pixel Count&#39;</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Original `camera` histogram&#39;</span><span class="p">)</span>
@@ -1325,7 +1397,11 @@ it is lower (or vice versa, depending on the comparison operator).</p>
 <img alt="_images/e6158667e52205677bb34ed353748876b33f90c5283bee904d2e4171901a5aa4.png" src="_images/e6158667e52205677bb34ed353748876b33f90c5283bee904d2e4171901a5aa4.png" />
 </div>
 </div>
-<p>To implement the Otsu filter, we “split” the histogram into two sides, at a given bin center. We can think of this as creating two separate histograms. Here is a visualisation of splitting at the 50th bin center (which is centered on the pixel intensity value of 98.6). The location of the “split” is shown as a thick, dashed line:</p>
+<p>To implement the Otsu filter, we “split” the histogram into two sides, at
+a given bin center. We can think of this as creating two separate histograms.
+Here is a visualisation of splitting at the 50th bin center (which is centered
+on the pixel intensity value of 98.6). The location of the <em>split</em> is shown as
+a thick, dashed line:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># The 50th bin center value.</span>
@@ -1343,15 +1419,22 @@ it is lower (or vice versa, depending on the comparison operator).</p>
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># A function to visualise different threshold values.</span>
 <span class="k">def</span><span class="w"> </span><span class="nf">plot_bins_with_threshold</span><span class="p">(</span><span class="n">threshold_bin_number</span><span class="p">,</span> <span class="n">legend</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
-    <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">bin_centers</span><span class="p">[:</span><span class="n">threshold_bin_number</span><span class="p">],</span> <span class="n">counts</span><span class="p">[:</span><span class="n">threshold_bin_number</span><span class="p">],</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;red&#39;</span><span class="p">,</span>
-             <span class="n">marker</span><span class="o">=</span><span class="s1">&#39;X&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Left Side Histogram&#39;</span><span class="p">)</span>
-    <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">bin_centers</span><span class="p">[</span><span class="n">threshold_bin_number</span><span class="p">:],</span> <span class="n">counts</span><span class="p">[</span><span class="n">threshold_bin_number</span><span class="p">:],</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;green&#39;</span><span class="p">,</span>
-             <span class="n">marker</span><span class="o">=</span><span class="s1">&#39;X&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Right Side Histogram&#39;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">bin_centers</span><span class="p">[:</span><span class="n">threshold_bin_number</span><span class="p">],</span>
+             <span class="n">counts</span><span class="p">[:</span><span class="n">threshold_bin_number</span><span class="p">],</span>
+             <span class="n">color</span><span class="o">=</span><span class="s1">&#39;red&#39;</span><span class="p">,</span>
+             <span class="n">marker</span><span class="o">=</span><span class="s1">&#39;X&#39;</span><span class="p">,</span>
+             <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Left Side Histogram&#39;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">bin_centers</span><span class="p">[</span><span class="n">threshold_bin_number</span><span class="p">:],</span>
+             <span class="n">counts</span><span class="p">[</span><span class="n">threshold_bin_number</span><span class="p">:],</span>
+             <span class="n">color</span><span class="o">=</span><span class="s1">&#39;green&#39;</span><span class="p">,</span>
+             <span class="n">marker</span><span class="o">=</span><span class="s1">&#39;X&#39;</span><span class="p">,</span>
+             <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Right Side Histogram&#39;</span><span class="p">)</span>
     <span class="n">plt</span><span class="o">.</span><span class="n">axvline</span><span class="p">(</span><span class="n">bin_centers</span><span class="p">[</span><span class="n">threshold_bin_number</span><span class="p">],</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;black&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Threshold&#39;</span><span class="p">,</span>
                 <span class="n">linestyle</span><span class="o">=</span><span class="s2">&quot;--&quot;</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
     <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Bin Centers&#39;</span><span class="p">)</span>
     <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Pixel Count&#39;</span><span class="p">)</span>
-    <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Threshold Pixel Intensity = </span><span class="si">{</span><span class="n">bin_centers</span><span class="p">[</span><span class="n">threshold_bin_number</span><span class="p">]</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+    <span class="n">thresh_center</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="n">bin_centers</span><span class="p">[</span><span class="n">threshold_bin_number</span><span class="p">],</span> <span class="mi">2</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Threshold Pixel Intensity = </span><span class="si">{</span><span class="n">thresh_center</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
     <span class="k">if</span> <span class="n">legend</span> <span class="o">==</span> <span class="kc">True</span><span class="p">:</span>
         <span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">bbox_to_anchor</span><span class="o">=</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>
     <span class="k">if</span> <span class="n">axis</span> <span class="o">==</span> <span class="kc">False</span><span class="p">:</span>
@@ -1469,7 +1552,24 @@ SSD of histogram above the 50th bin: 174551091.73
 <img alt="_images/d1ccf2585a31595b9a50a89f85acdee72f001b91e67f16843bc60ed5348aec3e.png" src="_images/d1ccf2585a31595b9a50a89f85acdee72f001b91e67f16843bc60ed5348aec3e.png" />
 </div>
 </div>
-<p>Different threshold values change the mean and the spread (<code class="docutils literal notranslate"><span class="pre">ssd</span></code>) of each histogram. For each different split visualised below, pay attention to the width of the spread around each mean (e.g. the horizontal lines coming off the vertical line for each mean). This will let you see how the different splits influence the mean and the <code class="docutils literal notranslate"><span class="pre">ssd</span></code> of each histogram, when we compare the left histogram vs right histogram, for a given split:</p>
+<p>Different threshold values change the mean and the spread (<code class="docutils literal notranslate"><span class="pre">ssd</span></code>) of each histogram. For each different split visualised below, pay attention to the width of the spread around each mean (e.g. the horizontal lines coming off the vertical line for each mean). This will let you see how the different splits influence the mean and the <code class="docutils literal notranslate"><span class="pre">ssd</span></code> of each histogram, when we compare the left histogram vs right histogram, for a given split.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p><strong>Spread, standard deviation and SSD</strong></p>
+<p>Bear in mind that we represent the <em>spread</em> around the mean in these plots as
+the <em>standard deviation</em> (SD) of the values either side of the split, around
+their respective means.  The SD gives you an idea of the <em>average</em> spread of
+each of the two histograms.</p>
+<p>However, remember that the actual metric used to evaluate the split is not the
+SD of the two histograms, but the <em>sum of squared deviation</em> (SSD). You can
+think of the SSD for each histogram, as the standard deviation (shown with the
+horizontal bar), squared (to give the variance) and then multiplied by the
+number of image values in the individual histogram.  Thus even if the two
+histograms (left and right) have the same standard deviation, a tall histogram
+(with many values) will contribute a higher SSD than a shorter histogram (with
+fewer values).  The metric used is the total SSD — that is the sum of the SSDs
+for the left and right histograms.</p>
+</div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Visualise multiple thresholds.</span>
@@ -1499,7 +1599,7 @@ SSD of histogram above the 50th bin: 174551091.73
 
 <span class="c1"># Loop through the bin centers, compute the `ssd` of both</span>
 <span class="c1"># histograms, for each threshold.</span>
-<span class="k">for</span> <span class="n">bin_no</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">n_bins</span><span class="p">):</span>
+<span class="k">for</span> <span class="n">bin_no</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">128</span><span class="p">):</span>
     <span class="n">left_mean</span><span class="p">,</span> <span class="n">left_ssd</span><span class="p">,</span> <span class="n">left_n</span> <span class="o">=</span> <span class="n">ssd</span><span class="p">(</span><span class="n">counts</span><span class="p">[:</span><span class="n">bin_no</span><span class="p">],</span> <span class="n">bin_centers</span><span class="p">[:</span><span class="n">bin_no</span><span class="p">])</span>
     <span class="n">right_mean</span><span class="p">,</span> <span class="n">right_ssd</span><span class="p">,</span> <span class="n">right_n</span> <span class="o">=</span> <span class="n">ssd</span><span class="p">(</span><span class="n">counts</span><span class="p">[</span><span class="n">bin_no</span><span class="p">:],</span> <span class="n">bin_centers</span><span class="p">[</span><span class="n">bin_no</span><span class="p">:])</span>
 
@@ -1523,22 +1623,9 @@ Otsu threshold: 102.59765625
 <p>We can see that this is the same Otsu threshold we get from <code class="docutils literal notranslate"><span class="pre">ski.filters.threshold_otsu()</span></code>, when we use the same number of bins (128).</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Show the number of bins.</span>
-<span class="n">n_bins</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>128
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Get the Otsu threshold from `skimage`.</span>
 <span class="n">ski</span><span class="o">.</span><span class="n">filters</span><span class="o">.</span><span class="n">threshold_otsu</span><span class="p">(</span><span class="n">camera</span><span class="p">,</span>
-                           <span class="n">nbins</span><span class="o">=</span><span class="n">n_bins</span><span class="p">)</span>
+                           <span class="n">nbins</span><span class="o">=</span><span class="mi">128</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -1583,7 +1670,7 @@ Otsu threshold: 102.59765625
 <img alt="_images/2d855a00b27f1c1090ad43c00d80bb2540060c460336afa3eec311882a25dc71.png" src="_images/2d855a00b27f1c1090ad43c00d80bb2540060c460336afa3eec311882a25dc71.png" />
 </div>
 </div>
-<p>Admittedly that is quite a cool visual effect, but it is poor segmentation performance. The <code class="docutils literal notranslate"><span class="pre">ssd</span></code>s for multiple different thresholds are shown in the title of each plot below; the <code class="docutils literal notranslate"><span class="pre">camera</span></code> image filtered to the same threshold is shown to the right of each histogram plot:</p>
+<p>Admittedly that is quite a cool visual effect, but it is poor segmentation performance - it has not done a good job of splitting the foreground cameraman from the background. The <code class="docutils literal notranslate"><span class="pre">ssd</span></code>s for multiple different thresholds are shown in the title of each plot below; the <code class="docutils literal notranslate"><span class="pre">camera</span></code> image filtered to the same threshold is shown to the right of each histogram plot:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Visualise multiple thresholds, as well as filtering `camera` using those thresholds.</span>
@@ -1653,7 +1740,8 @@ histogram:</p>
 </li>
 <li><p>calculate the sum of squared deviations from the left and right means:</p>
 <div class="math notranslate nohighlight">
-\[\begin{split}  \begin{align}
+\[\begin{split}
+  \begin{align}
   \mathrm{SSD}_k^{left} = \sum_{i=1}^{k} c_i (v_i - \mu_k^{left}) \\
   \mathrm{SSD}_k^{right} = \sum_{i={k+1}}^{L} c_i (v_i - \mu_k^{right}) \\
   \mathrm{SSD}_k^{total} = SSD_k^{left} + SSD_k^{right}
@@ -1790,37 +1878,30 @@ bin <span class="math notranslate nohighlight">\(z\)</span>:</p>
 <img alt="_images/53f89d0bc7e0e64b10145a5423a431e9450dd46b64870eb50896a85ce5fbbd7b.png" src="_images/53f89d0bc7e0e64b10145a5423a431e9450dd46b64870eb50896a85ce5fbbd7b.png" />
 </div>
 </div>
-<p>We can use Boolean indexing (as above) to set the pixel values according to the thresholds:</p>
+<p>We can use Boolean indexing (as above) to set the pixel values according to the thresholds, by looping through the thresholds.  But to be more elegant, we’ll use <code class="docutils literal notranslate"><span class="pre">np.digitize</span></code> to do the same job:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Copy to avoid overwriting.</span>
-<span class="n">camera_region_solution_multiotsu</span> <span class="o">=</span> <span class="n">camera</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
-
-<span class="c1"># Set values to the left of the lower threshold to 0.</span>
-<span class="n">camera_region_solution_multiotsu</span><span class="p">[</span><span class="n">camera_region_solution_multiotsu</span> <span class="o">&lt;</span> <span class="n">otsu_cam3_solution</span><span class="p">[</span><span class="mi">0</span><span class="p">]]</span> <span class="o">=</span> <span class="mi">0</span>
-
-<span class="c1"># Set values in between the thresholds to 1.</span>
-<span class="n">camera_region_solution_multiotsu</span><span class="p">[(</span><span class="n">camera_region_solution_multiotsu</span> <span class="o">&gt;=</span> <span class="n">otsu_cam3_solution</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">camera_region_solution_multiotsu</span> <span class="o">&lt;=</span> <span class="n">otsu_cam3_solution</span><span class="p">[</span><span class="mi">1</span><span class="p">])]</span> <span class="o">=</span> <span class="mi">1</span>
-
-<span class="c1"># Set values to the right of the higher threshold to 2.</span>
-<span class="n">camera_region_solution_multiotsu</span><span class="p">[</span><span class="n">camera_region_solution_multiotsu</span> <span class="o">&gt;</span> <span class="n">otsu_cam3_solution</span><span class="p">[</span><span class="mi">1</span><span class="p">]]</span> <span class="o">=</span> <span class="mi">2</span>
-
-<span class="c1"># Show the result.</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">camera_region_solution_multiotsu</span><span class="p">);</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">bins</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">([[</span><span class="mi">0</span><span class="p">],</span> <span class="n">otsu_cam3_solution</span><span class="p">,</span> <span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">camera</span><span class="p">)</span> <span class="o">+</span> <span class="mf">1.</span><span class="p">]])</span>
+<span class="n">bins</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/9936cc0d986e7a5f51dd807d609416997ad3831d9a8813e6ba07a5ac89212c63.png" src="_images/9936cc0d986e7a5f51dd807d609416997ad3831d9a8813e6ba07a5ac89212c63.png" />
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([  0.,  87., 176., 256.])
+</pre></div>
 </div>
 </div>
-<p>A more elegant, slightly hacky way, suggested in the <code class="docutils literal notranslate"><span class="pre">skimage</span></code> documentation is to use <code class="docutils literal notranslate"><span class="pre">np.digitize()</span></code>:</p>
+</div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Another route to the target image.</span>
-<span class="n">cam3_regions_hack</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">digitize</span><span class="p">(</span><span class="n">camera</span><span class="p">,</span>
-                           <span class="n">bins</span><span class="o">=</span><span class="n">otsu_cam3_solution</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">cam3_regions_hack</span><span class="p">);</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Digitize maps image values x to output values thus:</span>
+<span class="c1"># - where bins[0] &lt;= x &lt; bins[1] -&gt; output 0,</span>
+<span class="c1"># - where bins[1] &lt;= x &lt; bins[2] -&gt; output 1</span>
+<span class="c1"># - where bins[2] &lt;= x &lt; bins[3] -&gt; output 2.</span>
+<span class="n">camera_region_solution_multiotsu</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">digitize</span><span class="p">(</span><span class="n">camera</span><span class="p">,</span> <span class="n">bins</span><span class="p">)</span>
+
+<span class="c1"># Show the result.</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">camera_region_solution_multiotsu</span><span class="p">);</span>
 </pre></div>
 </div>
 </div>
@@ -1848,9 +1929,13 @@ bin <span class="math notranslate nohighlight">\(z\)</span>:</p>
 </div>
 </div>
 </section>
-<section class="tex2jax_ignore mathjax_ignore" id="summary">
-<h1>Summary<a class="headerlink" href="#summary" title="Link to this heading">#</a></h1>
-<p>This page has showed how to perform threshold filtering using <code class="docutils literal notranslate"><span class="pre">numpy</span></code>, <code class="docutils literal notranslate"><span class="pre">scipy</span></code> and <code class="docutils literal notranslate"><span class="pre">skimage</span></code>. On the <a class="reference internal" href="5_mean_filter.html"><span class="doc std std-doc">next page</span></a> we will look at convolutional filtering, where we modify pixel values based on the “local neighborhood” of surrounding pixels.</p>
+<section id="summary">
+<h2>Summary<a class="headerlink" href="#summary" title="Link to this heading">#</a></h2>
+<p>This page shows and explains threshold filtering using <code class="docutils literal notranslate"><span class="pre">numpy</span></code>, <code class="docutils literal notranslate"><span class="pre">scipy</span></code> and
+<code class="docutils literal notranslate"><span class="pre">skimage</span></code>. On the <a class="reference internal" href="5_mean_filter.html"><span class="doc std std-doc">next page</span></a> we will look at convolutional
+filtering, where we modify pixel values based on the “local neighborhood” of
+surrounding pixels.</p>
+</section>
 <section id="references">
 <h2>References<a class="headerlink" href="#references" title="Link to this heading">#</a></h2>
 <ul class="simple">
@@ -1937,19 +2022,13 @@ processing</a></p></li>
   </div>
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Threshold filtering</a><ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#what-is-signal-what-is-noise">What is signal? What is noise?</a></li>
-</ul>
-</li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#threshold-filtering-is-just-boolean-filtering">Threshold filtering is just Boolean filtering</a></li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#image-segmentation-via-threshold-filtering">Image segmentation via threshold filtering</a></li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#threshold-filters-in-skimage-the-otsu-method">Threshold filters in <code class="docutils literal notranslate"><span class="pre">skimage</span></code> - the Otsu method</a></li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#summary">Summary</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#threshold-filtering-is-just-boolean-filtering">Threshold filtering is just Boolean filtering</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#image-segmentation-via-threshold-filtering">Image segmentation via threshold filtering</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#threshold-filters-in-skimage-the-otsu-method">Threshold filters in <code class="docutils literal notranslate"><span class="pre">skimage</span></code> - the Otsu method</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#summary">Summary</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#references">References</a></li>
 </ul>
-</li>
-</ul>
-
   </nav></div>
 
 </div></div>
