@@ -15,7 +15,7 @@ jupyter:
 
 # Convolution filters I - the mean filter
 
-## Kernels and pixel neighborhoods
+## Footprints and pixel neighborhoods
 
 
 On the last page we filtered images based on a single threshold value, or based on multiple threshold values. Other filters work differently: they work by adjusting a given pixel's value based on the value of other pixels which surround it, in a specified area. The mean filter is one such filter.
@@ -27,13 +27,13 @@ The mean filter is a *local filter*, because it alters a given pixel's value bas
 The values within a pixel's local neighborhood affects the value that a local
 filter calculates when applied to given pixel. The `size` and `shape` of the
 "neighborhood" are up to the user. We can also refer to the neighborhood as
-a "kernel", "footprint" or "structuring element". As we will see later, Scikit
-image favors the term "footprint". For now, we will use the terms "kernel" and
+a "footprint" or "structuring element". As we will see later, Scikit image
+favors the term "footprint". For now, we will use the terms "footprint" and
 "neighborhood" interchangeably to refer to some set of pixels that surround
 a given pixel.
 
 The mean filter, as the name suggests, *averages* the pixel values within
-a kernel/neighborhood. To see this in action, let's build a simple mean filter
+a footprint/neighborhood. To see this in action, let's build a simple mean filter
 to filter an image array. First, we perform some imports, and change some
 defaults.
 
@@ -73,7 +73,7 @@ print(random_i)
 plt.imshow(random_i);
 ```
 
-Let's use some indexing to go for a walk through the neighborhoods (kernels) in
+Let's use some indexing to go for a walk through the neighborhoods (footprints) in
 this array. We will treat each `(3,3)` set of pixels as a separate
 neighborhood. For now, we only walk through the neighborhoods at the "top" of
 the array. We will start our "walk" in the top-left corner of the array, so
@@ -111,41 +111,41 @@ for i in np.arange(6):
 
 We can visualise the "walk" we have just taken, with prettier graphics - (you may want to right click on these images and open them in a new tab/window, for easier viewing):
 
-![](images/kernel_1.png)
+![](images/footprint_1.png)
 
-Now, imagine we calculate the mean within each neighborhood (kernel) - the mean of each kernel is shown below the image of each indexing operation:
+Now, imagine we calculate the mean within each neighborhood (footprint) - the mean of each footprint is shown below the image of each indexing operation:
 
-![](images/kernel_2_mean.png)
+![](images/footprint_2_mean.png)
 
-...and now further imagine that we replace *central pixel value of the 3-by-3 kernel with the mean of all the values in the kernel*. The image below shows the central value being replaced with the mean of each kernel:
+...and now further imagine that we replace *central pixel value of the 3-by-3 footprint with the mean of all the values in the footprint*. The image below shows the central value being replaced with the mean with each footprint:
 
-![](images/kernel_3_replace_central_pixel.png)
+![](images/footprint_3_replace_central_pixel.png)
 
 This is how the mean filter operates:
 
-* We define our kernel (e.g. our pixel neighborhood size and shape).
+* We define our footprint (e.g. our pixel neighborhood size and shape).
 
-* We center our kernel on a pixel.
+* We center our footprint on a pixel.
 
 * We then replace the value of the central pixel with the mean of the pixels in the neighborhood.
 
-The illustrations above only show the kernel proceeding through the pixels at the "top" of the array. In reality, filtering operations are applied every pixel in the image. You can think of this as the kernel "walking" through the entire array, being centered on one pixel at a time.
+The illustrations above only show the footprint proceeding through the pixels at the "top" of the array. In reality, filtering operations are applied every pixel in the image. You can think of this as the footprint "walking" through the entire array, being centered on one pixel at a time.
 
-Astute readers might ask "what happens near the edges of the array? If we center our kernel on a pixel in the last column or row, won't part of the kernel 'fall off' the edge of the array?'":
+Astute readers might ask "what happens near the edges of the array? If we center our footprint on a pixel in the last column or row, won't part of the footprint 'fall off' the edge of the array?'":
 
-![](images/kernel_hit_the_edge.png)
+![](images/footprint_hit_the_edge.png)
 
-Indeed, we need a strategy for this. There are actually many options for how a kernel should behave at the edges of an image array - we could "pad" the kernel elements that fall outside of the image with 0 values, for instance. Or we could duplicate values from the pixels at the edge of the array, to fill in kernel elements that fall outside of the array.
+Indeed, we need a strategy for this. There are actually many options for how a footprint should behave at the edges of an image array - we could "pad" the footprint elements that fall outside of the image with 0 values, for instance. Or we could duplicate values from the pixels at the edge of the array, to fill in footprint elements that fall outside of the array.
 
-**For now we will not worry about the edges, we just use the kernel only where it "fits" within the array.** In effect, this just ignores pixels near the edges of the image. Presently, most of these pixels at the edges of the image are 0, and there is some distance between the "i" and the image edges, so ignoring the pixels near the edge will not affect the "i" shape too much itself. The image below illustrates this concept, for a generic array:
+**For now we will not worry about the edges, we just use the footprint only where it "fits" within the array.** In effect, this just ignores pixels near the edges of the image. Presently, most of these pixels at the edges of the image are 0, and there is some distance between the "i" and the image edges, so ignoring the pixels near the edge will not affect the "i" shape too much itself. The image below illustrates this concept, for a generic array:
 
-![](images/kernel_general.png)
+![](images/footprint_general.png)
 
-The cell below defines a function that will apply this mean kernel, step-by-step in a for loop to the whole image array, only for pixel neighborhoods where the kernel "fits" over the central pixel, without extending outside of the image:
+The cell below defines a function that will apply this mean footprint, step-by-step in a for loop to the whole image array, only for pixel neighborhoods where the footprint "fits" over the central pixel, without extending outside of the image:
 
 ```{python}
-# A function to apply our crude mean kernel.
-def three_by_three_mean_kernel(image):
+# A function to apply our crude mean footprint.
+def three_by_three_mean_footprint(image):
 
     # Convert to float `dtype`.
     image = np.array(image,
@@ -158,15 +158,15 @@ def three_by_three_mean_kernel(image):
     # filtering operation)
     filtered_image = np.zeros(image.shape)
 
-    # Loop through the pixels and get the mean of each kernel.
+    # Loop through the pixels and get the mean of each footprint.
     for i in np.arange(1, n_rows-1):
         for j in np.arange(1, n_cols-1):
             row_start = i-1
             col_start = j-1
             row_end = i+2
             col_end = j+2
-            kernel = image[row_start:row_end, col_start:col_end].copy()
-            filtered_image[i, j] = kernel.mean()
+            footprint = image[row_start:row_end, col_start:col_end].copy()
+            filtered_image[i, j] = footprint.mean()
     return filtered_image
 ```
 
@@ -174,7 +174,7 @@ Let's apply our crude mean filter to the image array, and compare it to the orig
 
 ```{python}
 # Apply our mean filtering function.
-mean_filtered_i = three_by_three_mean_kernel(random_i)
+mean_filtered_i = three_by_three_mean_footprint(random_i)
 
 # Show the original array and the filtered array, from the
 # "raw" NumPy perspective.
@@ -190,24 +190,31 @@ plt.imshow(mean_filtered_i)
 plt.title("Crude Mean Filter");
 ```
 
-Ok, so we can see that some of the non-black (non-zero) pixel intensity values have been "spread around" to neighboring pixels, which is unsurprising, given what we know about how this operation works. We have literally, for each given pixel, "averaged out" between the pixels in the 3-by-3 neighborhood around the pixel. This is a very crude mean filter, intended to show the foundational principles of how filtering via a kernel works. There is a better, less crude way to implement a mean filter, however, to which we will turn in the next section.
+We can see that some of the non-black (non-zero) pixel intensity values have
+been "spread around" to neighboring pixels, which is unsurprising, given what
+we know about how this operation works. We have literally, for each given
+pixel, "averaged out" between the pixels in the 3-by-3 neighborhood around the
+pixel. This is a very crude mean filter, intended to show the foundational
+principles of how filtering via a footprint works. There is a better, less
+crude way to implement a mean filter, however, to which we will turn in the
+next section.
 
 ::: {exercise-start}
 :label: dont-be-mean
 :class: dropdown
 :::
 
-For this exercise, you should build a function which filters an image using a 3-by-3 kernel, like we did above. Your function should "walk" the 3-by-3 kernel through an image array, but it can ignore edge pixels, as we did above. E.g. you can just alter central pixels where the kernel "fits", as in the image below:
+For this exercise, you should build a function which filters an image using a 3-by-3 footprint, like we did above. Your function should "walk" the 3-by-3 footprint through an image array, but it can ignore edge pixels, as we did above. E.g. you can just alter central pixels where the footprint "fits", as in the image below:
 
-![](images/kernel_general_resize.png)
+![](images/footprint_general_resize.png)
 
-However, your kernel should do something different to the mean kernel we implemented earlier. Your function will do something dark, something illegal (at least by the standards of `skimage` `dtype` conventions)...
+However, your footprint should do something different to the mean footprint we implemented earlier. Your function will do something dark, something illegal (at least by the standards of `skimage` `dtype` conventions)...
 
-It should replace the central pixel value with the *negative sum* of the values under the kernel (e.g. add the values under the kernel up, and then make the sum negative). You should apply this to the `coins` image from `ski.data`. Here is the original image:
+It should replace the central pixel value with the *negative sum* of the values under the footprint (e.g. add the values under the footprint up, and then make the sum negative). You should apply this to the `coins` image from `ski.data`. Here is the original image:
 
 ![](images/coins.png)
 
-Here is how your image should look, after applying the negative sum filter, with a 3-by-3 kernel:
+Here is how your image should look, after applying the negative sum filter, with a 3-by-3 footprint:
 
 ![](images/neg_sum_coins.png)
 
@@ -225,7 +232,7 @@ Min Pixel Value: -1.0
 
 ```{python}
 # YOUR CODE HERE
-def three_by_three_negative_sum_kernel():
+def three_by_three_negative_sum_footprint():
     ...
 
 # Load in the `coins` image.
@@ -243,10 +250,10 @@ plt.imshow(coins);
 
 Whilst we told you not to adjust the function from above, obviously you function needs to do something similar to the function from above. So that was a rule for you, not for us ;)
 
-Here we have adjusted the function to take the negative sum of the kernel elements, rather than the mean. We also `rescale_intensity()` in the final line, to ensure pixel values fall in a legal range, for the `float64` `dtype`:
+Here we have adjusted the function to take the negative sum of the footprint elements, rather than the mean. We also `rescale_intensity()` in the final line, to ensure pixel values fall in a legal range, for the `float64` `dtype`:
 
 ```{python}
-def three_by_three_negative_sum_kernel_solution(image):
+def three_by_three_negative_sum_footprint_solution(image):
 
     # Convert to float `dtype`.
     image = np.array(image,
@@ -259,15 +266,15 @@ def three_by_three_negative_sum_kernel_solution(image):
     # filtering operation)
     filtered_image = np.zeros(image.shape)
 
-    # Loop through the pixels and get the mean of each kernel.
+    # Loop through the pixels and get the mean of each footprint.
     for i in np.arange(1, n_rows-1):
         for j in np.arange(1, n_cols-1):
             row_start = i-1
             col_start = j-1
             row_end = i+2
             col_end = j+2
-            kernel = image[row_start:row_end, col_start:col_end].copy()
-            filtered_image[i, j] = -kernel.sum()                          # LOOK HERE! We take the negative sum.
+            footprint = image[row_start:row_end, col_start:col_end].copy()
+            filtered_image[i, j] = -footprint.sum()                          # LOOK HERE! We take the negative sum.
     return ski.exposure.rescale_intensity(filtered_image, out_range="float64") # Rescale to ensure legal pixel values.
 ```
 
@@ -279,11 +286,11 @@ coins_solution = ski.data.coins()
 plt.imshow(coins_solution);
 ```
 
-We then apply our filter, replacing the value of the central pixel in each kernel with negative sum of the value of all the pixels under the kernel:
+We then apply our filter, replacing the value of the central pixel in each footprint with negative sum of the value of all the pixels under the footprint:
 
 ```{python}
 # Filter and show...
-neg_sum_filter_coins = three_by_three_negative_sum_kernel_solution(coins_solution)
+neg_sum_filter_coins = three_by_three_negative_sum_footprint_solution(coins_solution)
 plt.imshow(neg_sum_filter_coins);
 ```
 
@@ -297,9 +304,9 @@ show_attributes(neg_sum_filter_coins)
 :::
 
 
-# Convolution
+## Convolution
 
-In normal practice, filtering operations which use kernels rely on [convolution](https://en.wikipedia.org/wiki/Convolution). In fact, one name for the kernel is "convolution kernel". In image processing, convolution is similar to the process we saw with our crude mean filter - we "walk" a kernel across our whole image, centering it on every pixel, and perform a computation which modifies the central pixel based on the other values in the kernel/neighborhood.
+In normal practice, filtering operations which use footprints rely on [convolution](https://en.wikipedia.org/wiki/Convolution). In fact, one name for the footprint is "convolution kernel". In image processing, convolution is similar to the process we saw with our crude mean filter - we "walk" a kernel across our whole image, centering it on every pixel, and perform a computation which modifies the central pixel based on the other values in the kernel/neighborhood.
 
 Let's implement a true mean filter, using convolution. Obviously, we start with our kernel. First, we define its shape:
 
@@ -576,7 +583,7 @@ This is quite a strange kernel to apply! But it shows us how easy it is to achie
 :::
 
 
-# Mean filtering with `skimage`
+## Mean filtering with `skimage`
 
 We can implement a mean filter using the `ski.filters.rank.mean()` function. `skimage` prefers the term `footprint` to "kernel", but the meaning is the same. We supply a small matrix with which to "walk" through the image, centering the kernel on every pixel, and modifying that central pixel's value based on the values of the other pixels in its neighborhood, with the size and shape of the neighborhood being defined by the kernel (`footprint`).
 
@@ -727,11 +734,11 @@ Pay attention here to the effect on the *color* of the image. How is it differen
 You'll notice that the colors have changed substantially, relative to when we filtered each channel separately. This is because the 3D kernel is averaging across the color channels. We may want this effect (it is somewhat retro), but if we do not want to affect the color of the image, then generally filtering the channels separately is the way to go...
 
 
-# Summary
+## Summary
 
 This page has showed how to perform mean filtering, using `numpy`, `scipy` and `skimage`. On the [next page](6_gaussian_sharpening_edge), we will look at using different convolution kernels to get different filtering effects.
 
-# References
+## References
 
 * Gulati, J. (2024) *NumPy for Image Processing*. KDnuggets. Available from:
   <https://www.kdnuggets.com/numpy-for-image-processing>
