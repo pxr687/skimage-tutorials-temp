@@ -1631,7 +1631,7 @@ spoon!</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.image.AxesImage at 0x7ff2741e53d0&gt;
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.image.AxesImage at 0x7f76a4b24e90&gt;
 </pre></div>
 </div>
 <img alt="_images/50aff3d36362558deba307a37ae4682958e48d2b46c8fe49483f0733bf1123b0.png" src="_images/50aff3d36362558deba307a37ae4682958e48d2b46c8fe49483f0733bf1123b0.png" />
@@ -1790,7 +1790,7 @@ Min Pixel Value: 0.0
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.image.AxesImage at 0x7ff27793e180&gt;
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.image.AxesImage at 0x7f76a9fa0290&gt;
 </pre></div>
 </div>
 <img alt="_images/60b7cd61208645b425827f7a1ad2f07076f41c86351b79cba077558e9f2a5174.png" src="_images/60b7cd61208645b425827f7a1ad2f07076f41c86351b79cba077558e9f2a5174.png" />
@@ -1992,7 +1992,7 @@ using specific NumPy (or <code class="docutils literal notranslate"><span class=
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.image.AxesImage at 0x7ff277b85940&gt;
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.image.AxesImage at 0x7f76ba8be600&gt;
 </pre></div>
 </div>
 <img alt="_images/50aff3d36362558deba307a37ae4682958e48d2b46c8fe49483f0733bf1123b0.png" src="_images/50aff3d36362558deba307a37ae4682958e48d2b46c8fe49483f0733bf1123b0.png" />
@@ -2171,8 +2171,9 @@ clear as we go.</p>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># The image center in pixels</span>
-<span class="n">c_i</span><span class="p">,</span> <span class="n">c_j</span> <span class="o">=</span> <span class="n">dim_0</span> <span class="o">/</span> <span class="mi">2</span><span class="p">,</span> <span class="n">dim_1</span> <span class="o">/</span> <span class="mi">2</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># The coordinate of the image center in pixels.  Remember that pixel indices</span>
+<span class="c1"># start at 0.</span>
+<span class="n">c_i</span><span class="p">,</span> <span class="n">c_j</span> <span class="o">=</span> <span class="p">(</span><span class="n">dim_0</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">/</span> <span class="mi">2</span><span class="p">,</span> <span class="p">(</span><span class="n">dim_1</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">/</span> <span class="mi">2</span>
 <span class="c1"># Radius</span>
 <span class="n">r</span> <span class="o">=</span> <span class="mi">275</span>
 </pre></div>
@@ -2197,7 +2198,7 @@ Max Pixel Value: True
 Min Pixel Value: False
 </pre></div>
 </div>
-<img alt="_images/5143c08785a52a422fdff861aa1d7e46be69333fa4b6a250f56619c98bd447fe.png" src="_images/5143c08785a52a422fdff861aa1d7e46be69333fa4b6a250f56619c98bd447fe.png" />
+<img alt="_images/7850a6da4274437c38d9ed1c7b5fc1df9a12e4d879fcf94622614e94fcf82598.png" src="_images/7850a6da4274437c38d9ed1c7b5fc1df9a12e4d879fcf94622614e94fcf82598.png" />
 </div>
 </div>
 <p>Once we have our mask - which is just a Boolean array - it is just a matter of Boolean indexing to set all the pixel values in the image to the same value, where there is a True in the corresponding element in the mask:</p>
@@ -2212,7 +2213,7 @@ Min Pixel Value: False
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/a1402db65401a48a5434d7a0be6503a93f65e23d6addf449be9a207e9d9cdefc.png" src="_images/a1402db65401a48a5434d7a0be6503a93f65e23d6addf449be9a207e9d9cdefc.png" />
+<img alt="_images/6b5a71cb74cf9ddebcce949aa7b38f2bd59d3e37806674859eee527e60341760.png" src="_images/6b5a71cb74cf9ddebcce949aa7b38f2bd59d3e37806674859eee527e60341760.png" />
 </div>
 </div>
 <div class="exercise dropdown admonition" id="masked-man">
@@ -2250,21 +2251,23 @@ image:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution pt 1.</span>
-<span class="n">cam_c_i</span><span class="p">,</span> <span class="n">cam_c_j</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">camera</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span> <span class="o">/</span> <span class="mi">2</span>
+<span class="n">cam_c_i</span><span class="p">,</span> <span class="n">cam_c_j</span> <span class="o">=</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">camera</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">/</span> <span class="mi">2</span>
 <span class="n">p</span> <span class="o">=</span> <span class="mi">55</span>  <span class="c1"># By experiment.</span>
-<span class="n">i_camera</span><span class="p">,</span> <span class="n">j_camera</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">meshgrid</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">camera</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">camera</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]))</span>
+<span class="n">i_cam</span><span class="p">,</span> <span class="n">j_cam</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">meshgrid</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">camera</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span>
+                           <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">camera</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]),</span>
+                           <span class="n">indexing</span><span class="o">=</span><span class="s1">&#39;ij&#39;</span><span class="p">)</span>
 <span class="c1"># Apply formula to make mask.</span>
-<span class="n">mask_camera</span> <span class="o">=</span> <span class="p">((</span><span class="n">i_camera</span> <span class="o">-</span> <span class="n">cam_c_i</span><span class="p">)</span> <span class="o">**</span> <span class="mi">3</span> <span class="o">+</span> <span class="p">(</span><span class="n">j_camera</span> <span class="o">-</span> <span class="n">cam_c_j</span><span class="p">)</span> <span class="o">**</span> <span class="mi">3</span><span class="p">)</span> <span class="o">**</span> <span class="p">(</span><span class="mi">1</span> <span class="o">/</span> <span class="mi">3</span><span class="p">)</span> <span class="o">&gt;</span> <span class="n">p</span>
+<span class="n">mask_camera</span> <span class="o">=</span> <span class="p">((</span><span class="n">i_cam</span> <span class="o">-</span> <span class="n">cam_c_i</span><span class="p">)</span> <span class="o">**</span> <span class="mi">3</span> <span class="o">+</span> <span class="p">(</span><span class="n">j_cam</span> <span class="o">-</span> <span class="n">cam_c_j</span><span class="p">)</span> <span class="o">**</span> <span class="mi">3</span><span class="p">)</span> <span class="o">**</span> <span class="p">(</span><span class="mi">1</span> <span class="o">/</span> <span class="mi">3</span><span class="p">)</span> <span class="o">&gt;</span> <span class="n">p</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">mask_camera</span><span class="p">);</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/tmp/ipykernel_2642/1009322138.py:6: RuntimeWarning: invalid value encountered in power
-  mask_camera = ((i_camera - cam_c_i) ** 3 + (j_camera - cam_c_j) ** 3) ** (1 / 3) &gt; p
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/tmp/ipykernel_2626/2746963989.py:8: RuntimeWarning: invalid value encountered in power
+  mask_camera = ((i_cam - cam_c_i) ** 3 + (j_cam - cam_c_j) ** 3) ** (1 / 3) &gt; p
 </pre></div>
 </div>
-<img alt="_images/c9fbcd4e711ba858bc41531012641299b0a6675d76c43d208d0a8b442c5d7a91.png" src="_images/c9fbcd4e711ba858bc41531012641299b0a6675d76c43d208d0a8b442c5d7a91.png" />
+<img alt="_images/7113ee210edb41cfd048a0e1fcfadd6100dae0e01081b1e8fb02d4c99d6b6a79.png" src="_images/7113ee210edb41cfd048a0e1fcfadd6100dae0e01081b1e8fb02d4c99d6b6a79.png" />
 </div>
 </div>
 <div class="cell docutils container">
@@ -2277,7 +2280,7 @@ image:</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/060f74e6a9b5e6046c5e412c6ff35158c653bf79bf01fe9a74c432ad44bf6ffa.png" src="_images/060f74e6a9b5e6046c5e412c6ff35158c653bf79bf01fe9a74c432ad44bf6ffa.png" />
+<img alt="_images/ba8ad8e26b99002d00d7b3e7a6f01a7e8f479c091579400520319eb4823fcfd1.png" src="_images/ba8ad8e26b99002d00d7b3e7a6f01a7e8f479c091579400520319eb4823fcfd1.png" />
 </div>
 </div>
 </section>
@@ -2436,7 +2439,7 @@ Max Pixel Value: 207
 Min Pixel Value: 63
 </pre></div>
 </div>
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.image.AxesImage at 0x7ff2778e7a10&gt;
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.image.AxesImage at 0x7f76aa0d2b70&gt;
 </pre></div>
 </div>
 <img alt="_images/c7b80769183299078e5ab4339df4c51966f28bae48a1f0c68b5bb917cdedb60c.png" src="_images/c7b80769183299078e5ab4339df4c51966f28bae48a1f0c68b5bb917cdedb60c.png" />
@@ -2630,7 +2633,7 @@ Min Pixel Value: 0
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.image.AxesImage at 0x7ff2a08d7800&gt;
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.image.AxesImage at 0x7f76a9feff80&gt;
 </pre></div>
 </div>
 <img alt="_images/bef9d675f96e7306487274a9ce21bdb89f9593db4b4ee37f0576a945c6403edc.png" src="_images/bef9d675f96e7306487274a9ce21bdb89f9593db4b4ee37f0576a945c6403edc.png" />
@@ -2773,7 +2776,7 @@ of the channels.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.image.AxesImage at 0x7ff2777e7f20&gt;
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.image.AxesImage at 0x7f76ba874c80&gt;
 </pre></div>
 </div>
 <img alt="_images/47f051e43f314d35f26f2b6497a1673c1cc0ba20e4f6bd0a27f0cd36068d260f.png" src="_images/47f051e43f314d35f26f2b6497a1673c1cc0ba20e4f6bd0a27f0cd36068d260f.png" />
