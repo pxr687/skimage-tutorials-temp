@@ -21,11 +21,11 @@ We already encountered structuring elements - (of which kernels are one type) - 
 
 A (3, 3) structuring element can be applied as a square which affects 9 pixels - we might alter the image by centering this structuring element over every pixel, and replacing each pixel with the mean of the other pixels in its "neighborhood", for instance:
 
-![](images/kernel_general.png)
+![](images/footprint_general.png)
 
 You will also recall that we need a strategy for pixels at the edge of the image, where we center the structuring element on a pixel where part of the structuring element "falls off" the edge of the image:
 
-![](images/kernel_hit_the_edge.png)
+![](images/footprint_hit_the_edge.png)
 
 Options here including "padding" the empty structuring element locations with a repeated value (like 0), or just duplicating the existing pixels at the edge of the image.
 
