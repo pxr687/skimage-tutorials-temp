@@ -34,8 +34,8 @@ a guide...""")
 
 
 def hint_strange_coffee():
-            print("""You may need to adjust the *sign* of the kernel elements,
-to achieve the desired result...""")
+    print("""Remember to check back to the masking section for the way
+to get arrays of i and j coordinates for an array of a particular shape.""")
 
 
 def hint_krazy_kernel_1():

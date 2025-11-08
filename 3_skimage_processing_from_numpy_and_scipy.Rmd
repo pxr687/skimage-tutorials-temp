@@ -945,6 +945,7 @@ show_attributes(camera[130:160, 240:320])
 ::: {solution-end}
 :::
 
+(on-masks)=
 
 ## Masks
 

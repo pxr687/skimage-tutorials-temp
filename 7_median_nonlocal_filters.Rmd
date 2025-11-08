@@ -30,7 +30,7 @@ When compared to the other local filters we have seen, the median filter uses th
 
 Like with the other kernels we have seen, the "neighborhood array" is centered on every pixel during the filtering operation. The central pixel value is replaced with a number computed from the other values in the local neighborhood, e.g. the other pixel values under the "neighborhood array".  However, instead of *convolving* the neighborhood array and the image, as we would for a mean filter or Gaussian filter etc., the median filter, shockingly, takes the median value of the pixels under the small array. 
 
-![](images/kernel_general.png)
+![](images/footprint_general.png)
 
 There is no convolvable function to calculate the median, and this is why [some people](https://dsp.stackexchange.com/questions/13211/convolution-kernels-for-image-filtering) will tell you not to call the "neighborhood array" a "kernel", when we are doing median filtering. Calculating the median utilizes ranking and indexing, and cannot be expressed as set of additions, subtractions, multiplications, divisions etc, in the way that calculating a mean can, for instance.
 
