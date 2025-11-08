@@ -185,11 +185,6 @@
 <li class="toctree-l1"><a class="reference internal" href="3_skimage_processing_from_numpy_and_scipy.html">(Scikit-) Image processing, via NumPy and SciPy</a></li>
 <li class="toctree-l1"><a class="reference internal" href="4_threshold_filters.html">Threshold filtering</a></li>
 <li class="toctree-l1"><a class="reference internal" href="5_mean_filter.html">Convolution filters I - the mean filter</a></li>
-
-
-
-
-
 <li class="toctree-l1"><a class="reference internal" href="6_gaussian_sharpening_edge.html">Convolution filters II - Gaussian blur, sharpening and edge detection</a></li>
 
 
@@ -476,7 +471,7 @@ document.write(`
 <h1>Local filtering without convolution<a class="headerlink" href="#local-filtering-without-convolution" title="Link to this heading">#</a></h1>
 <p>When compared to the other local filters we have seen, the median filter uses the same process of “walking” through the image with a small array which denfines the “local neighborhood” of each pixel. In median filtering, you can <em>loosely</em> think of this small array as a kernel, but there are some major differences in the calculations, so let’s call it the “neighborhood array” instead.</p>
 <p>Like with the other kernels we have seen, the “neighborhood array” is centered on every pixel during the filtering operation. The central pixel value is replaced with a number computed from the other values in the local neighborhood, e.g. the other pixel values under the “neighborhood array”.  However, instead of <em>convolving</em> the neighborhood array and the image, as we would for a mean filter or Gaussian filter etc., the median filter, shockingly, takes the median value of the pixels under the small array.</p>
-<p><img alt="" src="_images/kernel_general.png" /></p>
+<p><img alt="" src="_images/footprint_general.png" /></p>
 <p>There is no convolvable function to calculate the median, and this is why <a class="reference external" href="https://dsp.stackexchange.com/questions/13211/convolution-kernels-for-image-filtering">some people</a> will tell you not to call the “neighborhood array” a “kernel”, when we are doing median filtering. Calculating the median utilizes ranking and indexing, and cannot be expressed as set of additions, subtractions, multiplications, divisions etc, in the way that calculating a mean can, for instance.</p>
 <p>One way to think of this, is that when we write the formula for the mean, we can write it without reference to any Python indexing operations:</p>
 <p><span class="math notranslate nohighlight">\( \large \text{mean} = \frac{\sum X}{n} \)</span></p>

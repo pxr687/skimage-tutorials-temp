@@ -182,11 +182,6 @@
 <li class="toctree-l1"><a class="reference internal" href="3_skimage_processing_from_numpy_and_scipy.html">(Scikit-) Image processing, via NumPy and SciPy</a></li>
 <li class="toctree-l1"><a class="reference internal" href="4_threshold_filters.html">Threshold filtering</a></li>
 <li class="toctree-l1"><a class="reference internal" href="5_mean_filter.html">Convolution filters I - the mean filter</a></li>
-
-
-
-
-
 <li class="toctree-l1"><a class="reference internal" href="6_gaussian_sharpening_edge.html">Convolution filters II - Gaussian blur, sharpening and edge detection</a></li>
 
 
@@ -479,9 +474,9 @@ document.write(`
 <p><a class="reference external" href="https://en.wikipedia.org/wiki/Mathematical_morphology">Morphology</a> is the mathematical study of shapes and has numerous applications in image processing. As such, Scikit-image has a dedicated module (<code class="docutils literal notranslate"><span class="pre">ski.morphology</span></code>) for associated functions.</p>
 <p>We already encountered structuring elements - (of which kernels are one type) - on <a class="reference internal" href="4_threshold_filters.html"><span class="doc std std-doc">earlier</span></a> <a class="reference internal" href="5_mean_filter.html"><span class="doc std std-doc">pages</span></a>. A structuring element is a grid of a certain shape - you can think of it as a “template” - which is used to define the “neighborhood” of pixels which an image processing operation affects.</p>
 <p>A (3, 3) structuring element can be applied as a square which affects 9 pixels - we might alter the image by centering this structuring element over every pixel, and replacing each pixel with the mean of the other pixels in its “neighborhood”, for instance:</p>
-<p><img alt="" src="_images/kernel_general.png" /></p>
+<p><img alt="" src="_images/footprint_general.png" /></p>
 <p>You will also recall that we need a strategy for pixels at the edge of the image, where we center the structuring element on a pixel where part of the structuring element “falls off” the edge of the image:</p>
-<p><img alt="" src="_images/kernel_hit_the_edge.png" /></p>
+<p><img alt="" src="_images/footprint_hit_the_edge.png" /></p>
 <p>Options here including “padding” the empty structuring element locations with a repeated value (like 0), or just duplicating the existing pixels at the edge of the image.</p>
 <p>We have seen structuring elements applied during filtering operations, courtesy of the <code class="docutils literal notranslate"><span class="pre">ski.filters</span></code> module. Morphological operations also make use of structuring elements, though in morphological operations, structuring elements are binary (contain only 0s and 1s).</p>
 <p>Morphological operations differ from the filtering operations we have seen previously because they are specifically related to the shape (…or, well, <a class="reference external" href="https://www.cs.auckland.ac.nz/courses/compsci773s1c/lectures/ImageProcessing-html/topic4.htm"><em>morphology</em></a>) of features with in the image. This contrasts with operations like <a class="reference internal" href="5_mean_filter.html"><span class="doc std std-doc">mean filtering</span></a> which “spread” pixel values around within a neighborhood, rather than identifying and altering features with a specific shape/morphology.</p>

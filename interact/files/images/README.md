@@ -31,6 +31,7 @@ These images are all generated from Scikit-image standard `camera` image:
 - `shoegaze.png` also from the [skimage intro page](../2_skimage_intro);
 - `masked_camera.png` from the [Numpy / Scipy page](../ 3_skimage_processing_from_numpy_and_scipy);
 - `camera_3_regions.png` from [threshold filters](../4_threshold_filters).
+- `camera_3_regions.png` from [threshold filters](../4_threshold_filters).
 
 ## `interverted_bricks.png`
 
@@ -52,3 +53,16 @@ Derived from `ski.data.colorwheel()`.
   ski.data.colorwheel())`
 - `gray_wheel.png` from the [Numpy / Scipy page](../
   3_skimage_processing_from_numpy_and_scipy).
+
+## `*coins*.png`
+
+From `ski.data.coins()`:
+
+- `neg_sum_coins.png` - written by the [mean filter page](../5_mean_filter).
+
+## `*coffee*.png`
+
+From `ski.data.coffee()`:
+
+- `coffee_strange_kernel.png` - written by the [mean filter
+  page](../5_mean_filter).

@@ -996,12 +996,7 @@ surrounding pixels.
 ## References
 
 * Gulati, J. (2024) *NumPy for Image Processing*. KDnuggets. Available from:
-  https://www.kdnuggets.com/numpy-for-image-processing
-* <https://setosa.io/ev/image-kernels>
-* [imindlabs on edge
-  detectors](https://wiki.imindlabs.com.au/ds/aml/4_problem_domains/1-image-processing/3_edge_detectors).
-* [Types of convolution
-  kernels](https://www.geeksforgeeks.org/deep-learning/types-of-convolution-kernels).
+  <https://www.kdnuggets.com/numpy-for-image-processing>
 
 Adapted from:
 

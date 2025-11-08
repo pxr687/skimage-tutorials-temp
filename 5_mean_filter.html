@@ -185,11 +185,6 @@
 <li class="toctree-l1"><a class="reference internal" href="3_skimage_processing_from_numpy_and_scipy.html">(Scikit-) Image processing, via NumPy and SciPy</a></li>
 <li class="toctree-l1"><a class="reference internal" href="4_threshold_filters.html">Threshold filtering</a></li>
 <li class="toctree-l1 current active"><a class="current reference internal" href="#">Convolution filters I - the mean filter</a></li>
-
-
-
-
-
 <li class="toctree-l1"><a class="reference internal" href="6_gaussian_sharpening_edge.html">Convolution filters II - Gaussian blur, sharpening and edge detection</a></li>
 
 
@@ -255,6 +250,37 @@
         <div class="header-article-item">
 
 <div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-launch-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Launch interactive content">
+    <i class="fas fa-rocket"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="interact/lab/index.html?path=5_mean_filter.ipynb" target="_blank"
+   class="btn btn-sm dropdown-item"
+   title="Launch via JupyterLite"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  
+    <img alt="JupyterLite logo" src="_static/images/logo_jupyterlite.svg">
+  </span>
+<span class="btn__text-container">JupyterLite</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
 
 
 
@@ -426,17 +452,13 @@ document.write(`
             </div>
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Convolution filters I - the mean filter</a><ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#kernels-and-pixel-neighborhoods">Kernels and pixel neighborhoods</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#footprints-and-pixel-neighborhoods">Footprints and pixel neighborhoods</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#convolution">Convolution</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#mean-filtering-with-skimage">Mean filtering with <code class="docutils literal notranslate"><span class="pre">skimage</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#filtering-3d-images">Filtering 3D images</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#summary">Summary</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#references">References</a></li>
 </ul>
-</li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#convolution">Convolution</a></li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#mean-filtering-with-skimage">Mean filtering with <code class="docutils literal notranslate"><span class="pre">skimage</span></code></a></li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#filtering-3d-images">Filtering 3D images</a></li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#summary">Summary</a></li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#references">References</a></li>
-</ul>
-
             </nav>
         </div>
     </div>
@@ -449,13 +471,34 @@ document.write(`
                   
   <section class="tex2jax_ignore mathjax_ignore" id="convolution-filters-i-the-mean-filter">
 <h1>Convolution filters I - the mean filter<a class="headerlink" href="#convolution-filters-i-the-mean-filter" title="Link to this heading">#</a></h1>
-<section id="kernels-and-pixel-neighborhoods">
-<h2>Kernels and pixel neighborhoods<a class="headerlink" href="#kernels-and-pixel-neighborhoods" title="Link to this heading">#</a></h2>
-<p>On the last page we filtered images based on a single threshold value, or based on multiple threshold values. Other filters work differently to this: they work by adjusting a given pixel’s value based on the value of other pixels which surround it, in a specified area. The mean filter is one such filter that works in this manner.</p>
-<p>The mean filter is a <em>local filter</em>, because it alters a given pixel’s value based on the values of other pixels in the surrounding “local neighborhood”. The image below shows the pixel values in the <code class="docutils literal notranslate"><span class="pre">smiley</span></code> image array that we created on an earlier <a class="reference internal" href="0_images_as_numpy_arrays.html"><span class="doc std std-doc">page</span></a>. Two possible “local neighborhoods” are shown for a given pixel, which is highlighted in red. One neighborhood is 3-by-3, and the other is 5-by-5 - we could use either when using a local filter:</p>
+<section id="footprints-and-pixel-neighborhoods">
+<h2>Footprints and pixel neighborhoods<a class="headerlink" href="#footprints-and-pixel-neighborhoods" title="Link to this heading">#</a></h2>
+<p>On the last page we filtered images based on a single threshold value, or based on multiple threshold values. Other filters work differently: they work by adjusting a given pixel’s value based on the value of other pixels which surround it, in a specified area. The mean filter is one such filter.</p>
+<p>The mean filter is a <em>local filter</em>, because it alters a given pixel’s value based on the values of other pixels in the surrounding “local neighborhood”. The image below shows the pixel values in the <code class="docutils literal notranslate"><span class="pre">smiley</span></code> image array that we created on an earlier <a class="reference internal" href="0_images_as_numpy_arrays.html"><span class="doc std std-doc">page</span></a>. Two possible “local neighborhoods” are shown for a given pixel, which is highlighted in red. One neighborhood is 3-by-3, and the other is 5-by-5 — we could use either when using a local filter:</p>
 <p><img alt="" src="_images/smiley_neighborhoods.png" /></p>
-<p>The values within a pixel’s local neighborhood will influence the change that a local filter makes to the central pixel. The <code class="docutils literal notranslate"><span class="pre">size</span></code> and <code class="docutils literal notranslate"><span class="pre">shape</span></code> of the “neighborhood” are up to the user. We can synonomously refer to the neighborhood as a “kernel”, “footprint” or “structuring element”. As we will see later, Scikit image favours the term “footprint”. For now, we will use the terms “kernel” and “neighborhood” interchangeably to refer to some set of pixels that surround a given pixel.</p>
-<p>The mean filter, as the name suggests, <em>averages</em> the pixel values within a kernel/neighborhood. To see this in action, let’s build a simple mean filter to filter an image array. First, we perform some imports:</p>
+<p>The values within a pixel’s local neighborhood affect the value that a local
+filter calculates when applied to given pixel. The <code class="docutils literal notranslate"><span class="pre">size</span></code> and <code class="docutils literal notranslate"><span class="pre">shape</span></code> of the
+“neighborhood” are up to the user. We can also refer to the neighborhood as
+a “footprint” or “structuring element”. As we will see later, Scikit image
+favors the term “footprint”. For now, we will use the terms “footprint” and
+“neighborhood” interchangeably to refer to some set of pixels that surround
+a given pixel.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p><strong>Footprints are binary arrays defining neighborhood</strong></p>
+<p>Above we’ve show footprints that are squares of different sizes, but in general a footprint is a binary array defining the voxels in the pixel neighborhood, with True (1) meaning in the neighborhood, and False (0) meaning not in the neighborhood.</p>
+<p>For example, instead of a square, we could use a cross-shaped footprint like
+this:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">x_shape</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="kc">False</span><span class="p">,</span> <span class="kc">True</span><span class="p">,</span> <span class="kc">False</span><span class="p">],</span>
+                    <span class="p">[</span><span class="kc">True</span><span class="p">,</span>  <span class="kc">True</span><span class="p">,</span>  <span class="kc">True</span><span class="p">],</span>
+                    <span class="p">[</span><span class="kc">False</span><span class="p">,</span> <span class="kc">True</span><span class="p">,</span> <span class="kc">False</span><span class="p">]])</span>
+</pre></div>
+</div>
+</div>
+<p>The mean filter, as the name suggests, <em>averages</em> the pixel values within
+a footprint/neighborhood. To see this in action, let’s build a simple mean
+filter to filter an image array. First, we perform some imports, and change
+some defaults.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Library imports.</span>
@@ -512,10 +555,16 @@ document.write(`
 <img alt="_images/37b9b61360bba01248e577d239fe0e2f2d44e2d2dcd7222932d23a061dd125e1.png" src="_images/37b9b61360bba01248e577d239fe0e2f2d44e2d2dcd7222932d23a061dd125e1.png" />
 </div>
 </div>
-<p>Let’s use some indexing to go for a walk through the neighborhoods (kernels) in this array. We will treat each <code class="docutils literal notranslate"><span class="pre">(3,3)</span></code> set of pixels as a separate neighborhood. For now, we only walk through the neighborhoods at the “top” of the array. We will start our “walk” in the top-left corner of the array, so that each 3-by-3 slice is centered on a pixel in the second row of the image:</p>
+<p>Let’s use some indexing to go for a walk through the neighborhoods
+(footprints) in this array. As above, we’ll use a simple 3 by 3 pixel square
+as the footprint — thus we treat each <code class="docutils literal notranslate"><span class="pre">(3,3)</span></code> set of pixels as
+a separate neighborhood. For now, we only walk through the neighborhoods at
+the “top” of the array. We will start our “walk” in the top-left corner of the
+array, so that each 3-by-3 slice is centered on a pixel in the second row of
+the image:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># The first neighborhood.</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Pixel values in the first neighborhood.</span>
 <span class="n">i_row_start</span><span class="p">,</span> <span class="n">i_col_start</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span>
 <span class="n">i_row_end</span><span class="p">,</span> <span class="n">i_col_end</span> <span class="o">=</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">3</span>
 <span class="n">random_i</span><span class="p">[</span><span class="n">i_row_start</span><span class="p">:</span><span class="n">i_row_end</span><span class="p">,</span> <span class="n">i_col_start</span><span class="p">:</span><span class="n">i_col_end</span><span class="p">]</span>
@@ -567,7 +616,7 @@ document.write(`
 <p>Obviously, this “walk” is more efficient in a for loop:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">6</span><span class="p">):</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">6</span><span class="p">):</span>
     <span class="n">i_row_start</span><span class="p">,</span> <span class="n">i_col_start</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="n">i</span>
     <span class="n">i_row_end</span><span class="p">,</span> <span class="n">i_col_end</span> <span class="o">=</span> <span class="mi">3</span><span class="p">,</span> <span class="n">i</span><span class="o">+</span><span class="mi">3</span>
     <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">random_i[</span><span class="si">{</span><span class="n">i_row_start</span><span class="si">}</span><span class="s2">:</span><span class="si">{</span><span class="n">i_row_end</span><span class="si">}</span><span class="s2">, </span><span class="si">{</span><span class="n">i_col_start</span><span class="si">}</span><span class="s2">:</span><span class="si">{</span><span class="n">i_col_end</span><span class="si">}</span><span class="s2">]</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
@@ -615,50 +664,74 @@ random_i[0:3, 5:8]
 </div>
 </div>
 </div>
-<p>We can visualise the “walk” we have just taken, with prettier graphics - (you may want to right click on these images and open them in a new tab/window, for easier viewing):</p>
-<p><img alt="" src="_images/kernel_1.png" /></p>
-<p>Now, imagine we calculate the mean within each neighborhood (kernel) - the mean of each kernel is shown below the image of each indexing operation:</p>
-<p><img alt="" src="_images/kernel_2_mean.png" /></p>
-<p>…and now further imagine that we replace <em>central pixel value of the 3-by-3 kernel with the mean of all the values in the kernel</em>. The image below shows the central value being replaced with the mean of each kernel:</p>
-<p><img alt="" src="_images/kernel_3_replace_central_pixel.png" /></p>
+<p>We can visualise the “walk” we have just taken, with prettier graphics — (you
+may want to right click on these images and open them in a new tab/window, for
+easier viewing):</p>
+<p><img alt="" src="_images/footprint_1.png" /></p>
+<p>Now, imagine we calculate the mean within each of these neighborhoods
+(footprints) - the mean of the pixel values within each footprint is shown
+below with the image of each indexing operation:</p>
+<p><img alt="" src="_images/footprint_2_mean.png" /></p>
+<p>…and now further imagine that we replace the <em>central pixel value of the
+3-by-3 footprint with the mean of all the values in the footprint</em>. The image
+below shows the central value being replaced with the mean with each
+footprint:</p>
+<p><img alt="" src="_images/footprint_3_replace_central_pixel.png" /></p>
 <p>This is how the mean filter operates:</p>
 <ul class="simple">
-<li><p>We define our kernel (e.g. our pixel neighborhood size and shape).</p></li>
-<li><p>We center our kernel on a pixel.</p></li>
-<li><p>We then replace the value of the central pixel with the mean of the pixels in the neighborhood.</p></li>
+<li><p>Define our footprint (e.g. our pixel neighborhood size and shape).</p></li>
+<li><p>For each pixel:</p>
+<ul>
+<li><p>Center our footprint on the given pixel.</p></li>
+<li><p>Replace the value of the central pixel with the mean of the pixels in the
+neighborhood.</p></li>
 </ul>
-<p>The illustrations above only show the kernel proceeding through the pixels at the “top” of the array. In reality, filtering operations are applied every pixel in the image. You can think of this as the kernel “walking” through the entire array, being centered on one pixel at a time.</p>
-<p>Astute readers might ask “what happens near the edges of the array? If we center our kernel on a pixel in the last column or row, won’t part of the kernel ‘fall off’ the edge of the array?’”:</p>
-<p><img alt="" src="_images/kernel_hit_the_edge.png" /></p>
-<p>Indeed, we need a strategy for this. There are actually many options for how a kernel should behave at the edges of an image array - we could “pad” the kernel elements that fall outside of the image with 0 values, for instance. Or we could duplicate values from the pixels at the edge of the array, to fill in kernel elements that fall outside of the array.</p>
-<p><strong>For now we will not worry about the edges, we just use the kernel only where it “fits” within the array.</strong> In effect, this just ignores pixels near the edges of the image. Presently, most of these pixels at the edges of the image are 0, and there is some distance between the “i” and the image edges, so ignoring the pixels near the edge will not affect the “i” shape too much itself. The image below illustrates this concept, for a generic array:</p>
-<p><img alt="" src="_images/kernel_general.png" /></p>
-<p>The cell below defines a function that will apply this mean kernel, step-by-step in a for loop to the whole image array, only for pixel neighborhoods where the kernel “fits” over the central pixel, without extending outside of the image:</p>
+</li>
+</ul>
+<p>The illustrations above only show the footprint proceeding through the pixels
+at the “top” of the array. In reality, filtering operations are applied to
+every pixel in the image. You can think of this as the footprint “walking”
+through the entire array, being centered on one pixel at a time.</p>
+<p>Astute readers might ask “what happens near the edges of the array? If we center our footprint on a pixel in the last column or row, won’t part of the footprint ‘fall off’ the edge of the array?’”:</p>
+<p><img alt="" src="_images/footprint_hit_the_edge.png" /></p>
+<p>Indeed, we need a strategy for this. There are actually many options for how a footprint should behave at the edges of an image array - we could “pad” the footprint elements that fall outside of the image with 0 values, for instance. Or we could duplicate values from the pixels at the edge of the array, to fill in footprint elements that fall outside of the array.</p>
+<p><strong>For now we will not worry about the edges, we just use the footprint only
+where it “fits” within the array.</strong></p>
+<p>In effect, this ignores pixels near the edges of the image. Presently, most of
+these pixels at the edges of the image are 0, and there is some distance
+between the pixel values containing the “i” and the image edges, so ignoring
+the pixels near the edge will not affect the “i” shape too much itself. The
+image below illustrates this concept, for a generic array:</p>
+<p><img alt="" src="_images/footprint_general.png" /></p>
+<p>The cell below defines a function that will apply this mean footprint,
+step-by-step in a for loop, to the whole image array.  It does this only for
+pixel neighborhoods where the footprint “fits” over the central pixel, without
+extending outside of the image:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># A function to apply our crude mean kernel.</span>
-<span class="k">def</span><span class="w"> </span><span class="nf">three_by_three_mean_kernel</span><span class="p">(</span><span class="n">image</span><span class="p">):</span>
-    
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># A function to apply our crude mean footprint.</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">three_by_three_mean_footprint</span><span class="p">(</span><span class="n">image</span><span class="p">):</span>
+
     <span class="c1"># Convert to float `dtype`.</span>
-    <span class="n">image</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">image</span><span class="p">,</span> 
+    <span class="n">image</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">image</span><span class="p">,</span>
                      <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">)</span>
-    
+
     <span class="c1"># Get the image shape.</span>
     <span class="n">n_rows</span><span class="p">,</span> <span class="n">n_cols</span> <span class="o">=</span> <span class="n">image</span><span class="o">.</span><span class="n">shape</span>
-    
+
     <span class="c1"># Create an empty image array (for the result of the</span>
     <span class="c1"># filtering operation)</span>
     <span class="n">filtered_image</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">image</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
-    
-    <span class="c1"># Loop through the pixels and get the mean of each kernel.</span>
-    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">n_rows</span><span class="o">-</span><span class="mi">1</span><span class="p">):</span>
-        <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">n_cols</span><span class="o">-</span><span class="mi">1</span><span class="p">):</span>
+
+    <span class="c1"># Loop through the pixels and get the mean of each footprint.</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">n_rows</span><span class="o">-</span><span class="mi">1</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">n_cols</span><span class="o">-</span><span class="mi">1</span><span class="p">):</span>
             <span class="n">row_start</span> <span class="o">=</span> <span class="n">i</span><span class="o">-</span><span class="mi">1</span>
             <span class="n">col_start</span> <span class="o">=</span> <span class="n">j</span><span class="o">-</span><span class="mi">1</span>
             <span class="n">row_end</span> <span class="o">=</span> <span class="n">i</span><span class="o">+</span><span class="mi">2</span>
             <span class="n">col_end</span> <span class="o">=</span> <span class="n">j</span><span class="o">+</span><span class="mi">2</span>
-            <span class="n">kernel</span> <span class="o">=</span> <span class="n">image</span><span class="p">[</span><span class="n">row_start</span><span class="p">:</span><span class="n">row_end</span><span class="p">,</span> <span class="n">col_start</span><span class="p">:</span><span class="n">col_end</span><span class="p">]</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
-            <span class="n">filtered_image</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="n">kernel</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>           
+            <span class="n">footprint</span> <span class="o">=</span> <span class="n">image</span><span class="p">[</span><span class="n">row_start</span><span class="p">:</span><span class="n">row_end</span><span class="p">,</span> <span class="n">col_start</span><span class="p">:</span><span class="n">col_end</span><span class="p">]</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+            <span class="n">filtered_image</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="n">footprint</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
     <span class="k">return</span> <span class="n">filtered_image</span>
 </pre></div>
 </div>
@@ -668,14 +741,14 @@ random_i[0:3, 5:8]
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Apply our mean filtering function.</span>
-<span class="n">mean_filtered_i</span> <span class="o">=</span> <span class="n">three_by_three_mean_kernel</span><span class="p">(</span><span class="n">random_i</span><span class="p">)</span>
+<span class="n">mean_filtered_i</span> <span class="o">=</span> <span class="n">three_by_three_mean_footprint</span><span class="p">(</span><span class="n">random_i</span><span class="p">)</span>
 
-<span class="c1"># Show the original array and the filtered array, from the </span>
+<span class="c1"># Show the original array and the filtered array, from the</span>
 <span class="c1"># &quot;raw&quot; NumPy perspective.</span>
 <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Original:</span><span class="se">\n\n</span><span class="s2"> </span><span class="si">{</span><span class="n">random_i</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Crude Mean filter:</span><span class="se">\n\n</span><span class="s2"> </span><span class="si">{</span><span class="n">mean_filtered_i</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 
-<span class="c1"># Plot both arrays/</span>
+<span class="c1"># Plot both arrays.</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">random_i</span><span class="p">);</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Original&#39;</span><span class="p">)</span>
@@ -716,37 +789,36 @@ Crude Mean filter:
 <img alt="_images/470ba2e9be9d67a710f556ad2845253b4a09050794216b37c82110abf3a5a967.png" src="_images/470ba2e9be9d67a710f556ad2845253b4a09050794216b37c82110abf3a5a967.png" />
 </div>
 </div>
-<p>Ok, so we can see that some of the non-black (non-zero) pixel intensity values have been “spread around” to neighboring pixels, which is unsurprising, given what we know about how this operation works. We have literally, for each given pixel, “averaged out” between the pixels in the 3-by-3 neighborhood around the pixel. This is a very crude mean filter, intended to show the foundational principles of how filtering via a kernel works. There is a better, less crude way to implement a mean filter, however, to which we will turn in the next section.</p>
+<p>We can see that some of the non-black (non-zero) pixel intensity values have
+been “spread around” to neighboring pixels, which is unsurprising, given what
+we know about how this operation works. We have literally, for each given
+pixel, “averaged out” between the pixels in the 3-by-3 neighborhood around the
+pixel. This is a very crude mean filter, intended to show the foundational
+principles of filtering via a footprint. There is a better, less crude way to
+implement a mean filter, however, to which we will come to in the next
+section.</p>
 <div class="exercise dropdown admonition" id="dont-be-mean">
 
 <p class="admonition-title"><span class="caption-number">Exercise 21 </span></p>
 <section id="exercise-content">
-<p>For this exercise, you should build a function which filters an image using a 3-by-3 kernel, like we did above. Your function should “walk” the 3-by-3 kernel through an image array, but it can ignore edge pixels, as we did above. E.g. you can just alter central pixels where the kernel “fits”, as in the image below:</p>
-<p><img alt="" src="_images/kernel_general_resize.png" /></p>
-<p>However, your kernel should do something different to the mean kernel we implemented earlier. Your function will do something dark, something illegal (at least by the standards of <code class="docutils literal notranslate"><span class="pre">skimage</span></code> <code class="docutils literal notranslate"><span class="pre">dtype</span></code> conventions)…</p>
-<p>It should replace the central pixel value with the <em>negative sum</em> of the values under the kernel (e.g. add the values under the kernel up, and then make the sum negative). You should apply this to the <code class="docutils literal notranslate"><span class="pre">coins</span></code> image from <code class="docutils literal notranslate"><span class="pre">ski.data</span></code>. Here is the original image:</p>
-<p><img alt="" src="_images/coins.png" /></p>
-<p>Here is how your image should look, after applying the negative sum filter, with a 3-by-3 kernel:</p>
-<p><img alt="" src="_images/neg_sum_coins.png" /></p>
-<p>This operation will create some illegal pixel values. You should <code class="docutils literal notranslate"><span class="pre">rescale_intensity()</span></code> to ensure your image has the follow (legal!) attributes:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>Type: &lt;class &#39;numpy.ndarray&#39;&gt;
-dtype: float64
-Shape: (303, 384)
-Max Pixel Value: 1.0
-Min Pixel Value: -1.0
-</pre></div>
-</div>
-<p><strong>DO NOT ADJUST ANY OF THE FUNCTIONS USED ABOVE WHEN MAKING YOUR FUNCTION</strong>. Try to do this from scratch, clearly thinking about what you need to do.</p>
+<p>For this exercise, you should build a function which filters an image using
+a 3-by-3 footprint, like we did above. Your function should “walk” the 3-by-3
+footprint through an image array, but it can ignore edge pixels, as we did
+above. In other words, you can just alter central pixels where the footprint
+“fits”, as in the image below:</p>
+<p><img alt="" src="_images/footprint_general_resize.png" /></p>
+<p>However, your footprint should do something different to the mean footprint we
+implemented earlier. Your function will do something dark, something illegal
+(at least by the standards of <code class="docutils literal notranslate"><span class="pre">skimage</span></code> <code class="docutils literal notranslate"><span class="pre">dtype</span></code> conventions)…</p>
+<p>It should replace the central pixel value with the <em>negative sum</em> of the
+values under the footprint (e.g. add the values under the footprint to give
+the sum, and then make the sum negative). You should apply this to the <code class="docutils literal notranslate"><span class="pre">coins</span></code>
+image from <code class="docutils literal notranslate"><span class="pre">ski.data</span></code>. Here is the original image:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># YOUR CODE HERE</span>
-<span class="k">def</span><span class="w"> </span><span class="nf">three_by_three_negative_sum_kernel</span><span class="p">():</span>
-    <span class="o">...</span>
-
-<span class="c1"># Load in the `coins` image.</span>
-<span class="n">coins</span> <span class="o">=</span> <span class="n">ski</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">coins</span><span class="p">()</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">coins</span> <span class="o">=</span> <span class="n">ski</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">coins</span><span class="p">()</span>
 <span class="n">show_attributes</span><span class="p">(</span><span class="n">coins</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">coins</span><span class="p">);</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">coins</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -758,7 +830,32 @@ Max Pixel Value: 252
 Min Pixel Value: 1
 </pre></div>
 </div>
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.image.AxesImage at 0x7f4dd9c69f70&gt;
+</pre></div>
+</div>
 <img alt="_images/ac70f7cc5b678ac690433d0ab55f89b2e45131ef773bcdd68acf4f95b6e8cde6.png" src="_images/ac70f7cc5b678ac690433d0ab55f89b2e45131ef773bcdd68acf4f95b6e8cde6.png" />
+</div>
+</div>
+<p>Here is how your image should look, after applying the negative sum filter, with a 3-by-3 footprint:</p>
+<p><img alt="" src="_images/neg_sum_coins.png" /></p>
+<p>This operation will create some non-standard floating point pixel values - in
+the sense that they are not between -1 and 1. You should <code class="docutils literal notranslate"><span class="pre">rescale_intensity()</span></code>
+to ensure your image has the follow (legal!) attributes:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>Type: &lt;class &#39;numpy.ndarray&#39;&gt;
+dtype: float64
+Shape: (303, 384)
+Max Pixel Value: 1.0
+Min Pixel Value: -1.0
+</pre></div>
+</div>
+<p><strong>DO NOT ADJUST ANY OF THE FUNCTIONS USED ABOVE WHEN MAKING YOUR FUNCTION</strong>. Try to do this from scratch, clearly thinking about what you need to do.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># YOUR CODE HERE</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">three_by_three_negative_sum_footprint</span><span class="p">():</span>
+    <span class="o">...</span>
+</pre></div>
+</div>
 </div>
 </div>
 </section>
@@ -767,38 +864,45 @@ Min Pixel Value: 1
 
 <p class="admonition-title">Solution to<a class="reference internal" href="#dont-be-mean"> Exercise 21</a></p>
 <section id="solution-content">
-<p>Whilst we told you not to adjust the function from above, obviously you function needs to do something similar to the function from above. So that was a rule for you, not for us ;)</p>
-<p>Here we have adjusted the function to take the negative sum of the kernel elements, rather than the mean. We also <code class="docutils literal notranslate"><span class="pre">rescale_intensity()</span></code> in the final line, to ensure pixel values fall in a legal range, for the <code class="docutils literal notranslate"><span class="pre">float64</span></code> <code class="docutils literal notranslate"><span class="pre">dtype</span></code>:</p>
+<p>Whilst we told you not to adjust the function from above, obviously you
+function needs to do something similar to the function from above. So that was
+a rule for you, not for us ;)</p>
+<p>Here we have adjusted the function to take the negative sum of the footprint
+elements, rather than the mean. We also <code class="docutils literal notranslate"><span class="pre">rescale_intensity()</span></code> in the final
+line, to ensure pixel values fall in a typical range, for the <code class="docutils literal notranslate"><span class="pre">float64</span></code>
+<code class="docutils literal notranslate"><span class="pre">dtype</span></code>:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">three_by_three_negative_sum_kernel_solution</span><span class="p">(</span><span class="n">image</span><span class="p">):</span>
-    
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">three_by_three_negative_sum_footprint_solution</span><span class="p">(</span><span class="n">image</span><span class="p">):</span>
+
     <span class="c1"># Convert to float `dtype`.</span>
-    <span class="n">image</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">image</span><span class="p">,</span> 
+    <span class="n">image</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">image</span><span class="p">,</span>
                      <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">)</span>
-    
+
     <span class="c1"># Get the image shape.</span>
     <span class="n">n_rows</span><span class="p">,</span> <span class="n">n_cols</span> <span class="o">=</span> <span class="n">image</span><span class="o">.</span><span class="n">shape</span>
-    
+
     <span class="c1"># Create an empty image array (for the result of the</span>
     <span class="c1"># filtering operation)</span>
     <span class="n">filtered_image</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">image</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
-    
-    <span class="c1"># Loop through the pixels and get the mean of each kernel.</span>
-    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">n_rows</span><span class="o">-</span><span class="mi">1</span><span class="p">):</span>
-        <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">n_cols</span><span class="o">-</span><span class="mi">1</span><span class="p">):</span>
+
+    <span class="c1"># Loop through the pixels and get the mean of each footprint.</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">n_rows</span><span class="o">-</span><span class="mi">1</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">n_cols</span><span class="o">-</span><span class="mi">1</span><span class="p">):</span>
             <span class="n">row_start</span> <span class="o">=</span> <span class="n">i</span><span class="o">-</span><span class="mi">1</span>
             <span class="n">col_start</span> <span class="o">=</span> <span class="n">j</span><span class="o">-</span><span class="mi">1</span>
             <span class="n">row_end</span> <span class="o">=</span> <span class="n">i</span><span class="o">+</span><span class="mi">2</span>
             <span class="n">col_end</span> <span class="o">=</span> <span class="n">j</span><span class="o">+</span><span class="mi">2</span>
-            <span class="n">kernel</span> <span class="o">=</span> <span class="n">image</span><span class="p">[</span><span class="n">row_start</span><span class="p">:</span><span class="n">row_end</span><span class="p">,</span> <span class="n">col_start</span><span class="p">:</span><span class="n">col_end</span><span class="p">]</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
-            <span class="n">filtered_image</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="o">-</span><span class="n">kernel</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>                          <span class="c1"># LOOK HERE! We take the negative sum.</span>
-    <span class="k">return</span> <span class="n">ski</span><span class="o">.</span><span class="n">exposure</span><span class="o">.</span><span class="n">rescale_intensity</span><span class="p">(</span><span class="n">filtered_image</span><span class="p">,</span> <span class="n">out_range</span><span class="o">=</span><span class="s2">&quot;float64&quot;</span><span class="p">)</span> <span class="c1"># Rescale to ensure legal pixel values.</span>
+            <span class="n">footprint</span> <span class="o">=</span> <span class="n">image</span><span class="p">[</span><span class="n">row_start</span><span class="p">:</span><span class="n">row_end</span><span class="p">,</span> <span class="n">col_start</span><span class="p">:</span><span class="n">col_end</span><span class="p">]</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+            <span class="c1"># Take the negative sum.</span>
+            <span class="n">filtered_image</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="o">-</span><span class="n">footprint</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+    <span class="c1"># Rescale to ensure legal pixel values.</span>
+    <span class="k">return</span> <span class="n">ski</span><span class="o">.</span><span class="n">exposure</span><span class="o">.</span><span class="n">rescale_intensity</span><span class="p">(</span><span class="n">filtered_image</span><span class="p">,</span> <span class="n">out_range</span><span class="o">=</span><span class="s2">&quot;float64&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 </div>
-<p>Here we load in the <code class="docutils literal notranslate"><span class="pre">coins</span></code> image, to which to apply our new filter:</p>
+<p>We reload in the <code class="docutils literal notranslate"><span class="pre">coins</span></code> image, to which to apply our new filter:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Load in and show the `coins` image.</span>
@@ -811,11 +915,12 @@ Min Pixel Value: 1
 <img alt="_images/ac70f7cc5b678ac690433d0ab55f89b2e45131ef773bcdd68acf4f95b6e8cde6.png" src="_images/ac70f7cc5b678ac690433d0ab55f89b2e45131ef773bcdd68acf4f95b6e8cde6.png" />
 </div>
 </div>
-<p>We then apply our filter, replacing the value of the central pixel in each kernel with negative sum of the value of all the pixels under the kernel:</p>
+<p>We then apply our filter, replacing the value of the central pixel in each footprint with negative sum of the value of all the pixels under the footprint:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Filter and show...</span>
-<span class="n">neg_sum_filter_coins</span> <span class="o">=</span> <span class="n">three_by_three_negative_sum_kernel_solution</span><span class="p">(</span><span class="n">coins_solution</span><span class="p">)</span>
+<span class="n">neg_sum_filter_coins</span> <span class="o">=</span> <span class="n">three_by_three_negative_sum_footprint_solution</span><span class="p">(</span>
+    <span class="n">coins_solution</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">neg_sum_filter_coins</span><span class="p">);</span>
 </pre></div>
 </div>
@@ -844,11 +949,32 @@ Min Pixel Value: -1.0
 </section>
 </div>
 </section>
-</section>
-<section class="tex2jax_ignore mathjax_ignore" id="convolution">
-<h1>Convolution<a class="headerlink" href="#convolution" title="Link to this heading">#</a></h1>
-<p>In normal practice, filtering operations which use kernels rely on <a class="reference external" href="https://en.wikipedia.org/wiki/Convolution">convolution</a>. In fact, one name for the kernel is “convolution kernel”. In image processing, convolution is similar to the process we saw with our crude mean filter - we “walk” a kernel across our whole image, centering it on every pixel, and perform a computation which modifies the central pixel based on the other values in the kernel/neighborhood.</p>
-<p>Let’s implement a true mean filter, using convolution. Obviously, we start with our kernel. First, we define its shape:</p>
+<section id="convolution">
+<h2>Convolution<a class="headerlink" href="#convolution" title="Link to this heading">#</a></h2>
+<p>In normal practice, filtering operations which use footprints rely on
+a mathematical operation called
+<a class="reference external" href="https://en.wikipedia.org/wiki/Convolution">convolution</a>.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p><strong>Footprints and kernels</strong></p>
+<p>At this point we introduce a new idea — that of a <em>kernel</em>.</p>
+<p>Remember that a footprint is a binary array defining the neighborhood that
+defines which pixel values we consider as the neighborhood.  For mean
+filtering, for example, we place the footprint over each pixel of the image,
+to define the neighboring values of the pixel, then apply an operation
+— taking the mean — to calculate the new pixel value.</p>
+<p>A kernel is like a footprint array, but where the values of the array, instead
+of being binary (0 or 1) contain the weights to apply to the corresponding
+pixel in the neighborhood.</p>
+<p>We generate the new filtered value by multiplying the kernel values by their
+corresponding pixels, and summing the result.</p>
+<p>This should be come clear as the page progresses.</p>
+</div>
+<p>Convolution is similar to the process we saw with our crude mean filter.  However, instead of walking a footprint over the image, and applying some methematical operation to the values within the footprint — we use a <em>kernel</em>, which is a <em>footprint with weights</em> (see above).</p>
+<p>As for footprints, we “walk” a kernel across our whole image, centering it on
+every pixel, then apply the kernel weights to their corresponding pixel values, and sum to produce the new pixel value.</p>
+<p>Let’s implement a true mean filter, using convolution. Obviously, we start
+with our kernel (a footprint with weights). First, we define the kernel shape:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Define our kernel shape.</span>
@@ -857,12 +983,12 @@ Min Pixel Value: -1.0
 </div>
 </div>
 </div>
-<p>We can take the product of the elements in the shape tuple, to get the number of elements inside the kernel (in this case 3 * 3 = 9, so 9 elements in the 3-by-3 kernel):</p>
+<p>We take the product of the shape tuple, to get the number of elements inside
+the kernel (in this case 3 * 3 = 9, so 9 elements in the 3-by-3 kernel):</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Get our kernel size, e.g. the number of elements in the kernel.</span>
 <span class="n">kernel_size</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">prod</span><span class="p">(</span><span class="n">kernel_shape</span><span class="p">)</span>
-
 <span class="n">kernel_size</span>
 </pre></div>
 </div>
@@ -876,7 +1002,7 @@ Min Pixel Value: -1.0
 <p>We can then construct our kernel, using <code class="docutils literal notranslate"><span class="pre">np.full()</span></code> which allows us to fill an array with a given value. In this case we will fill it with <span class="math notranslate nohighlight">\(\frac{1}{n}\)</span>, where <span class="math notranslate nohighlight">\(n\)</span> is the number of elements in our kernel (9 kernel elements - so <span class="math notranslate nohighlight">\(\frac{1}{9}\)</span> = 0.11):</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">mean_kernel</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">full</span><span class="p">(</span><span class="n">shape</span><span class="o">=</span><span class="n">kernel_shape</span><span class="p">,</span> 
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">mean_kernel</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">full</span><span class="p">(</span><span class="n">shape</span><span class="o">=</span><span class="n">kernel_shape</span><span class="p">,</span>
                       <span class="n">fill_value</span><span class="o">=</span><span class="mi">1</span><span class="o">/</span><span class="n">kernel_size</span><span class="p">)</span>
 
 <span class="n">mean_kernel</span>
@@ -891,12 +1017,13 @@ Min Pixel Value: -1.0
 </div>
 </div>
 </div>
-<p>Our purpose here is to take the mean of the values under the kernel, so how does a 3-by-3 kernel filled with <span class="math notranslate nohighlight">\(\frac{1}{n}\)</span> help us?</p>
+<p>Our purpose here is to take the mean of the values under the kernel, so how
+does a 3-by-3 kernel filled with <span class="math notranslate nohighlight">\(\frac{1}{n}\)</span> help us?</p>
 <p>Well, this value can be used to find the mean (duh!)…we’ll show this quickly using just four random values:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">nums</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">10</span><span class="p">,</span> <span class="mi">21</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">45</span><span class="p">])</span>
-<span class="n">nums</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">10</span><span class="p">,</span> <span class="mi">21</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">45</span><span class="p">])</span>
+<span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -909,9 +1036,9 @@ Min Pixel Value: -1.0
 <p>If we multiply each value by <span class="math notranslate nohighlight">\(\frac{1}{n}\)</span> and then take the sum of those values, we get…</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">n</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">nums</span><span class="p">)</span>
-
-<span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">nums</span> <span class="o">*</span> <span class="mi">1</span><span class="o">/</span><span class="n">n</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">n</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+<span class="n">div_by_n</span> <span class="o">=</span> <span class="n">x</span> <span class="o">*</span> <span class="mi">1</span> <span class="o">/</span> <span class="n">n</span>
+<span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">div_by_n</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -921,14 +1048,32 @@ Min Pixel Value: -1.0
 </div>
 </div>
 </div>
-<p>…the mean! And we can do exactly the same thing with the <code class="docutils literal notranslate"><span class="pre">mean_kernel</span></code> we made above. We can use the <code class="docutils literal notranslate"><span class="pre">scipy.ndimage.correlate()</span></code> function to achieve this with maximum efficiency (relative to the crude method we used above). This function involves <a class="reference external" href="https://docs.scipy.org/doc/scipy/reference/generated/scipy.ndimage.correlate.html">“moving a […] kernel over [an] image and computing the sum of products at each location”</a>. This means we:</p>
+<p>To belabor the point mathematically — write our vector (array) above as
+<span class="math notranslate nohighlight">\(\vec{x}\)</span>.   Write the <code class="docutils literal notranslate"><span class="pre">sum</span></code> operation as <span class="math notranslate nohighlight">\(\sum\)</span>.  Then the mean of <span class="math notranslate nohighlight">\(\vec{x}\)</span>
+is given by:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{align}
+\frac{1}{n} \sum x_i \\
+= \frac{1}{n} (x_1 + x_2 ... + x_n) \\
+= \frac{1}{n} x_1 + \frac{1}{n} x_2 ... \frac{1}{n} x_n \\
+= \sum \frac{x_i}{n}
+\end{align}
+\end{split}\]</div>
+<p>And we can do exactly the same thing with the <code class="docutils literal notranslate"><span class="pre">mean_kernel</span></code> we made above. We can use the <code class="docutils literal notranslate"><span class="pre">scipy.ndimage.correlate()</span></code> function to achieve this with maximum efficiency (relative to the crude method we used above). This function involves <a class="reference external" href="https://docs.scipy.org/doc/scipy/reference/generated/scipy.ndimage.correlate.html">“moving a […] kernel over [an] image and computing the sum of products at each location”</a>. This means we:</p>
 <ul class="simple">
 <li><p>Center the kernel on given array pixel in the original image.</p></li>
-<li><p>Multiply the array pixel values covered by the kernel with the elements in the kernel (in this case every kernel element value is <span class="math notranslate nohighlight">\(\frac{1}{9}\)</span>).</p></li>
-<li><p>Get the sum of those products (e.g. add them all together to produce a single value).</p></li>
-<li><p>Replace the central array pixel value in the original image with the single value we just computed.</p></li>
+<li><p>Multiply the array pixel values covered by the kernel with the elements in
+the kernel (in this case every kernel element value is <span class="math notranslate nohighlight">\(\frac{1}{9}\)</span>).</p></li>
+<li><p>Get the sum of those products (e.g. add them all together to produce
+a single value).</p></li>
+<li><p>Replace the central array pixel value in the original image with the single
+value we just computed.</p></li>
 </ul>
-<p>Because we are using a mean kernel, this operation will, shockingly, return the mean of the kernel. This process is illustrated below for three kernel locations - (once more you may want to right click on these images and open them in a new tab/window, for easier viewing):</p>
+<p>Because we are using a mean kernel, this operation will, shockingly, return
+the mean of values under the kernel. This process is illustrated below for
+three kernel locations - (once more you may want to right click on these
+images and open them in a new tab/window, for easier viewing):</p>
 <p><img alt="" src="_images/kernel_convolution_three_locs.png" /></p>
 <p>Now, let’s apply this kernel convolution to every pixel in the image array:</p>
 <div class="cell docutils container">
@@ -937,8 +1082,8 @@ Min Pixel Value: -1.0
 <span class="kn">import</span><span class="w"> </span><span class="nn">scipy.ndimage</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">ndi</span>
 
 <span class="c1"># Perform the convolution.</span>
-<span class="n">mean_filtered_random_i_via_sp</span> <span class="o">=</span> <span class="n">ndi</span><span class="o">.</span><span class="n">correlate</span><span class="p">(</span><span class="nb">input</span><span class="o">=</span><span class="n">random_i</span><span class="p">,</span> <span class="c1"># Our input image array.</span>
-                                              <span class="n">weights</span><span class="o">=</span><span class="n">mean_kernel</span><span class="p">,</span> <span class="c1"># Our kernel to convolve the image with.</span>
+<span class="n">mean_filtered_random_i_via_sp</span> <span class="o">=</span> <span class="n">ndi</span><span class="o">.</span><span class="n">correlate</span><span class="p">(</span><span class="nb">input</span><span class="o">=</span><span class="n">random_i</span><span class="p">,</span>
+                                              <span class="n">weights</span><span class="o">=</span><span class="n">mean_kernel</span><span class="p">,</span>
                                               <span class="n">output</span><span class="o">=</span><span class="nb">float</span><span class="p">)</span> <span class="c1"># Output `dtype`</span>
 
 <span class="c1"># Show the original image array, and the mean filtered image array</span>
@@ -984,7 +1129,9 @@ Mean filter:
 <img alt="_images/9ea5ff376623a09e70318e2ffa8ed0f255bed2369860bcfcefc16f5b13eda0ad.png" src="_images/9ea5ff376623a09e70318e2ffa8ed0f255bed2369860bcfcefc16f5b13eda0ad.png" />
 </div>
 </div>
-<p>The result is very similar to that obtained by our crude mean filter, only now it has been applied to <em>every</em> array pixel, where our crude filter simply ignored pixels at the edge of the image:</p>
+<p>The result is very similar to that obtained by our crude mean filter, only now
+it has been applied to <em>every</em> array pixel, including the edge pixels, where
+our crude filter simply ignored pixels at the edge of the image:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Show the result from our crude mean filter</span>
@@ -1026,33 +1173,85 @@ Mean filter via SciPy `correlate`:
 </div>
 <p>These two arrays are shown below side-by-side, and more nicely rendered, for easier comparison:</p>
 <p><img alt="" src="_images/two_mean_filters.png" /></p>
-<p>You can see that the values differ only near the top and bottom edges of the image. <code class="docutils literal notranslate"><span class="pre">ndi.correlate()</span></code> offers several options for dealing with pixels at the edge of the array (e.g. those pixels for which the kernel “falls off” the edge of the image). Here are the options, from the <a class="reference external" href="https://docs.scipy.org/doc/scipy/reference/generated/scipy.ndimage.correlate.html">documentation</a>, we can choose an option by specifying the <code class="docutils literal notranslate"><span class="pre">mode</span></code> argument to <code class="docutils literal notranslate"><span class="pre">ndi.correlate</span></code> (e.g. <code class="docutils literal notranslate"><span class="pre">mode</span> <span class="pre">=</span> <span class="pre">'constant'</span></code> etc.):</p>
-<blockquote>
-<div><p><strong>mode</strong> : <em>{‘reflect’, ‘constant’, ‘nearest’, ‘mirror’, ‘wrap’}, optional</em></p>
-<p>The <code class="docutils literal notranslate"><span class="pre">mode</span></code> parameter determines how the input array is extended beyond its boundaries. Default is <code class="docutils literal notranslate"><span class="pre">'reflect'</span></code>. Behavior for each valid value is as follows:</p>
-<ul class="simple">
-<li><p><strong><code class="docutils literal notranslate"><span class="pre">reflect</span></code></strong> <em>(d c b a | a b c d | d c b a)</em><br />
-The input is extended by reflecting about the edge of the last pixel. This mode is also sometimes referred to as half-sample symmetric.</p></li>
-<li><p><strong><code class="docutils literal notranslate"><span class="pre">constant</span></code></strong> <em>(k k k k | a b c d | k k k k)</em><br />
-The input is extended by filling all values beyond the edge with the same constant value, defined by the <code class="docutils literal notranslate"><span class="pre">cval</span></code> parameter.</p></li>
-<li><p><strong><code class="docutils literal notranslate"><span class="pre">nearest</span></code></strong> <em>(a a a a | a b c d | d d d d)</em><br />
-The input is extended by replicating the last pixel.</p></li>
-<li><p><strong><code class="docutils literal notranslate"><span class="pre">mirror</span></code></strong> <em>(d c b | a b c d | c b a)</em><br />
-The input is extended by reflecting about the center of the last pixel. This mode is also sometimes referred to as whole-sample symmetric.</p></li>
-<li><p><strong><code class="docutils literal notranslate"><span class="pre">wrap</span></code></strong> <em>(a b c d | a b c d | a b c d)</em><br />
-The input is extended by wrapping around to the opposite edge.</p></li>
-</ul>
-</div></blockquote>
-<p>Let’s define a function so that we can apply the mean filter to any image, using the proper <code class="docutils literal notranslate"><span class="pre">scipy.ndimage.correlate()</span></code> machinery, so we no longer ignore edge pixels (poor pixels!):</p>
+<p>You can see that the values differ only near the top and bottom edges of the
+image. <code class="docutils literal notranslate"><span class="pre">ndi.correlate()</span></code> offers several options for dealing with pixels at the
+edge of the array (e.g. those pixels for which the kernel “falls off” the edge
+of the image). Here are the options, from the
+<a class="reference external" href="https://docs.scipy.org/doc/scipy/reference/generated/scipy.ndimage.correlate.html">documentation</a>,
+we can choose an option by specifying the <code class="docutils literal notranslate"><span class="pre">mode</span></code> argument to <code class="docutils literal notranslate"><span class="pre">ndi.correlate</span></code>
+(e.g. <code class="docutils literal notranslate"><span class="pre">mode</span> <span class="pre">=</span> <span class="pre">'constant'</span></code> etc.):</p>
+<div class="cell tag_hide-input docutils container">
+<details class="admonition hide above-input">
+<summary aria-label="Toggle hidden content">
+<p class="collapsed admonition-title">Show code cell source</p>
+<p class="expanded admonition-title">Hide code cell source</p>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Print the help for the mode parameter.</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">re</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">re</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;\s+mode\s*:.*?(?=\s+cval\s*:)&#39;</span><span class="p">,</span>
+                <span class="n">ndi</span><span class="o">.</span><span class="n">correlate</span><span class="o">.</span><span class="vm">__doc__</span><span class="p">,</span>
+                <span class="n">flags</span><span class="o">=</span><span class="n">re</span><span class="o">.</span><span class="n">MULTILINE</span> <span class="o">|</span> <span class="n">re</span><span class="o">.</span><span class="n">DOTALL</span><span class="p">)</span>
+      <span class="o">.</span><span class="n">group</span><span class="p">())</span>
+</pre></div>
+</div>
+</div>
+</details>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>    mode : {&#39;reflect&#39;, &#39;constant&#39;, &#39;nearest&#39;, &#39;mirror&#39;, &#39;wrap&#39;}, optional
+        The `mode` parameter determines how the input array is extended
+        beyond its boundaries. Default is &#39;reflect&#39;. Behavior for each valid
+        value is as follows:
+    
+        &#39;reflect&#39; (`d c b a | a b c d | d c b a`)
+            The input is extended by reflecting about the edge of the last
+            pixel. This mode is also sometimes referred to as half-sample
+            symmetric.
+    
+        &#39;constant&#39; (`k k k k | a b c d | k k k k`)
+            The input is extended by filling all values beyond the edge with
+            the same constant value, defined by the `cval` parameter.
+    
+        &#39;nearest&#39; (`a a a a | a b c d | d d d d`)
+            The input is extended by replicating the last pixel.
+    
+        &#39;mirror&#39; (`d c b | a b c d | c b a`)
+            The input is extended by reflecting about the center of the last
+            pixel. This mode is also sometimes referred to as whole-sample
+            symmetric.
+    
+        &#39;wrap&#39; (`a b c d | a b c d | a b c d`)
+            The input is extended by wrapping around to the opposite edge.
+    
+        For consistency with the interpolation functions, the following mode
+        names can also be used:
+    
+        &#39;grid-mirror&#39;
+            This is a synonym for &#39;reflect&#39;.
+    
+        &#39;grid-constant&#39;
+            This is a synonym for &#39;constant&#39;.
+    
+        &#39;grid-wrap&#39;
+            This is a synonym for &#39;wrap&#39;.
+</pre></div>
+</div>
+</div>
+</div>
+<p>Let’s define a function so that we can apply the mean filter to any image,
+using the proper <code class="docutils literal notranslate"><span class="pre">scipy.ndimage.correlate()</span></code> machinery, so we no longer ignore
+edge pixels (poor pixels!).   We’ll define the kernel with a shape, giving the
+shape of the footprint.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">mean_filter</span><span class="p">(</span><span class="n">image_array</span><span class="p">,</span> <span class="n">kernel_shape</span><span class="p">):</span>
-    <span class="n">kernel_size</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">prod</span><span class="p">(</span><span class="n">kernel_shape</span><span class="p">)</span> <span class="c1"># Get the kernel size (n).</span>
-    <span class="n">mean_kernel</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">full</span><span class="p">(</span><span class="n">kernel_shape</span><span class="p">,</span> <span class="c1"># Make the mean kernel in the desired shape... </span>
-                          <span class="mi">1</span><span class="o">/</span><span class="n">kernel_size</span><span class="p">)</span><span class="c1"># ...each each element in the mean kernel is 1/n.</span>
-    <span class="k">return</span> <span class="n">ndi</span><span class="o">.</span><span class="n">correlate</span><span class="p">(</span><span class="n">image_array</span><span class="p">,</span> 
-                        <span class="n">mean_kernel</span><span class="p">,</span>
-                        <span class="n">output</span><span class="o">=</span><span class="nb">float</span><span class="p">)</span>
+    <span class="n">footprint</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="n">kernel_shape</span><span class="p">)</span>
+    <span class="n">n</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">footprint</span><span class="p">)</span>  <span class="c1"># Number of pixels in footprint.</span>
+    <span class="n">mean_kernel</span> <span class="o">=</span> <span class="n">footprint</span> <span class="o">/</span> <span class="n">n</span>
+    <span class="k">return</span> <span class="n">ndi</span><span class="o">.</span><span class="n">correlate</span><span class="p">(</span><span class="n">image_array</span><span class="p">,</span>
+                         <span class="n">mean_kernel</span><span class="p">,</span>
+                         <span class="n">output</span><span class="o">=</span><span class="nb">float</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -1069,20 +1268,20 @@ The input is extended by wrapping around to the opposite edge.</p></li>
 <img alt="_images/dac19c1554e829ebdf2e46c41facbcef0df8303b750143bd5cda389f38533b83.png" src="_images/dac19c1554e829ebdf2e46c41facbcef0df8303b750143bd5cda389f38533b83.png" />
 </div>
 </div>
-<p>But first, we will use <code class="docutils literal notranslate"><span class="pre">np.random.normal()</span></code> to add some normally distributed (Gaussian) noise to the image:</p>
+<p>But first, we will use <code class="docutils literal notranslate"><span class="pre">np.random.normal()</span></code> to add some normally distributed
+(Gaussian) noise to the image:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Add some noise to the pixel values in `coffee`.</span>
-<span class="n">noisy_coffee_gray</span> <span class="o">=</span> <span class="n">coffee_gray</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span>
-                                                   <span class="mi">2</span><span class="p">,</span>
-                                                   <span class="n">coffee_gray</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
-
+<span class="n">rng</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">default_rng</span><span class="p">()</span>
+<span class="c1"># Mean 0, std 2 normal random numbers.</span>
+<span class="n">noisy_coffee_gray</span> <span class="o">=</span> <span class="n">coffee_gray</span> <span class="o">+</span> <span class="n">rng</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="n">coffee_gray</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">noisy_coffee_gray</span><span class="p">);</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/17bc95f072366b5d11af6a903701b0cf58e529dcbe2c86c12137ef162171106f.png" src="_images/17bc95f072366b5d11af6a903701b0cf58e529dcbe2c86c12137ef162171106f.png" />
+<img alt="_images/c1123cec06550ada3f62b010cf2731402091e2dc26ffc3245f4d91bd2b3e7c15.png" src="_images/c1123cec06550ada3f62b010cf2731402091e2dc26ffc3245f4d91bd2b3e7c15.png" />
 </div>
 </div>
 <p>The mean filter can remove some of the noise, restoring the clarity of the image:</p>
@@ -1107,10 +1306,11 @@ The input is extended by wrapping around to the opposite edge.</p></li>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/da74197b9bd48e2aa2a370613df11010b47e15e78f6acf7a7f064a8a1ea68763.png" src="_images/da74197b9bd48e2aa2a370613df11010b47e15e78f6acf7a7f064a8a1ea68763.png" />
+<img alt="_images/faaf444f55d135aa5a5e78fc38d8e3a2730197b5bbab662f5036c24ea29a0eb4.png" src="_images/faaf444f55d135aa5a5e78fc38d8e3a2730197b5bbab662f5036c24ea29a0eb4.png" />
 </div>
 </div>
-<p>We can see that the image is clearer, the noise has been reduced and some of the signal has been restored.</p>
+<p>We can see that the image is clearer, the noise has been reduced and some of
+the signal has been restored.</p>
 <p>Let’s try out some different kernel sizes:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -1125,7 +1325,7 @@ The input is extended by wrapping around to the opposite edge.</p></li>
 <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Noisy&#39;</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">noisy_coffee_gray</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">axis</span><span class="p">(</span><span class="s1">&#39;off&#39;</span><span class="p">)</span>
-<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="nb">int</span><span class="p">(</span><span class="n">n_cols</span><span class="o">*</span><span class="mi">2</span><span class="p">)</span><span class="o">+</span><span class="mi">1</span><span class="p">):</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="nb">int</span><span class="p">(</span><span class="n">n_cols</span><span class="o">*</span><span class="mi">2</span><span class="p">)</span><span class="o">+</span><span class="mi">1</span><span class="p">):</span>
     <span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="n">n_cols</span><span class="p">,</span> <span class="n">i</span><span class="p">)</span>
     <span class="n">kernel_shape</span> <span class="o">=</span> <span class="p">(</span><span class="n">i</span><span class="o">+</span><span class="p">(</span><span class="n">i</span><span class="o">*</span><span class="mi">3</span><span class="p">),</span> <span class="n">i</span><span class="o">+</span><span class="p">(</span><span class="n">i</span><span class="o">*</span><span class="mi">3</span><span class="p">))</span>
     <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Mean Filtered</span><span class="se">\n</span><span class="s1">Kernel = (</span><span class="si">{</span><span class="n">i</span><span class="o">+</span><span class="p">(</span><span class="n">i</span><span class="o">*</span><span class="mi">3</span><span class="p">)</span><span class="si">}</span><span class="s1">,</span><span class="si">{</span><span class="n">i</span><span class="o">+</span><span class="p">(</span><span class="n">i</span><span class="o">*</span><span class="mi">3</span><span class="p">)</span><span class="si">}</span><span class="s1">)&#39;</span><span class="p">)</span>
@@ -1137,27 +1337,39 @@ The input is extended by wrapping around to the opposite edge.</p></li>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/b68c674555fd6490e05054ffaaa1f5f7474a0280a371402e2351a2cf04d026eb.png" src="_images/b68c674555fd6490e05054ffaaa1f5f7474a0280a371402e2351a2cf04d026eb.png" />
+<img alt="_images/e533def57974d037e04c47403dfed169b3ec3b85e8c41274c4a27e85183413fd.png" src="_images/e533def57974d037e04c47403dfed169b3ec3b85e8c41274c4a27e85183413fd.png" />
 </div>
 </div>
-<p>As with many filtering operations, the effect of altering aspects of the filtering process (like a threshold value or kernel size), is very context-dependent. It may take many iterations before finding a “sweet spot”, and where the sweet spot is may be somewhat subjective.</p>
+<p>As with many filtering operations, the effect of altering aspects of the
+filtering process (like a threshold value or kernel size), is very
+context-dependent. It may take many iterations before finding a “sweet spot”,
+and where the sweet spot is may be somewhat subjective.</p>
 <div class="exercise dropdown admonition" id="strange-filter-coffee">
 
 <p class="admonition-title"><span class="caption-number">Exercise 22 </span></p>
 <section id="exercise-content">
-<p>The nice thing about applying filtering via convolution kernels is that changing the kernel itself lets us implement a wide variety of functions, even strange ones. In this exercise, you will write a function called <code class="docutils literal notranslate"><span class="pre">strange_filter()</span></code>. You should apply it to <code class="docutils literal notranslate"><span class="pre">coffee_gray</span></code> to produce the following image:</p>
+<p>The nice thing about applying filtering via convolution kernels is that
+changing the kernel itself lets us implement a wide variety of functions, even
+fairly strange ones. In this exercise, you will write a function called
+<code class="docutils literal notranslate"><span class="pre">strange_filter()</span></code>. You should apply it to <code class="docutils literal notranslate"><span class="pre">coffee_gray</span></code> to produce the
+following image:</p>
 <p><img alt="" src="_images/coffee_strange_kernel.png" /></p>
-<p>For a given pixel value, when the value is multiplied by it’s corresponding kernel element, the <em>absolute</em> value of the result should be <em>half as big as the absolute original pixel value</em>.</p>
+<p>The kernel we used, and that we want you to us, was one where the kernel value
+was proportional to the Euclidean distance from the kernel center.  That is,
+if <span class="math notranslate nohighlight">\(i\)</span> is the first (row) index <em>of the kernel</em>, and <em>j</em> is the second
+(column) index of the kernel, the kernel value at coordinate <span class="math notranslate nohighlight">\(i, j\)</span> is given
+by:</p>
+<div class="math notranslate nohighlight">
+\[
+\sqrt{(i - c_i)^2 + (j - c_j)^2)}
+\]</div>
+<p>where <span class="math notranslate nohighlight">\(c_i\)</span> and <span class="math notranslate nohighlight">\(c_j\)</span> are the coordinates of the center pixel in the kernel.</p>
+<p>Notice this gives higher weight to pixels that are <em>further from the center</em>.</p>
+<p>You might remember this kind of idea from the circular mask in the <a class="reference internal" href="3_skimage_processing_from_numpy_and_scipy.html#on-masks"><span class="std std-ref">mask
+section</span></a>.  Look there for inspiration.</p>
 <p>Write your function so that it can be used with kernels of different <code class="docutils literal notranslate"><span class="pre">shape</span></code>s, so you can work out what kernel <code class="docutils literal notranslate"><span class="pre">shape</span></code> you need to recreate the target image, by trial and error.</p>
-<p>Your final image should have the following attributes (again, you may need to <code class="docutils literal notranslate"><span class="pre">rescale_intensity()</span></code> or take other steps to avoid illegal pixel values, for the <code class="docutils literal notranslate"><span class="pre">dtype</span></code>):</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>Type: &lt;class &#39;numpy.ndarray&#39;&gt;
-dtype: int8
-Shape: (400, 600)
-Max Pixel Value: -1
-Min Pixel Value: -49
-</pre></div>
-</div>
 <p><strong>DO <em>NOT</em> COPY THE <code class="docutils literal notranslate"><span class="pre">mean_filter()</span></code> FUNCTION FROM ABOVE AND MODIFY IT</strong> - try to write a function from scratch, thinking carefully about what you need to do.</p>
+<p><em>Hint:</em> You will need a fairly large kernel to get the effect you want.</p>
 <p><em>Hint:</em> run the <code class="docutils literal notranslate"><span class="pre">hint_strange_coffee()</span></code> function for additional help.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -1187,27 +1399,49 @@ Min Pixel Value: 0.0
 
 <p class="admonition-title">Solution to<a class="reference internal" href="#strange-filter-coffee"> Exercise 22</a></p>
 <section id="solution-content">
-<p>The solution here involves making a kernel where every kernel element has the value of <span class="math notranslate nohighlight">\(-\frac{1}{2}\)</span> (e.g. -0.5). So, for a 3-by-3 kernel:</p>
-<p><img alt="" src="_images/strange_kernel.png" /></p>
+<p>The solution here involves adapting the code you find in <a class="reference internal" href="3_skimage_processing_from_numpy_and_scipy.html#on-masks"><span class="std std-ref">the mask
+section</span></a>, to build the kernel.  Let’s start by building a function
+to build the kernel for given kernel shape:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">euclid_kernel</span><span class="p">(</span><span class="n">kernel_shape</span><span class="p">):</span>
+    <span class="c1"># i and j coordinates in the kernel.</span>
+    <span class="n">i_coords</span><span class="p">,</span> <span class="n">j_coords</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">meshgrid</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">kernel_shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span>
+                                     <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">kernel_shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]),</span>
+                                     <span class="n">indexing</span><span class="o">=</span><span class="s1">&#39;ij&#39;</span><span class="p">)</span>
+    <span class="c1"># Calculate distance for each pixel in kernel.</span>
+    <span class="n">c_i</span><span class="p">,</span> <span class="n">c_j</span> <span class="o">=</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">kernel_shape</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">/</span> <span class="mi">2</span>
+    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">((</span><span class="n">i_coords</span> <span class="o">-</span> <span class="n">c_i</span><span class="p">)</span> <span class="o">**</span> <span class="mi">2</span> <span class="o">+</span> <span class="p">(</span><span class="n">j_coords</span> <span class="o">-</span> <span class="n">c_j</span><span class="p">)</span> <span class="o">**</span> <span class="mi">2</span><span class="p">)</span>
+
+<span class="c1"># Show a 25 by 25 kernel.</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">euclid_kernel</span><span class="p">((</span><span class="mi">25</span><span class="p">,</span> <span class="mi">25</span><span class="p">)))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.image.AxesImage at 0x7f4dd9dd62d0&gt;
+</pre></div>
+</div>
+<img alt="_images/a71c59f05f7f35aa9d224ba9b291a2d1fe8a70b780e8fe5475f3df95d4ccd1ab.png" src="_images/a71c59f05f7f35aa9d224ba9b291a2d1fe8a70b780e8fe5475f3df95d4ccd1ab.png" />
+</div>
+</div>
 <p>We define our <code class="docutils literal notranslate"><span class="pre">strange_filter()</span></code> function in the cell below:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">strange_filter_solution</span><span class="p">(</span><span class="n">image_array</span><span class="p">,</span> <span class="n">kernel_shape</span><span class="p">):</span>
-    <span class="n">kernel_size</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">prod</span><span class="p">(</span><span class="n">kernel_shape</span><span class="p">)</span>
-    <span class="n">strange_kernel</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">full</span><span class="p">(</span><span class="n">kernel_shape</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.5</span><span class="p">)</span>
-    <span class="n">output_img</span> <span class="o">=</span> <span class="n">ndi</span><span class="o">.</span><span class="n">correlate</span><span class="p">(</span><span class="n">image_array</span><span class="p">,</span> 
-                               <span class="n">strange_kernel</span><span class="p">,</span>
-                               <span class="n">output</span><span class="o">=</span><span class="s2">&quot;int8&quot;</span><span class="p">)</span> <span class="c1"># Avoid illegal pixel values.</span>
-    <span class="k">return</span> <span class="n">output_img</span> 
+    <span class="k">return</span> <span class="n">ndi</span><span class="o">.</span><span class="n">correlate</span><span class="p">(</span><span class="n">image_array</span><span class="p">,</span>
+                         <span class="n">euclid_kernel</span><span class="p">(</span><span class="n">kernel_shape</span><span class="p">),</span>
+                         <span class="n">mode</span><span class="o">=</span><span class="s1">&#39;reflect&#39;</span><span class="p">,</span>  <span class="c1"># The default.</span>
+                        <span class="p">)</span>
 </pre></div>
 </div>
 </div>
 </div>
-<p>To get the exact target image, we use a kernel of <code class="docutils literal notranslate"><span class="pre">shape</span></code> (10, 10):</p>
+<p>To get the exact target image, we use a kernel of <code class="docutils literal notranslate"><span class="pre">shape</span></code> (50, 50):</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Apply the filter and show the result.</span>
-<span class="n">strange_filter_coffee</span> <span class="o">=</span> <span class="n">strange_filter_solution</span><span class="p">(</span><span class="n">coffee_gray</span><span class="p">,</span> <span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">10</span><span class="p">))</span>
+<span class="n">strange_filter_coffee</span> <span class="o">=</span> <span class="n">strange_filter_solution</span><span class="p">(</span><span class="n">coffee_gray</span><span class="p">,</span> <span class="p">(</span><span class="mi">50</span><span class="p">,</span> <span class="mi">50</span><span class="p">))</span>
 <span class="n">show_attributes</span><span class="p">(</span><span class="n">strange_filter_coffee</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">strange_filter_coffee</span><span class="p">);</span>
 </pre></div>
@@ -1215,41 +1449,34 @@ Min Pixel Value: 0.0
 </div>
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Type: &lt;class &#39;numpy.ndarray&#39;&gt;
-dtype: int8
+dtype: float64
 Shape: (400, 600)
-Max Pixel Value: -1
-Min Pixel Value: -49
+Max Pixel Value: 37834.72
+Min Pixel Value: 1720.34
 </pre></div>
 </div>
-<img alt="_images/597f2407f54214c46a1c2ffdc7ab006c8ebb999da17b23833cf73cd04f3fb3b5.png" src="_images/597f2407f54214c46a1c2ffdc7ab006c8ebb999da17b23833cf73cd04f3fb3b5.png" />
+<img alt="_images/0c8c66f34ade688d4618a5a89f5def731af9f4587af754f58f8a73fadffef632.png" src="_images/0c8c66f34ade688d4618a5a89f5def731af9f4587af754f58f8a73fadffef632.png" />
 </div>
 </div>
-<p>Kernels of other sizes will lead to different (albeit cool!) effects:</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Apply the filter and show the result.</span>
-<span class="n">strange_filter_coffee_other</span> <span class="o">=</span> <span class="n">strange_filter_solution</span><span class="p">(</span><span class="n">coffee_gray</span><span class="p">,</span> <span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">))</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">strange_filter_coffee_other</span><span class="p">);</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<img alt="_images/f5f29ec103e2fbb77441b4b0aa9e9c9cf9a560d00d3d1d3a8bcc3d39e366c9d1.png" src="_images/f5f29ec103e2fbb77441b4b0aa9e9c9cf9a560d00d3d1d3a8bcc3d39e366c9d1.png" />
-</div>
-</div>
+<p><strong>For reflection</strong> — why does the filtered image look as it does?  See if you
+can explain its features, compared to the original.</p>
 <p>This is quite a strange kernel to apply! But it shows us how easy it is to achieve radical filtering effects with some custom kernels…</p>
 </section>
 </div>
 </section>
-<section class="tex2jax_ignore mathjax_ignore" id="mean-filtering-with-skimage">
-<h1>Mean filtering with <code class="docutils literal notranslate"><span class="pre">skimage</span></code><a class="headerlink" href="#mean-filtering-with-skimage" title="Link to this heading">#</a></h1>
-<p>We can implement a mean filter using the <code class="docutils literal notranslate"><span class="pre">ski.filters.rank.mean()</span></code> function. <code class="docutils literal notranslate"><span class="pre">skimage</span></code> prefers the term <code class="docutils literal notranslate"><span class="pre">footprint</span></code> to “kernel”, but the meaning is the same. We supply a small matrix with which to “walk” through the image, centering the kernel on every pixel, and modifying that central pixel’s value based on the values of the other pixels in it’s neighborhood, with the size and shape of the neighborhood being defined by the kernel (<code class="docutils literal notranslate"><span class="pre">footprint</span></code>).</p>
-<p>Inspecting the <code class="docutils literal notranslate"><span class="pre">skimage</span></code> documentation will reveal that the format expected for the <code class="docutils literal notranslate"><span class="pre">footprint</span></code> should be <a class="reference external" href="https://scikit-image.org/docs/0.25.x/api/skimage.filters.rank.html#skimage.filters.rank.mean">“the [pixel] neighborhood expressed as an ndarray of 1’s and 0’s.”</a>. We will uses <code class="docutils literal notranslate"><span class="pre">np.ones()</span></code> to generate an array in this format. We use a (9, 9) kernel to achieve a stronger visual effect:</p>
+<section id="mean-filtering-with-skimage">
+<h2>Mean filtering with <code class="docutils literal notranslate"><span class="pre">skimage</span></code><a class="headerlink" href="#mean-filtering-with-skimage" title="Link to this heading">#</a></h2>
+<p>We can implement a mean filter using the <code class="docutils literal notranslate"><span class="pre">ski.filters.rank.mean()</span></code> function. <code class="docutils literal notranslate"><span class="pre">skimage</span></code> uses <code class="docutils literal notranslate"><span class="pre">footprint</span></code>s rather than kernels. We supply a small <em>footprint</em> array with which to “walk” through the image, centering the footprint on every pixel, and modifying that central pixel’s value based on the values of the other pixels in its neighborhood, with the size and shape of the neighborhood being defined by the footprint.</p>
+<p>Inspecting the <code class="docutils literal notranslate"><span class="pre">skimage</span></code> documentation will reveal that the format expected
+for the <code class="docutils literal notranslate"><span class="pre">footprint</span></code> should be <a class="reference external" href="https://scikit-image.org/docs/0.25.x/api/skimage.filters.rank.html#skimage.filters.rank.mean">“the [pixel] neighborhood expressed as an
+ndarray of 1’s and
+0’s.”</a>.
+We will use <code class="docutils literal notranslate"><span class="pre">np.ones()</span></code> to generate an array in this format. We use a (9, 9)
+kernel to achieve a stronger visual effect:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># A &quot;footprint&quot; (eg. kernel) to pass to `skimage`.</span>
-<span class="n">footprint_9_by_9</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span> <span class="p">(</span><span class="mi">9</span><span class="p">,</span> <span class="mi">9</span><span class="p">)</span> <span class="p">)</span>
-
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># A &quot;footprint&quot; to pass to `skimage`.</span>
+<span class="n">footprint_9_by_9</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">((</span><span class="mi">9</span><span class="p">,</span> <span class="mi">9</span><span class="p">))</span>
 <span class="n">footprint_9_by_9</span>
 </pre></div>
 </div>
@@ -1281,7 +1508,10 @@ Min Pixel Value: -49
 <img alt="_images/50aff3d36362558deba307a37ae4682958e48d2b46c8fe49483f0733bf1123b0.png" src="_images/50aff3d36362558deba307a37ae4682958e48d2b46c8fe49483f0733bf1123b0.png" />
 </div>
 </div>
-<p>Below, we apply the mean filter, using the <code class="docutils literal notranslate"><span class="pre">footprint_9_by_9</span></code> array as the kernel:</p>
+<p>Below, we apply the mean filter, using the <code class="docutils literal notranslate"><span class="pre">footprint_9_by_9</span></code> array as the
+footprint.  At each pixel, Scikit-image will place the footprint over the
+pixel, select the values in the image with a corresponding 1 (or True) in the
+footprint, and apply the <code class="docutils literal notranslate"><span class="pre">mean</span></code> operation to those values.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Mean filter the `camera` image with `skimage`</span>
@@ -1304,9 +1534,9 @@ Min Pixel Value: -49
 </div>
 </div>
 </section>
-<section class="tex2jax_ignore mathjax_ignore" id="filtering-3d-images">
-<h1>Filtering 3D images<a class="headerlink" href="#filtering-3d-images" title="Link to this heading">#</a></h1>
-<p>We can filter a 3D color image just by convolving our filtering kernel with each color channel separately. Let’s load a 3D image:</p>
+<section id="filtering-3d-images">
+<h2>Filtering 3D images<a class="headerlink" href="#filtering-3d-images" title="Link to this heading">#</a></h2>
+<p>We can filter a 3D color image by convolving our filtering kernel with each color channel separately. Let’s load a 3D image:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Load in and show an image.</span>
@@ -1338,7 +1568,7 @@ Min Pixel Value: 0
 <div class="cell_output docutils container">
 <div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
 <span class="ne">RuntimeError</span><span class="g g-Whitespace">                              </span>Traceback (most recent call last)
-<span class="n">Cell</span> <span class="n">In</span><span class="p">[</span><span class="mi">34</span><span class="p">],</span> <span class="n">line</span> <span class="mi">2</span>
+<span class="n">Cell</span> <span class="n">In</span><span class="p">[</span><span class="mi">37</span><span class="p">],</span> <span class="n">line</span> <span class="mi">2</span>
 <span class="g g-Whitespace">      </span><span class="mi">1</span> <span class="c1"># Oh dear.</span>
 <span class="ne">----&gt; </span><span class="mi">2</span> <span class="n">astronaut_mean_filtered</span> <span class="o">=</span> <span class="n">ndi</span><span class="o">.</span><span class="n">correlate</span><span class="p">(</span><span class="n">astronaut</span><span class="p">,</span> <span class="n">weights</span><span class="o">=</span><span class="n">mean_kernel</span><span class="p">)</span>
 
@@ -1367,7 +1597,7 @@ Min Pixel Value: 0
 </div>
 </div>
 </div>
-<p>As you can see, the error results from using a 2D kernel to filter a 3D image. A simple solution to this is just to apply the filter to each color channel separately. This is done in the cell below, using a for loop to filter each channel, storing the channels separately in a dictionary, and then <code class="docutils literal notranslate"><span class="pre">np.stacking()</span></code> the individually filtered channels back into a 3D image:</p>
+<p>As you can see, the error results from using a 2D kernel to filter a 3D image. A simple solution to this is just to apply the filter to each color channel separately. This is done in the cell below, using a for loop to filter each channel, storing the channels separately in a dictionary, and then <code class="docutils literal notranslate"><span class="pre">np.stack()</span></code>-ing the individually filtered channels back into a 3D image:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># A dictionary to store the individually filtered channels.</span>
@@ -1375,7 +1605,7 @@ Min Pixel Value: 0
 
 <span class="c1"># Loop through and filter each channel individually, store</span>
 <span class="c1"># the results in the dictionary.</span>
-<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">astronaut</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">2</span><span class="p">]):</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">astronaut</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">2</span><span class="p">]):</span>
     <span class="n">current_filtered_channel</span> <span class="o">=</span> <span class="n">ndi</span><span class="o">.</span><span class="n">correlate</span><span class="p">(</span><span class="n">astronaut</span><span class="p">[:,</span> <span class="p">:,</span> <span class="n">i</span><span class="p">],</span>
                                              <span class="n">weights</span><span class="o">=</span><span class="n">mean_kernel</span><span class="p">)</span>
     <span class="n">filtered_channels</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">current_filtered_channel</span>
@@ -1383,7 +1613,7 @@ Min Pixel Value: 0
 <span class="c1"># Stack back to 3D.</span>
 <span class="n">astronaut_mean_filtered</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">stack</span><span class="p">([</span><span class="n">filtered_channels</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span>
                                     <span class="n">filtered_channels</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span>
-                                    <span class="n">filtered_channels</span><span class="p">[</span><span class="mi">2</span><span class="p">]],</span> 
+                                    <span class="n">filtered_channels</span><span class="p">[</span><span class="mi">2</span><span class="p">]],</span>
                                    <span class="n">axis</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
 
 <span class="c1"># Show the result.</span>
@@ -1402,7 +1632,8 @@ Min Pixel Value: 0
 <img alt="_images/819049cabe6493a0d2aa201e49e374a801acf18be78dfb5b527b71b31113d9b9.png" src="_images/819049cabe6493a0d2aa201e49e374a801acf18be78dfb5b527b71b31113d9b9.png" />
 </div>
 </div>
-<p>This is straightforward to do with <code class="docutils literal notranslate"><span class="pre">skimage</span></code> as well; we also use the larger (9, 9) <code class="docutils literal notranslate"><span class="pre">footprint_9_by_9</span></code> kernel:</p>
+<p>This is straightforward to do with <code class="docutils literal notranslate"><span class="pre">skimage</span></code> as well; we also use the larger
+(9, 9) <code class="docutils literal notranslate"><span class="pre">footprint_9_by_9</span></code> kernel:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># A dictionary to store the individually filtered channels.</span>
@@ -1410,15 +1641,16 @@ Min Pixel Value: 0
 
 <span class="c1"># Loop through and filter each channel individually, store</span>
 <span class="c1"># the results in the dictionary.</span>
-<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">astronaut</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">2</span><span class="p">]):</span>
-    <span class="n">current_filtered_channel</span> <span class="o">=</span> <span class="n">ski</span><span class="o">.</span><span class="n">filters</span><span class="o">.</span><span class="n">rank</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">astronaut</span><span class="p">[:,</span> <span class="p">:,</span> <span class="n">i</span><span class="p">],</span>   <span class="c1"># Use `skimage` for the filtering.</span>
-                                                    <span class="n">footprint</span><span class="o">=</span><span class="n">footprint_9_by_9</span><span class="p">)</span> <span class="c1"># Use a larger kernel.</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">astronaut</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">2</span><span class="p">]):</span>
+    <span class="n">current_filtered_channel</span> <span class="o">=</span> <span class="n">ski</span><span class="o">.</span><span class="n">filters</span><span class="o">.</span><span class="n">rank</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span>  <span class="c1"># skimage filtering.</span>
+        <span class="n">astronaut</span><span class="p">[:,</span> <span class="p">:,</span> <span class="n">i</span><span class="p">],</span>
+        <span class="n">footprint</span><span class="o">=</span><span class="n">footprint_9_by_9</span><span class="p">)</span> <span class="c1"># Use a larger kernel.</span>
     <span class="n">filtered_channels</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">current_filtered_channel</span>
 
 <span class="c1"># Stack back to 3D.</span>
 <span class="n">astronaut_mean_filtered</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">stack</span><span class="p">([</span><span class="n">filtered_channels</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span>
                                     <span class="n">filtered_channels</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span>
-                                    <span class="n">filtered_channels</span><span class="p">[</span><span class="mi">2</span><span class="p">]],</span> 
+                                    <span class="n">filtered_channels</span><span class="p">[</span><span class="mi">2</span><span class="p">]],</span>
                                    <span class="n">axis</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
 
 <span class="c1"># Show the result.</span>
@@ -1437,22 +1669,14 @@ Min Pixel Value: 0
 <img alt="_images/dca42a3c82eb4f39bb699b2bea7ecc9ccb084265e7f8aace2f15cf1c5d7055a2.png" src="_images/dca42a3c82eb4f39bb699b2bea7ecc9ccb084265e7f8aace2f15cf1c5d7055a2.png" />
 </div>
 </div>
-<p>We got a blurrier output image via <code class="docutils literal notranslate"><span class="pre">skimage</span></code> here, than in the manual convolution using <code class="docutils literal notranslate"><span class="pre">ndi.correlate()</span></code>. This is because we used a larger kernel for the <code class="docutils literal notranslate"><span class="pre">skimage</span></code> filtering, and so are averaging over larger pixel neighborhoods.</p>
-<p>Scikit-image will also handle this using a 3D kernel. Below we adjust our <code class="docutils literal notranslate"><span class="pre">footprint_9_by_9</span></code> kernel by <code class="docutils literal notranslate"><span class="pre">np.stack()</span></code>-ing it into 3D:</p>
+<p>We got a blurrier output image via <code class="docutils literal notranslate"><span class="pre">skimage</span></code> here, than in the manual
+convolution using <code class="docutils literal notranslate"><span class="pre">ndi.correlate()</span></code>. This is because we used a larger kernel
+for the <code class="docutils literal notranslate"><span class="pre">skimage</span></code> filtering, and so are averaging over larger pixel
+neighborhoods.</p>
+<p>Scikit-image will also handle this using a 3D kernel.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Stack to 3D.</span>
-<span class="n">footprint_9_by_9_3D</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">stack</span><span class="p">([</span><span class="n">footprint_9_by_9</span><span class="p">,</span>
-                                <span class="n">footprint_9_by_9</span><span class="p">,</span>
-                                <span class="n">footprint_9_by_9</span><span class="p">],</span>
-                                <span class="n">axis</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
-
-<span class="n">footprint_9_by_9_3D</span><span class="o">.</span><span class="n">shape</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(9, 9, 3)
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">footprint_9_by_9_3D</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">((</span><span class="mi">9</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">3</span><span class="p">))</span>
 </pre></div>
 </div>
 </div>
@@ -1479,28 +1703,37 @@ Min Pixel Value: 0
 <img alt="_images/c8ae7707234f553e485189b8e63c537de79133ab155657e4e37416ad2359ccee.png" src="_images/c8ae7707234f553e485189b8e63c537de79133ab155657e4e37416ad2359ccee.png" />
 </div>
 </div>
-<p>Pay attention here to the effect on the <em>color</em> of the image. How is it different to filtering the color channels separately?</p>
-<p>You’ll notice that the colors have changed substantially, relative to when we filtered each channel separately. This is because the 3D kernel is averaging across the color channels. We may want this effect (it is somewhat retro), but if we do not want to affect the color of the image, then generally filtering the channels separately is the way to go…</p>
+<p>Pay attention here to the effect on the <em>color</em> of the image. How is it
+different to filtering the color channels separately?</p>
+<p>You’ll notice that the colors have changed substantially, relative to when we
+filtered each channel separately. This is because the 3D kernel is averaging
+<em>across the color channels</em>. We may want this effect (it is somewhat retro),
+but if we do not want to mix the color channels of the image, then generally
+filtering the channels separately is the way to go…</p>
 </section>
-<section class="tex2jax_ignore mathjax_ignore" id="summary">
-<h1>Summary<a class="headerlink" href="#summary" title="Link to this heading">#</a></h1>
-<p>This page has showed how to perform mean filtering, using <code class="docutils literal notranslate"><span class="pre">numpy</span></code>, <code class="docutils literal notranslate"><span class="pre">scipy</span></code> and <code class="docutils literal notranslate"><span class="pre">skimage</span></code>. On the <a class="reference internal" href="6_gaussian_sharpening_edge.html"><span class="doc std std-doc">next page</span></a>, we will look at using different convolution kernels to get different filtering effects.</p>
+<section id="summary">
+<h2>Summary<a class="headerlink" href="#summary" title="Link to this heading">#</a></h2>
+<p>This page has showed how to perform mean filtering, using <code class="docutils literal notranslate"><span class="pre">numpy</span></code>, <code class="docutils literal notranslate"><span class="pre">scipy</span></code> and
+<code class="docutils literal notranslate"><span class="pre">skimage</span></code>. On the <a class="reference internal" href="6_gaussian_sharpening_edge.html"><span class="doc std std-doc">next page</span></a>, we will look at
+using different convolution kernels to get different filtering effects.</p>
 </section>
-<section class="tex2jax_ignore mathjax_ignore" id="references">
-<h1>References<a class="headerlink" href="#references" title="Link to this heading">#</a></h1>
-<p>Gulati, J. (2024) <em>NumPy for Image Processing</em>. KDnuggets. Available from: <a class="reference external" href="https://www.kdnuggets.com/numpy-for-image-processing">https://www.kdnuggets.com/numpy-for-image-processing</a></p>
-<p>Reference: <a class="reference external" href="https://setosa.io/ev/image-kernels">https://setosa.io/ev/image-kernels</a></p>
-<p>Reference: <a class="reference external" href="https://wiki.imindlabs.com.au/ds/aml/4_problem_domains/1-image-processing/3_edge_detectors">https://wiki.imindlabs.com.au/ds/aml/4_problem_domains/1-image-processing/3_edge_detectors</a></p>
-<p>Reference: <a class="reference external" href="https://www.geeksforgeeks.org/deep-learning/types-of-convolution-kernels">https://www.geeksforgeeks.org/deep-learning/types-of-convolution-kernels</a></p>
+<section id="references">
+<h2>References<a class="headerlink" href="#references" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>Gulati, J. (2024) <em>NumPy for Image Processing</em>. KDnuggets. Available from:
+<a class="reference external" href="https://www.kdnuggets.com/numpy-for-image-processing">https://www.kdnuggets.com/numpy-for-image-processing</a></p></li>
+<li><p><a class="reference external" href="https://setosa.io/ev/image-kernels">https://setosa.io/ev/image-kernels</a></p></li>
+<li><p><a class="reference external" href="https://www.geeksforgeeks.org/deep-learning/types-of-convolution-kernels">Types of convolution
+kernels</a>.</p></li>
+</ul>
 <p>Adapted from:</p>
 <ul class="simple">
 <li><p><a class="reference external" href="https://lectures.scientific-python.org/advanced/image_processing">Scientific Python Lecture Notes - image
 processing</a></p></li>
 <li><p><a class="reference external" href="https://lectures.scientific-python.org/packages/scikit-image/index.html">Scientific Python Lecture Notes: scikit-image</a></p></li>
-<li><p><a class="reference external" href="https://textbook.nipraxis.org/otsu_threshold.html">Nipraxis course - Otsu threshold</a></p></li>
 </ul>
-<p>with further inspiration from <a class="reference external" href="https://jni.github.io/i2k-skimage-napari/lectures/1_image_filters.html">Napari tutorial</a> and <a class="reference external" href="https://github.com/scikit-image/skimage-tutorials"><code class="docutils literal notranslate"><span class="pre">skimage</span></code></a> <a class="reference external" href="https://scipy-2024-image-analysis.github.io/tutorial/01_images_are_arrays.html">tutorials</a>.</p>
-<!-- #endregion --></section>
+</section>
+</section>
 
     <script type="text/x-thebe-config">
     {
@@ -1566,17 +1799,13 @@ processing</a></p></li>
   </div>
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Convolution filters I - the mean filter</a><ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#kernels-and-pixel-neighborhoods">Kernels and pixel neighborhoods</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#footprints-and-pixel-neighborhoods">Footprints and pixel neighborhoods</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#convolution">Convolution</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#mean-filtering-with-skimage">Mean filtering with <code class="docutils literal notranslate"><span class="pre">skimage</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#filtering-3d-images">Filtering 3D images</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#summary">Summary</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#references">References</a></li>
 </ul>
-</li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#convolution">Convolution</a></li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#mean-filtering-with-skimage">Mean filtering with <code class="docutils literal notranslate"><span class="pre">skimage</span></code></a></li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#filtering-3d-images">Filtering 3D images</a></li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#summary">Summary</a></li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#references">References</a></li>
-</ul>
-
   </nav></div>
 
 </div></div>
