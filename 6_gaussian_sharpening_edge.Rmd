@@ -6,7 +6,7 @@ jupyter:
       extension: .Rmd
       format_name: rmarkdown
       format_version: '1.2'
-      jupytext_version: 1.17.3
+      jupytext_version: 1.16.6
   kernelspec:
     display_name: Python 3 (ipykernel)
     language: python
@@ -114,9 +114,9 @@ def kernel_plot(kernel, ax=None, surface=True, elev=30, azim=-45, text=True):
 kernel_plot(gaussian_like_kernel)
 ```
 
-Now, it may not be immediately apparent to some readers what this plot has to
-do with a Gaussian distribution. For now let's use "Gaussian" very loosely
-— for now all we will take from the name is that, like a standard Gaussian
+It may not be immediately apparent to some readers what this plot has to do
+with a Gaussian distribution. For now let's use "Gaussian" very loosely — for
+now all we will take from the name is that, like a standard Gaussian
 distribution, at the center the kernel has high values, then the values fall
 off as we get nearer to the sides. Let's warmly refer to the graph as the "red
 mountain".
@@ -134,20 +134,20 @@ gaussian_like_kernel
 
 If you prefer, you can view the NumPy array kernel with prettier graphics below:
 
-```{python}
+```{python tags=c("raises-exception", "remove-cell")}
 # For pretty mathematical display.
 # This might break on a system without LaTeX.  Let it error if so, and use the
 # # copy saved from another build.
 import sympy as sy
 
-def save_sy_mat(arr, out_fname, ndigits=2, dpi=1200):
+def save_sy_mat(arr, out_fname, ndigits=2, dpi=600):
     arr_sym = sy.Matrix(np.round(arr, ndigits))
     # Save (if the system allows it) to image.
-    sy.preview(arr_sym, viewer='file', 
+    sy.preview(arr_sym, viewer='file',
                euler=False,
                dvioptions=["-T", "tight", "-z", "0", f"-D {dpi}"],
                filename=out_fname)
-    
+
 save_sy_mat(gaussian_like_kernel, 'images/gaussian_kernel_2.png')
 ```
 
@@ -155,38 +155,38 @@ save_sy_mat(gaussian_like_kernel, 'images/gaussian_kernel_2.png')
 
 Just as final comparison between the  NumPy array kernel and the plot, here is the "red mountain" viewed from directly above, with the NumPy array kernel, in pretty graphics, shown to the right-hand side of the plot:
 
-```{python}
-def surface_mat_pair(kernel, mat_fname, step_scale=1.05):
-    fig = plt.figure(figsize=(15, 30))
+```{python tags=c("hide-input")}
+def surface_mat_pair(kernel, mat_fname, fig=None):
+    if fig is None:
+        fig = plt.figure(figsize=(12, 6))
     ax0 = fig.add_subplot(1, 2, 1, projection='3d')
     kernel_plot(kernel, ax=ax0, elev=90, azim=0)
     ax1 = fig.add_subplot(1, 2, 2)
     mat_img = ski.io.imread(mat_fname)
     ax1.imshow(mat_img,
                origin='upper',
-               interpolation='nearest',
                aspect='equal')
     ax1.xaxis.set_label_position('top') 
     ax1.xaxis.tick_top()
     ax1.set_xlabel('Integer index (axis = 1)')
     ax1.set_ylabel('Integer index (axis = 0)')
     # Set tick labels and positions as if for matrix indices.
+    pad_factors = [0.05, 0.1]  # To account for margins
     for ax_name, ax_ind in zip(('y', 'x'), (0, 1)):
         kern_ax_len = kernel.shape[ax_ind]
         mat_ax_len = mat_img.shape[ax_ind]
-        step = mat_ax_len / (kern_ax_len * step_scale)
-        tick_pos = np.arange(step / 2, mat_ax_len, step)
+        p_f = pad_factors[ax_ind]
+        step = mat_ax_len / (kern_ax_len + p_f)
+        tick_pos = np.arange(step * (0.5 + p_f), mat_ax_len, step)
         getattr(ax1, f'set_{ax_name}ticks')(tick_pos)
         getattr(ax1, f'set_{ax_name}ticklabels')(range(kern_ax_len))
     # Turn off spines.
     for position in ('left', 'right', 'top', 'bottom'):
         ax1.spines[position].set_visible(False)
-        
-surface_mat_pair(gaussian_like_kernel, 'images/gaussian_kernel_2.png')
-```
+    fig.subplots_adjust(left=0.0, right=1, wspace=0)
+    plt.tight_layout()
 
-```{python}
-3.15 / 3
+surface_mat_pair(gaussian_like_kernel, 'images/gaussian_kernel_2.png')
 ```
 
 Remember that the kernel has only 9 values (shown as blue text on the plot), so there are no values in between the array values. If you prefer, we can visualise the kernel using a wireframe, to make it clearer that there are no values in between the kernel elements (e.g. in between the points where there is blue text):
@@ -275,18 +275,14 @@ plt.title('`big_gaussian_kernel` \nRed Mountain View:');
 
 Again, to make the relationship between the NumPy array and the graph as clear as possible, here is the "red mountain" viewed from directly above, with the `big_gaussian_kernel` array shown to its right:
 
-```{python}
+```{python tags=c("raises-exception", "remove-cell")}
+# Save figure if we can.
 save_sy_mat(big_gaussian_kernel, 'images/big_gaussian_kernel.png', dpi=1200)
 ```
 
-![](images/big_gaussian_kernel.png)
-
-```{python}
-surface_mat_pair(big_gaussian_kernel, 'images/big_gaussian_kernel.png', step_scale=1.01)
+```{python tags=c("hide-input")}
+surface_mat_pair(big_gaussian_kernel, 'images/big_gaussian_kernel.png')
 ```
-
-![](images/sky_gauss_2.png)
-
 
 You  may (or may not) recognise the "red mountain" - when we plot the `big_gaussian_kernel` - as a multivariate [Gaussian distribution](https://en.wikipedia.org/wiki/Gaussian_function). Here is one way of writing the formula for the multivariate Gaussian distribution:
 
@@ -798,19 +794,25 @@ plt.tight_layout();
 
 You can see that the sharpened image, as intended, has better clarity than the original. We can also use a specialised [sharpening kernel](https://www.geeksforgeeks.org/deep-learning/types-of-convolution-kernels/#3-sharpening-kernel) to achieve the same effect:
 
-![](images/sharpening_kernel.png)
-
-We show this kernel in 3D below (it does look pretty sharp!):
-
 ```{python}
 sharpening_kernel = np.array([[0, -1 , 0],
                               [-1, 5, -1],
                               [0, -1,  0]])
-print(sharpening_kernel)
+```
+
+Here's a nicer mathematical display of the kernel:
+
+```{python tags=c("hide-input")}
+sy.Matrix(sharpening_kernel)
+```
+
+We show this kernel in 3D below (it does look pretty sharp!):
+
+```{python}
 kernel_plot(sharpening_kernel)
 ```
 
-This kernel works by [emphasising differences between adjacent pixels](https://setosa.io/ev/image-kernels/#:~:text=The%20sharpen%20kernel%20emphasizes%20differences,differences%20in%20adjacent%20pixel%20values.). Essentially, the more different than a pixel is from its surrounding pixels, the bigger value it will get in the sharpened image. 
+The kernel works by [emphasising differences between adjacent pixels](https://setosa.io/ev/image-kernels/#:~:text=The%20sharpen%20kernel%20emphasizes%20differences,differences%20in%20adjacent%20pixel%20values.). Essentially, the more different than a pixel is from its surrounding pixels, the bigger value it will get in the sharpened image. 
 
 To see this in detail, let's take just the middle row of the `sharpening_kernel`:
 
@@ -974,7 +976,9 @@ You mission is the following. Make a custom sharpening kernel to sharpen `blurry
 
 When making your modifications to the kernel pay attention to the original values in `sharpening_kernel` to decide what values you can use to achieve a similar but stronger effect. Here is the original `sharpening_kernel`, to act as your spiritual guide:
 
-![](images/sharpening_kernel.png)
+```{python tags=c("hide-input")}
+sy.Matrix(sharpening_kernel)
+```
 
 ...think carefully about what you can change to improve the sharpening performance. 
 
@@ -1006,12 +1010,12 @@ An important feature to be aware of here, is that the sharpening kernel should s
 
 ```{python}
 # The sum of the original `sharpening_kernel`.
-sharpening_kernel.sum()
+np.sum(sharpening_kernel)
 ```
 
 ```{python}
 # The sum of the newer, stronger `another_sharpening_kernel`.
-another_sharpening_kernel.sum()
+np.sum(another_sharpening_kernel)
 ```
 
 As with Gaussian kernels, this is to ensure that the sharpening filter does not alter the average brightness of the original image. 
