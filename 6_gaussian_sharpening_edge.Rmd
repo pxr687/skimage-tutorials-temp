@@ -1,6 +1,6 @@
-# Convolution filters II - Gaussian blur, sharpening and edge detection
+# Filtering with kernels II - Gaussian blur, sharpening and edge detection
 
-This page will explore additional foundational filters which use convolutional kernels, implementing them first with NumPy and SciPy, and then with Scikit-image. As usual, we begin with some imports:
+This page will explore additional foundational filters which use kernels, implementing them first with NumPy and SciPy, and then with Scikit-image. As usual, we begin with some imports:
 
 ```{python}
 # Library imports.
@@ -241,7 +241,8 @@ When comparing to the `big_gaussian_kernel`, shown below, you can see that the p
 
 As we said above, when we filter using these Gaussian kernels, we "walk" the kernel through the image, with the top of the "mountain", the crimson peak, centered on a given pixel at each step. The central pixel value is then replaced with an average of the pixels in the neighborhood, but each pixels contribution to the average is weighted by how close it is to the central pixel. E.g. by how close it falls to the crimson peak of the Gaussian surfaces we showed above. Pixels closer to the central pixel, under the crimson peak, will exert more influence, pixels further away will exert a weaker influence.
 
-Let's convolve `big_gaussian_kernel` with the `camera` image, using `ndi.correlate()`, as we used for the mean filter:
+Let's apply the `big_gaussian_kernel` with the `camera` image, using
+`ndi.correlate()`, as we used for the mean filter:
 
 ```{python}
 # Appl the `big_gaussian_kernel` as a filter.
@@ -578,7 +579,7 @@ def DIY_gauss(x, y, sigma):
 Do not forget to use your kernel to blur the `xenomorph` image in the cell below:
 
 ```{python}
-# Convolve your kernel with the xenomorph image...
+# Apply your kernel with the xenomorph image...
 xenomorph_gauss_blurred = ...
 ```
 
@@ -725,7 +726,8 @@ middle_row_sharp = sharpening_kernel[1, :]
 middle_row_sharp
 ```
 
-We can convolve this middle row with a 1-D array of numbers, using the same machinery as for larger image arrays:
+We can filter this middle row with a 1-D array of numbers, using the same
+machinery as for larger image arrays:
 
 ```{python}
 # An array of numbers.
@@ -733,7 +735,7 @@ my_nums = np.array([0, 1, 2, 100])
 my_nums
 ```
 
-We perform the convolution in the cell below:
+We perform the filtering in the cell below:
 
 ```{python}
 ndi.correlate(my_nums, 
@@ -748,7 +750,7 @@ no_diff = np.ones((6, 6))
 no_diff
 ```
 
-Convolving this array with the `sharpening_kernel` will yield the same array, as there are no differences in the input.
+Applying this array with the `sharpening_kernel` will yield the same array, as there are no differences in the input.
 
 ```{python}
 ndi.correlate(no_diff, 
@@ -769,7 +771,10 @@ diffs = np.array([[2, 3, 2, 3, 2, 3],
 diffs
 ```
 
-Convolving with the `sharpening_kernel` results in a larger number of larger absolute values in the bottom three rows, amplifying the differences between the pixels, such that larger differences become even larger thanks to the sharpening operation:
+Applying the `sharpening_kernel` results in a larger number of larger absolute
+values in the bottom three rows, amplifying the differences between the pixels,
+such that larger differences become even larger thanks to the sharpening
+operation:
 
 ```{python}
 # Larger differences in later rows, where there is greater variance in the pixel intensities.
@@ -925,7 +930,7 @@ The reason our new `another_sharpening_kernel` performs better than the original
 We use the new kernel to sharpen `blurry_eagle` in the cell below:
 
 ```{python}
-# Perform the convolution, to sharpen the image.
+# Perform the filtering, to sharpen the image.
 sharpened_eagle_solution = ndi.correlate(blurry_eagle,
                                weights=another_sharpening_kernel)
 
@@ -997,7 +1002,7 @@ edgy = np.array([ [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
 plt.imshow(edgy);
 ```
 
-Convolving with our horizontal edge detection kernel finds the horizontal edges. Note again that the change in pixel intensities is in the *vertical* direction, but the edge itself runs in the *horizontal* direction:
+Applying our horizontal edge detection kernel finds the horizontal edges. Note again that the change in pixel intensities is in the *vertical* direction, but the edge itself runs in the *horizontal* direction:
 
 ```{python}
 # Use the horizontal edge detection filter.
@@ -1011,13 +1016,14 @@ Let's think about what has happened here at the level of the individual pixels. 
 
 ![](images/horizontal_edge_detection_1.png)
 
-You can see that, for a binary image, the horizontal kernel convolution essential "counts" the number of 0-to-1 vertical changes in the kernel location, which lets it detect horizontal edges.
+You can see that, for a binary image, the horizontal kernel essentially "counts" the number of 0-to-1 vertical changes in the kernel location, which lets it detect horizontal edges.
 
 Conversely, when the kernel hits the 1-to-0 vertical changes at the bottom of the array, we get a similar count of the 1-to-0 changes, but indicated by a negative value, telling us that the gradient is in the other direction:
 
 ![](images/horizontal_edge_detection_2.png)
 
-The original `edgy` array, and the array resulting from convolution with the `horizontal_edge_detection_kernel` are both shown in "raw" NumPy output below:
+The original `edgy` array, and the array resulting from application of the
+`horizontal_edge_detection_kernel` are both shown in "raw" NumPy output below:
 
 ```{python}
 # Show the horizontal edge-filtered array.
@@ -1335,7 +1341,7 @@ plt.imshow(edgy_sobel_ski);
 
 You can see that both the horizontal edges and the vertical edges are two pixels wide. 
 
-Can you think of the modifications you could make to the edge detection kernels, such that after convolving `edgy` with the kernels, and combining the results into one image, that the edges in the combined image are *only one pixel wide*?
+Can you think of the modifications you could make to the edge detection kernels, such that after applying the kernels to `edgy`, and combining the results into one image, that the edges in the combined image are *only one pixel wide*?
 
 Think about what you need to do, and try to recreate this target image:
 
@@ -1369,10 +1375,10 @@ horizontal_2by2_kernel = np.array([[1, 1],
 horizontal_2by2_kernel
 ```
 
-...convolving `edgy` with this kernel yields single-pixel wide horizontal edges:
+...filtering `edgy` with this kernel yields single-pixel wide horizontal edges:
 
 ```{python}
-# Convolve `edgy` with our kernel to find the horizontal edges.
+# Filter `edgy` with our kernel to find the horizontal edges.
 edgy_horizontal_from_2by2 = ndi.correlate(edgy,
                                           weights=horizontal_2by2_kernel)
 
@@ -1387,10 +1393,10 @@ vertical_2by2_kernel = np.array([[-1, 1],
 vertical_2by2_kernel
 ```
 
-...convolving with `edgy` gives us:
+...applying to `edgy` gives us:
 
 ```{python}
-# Convolve `edgy` with our kernel to find the vertical edges.
+# Filtering `edgy` with our kernel to find the vertical edges.
 edgy_vertical_from_2by2 = ndi.correlate(edgy,
                                         weights=vertical_2by2_kernel)
 
@@ -1416,7 +1422,7 @@ plt.imshow(edgy_both_from_2by2_kernel );
 
 # Summary
 
-This page has showed how to use various convolution kernels to filter images, using `numpy`, `scipy` and `skimage`. We have seen how changing the convolutional kernel can alter the filtering process to achieve different aims, like blurring/smoothing and edge detection. On the [next page](7_median_nonlocal_filters) we will explore different types of filters, which do not use convolution to implement their filtering effects.
+This page has showed how to use various kernels to filter images, using `numpy`, `scipy` and `skimage`. We have seen how changing the kernel can alter the filtering process to achieve different aims, like blurring/smoothing and edge detection. On the [next page](7_median_nonlocal_filters) we will explore different types of filters, which do not use kernel methods to implement their filtering effects.
 
 
 # References
