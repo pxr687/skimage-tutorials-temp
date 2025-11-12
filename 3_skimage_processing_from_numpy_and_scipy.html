@@ -184,8 +184,8 @@
 <li class="toctree-l1"><a class="reference internal" href="2_skimage_intro.html">Introducing Scikit-image</a></li>
 <li class="toctree-l1 current active"><a class="current reference internal" href="#">(Scikit-) Image processing, via NumPy and SciPy</a></li>
 <li class="toctree-l1"><a class="reference internal" href="4_threshold_filters.html">Threshold filtering</a></li>
-<li class="toctree-l1"><a class="reference internal" href="5_mean_filter.html">Convolution filters I - the mean filter</a></li>
-<li class="toctree-l1"><a class="reference internal" href="6_gaussian_sharpening_edge.html">Convolution filters II - Gaussian blur, sharpening and edge detection</a></li>
+<li class="toctree-l1"><a class="reference internal" href="5_mean_filter.html">Filtering with kernels - the mean filter</a></li>
+<li class="toctree-l1"><a class="reference internal" href="6_gaussian_sharpening_edge.html">Filtering with kernels II - Gaussian blur, sharpening and edge detection</a></li>
 
 
 
@@ -1626,7 +1626,7 @@ spoon!</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.image.AxesImage at 0x7f4c160da210&gt;
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.image.AxesImage at 0x7f7119f29fd0&gt;
 </pre></div>
 </div>
 <img alt="_images/50aff3d36362558deba307a37ae4682958e48d2b46c8fe49483f0733bf1123b0.png" src="_images/50aff3d36362558deba307a37ae4682958e48d2b46c8fe49483f0733bf1123b0.png" />
@@ -1785,7 +1785,7 @@ Min Pixel Value: 0.0
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.image.AxesImage at 0x7f4c1b4b1490&gt;
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.image.AxesImage at 0x7f7123e37380&gt;
 </pre></div>
 </div>
 <img alt="_images/60b7cd61208645b425827f7a1ad2f07076f41c86351b79cba077558e9f2a5174.png" src="_images/60b7cd61208645b425827f7a1ad2f07076f41c86351b79cba077558e9f2a5174.png" />
@@ -1987,7 +1987,7 @@ using specific NumPy (or <code class="docutils literal notranslate"><span class=
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.image.AxesImage at 0x7f4c1b5048c0&gt;
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.image.AxesImage at 0x7f71405a4260&gt;
 </pre></div>
 </div>
 <img alt="_images/50aff3d36362558deba307a37ae4682958e48d2b46c8fe49483f0733bf1123b0.png" src="_images/50aff3d36362558deba307a37ae4682958e48d2b46c8fe49483f0733bf1123b0.png" />
@@ -2258,7 +2258,7 @@ image:</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/tmp/ipykernel_2655/2746963989.py:8: RuntimeWarning: invalid value encountered in power
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/tmp/ipykernel_2634/2746963989.py:8: RuntimeWarning: invalid value encountered in power
   mask_camera = ((i_cam - cam_c_i) ** 3 + (j_cam - cam_c_j) ** 3) ** (1 / 3) &gt; p
 </pre></div>
 </div>
@@ -2434,7 +2434,7 @@ Max Pixel Value: 207
 Min Pixel Value: 63
 </pre></div>
 </div>
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.image.AxesImage at 0x7f4c1605c920&gt;
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.image.AxesImage at 0x7f71406a5be0&gt;
 </pre></div>
 </div>
 <img alt="_images/c7b80769183299078e5ab4339df4c51966f28bae48a1f0c68b5bb917cdedb60c.png" src="_images/c7b80769183299078e5ab4339df4c51966f28bae48a1f0c68b5bb917cdedb60c.png" />
@@ -2628,7 +2628,7 @@ Min Pixel Value: 0
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.image.AxesImage at 0x7f4c443ee7e0&gt;
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.image.AxesImage at 0x7f7119f51400&gt;
 </pre></div>
 </div>
 <img alt="_images/bef9d675f96e7306487274a9ce21bdb89f9593db4b4ee37f0576a945c6403edc.png" src="_images/bef9d675f96e7306487274a9ce21bdb89f9593db4b4ee37f0576a945c6403edc.png" />
@@ -2771,7 +2771,7 @@ of the channels.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.image.AxesImage at 0x7f4c1605dd30&gt;
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.image.AxesImage at 0x7f71405c5af0&gt;
 </pre></div>
 </div>
 <img alt="_images/47f051e43f314d35f26f2b6497a1673c1cc0ba20e4f6bd0a27f0cd36068d260f.png" src="_images/47f051e43f314d35f26f2b6497a1673c1cc0ba20e4f6bd0a27f0cd36068d260f.png" />

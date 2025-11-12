@@ -989,9 +989,9 @@ plt.tight_layout();
 ## Summary
 
 This page shows and explains threshold filtering using `numpy`, `scipy` and
-`skimage`. On the [next page](5_mean_filter) we will look at convolutional
-filtering, where we modify pixel values based on the "local neighborhood" of
-surrounding pixels.
+`skimage`. On the [next page](5_mean_filter) we will look at kernel filtering,
+where we modify pixel values based on the "local neighborhood" of surrounding
+pixels.
 
 ## References
 

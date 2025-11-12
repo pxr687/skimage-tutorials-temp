@@ -13,7 +13,7 @@ jupyter:
     name: python3
 ---
 
-# Convolution filters I - the mean filter
+# Filtering with kernels - the mean filter
 
 ## Footprints and pixel neighborhoods
 
@@ -190,7 +190,7 @@ footprint elements that fall outside of the image with 0 values, for instance.
 Or we could duplicate values from the pixels at the edge of the array, to fill
 in footprint elements that fall outside of the array.  As we will see below,
 we will need a strategy like this for estimating the off-image values for
-the [kernel filter methods](convolution-kernel-methods).
+the [kernel filter methods](kernel-filter-methods).
 
 However, for the "footprint" filters that we are considering here, the most
 obvious strategy is simply to clip the footprint at the edges, ignoring the
@@ -440,8 +440,7 @@ plt.title('Mean filtered\n(9,9) footprint')
 plt.imshow(mean_filtered_camera);
 ```
 
-(convolution-kernel-methods)=
-
+(kernel-filter-methods)=
 
 ## Filtering with kernels
 
@@ -453,8 +452,7 @@ function, such as the mean, to calculate a single value from the neighboring pix
 As you saw above, we call this *footprint / function* filtering.
 
 Another, faster but less general way of applying local filters is by
-*convolving* with a *kernel*.  For more on convolution, see [convolution on
-Wikepedia](https://en.wikipedia.org/wiki/Convolution).
+*applying a *kernel*.
 
 Remember that a footprint is a binary array defining the neighborhood that
 defines which pixel values we consider as the neighborhood.  For mean
@@ -472,9 +470,10 @@ corresponding pixels, and summing the result.
 This should be come clear as the page progresses.
 
 As for footprints, we "walk" a kernel across our whole image, centering it on
-every pixel, then apply the kernel weights to their corresponding pixel values, and sum to produce the new pixel value.
+every pixel, then apply the kernel weights to their corresponding pixel values,
+and sum to produce the new pixel value.
 
-Let's implement a mean filter, using convolution. Obviously, we start with our
+Let's implement a mean filter, using a kernel. Obviously, we start with our
 kernel (a footprint with weights). First, we define the kernel shape:
 
 ```{python}
@@ -555,15 +554,15 @@ the mean of values under the kernel. This process is illustrated below for
 three kernel locations - (once more you may want to right click on these
 images and open them in a new tab/window, for easier viewing):
 
-![](images/kernel_convolution_three_locs.png)
+![](images/kernel_three_locs.png)
 
-Now, let's apply this kernel convolution to every pixel in the image array:
+Now, let's apply this kernel to every pixel in the image array:
 
 ```{python}
 # A new import.
 import scipy.ndimage as ndi
 
-# Perform the convolution.
+# Filter
 mean_filtered_random_i_via_sp = ndi.correlate(input=random_i,
                                               weights=mean_kernel,
                                               output=float) # Output `dtype`
@@ -718,11 +717,10 @@ and where the sweet spot is may be somewhat subjective.
 :class: dropdown
 :::
 
-The nice thing about applying filtering via convolution kernels is that
-changing the kernel itself lets us implement a wide variety of functions, even
-fairly strange ones. In this exercise, you will write a function called
-`strange_filter()`. You should apply it to `coffee_gray` to produce the
-following image:
+The nice thing about applying filtering via kernels is that changing the kernel
+itself lets us implement a wide variety of functions, even fairly strange ones.
+In this exercise, you will write a function called `strange_filter()`. You
+should apply it to `coffee_gray` to produce the following image:
 
 ![](images/coffee_strange_kernel.png)
 
@@ -821,7 +819,8 @@ This is quite a strange kernel to apply! But it shows us how easy it is to achie
 
 ## Filtering 3D images
 
-We can filter a 3D color image by convolving our filtering kernel with each color channel separately. Let's load a 3D image:
+We can filter a 3D color image by applying our filtering kernel to each color
+channel separately. Let's load a 3D image:
 
 ```{python}
 # Load in and show an image.
@@ -899,10 +898,9 @@ plt.imshow(astronaut_mean_filtered)
 plt.tight_layout();
 ```
 
-We got a blurrier output image via `skimage` here, than in the manual
-convolution using `ndi.correlate()`. This is because we used a larger kernel
-for the `skimage` filtering, and so are averaging over larger pixel
-neighborhoods.
+We got a blurrier output image via `skimage` here, than in the kernel filter
+using `ndi.correlate()`. This is because we used a larger kernel for the
+`skimage` filtering, and so are averaging over larger pixel neighborhoods.
 
 Scikit-image will also handle this using a 3D kernel.
 
@@ -940,7 +938,7 @@ filtering the channels separately is the way to go...
 
 This page has showed how to perform mean filtering, using `numpy`, `scipy` and
 `skimage`. On the [next page](6_gaussian_sharpening_edge), we will look at
-using different convolution kernels to get different filtering effects.
+using different kernels to get different filtering effects.
 
 
 ## References
@@ -948,8 +946,6 @@ using different convolution kernels to get different filtering effects.
 * Gulati, J. (2024) *NumPy for Image Processing*. KDnuggets. Available from:
   <https://www.kdnuggets.com/numpy-for-image-processing>
 * <https://setosa.io/ev/image-kernels>
-* [Types of convolution
-  kernels](https://www.geeksforgeeks.org/deep-learning/types-of-convolution-kernels).
 
 Adapted from:
 

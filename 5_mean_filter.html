@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>Convolution filters I - the mean filter &#8212; Scikit-image via NumPy and SciPy</title>
+    <title>Filtering with kernels - the mean filter &#8212; Scikit-image via NumPy and SciPy</title>
   
   
   
@@ -65,7 +65,7 @@
     <link rel="icon" href="_static/pandas_numpy.ico"/>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="Convolution filters II - Gaussian blur, sharpening and edge detection" href="6_gaussian_sharpening_edge.html" />
+    <link rel="next" title="Filtering with kernels II - Gaussian blur, sharpening and edge detection" href="6_gaussian_sharpening_edge.html" />
     <link rel="prev" title="Threshold filtering" href="4_threshold_filters.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
@@ -184,8 +184,8 @@
 <li class="toctree-l1"><a class="reference internal" href="2_skimage_intro.html">Introducing Scikit-image</a></li>
 <li class="toctree-l1"><a class="reference internal" href="3_skimage_processing_from_numpy_and_scipy.html">(Scikit-) Image processing, via NumPy and SciPy</a></li>
 <li class="toctree-l1"><a class="reference internal" href="4_threshold_filters.html">Threshold filtering</a></li>
-<li class="toctree-l1 current active"><a class="current reference internal" href="#">Convolution filters I - the mean filter</a></li>
-<li class="toctree-l1"><a class="reference internal" href="6_gaussian_sharpening_edge.html">Convolution filters II - Gaussian blur, sharpening and edge detection</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Filtering with kernels - the mean filter</a></li>
+<li class="toctree-l1"><a class="reference internal" href="6_gaussian_sharpening_edge.html">Filtering with kernels II - Gaussian blur, sharpening and edge detection</a></li>
 
 
 
@@ -442,7 +442,7 @@ document.write(`
               
 
 <div id="jb-print-docs-body" class="onlyprint">
-    <h1>Convolution filters I - the mean filter</h1>
+    <h1>Filtering with kernels - the mean filter</h1>
     <!-- Table of contents -->
     <div id="print-main-content">
         <div id="jb-print-toc">
@@ -471,8 +471,8 @@ document.write(`
 <div id="searchbox"></div>
                 <article class="bd-article">
                   
-  <section class="tex2jax_ignore mathjax_ignore" id="convolution-filters-i-the-mean-filter">
-<h1>Convolution filters I - the mean filter<a class="headerlink" href="#convolution-filters-i-the-mean-filter" title="Link to this heading">#</a></h1>
+  <section class="tex2jax_ignore mathjax_ignore" id="filtering-with-kernels-the-mean-filter">
+<h1>Filtering with kernels - the mean filter<a class="headerlink" href="#filtering-with-kernels-the-mean-filter" title="Link to this heading">#</a></h1>
 <section id="footprints-and-pixel-neighborhoods">
 <h2>Footprints and pixel neighborhoods<a class="headerlink" href="#footprints-and-pixel-neighborhoods" title="Link to this heading">#</a></h2>
 <p>On the last page we filtered images based on a single threshold value, or based on multiple threshold values. Other filters work differently: they work by adjusting a given pixel’s value based on the value of other pixels which surround it, in a specified area. The mean filter is one such filter.</p>
@@ -723,7 +723,7 @@ footprint elements that fall outside of the image with 0 values, for instance.
 Or we could duplicate values from the pixels at the edge of the array, to fill
 in footprint elements that fall outside of the array.  As we will see below,
 we will need a strategy like this for estimating the off-image values for
-the <a class="reference internal" href="#convolution-kernel-methods"><span class="std std-ref">kernel filter methods</span></a>.</p>
+the <a class="reference internal" href="#kernel-filter-methods"><span class="std std-ref">kernel filter methods</span></a>.</p>
 <p>However, for the “footprint” filters that we are considering here, the most
 obvious strategy is simply to clip the footprint at the edges, ignoring the
 part of the footprint that has fallen off the sides of the image.  So, for
@@ -863,7 +863,7 @@ Max Pixel Value: 252
 Min Pixel Value: 1
 </pre></div>
 </div>
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.image.AxesImage at 0x7f8cc6dd7680&gt;
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.image.AxesImage at 0x7f3f98d2e120&gt;
 </pre></div>
 </div>
 <img alt="_images/ac70f7cc5b678ac690433d0ab55f89b2e45131ef773bcdd68acf4f95b6e8cde6.png" src="_images/ac70f7cc5b678ac690433d0ab55f89b2e45131ef773bcdd68acf4f95b6e8cde6.png" />
@@ -1058,15 +1058,14 @@ footprint, and apply the <code class="docutils literal notranslate"><span class=
 </section>
 </section>
 <section id="filtering-with-kernels">
-<span id="convolution-kernel-methods"></span><h2>Filtering with kernels<a class="headerlink" href="#filtering-with-kernels" title="Link to this heading">#</a></h2>
+<span id="kernel-filter-methods"></span><h2>Filtering with kernels<a class="headerlink" href="#filtering-with-kernels" title="Link to this heading">#</a></h2>
 <p>We have so far seen filtering with footprints.   We use a footprint array to
 specify the local neighborhood for any pixel.  Then for each pixel, we apply
 the footprint at that pixel, to select the local pixels, and use some
 function, such as the mean, to calculate a single value from the neighboring pixels.  This is the value at that pixel in the output image.</p>
 <p>As you saw above, we call this <em>footprint / function</em> filtering.</p>
 <p>Another, faster but less general way of applying local filters is by
-<em>convolving</em> with a <em>kernel</em>.  For more on convolution, see <a class="reference external" href="https://en.wikipedia.org/wiki/Convolution">convolution on
-Wikepedia</a>.</p>
+*applying a <em>kernel</em>.</p>
 <p>Remember that a footprint is a binary array defining the neighborhood that
 defines which pixel values we consider as the neighborhood.  For mean
 filtering, for example, we place the footprint over each pixel of the image,
@@ -1079,8 +1078,9 @@ pixel in the neighborhood.</p>
 corresponding pixels, and summing the result.</p>
 <p>This should be come clear as the page progresses.</p>
 <p>As for footprints, we “walk” a kernel across our whole image, centering it on
-every pixel, then apply the kernel weights to their corresponding pixel values, and sum to produce the new pixel value.</p>
-<p>Let’s implement a mean filter, using convolution. Obviously, we start with our
+every pixel, then apply the kernel weights to their corresponding pixel values,
+and sum to produce the new pixel value.</p>
+<p>Let’s implement a mean filter, using a kernel. Obviously, we start with our
 kernel (a footprint with weights). First, we define the kernel shape:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -1200,14 +1200,14 @@ value we just computed.</p></li>
 the mean of values under the kernel. This process is illustrated below for
 three kernel locations - (once more you may want to right click on these
 images and open them in a new tab/window, for easier viewing):</p>
-<p><img alt="" src="_images/kernel_convolution_three_locs.png" /></p>
-<p>Now, let’s apply this kernel convolution to every pixel in the image array:</p>
+<p><img alt="" src="_images/kernel_three_locs.png" /></p>
+<p>Now, let’s apply this kernel to every pixel in the image array:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># A new import.</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">scipy.ndimage</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">ndi</span>
 
-<span class="c1"># Perform the convolution.</span>
+<span class="c1"># Filter</span>
 <span class="n">mean_filtered_random_i_via_sp</span> <span class="o">=</span> <span class="n">ndi</span><span class="o">.</span><span class="n">correlate</span><span class="p">(</span><span class="nb">input</span><span class="o">=</span><span class="n">random_i</span><span class="p">,</span>
                                               <span class="n">weights</span><span class="o">=</span><span class="n">mean_kernel</span><span class="p">,</span>
                                               <span class="n">output</span><span class="o">=</span><span class="nb">float</span><span class="p">)</span> <span class="c1"># Output `dtype`</span>
@@ -1401,7 +1401,7 @@ to the image:</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/fdf4cbb57b499b77ae0bc1eca480a43e02cf6e53c6d073ede2aca39fb9a8f383.png" src="_images/fdf4cbb57b499b77ae0bc1eca480a43e02cf6e53c6d073ede2aca39fb9a8f383.png" />
+<img alt="_images/20797072c40f536d522e5522b691eae3abff83de6ae74b123c88349468c60060.png" src="_images/20797072c40f536d522e5522b691eae3abff83de6ae74b123c88349468c60060.png" />
 </div>
 </div>
 <p>The mean filter can remove some of the noise, restoring the clarity of the
@@ -1433,7 +1433,7 @@ it to anything like the same extent as the pixel-to-pixel noise.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/7d197cbad2088fd57dd5b00b73b4db14aaae7a63fd4d64a47f1918d5d4c23dd7.png" src="_images/7d197cbad2088fd57dd5b00b73b4db14aaae7a63fd4d64a47f1918d5d4c23dd7.png" />
+<img alt="_images/4d5ab0dbb1aa2f91faee11afbf99da4808c9034a6e0ff3af2fe863c8866035fe.png" src="_images/4d5ab0dbb1aa2f91faee11afbf99da4808c9034a6e0ff3af2fe863c8866035fe.png" />
 </div>
 </div>
 <p>We can see that the image is clearer, the noise has been reduced and some of
@@ -1464,7 +1464,7 @@ the signal has been restored.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/fccc043fb73051a3d9794c49d5b225e2d8b9c56c19b4b2e7a04432c9993e6028.png" src="_images/fccc043fb73051a3d9794c49d5b225e2d8b9c56c19b4b2e7a04432c9993e6028.png" />
+<img alt="_images/1e1d746aaefda12db1b416214d0ce70e973e66f4156e345be0d41987e8562e9a.png" src="_images/1e1d746aaefda12db1b416214d0ce70e973e66f4156e345be0d41987e8562e9a.png" />
 </div>
 </div>
 <p>As with many filtering operations, the effect of altering aspects of the
@@ -1475,11 +1475,10 @@ and where the sweet spot is may be somewhat subjective.</p>
 
 <p class="admonition-title"><span class="caption-number">Exercise 22 </span></p>
 <section id="exercise-content">
-<p>The nice thing about applying filtering via convolution kernels is that
-changing the kernel itself lets us implement a wide variety of functions, even
-fairly strange ones. In this exercise, you will write a function called
-<code class="docutils literal notranslate"><span class="pre">strange_filter()</span></code>. You should apply it to <code class="docutils literal notranslate"><span class="pre">coffee_gray</span></code> to produce the
-following image:</p>
+<p>The nice thing about applying filtering via kernels is that changing the kernel
+itself lets us implement a wide variety of functions, even fairly strange ones.
+In this exercise, you will write a function called <code class="docutils literal notranslate"><span class="pre">strange_filter()</span></code>. You
+should apply it to <code class="docutils literal notranslate"><span class="pre">coffee_gray</span></code> to produce the following image:</p>
 <p><img alt="" src="_images/coffee_strange_kernel.png" /></p>
 <p>The kernel we used, and that we want you to us, was one where the kernel value
 was proportional to the Euclidean distance from the kernel center.  That is,
@@ -1546,7 +1545,7 @@ to build the kernel for given kernel shape:</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.image.AxesImage at 0x7f8cb9a2eed0&gt;
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.image.AxesImage at 0x7f3f8fa53110&gt;
 </pre></div>
 </div>
 <img alt="_images/a71c59f05f7f35aa9d224ba9b291a2d1fe8a70b780e8fe5475f3df95d4ccd1ab.png" src="_images/a71c59f05f7f35aa9d224ba9b291a2d1fe8a70b780e8fe5475f3df95d4ccd1ab.png" />
@@ -1593,7 +1592,8 @@ can explain its features, compared to the original.</p>
 </section>
 <section id="filtering-3d-images">
 <h2>Filtering 3D images<a class="headerlink" href="#filtering-3d-images" title="Link to this heading">#</a></h2>
-<p>We can filter a 3D color image by convolving our filtering kernel with each color channel separately. Let’s load a 3D image:</p>
+<p>We can filter a 3D color image by applying our filtering kernel to each color
+channel separately. Let’s load a 3D image:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Load in and show an image.</span>
@@ -1726,10 +1726,9 @@ Min Pixel Value: 0
 <img alt="_images/dca42a3c82eb4f39bb699b2bea7ecc9ccb084265e7f8aace2f15cf1c5d7055a2.png" src="_images/dca42a3c82eb4f39bb699b2bea7ecc9ccb084265e7f8aace2f15cf1c5d7055a2.png" />
 </div>
 </div>
-<p>We got a blurrier output image via <code class="docutils literal notranslate"><span class="pre">skimage</span></code> here, than in the manual
-convolution using <code class="docutils literal notranslate"><span class="pre">ndi.correlate()</span></code>. This is because we used a larger kernel
-for the <code class="docutils literal notranslate"><span class="pre">skimage</span></code> filtering, and so are averaging over larger pixel
-neighborhoods.</p>
+<p>We got a blurrier output image via <code class="docutils literal notranslate"><span class="pre">skimage</span></code> here, than in the kernel filter
+using <code class="docutils literal notranslate"><span class="pre">ndi.correlate()</span></code>. This is because we used a larger kernel for the
+<code class="docutils literal notranslate"><span class="pre">skimage</span></code> filtering, and so are averaging over larger pixel neighborhoods.</p>
 <p>Scikit-image will also handle this using a 3D kernel.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -1772,7 +1771,7 @@ filtering the channels separately is the way to go…</p>
 <h2>Summary<a class="headerlink" href="#summary" title="Link to this heading">#</a></h2>
 <p>This page has showed how to perform mean filtering, using <code class="docutils literal notranslate"><span class="pre">numpy</span></code>, <code class="docutils literal notranslate"><span class="pre">scipy</span></code> and
 <code class="docutils literal notranslate"><span class="pre">skimage</span></code>. On the <a class="reference internal" href="6_gaussian_sharpening_edge.html"><span class="doc std std-doc">next page</span></a>, we will look at
-using different convolution kernels to get different filtering effects.</p>
+using different kernels to get different filtering effects.</p>
 </section>
 <section id="references">
 <h2>References<a class="headerlink" href="#references" title="Link to this heading">#</a></h2>
@@ -1780,8 +1779,6 @@ using different convolution kernels to get different filtering effects.</p>
 <li><p>Gulati, J. (2024) <em>NumPy for Image Processing</em>. KDnuggets. Available from:
 <a class="reference external" href="https://www.kdnuggets.com/numpy-for-image-processing">https://www.kdnuggets.com/numpy-for-image-processing</a></p></li>
 <li><p><a class="reference external" href="https://setosa.io/ev/image-kernels">https://setosa.io/ev/image-kernels</a></p></li>
-<li><p><a class="reference external" href="https://www.geeksforgeeks.org/deep-learning/types-of-convolution-kernels">Types of convolution
-kernels</a>.</p></li>
 </ul>
 <p>Adapted from:</p>
 <ul class="simple">
@@ -1836,7 +1833,7 @@ processing</a></p></li>
        title="next page">
       <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">Convolution filters II - Gaussian blur, sharpening and edge detection</p>
+        <p class="prev-next-title">Filtering with kernels II - Gaussian blur, sharpening and edge detection</p>
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>

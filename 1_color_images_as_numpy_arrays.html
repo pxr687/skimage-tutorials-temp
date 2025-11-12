@@ -184,8 +184,8 @@
 <li class="toctree-l1"><a class="reference internal" href="2_skimage_intro.html">Introducing Scikit-image</a></li>
 <li class="toctree-l1"><a class="reference internal" href="3_skimage_processing_from_numpy_and_scipy.html">(Scikit-) Image processing, via NumPy and SciPy</a></li>
 <li class="toctree-l1"><a class="reference internal" href="4_threshold_filters.html">Threshold filtering</a></li>
-<li class="toctree-l1"><a class="reference internal" href="5_mean_filter.html">Convolution filters I - the mean filter</a></li>
-<li class="toctree-l1"><a class="reference internal" href="6_gaussian_sharpening_edge.html">Convolution filters II - Gaussian blur, sharpening and edge detection</a></li>
+<li class="toctree-l1"><a class="reference internal" href="5_mean_filter.html">Filtering with kernels - the mean filter</a></li>
+<li class="toctree-l1"><a class="reference internal" href="6_gaussian_sharpening_edge.html">Filtering with kernels II - Gaussian blur, sharpening and edge detection</a></li>
 
 
 
@@ -1296,9 +1296,9 @@ interactively, to see the random draw a few times:</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>X1 = 0.91
-X2 = 0.81
-X3 = 0.18
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>X1 = 0.35
+X2 = 0.14
+X3 = 0.47
 </pre></div>
 </div>
 </div>
@@ -1325,12 +1325,12 @@ X3 = 0.18
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Red (X1) = 0.98
-Green (X2) = 0.16
-Blue (X3) = 0.43
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Red (X1) = 0.61
+Green (X2) = 0.9
+Blue (X3) = 0.95
 </pre></div>
 </div>
-<img alt="_images/58e6fbf8373d086b63fd0645017f06d3a5881283160ea23b4804908ee71f52cb.png" src="_images/58e6fbf8373d086b63fd0645017f06d3a5881283160ea23b4804908ee71f52cb.png" />
+<img alt="_images/839b03737fc6e810c0a1bc04f9afc938edc6cdd9ffdd4a72f99295c83620b884.png" src="_images/839b03737fc6e810c0a1bc04f9afc938edc6cdd9ffdd4a72f99295c83620b884.png" />
 </div>
 </div>
 <p>So, each two-dimensional display image has a “hidden” three-dimensional array behind it. Each slice of the third dimension is a color channel. The mix of values at a given element in each color channel determines the color of that pixel in the rendered image. You may want to view this image in a new browser window, to see more clearly the exact mixes of the color channels, which are shown above each square on the right-hand side of the image:</p>
@@ -1347,7 +1347,7 @@ Blue (X3) = 0.43
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/4c7c9b91494ece27454634e25fc1917485b0c3fc9120d89bd8750f06e5c929fa.png" src="_images/4c7c9b91494ece27454634e25fc1917485b0c3fc9120d89bd8750f06e5c929fa.png" />
+<img alt="_images/6c40df9e3f062812d72bbdf0df0bfc9b2f535a6d6848befad5f819b197709030.png" src="_images/6c40df9e3f062812d72bbdf0df0bfc9b2f535a6d6848befad5f819b197709030.png" />
 </div>
 </div>
 <p>We have now completed our perilous expedition into the third dimension… We
@@ -1926,7 +1926,7 @@ Min Pixel Value: 0
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/83458a89319106c617c9b9baddee3e69983ba098b37bbc66cc97da766652ace2.png" src="_images/83458a89319106c617c9b9baddee3e69983ba098b37bbc66cc97da766652ace2.png" />
+<img alt="_images/f160c0207fb28036b2d1dd40a486ed5482fafca22e9ff77e66b524739738c3f4.png" src="_images/f160c0207fb28036b2d1dd40a486ed5482fafca22e9ff77e66b524739738c3f4.png" />
 </div>
 </div>
 </section>

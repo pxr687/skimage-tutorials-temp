@@ -66,7 +66,7 @@
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="Morphology" href="8_morphology.html" />
-    <link rel="prev" title="Convolution filters II - Gaussian blur, sharpening and edge detection" href="6_gaussian_sharpening_edge.html" />
+    <link rel="prev" title="Filtering with kernels II - Gaussian blur, sharpening and edge detection" href="6_gaussian_sharpening_edge.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   </head>
@@ -184,8 +184,8 @@
 <li class="toctree-l1"><a class="reference internal" href="2_skimage_intro.html">Introducing Scikit-image</a></li>
 <li class="toctree-l1"><a class="reference internal" href="3_skimage_processing_from_numpy_and_scipy.html">(Scikit-) Image processing, via NumPy and SciPy</a></li>
 <li class="toctree-l1"><a class="reference internal" href="4_threshold_filters.html">Threshold filtering</a></li>
-<li class="toctree-l1"><a class="reference internal" href="5_mean_filter.html">Convolution filters I - the mean filter</a></li>
-<li class="toctree-l1"><a class="reference internal" href="6_gaussian_sharpening_edge.html">Convolution filters II - Gaussian blur, sharpening and edge detection</a></li>
+<li class="toctree-l1"><a class="reference internal" href="5_mean_filter.html">Filtering with kernels - the mean filter</a></li>
+<li class="toctree-l1"><a class="reference internal" href="6_gaussian_sharpening_edge.html">Filtering with kernels II - Gaussian blur, sharpening and edge detection</a></li>
 
 
 
@@ -422,7 +422,7 @@ document.write(`
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
 <li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">More filters: the median filter and non-local filters</a></li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#local-filtering-without-convolution">Local filtering without convolution</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#local-filtering-without-kernels">Local filtering without kernels</a></li>
 <li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#edge-preservation">Edge preservation</a></li>
 <li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#non-local-filters">Non-local filters</a></li>
 <li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#histogram-equalisation-in-skimage">Histogram equalisation in <code class="docutils literal notranslate"><span class="pre">skimage</span></code></a></li>
@@ -442,8 +442,8 @@ document.write(`
                   
   <section class="tex2jax_ignore mathjax_ignore" id="more-filters-the-median-filter-and-non-local-filters">
 <h1>More filters: the median filter and non-local filters<a class="headerlink" href="#more-filters-the-median-filter-and-non-local-filters" title="Link to this heading">#</a></h1>
-<p>This page will cover filters which do not use convolution kernels. First, we will look at the median filter, which differs in important ways from the other local filters we saw on <a class="reference internal" href="5_mean_filter.html"><span class="doc std std-doc">previous</span></a> pages, because it cannot be implemented through convolution.</p>
-<p>After the median filter, we will look at another filter, the histogram equalisation filter, which does not use convolution. In fact, histogram equalisation does not use a kernel at all. Because it eschews kernels completely, the histogram equalisation filter is a <em>non-local</em> filter. More on this below.</p>
+<p>This page will cover filters which do not use filtering kernels. First, we will look at the median filter, which differs in important ways from the other local filters we saw on <a class="reference internal" href="5_mean_filter.html"><span class="doc std std-doc">previous</span></a> pages, because it cannot be implemented through kernels.</p>
+<p>After the median filter, we will look at another filter, the histogram equalisation filter, which does not use kernel methods. In fact, histogram equalisation does not use a kernel at all. Because it eschews kernels completely, the histogram equalisation filter is a <em>non-local</em> filter. More on this below.</p>
 <p>As normal, we begin with some imports:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -467,12 +467,12 @@ document.write(`
 </div>
 </div>
 </section>
-<section class="tex2jax_ignore mathjax_ignore" id="local-filtering-without-convolution">
-<h1>Local filtering without convolution<a class="headerlink" href="#local-filtering-without-convolution" title="Link to this heading">#</a></h1>
+<section class="tex2jax_ignore mathjax_ignore" id="local-filtering-without-kernels">
+<h1>Local filtering without kernels<a class="headerlink" href="#local-filtering-without-kernels" title="Link to this heading">#</a></h1>
 <p>When compared to the other local filters we have seen, the median filter uses the same process of “walking” through the image with a small array which denfines the “local neighborhood” of each pixel. In median filtering, you can <em>loosely</em> think of this small array as a kernel, but there are some major differences in the calculations, so let’s call it the “neighborhood array” instead.</p>
-<p>Like with the other kernels we have seen, the “neighborhood array” is centered on every pixel during the filtering operation. The central pixel value is replaced with a number computed from the other values in the local neighborhood, e.g. the other pixel values under the “neighborhood array”.  However, instead of <em>convolving</em> the neighborhood array and the image, as we would for a mean filter or Gaussian filter etc., the median filter, shockingly, takes the median value of the pixels under the small array.</p>
+<p>Like with the other kernels we have seen, the “neighborhood array” is centered on every pixel during the filtering operation. The central pixel value is replaced with a number computed from the other values in the local neighborhood, e.g. the other pixel values under the “neighborhood array”.  However, instead of <em>applying a kernel</em> to the neighborhood array and the image, as we would for a mean filter or Gaussian filter etc., the median filter, shockingly, takes the median value of the pixels under the small array.</p>
 <p><img alt="" src="_images/footprint_general.png" /></p>
-<p>There is no convolvable function to calculate the median, and this is why <a class="reference external" href="https://dsp.stackexchange.com/questions/13211/convolution-kernels-for-image-filtering">some people</a> will tell you not to call the “neighborhood array” a “kernel”, when we are doing median filtering. Calculating the median utilizes ranking and indexing, and cannot be expressed as set of additions, subtractions, multiplications, divisions etc, in the way that calculating a mean can, for instance.</p>
+<p>There is no way of using a kernel to calculate the median, and this is why <a class="reference external" href="https://dsp.stackexchange.com/questions/13211/convolution-kernels-for-image-filtering">some people</a> will tell you not to call the “neighborhood array” a “kernel”, when we are doing median filtering. Calculating the median utilizes ranking and indexing, and cannot be expressed as set of additions, subtractions, multiplications, divisions etc, in the way that calculating a mean can, for instance.</p>
 <p>One way to think of this, is that when we write the formula for the mean, we can write it without reference to any Python indexing operations:</p>
 <p><span class="math notranslate nohighlight">\( \large \text{mean} = \frac{\sum X}{n} \)</span></p>
 <p>…we can read that as “to get the mean of a set of numbers (where <span class="math notranslate nohighlight">\(X\)</span> refers all of the numbers), add them up and divide by however many numbers there are (<span class="math notranslate nohighlight">\(n\)</span>)”.</p>
@@ -556,7 +556,7 @@ document.write(`
 </div>
 </div>
 </div>
-<p>There is no convolution kernel that can do this - instead we use the “neighborhood array” to define a pixel neighborhood, then replace the central value with the median from that neighborhood, using the sorting and indexing we have seen above. So, the median filter <em>is</em> a local filter, because it alters pixel values based on other pixel values in the local neighborhood. However, it is not a <em>convolution filter</em> because it does use the local neighborhood in a convolution operation, in contrast to other local filters like the mean filter, Gaussian filter etc.</p>
+<p>There is no kernel method that can do this - instead we use the “neighborhood array” to define a pixel neighborhood, then replace the central value with the median from that neighborhood, using the sorting and indexing we have seen above. So, the median filter <em>is</em> a local filter, because it alters pixel values based on other pixel values in the local neighborhood. However, it is not a <em>kernel filter</em> because it does use a weighted weighted sum of the local neighborhood, in contrast to other local filters like the mean filter, Gaussian filter etc.</p>
 </section>
 <section class="tex2jax_ignore mathjax_ignore" id="edge-preservation">
 <h1>Edge preservation<a class="headerlink" href="#edge-preservation" title="Link to this heading">#</a></h1>
@@ -632,7 +632,7 @@ Median = 7.0
 </div>
 </div>
 </div>
-<p>Because the median is not a function which can be applied via convolution, we cannot apply it using <code class="docutils literal notranslate"><span class="pre">ndi.correlate()</span></code>, as we did with the other <a class="reference internal" href="5_mean_filter.html"><span class="doc std std-doc">local filters</span></a>.</p>
+<p>Because the median is not a function which can be applied via kernel filtering, we cannot apply it using <code class="docutils literal notranslate"><span class="pre">ndi.correlate()</span></code>, as we did with the other <a class="reference internal" href="5_mean_filter.html"><span class="doc std std-doc">local filters</span></a>.</p>
 <p>We can apply it in <code class="docutils literal notranslate"><span class="pre">skimage</span></code> using <code class="docutils literal notranslate"><span class="pre">ski.filters.median()</span></code>. Again,  we supply a <code class="docutils literal notranslate"><span class="pre">footprint</span></code> argument to determine the size of each pixel’s “local neighborhood”:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -764,7 +764,7 @@ Min Pixel Value: 63
 </section>
 <section class="tex2jax_ignore mathjax_ignore" id="non-local-filters">
 <h1>Non-local filters<a class="headerlink" href="#non-local-filters" title="Link to this heading">#</a></h1>
-<p>Whilst the median filter does not use convolution, it is still a local filter, because it filters pixels based on the values of other pixels in the local neighborhood. Other filters use neither convolution nor a local pixel neighborhood. These filters are called <em>non-local filters</em>.</p>
+<p>Whilst the median filter does not use a kernel, it is still a local filter, because it filters pixels based on the values of other pixels in the local neighborhood. Other filters use neither kernel filtering nor a local pixel neighborhood. These filters are called <em>non-local filters</em>.</p>
 <p>Non-local filters have their name because they filter all of the pixels in an image based on characteristics of a specific region of the image, or based upon characteristics of the entire image. As a result, a non-local filter might modify a given pixel’s value based on the values of pixels in a region of the image which is nowhere near the “local neighborhood” of the pixel being modified.</p>
 <p>One foundational non-local filter is a <a class="reference external" href="https://en.wikipedia.org/wiki/Histogram_equalization"><em>histogram equalisation filter</em></a>. This filter modifies pixels based on the histogram of the entire image. Essentially, this process “smoothes out” the histogram into a even “hill”, so that there is less variance between the pixel intensities. The image below illustrates this principle:</p>
 <p><img alt="" src="_images/hist_equal.png" /></p>
@@ -1211,7 +1211,7 @@ Min Pixel Value: 0.0
 </section>
 <section class="tex2jax_ignore mathjax_ignore" id="summary">
 <h1>Summary<a class="headerlink" href="#summary" title="Link to this heading">#</a></h1>
-<p>This page has shown a local filter (the median filter) and a non-local filter (histogram equalisation) which do not use convolution to perform their filtering operations. On the <a class="reference internal" href="8_morphology.html"><span class="doc std std-doc">next page</span></a> we will introduce another method for modifying pixels based on a <code class="docutils literal notranslate"><span class="pre">footprint</span></code>.</p>
+<p>This page has shown a local filter (the median filter) and a non-local filter (histogram equalisation) which do not use kernel filtering to perform their filtering operations. On the <a class="reference internal" href="8_morphology.html"><span class="doc std std-doc">next page</span></a> we will introduce another method for modifying pixels based on a <code class="docutils literal notranslate"><span class="pre">footprint</span></code>.</p>
 </section>
 <section class="tex2jax_ignore mathjax_ignore" id="references">
 <h1>References<a class="headerlink" href="#references" title="Link to this heading">#</a></h1>
@@ -1267,7 +1267,7 @@ processing</a></p></li>
       <i class="fa-solid fa-angle-left"></i>
       <div class="prev-next-info">
         <p class="prev-next-subtitle">previous</p>
-        <p class="prev-next-title">Convolution filters II - Gaussian blur, sharpening and edge detection</p>
+        <p class="prev-next-title">Filtering with kernels II - Gaussian blur, sharpening and edge detection</p>
       </div>
     </a>
     <a class="right-next"
@@ -1296,7 +1296,7 @@ processing</a></p></li>
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
 <li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">More filters: the median filter and non-local filters</a></li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#local-filtering-without-convolution">Local filtering without convolution</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#local-filtering-without-kernels">Local filtering without kernels</a></li>
 <li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#edge-preservation">Edge preservation</a></li>
 <li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#non-local-filters">Non-local filters</a></li>
 <li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#histogram-equalisation-in-skimage">Histogram equalisation in <code class="docutils literal notranslate"><span class="pre">skimage</span></code></a></li>
