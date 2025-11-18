@@ -13,7 +13,7 @@ jupyter:
     name: python3
 ---
 
-# Convolution filters I - the mean filter
+# Filtering with kernels - the mean filter
 
 ## Footprints and pixel neighborhoods
 
@@ -46,6 +46,26 @@ x_shape = np.array([[False, True, False],
                     [True,  True,  True],
                     [False, True, False]])
 ```
+:::
+
+::: {note}
+
+**Filtering with footprints and functions**
+
+The essence of footprint-based filtering is:
+
+- Define a local neighborhood with the footprint.
+- For each pixel in turn:
+  - Place the footprint centered over the target pixel.
+  - Use the footprint to identify the pixels in the image that are in the
+    *local neighborhood* of the target pixel.  Select these pixels.
+  - Apply some function, such as `np.mean`, to the selected pixel values,
+    calculate a new value to replace the target pixel value in the output
+    image.
+
+
+We will call this method: *footprint / function* filtering.
+
 :::
 
 The mean filter, as the name suggests, *averages* the pixel values within
@@ -164,31 +184,35 @@ Astute readers might ask "what happens near the edges of the array? If we center
 
 ![](images/footprint_hit_the_edge.png)
 
-Indeed, we need a strategy for this. There are actually many options for how a footprint should behave at the edges of an image array - we could "pad" the footprint elements that fall outside of the image with 0 values, for instance. Or we could duplicate values from the pixels at the edge of the array, to fill in footprint elements that fall outside of the array.
+Indeed, we need a strategy for this. There are actually many options for how
+a footprint should behave at the edges of an image array - we could "pad" the
+footprint elements that fall outside of the image with 0 values, for instance.
+Or we could duplicate values from the pixels at the edge of the array, to fill
+in footprint elements that fall outside of the array.  As we will see below,
+we will need a strategy like this for estimating the off-image values for
+the [kernel filter methods](kernel-filter-methods).
 
-**For now we will not worry about the edges, we just use the footprint only
-where it "fits" within the array.**
+However, for the "footprint" filters that we are considering here, the most
+obvious strategy is simply to clip the footprint at the edges, ignoring the
+part of the footprint that has fallen off the sides of the image.  So, for
+example, in the illustration above, where the footprint has gone over the
+edge, we take the footprint to be only the part that remains covering the
+image.  Thus, in the illustration, the effective footprint at the edge will be
+a 3 row by 2 column footprint.
 
-In effect, this ignores pixels near the edges of the image. Presently, most of
-these pixels at the edges of the image are 0, and there is some distance
-between the pixel values containing the "i" and the image edges, so ignoring
-the pixels near the edge will not affect the "i" shape too much itself. The
-image below illustrates this concept, for a generic array:
+Let us return to the implementation of a footprint filter.  In general it
+looks like the illustration below, as we move the footprint to be centered on
+each pixel, select the image pixels within the footprint (remembering to clip
+at the edges), and apply our function to the footprint-selected pixels.
 
 ![](images/footprint_general.png)
 
 The cell below defines a function that will apply this mean footprint,
-step-by-step in a for loop, to the whole image array.  It does this only for
-pixel neighborhoods where the footprint "fits" over the central pixel, without
-extending outside of the image:
+step-by-step in a for loop, to the whole image array.  Where the footprint falls off the sides of the image, we clip the footprint to fit inside the image.
 
 ```{python}
-# A function to apply our crude mean footprint.
+# A function to apply our crude footprint / mean algorithm.
 def three_by_three_mean_footprint(image):
-
-    # Convert to float `dtype`.
-    image = np.array(image,
-                     dtype=float)
 
     # Get the image shape.
     n_rows, n_cols = image.shape
@@ -197,19 +221,27 @@ def three_by_three_mean_footprint(image):
     # filtering operation)
     filtered_image = np.zeros(image.shape)
 
-    # Loop through the pixels and get the mean of each footprint.
-    for i in range(1, n_rows-1):
-        for j in range(1, n_cols-1):
-            row_start = i-1
-            col_start = j-1
-            row_end = i+2
-            col_end = j+2
-            footprint = image[row_start:row_end, col_start:col_end].copy()
-            filtered_image[i, j] = footprint.mean()
+    # Loop through the pixels and get the mean within each footprint.
+    for i in range(n_rows):
+        for j in range(n_cols):
+            # Find the coordinates of the image pixels under the footprint.
+            # Previous row to current, or 0 if above image.
+            row_start = max(0, i - 1)
+            # Previous column to current, or 0 if to right of image.
+            col_start = max(0, j - 1)
+            # Exclusive stop; 2 rows down, or n_rows if below image.
+            row_end = min(n_rows, i + 2)
+            # Exclusive stop; 2 rows across, or n_cols if left of image.
+            col_end = min(n_cols, j + 2)
+            # Index out part of image under footprint.
+            selected = image[row_start:row_end, col_start:col_end]
+            # Take mean.
+            filtered_image[i, j] = np.mean(selected)
     return filtered_image
 ```
 
-Let's apply our crude mean filter to the image array, and compare it to the original image array:
+Let's apply our crude footprint / mean filter to the image array, and compare
+it to the original image array:
 
 ```{python}
 # Apply our mean filtering function.
@@ -233,10 +265,9 @@ We can see that some of the non-black (non-zero) pixel intensity values have
 been "spread around" to neighboring pixels, which is unsurprising, given what
 we know about how this operation works. We have literally, for each given
 pixel, "averaged out" between the pixels in the 3-by-3 neighborhood around the
-pixel. This is a very crude mean filter, intended to show the foundational
-principles of filtering via a footprint. There is a better, less crude way to
-implement a mean filter, however, to which we will come to in the next
-section.
+pixel. This is a crude footprint / mean filter, intended to show the
+foundational principles of filtering via a footprint. There other ways to
+implement mean filters, however, to which we will come to in the next section.
 
 ::: {exercise-start}
 :label: dont-be-mean
@@ -245,15 +276,13 @@ section.
 
 For this exercise, you should build a function which filters an image using
 a 3-by-3 footprint, like we did above. Your function should "walk" the 3-by-3
-footprint through an image array, but it can ignore edge pixels, as we did
-above. In other words, you can just alter central pixels where the footprint
-"fits", as in the image below:
+footprint through an image array, clipping the footprint at the image edges,
+as we did above.
 
-![](images/footprint_general_resize.png)
-
-However, your footprint should do something different to the mean footprint we
-implemented earlier. Your function will do something dark, something illegal
-(at least by the standards of `skimage` `dtype` conventions)...
+However, the function you apply within the footprint should do something
+different to the mean we implemented earlier. Your function will do something
+dark, something illegal (or perhaps impolite, by the standards of `skimage`
+`dtype` conventions)...
 
 It should replace the central pixel value with the *negative sum* of the
 values under the footprint (e.g. add the values under the footprint to give
@@ -320,16 +349,16 @@ def three_by_three_negative_sum_footprint_solution(image):
     # filtering operation)
     filtered_image = np.zeros(image.shape)
 
-    # Loop through the pixels and get the mean of each footprint.
-    for i in range(1, n_rows-1):
-        for j in range(1, n_cols-1):
-            row_start = i-1
-            col_start = j-1
-            row_end = i+2
-            col_end = j+2
+    # Loop through the pixels and get the negative sum within each footprint.
+    for i in range(n_rows):
+        for j in range(n_cols):
+            row_start = max(0, i - 1)
+            col_start = max(0, j - 1)
+            row_end = min(n_rows, i + 2)
+            col_end = min(n_cols, j + 2)
             footprint = image[row_start:row_end, col_start:col_end].copy()
             # Take the negative sum.
-            filtered_image[i, j] = -footprint.sum()
+            filtered_image[i, j] = -np.sum(footprint)
     # Rescale to ensure legal pixel values.
     return ski.exposure.rescale_intensity(filtered_image, out_range="float64")
 ```
@@ -361,17 +390,69 @@ show_attributes(neg_sum_filter_coins)
 :::
 
 
-## Convolution
+### Mean filtering with `skimage`
 
-In normal practice, filtering operations which use footprints rely on
-a mathematical operation called
-[convolution](https://en.wikipedia.org/wiki/Convolution).
+`ski.filters.rank.mean()` implements a footprint / mean filter very much like
+our crude version above. We supply a *footprint* array with which to "walk"
+through the image, centering the footprint on every pixel, and modifying that
+central pixel's value based on the values of the other pixels in its
+neighborhood, with the size and shape of the neighborhood being defined by the
+footprint.
 
-::: {note}
+Inspecting the `skimage` documentation will reveal that the format expected
+for the `footprint` should be ["the [pixel] neighborhood expressed as an
+ndarray of 1’s and
+0’s."](https://scikit-image.org/docs/0.25.x/api/skimage.filters.rank.html#skimage.filters.rank.mean).
+We will use `np.ones()` to generate an array in this format. We use a (9, 9)
+footprint to achieve a stronger visual effect:
 
-**Footprints and kernels**
+```{python}
+# A "footprint" to pass to `skimage`.
+footprint_9_by_9 = np.ones((9, 9))
+footprint_9_by_9
+```
 
-At this point we introduce a new idea — that of a *kernel*. 
+We will use it to filter the stalwart `camera` image:
+
+```{python}
+# Import and show the `camera` image.
+camera = ski.data.camera()
+plt.imshow(camera);
+```
+
+Below, we apply the mean filter, using the `footprint_9_by_9` array as the
+footprint.  At each pixel, Scikit-image will place the footprint over the
+pixel, select the values in the image with a corresponding 1 (or True) in the
+footprint, and apply the `mean` operation to those values.
+
+```{python}
+# Mean filter the `camera` image with `skimage`
+mean_filtered_camera = ski.filters.rank.mean(camera,
+                                             footprint=footprint_9_by_9)
+
+# Plot both image to compare
+plt.figure(figsize=(10, 4))
+plt.subplot(1, 2, 1)
+plt.title('Original')
+plt.imshow(camera)
+plt.subplot(1, 2, 2)
+plt.title('Mean filtered\n(9,9) footprint')
+plt.imshow(mean_filtered_camera);
+```
+
+(kernel-filter-methods)=
+
+## Filtering with kernels
+
+We have so far seen filtering with footprints.   We use a footprint array to
+specify the local neighborhood for any pixel.  Then for each pixel, we apply
+the footprint at that pixel, to select the local pixels, and use some
+function, such as the mean, to calculate a single value from the neighboring pixels.  This is the value at that pixel in the output image.
+
+As you saw above, we call this *footprint / function* filtering.
+
+Another, faster but less general way of applying local filters is by
+*applying a *kernel*.
 
 Remember that a footprint is a binary array defining the neighborhood that
 defines which pixel values we consider as the neighborhood.  For mean
@@ -380,7 +461,7 @@ to define the neighboring values of the pixel, then apply an operation
 — taking the mean — to calculate the new pixel value.
 
 A kernel is like a footprint array, but where the values of the array, instead
-of being binary (0 or 1) contain the weights to apply to the corresponding
+of being binary (0 or 1), contain the weights to apply to the corresponding
 pixel in the neighborhood.
 
 We generate the new filtered value by multiplying the kernel values by their
@@ -388,41 +469,47 @@ corresponding pixels, and summing the result.
 
 This should be come clear as the page progresses.
 
-:::
-
-Convolution is similar to the process we saw with our crude mean filter.  However, instead of walking a footprint over the image, and applying some methematical operation to the values within the footprint — we use a *kernel*, which is a *footprint with weights* (see above).
-
 As for footprints, we "walk" a kernel across our whole image, centering it on
-every pixel, then apply the kernel weights to their corresponding pixel values, and sum to produce the new pixel value.
+every pixel, then apply the kernel weights to their corresponding pixel values,
+and sum to produce the new pixel value.
 
-Let's implement a true mean filter, using convolution. Obviously, we start
-with our kernel (a footprint with weights). First, we define the kernel shape:
+Let's implement a mean filter, using a kernel. Obviously, we start with our
+kernel (a footprint with weights). First, we define the kernel shape:
 
 ```{python}
 # Define our kernel shape.
 kernel_shape = (3, 3)
 ```
 
-We take the product of the shape tuple, to get the number of elements inside
-the kernel (in this case 3 * 3 = 9, so 9 elements in the 3-by-3 kernel):
+We'll start the kernel as a suitably shape array of ones:
 
 ```{python}
-# Get our kernel size, e.g. the number of elements in the kernel.
-kernel_size = np.prod(kernel_shape)
-kernel_size
+mean_kernel = np.ones(kernel_shape)
 ```
 
-We can then construct our kernel, using `np.full()` which allows us to fill an array with a given value. In this case we will fill it with $\frac{1}{n}$, where $n$ is the number of elements in our kernel (9 kernel elements - so $\frac{1}{9}$ = 0.11):
+```{python}
+# Number of pixels in the kernel.
+n = np.prod(kernel_shape)
+n
+```
+
+Of course, in this case, where we've started with an array of all ones, we could also do this:
 
 ```{python}
-mean_kernel = np.full(shape=kernel_shape,
-                      fill_value=1/kernel_size)
+# Number of pixels in the kernel.
+n = np.sum(mean_kernel)
+n
+```
 
+A kernel is a footprint with weights.  For a mean filter, the weights throughout the kernel should be $\frac{1}{n}$, where $n$ is the number of elements in our kernel, In our case this is $\frac{1}{9}$ = 0.11:
+
+```{python}
+mean_kernel = mean_kernel * 1 / n
 mean_kernel
 ```
 
-Our purpose here is to take the mean of the values under the kernel, so how
-does a 3-by-3 kernel filled with $\frac{1}{n}$ help us?
+Our purpose is to take the mean of the values under the kernel, so how does
+a 3-by-3 kernel filled with $\frac{1}{n}$ help us?
 
 Well, this value can be used to find the mean (duh!)...we'll show this quickly using just four random values:
 
@@ -439,20 +526,20 @@ div_by_n = x * 1 / n
 np.sum(div_by_n)
 ```
 
-To belabor the point mathematically — write our vector (array) above as
+To belabor the point mathematically — write our vector (1D array) above as
 $\vec{x}$.   Write the `sum` operation as $\sum$.  Then the mean of $\vec{x}$
 is given by:
 
 $$
 \begin{align}
-\frac{1}{n} \sum x_i \\
-= \frac{1}{n} (x_1 + x_2 ... + x_n) \\
-= \frac{1}{n} x_1 + \frac{1}{n} x_2 ... \frac{1}{n} x_n \\
+\frac{1}{n} \sum x_i 
+= \frac{1}{n} (x_1 + x_2 ... + x_n) 
+= \frac{1}{n} x_1 + \frac{1}{n} x_2 ... \frac{1}{n} x_n
 = \sum \frac{x_i}{n}
 \end{align}
 $$
 
-And we can do exactly the same thing with the `mean_kernel` we made above. We can use the `scipy.ndimage.correlate()` function to achieve this with maximum efficiency (relative to the crude method we used above). This function involves ["moving a [...] kernel over [an] image and computing the sum of products at each location"](https://docs.scipy.org/doc/scipy/reference/generated/scipy.ndimage.correlate.html). This means we:
+And we can do exactly the same thing with the `mean_kernel` we made above. We can use the `scipy.ndimage.correlate()` function to achieve this with maximum computational efficiency (relative to the crude method we used above). This function involves ["moving a [...] kernel over [an] image and computing the sum of products at each location"](https://docs.scipy.org/doc/scipy/reference/generated/scipy.ndimage.correlate.html). This means we:
 
 - Center the kernel on given array pixel in the original image.
 - Multiply the array pixel values covered by the kernel with the elements in
@@ -467,15 +554,15 @@ the mean of values under the kernel. This process is illustrated below for
 three kernel locations - (once more you may want to right click on these
 images and open them in a new tab/window, for easier viewing):
 
-![](images/kernel_convolution_three_locs.png)
+![](images/kernel_three_locs.png)
 
-Now, let's apply this kernel convolution to every pixel in the image array:
+Now, let's apply this kernel to every pixel in the image array:
 
 ```{python}
 # A new import.
 import scipy.ndimage as ndi
 
-# Perform the convolution.
+# Filter
 mean_filtered_random_i_via_sp = ndi.correlate(input=random_i,
                                               weights=mean_kernel,
                                               output=float) # Output `dtype`
@@ -491,25 +578,35 @@ plt.title('Mean Filtered')
 plt.imshow(mean_filtered_random_i_via_sp);
 ```
 
-The result is very similar to that obtained by our crude mean filter, only now
-it has been applied to *every* array pixel, including the edge pixels, where
-our crude filter simply ignored pixels at the edge of the image:
+The result is very similar to that obtained by our crude mean filter.  It's
+similar, not identical, because the mathematics of applying the kernel at the
+edges, do not easily allow us to do what we did with the footprint / function
+method.  As you remember, the footprint method immediately suggests we clip
+the footprint at the edges.  This is not easily done with with the kernel
+methods, so we need instead (and internally) to expand the image with
+estimated edge pixels, before applying the kernel.  You will see more on this
+below, but for now, let us confirm the results are similar, but not the same,
+using values rounded to 2 decimal places.
 
-```{python}
-# Show the result from our crude mean filter
-print(f"\nCrude mean filter:\n\n {mean_filtered_i}")
-print(f"\n\nMean filter via SciPy `correlate`:\n\n {mean_filtered_random_i_via_sp}")
+```{python tags=c("hide-input")}
+# Display libraries to show mathematics nicely.
+from IPython.display import display, Latex
+import sympy as sy
+
+crude_a = sy.latex(sy.Matrix(np.round(mean_filtered_i, 2)))
+kernel_a = sy.latex(sy.Matrix(np.round(mean_filtered_random_i_via_sp, 2))) 
+display(Latex(r'''\begin{array}{}
+\text{Crude footprint / mean filter} & \texttt{scipy.ndi.correlate} \text{ mean filter} \\
+%s & %s
+\end{array}
+''' % (crude_a, kernel_a)))
 ```
-
-These two arrays are shown below side-by-side, and more nicely rendered, for easier comparison:
-
-![](images/two_mean_filters.png)
 
 You can see that the values differ only near the top and bottom edges of the
 image. `ndi.correlate()` offers several options for dealing with pixels at the
 edge of the array (e.g. those pixels for which the kernel "falls off" the edge
 of the image). Here are the options, from the
-[documentation](https://docs.scipy.org/doc/scipy/reference/generated/scipy.ndimage.correlate.html),
+[documentation](https://docs.scipy.org/doc/scipy/reference/generated/scipy.ndimage.correlate.html);
 we can choose an option by specifying the `mode` argument to `ndi.correlate`
 (e.g. `mode = 'constant'` etc.):
 
@@ -524,9 +621,8 @@ print(re.search(r'\s+mode\s*:.*?(?=\s+cval\s*:)',
 ```
 
 Let's define a function so that we can apply the mean filter to any image,
-using the proper `scipy.ndimage.correlate()` machinery, so we no longer ignore
-edge pixels (poor pixels!).   We'll define the kernel with a shape, giving the
-shape of the footprint.
+using the proper `scipy.ndimage.correlate()` machinery.   We'll define the
+kernel with a shape:
 
 ```{python}
 def mean_filter(image_array, kernel_shape):
@@ -545,8 +641,8 @@ coffee_gray = ski.color.rgb2gray(ski.data.coffee())
 plt.imshow(coffee_gray);
 ```
 
-But first, we will use `np.random.normal()` to add some normally distributed
-(Gaussian) noise to the image:
+But first, we will use Numpy to add some normally distributed (Gaussian) noise
+to the image:
 
 ```{python}
 # Add some noise to the pixel values in `coffee`.
@@ -556,7 +652,14 @@ noisy_coffee_gray = coffee_gray + rng.normal(0, 2, size=coffee_gray.shape)
 plt.imshow(noisy_coffee_gray);
 ```
 
-The mean filter can remove some of the noise, restoring the clarity of the image:
+The mean filter can remove some of the noise, restoring the clarity of the
+image.  This works because the noise varies randomly around 0 from pixel to
+pixel.  Taking an average of random numbers with mean 0 (as here) will, on
+average, give a number closer to 0 than the original random numbers.  However,
+the underlying (noise-free) image has some consistency from pixel to pixel,
+caused by the features of the image — such as the cup, in this case.  Although
+the averaging leads to blurring of the underlying image, it doesn't suppress
+it to anything like the same extent as the pixel-to-pixel noise.
 
 ```{python}
 # Mean filter the noisy coffee image, and show the result.
@@ -614,11 +717,10 @@ and where the sweet spot is may be somewhat subjective.
 :class: dropdown
 :::
 
-The nice thing about applying filtering via convolution kernels is that
-changing the kernel itself lets us implement a wide variety of functions, even
-fairly strange ones. In this exercise, you will write a function called
-`strange_filter()`. You should apply it to `coffee_gray` to produce the
-following image:
+The nice thing about applying filtering via kernels is that changing the kernel
+itself lets us implement a wide variety of functions, even fairly strange ones.
+In this exercise, you will write a function called `strange_filter()`. You
+should apply it to `coffee_gray` to produce the following image:
 
 ![](images/coffee_strange_kernel.png)
 
@@ -715,54 +817,10 @@ This is quite a strange kernel to apply! But it shows us how easy it is to achie
 :::
 
 
-## Mean filtering with `skimage`
-
-We can implement a mean filter using the `ski.filters.rank.mean()` function. `skimage` uses `footprint`s rather than kernels. We supply a small *footprint* array with which to "walk" through the image, centering the footprint on every pixel, and modifying that central pixel's value based on the values of the other pixels in its neighborhood, with the size and shape of the neighborhood being defined by the footprint.
-
-Inspecting the `skimage` documentation will reveal that the format expected
-for the `footprint` should be ["the [pixel] neighborhood expressed as an
-ndarray of 1’s and
-0’s."](https://scikit-image.org/docs/0.25.x/api/skimage.filters.rank.html#skimage.filters.rank.mean).
-We will use `np.ones()` to generate an array in this format. We use a (9, 9)
-kernel to achieve a stronger visual effect:
-
-```{python}
-# A "footprint" to pass to `skimage`.
-footprint_9_by_9 = np.ones((9, 9))
-footprint_9_by_9
-```
-
-We will use it to filter the stalwart `camera` image:
-
-```{python}
-# Import and show the `camera` image.
-camera = ski.data.camera()
-plt.imshow(camera);
-```
-
-Below, we apply the mean filter, using the `footprint_9_by_9` array as the
-footprint.  At each pixel, Scikit-image will place the footprint over the
-pixel, select the values in the image with a corresponding 1 (or True) in the
-footprint, and apply the `mean` operation to those values.
-
-```{python}
-# Mean filter the `camera` image with `skimage`
-mean_filtered_camera = ski.filters.rank.mean(camera,
-                                             footprint=footprint_9_by_9)
-
-# Plot both image to compare
-plt.figure(figsize=(10, 4))
-plt.subplot(1, 2, 1)
-plt.title('Original')
-plt.imshow(camera)
-plt.subplot(1, 2, 2)
-plt.title('Mean filtered\n(9,9) kernel')
-plt.imshow(mean_filtered_camera);
-```
-
 ## Filtering 3D images
 
-We can filter a 3D color image by convolving our filtering kernel with each color channel separately. Let's load a 3D image:
+We can filter a 3D color image by applying our filtering kernel to each color
+channel separately. Let's load a 3D image:
 
 ```{python}
 # Load in and show an image.
@@ -840,10 +898,9 @@ plt.imshow(astronaut_mean_filtered)
 plt.tight_layout();
 ```
 
-We got a blurrier output image via `skimage` here, than in the manual
-convolution using `ndi.correlate()`. This is because we used a larger kernel
-for the `skimage` filtering, and so are averaging over larger pixel
-neighborhoods.
+We got a blurrier output image via `skimage` here, than in the kernel filter
+using `ndi.correlate()`. This is because we used a larger kernel for the
+`skimage` filtering, and so are averaging over larger pixel neighborhoods.
 
 Scikit-image will also handle this using a 3D kernel.
 
@@ -881,7 +938,7 @@ filtering the channels separately is the way to go...
 
 This page has showed how to perform mean filtering, using `numpy`, `scipy` and
 `skimage`. On the [next page](6_gaussian_sharpening_edge), we will look at
-using different convolution kernels to get different filtering effects.
+using different kernels to get different filtering effects.
 
 
 ## References
@@ -889,8 +946,6 @@ using different convolution kernels to get different filtering effects.
 * Gulati, J. (2024) *NumPy for Image Processing*. KDnuggets. Available from:
   <https://www.kdnuggets.com/numpy-for-image-processing>
 * <https://setosa.io/ev/image-kernels>
-* [Types of convolution
-  kernels](https://www.geeksforgeeks.org/deep-learning/types-of-convolution-kernels).
 
 Adapted from:
 
