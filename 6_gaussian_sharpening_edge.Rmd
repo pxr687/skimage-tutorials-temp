@@ -151,7 +151,9 @@ save_sy_mat(gaussian_like_kernel, 'images/gaussian_kernel_2.png')
 
 ![](images/gaussian_kernel_2.png)
 
-Just as final comparison between the  NumPy array kernel and the plot, here is the "red mountain" viewed from directly above, with the NumPy array kernel, in pretty graphics, shown to the right-hand side of the plot:
+Just as a final comparison between the  NumPy array kernel and the plot, here
+is the "red mountain" viewed from directly above, with the NumPy array kernel,
+in pretty graphics, shown to the right-hand side of the plot:
 
 ```{python tags=c("hide-input")}
 def surface_mat_pair(kernel, mat_fname, fig=None):
@@ -197,7 +199,8 @@ kernel_plot(gaussian_like_kernel, surface=False)
 Let's refer to the highest point on this kernel surface as the ["crimson peak"](https://en.wikipedia.org/wiki/Crimson_Peak). The crimson peak is the central kernel element of 0.25, at row/column integer index location `[1, 1]`:
 
 ```{python}
-# The central kernel value, at the crimson peak - check that you can also see this on the graph above.
+# The central kernel value, at the crimson peak - check that you can also see
+# this on the graph above.
 gaussian_like_kernel[1, 1]
 ```
 
@@ -216,7 +219,10 @@ Let's use this kernel to filter the following image array:
 # Make a small image array.
 small_square = np.zeros((20, 20))
 small_square[9:11, 9:11] = 1
-print(small_square)
+small_square
+```
+
+```{python}
 plt.imshow(small_square);
 ```
 
@@ -239,7 +245,11 @@ plt.imshow(gaussian_like_filtered_small_square);
 
 Blurry! So to recap, we have averaged within a 3-by-3 pixel neighborhood, replacing the central pixel value with a weighted average of all the pixel values in the neighborhood. The weights are larger for pixels closer to the central value of the kernel (e.g. closer to the center of the "crimson peak" on the plot above).
 
-This type of filtering is called *Gaussian filtering* because the kernel element values approximate a [Gaussian (e.g. normal) distribution](https://en.wikipedia.org/wiki/Normal_distribution). The plot of the kernel above, with the "red mountain" may not look much like the normal distribution to you at the moment, but bear with us.
+Filtering with this type of kernel is called *Gaussian filtering* because the
+kernel element values approximate a [Gaussian (e.g. normal)
+distribution](https://en.wikipedia.org/wiki/Normal_distribution). The plot of
+the kernel above, with the "red mountain" may not look much like the normal
+distribution to you at the moment, but bear with us.
 
 To see the Gaussian nature of this filtering operation, let's take a look at another, larger kernel below - it has `shape` `(9, 9)`:
 
@@ -249,7 +259,10 @@ big_gaussian_kernel = make_gaussian_kernel(9)
 
 big_gaussian_kernel.round(2)
 ```
-Can you see any pattern in the arrangement of the numbers? Where are the high numbers, where are the low numbers? The `big_gaussian_kernel` NumPy array is shown below, in prettier form, to aid your ruminations:
+
+Can you see any pattern in the arrangement of the numbers? Where are the high
+numbers, where are the low numbers? The `big_gaussian_kernel` NumPy array is
+shown below, in prettier form, to aid your ruminations:
 
 ```{python}
 sy.Matrix(big_gaussian_kernel.round(2))
@@ -258,11 +271,17 @@ sy.Matrix(big_gaussian_kernel.round(2))
 We will also plot this kernel in 3D, as with the last kernel. Again, the integer index locations of the array form the horizontal ($x$ and $y$) axis values, and the values within the array are plotted on the vertical ($z$) axis. 
 
 ```{python}
-# Show the new, bigger gaussian kernel.
+# Show the new, bigger Gaussian kernel.
 kernel_plot(big_gaussian_kernel, text=False)
 ```
 
-Again, if you prefer, we can view the kernel as a wireframe plot, which we show in the cell below. We first show the NumPy view of the array again, above the plot. The plot looks messy when the kernel element values (blue text) are also shown, but we show them for easy comparison to the `big_gaussian_kernel` NumPy array. If you are running interactively, you can set `text = False` in the plotting function and re-run the cell, to switch the blue numbers off, if you wish:
+Again, if you prefer, we can view the kernel as a wireframe plot, which we show
+in the cell below. We first show the NumPy view of the array again, above the
+plot. The plot looks messy when the kernel element values (blue text) are also
+shown, but we show them for easy comparison to the `big_gaussian_kernel` NumPy
+array. If you are running interactively, you can set `text=False` in the
+plotting function and re-run the cell, to switch the blue numbers off, if you
+wish:
 
 ```{python}
 # Compare the NumPy array to the plot.
@@ -271,7 +290,9 @@ kernel_plot(big_gaussian_kernel, surface=False)
 plt.title('`big_gaussian_kernel` \nRed Mountain View:');
 ```
 
-Again, to make the relationship between the NumPy array and the graph as clear as possible, here is the "red mountain" viewed from directly above, with the `big_gaussian_kernel` array shown to its right:
+Again, to make the relationship between the NumPy array and the graph as clear
+as possible, here is the "red mountain" viewed from directly above, with the
+`big_gaussian_kernel` array shown to its right:
 
 ```{python tags=c("raises-exception", "remove-cell")}
 # Save figure if we can.
@@ -282,17 +303,24 @@ save_sy_mat(big_gaussian_kernel, 'images/big_gaussian_kernel.png', dpi=1200)
 surface_mat_pair(big_gaussian_kernel, 'images/big_gaussian_kernel.png')
 ```
 
-You  may (or may not) recognise the "red mountain" - when we plot the `big_gaussian_kernel` - as a multivariate [Gaussian distribution](https://en.wikipedia.org/wiki/Gaussian_function). Here is one way of writing the formula for the multivariate Gaussian distribution:
+You may (or may not) recognise the "red mountain" - when we plot the
+`big_gaussian_kernel` - as a multivariate [Gaussian
+distribution](https://en.wikipedia.org/wiki/Gaussian_function). Here is one way
+of writing the formula for the multivariate Gaussian distribution:
 
 $
  \Large p(x, y) = \frac{1}{2 \pi  \sigma_x  \sigma_y}  \
     e^{-\frac{1}{2} (\frac{(X - \mu_x)^2} {\sigma_x^2} + \frac{(Y - \mu_y)^2} {\sigma_y^2})}
 $
 
-Essentially, the function takes the input variables $x$ and $y$, a mean ($\mu$) and standard deviation ($\sigma$; e.g. spread) for each variable, and returns a probability of a particular combination of $x$ and $y$. Here is a plot of a prototypical multivariate Gaussian, where both input variables have a mean of 0, a spread of 1, and are uncorrelated with each other:
+Essentially, the function takes the input variables $x$ and $y$, a mean ($\mu$)
+and standard deviation ($\sigma$; a measure of spread) for each variable, and
+returns a probability of a particular combination of $x$ and $y$. Here is
+a plot of a prototypical multivariate Gaussian, where both input variables have
+a mean of 0, a standard deviation of 1, and are uncorrelated with each other:
 
 ```{python}
-# Plot a multivariate Gaussian, where both x and y have a mean of 0 and variance of 1.
+# Plot multivariate Gaussian; both x and y have a mean of 0 and std of 1.
 x = np.linspace(-5, 5, 10_00)
 y = np.linspace(-5, 5, 10_00)
 X, Y = np.meshgrid(x,y)
