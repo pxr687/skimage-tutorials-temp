@@ -6,7 +6,7 @@ jupyter:
       extension: .Rmd
       format_name: rmarkdown
       format_version: '1.2'
-      jupytext_version: 1.16.6
+      jupytext_version: 1.18.1
   kernelspec:
     display_name: Python 3 (ipykernel)
     language: python
@@ -149,7 +149,9 @@ def save_sy_mat(arr, out_fname, ndigits=2, dpi=600):
 save_sy_mat(gaussian_like_kernel, 'images/gaussian_kernel_2.png')
 ```
 
-![](images/gaussian_kernel_2.png)
+```{python tags=c("hide-input")}
+sy.Matrix(gaussian_like_kernel.round(2))
+```
 
 Just as a final comparison between the  NumPy array kernel and the plot, here
 is the "red mountain" viewed from directly above, with the NumPy array kernel,
@@ -196,7 +198,14 @@ Remember that the kernel has only 9 values (shown as blue text on the plot), so 
 kernel_plot(gaussian_like_kernel, surface=False)
 ```
 
-Let's refer to the highest point on this kernel surface as the ["crimson peak"](https://en.wikipedia.org/wiki/Crimson_Peak). The crimson peak is the central kernel element of 0.25, at row/column integer index location `[1, 1]`:
+Let's refer to the highest point on this kernel surface as the "crimson
+peak".[^crimson-peak].  The crimson peak is the central kernel element of
+0.25, at row/column integer index location `[1, 1]`:
+
+[^crimson-peak]: We made up the term "crimson-peak" for the peak our red
+  displays of Gaussian kernels, but, by coincidence, it is also [the title of
+  one of Guillermo del Toro's less successful
+  films](https://en.wikipedia.org/wiki/Crimson_Peak).
 
 ```{python}
 # The central kernel value, at the crimson peak - check that you can also see
@@ -310,14 +319,20 @@ of writing the formula for the multivariate Gaussian distribution:
 
 $
  \Large p(x, y) = \frac{1}{2 \pi  \sigma_x  \sigma_y}  \
-    e^{-\frac{1}{2} (\frac{(X - \mu_x)^2} {\sigma_x^2} + \frac{(Y - \mu_y)^2} {\sigma_y^2})}
+    e^{-\frac{1}{2} (\frac{(x - \mu_x)^2} {\sigma_x^2} + \frac{(y - \mu_y)^2} {\sigma_y^2})}
 $
 
-Essentially, the function takes the input variables $x$ and $y$, a mean ($\mu$)
-and standard deviation ($\sigma$; a measure of spread) for each variable, and
-returns a probability of a particular combination of $x$ and $y$. Here is
-a plot of a prototypical multivariate Gaussian, where both input variables have
-a mean of 0, a standard deviation of 1, and are uncorrelated with each other:
+where $\mu_x$ is the mean of all $x$ values, and $\sigma_x$ is the standard deviation of all $x$ values.
+
+In our case, when we are building kernels, the inputs $x$ and $y$ will be some
+function of row and column indices.  Here is a plot of a prototypical
+multivariate Gaussian, where both input variables have a mean of 0, a standard
+deviation of 1.[^independence]
+
+[^independence]: Throughout, we will also assume that the inputs to our
+  multivariate (2D, 3D, 4D) Gaussians are *independent*.  We won't attempt to
+  explain that here, but see [Multivariate normal
+  distributions](https://en.wikipedia.org/wiki/Multivariate_normal_distribution).
 
 ```{python}
 # Plot multivariate Gaussian; both x and y have a mean of 0 and std of 1.
@@ -340,24 +355,43 @@ ax.set_zlabel('Probability', labelpad=1)
 ax.set_title("Multivariate Gaussian Distribution");
 ```
 
-Here is the plot of `big_gaussian_kernel` again, for comparison to the perfect Gaussian shown in the image above:
+Here is the plot of `big_gaussian_kernel` again, for comparison to the perfect
+Gaussian shown in the image above:
 
 ```{python}
 # Show the plot of `big_gaussian_kernel` again.
 kernel_plot(big_gaussian_kernel, text = False)
 ```
 
-The "crimson peak" of the `big_gaussian_kernel` is spikier than for the prototypical Gaussian, simply because it is centered on a single pixel (creating the spike at the "crimson peak"). For the smaller `gaussian_like_kernel` the whole 3D plot appeared more "spiky" as it has less array elements. In the bigger `(9, 9)` `big_gaussian_kernel`, we can see a smoother, more obviously Gaussian "mountain", much more visually similar to prototypical multivariate Gaussian distribution.
+The "crimson peak" of the `big_gaussian_kernel` is spikier than for the
+prototypical Gaussian, simply because it is centered on a single pixel
+(creating the spike at the "crimson peak"). For the smaller
+`gaussian_like_kernel` the whole 3D plot appeared more "spiky" as it has less
+array elements. In the bigger `(9, 9)` `big_gaussian_kernel`, we can see
+a smoother, more obviously Gaussian "mountain", much more visually similar to
+prototypical multivariate Gaussian distribution.
 
 Both our `(3, 3)` kernel above, and the larger kernel we just plotted, are called [gaussian blur kernels](https://www.geeksforgeeks.org/deep-learning/types-of-convolution-kernels). Let's look at the `gaussian_like_kernel` array again, to compare it to `big_gaussian_kernel` directly:
 
-![](images/gaussian_kernel_2.png)
+```{python tags=c("hide-input")}
+sy.Matrix(gaussian_like_kernel.round(2))
+```
 
 When comparing to the `big_gaussian_kernel`, shown below, you can see that the pattern in the numbers is the same. The biggest value occurs in the center of the array, the smallest values are in the corners of the array. For the bigger Gaussian kernel, it is apparent that kernel values *closer* to the center are larger, the values get smaller the further we get from the central element:
 
-![](images/big_gaussian_kernel_array.png)
+```{python}
+sy.Matrix(big_gaussian_kernel.round(2))
+```
 
-As we said above, when we filter using these Gaussian kernels, we "walk" the kernel through the image, with the top of the "mountain", the crimson peak, centered on a given pixel at each step. The central pixel value is then replaced with an average of the pixels in the neighborhood, but each pixels contribution to the average is weighted by how close it is to the central pixel. E.g. by how close it falls to the crimson peak of the Gaussian surfaces we showed above. Pixels closer to the central pixel, under the crimson peak, will exert more influence, pixels further away will exert a weaker influence.
+As we said above, when we filter using these Gaussian kernels, we "walk" the
+kernel through the image, with the top of the "mountain", the crimson peak,
+centered on a given pixel at each step. The central pixel value is then
+replaced with a *weighted average* of the pixels in the neighborhood, where
+each pixel's contribution (weight) to the average is given by the corresponding kernel value.  With a Gaussian kernel like this, pixels nearer to the center of the kernel have higher weights — so the weight is related to
+its distance to the crimson peak of the Gaussian surfaces we showed above.
+Pixels closer to the central pixel, under the crimson peak, will exert more
+influence, pixels further away will exert a weaker influence.
+
 
 Let's apply the `big_gaussian_kernel` with the `camera` image, using
 `ndi.correlate()`, as we used for the mean filter:
@@ -380,20 +414,25 @@ plt.title('Gaussian filter \n(9, 9) kernel')
 plt.matshow(big_gaussian_filtered_small_square, fignum=0);
 ```
 
-It is apparent that the larger kernel has "spread" the intensity of higher-valued pixels further than the small kernel. This makes sense, because it is averaging across bigger pixel neighborhoods. 
+It is apparent that the larger kernel has "spread" the intensity of
+higher-valued pixels further than the small kernel. This makes sense, because
+it is averaging across bigger pixel neighborhoods.
 
-Both of these kernels, in relative terms, are quite small. As such, it is easier to see their effect in lower-resolution images. Higher resolution images will typically require larger kernels for the same results.
+Both of these kernels are quite small relative to the size of the image. As
+such, it is easier to see their effect in lower-resolution images.
 
 Below, we make a pixelated version of `camera`:
 
 ```{python}
 # Pixelate the `camera` image.
 camera = ski.data.camera()
-pixelated_camera = ski.transform.rescale(camera, 0.2) # Rescale to 20% of original size, this
-plt.imshow(pixelated_camera);                         # induces pixelation.
+# Rescale to 20% of original size, this makes the image appear more pixelated.
+pixelated_camera = ski.transform.rescale(camera, 0.2)
+plt.imshow(pixelated_camera);
 ```
 
-Below, we filter with separately with `gaussian_like_kernel` and `big_gaussian_kernel`:
+Below, we filter with separately with `gaussian_like_kernel` and
+`big_gaussian_kernel`:
 
 ```{python}
 # Filter with the small Gaussian kernel.
@@ -417,11 +456,13 @@ plt.title('Gaussian filter \n(9, 9) Kernel')
 plt.matshow(big_gaussian_filtered_pixelated_camera, fignum=0);
 ```
 
-The smoothing effect is clear, with the larger kernel creating a more striking smoothing effect.
+The smoothing effect is clear, with the larger kernel creating a more striking
+smoothing effect, because we are blurring over more pixels.
 
-# Gaussian filters in `skimage`
+## Gaussian filters in `skimage`
 
-This Gaussian filter is easy to implement in `skimage`, let's try it with the `cat` image from `ski.data`:
+Gaussian filters are easy to implement in `skimage`; let's try it with the
+`cat` image from `ski.data`:
 
 ```{python}
 # Load the `cat` image.
@@ -430,7 +471,12 @@ show_attributes(cat)
 plt.imshow(cat);
 ```
 
-`ski.filters.gaussian()` implements the Gaussian filter. We can control the `sigma` parameter, which controls the spread of the Gaussian "mountain" in the kernel. Lower values will reduce the weight of pixel values far from the central pixel, weighting only those close to it highly. Conversely, higher values will give greater weight to pixels further away from the central pixel:
+`ski.filters.gaussian()` implements the Gaussian filter. We can control the
+`sigma` parameter, which controls the spread of the Gaussian "mountain" in the
+kernel. Lower values will reduce the weight of pixel values far from the
+central pixel, giving high weights only to those close to the peak.
+Conversely, higher values will give greater weight to pixels further away from
+the central pixel:
 
 ![](images/low_sigma_v_high_sigma.png)
 
@@ -439,21 +485,20 @@ Let's apply the filter with a `sigma` of 3:
 
 ```{python}
 # Gaussian filter `cat`, with `skimage`.
-plt.imshow(ski.filters.gaussian(cat, 
-                                sigma=3));
+plt.imshow(ski.filters.gaussian(cat, sigma=3));
 ```
 
-Different sigma values will introduce a blurrier effect, because for higher `sigma` values, pixels further from the central value within each kernel are exerting more influence in the averaging calculation:
+Higher sigma values will introduce a blurrier effect, because for higher
+`sigma` values, pixels further from the central value within each kernel are
+exerting more influence in the averaging calculation:
 
 ```{python}
 # Plot with different `sigma` values.
 plt.figure(figsize=(14, 6))
 for i, sigma in enumerate(np.arange(2, 14, 2)):
     plt.subplot(2, 3, i+1)
-    plt.imshow(ski.filters.gaussian(cat, 
-                                    sigma=sigma))
-
-    plt.xticks([])
+    plt.imshow(ski.filters.gaussian(cat, sigma=sigma))
+    plt.xticks([])  # Turn of tick marks and labels.
     plt.yticks([])
     plt.title(f"sigma = {sigma}")
 plt.suptitle('skimage.filters.gaussian()')
@@ -465,9 +510,11 @@ plt.tight_layout();
 :class: dropdown
 :::
 
-Here is another kernel which follows a roughly Gaussian-like pattern - e.g. pixels closer to the center are weighted more heavily, pixels towards the sides have less weight. However, it is only somewhat Gaussian-like, and in fact is a very strange kernel, as we will see when we view it on a 3D plot:
-
-![](images/almost_gaussian.png)
+Here is another kernel which follows a roughly Gaussian-like pattern - in that
+pixels closer to the center are weighted more heavily, pixels towards the
+sides have less weight. However, it is only somewhat Gaussian-like, and in
+fact is a very strange kernel, as we will soon see when we view it on a 3D
+plot.
 
 It is defined as a variable in the cell below:
 
@@ -486,6 +533,12 @@ almost_gaussian_kernel = np.array([[1, 1, 1, 2, 2, 2, 1, 1, 1],
 almost_gaussian_kernel
 ```
 
+Here it is in a nicer mathematical display:
+
+```{python}
+sy.Matrix(almost_gaussian_kernel)
+```
+
 We plot this oddball kernel in 3D, in the cell below:
 
 ```{python}
@@ -493,7 +546,9 @@ We plot this oddball kernel in 3D, in the cell below:
 kernel_plot(almost_gaussian_kernel)
 ```
 
-It looks like a late 90s games console graphics take on a Gaussian! When we filter the `camera` image using this kernel, we get some strange results. First, we show the original `camera` image, as a starting point:
+It looks like take on a Gaussian with late 90s games console graphics! When we
+filter the `camera` image using this kernel, we get some strange results.
+First, we show the original `camera` image, as a starting point:
 
 ```{python}
 # Show the original `camera` image.
@@ -501,20 +556,25 @@ show_attributes(camera)
 plt.imshow(camera);
 ```
 
-Now, we filter with weird kernel:
+Now, we filter with the weird kernel:
 
 ```{python}
 # Filter with the oddball kernel. (Probably) not the result we want...
 almost_gaussian_filtered_camera = ndi.correlate(camera,
                                                 weights=almost_gaussian_kernel)
 # Show the attributes and plot the result.
-show_attributes(almost_gaussian_filtered_camera)      
+show_attributes(almost_gaussian_filtered_camera)
 plt.matshow(almost_gaussian_filtered_camera);
 ```
 
-This may be a pretty cool effect, but, because the kernel we used looks like the weird cousin of a Gaussian, we would maybe expect this kernel to do something closer to Gaussian smoothing than to totally psych out the image, as it has done here.
+This may be a pretty cool effect, but, because the kernel we used looks like
+the weird cousin of a Gaussian, we would maybe expect this kernel to do
+something closer to Gaussian smoothing than to totally psych out the image, as
+it has done here.
 
-With a small modification to the `dtype`, however, we can get the following Gaussian-like smoothing on `camera`, using the oddball `almost_gaussian_kernel`:
+With a small modification to the `dtype`, however, we can get the following
+Gaussian-like smoothing on `camera`, using the oddball
+`almost_gaussian_kernel`:
 
 ```{python}
 # Convert to `float64` dtype.
@@ -523,23 +583,29 @@ camera_as_float = ski.util.img_as_float64(camera)
 # Filter with the oddball kernel, successfully.
 almost_gaussian_filtered_camera = ndi.correlate(camera_as_float,
                                                 weights=almost_gaussian_kernel)
-                                                     
+
 plt.matshow(almost_gaussian_filtered_camera);
 ```
 
-Why did this happen? Take a moment to think about possible explanations. After your pause for thought, your task is to *make adjustments to the kernel **only** to prevent the original psychedelic error from happening*. You should be able to obtain the same smoothed image from the cell above, if you modify the kernel correctly. Just for reference, to save you scrolling, here is the target image again:
+Why did this happen? Take a moment to think about possible explanations. After
+your pause for thought, your task is to *make adjustments to the kernel
+**only** to prevent the original psychedelic effect from happening*. You
+should be able to obtain the same smoothed image from the cell above, if you
+modify the kernel correctly. The target image is just above.  To save you scrolling, here is the psychedelic image that you should avoid:
 
-![](images/krazy_kernel_target_image.png)
+```{python}
+plt.matshow(almost_gaussian_filtered_camera);
+```
 
-...and here is the psychedelic image that you should avoid:
+When you modify the kernel **DO NOT** recreate the kernel array and "manually"
+modify the original numbers by editing them directly. Use `numpy`, `scipy` or
+`skimage` functions to alter the kernel to do what you need.
 
-![](images/psych_out.png)
+*Hint*: run the `hint_krazy_kernel_1()` function for a hint about how you
+could modify the kernel...
 
-When you modify the kernel **DO NOT** recreate the kernel array and "manually" modify the original numbers by editing them directly. Use `numpy`, `scipy` or `skimage` functions to alter the kernel to do what you need.
-
-*Hint*: run the `hint_krazy_kernel_1()` function for a hint about how you could modify the kernel...
-
-*Hint 2*: run the `hint_krazy_kernel_2()` function for some additional help regarding the source of the original error...
+*Hint 2*: run the `hint_krazy_kernel_2()` function for some additional help
+regarding the source of the original error...
 
 ```{python}
 # YOUR CODE HERE
@@ -553,52 +619,77 @@ my_new_kernel = almost_gaussian_kernel.copy()
 ::: {solution-start} krazy-kernel
 :class: dropdown
 :::
-            
-So, the problem here is *integer overflow*. Filtering `camera` with the `almost_gaussian_kernel` results in numbers that are too big for the original `uint8` `dtype` to handle. Let's remind ourselves of the kernel values:
+
+So, the problem here is *integer overflow*. Filtering `camera` with the
+`almost_gaussian_kernel` results in numbers that are too big for the original
+`uint8` `dtype` to handle. Let's remind ourselves of the kernel values:
 
 ```{python}
 # Show the kernel.
 almost_gaussian_kernel
 ```
 
-Now, when the maximum value of the kernel gets multiplied by the maximum value in `camera`, we get:
+Now, when the maximum value of the kernel gets multiplied by the maximum value
+in `camera`, we get:
 
 ```{python}
-camera.max() * almost_gaussian_kernel.max()
+np.max(camera) * np.max(almost_gaussian_kernel)
 ```
 
-This multiplication will surely happen, when the kernel is centered on the maximum valued pixel (remember that, in filtering, the kernel gets centered on every pixel in the image).
+This multiplication will surely happen, when the kernel is centered on the
+maximum valued pixel (remember that, in filtering, the kernel gets centered on
+every pixel in the image).
 
-This value is too large for the `unit8` `dtype` of the original camera image, which can only range from [0 to 255](https://scikit-image.org/docs/0.25.x/user_guide/data_types.html).
+This value is too large for the `uint8` `dtype` of the original camera image,
+which can only range from [0 to
+255](https://scikit-image.org/docs/0.25.x/user_guide/data_types.html).
 
 ```{python}
 camera.dtype
 ```
 
-This is what explains the strange result we saw above. 
+Remember that, instead of giving an error, values which overflow the maximum
+for the dtype wrap around to start again at 0:
 
-One solution to this is to scale the kernel to sum to 1. In fact, this is [common practice](https://dsp.stackexchange.com/questions/25130/why-should-the-sum-of-masks-kernel-filter-in-image-processing-be-one) with image filtering kernels because it ensures that they do not alter the average intensity values of the images to which they are applied. In this case, however, scaling the kernel so that it sums to 1 will also prevent integer overflow...
+```{python}
+np.array(255, dtype=np.uint8) + 2
+```
 
-To ensure the kernel sums to 1, we just multiply the kernel by the reciprocal of the sum of the elements in the kernel, which in this case sum to 144:
+This effect explains the strange result we saw above.
 
-![](images/almost_gaussian_solution.png)
+One solution to this is to scale the kernel to sum to 1.  In that case, taking
+a weighted sum of the kernel values cannot give a value larger than the
+maximum under the kernel.  In fact, this is [common
+practice](https://dsp.stackexchange.com/questions/25130/why-should-the-sum-of-masks-kernel-filter-in-image-processing-be-one)
+with image filtering kernels because it ensures that they do not alter the
+average intensity values of the images to which they are applied. In this
+case, however, scaling the kernel so that it sums to 1 will also prevent
+integer overflow...
+
+To ensure the kernel sums to 1, we just multiply the kernel by the reciprocal
+of the sum of the elements in the kernel, which in this case sum to 144:
+
+```{python tags=c("hide-input")}
+sy.MatMul(sy.Rational(1, 144),
+          sy.Matrix(almost_gaussian_kernel), evaluate=False)
+```
 
 ```{python}
 # Show the sum of the `almost_gaussian_kernel`.
-almost_gaussian_kernel.sum()
+k_sum = np.sum(almost_gaussian_kernel)
+k_sum
 ```
 
 ```{python}
 # Fixed, scaled kernel.
-almost_gaussian_solution_1 = 1/almost_gaussian_kernel.sum() * almost_gaussian_kernel
-
+almost_gaussian_solution_1 = 1 / k_sum * almost_gaussian_kernel
 almost_gaussian_solution_1
 ```
 
 The kernel values now sum to 1:
 
 ```{python}
-almost_gaussian_solution_1.sum()
+np.sum(almost_gaussian_solution_1)
 ```
 
 But the kernel still has its original, idiosyncratic shape:
@@ -608,12 +699,15 @@ But the kernel still has its original, idiosyncratic shape:
 kernel_plot(almost_gaussian_solution_1);
 ```
 
-Now, when we use this adjusted kernel to filter `camera`, we get the target image, which is the product of a filtering process much closer to Gaussian smoothing than the original attempt above:
+Now, when we use this adjusted kernel to filter `camera`, we get the target
+image, which is the product of a filtering process much closer to Gaussian
+smoothing than the original attempt above:
 
 ```{python}
 # Bingo!
-almost_gaussian_filtered_camera = ndi.correlate(camera,
-                                                weights=almost_gaussian_solution_1)                        
+almost_gaussian_filtered_camera = ndi.correlate(
+    camera,
+    weights=almost_gaussian_solution_1)
 plt.matshow(almost_gaussian_filtered_camera);
 ```
 
@@ -621,6 +715,9 @@ plt.matshow(almost_gaussian_filtered_camera);
 ::: {solution-end}
 :::
 
+<!---
+Nov 19 14.48
+-->
 
 ::: {exercise-start}
 :label: DIY-gaussian
