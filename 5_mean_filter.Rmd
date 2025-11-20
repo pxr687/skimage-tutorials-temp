@@ -86,9 +86,9 @@ plt.rcParams['image.cmap'] = 'gray'
 # Set NumPy precision to 2 decimal places
 np.set_printoptions(precision=2)
 
-#  Custom functions for illustrations, hints, and to quickly report image attributes.
-from show_attributes import show_attributes
-from hints import hint_strange_coffee
+# Custom functions for illustrations, hints, and to quickly report image
+# attributes.
+from skitut import show_attributes, hints
 ```
 
 Next, we create the `random_i` image array:
@@ -747,7 +747,7 @@ Write your function so that it can be used with kernels of different `shape`s, s
 
 *Hint:* You will need a fairly large kernel to get the effect you want.
 
-*Hint:* run the `hint_strange_coffee()` function for additional help.
+*Hint:* run the `hint.strange_coffee()` function for additional help.
 
 ```{python}
 # YOUR CODE HERE

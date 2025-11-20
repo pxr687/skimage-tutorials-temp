@@ -41,17 +41,15 @@ import numpy as np
 import matplotlib.pyplot as plt
 import skimage as ski
 
-# Import a custom function to give hints for some exercises.
-from hints import hint_split_i, hint_cryptic_camera
-
 # Set precision for float numbers
 # %precision 2
 
 # Set 'gray' as the default colormap
 plt.rcParams['image.cmap'] = 'gray'
 
-# A custom function for showing image attributes.
-from show_attributes import show_attributes
+# Import hints for some exercises, and custom function for showing image
+# attributes.
+from skitut import hints, show_attributes
 
 # Create our image array.
 i_img = np.array([[0, 0, 0, 0, 0, 0, 0, 0],
@@ -246,7 +244,7 @@ Min Pixel Value: -1.0
 
 *Hint:* there are various ways to do this, but the most efficient way we could think of is one short line of Numpy processing.  You might consider having a look at [Functions on arrays](https://inferentialthinking.com/chapters/05/1/Arrays.html#functions-on-arrays) for inspiration.
 
-*Hint:* run the function `hint_split_i()`, which was imported at the beginning
+*Hint:* run the function `hints.split_i()`, which was imported at the beginning
 of this notebook, to see a helpful hint.
 
 ```{python}

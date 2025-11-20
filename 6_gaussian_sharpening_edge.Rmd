@@ -32,11 +32,10 @@ plt.rcParams['image.cmap'] = 'gray'
 # Set NumPy precision to 2 decimal places
 np.set_printoptions(precision=2)
 
-#  Custom functions/variables for illustrations, to quickly report image attributes, and for exercises.
-from gaussian_illustration import make_gaussian_kernel
-from show_attributes import show_attributes
-from hints import secret_val
-from hints import hint_krazy_kernel_1, hint_krazy_kernel_2, hint_edgy
+# Custom functions/variables for illustrations, to quickly report image
+# attributes, and for exercises.
+from skitut.gaussian_illustration import make_gaussian_kernel
+from skitut import show_attributes, hints
 ```
 
 ## Gaussian filtering
@@ -601,10 +600,10 @@ When you modify the kernel **DO NOT** recreate the kernel array and "manually"
 modify the original numbers by editing them directly. Use `numpy`, `scipy` or
 `skimage` functions to alter the kernel to do what you need.
 
-*Hint*: run the `hint_krazy_kernel_1()` function for a hint about how you
+*Hint*: run the `hints.krazy_kernel_1()` function for a hint about how you
 could modify the kernel...
 
-*Hint 2*: run the `hint_krazy_kernel_2()` function for some additional help
+*Hint 2*: run the `hint.krazy_kernel_2()` function for some additional help
 regarding the source of the original error...
 
 ```{python}
@@ -1576,7 +1575,7 @@ Here are the original edge detection kernels we used, for comparison, to help yo
 
 Please note that you will "pass" this exercise if you make kernels which detect one-pixel wide edges, even if your final image does not exactly match the one above. You could modify the Sobel kernels as well, or investigate other edge detection kernel types...
 
-*Hint:* run the function `hint_edgy()` for some help if you get stuck.
+*Hint:* run the function `hints.edgy()` for some help if you get stuck.
 
 ```{python}
 # YOUR CODE HERE

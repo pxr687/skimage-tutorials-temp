@@ -604,10 +604,10 @@ Now over to you to create some [computer art](https://en.wikipedia.org/wiki/Comp
 
 ```{python}
 # Importing a custom function to create the image.
-from smiley import create_smiley
+import skitut
 
 # Create and show the image.
-create_smiley();
+skitut.create_smiley();
 ```
 
 The array you create should have `.shape` of (11, 8) - so 11 rows and 8 columns.
