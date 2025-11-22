@@ -1,8 +1,30 @@
+---
+jupyter:
+  jupytext:
+    formats: ipynb,Rmd
+    text_representation:
+      extension: .Rmd
+      format_name: rmarkdown
+      format_version: '1.2'
+      jupytext_version: 1.17.3
+  kernelspec:
+    display_name: Python 3 (ipykernel)
+    language: python
+    name: python3
+---
+
 # More filters: the median filter and non-local filters
 
-This page will cover filters which do not use filtering kernels. First, we will look at the median filter, which differs in important ways from the other local filters we saw on [previous](5_mean_filter) pages, because it cannot be implemented through kernels.
+This page will cover filters which do not use filtering kernels. First, we
+will look at the median filter, which differs in important ways from the other
+local filters we saw on [previous](5_mean_filter) pages, because it cannot be
+implemented through kernels.  In fact, it is a footprint/function filter.
 
-After the median filter, we will look at another filter, the histogram equalisation filter, which does not use kernel methods. In fact, histogram equalisation does not use a kernel at all. Because it eschews kernels completely, the histogram equalisation filter is a *non-local* filter. More on this below.
+After the median filter, we will look at another filter, the histogram
+equalisation filter, which does not use kernel methods. In fact, histogram
+equalisation does not use a footprint at all. Because it eschews footprints
+completely, the histogram equalisation filter is a *non-local* filter. More on
+this below.
 
 As normal, we begin with some imports:
 
@@ -24,23 +46,42 @@ np.set_printoptions(precision=2)
 from skitut import show_attributes
 ```
 
-# Local filtering without kernels
+## Local filtering without kernels
 
-When compared to the other local filters we have seen, the median filter uses the same process of "walking" through the image with a small array which denfines the "local neighborhood" of each pixel. In median filtering, you can *loosely* think of this small array as a kernel, but there are some major differences in the calculations, so let's call it the "neighborhood array" instead. 
+When compared to the other local filters we have seen, the median filter uses
+the same process of "walking" through the image with a small array which
+defines the "local neighborhood" of each pixel.
 
-Like with the other kernels we have seen, the "neighborhood array" is centered on every pixel during the filtering operation. The central pixel value is replaced with a number computed from the other values in the local neighborhood, e.g. the other pixel values under the "neighborhood array".  However, instead of *applying a kernel* to the neighborhood array and the image, as we would for a mean filter or Gaussian filter etc., the median filter, shockingly, takes the median value of the pixels under the small array. 
+Median filtering is an example of footprint/function filtering.  That is, the footprint defines the local neighborhood, and we apply the `np.median` function to that local neighborhood.
+
+As with the other footprints and kernels we have seen, the footprint is
+centered on every pixel during the filtering operation. The central pixel
+value is replaced with a number computed from the other values in the local
+neighborhood, e.g. the other pixel values under the footprint.
+
+However, instead of *applying a kernel* to the neighborhood array and the
+image, as we would for a mean filter or Gaussian filter etc., the median
+filter, you may be surprised to hear, takes the *median* value of the pixels
+under the footprint.
 
 ![](images/footprint_general.png)
 
-There is no way of using a kernel to calculate the median, and this is why [some people](https://dsp.stackexchange.com/questions/13211/convolution-kernels-for-image-filtering) will tell you not to call the "neighborhood array" a "kernel", when we are doing median filtering. Calculating the median utilizes ranking and indexing, and cannot be expressed as set of additions, subtractions, multiplications, divisions etc, in the way that calculating a mean can, for instance.
+There is no way of using a kernel to calculate the median, and this is why
+we and [others](https://dsp.stackexchange.com/questions/13211/convolution-kernels-for-image-filtering)
+will tell you not to call the footprint a "kernel", when we are doing median
+filtering. Calculating the median utilizes ranking and indexing, and cannot be
+expressed as set of additions, subtractions, multiplications, divisions etc,
+in the way that calculating a mean can, for instance.
 
 One way to think of this, is that when we write the formula for the mean, we can write it without reference to any Python indexing operations:
 
 $ \large \text{mean} = \frac{\sum X}{n} $
 
-...we can read that as "to get the mean of a set of numbers (where $X$ refers all of the numbers), add them up and divide by however many numbers there are ($n$)". 
+...we can read that as "to get the mean of a set of numbers (where $X$ refers all of the numbers), add them up and divide by however many numbers there are ($n$)".
 
-Conversely for the median we first have to order the numbers from lowest to highest ($X_{\text{sorted}}$), and then find the value that is *at the central index*. So where $X$ is an array containing all the numbers, if $n$ is odd:
+Conversely for the median we first have to order the numbers from lowest to
+highest ($X_{\text{sorted}}$), and then find the value that is *at the central
+index*. So where $X$ is an array containing all the numbers, if $n$ is odd:
 
 $ \large \text{median} = X_{\text{sorted}}[\frac{n}{2}]$
 
@@ -49,7 +90,6 @@ Where the square brackets are a *Python* indexing operation (we will need a diff
 ```{python}
 # Some numbers.
 nums = np.array([10, 4, 5, 8, 7])
-
 nums
 ```
 
@@ -57,15 +97,16 @@ We get the mean from: $ \large \text{mean} = \frac{\sum x_i...x_n}{n} $
 
 ```{python}
 # Take the sum, divide by n.
-np.sum(nums)/len(nums)
+np.sum(nums) / len(nums)
 ```
 
 ```{python}
 # Compare to the same calculation from NumPy.
-nums.mean()
+np.mean(nums)
 ```
 
-Whereas we get the median from: $ \large \text{median} = X_{\text{sorted}}[\frac{n}{2}]$
+Whereas we get the median from: $ \large \text{median}
+= X_{\text{sorted}}[\frac{n}{2}]$
 
 ```{python}
 # Get the median.
@@ -82,16 +123,23 @@ median
 np.median(nums)
 ```
 
-There is no kernel method that can do this - instead we use the "neighborhood array" to define a pixel neighborhood, then replace the central value with the median from that neighborhood, using the sorting and indexing we have seen above. So, the median filter *is* a local filter, because it alters pixel values based on other pixel values in the local neighborhood. However, it is not a *kernel filter* because it does use a weighted weighted sum of the local neighborhood, in contrast to other local filters like the mean filter, Gaussian filter etc. 
+There is no kernel method that can do this - instead we use the footprint to
+define a pixel neighborhood, then replace the central value with the median
+from that neighborhood, using the sorting and indexing we have seen above. So,
+the median filter *is* a local filter, because it alters pixel values based on
+other pixel values in the local neighborhood (footprint). However, it is not
+a *kernel filter* because it does not use a weighted weighted sum of the local
+neighborhood, in contrast to other kernel-based filters like the mean filter,
+Gaussian filter etc.
 
-# Edge preservation
+## Edge preservation
 
-The median filter is especially useful for removing noise from images, while preserving the "edges" in the image. You'll recall that the edges are big changes in the gradient of pixel intensities, between nearby pixels (e.g. black-to-white, white-to-black etc). Let's look at why the median filter is "edge preserving", by expanding the `nums` array into a low-resolution image, using `np.tile()` and `.reshape()`.
+The median filter is especially useful for removing noise from images, while preserving the "edges" in the image. You'll recall that the edges are big changes in the gradient of pixel intensities, between nearby pixels (e.g. black-to-white, white-to-black etc). Let's look at why the median filter is "edge preserving", by expanding the `nums` array into a low-resolution image, using `np.tile()` and `np.reshape()`.
 
 ```{python}
 # Make `nums` into a image array.
-nums_img = np.tile(nums, reps=3).reshape((3, 5))
-nums_img 
+nums_img = np.reshape(np.tile(nums, reps=3), (3, 5))
+nums_img
 ```
 
 ```{python}
@@ -99,14 +147,18 @@ nums_img
 plt.matshow(nums_img);
 ```
 
-Now, imagine we "walk" a 3-by-3 kernel (sorry pedants!) through the `nums_img` array, and replace the central pixel of each kernel (sorry again, pedants!) with the median of the pixels under the kernel.
+Now, imagine we "walk" a 3-by-3 footprint through the `nums_img` array, and
+replace the central pixel of each footprint with the median of the pixels
+under the kernel.
 
-This process is shown below, for three kernels (OK, pedants, three "local neighborhoods under a 3-by-3 array very much resembling a kernel"). The central pixel is highlighted in red, and the index of the current local neighborhood is shown above the pixel values.
+This process is shown below, for three footprints ("local
+neighborhoods" under a 3-by-3 array). The central pixel is highlighted in red,
+and the index of the current local neighborhood is shown above the pixel
+values.
 
 The flattened and sorted values from each local neighborhood are also shown, along with the median value of the neighborhood:
 
 ![](images/median_filter.png)
-
 
 We can also show this in "Python space", using a for loop:
 
@@ -122,13 +174,17 @@ for i in np.arange(3):
     print(f"Median = {np.median(nums_img[i_row_start:i_row_end, i_col_start:i_col_end])}")
 ```
 
-Because the median is not a function which can be applied via kernel filtering, we cannot apply it using `ndi.correlate()`, as we did with the other [local filters](5_mean_filter). 
+Because the median is not a function which can be applied via kernel
+filtering, we cannot apply it using `ndi.correlate()`, as we did with the
+other [local filters](5_mean_filter).
 
-We can apply it in `skimage` using `ski.filters.median()`. Again,  we supply a `footprint` argument to determine the size of each pixel's "local neighborhood":
+We can apply it in `skimage` using `ski.filters.median()`. Again,  we supply
+a `footprint` argument to determine the size and shape of each pixel's "local
+neighborhood":
 
 ```{python}
 # Median filter `nums_img`.
-nums_median_filtered = ski.filters.median(nums_img, 
+nums_median_filtered = ski.filters.median(nums_img,
                                           footprint=np.ones((3,3)))
 nums_median_filtered
 ```
