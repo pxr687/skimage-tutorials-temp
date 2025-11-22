@@ -35,7 +35,8 @@ np.set_printoptions(precision=2)
 # Custom functions/variables for illustrations, to quickly report image
 # attributes, and for exercises.
 from skitut.gaussian_illustration import make_gaussian_kernel
-from skitut import show_attributes, hints
+# Utilities for mathematical display of matrices.
+from skitut import show_attributes, hints, show_mat, save_load_show_mat
 ```
 
 ## Gaussian filtering
@@ -131,25 +132,8 @@ gaussian_like_kernel
 
 If you prefer, you can view the NumPy array kernel with prettier graphics below:
 
-```{python tags=c("raises-exception", "remove-cell")}
-# For pretty mathematical display.
-# This might break on a system without LaTeX.  Let it error if so, and use the
-# # copy saved from another build.
-import sympy as sy
-
-def save_sy_mat(arr, out_fname, ndigits=2, dpi=600):
-    arr_sym = sy.Matrix(np.round(arr, ndigits))
-    # Save (if the system allows it) to image.
-    sy.preview(arr_sym, viewer='file',
-               euler=False,
-               dvioptions=["-T", "tight", "-z", "0", f"-D {dpi}"],
-               filename=out_fname)
-
-save_sy_mat(gaussian_like_kernel, 'images/gaussian_kernel_2.png')
-```
-
 ```{python tags=c("hide-input")}
-sy.Matrix(gaussian_like_kernel.round(2))
+show_mat(gaussian_like_kernel)
 ```
 
 Just as a final comparison between the  NumPy array kernel and the plot, here
@@ -163,7 +147,8 @@ def surface_mat_pair(kernel, mat_fname, fig=None):
     ax0 = fig.add_subplot(1, 2, 1, projection='3d')
     kernel_plot(kernel, ax=ax0, elev=90, azim=0)
     ax1 = fig.add_subplot(1, 2, 2)
-    mat_img = ski.io.imread(mat_fname)
+    # Our own utility for making matrix display image, loading.
+    mat_img = save_load_show_mat(kernel, mat_fname)
     ax1.imshow(mat_img,
                origin='upper',
                aspect='equal')
@@ -181,7 +166,7 @@ def surface_mat_pair(kernel, mat_fname, fig=None):
         tick_pos = np.arange(step * (0.5 + p_f), mat_ax_len, step)
         getattr(ax1, f'set_{ax_name}ticks')(tick_pos)
         getattr(ax1, f'set_{ax_name}ticklabels')(range(kern_ax_len))
-    # Turn off spines.
+    # Turn off spines for matrix display.
     for position in ('left', 'right', 'top', 'bottom'):
         ax1.spines[position].set_visible(False)
     fig.subplots_adjust(left=0.0, right=1, wspace=0)
@@ -273,7 +258,7 @@ numbers, where are the low numbers? The `big_gaussian_kernel` NumPy array is
 shown below, in prettier form, to aid your ruminations:
 
 ```{python}
-sy.Matrix(big_gaussian_kernel.round(2))
+show_mat(big_gaussian_kernel)
 ```
 
 We will also plot this kernel in 3D, as with the last kernel. Again, the integer index locations of the array form the horizontal ($x$ and $y$) axis values, and the values within the array are plotted on the vertical ($z$) axis. 
@@ -301,11 +286,6 @@ plt.title('`big_gaussian_kernel` \nRed Mountain View:');
 Again, to make the relationship between the NumPy array and the graph as clear
 as possible, here is the "red mountain" viewed from directly above, with the
 `big_gaussian_kernel` array shown to its right:
-
-```{python tags=c("raises-exception", "remove-cell")}
-# Save figure if we can.
-save_sy_mat(big_gaussian_kernel, 'images/big_gaussian_kernel.png', dpi=1200)
-```
 
 ```{python tags=c("hide-input")}
 surface_mat_pair(big_gaussian_kernel, 'images/big_gaussian_kernel.png')
@@ -373,13 +353,13 @@ prototypical multivariate Gaussian distribution.
 Both our `(3, 3)` kernel above, and the larger kernel we just plotted, are called [gaussian blur kernels](https://www.geeksforgeeks.org/deep-learning/types-of-convolution-kernels). Let's look at the `gaussian_like_kernel` array again, to compare it to `big_gaussian_kernel` directly:
 
 ```{python tags=c("hide-input")}
-sy.Matrix(gaussian_like_kernel.round(2))
+show_mat(gaussian_like_kernel)
 ```
 
 When comparing to the `big_gaussian_kernel`, shown below, you can see that the pattern in the numbers is the same. The biggest value occurs in the center of the array, the smallest values are in the corners of the array. For the bigger Gaussian kernel, it is apparent that kernel values *closer* to the center are larger, the values get smaller the further we get from the central element:
 
 ```{python}
-sy.Matrix(big_gaussian_kernel.round(2))
+show_mat(big_gaussian_kernel)
 ```
 
 As we said above, when we filter using these Gaussian kernels, we "walk" the
@@ -535,7 +515,7 @@ almost_gaussian_kernel
 Here it is in a nicer mathematical display:
 
 ```{python}
-sy.Matrix(almost_gaussian_kernel)
+show_mat(almost_gaussian_kernel)
 ```
 
 We plot this oddball kernel in 3D, in the cell below:
@@ -669,6 +649,8 @@ To ensure the kernel sums to 1, we just multiply the kernel by the reciprocal
 of the sum of the elements in the kernel, which in this case sum to 144:
 
 ```{python tags=c("hide-input")}
+import sympy as sy
+
 sy.MatMul(sy.Rational(1, 144),
           sy.Matrix(almost_gaussian_kernel), evaluate=False)
 ```
@@ -926,7 +908,7 @@ sharpening_kernel = np.array([[0, -1 , 0],
 Here's a nicer mathematical display of the kernel:
 
 ```{python tags=c("hide-input")}
-sy.Matrix(sharpening_kernel)
+show_mat(sharpening_kernel)
 ```
 
 We show this kernel in 3D below (it does look pretty sharp!):
@@ -1104,10 +1086,10 @@ You mission is the following. Make a custom sharpening kernel to sharpen `blurry
 When making your modifications to the kernel pay attention to the original values in `sharpening_kernel` to decide what values you can use to achieve a similar but stronger effect. Here is the original `sharpening_kernel`, to act as your spiritual guide:
 
 ```{python tags=c("hide-input")}
-sy.Matrix(sharpening_kernel)
+show_mat(sharpening_kernel)
 ```
 
-...think carefully about what you can change to improve the sharpening performance. 
+...think carefully about what you can change to improve the sharpening performance.
 
 As a final step use `ski.filters.unsharp_mask()` as an alternate method sharpen the `blurry_eagle` image. Use whatever argument settings you need. Compare the result to your custom kernel.
 
