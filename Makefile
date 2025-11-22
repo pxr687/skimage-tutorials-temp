@@ -12,14 +12,7 @@ html:
 jl:
 	# Jupyter-lite files for book build.
 	$(PIP_INSTALL_CMD) -r jl-build-requirements.txt
-	rm -rf $(JL_DIR)
-	mkdir $(JL_DIR)
-	cp -r $(OTHER_DIRS) $(JL_DIR)
-	$(PYTHON) _scripts/process_notebooks.py $(JL_DIR)
-	$(PYTHON) -m jupyter lite build \
-		--contents $(JL_DIR) \
-		--output-dir $(BUILD_DIR)/interact \
-		--lite-dir $(JL_DIR)
+	jljb-write-dir $(BUILD_DIR)/interact data images --jl-tmp $(JL_DIR)
 
 web: html jl
 

@@ -6,7 +6,7 @@ jupyter:
       extension: .Rmd
       format_name: rmarkdown
       format_version: '1.2'
-      jupytext_version: 1.17.3
+      jupytext_version: 1.18.1
   kernelspec:
     display_name: Python 3 (ipykernel)
     language: python
@@ -44,11 +44,9 @@ import matplotlib.pyplot as plt
 # Set the default colormap for this session.
 plt.rcParams['image.cmap'] = 'gray'
 
-# Import a custom function to give hints for some exercises.
-from hints import hint_cat, hint_camera
-
-# A custom function to quickly report array image attributes.
-from show_attributes import show_attributes
+# Import a custom function to give hints for some exercises, and
+# a custom function to quickly report array image attributes.
+from skitut import hints, show_attributes
 ```
 
 We can use some simple NumPy functions and the familiar array indexing syntax to create our familiar, exceedingly artistic, image array:
@@ -94,7 +92,7 @@ We show this principle again below, for each color channel. The top row of the p
 ```{python}
 # Use a custom function to plot the maximum intensity values in the diagonals, for `int` and `float` data,
 # using our familiar 1's and 0's array.
-from random_colors import plot_int_float
+from skitut.random_colors import plot_int_float
 
 plot_int_float();
 ```
@@ -635,7 +633,7 @@ Here are some things to pay attention to, in the target image, to help you think
 - the color of the target image in different regions.
 - the `dtype` of the target image.
 
-*Hint 1:* run the function `hint_camera()` for some additional help if you get stuck.
+*Hint 1:* run the function `hints.camera()` for some additional help if you get stuck.
 
 ```{python}
 # YOUR CODE HERE

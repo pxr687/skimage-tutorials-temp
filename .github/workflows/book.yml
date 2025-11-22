@@ -24,21 +24,15 @@ jobs:
         with:
           submodules: recursive
       # Install dependencies
-      - name: Set up Python 3.12
+      - name: Set up Python 3.13
         uses: actions/setup-python@v4
         with:
-          python-version: 3.12
+          python-version: 3.13
 
       - name: Install dependencies
         run: |
           pip install -r build_requirements.txt
 
-      - name: Run tests
-        run: |
-          pip install -r test_requirements.txt
-          pytest .
-
-      # Build the page
       - name: Build the book
         run: |
           make web

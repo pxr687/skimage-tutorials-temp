@@ -20,8 +20,8 @@ plt.rcParams['image.cmap'] = 'gray'
 # Set NumPy precision to 2 decimal places
 np.set_printoptions(precision=2)
 
-#  A custom function to quickly report image attributes.
-from show_attributes import show_attributes
+# A custom function to quickly report image attributes.
+from skitut import show_attributes
 ```
 
 # Local filtering without kernels

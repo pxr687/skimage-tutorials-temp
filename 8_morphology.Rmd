@@ -47,11 +47,11 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 # A custom function for displaying image attributes.
-from show_attributes import show_attributes
+from skitut import show_attributes
 
 # A custom function for comparison plots.
 def show_both(original,
-              altered, 
+              altered,
               alteration='',
               figsize=(14, 14)):
     plt.figure(figsize=figsize)
@@ -77,7 +77,7 @@ square = np.array([[0, 0, 0, 0, 0, 0, 0],
 plt.imshow(square);
 ```
 
-Let's get fancy and ostentacious now, and invest in some diamonds, by which we mean let's use `ski.morphology.diamond()` to construct a structuring element:
+Let's get fancy and ostentatious now, and invest in some diamonds, by which we mean let's use `ski.morphology.diamond()` to construct a structuring element:
 
 ```{python}
 # Create a `diamond` structuring element.

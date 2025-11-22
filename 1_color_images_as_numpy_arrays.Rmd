@@ -6,7 +6,7 @@ jupyter:
       extension: .Rmd
       format_name: rmarkdown
       format_version: '1.2'
-      jupytext_version: 1.17.3
+      jupytext_version: 1.18.1
   kernelspec:
     display_name: Python 3 (ipykernel)
     language: python
@@ -39,7 +39,7 @@ plt.rcParams['image.cmap'] = 'gray'
 
 # Import a custom function to give hints for some exercises.
 # This is a function we wrote for the tutorial.
-from hints import hint_corrupted_camera
+from skitut import hints
 ```
 
 Below, we create some small 2D image arrays, with which to explore color
@@ -622,7 +622,7 @@ You can view lots of random mixes across the color channels, as a grid of plots,
 ```{python}
 # A custom function to demonstrate many mixes of values across the three
 # color channels.
-from random_colors import random_color_array
+from skitut.random_colors import random_color_array
 
 random_color_array(8, 8)
 ```
@@ -697,7 +697,7 @@ The display conventions are:
   arrays, such as `dtype=np.uint8`).
 
 You will see both conventions in images you encounter "in the wild", and
-Scikit image supports both formats (as well as multiple other formats - see
+Scikit-image supports both formats (as well as multiple other formats - see
 the table below). Neglecting to pay attention to `dtype` is a very common
 source of errors when dealing with image arrays, so keep track of it, and
 deliberately specify it as often as possible!
@@ -709,7 +709,7 @@ values:
 ```{python}
 # Use a custom function to plot the maximum intensity values in the diagonals,
 # for `int` and `float` data, using our familiar 1's and 0's array.
-from random_colors import plot_int_float
+from skitut.random_colors import plot_int_float
 
 plot_int_float();
 ```
@@ -1036,7 +1036,7 @@ here...
 
 *Hint 3*: Don't forget this is an *integer* image.
 
-*Hint 3*: Run the function `hint_corrupted_camera()` for additional help...
+*Hint 3*: Run the function `hints.corrupted_camera()` for additional help...
 
 ```{python}
 # Make a random number generator
@@ -1134,7 +1134,7 @@ the [next page](2_skimage_intro).
 On this page we have seen how color can be represented in NumPy array images:
 
 * Images are (at least) two-dimensional arrays of numbers. Multiple `dtype`s
-  in image arrays are supported by Scikit image.
+  in image arrays are supported by Scikit-image.
 * We have seen images where the number at each array pixel location determines
   the gray-level (in a 2D array) or color (in a 3D array) of that location
   when the image is displayed. For 3D color arrays the number in each

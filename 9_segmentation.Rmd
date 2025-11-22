@@ -16,7 +16,7 @@ jupyter:
 
 # Image segmentation
 
-Based on: https://scikit-image.org/skimage-tutorials/lectures/4_segmentation.html
+Based on [the Skimage segmentation tutoria](https://scikit-image.org/skimage-tutorials/lectures/4_segmentation.html)
 
 [Recap how we saw it before]
 

@@ -40,9 +40,10 @@ plt.rcParams['image.cmap'] = 'gray'
 # Set NumPy precision to 2 decimal places
 np.set_printoptions(precision=2)
 
-#  Custom functions for illustrations, hints, and to quickly report image attributes.
-from noise_illustration import generate_image, original_image
-from show_attributes import show_attributes
+# Custom functions for illustrations, and to quickly report image
+# attributes.
+from skitut.noise_illustration import generate_image, original_image
+from skitut import show_attributes
 ```
 
 
