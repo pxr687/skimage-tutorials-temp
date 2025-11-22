@@ -20,7 +20,7 @@ on the values in a NumPy image array. First, we will explore how to achieve
 specific effects using NumPy and SciPy. We will demonstrate what these
 operations are doing to an image at the level of the array pixels. After that,
 we will show how more sophisticated extensions of these techniques can be
-implemented with Scikit-image. We will focus on the way that Scikit image
+implemented with Scikit-image. We will focus on the way that Scikit-image
 often uses NumPy and SciPy operations "under the hood".
 
 [Remember that](ip-maxim) *"image processing" is when we do something that
