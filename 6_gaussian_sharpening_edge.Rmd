@@ -249,8 +249,7 @@ To see the Gaussian nature of this filtering operation, let's take a look at ano
 ```{python}
 # Another kernel.
 big_gaussian_kernel = make_gaussian_kernel(9)
-
-big_gaussian_kernel.round(2)
+np.round(big_gaussian_kernel, 2)
 ```
 
 Can you see any pattern in the arrangement of the numbers? Where are the high
@@ -599,9 +598,10 @@ my_new_kernel = almost_gaussian_kernel.copy()
 :class: dropdown
 :::
 
-So, the problem here is *integer overflow*. Filtering `camera` with the
-`almost_gaussian_kernel` results in numbers that are too big for the original
-`uint8` `dtype` to handle. Let's remind ourselves of the kernel values:
+You will have discovered that the problem here is *integer overflow*.
+Filtering `camera` with the `almost_gaussian_kernel` results in numbers that
+are too big for the original `uint8` `dtype` to handle. Let's remind ourselves
+of the kernel values:
 
 ```{python}
 # Show the kernel.
@@ -705,13 +705,20 @@ Nov 19 14.48
 :class: dropdown
 :::
 
-Below is another way of writing the formula for generating a 2D Gaussian distribution, and therefore for generating a 2D Gaussian kernel.
+Below is another way of writing the formula for generating a 2D Gaussian
+distribution, and therefore for generating a 2D Gaussian kernel.
 
 $ \Large \text{Gaussian}(x, y) = \frac{1}{\sqrt{2 \pi \sigma^2}} e^{- \frac{x^2 + y^2}{2\sigma^2}} $
 
-In contrast the formula we saw above for the same distribution, *this formula assumes that both $x$ and $y$ have an equal spread*. Generally we will want this equality of spread, for a Gaussian kernel.
+In contrast the formula we saw above for the same distribution, *this formula
+assumes that both $x$ and $y$ have an equal spread* (standard deviation).
+Generally we will want this equality of spread, for a Gaussian kernel.
 
-Your task is to define a function in the cell below (called `DIY_gauss`) which implements this revised Gaussian formula. Your function should take two 2D arrays ($x$ and $y$), and a `sigma` ($\sigma$) value, as arguments. Figure out what needs to be in each input argument to produce the following `target_kernel`:
+Your task is to define a function in the cell below (called `DIY_gauss`) which
+implements this revised Gaussian formula. Your function should take two 2D
+arrays ($x$ and $y$), and a `sigma` ($\sigma$, standard deviation) value, as
+arguments. Figure out what needs to be in each input argument to produce the
+following `target_kernel`:
 
 ```{python}
 # Show the target kernel.
@@ -729,7 +736,8 @@ kernel_plot(target_kernel);
 target_kernel
 ```
 
-Once you have successfully generated the `target_kernel` using your function, use it to blur the following image:
+Once you have successfully generated the `target_kernel` using your function,
+use it to blur the following image:
 
 ```{python}
 # Read in and show the image which you should blur with your new kernel.
@@ -737,11 +745,15 @@ xenomorph = ski.io.imread("images/xenomorph.jpg", as_gray=True)
 plt.imshow(xenomorph);
 ```
 
-You should find the `sigma` value that you need in order to produce the following target image:
+You should find the `sigma` value that you need in order to produce the
+following target image:
 
 ![](images/xeno_blur.png)
 
-To help narrow things down, we have put some scaffolding code in the cell below, which shows how to generate the 2D `x` and `y` arrays with `np.meshgrid()`. The code is currently commented out, you will need to uncomment it, and modify it so it can be used to produce the `target_kernel`.
+To help narrow things down, we have put some scaffolding code in the cell
+below, which shows how to generate the 2D `x` and `y` arrays with
+`np.meshgrid()`. The code is currently commented out, you will need to
+uncomment it, and modify it so it can be used to produce the `target_kernel`.
 
 *Hint*: the values you need, for your `x` and `y` arrays, and your `sigma` value, are all positive or negative integers smaller than 5.
 
@@ -755,8 +767,7 @@ To help narrow things down, we have put some scaffolding code in the cell below,
 # The input vectors for your function.
 #x_lin = np.arange(...)
 #y_lin = x_lin.copy()
-#x, y = np.meshgrid(x_lin,
-                   #y_lin)
+#x, y = np.meshgrid(x_lin, y_lin)
 
 # Your function.
 def DIY_gauss(x, y, sigma):
@@ -769,7 +780,7 @@ def DIY_gauss(x, y, sigma):
 # You will need to un-comment the code first (obvivously!).
 
 # UNCOMMENT THE LINE BELOW AND RUN THE CODE
-# assert all(DIY_gauss_solution(x, y, sigma=secret_val()).round(2) == target_kernel.round(2).round(2))
+# assert all(DIY_gauss_solution(x, y, sigma=secret_val()).round(2) == target_kernel.round(2))
 ```
 
 Do not forget to use your kernel to blur the `xenomorph` image in the cell below:
@@ -786,11 +797,18 @@ xenomorph_gauss_blurred = ...
 :class: dropdown
 :::
 
-The function you need, with the correct input arguments, is below. You need to use `np.arange(-3, 4)` for the inputs to `np.meshgrid()` - the resulting 2D `x_solution` and `y_solution` arrays are printed out under the cell. A `sigma` of 1 will generate the target kernel.
+The function you need, with the correct input arguments, is below. You need to
+use `np.arange(-3, 4)` for the inputs to `np.meshgrid()` - the resulting 2D
+`x_solution` and `y_solution` arrays are printed out under the cell. A `sigma`
+of 1 will generate the target kernel.
 
-An important step here is `gauss = 1/gauss.sum() * gauss` which ensures that the kernel elements sum to 1. As we noted in the solution to the last exercise, this step makes sure that the average pixel intensity of an image stays the same as the original image, when we filter the image with this kernel (this is called *normalising the kernel*). 
+An important step here is `gauss = 1/gauss.sum() * gauss` which ensures that the kernel elements sum to 1. As we noted in the solution to the last exercise, this step makes sure that the average pixel intensity of an image stays the same as the original image, when we filter the image with this kernel (this is called *normalising the kernel*).
 
-If we skip the normalisation step, we may well create problems with illegal (too large!) pixel intensity values, or otherwise will be changing the intensities in a way that is not part of the typical Gaussian blur procedure e.g. we will be altering the average pixel intensity of the whole image, rather than just blurring the pixels...
+If we skip the normalisation step, we may well create problems with
+not-standard (too large!) pixel intensity values, or otherwise will be
+changing the intensities in a way that is not part of the typical Gaussian
+blur procedure e.g. we will be altering the average pixel intensity of the
+whole image, rather than just blurring the pixels...
 
 ```{python}
 def DIY_gauss_solution(i, j, sigma):
@@ -822,7 +840,7 @@ To use the `target_kernel` to recreate the target image, you need to hefty sigma
 sigma = 10
 
 # Blur the `xenomorph` image, and show beside the original.
-target_image_solution = ndi.correlate(xenomorph, 
+target_image_solution = ndi.correlate(xenomorph,
                                       weights=DIY_gauss_solution(x_solution, y_solution, sigma=sigma))
 
 # Show the original image and the blurred image.
@@ -846,26 +864,34 @@ plt.savefig('images/xeno_blur.png')
 :::
 
 
-# Image sharpening
+## Image sharpening
 
-Gaussian filtering is a nice visual effect by itself, but filters like the Gaussian filter which blur an image can also, somewhat paradoxically, be used to *sharpen* an image. *Sharpening* is the opposite of blurring, it makes images clearer, with the features and edges more defined.
+Gaussian filtering is a nice visual effect by itself, but filters like the
+Gaussian filter which blur an image can also, somewhat paradoxically, be used
+to *sharpen* an image. *Sharpening* is the opposite of blurring, it makes
+images clearer, with the features and edges more defined.
 
 How can we sharpen an image with a Gaussian *blur* filter, we hear you ask? We will demonstrate below. Sharpening is easiest to appreciate if we start with a slightly blurry image. In the cell below, we create a `blurry_cat` image by applying a Gaussian filter, we use a low `sigma` value, to keep the blur only slight:
 
 ```{python}
 # Add a little blur.
-blurry_cat = ski.filters.gaussian(ski.data.cat(), 
+blurry_cat = ski.filters.gaussian(ski.data.cat(),
                                   sigma=1)
 plt.imshow(blurry_cat);
 ```
 
-A simple way to sharpen the image is via the [following procedure](https://blog.demofox.org/2022/02/26/image-sharpening-convolution-kernels):
+A simple way to sharpen the image is via the [following
+procedure](https://blog.demofox.org/2022/02/26/image-sharpening-convolution-kernels):
 
 $$
 \text{sharpened_image} = \text{original_image} + (\text{original_image} – \text{blurred_image})
 $$
 
-Theoretically speaking, $\text{(original_image – blurred_image)}$ contains *sharpened details* of the image, because it results from subtracting out a version of the image which is much blurrier than the original, giving us the *difference* between the original image and the blurry image. This effect is easiest to appreciate visually:
+Theoretically speaking, $\text{(original_image – blurred_image)}$ contains
+*sharpened details* of the image, because it results from subtracting out
+a version of the image which is blurrier than the original, giving us the
+*difference* between the original image and the blurry image. This effect is
+easiest to appreciate visually:
 
 ```{python}
 # Perform the sharpening, on each color channel separately, to avoid altering the color of the image.
@@ -874,11 +900,11 @@ sharpened = []
 for i in np.arange(blurry_cat.shape[2]):
     gaussian_filtered_cats.append(ski.filters.gaussian(blurry_cat[:, :, i], 4))
     sharpened.append(blurry_cat[:, :, i] + (blurry_cat[:, :, i] - gaussian_filtered_cats[i]))
-    
+
 # Stack back to 3D.
 sharpened = np.stack(sharpened, axis=2)
-gaussian_filter_cat = np.stack(gaussian_filtered_cats, 
-                             axis=2)
+gaussian_filter_cat = np.stack(gaussian_filtered_cats,
+                               axis=2)
 
 # Rescale to legal pixel ranges.
 sharpened = ski.exposure.rescale_intensity(sharpened, out_range=(0, 1))
@@ -897,7 +923,10 @@ plt.imshow(sharpened)
 plt.tight_layout();
 ```
 
-You can see that the sharpened image, as intended, has better clarity than the original. We can also use a specialised [sharpening kernel](https://www.geeksforgeeks.org/deep-learning/types-of-convolution-kernels/#3-sharpening-kernel) to achieve the same effect:
+You can see that the sharpened image, as intended, has better clarity than the
+original. We can also use a specialised [sharpening
+kernel](https://www.geeksforgeeks.org/deep-learning/types-of-convolution-kernels/#3-sharpening-kernel)
+to achieve the same effect:
 
 ```{python}
 sharpening_kernel = np.array([[0, -1 , 0],
@@ -917,7 +946,10 @@ We show this kernel in 3D below (it does look pretty sharp!):
 kernel_plot(sharpening_kernel)
 ```
 
-The kernel works by [emphasising differences between adjacent pixels](https://setosa.io/ev/image-kernels/#:~:text=The%20sharpen%20kernel%20emphasizes%20differences,differences%20in%20adjacent%20pixel%20values.). Essentially, the more different than a pixel is from its surrounding pixels, the bigger value it will get in the sharpened image. 
+The kernel works by [emphasising differences between adjacent
+pixels](https://setosa.io/ev/image-kernels/#:~:text=The%20sharpen%20kernel%20emphasizes%20differences,differences%20in%20adjacent%20pixel%20values.).
+Essentially, the more different a pixel is from its surrounding pixels, the
+bigger value it will get in the sharpened image.
 
 To see this in detail, let's take just the middle row of the `sharpening_kernel`:
 
@@ -940,11 +972,14 @@ my_nums
 We perform the filtering in the cell below:
 
 ```{python}
-ndi.correlate(my_nums, 
-              weights=middle_row_sharp)
+ndi.correlate(my_nums, weights=middle_row_sharp)
 ```
 
-You can see that bigger differences between adjacent values result in larger absolute numbers in the output array, emphasising the differences. We show this principle again below, using 2D arrays the full `sharpening_kernel`. First, we create a 2D array where there are no differences between the adjacent pixels:
+You can see that bigger differences between adjacent values result in larger
+absolute numbers in the output array, emphasising the differences. We show
+this principle again below, using 2D arrays the full `sharpening_kernel`.
+First, we create a 2D array where there are no differences between the
+adjacent pixels:
 
 ```{python}
 # A boring array.
@@ -952,14 +987,14 @@ no_diff = np.ones((6, 6))
 no_diff
 ```
 
-Applying this array with the `sharpening_kernel` will yield the same array, as there are no differences in the input.
+Applying this array with the `sharpening_kernel` will yield the same array, as
+there are no differences in the input.
 
 ```{python}
-ndi.correlate(no_diff, 
-              weights=sharpening_kernel)
+ndi.correlate(no_diff, weights=sharpening_kernel)
 ```
 
-Conversely, the array below contains a repeating pattern of 2's and 3's in the first three rows, so the differences between pixel neighborhoods in the early rows are fairly consistent. 
+Conversely, the array below contains a repeating pattern of 2's and 3's in the first three rows, so the differences between pixel neighborhoods in the early rows are fairly consistent.
 
 In the last three rows, the same pattern is repeated, only now the 3's are negative, increasing the difference between the pixels in each neighborhood:
 
@@ -980,28 +1015,22 @@ operation:
 
 ```{python}
 # Larger differences in later rows, where there is greater variance in the pixel intensities.
-sharp_diffs = ndi.correlate(diffs, 
-                            weights=sharpening_kernel)
-print(sharp_diffs)
+sharp_diffs = ndi.correlate(diffs, weights=sharpening_kernel)
+sharp_diffs
 ```
 
-Let's apply the `sharpening_kernel` to the `blurry_cat` image array. As this array is a 3D color image, we apply the kernel to each color channel separately:
+Let's apply the `sharpening_kernel` to the `blurry_cat` image array. As this
+array is a 2D *color* image (meaning, a 3D array), we apply the kernel to each
+color channel separately:
 
 ```{python}
 # Separately sharpen each color channel of the `blurry_cat` image.
-sharpened_channels = {}
+sharpened_cat = blurry_cat.copy()
 for i in np.arange(3):
-    sharpened_cat_channel = ndi.correlate(blurry_cat[:, :, i],
+    sharpened_cat[:, :, i] = ndi.correlate(blurry_cat[:, :, i],
                                           weights=sharpening_kernel)
-    sharpened_channels[i] = sharpened_cat_channel
 
-# Stack back to 3D.
-sharpened_cat = np.stack([sharpened_channels[0],
-                          sharpened_channels[1],
-                          sharpened_channels[2]],
-                          axis=2)
-
-# Rescale to avoid illegal an pixel range.
+# Rescale to avoid non-standard pixel range.
 sharpened_cat = ski.exposure.rescale_intensity(sharpened_cat, out_range=(0, 1))
 
 # Show the result.
@@ -1019,12 +1048,17 @@ Scikit-image (unsurprisingly) also has filters to sharpen images. The `ski.filte
 
 $ \text{sharpened_img = original_img + scaling_amount * (original_img - blurred_img)} $
 
-...where "scaling_amount" is a single value which amplifies the sharpened details. Here is the result on `blurry_cat`, using the default parameters, aside from `channel_axis`. We set this to 2 to tell the function that this is a color image, with the color channels in the third dimension (`axis = 2`). This prevents the sharpening filter from affecting the color of the image:
+...where "scaling_amount" is a single value which amplifies the sharpened
+details. Here is the result on `blurry_cat`, using the default parameters,
+aside from `channel_axis`. We set this to 2 to tell the function that this is
+a color image, with the color channels in the third dimension (`axis=2`). This
+prevents the sharpening filter from applying the sharpening filter across the
+color axis, and therefore affecting the color of the image.
 
 ```{python}
 # Sharpen `blurry_cat`.
 sharpen_cat = ski.filters.unsharp_mask(blurry_cat,
-                                      channel_axis=2)
+                                       channel_axis=2)
 
 # Show the result.
 plt.figure(figsize=(16, 6))
@@ -1061,7 +1095,8 @@ plt.tight_layout();
 :class: dropdown
 :::
 
-In keeping with the "sharp" topic, below we load in a picture of a very regal-looking eagle, from `ski.data`:
+In keeping with the "sharp" topic, below we load in a picture of a very
+regal-looking eagle, from `ski.data`:
 
 ```{python}
 # Load in and show an image.
@@ -1070,7 +1105,8 @@ show_attributes(eagle)
 plt.imshow(eagle);
 ```
 
-We're feeling vandalistic, and so have ruined this image by adding a boatload of Gaussian blur, in the cell below:
+We're feeling vandalistic, and so have ruined this image by adding a boatload
+of Gaussian blur, in the cell below:
 
 ```{python}
 # Blur the `eagle` image.
@@ -1079,7 +1115,7 @@ blurry_eagle = ski.filters.gaussian(eagle,
 plt.imshow(blurry_eagle);
 ```
 
-You mission is the following. Make a custom sharpening kernel to sharpen `blurry_eagle`. You need to modify the kernel, because if we use the original `sharpening_kernel` on `blurry_eagle`, it does not perform well. The image below shows the result of sharpening with the original `sharpening_kernel`:
+You mission is the following: make a custom sharpening kernel to sharpen `blurry_eagle`. You need to modify the kernel, because if we use the original `sharpening_kernel` on `blurry_eagle`, it does not perform well. The image below shows the result of sharpening with the original `sharpening_kernel`:
 
 ![](images/not_great_sharp.png)
 
@@ -1091,7 +1127,9 @@ show_mat(sharpening_kernel)
 
 ...think carefully about what you can change to improve the sharpening performance.
 
-As a final step use `ski.filters.unsharp_mask()` as an alternate method sharpen the `blurry_eagle` image. Use whatever argument settings you need. Compare the result to your custom kernel.
+As a final step use `ski.filters.unsharp_mask()` as an alternate method
+sharpen the `blurry_eagle` image. Use whatever argument settings you need.
+Compare the result to your custom kernel.
 
 ```{python}
 # YOUR CODE HERE
@@ -1115,7 +1153,8 @@ another_sharpening_kernel = np.array([[ -3, -3, -3],
                                       [ -3, -3, -3]])
 ```
 
-An important feature to be aware of here, is that the sharpening kernel should sum to 1:
+An important feature to be aware of here, is that the sharpening kernel should
+sum to 1:
 
 ```{python}
 # The sum of the original `sharpening_kernel`.
@@ -1127,9 +1166,14 @@ np.sum(sharpening_kernel)
 np.sum(another_sharpening_kernel)
 ```
 
-As with Gaussian kernels, this is to ensure that the sharpening filter does not alter the average brightness of the original image. 
+As with Gaussian kernels, this is to ensure that the sharpening filter does
+not alter the average intensities of the original image.
 
-The reason our new `another_sharpening_kernel` performs better than the original `sharpening_kernel` is because the central value is higher. To ensure the kernel sums to 1, we therefore must increase the absolute value of the negative kernel elements. These two factors (bigger central value, bigger negative off-center values) increase the strength of the sharpening effect. 
+The reason our new `another_sharpening_kernel` performs better than the
+original `sharpening_kernel` is because the central value is higher. To ensure
+the kernel sums to 1, we therefore must increase the absolute value of the
+negative kernel elements. These two factors (bigger central value, bigger
+negative off-center values) increase the strength of the sharpening effect.
 
 We use the new kernel to sharpen `blurry_eagle` in the cell below:
 
@@ -1152,13 +1196,13 @@ plt.imshow(sharpened_eagle_solution)
 plt.tight_layout();
 ```
 
-We also got pretty good results from `ski.filters.unsharp_mask()`, setting the `amount` argument to 3 (for a strong sharpening effect):
+We also got pretty good results from `ski.filters.unsharp_mask()`, setting the
+`amount` argument to 3 (for a strong sharpening effect):
 
 ```{python}
 # Sharpen, via `skimage`.
 sharpened_eagle_solution_from_ski = ski.filters.unsharp_mask(blurry_eagle, 
                                                              amount=5)
-
 # Show the result.
 plt.figure(figsize=(12, 6))
 plt.subplot(1,2,1)
@@ -1174,9 +1218,17 @@ plt.tight_layout();
 :::
 
 
-# Edge detection filtering 
+## Edge detection filtering
 
-We saw a simple [edge detection filter](3_skimage_processing_from_numpy_and_scipy) in one of the exercises on an earlier page. In image processing and computer vision, an edge is a rapid change in intensity between pixels - e.g. there is a high *gradient* of change between the pixel values. We can construct a [kernel](https://www.geeksforgeeks.org/deep-learning/types-of-convolution-kernels) which will detect such intensity changes in the vertical ($y$) direction, and thus will detect horizontal edges. That may sound paradoxical, but *horizontal* edges have *vertical* gradients:
+We saw a simple [edge detection
+filter](3_skimage_processing_from_numpy_and_scipy) in one of the exercises on
+an earlier page. In image processing and computer vision, an edge is a rapid
+change in intensity between pixels - in other words there is a high *gradient*
+of change between the pixel values. We can construct
+a [kernel](https://www.geeksforgeeks.org/deep-learning/types-of-convolution-kernels)
+which will detect such intensity changes in the vertical ($y$) direction, and
+thus will detect horizontal edges. That may sound paradoxical, but
+*horizontal* edges have *vertical* gradients:
 
 ```{python}
 # A horizontal edge detection kernel.
@@ -1212,7 +1264,6 @@ Applying our horizontal edge detection kernel finds the horizontal edges. Note a
 # Use the horizontal edge detection filter.
 edgy_horizontal = ndi.correlate(edgy,
                                 horizontal_edge_detection_kernel)
-
 plt.imshow(edgy_horizontal);
 ```
 
@@ -1220,7 +1271,9 @@ Let's think about what has happened here at the level of the individual pixels. 
 
 ![](images/horizontal_edge_detection_1.png)
 
-You can see that, for a binary image, the horizontal kernel essentially "counts" the number of 0-to-1 vertical changes in the kernel location, which lets it detect horizontal edges.
+You can see that, for a binary image, the horizontal kernel essentially
+"counts" the number of 0-to-1 vertical changes in the kernel location, which
+lets it detect horizontal edges.
 
 Conversely, when the kernel hits the 1-to-0 vertical changes at the bottom of the array, we get a similar count of the 1-to-0 changes, but indicated by a negative value, telling us that the gradient is in the other direction:
 
@@ -1244,12 +1297,15 @@ We can "flip" our edge detection [kernel](https://www.geeksforgeeks.org/deep-lea
 ```{python}
 # A vertical edge detection kernel.
 vertical_edge_detection_kernel = horizontal_edge_detection_kernel.T
-
 vertical_edge_detection_kernel
 ```
 
-It should be easy to appreciate why this edge detection kernel operates to detect gradients and edges in a different direction! 
-Now, when applied to our `edgy` image array, the vertical edge detection kernel, true to its name, detects vertical edges, and it does show by looking for large pixel intensity changes in the horizontal direction (e.g. those at the left/right side edges of the square):
+It should be easy to appreciate why this edge detection kernel operates to
+detect gradients and edges in a different direction! Now, when applied to our
+`edgy` image array, the vertical edge detection kernel, true to its name,
+detects vertical edges, and it does so by looking for large pixel intensity
+changes in the horizontal direction (those at the left/right side edges of the
+square):
 
 ```{python}
 # The original square.
@@ -1260,15 +1316,17 @@ plt.imshow(edgy);
 # Detect edges in the vertical direction.
 edgy_vertical = ndi.correlate(edgy,
                               vertical_edge_detection_kernel)
-
 plt.imshow(edgy_vertical);
 ```
 
-Again, in the resultant image, changes from black to white (0-to-1) end up as white pixels (with value 1). Conversely, changes from white to black (1-to-0) end up as black pixels (with value -1). No change ends up as gray (0):
+Again, in the resultant image, changes from black to white (0-to-1) end up as
+white pixels (with value 1). Conversely, changes from white to black (1-to-0)
+end up as black pixels (with value -1). No change ends up as gray (0):
 
 ![](images/vertical_edge_matrices.png)
 
-Applied to more complex images, this edge detection can have some pretty cool effects:
+Applied to more complex images, this edge detection can have some pretty cool
+effects:
 
 ```{python}
 # Load in an image, convert to grayscale.
@@ -1283,8 +1341,9 @@ First, we detect edges in the horizontal direction:
 
 ```{python}
 # Filter using the horizontal edge detection kernel.
-gradient_horizontal_coffee_gray = ndi.correlate(coffee_gray,
-                                              horizontal_edge_detection_kernel)
+gradient_horizontal_coffee_gray = ndi.correlate(
+    coffee_gray,
+    horizontal_edge_detection_kernel)
 plt.imshow(gradient_horizontal_coffee_gray);
 ```
 
@@ -1292,12 +1351,15 @@ Then, in the vertical direction:
 
 ```{python}
 # Filter using the vertical edge detection kernel.
-gradient_vertical_coffee_gray = ndi.correlate(coffee_gray,
-                                               vertical_edge_detection_kernel)
+gradient_vertical_coffee_gray = ndi.correlate(
+    coffee_gray,
+    vertical_edge_detection_kernel)
 plt.imshow(gradient_vertical_coffee_gray);
 ```
 
-We can combine these two edge detection filters together to search for edges in both directions. First, lets refreseh our memory of what `edgy` looked like, filtered in both directions separately:
+We can combine these two edge detection filters together to search for edges
+in both directions. First, lets refresh our memory of what `edgy` looked like,
+filtered in both directions separately:
 
 ```{python}
 # Show the image which has been filtered with the horizontal edge detection kernel.
@@ -1313,19 +1375,24 @@ plt.title('Vertical Edges');
 A simple way to combine these filters is to:
 
 - `np.stack()` them into 3D...
-
 - ...then convert pixel values to absolute numbers (e.g. remove the signs)...
+- ...and then take to the maximum value across the third dimension (e.g. using
+  `np.max(arr, axis = 2)`). This will resize the array down to 2D and...
 
-- ...and then take to the maximum value across the third dimension (e.g. using `.max(axis = 2)`). This will resize the array down to 2D and...
-
-...at the end of this process, only pixels for which an edge was detected in either direction will remain in the resulting image array:
+...at the end of this process, only pixels for which an edge was detected in
+either direction will remain in the resulting image array:
 
 ```{python}
 # Combine the filters.
-edgy_vertical_horizontal_stack = np.stack([edgy_vertical, edgy_horizontal], axis=2) # Stack to 3D, `shape` = (11, 10, 2).
-edgy_vertical_horizontal_stack = np.abs(edgy_vertical_horizontal_stack) # Remove the signs, from all elements in the 3D array.
-edgy_vertical_horizontal_stack = edgy_vertical_horizontal_stack.max(axis=2) # Reshape to 2D, leaving only the largest value from
-                                                                            # either slice in the resulting array.
+# Stack to 3D, `shape` = (11, 10, 2).
+edgy_vertical_horizontal_stack = np.stack([edgy_vertical,
+                                           edgy_horizontal],
+                                          axis=2)
+# Remove the signs, from all elements in the 3D array.
+edgy_vertical_horizontal_stack = np.abs(edgy_vertical_horizontal_stack)
+# Reshape to 2D, leaving only the largest value from either slice in the
+# resulting array.
+edgy_vertical_horizontal_stack = np.max(edgy_vertical_horizontal_stack, axis=2)
 # Show the result.
 plt.imshow(edgy_vertical_horizontal_stack);
 ```
@@ -1349,20 +1416,25 @@ plt.title("Both Combined")
 plt.imshow(edgy_vertical_horizontal_stack);
 ```
 
-The pixel values throughout this edge detection process, on the `edgy` array, are shown on the image below:
+The pixel values throughout this edge detection process, on the `edgy` array,
+are shown on the image below:
 
 ![](images/edge_detection_process.png)
 
-
-Let's do this again, for the images that resulted from filtering `coffee_gray` with our horizontal and vertical edge detection kernels, respectively.
+Let's do this again, for the images that resulted from filtering `coffee_gray`
+with our horizontal and vertical edge detection kernels, respectively.
 
 ```{python}
 # Search for both types of edge (with `coffee_gray`).
-coffee_vertical_horizontal_stack = np.stack([gradient_vertical_coffee_gray, 
-                                             gradient_horizontal_coffee_gray], axis=2) # Stack to 3D, `shape` = (400, 600, 2).
-coffee_vertical_horizontal_stack = np.abs(coffee_vertical_horizontal_stack) # Remove the signs, from all elements in the 3D array.
-coffee_vertical_horizontal_stack = coffee_vertical_horizontal_stack.max(axis=2)# Reshape to 2D, leaving only the largest value from
-                                                                               # from either slice in the resulting 2D array.
+# Stack to 3D, `shape` = (400, 600, 2).
+coffee_vertical_horizontal_stack = np.stack([gradient_vertical_coffee_gray,
+                                             gradient_horizontal_coffee_gray], axis=2)
+# Remove the signs, from all elements in the 3D array.
+coffee_vertical_horizontal_stack = np.abs(coffee_vertical_horizontal_stack)
+# Reshape to 2D, leaving only the largest value from # from either slice in
+# the resulting 2D array.
+coffee_vertical_horizontal_stack = np.max(coffee_vertical_horizontal_stack,
+                                          axis=2)
 
 # Show the result.
 plt.imshow(coffee_vertical_horizontal_stack);
@@ -1389,9 +1461,9 @@ plt.title("Both Combined")
 plt.imshow(coffee_vertical_horizontal_stack);
 ```
 
-# Sobel edge detection filtering
+## Sobel edge detection filtering
 
-A similar edge detection filter is the Sobel filter, which uses the [following](https://www.geeksforgeeks.org/deep-learning/types-of-convolution-kernels/) [kernels](https://nrsyed.com/2018/02/18/edge-detection-in-images-how-to-derive-the-sobel-operator):
+The Sobel filter is a similar edge detection filter, which uses the [following](https://www.geeksforgeeks.org/deep-learning/types-of-convolution-kernels/) [kernels](https://nrsyed.com/2018/02/18/edge-detection-in-images-how-to-derive-the-sobel-operator):
 
 ```{python}
 # Sobel horizontal edge detection kernel.
@@ -1415,7 +1487,6 @@ Let's try these out with `edgy`:
 # Apply the Sobel horizontal edge detection filter.
 sobel_edgy_horizontal = ndi.correlate(edgy,
                                       sobel_horizontal)
-
 plt.imshow(sobel_edgy_horizontal);
 ```
 
@@ -1426,8 +1497,7 @@ The effect on the individual pixel values is shown below:
 ```{python}
 # Apply the Sobel vertical edge detection filter.
 sobel_edgy_vertical = ndi.correlate(edgy,
-                                      sobel_vertical)
-
+                                    sobel_vertical)
 plt.imshow(sobel_edgy_vertical);
 ```
 
@@ -1435,20 +1505,32 @@ Again, you can inspect the effect on the individual pixel values below:
 
 ![](images/vertical_edge_matrices_sobel.png)
 
-
-We can combine each edge-filtered image using the method we saw above, taking the absolute maximum values after stacking:
+We can combine each edge-filtered image using the method we saw above, taking
+the absolute maximum values after stacking:
 
 ```{python}
 # Combine the filters.
-sobel_edgy_vertical_horizontal_stack = np.stack([sobel_edgy_vertical, sobel_edgy_horizontal], axis=2) # Stack to 3D, `shape` = (11, 10, 2).
-sobel_edgy_vertical_horizontal_stack = np.abs(sobel_edgy_vertical_horizontal_stack) # Remove the signs, from all elements in the 3D array.
-sobel_edgy_vertical_horizontal_stack = sobel_edgy_vertical_horizontal_stack.max(axis=2) # Reshape to 2D, leaving only the largest value from
-                                                                            # either slice in the resulting array.
+# Stack to 3D, `shape` = (11, 10, 2).
+sobel_edgy_vertical_horizontal_stack = np.stack([sobel_edgy_vertical,
+                                                 sobel_edgy_horizontal],
+                                                axis=2)
+# Remove the signs, from all elements in the 3D array.
+sobel_edgy_vertical_horizontal_stack = np.abs(
+    sobel_edgy_vertical_horizontal_stack)
+# Reshape to 2D, leaving only the largest value from either slice in the
+# resulting array.
+sobel_edgy_vertical_horizontal_stack = np.max(
+    sobel_edgy_vertical_horizontal_stack,
+    axis=2)
 # Show the result.
 plt.imshow(sobel_edgy_vertical_horizontal_stack);
 ```
 
-The more formal method is to use the following [formula](https://nrsyed.com/2018/02/18/edge-detection-in-images-how-to-derive-the-sobel-operator), where the filtered image containing the *vertical edges* (e.g. the *horizontal* gradients) is $G_x$, and the the filtered image containing the *horizontal edges* (e.g. the *vertical* gradients) is $G_y$:
+The more formal method is to use the following
+[formula](https://nrsyed.com/2018/02/18/edge-detection-in-images-how-to-derive-the-sobel-operator),
+where the filtered image containing the *vertical edges* (e.g. the
+*horizontal* gradients) is $G_x$, and the filtered image containing the
+*horizontal edges* (e.g. the *vertical* gradients) is $G_y$:
 
 $ \large G_{\text{overall}} = \sqrt{ G_x^2 + G_y^2 } $
 
@@ -1460,14 +1542,16 @@ sobel_overall = np.sqrt(sobel_edgy_vertical**2 + sobel_edgy_horizontal**2)
 plt.imshow(sobel_overall);
 ```
 
-Below we show the pixel values in this  Sobel-filtered image, with edges in both directions - the numbers in the final array have been rounded to keep it uncluttered:
+Below we show the pixel values in this Sobel-filtered image, with edges in both directions - the numbers in the final array have been rounded to keep it uncluttered:
 
 ![](images/sobel_both.png)
 
 
-# Edge detection filters in `skimage`
+## Edge detection filters in `skimage`
 
-`skimage` contains a variety of edge detection filters, and makes it a breeze to implement them. You know the drill now, just pass `skimage` your NumPy image array and pray the `dtype`s are all in order (we kid, but also not...).
+`skimage` contains a variety of edge detection filters, and makes it a breeze
+to implement them. You know the drill now, just pass `skimage` your NumPy
+image array and pray the `dtype`s are all in order (we kid, but also not...).
 
 Remember the first edge detection kernels that we used above?:
 
@@ -1476,7 +1560,7 @@ Remember the first edge detection kernels that we used above?:
 [Similar](https://scikit-image.org/docs/0.25.x/api/skimage.filters.html#skimage.filters.prewitt_h) [kernels](https://scikit-image.org/docs/0.25.x/api/skimage.filters.html#skimage.filters.prewitt_v) [are are used by](https://en.wikipedia.org/wiki/Prewitt_operator) `ski.filters.prewitt()` edge detection filter, which we implement in the cell below, on the `edgy` array:
 
 ```{python}
-# Prewhitt filtering.
+# Prewitt filtering.
 edgy_prewitt_ski = ski.filters.prewitt(edgy)
 plt.imshow(edgy_prewitt_ski);
 ```
@@ -1489,7 +1573,7 @@ edgy_sobel_ski = ski.filters.sobel(edgy)
 plt.imshow(edgy_sobel_ski);
 ```
 
-The plot below shows the effect of both filters, side by side:
+The plot below shows the effect of the two filters, side by side:
 
 ```{python}
 # Altogether...
@@ -1498,7 +1582,7 @@ prewitt_coins = ski.filters.prewitt(coins)
 sobel_coins = ski.filters.sobel(coins)
 prewitt_coffee = ski.filters.prewitt(coffee_gray)
 sobel_coffee = ski.filters.sobel(coffee_gray)
-fig, ax = plt.subplots(3, 3, 
+fig, ax = plt.subplots(3, 3,
                        figsize=(12, 12),
                        constrained_layout=True)
 ax[0, 0].imshow(edgy)
@@ -1536,22 +1620,30 @@ plt.show();
 :class: dropdown
 :::
 
-Think about all of the edge detection filter types we have seen above. You may have noticed that, for all of the final output images from each filter, the edges detected are two pixels wide. For instance the image below results from filtering `edgy` with the Sobel filter:
+Think about all of the edge detection filter types we have seen above. You may
+have noticed that, for all of the final output images from each filter, the
+edges detected are two pixels wide. For instance the image below results from
+filtering `edgy` with the Sobel filter:
 
 ```{python}
 # Edgy, filtered with `ski.filters.sobel()`.
 plt.imshow(edgy_sobel_ski);
 ```
 
-You can see that both the horizontal edges and the vertical edges are two pixels wide. 
+You can see that both the horizontal edges and the vertical edges are two
+pixels wide.
 
-Can you think of the modifications you could make to the edge detection kernels, such that after applying the kernels to `edgy`, and combining the results into one image, that the edges in the combined image are *only one pixel wide*?
+Can you think of the modifications you could make to the edge detection
+kernels, such that after applying the kernels to `edgy`, and combining the
+results into one image, that the edges in the combined image are *only one
+pixel wide*?
 
 Think about what you need to do, and try to recreate this target image:
 
 ![](images/one_edge.png)
 
-Here are the original edge detection kernels we used, for comparison, to help you think about what modifications you need to recreate the target image:
+Here are the original edge detection kernels we used, for comparison, to help
+you think about what modifications you need to recreate the target image:
 
 ![](images/edge_dector_kernels.png)
 
@@ -1570,7 +1662,9 @@ Please note that you will "pass" this exercise if you make kernels which detect 
 :class: dropdown
 :::
 
-The solution here is to use smaller kernels, so they are searching for pixel intensity gradients in smaller pixel neighborhoods. We used the following kernels:
+The solution here is to use smaller kernels, so they are searching for pixel
+intensity gradients in smaller pixel neighborhoods. We used the following
+kernels:
 
 ```{python}
 # Detect horizontal edges.
@@ -1617,35 +1711,34 @@ As if by magic, we get our one-pixel wide edges, in the final image:
 # Both types of edge together, with thanks to Euclid.
 edgy_both_from_2by2_kernel = np.sqrt(edgy_vertical_from_2by2**2 + edgy_horizontal_from_2by2**2)
 
-plt.imshow(edgy_both_from_2by2_kernel );
+plt.imshow(edgy_both_from_2by2_kernel);
 ```
 
 ::: {solution-end}
 :::
 
 
-# Summary
+## Summary
 
-This page has showed how to use various kernels to filter images, using `numpy`, `scipy` and `skimage`. We have seen how changing the kernel can alter the filtering process to achieve different aims, like blurring/smoothing and edge detection. On the [next page](7_median_nonlocal_filters) we will explore different types of filters, which do not use kernel methods to implement their filtering effects.
+This page has showed how to use various kernels to filter images, using
+`numpy`, `scipy` and `skimage`. We have seen how changing the kernel can alter
+the filtering process to achieve different aims, like blurring/smoothing and
+edge detection. On the [next page](7_median_nonlocal_filters) we will explore
+different types of filters, which do not use kernel methods to implement their
+filtering effects.
 
 
-# References
-
-Gulati, J. (2024) *NumPy for Image Processing*. KDnuggets. Available from: https://www.kdnuggets.com/numpy-for-image-processing 
-
-Reference: https://setosa.io/ev/image-kernels
-
-Reference: https://wiki.imindlabs.com.au/ds/aml/4_problem_domains/1-image-processing/3_edge_detectors
-
-Reference: https://www.geeksforgeeks.org/deep-learning/types-of-convolution-kernels
-
+## References
 
 Adapted from:
 
 * [Scientific Python Lecture Notes - image
   processing](https://lectures.scientific-python.org/advanced/image_processing)
 * [Scientific Python Lecture Notes: scikit-image](https://lectures.scientific-python.org/packages/scikit-image/index.html)
-* [Nipraxis course - Otsu threshold](https://textbook.nipraxis.org/otsu_threshold.html)
 
-with further inspiration from [Napari tutorial](https://jni.github.io/i2k-skimage-napari/lectures/1_image_filters.html) and [`skimage`](https://github.com/scikit-image/skimage-tutorials) [tutorials](https://scipy-2024-image-analysis.github.io/tutorial/01_images_are_arrays.html).
-<!-- #endregion -->
+with further inspiration from:
+
+* [Napari tutorial](https://jni.github.io/i2k-skimage-napari/lectures/1_image_filters.html);
+* [`skimage` tutorial](https://github.com/scikit-image/skimage-tutorials);
+* [Scipy 2024 image analysis
+  tutorial](https://scipy-2024-image-analysis.github.io/tutorial/01_images_are_arrays.html).
