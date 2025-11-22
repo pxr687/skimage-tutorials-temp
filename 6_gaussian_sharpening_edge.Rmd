@@ -277,7 +277,7 @@ wish:
 
 ```{python}
 # Compare the NumPy array to the plot.
-print("\n`big_gaussian_kernel` NumPy view:\n\n",big_gaussian_kernel.round(2))
+print("\n`big_gaussian_kernel` NumPy view:\n\n", np.round(big_gaussian_kernel, 2))
 kernel_plot(big_gaussian_kernel, surface=False)
 plt.title('`big_gaussian_kernel` \nRed Mountain View:');
 ```
@@ -779,8 +779,9 @@ def DIY_gauss(x, y, sigma):
 # If the code below runs with no error, you have written the function correctly...
 # You will need to un-comment the code first (obvivously!).
 
-# UNCOMMENT THE LINE BELOW AND RUN THE CODE
-# assert all(DIY_gauss_solution(x, y, sigma=secret_val()).round(2) == target_kernel.round(2))
+# UNCOMMENT THE LINES BELOW AND RUN THE CODE
+# assert np.all(np.round(DIY_gauss_solution(x, y, sigma=hints.secret_val()), 2)
+#               == np.round(target_kernel, 2))
 ```
 
 Do not forget to use your kernel to blur the `xenomorph` image in the cell below:
@@ -828,10 +829,11 @@ x_solution, y_solution = np.meshgrid(x_lin_solution,
 
 # Print out some reports/results.
 print(f"x =\n {x_solution} \n \ny =\n {y_solution}")
-print(f"\nGaussian kernel (same as `target_kernel`) =\n {DIY_gauss_solution(x_solution, y_solution, 1).round(2)}\n")
+print("\nGaussian kernel (same as `target_kernel`) =\n"
+      f" {np.round(DIY_gauss_solution(x_solution, y_solution, 1), 2)}\n")
 # Is it all the same as the `target_kernel`?
 print("Same as the target? This array should contain on `True`s if so...:")
-DIY_gauss_solution(x_solution, y_solution, 1).round(2) == target_kernel.round(2)
+np.round(DIY_gauss_solution(x_solution, y_solution, 1), 2) == np.round(target_kernel, 2)
 ```
 
 To use the `target_kernel` to recreate the target image, you need to hefty sigma value of 10:
