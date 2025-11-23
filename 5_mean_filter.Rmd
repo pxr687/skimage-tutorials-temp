@@ -27,7 +27,7 @@ The mean filter is a *local filter*, because it alters a given pixel's value bas
 The values within a pixel's local neighborhood affect the value that a local
 filter calculates when applied to given pixel. The `size` and `shape` of the
 "neighborhood" are up to the user. We can also refer to the neighborhood as
-a "footprint" or "structuring element". As we will see later, Scikit image
+a "footprint" or "structuring element". As we will see later, Scikit-image
 favors the term "footprint". For now, we will use the terms "footprint" and
 "neighborhood" interchangeably to refer to some set of pixels that surround
 a given pixel.
@@ -86,9 +86,9 @@ plt.rcParams['image.cmap'] = 'gray'
 # Set NumPy precision to 2 decimal places
 np.set_printoptions(precision=2)
 
-#  Custom functions for illustrations, hints, and to quickly report image attributes.
-from show_attributes import show_attributes
-from hints import hint_strange_coffee
+# Custom functions for illustrations, hints, and to quickly report image
+# attributes.
+from skitut import show_attributes, hints
 ```
 
 Next, we create the `random_i` image array:
@@ -747,7 +747,7 @@ Write your function so that it can be used with kernels of different `shape`s, s
 
 *Hint:* You will need a fairly large kernel to get the effect you want.
 
-*Hint:* run the `hint_strange_coffee()` function for additional help.
+*Hint:* run the `hint.strange_coffee()` function for additional help.
 
 ```{python}
 # YOUR CODE HERE
