@@ -183,14 +183,6 @@
 <li class="toctree-l1"><a class="reference internal" href="4_threshold_filters.html">Threshold filtering</a></li>
 <li class="toctree-l1"><a class="reference internal" href="5_mean_filter.html">Filtering with kernels - the mean filter</a></li>
 <li class="toctree-l1"><a class="reference internal" href="6_gaussian_sharpening_edge.html">Filtering with kernels II - Gaussian blur, sharpening and edge detection</a></li>
-
-
-
-
-
-
-
-
 <li class="toctree-l1"><a class="reference internal" href="7_median_nonlocal_filters.html">More filters: the median filter and non-local filters</a></li>
 
 
@@ -493,11 +485,11 @@ document.write(`
 <span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
 
 <span class="c1"># A custom function for displaying image attributes.</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">show_attributes</span><span class="w"> </span><span class="kn">import</span> <span class="n">show_attributes</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">skitut</span><span class="w"> </span><span class="kn">import</span> <span class="n">show_attributes</span>
 
 <span class="c1"># A custom function for comparison plots.</span>
 <span class="k">def</span><span class="w"> </span><span class="nf">show_both</span><span class="p">(</span><span class="n">original</span><span class="p">,</span>
-              <span class="n">altered</span><span class="p">,</span> 
+              <span class="n">altered</span><span class="p">,</span>
               <span class="n">alteration</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">,</span>
               <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">14</span><span class="p">,</span> <span class="mi">14</span><span class="p">)):</span>
     <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="n">figsize</span><span class="p">)</span>
@@ -528,7 +520,7 @@ document.write(`
 <img alt="_images/08d091eeb7bcdcb9326e54f43612811154ae379047d17666e181136d291c131f.png" src="_images/08d091eeb7bcdcb9326e54f43612811154ae379047d17666e181136d291c131f.png" />
 </div>
 </div>
-<p>Let’s get fancy and ostentacious now, and invest in some diamonds, by which we mean let’s use <code class="docutils literal notranslate"><span class="pre">ski.morphology.diamond()</span></code> to construct a structuring element:</p>
+<p>Let’s get fancy and ostentatious now, and invest in some diamonds, by which we mean let’s use <code class="docutils literal notranslate"><span class="pre">ski.morphology.diamond()</span></code> to construct a structuring element:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Create a `diamond` structuring element.</span>

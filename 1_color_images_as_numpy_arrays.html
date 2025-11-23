@@ -186,14 +186,6 @@
 <li class="toctree-l1"><a class="reference internal" href="4_threshold_filters.html">Threshold filtering</a></li>
 <li class="toctree-l1"><a class="reference internal" href="5_mean_filter.html">Filtering with kernels - the mean filter</a></li>
 <li class="toctree-l1"><a class="reference internal" href="6_gaussian_sharpening_edge.html">Filtering with kernels II - Gaussian blur, sharpening and edge detection</a></li>
-
-
-
-
-
-
-
-
 <li class="toctree-l1"><a class="reference internal" href="7_median_nonlocal_filters.html">More filters: the median filter and non-local filters</a></li>
 
 
@@ -491,7 +483,7 @@ aesthetic experiences, like this one:</p>
 
 <span class="c1"># Import a custom function to give hints for some exercises.</span>
 <span class="c1"># This is a function we wrote for the tutorial.</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">hints</span><span class="w"> </span><span class="kn">import</span> <span class="n">hint_corrupted_camera</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">skitut</span><span class="w"> </span><span class="kn">import</span> <span class="n">hints</span>
 </pre></div>
 </div>
 </div>
@@ -1296,9 +1288,9 @@ interactively, to see the random draw a few times:</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>X1 = 0.35
-X2 = 0.14
-X3 = 0.47
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>X1 = 0.15
+X2 = 0.43
+X3 = 0.02
 </pre></div>
 </div>
 </div>
@@ -1325,12 +1317,12 @@ X3 = 0.47
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Red (X1) = 0.61
-Green (X2) = 0.9
-Blue (X3) = 0.95
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Red (X1) = 0.34
+Green (X2) = 0.54
+Blue (X3) = 0.07
 </pre></div>
 </div>
-<img alt="_images/839b03737fc6e810c0a1bc04f9afc938edc6cdd9ffdd4a72f99295c83620b884.png" src="_images/839b03737fc6e810c0a1bc04f9afc938edc6cdd9ffdd4a72f99295c83620b884.png" />
+<img alt="_images/8a6cc30d6146086c85c9da37dde66735ffdbec27756267910c3c536483d8503f.png" src="_images/8a6cc30d6146086c85c9da37dde66735ffdbec27756267910c3c536483d8503f.png" />
 </div>
 </div>
 <p>So, each two-dimensional display image has a “hidden” three-dimensional array behind it. Each slice of the third dimension is a color channel. The mix of values at a given element in each color channel determines the color of that pixel in the rendered image. You may want to view this image in a new browser window, to see more clearly the exact mixes of the color channels, which are shown above each square on the right-hand side of the image:</p>
@@ -1340,14 +1332,14 @@ Blue (X3) = 0.95
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># A custom function to demonstrate many mixes of values across the three</span>
 <span class="c1"># color channels.</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">random_colors</span><span class="w"> </span><span class="kn">import</span> <span class="n">random_color_array</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">skitut.random_colors</span><span class="w"> </span><span class="kn">import</span> <span class="n">random_color_array</span>
 
 <span class="n">random_color_array</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="mi">8</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/6c40df9e3f062812d72bbdf0df0bfc9b2f535a6d6848befad5f819b197709030.png" src="_images/6c40df9e3f062812d72bbdf0df0bfc9b2f535a6d6848befad5f819b197709030.png" />
+<img alt="_images/a6908424d7c204cbe99b02e2e86105e9d170f0383650f1bcdb1087c68e1994be.png" src="_images/a6908424d7c204cbe99b02e2e86105e9d170f0383650f1bcdb1087c68e1994be.png" />
 </div>
 </div>
 <p>We have now completed our perilous expedition into the third dimension… We
@@ -1484,7 +1476,7 @@ arrays, such as <code class="docutils literal notranslate"><span class="pre">dty
 arrays, such as <code class="docutils literal notranslate"><span class="pre">dtype=np.uint8</span></code>).</p></li>
 </ul>
 <p>You will see both conventions in images you encounter “in the wild”, and
-Scikit image supports both formats (as well as multiple other formats - see
+Scikit-image supports both formats (as well as multiple other formats - see
 the table below). Neglecting to pay attention to <code class="docutils literal notranslate"><span class="pre">dtype</span></code> is a very common
 source of errors when dealing with image arrays, so keep track of it, and
 deliberately specify it as often as possible!</p>
@@ -1495,7 +1487,7 @@ values:</p>
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Use a custom function to plot the maximum intensity values in the diagonals,</span>
 <span class="c1"># for `int` and `float` data, using our familiar 1&#39;s and 0&#39;s array.</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">random_colors</span><span class="w"> </span><span class="kn">import</span> <span class="n">plot_int_float</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">skitut.random_colors</span><span class="w"> </span><span class="kn">import</span> <span class="n">plot_int_float</span>
 
 <span class="n">plot_int_float</span><span class="p">();</span>
 </pre></div>
@@ -1872,7 +1864,7 @@ coordinate 100 through 199, and column (<code class="docutils literal notranslat
 Numpy random number generator (<code class="docutils literal notranslate"><span class="pre">rng</span></code> in the code so far) which might be of use
 here…</p>
 <p><em>Hint 3</em>: Don’t forget this is an <em>integer</em> image.</p>
-<p><em>Hint 3</em>: Run the function <code class="docutils literal notranslate"><span class="pre">hint_corrupted_camera()</span></code> for additional help…</p>
+<p><em>Hint 3</em>: Run the function <code class="docutils literal notranslate"><span class="pre">hints.corrupted_camera()</span></code> for additional help…</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Make a random number generator</span>
@@ -1926,7 +1918,7 @@ Min Pixel Value: 0
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/f160c0207fb28036b2d1dd40a486ed5482fafca22e9ff77e66b524739738c3f4.png" src="_images/f160c0207fb28036b2d1dd40a486ed5482fafca22e9ff77e66b524739738c3f4.png" />
+<img alt="_images/3558788365a121ba09dfe854fecb74b45cb00539c1f97d0787c6f01ab53df54a.png" src="_images/3558788365a121ba09dfe854fecb74b45cb00539c1f97d0787c6f01ab53df54a.png" />
 </div>
 </div>
 </section>
@@ -1984,7 +1976,7 @@ the <a class="reference internal" href="2_skimage_intro.html"><span class="doc s
 <p>On this page we have seen how color can be represented in NumPy array images:</p>
 <ul class="simple">
 <li><p>Images are (at least) two-dimensional arrays of numbers. Multiple <code class="docutils literal notranslate"><span class="pre">dtype</span></code>s
-in image arrays are supported by Scikit image.</p></li>
+in image arrays are supported by Scikit-image.</p></li>
 <li><p>We have seen images where the number at each array pixel location determines
 the gray-level (in a 2D array) or color (in a 3D array) of that location
 when the image is displayed. For 3D color arrays the number in each

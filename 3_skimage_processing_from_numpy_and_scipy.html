@@ -186,14 +186,6 @@
 <li class="toctree-l1"><a class="reference internal" href="4_threshold_filters.html">Threshold filtering</a></li>
 <li class="toctree-l1"><a class="reference internal" href="5_mean_filter.html">Filtering with kernels - the mean filter</a></li>
 <li class="toctree-l1"><a class="reference internal" href="6_gaussian_sharpening_edge.html">Filtering with kernels II - Gaussian blur, sharpening and edge detection</a></li>
-
-
-
-
-
-
-
-
 <li class="toctree-l1"><a class="reference internal" href="7_median_nonlocal_filters.html">More filters: the median filter and non-local filters</a></li>
 
 
@@ -488,7 +480,7 @@ on the values in a NumPy image array. First, we will explore how to achieve
 specific effects using NumPy and SciPy. We will demonstrate what these
 operations are doing to an image at the level of the array pixels. After that,
 we will show how more sophisticated extensions of these techniques can be
-implemented with Scikit-image. We will focus on the way that Scikit image
+implemented with Scikit-image. We will focus on the way that Scikit-image
 often uses NumPy and SciPy operations “under the hood”.</p>
 <p><a class="reference internal" href="0_images_as_numpy_arrays.html#ip-maxim"><span class="std std-ref">Remember that</span></a> <em>“image processing” is when we do something that
 analyzes or changes the numbers inside the image array</em>? Well, in fact, all
@@ -506,17 +498,15 @@ processing software like Scikit-image.</p>
 <span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">skimage</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">ski</span>
 
-<span class="c1"># Import a custom function to give hints for some exercises.</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">hints</span><span class="w"> </span><span class="kn">import</span> <span class="n">hint_split_i</span><span class="p">,</span> <span class="n">hint_cryptic_camera</span>
-
 <span class="c1"># Set precision for float numbers</span>
 <span class="o">%</span><span class="k">precision</span> 2
 
 <span class="c1"># Set &#39;gray&#39; as the default colormap</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">rcParams</span><span class="p">[</span><span class="s1">&#39;image.cmap&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;gray&#39;</span>
 
-<span class="c1"># A custom function for showing image attributes.</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">show_attributes</span><span class="w"> </span><span class="kn">import</span> <span class="n">show_attributes</span>
+<span class="c1"># Import hints for some exercises, and custom function for showing image</span>
+<span class="c1"># attributes.</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">skitut</span><span class="w"> </span><span class="kn">import</span> <span class="n">hints</span><span class="p">,</span> <span class="n">show_attributes</span>
 
 <span class="c1"># Create our image array.</span>
 <span class="n">i_img</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span>
@@ -902,7 +892,7 @@ Min Pixel Value: -1.0
 </div>
 <p><em>Note</em>: notice how we have lost a column, relative to the original <code class="docutils literal notranslate"><span class="pre">i_img</span></code> array…  We also now have -1 values in the array. Have a think about which colors in the displayed image you think that these negative values will correspond to.</p>
 <p><em>Hint:</em> there are various ways to do this, but the most efficient way we could think of is one short line of Numpy processing.  You might consider having a look at <a class="reference external" href="https://inferentialthinking.com/chapters/05/1/Arrays.html#functions-on-arrays">Functions on arrays</a> for inspiration.</p>
-<p><em>Hint:</em> run the function <code class="docutils literal notranslate"><span class="pre">hint_split_i()</span></code>, which was imported at the beginning
+<p><em>Hint:</em> run the function <code class="docutils literal notranslate"><span class="pre">hints.split_i()</span></code>, which was imported at the beginning
 of this notebook, to see a helpful hint.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -1626,7 +1616,7 @@ spoon!</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.image.AxesImage at 0x7f7119f29fd0&gt;
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.image.AxesImage at 0x7f349c8f4a50&gt;
 </pre></div>
 </div>
 <img alt="_images/50aff3d36362558deba307a37ae4682958e48d2b46c8fe49483f0733bf1123b0.png" src="_images/50aff3d36362558deba307a37ae4682958e48d2b46c8fe49483f0733bf1123b0.png" />
@@ -1785,7 +1775,7 @@ Min Pixel Value: 0.0
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.image.AxesImage at 0x7f7123e37380&gt;
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.image.AxesImage at 0x7f34986a20d0&gt;
 </pre></div>
 </div>
 <img alt="_images/60b7cd61208645b425827f7a1ad2f07076f41c86351b79cba077558e9f2a5174.png" src="_images/60b7cd61208645b425827f7a1ad2f07076f41c86351b79cba077558e9f2a5174.png" />
@@ -1987,7 +1977,7 @@ using specific NumPy (or <code class="docutils literal notranslate"><span class=
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.image.AxesImage at 0x7f71405a4260&gt;
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.image.AxesImage at 0x7f349cf49bd0&gt;
 </pre></div>
 </div>
 <img alt="_images/50aff3d36362558deba307a37ae4682958e48d2b46c8fe49483f0733bf1123b0.png" src="_images/50aff3d36362558deba307a37ae4682958e48d2b46c8fe49483f0733bf1123b0.png" />
@@ -2258,7 +2248,7 @@ image:</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/tmp/ipykernel_2634/2746963989.py:8: RuntimeWarning: invalid value encountered in power
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/tmp/ipykernel_2690/2746963989.py:8: RuntimeWarning: invalid value encountered in power
   mask_camera = ((i_cam - cam_c_i) ** 3 + (j_cam - cam_c_j) ** 3) ** (1 / 3) &gt; p
 </pre></div>
 </div>
@@ -2434,7 +2424,7 @@ Max Pixel Value: 207
 Min Pixel Value: 63
 </pre></div>
 </div>
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.image.AxesImage at 0x7f71406a5be0&gt;
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.image.AxesImage at 0x7f349c910a50&gt;
 </pre></div>
 </div>
 <img alt="_images/c7b80769183299078e5ab4339df4c51966f28bae48a1f0c68b5bb917cdedb60c.png" src="_images/c7b80769183299078e5ab4339df4c51966f28bae48a1f0c68b5bb917cdedb60c.png" />
@@ -2628,7 +2618,7 @@ Min Pixel Value: 0
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.image.AxesImage at 0x7f7119f51400&gt;
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.image.AxesImage at 0x7f3498794a50&gt;
 </pre></div>
 </div>
 <img alt="_images/bef9d675f96e7306487274a9ce21bdb89f9593db4b4ee37f0576a945c6403edc.png" src="_images/bef9d675f96e7306487274a9ce21bdb89f9593db4b4ee37f0576a945c6403edc.png" />
@@ -2771,7 +2761,7 @@ of the channels.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.image.AxesImage at 0x7f71405c5af0&gt;
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.image.AxesImage at 0x7f34985a5950&gt;
 </pre></div>
 </div>
 <img alt="_images/47f051e43f314d35f26f2b6497a1673c1cc0ba20e4f6bd0a27f0cd36068d260f.png" src="_images/47f051e43f314d35f26f2b6497a1673c1cc0ba20e4f6bd0a27f0cd36068d260f.png" />
@@ -2869,7 +2859,7 @@ the <code class="docutils literal notranslate"><span class="pre">float64</span><
 <span class="g g-Whitespace">      </span><span class="mi">1</span> <span class="c1"># Ouch!</span>
 <span class="ne">----&gt; </span><span class="mi">2</span> <span class="n">ski</span><span class="o">.</span><span class="n">util</span><span class="o">.</span><span class="n">img_as_ubyte</span><span class="p">(</span><span class="n">gray_wheel</span><span class="p">)</span>
 
-<span class="nn">File /opt/hostedtoolcache/Python/3.12.12/x64/lib/python3.12/site-packages/skimage/util/dtype.py:576,</span> in <span class="ni">img_as_ubyte</span><span class="nt">(image, force_copy)</span>
+<span class="nn">File /opt/hostedtoolcache/Python/3.13.9/x64/lib/python3.13/site-packages/skimage/util/dtype.py:576,</span> in <span class="ni">img_as_ubyte</span><span class="nt">(image, force_copy)</span>
 <span class="g g-Whitespace">    </span><span class="mi">555</span> <span class="k">def</span><span class="w"> </span><span class="nf">img_as_ubyte</span><span class="p">(</span><span class="n">image</span><span class="p">,</span> <span class="n">force_copy</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
 <span class="g g-Whitespace">    </span><span class="mi">556</span><span class="w">     </span><span class="sd">&quot;&quot;&quot;Convert an image to 8-bit unsigned integer format.</span>
 <span class="g g-Whitespace">    </span><span class="mi">557</span><span class="sd"> </span>
@@ -2878,7 +2868,7 @@ the <code class="docutils literal notranslate"><span class="pre">float64</span><
 <span class="g g-Whitespace">    </span><span class="mi">575</span><span class="sd">     &quot;&quot;&quot;</span>
 <span class="ne">--&gt; </span><span class="mi">576</span>     <span class="k">return</span> <span class="n">_convert</span><span class="p">(</span><span class="n">image</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">uint8</span><span class="p">,</span> <span class="n">force_copy</span><span class="p">)</span>
 
-<span class="nn">File /opt/hostedtoolcache/Python/3.12.12/x64/lib/python3.12/site-packages/skimage/util/dtype.py:312,</span> in <span class="ni">_convert</span><span class="nt">(image, dtype, force_copy, uniform)</span>
+<span class="nn">File /opt/hostedtoolcache/Python/3.13.9/x64/lib/python3.13/site-packages/skimage/util/dtype.py:312,</span> in <span class="ni">_convert</span><span class="nt">(image, dtype, force_copy, uniform)</span>
 <span class="g g-Whitespace">    </span><span class="mi">309</span>     <span class="k">return</span> <span class="n">image</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">dtype_out</span><span class="p">)</span>
 <span class="g g-Whitespace">    </span><span class="mi">311</span> <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">min</span><span class="p">(</span><span class="n">image</span><span class="p">)</span> <span class="o">&lt;</span> <span class="o">-</span><span class="mf">1.0</span> <span class="ow">or</span> <span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">image</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mf">1.0</span><span class="p">:</span>
 <span class="ne">--&gt; </span><span class="mi">312</span>     <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Images of type float must be between -1 and 1.&quot;</span><span class="p">)</span>

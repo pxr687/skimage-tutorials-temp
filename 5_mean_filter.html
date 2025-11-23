@@ -186,14 +186,6 @@
 <li class="toctree-l1"><a class="reference internal" href="4_threshold_filters.html">Threshold filtering</a></li>
 <li class="toctree-l1 current active"><a class="current reference internal" href="#">Filtering with kernels - the mean filter</a></li>
 <li class="toctree-l1"><a class="reference internal" href="6_gaussian_sharpening_edge.html">Filtering with kernels II - Gaussian blur, sharpening and edge detection</a></li>
-
-
-
-
-
-
-
-
 <li class="toctree-l1"><a class="reference internal" href="7_median_nonlocal_filters.html">More filters: the median filter and non-local filters</a></li>
 
 
@@ -481,7 +473,7 @@ document.write(`
 <p>The values within a pixel’s local neighborhood affect the value that a local
 filter calculates when applied to given pixel. The <code class="docutils literal notranslate"><span class="pre">size</span></code> and <code class="docutils literal notranslate"><span class="pre">shape</span></code> of the
 “neighborhood” are up to the user. We can also refer to the neighborhood as
-a “footprint” or “structuring element”. As we will see later, Scikit image
+a “footprint” or “structuring element”. As we will see later, Scikit-image
 favors the term “footprint”. For now, we will use the terms “footprint” and
 “neighborhood” interchangeably to refer to some set of pixels that surround
 a given pixel.</p>
@@ -536,9 +528,9 @@ some defaults.</p>
 <span class="c1"># Set NumPy precision to 2 decimal places</span>
 <span class="n">np</span><span class="o">.</span><span class="n">set_printoptions</span><span class="p">(</span><span class="n">precision</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
 
-<span class="c1">#  Custom functions for illustrations, hints, and to quickly report image attributes.</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">show_attributes</span><span class="w"> </span><span class="kn">import</span> <span class="n">show_attributes</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">hints</span><span class="w"> </span><span class="kn">import</span> <span class="n">hint_strange_coffee</span>
+<span class="c1"># Custom functions for illustrations, hints, and to quickly report image</span>
+<span class="c1"># attributes.</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">skitut</span><span class="w"> </span><span class="kn">import</span> <span class="n">show_attributes</span><span class="p">,</span> <span class="n">hints</span>
 </pre></div>
 </div>
 </div>
@@ -863,7 +855,7 @@ Max Pixel Value: 252
 Min Pixel Value: 1
 </pre></div>
 </div>
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.image.AxesImage at 0x7f3f98d2e120&gt;
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.image.AxesImage at 0x7f91ce982d50&gt;
 </pre></div>
 </div>
 <img alt="_images/ac70f7cc5b678ac690433d0ab55f89b2e45131ef773bcdd68acf4f95b6e8cde6.png" src="_images/ac70f7cc5b678ac690433d0ab55f89b2e45131ef773bcdd68acf4f95b6e8cde6.png" />
@@ -1320,42 +1312,42 @@ we can choose an option by specifying the <code class="docutils literal notransl
 </div>
 </details>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>    mode : {&#39;reflect&#39;, &#39;constant&#39;, &#39;nearest&#39;, &#39;mirror&#39;, &#39;wrap&#39;}, optional
-        The `mode` parameter determines how the input array is extended
-        beyond its boundaries. Default is &#39;reflect&#39;. Behavior for each valid
-        value is as follows:
-    
-        &#39;reflect&#39; (`d c b a | a b c d | d c b a`)
-            The input is extended by reflecting about the edge of the last
-            pixel. This mode is also sometimes referred to as half-sample
-            symmetric.
-    
-        &#39;constant&#39; (`k k k k | a b c d | k k k k`)
-            The input is extended by filling all values beyond the edge with
-            the same constant value, defined by the `cval` parameter.
-    
-        &#39;nearest&#39; (`a a a a | a b c d | d d d d`)
-            The input is extended by replicating the last pixel.
-    
-        &#39;mirror&#39; (`d c b | a b c d | c b a`)
-            The input is extended by reflecting about the center of the last
-            pixel. This mode is also sometimes referred to as whole-sample
-            symmetric.
-    
-        &#39;wrap&#39; (`a b c d | a b c d | a b c d`)
-            The input is extended by wrapping around to the opposite edge.
-    
-        For consistency with the interpolation functions, the following mode
-        names can also be used:
-    
-        &#39;grid-mirror&#39;
-            This is a synonym for &#39;reflect&#39;.
-    
-        &#39;grid-constant&#39;
-            This is a synonym for &#39;constant&#39;.
-    
-        &#39;grid-wrap&#39;
-            This is a synonym for &#39;wrap&#39;.
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>mode : {&#39;reflect&#39;, &#39;constant&#39;, &#39;nearest&#39;, &#39;mirror&#39;, &#39;wrap&#39;}, optional
+    The `mode` parameter determines how the input array is extended
+    beyond its boundaries. Default is &#39;reflect&#39;. Behavior for each valid
+    value is as follows:
+
+    &#39;reflect&#39; (`d c b a | a b c d | d c b a`)
+        The input is extended by reflecting about the edge of the last
+        pixel. This mode is also sometimes referred to as half-sample
+        symmetric.
+
+    &#39;constant&#39; (`k k k k | a b c d | k k k k`)
+        The input is extended by filling all values beyond the edge with
+        the same constant value, defined by the `cval` parameter.
+
+    &#39;nearest&#39; (`a a a a | a b c d | d d d d`)
+        The input is extended by replicating the last pixel.
+
+    &#39;mirror&#39; (`d c b | a b c d | c b a`)
+        The input is extended by reflecting about the center of the last
+        pixel. This mode is also sometimes referred to as whole-sample
+        symmetric.
+
+    &#39;wrap&#39; (`a b c d | a b c d | a b c d`)
+        The input is extended by wrapping around to the opposite edge.
+
+    For consistency with the interpolation functions, the following mode
+    names can also be used:
+
+    &#39;grid-mirror&#39;
+        This is a synonym for &#39;reflect&#39;.
+
+    &#39;grid-constant&#39;
+        This is a synonym for &#39;constant&#39;.
+
+    &#39;grid-wrap&#39;
+        This is a synonym for &#39;wrap&#39;.
 </pre></div>
 </div>
 </div>
@@ -1401,7 +1393,7 @@ to the image:</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/20797072c40f536d522e5522b691eae3abff83de6ae74b123c88349468c60060.png" src="_images/20797072c40f536d522e5522b691eae3abff83de6ae74b123c88349468c60060.png" />
+<img alt="_images/1c0e0ac043722cf7c2dcf598a141e37d91c2be58dee5289f93accfce8e8535c7.png" src="_images/1c0e0ac043722cf7c2dcf598a141e37d91c2be58dee5289f93accfce8e8535c7.png" />
 </div>
 </div>
 <p>The mean filter can remove some of the noise, restoring the clarity of the
@@ -1433,7 +1425,7 @@ it to anything like the same extent as the pixel-to-pixel noise.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/4d5ab0dbb1aa2f91faee11afbf99da4808c9034a6e0ff3af2fe863c8866035fe.png" src="_images/4d5ab0dbb1aa2f91faee11afbf99da4808c9034a6e0ff3af2fe863c8866035fe.png" />
+<img alt="_images/678af8668e4f9c2b0ac71201006ad1245557ac3fbaf7ced3703b7dd29d7c991d.png" src="_images/678af8668e4f9c2b0ac71201006ad1245557ac3fbaf7ced3703b7dd29d7c991d.png" />
 </div>
 </div>
 <p>We can see that the image is clearer, the noise has been reduced and some of
@@ -1464,7 +1456,7 @@ the signal has been restored.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/1e1d746aaefda12db1b416214d0ce70e973e66f4156e345be0d41987e8562e9a.png" src="_images/1e1d746aaefda12db1b416214d0ce70e973e66f4156e345be0d41987e8562e9a.png" />
+<img alt="_images/0793ea2bc1d640f41eed11accd66a0894aa4ea070180b26f583ba05d9ef8e7bd.png" src="_images/0793ea2bc1d640f41eed11accd66a0894aa4ea070180b26f583ba05d9ef8e7bd.png" />
 </div>
 </div>
 <p>As with many filtering operations, the effect of altering aspects of the
@@ -1496,7 +1488,7 @@ section</span></a>.  Look there for inspiration.</p>
 <p>Write your function so that it can be used with kernels of different <code class="docutils literal notranslate"><span class="pre">shape</span></code>s, so you can work out what kernel <code class="docutils literal notranslate"><span class="pre">shape</span></code> you need to recreate the target image, by trial and error.</p>
 <p><strong>DO <em>NOT</em> COPY THE <code class="docutils literal notranslate"><span class="pre">mean_filter()</span></code> FUNCTION FROM ABOVE AND MODIFY IT</strong> - try to write a function from scratch, thinking carefully about what you need to do.</p>
 <p><em>Hint:</em> You will need a fairly large kernel to get the effect you want.</p>
-<p><em>Hint:</em> run the <code class="docutils literal notranslate"><span class="pre">hint_strange_coffee()</span></code> function for additional help.</p>
+<p><em>Hint:</em> run the <code class="docutils literal notranslate"><span class="pre">hint.strange_coffee()</span></code> function for additional help.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># YOUR CODE HERE</span>
@@ -1545,7 +1537,7 @@ to build the kernel for given kernel shape:</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.image.AxesImage at 0x7f3f8fa53110&gt;
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.image.AxesImage at 0x7f91c82bf4d0&gt;
 </pre></div>
 </div>
 <img alt="_images/a71c59f05f7f35aa9d224ba9b291a2d1fe8a70b780e8fe5475f3df95d4ccd1ab.png" src="_images/a71c59f05f7f35aa9d224ba9b291a2d1fe8a70b780e8fe5475f3df95d4ccd1ab.png" />
@@ -1629,7 +1621,7 @@ Min Pixel Value: 0
 <span class="g g-Whitespace">      </span><span class="mi">1</span> <span class="c1"># Oh dear.</span>
 <span class="ne">----&gt; </span><span class="mi">2</span> <span class="n">astronaut_mean_filtered</span> <span class="o">=</span> <span class="n">ndi</span><span class="o">.</span><span class="n">correlate</span><span class="p">(</span><span class="n">astronaut</span><span class="p">,</span> <span class="n">weights</span><span class="o">=</span><span class="n">mean_kernel</span><span class="p">)</span>
 
-<span class="nn">File /opt/hostedtoolcache/Python/3.12.12/x64/lib/python3.12/site-packages/scipy/ndimage/_filters.py:1375,</span> in <span class="ni">correlate</span><span class="nt">(input, weights, output, mode, cval, origin, axes)</span>
+<span class="nn">File /opt/hostedtoolcache/Python/3.13.9/x64/lib/python3.13/site-packages/scipy/ndimage/_filters.py:1375,</span> in <span class="ni">correlate</span><span class="nt">(input, weights, output, mode, cval, origin, axes)</span>
 <span class="g g-Whitespace">   </span><span class="mi">1309</span> <span class="nd">@_ni_docstrings</span><span class="o">.</span><span class="n">docfiller</span>
 <span class="g g-Whitespace">   </span><span class="mi">1310</span> <span class="k">def</span><span class="w"> </span><span class="nf">correlate</span><span class="p">(</span><span class="nb">input</span><span class="p">,</span> <span class="n">weights</span><span class="p">,</span> <span class="n">output</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s1">&#39;reflect&#39;</span><span class="p">,</span> <span class="n">cval</span><span class="o">=</span><span class="mf">0.0</span><span class="p">,</span>
 <span class="g g-Whitespace">   </span><span class="mi">1311</span>               <span class="n">origin</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">axes</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
@@ -1641,7 +1633,7 @@ Min Pixel Value: 0
 <span class="ne">-&gt; </span><span class="mi">1375</span>     <span class="k">return</span> <span class="n">_correlate_or_convolve</span><span class="p">(</span><span class="nb">input</span><span class="p">,</span> <span class="n">weights</span><span class="p">,</span> <span class="n">output</span><span class="p">,</span> <span class="n">mode</span><span class="p">,</span> <span class="n">cval</span><span class="p">,</span>
 <span class="g g-Whitespace">   </span><span class="mi">1376</span>                                   <span class="n">origin</span><span class="p">,</span> <span class="kc">False</span><span class="p">,</span> <span class="n">axes</span><span class="p">)</span>
 
-<span class="nn">File /opt/hostedtoolcache/Python/3.12.12/x64/lib/python3.12/site-packages/scipy/ndimage/_filters.py:1277,</span> in <span class="ni">_correlate_or_convolve</span><span class="nt">(input, weights, output, mode, cval, origin, convolution, axes)</span>
+<span class="nn">File /opt/hostedtoolcache/Python/3.13.9/x64/lib/python3.13/site-packages/scipy/ndimage/_filters.py:1277,</span> in <span class="ni">_correlate_or_convolve</span><span class="nt">(input, weights, output, mode, cval, origin, convolution, axes)</span>
 <span class="g g-Whitespace">   </span><span class="mi">1275</span> <span class="n">wshape</span> <span class="o">=</span> <span class="p">[</span><span class="n">ii</span> <span class="k">for</span> <span class="n">ii</span> <span class="ow">in</span> <span class="n">weights</span><span class="o">.</span><span class="n">shape</span> <span class="k">if</span> <span class="n">ii</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">]</span>
 <span class="g g-Whitespace">   </span><span class="mi">1276</span> <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">wshape</span><span class="p">)</span> <span class="o">!=</span> <span class="nb">input</span><span class="o">.</span><span class="n">ndim</span><span class="p">:</span>
 <span class="ne">-&gt; </span><span class="mi">1277</span>     <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;weights.ndim (</span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">wshape</span><span class="p">)</span><span class="si">}</span><span class="s2">) must match &quot;</span>
