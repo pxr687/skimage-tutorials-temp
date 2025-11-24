@@ -591,7 +591,38 @@ plt.imshow(eagleback_to_2D)
 plt.title('Equalised Image');
 ```
 
-Obviously, this operation has changed the `dtype` of the image because we have
+Let's consider how the equalisation works.   Consider the original normalised (density) histogram and the cumulative density that we calculated above:
+
+```{python}
+plat_x = [130, 200]
+fig, ax = plt.subplots(2, 1)
+ax[0].plot(bin_centers, counts_normed)
+ax[0].set_ylabel('Intensity proportion');
+ax[0].set_title('Proportional histogram')
+ax[0].set_xticks([])
+y_lims = ax[0].get_ylim()
+ax[0].add_patch(
+    plt.Rectangle([plat_x[0], y_lims[0]],
+                  plat_x[1] - plat_x[0],
+                  y_lims[1] - y_lims[0],
+                  color='gray', alpha=0.3))
+ax[1].plot(bin_centers, cdf)
+ax[1].set_xlabel('Pixel Intensity')
+ax[1].set_ylabel('Cumulative Proportion');
+ax[1].set_title('Cumulative proportion');
+y_lims = ax[1].get_ylim()
+ax[1].add_patch(
+    plt.Rectangle([plat_x[0], y_lims[0]],
+                  plat_x[1] - plat_x[0],
+                  y_lims[1] - y_lims[0],
+                  color='gray', alpha=0.3));
+```
+
+Now consider the low plateau in the proportional histogram between about pixel intensities of 130 to 200 (gray box).  This corresponds to a plateau in the cumulative proportion in the same region, because there are relatively few pixels in the image within this wide range.  In the original image there is a fairly wide difference (of 70) between pixels at either end of this plateau.  However, there is a small difference in cumulative density (less than 0.1) for pixels between 130 and 200.  If we replace the pixel values with the cumulative proportion values, this has the effect of compressing the image range devoted to difference along this plateau.  Conversely, for parts of the intensity range where the there is a rapid change in cumulative proportion, replacing image intensity with cumulative proportion will have the effect of expanding the available image range for those image intensities.  Thus the normalization has the effect of devoting greater image range to regions of rapid change in the original histogram.
+from matplotlib.patches import Rectangle
+
+
+The Numpy implementation of histogram equalisation has changed the `dtype` of the image because we have
 replaced values ranging from 1 to 255 with proportions ranging from 0 to 1:
 
 ```{python}
