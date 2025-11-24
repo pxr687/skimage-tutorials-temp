@@ -6,7 +6,7 @@ jupyter:
       extension: .Rmd
       format_name: rmarkdown
       format_version: '1.2'
-      jupytext_version: 1.17.3
+      jupytext_version: 1.16.6
   kernelspec:
     display_name: Python 3 (ipykernel)
     language: python
@@ -32,9 +32,7 @@ As normal, we begin with some imports:
 # Library imports.
 import numpy as np
 import matplotlib.pyplot as plt
-import scipy.ndimage as ndi
 import skimage as ski
-from mpl_toolkits.mplot3d import Axes3D
 
 # Set 'gray' as the default colormap
 plt.rcParams['image.cmap'] = 'gray'
@@ -102,12 +100,13 @@ Conversely for the median we first have to order the numbers from lowest to
 highest ($X_{\text{sorted}}$), and then find the value that is *at the central
 index*. So where $X$ is an array containing all the numbers, if $n$ is odd:
 
-$ \large \text{median} = X_{\text{sorted}}[\frac{n}{2}]$
+$ \large \text{median} = X_{\text{sorted}}[\frac{n - 1}{2}]$
 
-— where the square brackets are a *Python* indexing operation (we will need
-a different indexing operation if using a programming language that does not
-count indexes from 0, or if $n$ is even...). So for the numbers in the array
-below:
+— where the square brackets are an indexing operation.
+
+Recall that, in Python, indices start at 0, and therefore, the central element is at index $\frac{n - 1}{2}$.
+
+Consider the numbers in the array below:
 
 ```{python}
 # Some numbers.
@@ -128,7 +127,7 @@ np.mean(nums)
 ```
 
 Whereas we get the median from: $ \large \text{median}
-= X_{\text{sorted}}[\frac{n}{2}]$
+= X_{\text{sorted}}[\frac{n - 1}{2}]$
 
 ```{python}
 # Get the median.
@@ -145,15 +144,31 @@ median
 np.median(nums)
 ```
 
-There is no kernel method that can do this, because the median cannot be
-expressed as a weighted sum.   Instead we use the footprint to define a pixel
-neighborhood, then replace the central value with the median from that
-neighborhood, using the sorting and indexing we have seen above. So, the median
-filter *is* a local filter, because it alters pixel values based on other pixel
-values in the local neighborhood (footprint). However, it is not a *kernel
-filter* because it does not use a weighted sum of the local neighborhood, in
-contrast to other kernel-based filters like the mean filter, Gaussian filter
-etc.
+::: {note}
+
+**Median and even-length arrays**
+
+You will have spotted at once that the central position $\frac{n - 1}{2}$ will
+not be an integer for even-length arrays.  In code, the central position is `c
+= (len(arr) - 1) / 2`, and, for even-length arrays (`len(arr)` is even), `c`
+will not be an integer.
+
+`np.median` solves this in the standard way, by giving the median value as the
+mean of the values in the sorted array at indices `np.floor(c)` and
+`np.ceil(c)` — in other words, the mean of the sorted values either side of position
+`c`.
+
+:::
+
+There is no kernel method that can do the median calculation, because the
+median cannot be expressed as a weighted sum.   Instead we use the footprint to
+define a pixel neighborhood, then replace the central value with the median
+from that neighborhood, using the sorting and indexing we have seen above. So,
+the median filter *is* a local filter, because it alters pixel values based on
+other pixel values in the local neighborhood (footprint). However, it is not
+a *kernel filter* because it does not use a weighted sum of the local
+neighborhood, in contrast to other kernel-based filters like the mean filter,
+Gaussian filter etc.
 
 ## Edge preservation
 
@@ -236,12 +251,14 @@ plt.title('Median Filtered');
 ```
 
 Edges involving a bigger gradient have been preserved, whilst less prominent
-edges have been merged into more prominent ones. We show this, for comparison,
+edges have been merged into more prominent ones nearby. We show this, for comparison,
 alongside a mean filtered version of `nums_img`, filtered using the same size
 `footprint` ((3, 3)):
 
 ```{python}
-nums_img = ski.util.img_as_ubyte(nums_img) # Avoid `dtype` warning.
+# Avoid dtype warning.  In our case, `nums_img` already fits within the 
+# np.uint8 range (0 to 255).
+nums_img = nums_img.astype(np.uint8)
 nums_mean_filtered = ski.filters.rank.mean(nums_img,
                                            footprint=np.ones((3,3)))
 # Show the images.
@@ -320,11 +337,31 @@ neighborhood" of the pixel being modified.
 One foundational non-local filter is a [*histogram equalisation
 filter*](https://en.wikipedia.org/wiki/Histogram_equalization). This filter
 modifies pixels based on the intensity histogram of the entire image.
-Essentially, this process "smooths out" the histogram into a even "hill", so
-that there is less variance between the pixel intensities. The image below
-illustrates this principle:
+Essentially, this process flattens the image intensity histogram into a uniform
+distribution, so that there is less variance between the pixel intensities. The
+image below illustrates this principle:
 
-![](images/hist_equal.png)
+```{python tags=c("hide-input")}
+gray_coffee = ski.color.rgb2gray(ski.data.coffee())
+eq_coffee = ski.exposure.equalize_hist(gray_coffee)
+plt.subplot(1, 2, 1)
+edges, counts, obj = plt.hist(gray_coffee.ravel(), bins=50);
+ylims = plt.ylim()
+plt.xticks([])
+plt.yticks([])
+plt.xlabel('Pixel intensity')
+plt.ylabel('Bin count')
+plt.title('Original image')
+plt.subplot(1, 2, 2)
+plt.hist(eq_coffee.ravel(), bins=50)
+plt.ylim(ylims)
+plt.xticks([])
+plt.yticks([])
+plt.xlabel('Pixel intensity')
+plt.ylabel('Bin count')
+plt.title('Equalised');
+```
+
 
 We will demonstrate the histogram equalisation filter with the `eagle` image
 from `ski.data`:
