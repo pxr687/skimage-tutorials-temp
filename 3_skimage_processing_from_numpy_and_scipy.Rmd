@@ -747,6 +747,12 @@ plt.imshow(look_at_me);
 
 If in doubt, check the `dtype`!
 
+```{python tags=c("remove-cell")}
+# We regenerate and store the output image for page generation, used above.
+plt.imshow(look_at_me)
+plt.savefig('images/look_at_me.png')
+```
+
 ::: {solution-end}
 :::
 
