@@ -29,6 +29,8 @@ These images are all generated from Scikit-image standard `camera` image:
   page](../1_color_images_as_numpy_arrays);
 - `noisy_camera.png` from the [skimage intro page](../2_skimage_intro);
 - `shoegaze.png` also from the [skimage intro page](../2_skimage_intro);
+- `look_at_me.png` from the [Numpy / Scipy
+  page](../3_skimage_processing_from_numpy_and_scipy);
 - `masked_camera.png` from the [Numpy / Scipy page](../ 3_skimage_processing_from_numpy_and_scipy);
 - `camera_3_regions.png` from [threshold filters](../4_threshold_filters).
 - `camera_3_regions.png` from [threshold filters](../4_threshold_filters).
