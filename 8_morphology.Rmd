@@ -6,7 +6,7 @@ jupyter:
       extension: .Rmd
       format_name: rmarkdown
       format_version: '1.2'
-      jupytext_version: 1.17.3
+      jupytext_version: 1.18.1
   kernelspec:
     display_name: Python 3 (ipykernel)
     language: python
@@ -29,7 +29,7 @@ might consider kernels as specialized footprints.
 
 ::: {note}
 
-**Footprints and structural elements**
+**Footprints and structuring elements**
 
 You will see other tutorials refer to *footprints* as [structuring
 elements](https://en.wikipedia.org/wiki/Structuring_element) or *structural
@@ -39,10 +39,10 @@ element.
 
 :::
 
-A (3, 3) footprint can be applied as a square which affects 9 pixels - we might
-alter the image by centering this footprint over every pixel, and replacing
-each pixel with the mean of the other pixels in its "neighborhood", for
-instance:
+A (3, 3) footprint can be applied as a square which affects 9 pixels - we
+might alter the image by centering this footprint over every pixel, and
+replacing each pixel with the mean of the other pixels in its "neighborhood",
+for instance:
 
 ![](images/footprint_general.png)
 
@@ -61,29 +61,37 @@ courtesy of the `ski.filters` module. Morphological operations also make use of
 footprints. As you remember, footprints (but not kernels) are binary (contain
 only True / False or 0 / 1).
 
-Morphological operations differ from the filtering operations we have seen
-previously because they are specifically related to the shape (...or, well,
+## Morphology and footprints
+
+The fundamental operations of morphological image processing are [erosion](https://en.wikipedia.org/wiki/Erosion_(morphology)) and
+[dilation](https://en.wikipedia.org/wiki/Dilation_(morphology)).
+
+As you about to see, basic morphological operations come about by:
+
+* Choosing a footprint that matches a shape in the image you are interested
+  in, and
+* Applying this footprint via footprint / function filter with:
+  * the `minimum` function, to do an operation called *erosion* or
+  * the `maximum` function, to do an operation called *dilation* or
+  * some combination of these.
+
+The primary new thing we see in morphology, compared to our previous filters,
+is an increased interest in the shape of the binary *footprint* (to match
+features we are interested in, in the image).  But we also introduce `minimum`
+and `maximum` functions to use in footprint / function filters.
+
+Using filters and crafted footprints allows us to tune our filtering to the
+shape (...or, well,
 [*morphology*](https://www.cs.auckland.ac.nz/courses/compsci773s1c/lectures/ImageProcessing-html/topic4.htm))
-of features within the image. This contrasts with operations like [mean
-filtering](5_mean_filter) which "spread" pixel values around within
-a neighborhood, rather than identifying and altering features with a specific
-shape/morphology.
+of features within the image.
 
-## Footprints
+## Erosion is footprint / function filtering with `minimum`
 
-Because morphological operations are part of image processing, they involve the
-modification of array pixel values. In morphological operations, the footprint
-guides changes to pixel values *depending upon the match between the shape of
-the footprint and the shape of the pixels in the "neighborhood" of the
-footprint*.
+Let us leap ahead to show you the morphological operation of [erosion](
+https://en.wikipedia.org/wiki/Erosion_(morphology)).
 
-The footprint, typically, is centered once on every pixel in an image, and this
-central pixel is modified (or not) depending upon the match between the shape
-of the footprint and the shape described by the pixel values in that
-neighborhood.
-
-Let's make ourselves a simple binary image, so we can see the effect of the
-foundational morphological operations more clearly:
+As we said above, erosion is the application of a footprint / function filter,
+where the function is "minimum".
 
 ```{python}
 import skimage as ski
@@ -93,23 +101,94 @@ import matplotlib.pyplot as plt
 # A custom function for displaying image attributes.
 from skitut import show_attributes
 
-# A custom function for comparison plots.
-def show_both(original,
-              altered,
-              alteration='',
-              figsize=(14, 14)):
-    plt.figure(figsize=figsize)
-    plt.subplot(1, 2, 1)
-    plt.title('Original')
-    plt.imshow(original)
-    plt.subplot(1, 2, 2)
-    plt.title(alteration)
-    plt.imshow(altered)
-    plt.show()
+# A custom function to show original and altered images side-by-side.
+from skitut import show_both
 
 # Set 'gray' as the default colormap
 plt.rcParams['image.cmap'] = 'gray'
+```
 
+The morphology (shape) part of erosion, is the choice of a footprint to identify the shape you are interested in, within in the image.
+
+For example, consider this image — the blue channel of an image from the Hubble Space Telescope:
+
+```{python}
+# Blue channel of Hubble image, as uint8
+hubble_blue = ski.data.hubble_deep_field()[:, :, 2]
+# As uint8 integer image type.
+hubble_blue_ubyte = ski.util.img_as_ubyte(hubble_blue)
+plt.imshow(hubble_blue_ubyte);
+```
+
+There are a small number of bright, large stars in this field, and a much larger number of smaller stars.
+
+We might want to keep the larger disk-shaped objects in this image (brighter stars), and suppress the smaller objects.
+
+We can do this by first specifying a disk as our footprint — identifying the shape of the local neighborhood:
+
+```{python}
+# Our footprint is a disk of radius 5 pixels.
+disk_5 = ski.morphology.disk(radius=5)
+disk_5
+```
+
+```{python}
+# Footprint as image.
+plt.imshow(disk_5);
+```
+
+This will be our footprint when applying a `minimum` function, from `ski.filter.rank`, like this:
+
+```{python}
+hubble_eroded = ski.filters.rank.minimum(hubble_blue_ubyte, disk_5)
+plt.imshow(hubble_eroded);
+```
+
+This is the algorithm for *erosion*, one of the two basic operations in
+morphology (the other being *dilation*).
+
+You will see above, the minimum filtering with the disk footprint has the effect of keeping areas which are disks of the given size or bigger, and suppressing areas which have objects of smaller size.  The next section explains how this works, using binary images as examples.
+
+We have said that *erosion* is the process of applying a footprint / function filter, where the function is *minimum* (as above).  Just to show this is the case, here we use the `ski.morphology.erosion` function to apply the same operation, and get exactly the same result:
+
+```{python}
+hubble_eroded_again = ski.morphology.erosion(hubble_blue_ubyte, disk_5)
+# We get exactly the result we got by applying the minimum filter above.
+np.all(hubble_eroded_again == hubble_eroded)
+```
+
+With that example, let us return to a discussion of the erosion (footprint
+/ minimum) algorithm.
+
+
+## Footprints as template shapes
+
+Because morphological operations are part of image processing, they involve
+the modification of array pixel values. In morphological operations, the
+footprint guides changes to pixel values *depending upon the match between the
+shape of the footprint and the shape of the pixels in the "neighborhood" of
+the footprint*.
+
+The footprint is centered once on every pixel in an image, and this central
+pixel is modified (or not) depending upon the match between the shape of the
+footprint and the shape described by the pixel values in that neighborhood.
+
+::: {note}
+
+**Footprints and centering**
+
+We asserted above that we center the footprint on each pixel in the image, and
+this by far the most common procedure.  However, you can ask Scikit-image or
+Scipy `ndimage` to offset the footprint centering by a given number of pixels.  See the corresponding help for the Scikit-image and `ndimage` functions for detail on how to do this.
+
+:::
+
+
+## Erosion on a binary image
+
+It can be easier to think of erosion (and dilation) in terms of their effects on simple binary (True / False, 1 / 0) images.
+
+```{python}
 # Make a binary square.
 square = np.array([[0, 0, 0, 0, 0, 0, 0],
                    [0, 0, 0, 0, 0, 0, 0],
@@ -122,7 +201,7 @@ plt.imshow(square);
 ```
 
 Let's get fancy and ostentatious now, and invest in some diamonds, by which we
-mean, let's use `ski.morphology.diamond()` to construct a footprint:
+mean, let's use `ski.morphology.diamond()` to construct a new footprint:
 
 ```{python}
 # Create a `diamond` footprint.
@@ -144,28 +223,16 @@ a bigger `radius`...:
 diamond.shape
 ```
 
-## Erosion
+As you read above, erosion proceeds by applying the following algorithm at each pixel of the image.
 
-The fundamental operations of morphological image processing are [erosion](https://en.wikipedia.org/wiki/Erosion_(morphology)) and
-[dilation](https://en.wikipedia.org/wiki/Dilation_(morphology)).  We will
-consider erosion first.
+1. Placing the footprint over the pixel and
+1. Selecting the pixel values under the footprint (where the footprint is
+   1 / True) and
+1. Setting the output value at the given pixel to the minimum of the selected
+   values.
 
-Much like when bad behaviour spreads through a social group, erosion will, for
-every pixel in the image:
-
-1. Place the footprint over the pixel and
-1. determine of the image intensity values under the footprint *match* the
-   footprint shape (we will explain this soon), and then:
-1. If the footprint matches, leave the pixel value unchanged in the output
-   image.
-1. If the footprint does not match, set the output pixel value to be the lowest
-   image intensity value within the footprint.
-
-As mentioned above, a full morphological operation involves centering the
-footprint on *every pixel in the image*, so every pixel gets assessed for
-alteration with reference to the other pixels in its neighborhood.
-
-We can erode our binary square using `ski.morphology.erosion()`, we use the
+Here we erode our binary square using `ski.morphology.erosion()`.  We could
+equivalently have used `ski.filter.rank.minimum`.  In either case, we use the
 `footprint` argument to specify our footprint:
 
 ```{python}
@@ -182,33 +249,33 @@ plt.imshow(eroded_square);
 
 What has happened here? We can think of our `diamond` footprint as being a bit
 like a weird [crosshair/reticle](https://en.wikipedia.org/wiki/Reticle) of
-a gun. In a morphological operation, we "target" the crosshair on a given array
-pixel. Because we are eroding, the central pixel will be *lowered to the value
-of the lowest pixel in its neighborhood* if the pixels in the neighborhood do
-not "match" the shape of the footprint. This is illustrated below.
+a gun. In a morphological operation, we "target" the crosshair on a given
+array pixel. Because we are eroding, the central pixel will be *lowered to the
+value of the lowest pixel in its neighborhood*. This is illustrated below.
 
-Now, because our `square` array contains only 1s and 0s, central pixels "match"
-the footprint if the pixels under the footprint are 1 where the values in the
-footprint are 1. The image below shows the `diamond` footprint being applied to
-three different central pixels. "Matches" between the footprint and the array
-pixels are depicted with a green tick; "clashes" between the footprint and the
-array pixels are depicted with a red X. "Clashes" occur where the footprint
-value is 1 and the array pixel value is 0.
+When we apply the footprint to each pixel in the image, call the pixels under
+the footprint — *the pixel neighborhood*.  Because our `square` array contains
+only 1s and 0s, the output pixels will be 1 *only if* all pixels in the local
+neighborhood are 1, and 0 otherwise.  The image below shows the `diamond`
+footprint being applied to three different central pixels. Call pixels
+"matches" where all the pixels in the pixel local neighborhood are 1.  All
+other pixels are "clashes".  These are pixels where at least one pixel in the
+pixel local neighborhood is 0. Matches between the footprint and the array
+pixels are depicted with a green tick; clashes between the footprint and the
+array pixels are depicted with a red X.
 
-If a "clash" occurs, then the central pixel gets lowered to the lowest value
-under the footprint (0). (We call this, loosely, the central pixel "dying").
-
-If there is a full "match" between the neighborhood values and the footprint,
-then the central pixel is left altered (we say that it "survives"):
+Whether there is a match or a clash, the output pixel gets set to the minimum
+of the pixel local neighborhood.  For matches this is 1 (all pixels in the
+neighborhood are 1).  For clashes this is 0 (at least one pixel in the
+neighborhood is 0).
 
 ![](images/hit_n_miss_with_text.png)
-
 
 Let's repeat this erosion process with two `square` arrays `concatenate`d
 together.
 
-What do you think will happen when we erode them using the `diamond` footprint?
-Try to predict before you check:
+What do you think will happen when we erode them using the `diamond`
+footprint? Try to predict before you check:
 
 ```{python}
 # `concatenate` two `square` arrays.
@@ -237,8 +304,7 @@ shows what happened:
 All other "neighborhoods" did not match the footprint, and so the values in the
 neighborhood were lowered to 0, 0 being the lowest value in each neighborhood.
 This has the effect, if a non-matching pixel has the value of 1, of setting it
-to 0. If a non-matching pixel has a value of 0, it also gets set to 0, but it
-was already 0, so there is no appreciable change.
+to 0.
 
 Let's alter our image array slightly, to see how this affects the erosion operation with our `diamond` footprint. We will place a black array pixel inside the right-hand white square:
 
@@ -256,34 +322,47 @@ square_the_circle = np.array([[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
 plt.imshow(square_the_circle);
 ```
 
-Before looking at the output of the cell below, try to think carefully about how you think this will affect the erosion operation, using the (3, 3) `diamond` footprint. Picture what will happen on the black pixel in the center of the right-hand square.
+Before looking at the output of the cell below, try to think carefully about
+how you think this will affect the erosion operation, using the (3, 3)
+`diamond` footprint. Picture what will happen on the black pixel in the center
+of the right-hand square.
 
-Scroll down to the output of the cell below to see if your prediction was correct:
+Scroll down to the output of the cell below to see if your prediction was
+correct:
 
 ```{python}
 eroded_square_the_circle = ski.morphology.erosion(square_the_circle, diamond)
-
 plt.imshow(eroded_square_the_circle);
 ```
 
 Ok, so now the whole right-hand square got taken out. Brutal.
 
-Why did this happen? The cell below illustrates, again using green ticks for "matches" between the footprint and the pixel "neighborhood", and red X's for "clashes" between the footprint and the pixel "neighborhood".
+Why did this happen? The cell below illustrates, again using green ticks for
+"matches" between the footprint and the pixel "neighborhood", and red X's for
+"clashes" between the footprint and the pixel "neighborhood".
 
-Remember that a "clash" means the central pixel "dies"; a "match" means the central pixel "survives":
+Remember that a "clash" means the central pixel "dies" (gets set to 0);
+a "match" means the central pixel "survives" (gets set to 1).
 
 ![](images/hit_n_miss_with_text_3.png)
+
+Think of erosion as searching for, and maintaining, areas matching the
+footprint shape, while suppressing areas not of that shape.
 
 
 ## Dilation
 
 The other foundational operation in morphological image processing is
-*dilation*. Dilation works the same as erosion in terms of centering
-a footprint on each pixel and looking for "matches" or "clashes". However, it
-does exactly the opposite thing for pixels where it finds a "clash". Where, in
-the event of a "clash", erosion *lowers* central pixel values down to the
-neighborhood minimum, dilation instead *raises* central pixel to the value of
-the neighborhood maximum.
+*dilation*.
+
+Dilation is nothing but a footprint / function filter, where the function is
+`maximum` rather than `minimum`.
+
+Dilation works in the same way as erosion, or any other footprint / function
+filter, in terms of centering a footprint on each pixel, to select the pixel local neighborhood.  It takes the maximum of the local pixel values.
+
+Now, if *any* of the pixels in the local neighborhood are 1, the output pixel
+is 1.  Call this a *dilation* match.  Only if *all* the local neighborhood pixels are 0, is the output pixel 0.  Call this a *dilation* clash.
 
 Let's dilate the `square` array:
 
@@ -296,11 +375,12 @@ square
 plt.imshow(square);
 ```
 
-Now, we use `ski.morphology.dilation()` to dilate the image, again using
+Now, we use `ski.morphology.dilation()` to dilate the image.   We could,
+equivalently, use the `ski.filter.rank.maximum` function. Again we will use
 `diamond` as our footprint:
 
 ```{python}
-# Perform the dilaton.
+# Perform the dilation.
 dilated_square = ski.morphology.dilation(square,
                                          footprint=diamond)
 dilated_square
@@ -352,20 +432,22 @@ fade into the black background.
 For dilation, clashing central pixels get *raised* to the neighborhood maximum,
 which in this case is 1.
 
-So, [remember](https://scikit-image.org/docs/0.25.x/auto_examples/applications/plot_morphology.html):
+Think of dilation as extending bright areas with the footprint shape.
 
-*Erosion enlarges dark regions and shrinks bright regions.*
+[Another way of thinking of this](https://scikit-image.org/docs/0.25.x/auto_examples/applications/plot_morphology.html) is:
 
-*Dilation enlarges bright regions and shrinks dark regions.*
+* *Erosion enlarges dark regions and shrinks bright regions.*
+* *Dilation enlarges bright regions and shrinks dark regions.*
 
 
 ## Morphology using more complex images
 
 Let's apply some of this to more complex images. Fittingly, we will use
-a terrifying picture of a [Xenomorph](https://en.wikipedia.org/wiki/Xenomorph),
-which at the time of writing Wikipedia defines as "a fictional endoparasitoid
-extraterrestrial species that serves as the main antagonist of the Alien and
-Alien vs. Predator franchises". Yikes.
+a terrifying picture of
+a [Xenomorph](https://en.wikipedia.org/wiki/Xenomorph), which at the time of
+writing Wikipedia defines as "a fictional endoparasitoid extraterrestrial
+species that serves as the main antagonist of the Alien and Alien vs. Predator
+franchises". Yikes.
 
 ```{python}
 # Photo by Stockcake
@@ -415,7 +497,7 @@ show_both(xenomorph, xeno_binary_dilate_rad_1_diamond, "Dilated");
 
 We can alter the size of the footprint to change the nature of the effect. The
 exact change will be heavily dependent on the image array we are processing.
-Here we create a diamond with `radius = 6`:
+Here we create a diamond with `radius=6`:
 
 ```{python}
 # Create and show a larger diamond footprint.
@@ -438,15 +520,15 @@ show_both(xenomorph,
           "Eroded \n(13, 13) Diamond SE");
 ```
 
-There are fewer "matches" between the large footprint and pixel neighborhoods
-in the image - this leaves less central pixels unchanged, than for a smaller
-footprint of the same shape. Because in erosion we are *lowering* central pixel
-values in the event of a "clash", the darker regions have expanded
-substantially more than when we used a smaller `diamond`, which gave more
-"matches".
+There are fewer areas for this large footprint where the all the values (and
+therefore the minimum value) is high.  Therefore, erosion leaves less central
+pixels with relatively high values, than for a smaller footprint of the same
+shape.  For all the pixels where the local neighborhood includes at least one
+low-value pixel, the erosion output is low-value, so the darker regions have
+expanded substantially more than when we used a smaller `diamond`, which gave
+more "matches".
 
-Dilation, again has the opposite effect of increasing brighter regions, in the
-event of "clashes":
+Dilation, again has the opposite effect of increasing brighter regions around regions that are already bright:
 
 ```{python}
 # Dilate the xenomorph with the `radius = 6` diamond.
@@ -458,7 +540,7 @@ show_both(xenomorph,
 ```
 
 We can also change the shape of the footprint - here we create a rectangle
-(well, a square) of `shape` (3, 3):
+(Ok, a square) of `shape` (3, 3):
 
 ```{python}
 # A square footprint.
@@ -466,8 +548,8 @@ square_SE = ski.morphology.footprint_rectangle((3, 3))
 square_SE
 ```
 
-This new footprint is the same `shape` as the kernels we used on the [filtering
-page](5_mean_filter). Below we use it to erode the xenomorph image:
+This new footprint is the same `shape` as the kernels we used on the
+[filtering page](5_mean_filter). Below we use it to erode the xenomorph image:
 
 ```{python}
 # Erode the xenomorph (with the square footprint).
@@ -488,11 +570,12 @@ xeno_binary_dilate_square = ski.morphology.dilation(xenomorph,
 show_both(xenomorph, xeno_binary_dilate_square, "Dilated \n(3,3) Square SE");
 ```
 
-Changing the shape or size of the footprint will change the number of
-"matches", and therefore the degree and location of changes to the bright/dark
-regions, for both erosion and dilation. We are essentially looking for features
-of a certain shape (the shape of our footprint) in the image, and then
-dilating/eroding on the basis of the number of matches/clashes.
+Changing the shape or size of the footprint will change the local pixel
+neighborhood, and therefore the degree and location of changes to the
+bright/dark regions, for both erosion and dilation. We are essentially looking
+for features of a certain shape (the shape of our footprint) in the image, and
+then dilating (increasing to neighborhood maximum) / eroding (decreasing to
+neighborhood minimum) on that basis.
 
 ::: {exercise-start}
 :label: block-xeno
@@ -537,7 +620,8 @@ big_diamond = ski.morphology.diamond(radius=30)
 plt.imshow(big_diamond);
 ```
 
-Dilating with this `big_diamond` will give you the right outline, but the wrong colors:
+Dilating with this `big_diamond` will give you the right outline, but the
+wrong colors:
 
 ```{python}
 # Solution, part 1:
@@ -564,6 +648,109 @@ plt.savefig('images/xeno_ex_1.png')
 ::: {solution-end}
 :::
 
+
+## Erosion and dilation on greyscale images
+
+For most of this tutorial we have used binary images to show erosion and
+dilation, but as you know the algorithm, it will be obvious how erosion and
+dilation apply to greyscale images.
+
+Erosion is the application of a footprint / minimum filter, so bright regions matching the footprint shape will continue to be bright, but other regions, including those at the edge of bright regions, will become dark (as they acquire the minimum of the local neighborhood.  You have already seen erosion with a radius 6 disk applied to the Hubble Space Telescope image above.  Let's apply the `diamond_6` footprint to this image.
+
+```{python}
+# The original image (blue channel of Hubble image).
+plt.imshow(hubble_blue_ubyte);
+plt.title('Input image');
+```
+
+```{python}
+# The footprint we will use.
+plt.imshow(diamond_6)
+plt.title('Footprint');
+```
+
+```{python}
+# Eroded image.
+# We used the equivalent ski.filters.rank.minimum call previously.
+hubble_eroded = ski.morphology.erosion(hubble_blue_ubyte, diamond_6)
+plt.imshow(hubble_eroded)
+plt.title('Eroded image');
+```
+
+We can also apply dilation.  Here pixels with *any* bright pixel in the local
+neighborhood become bright, so small bright objects will become larger.
+
+```{python}
+# Dilated image.
+hubble_dilated = ski.morphology.dilation(hubble_blue_ubyte, diamond_6)
+plt.imshow(hubble_dilated)
+plt.title('Eroded image');
+```
+
+
+## Opening and closing
+
+[Opening](https://en.wikipedia.org/wiki/Opening_(morphology)) and
+[closing](https://en.wikipedia.org/wiki/Closing_(morphology) are two other
+important morphological operations.
+
+Opening is the result of:
+
+* Applying erosion to an image and then
+* Applying dilation to the result.
+
+Closing is the result of
+
+* Applying dilation to an image and then
+* Applying erosion to the result.
+
+Some reflection might reveal what kind of effects these will have.
+
+For *opening*, we are first trimming the image down to objects matching the
+footprint, and then expanding the remaining objects.
+
+```{python}
+# Recalculate the eroded Hubble image.
+hubble_eroded = ski.morphology.erosion(hubble_blue_ubyte, diamond_6)
+# Calculate the opened image by dilating the eroded image.
+hubble_opened = ski.morphology.dilation(hubble_eroded, diamond_6)
+plt.imshow(hubble_opened)
+plt.title('Hubble image, opened');
+```
+We asserted that opening was erosion followed by dilation, but you will want
+confirmation of this:
+
+```{python}
+# Is ski.morphology.opening actually the same as dilation on erosion?
+np.all(ski.morphology.opening(hubble_blue_ubyte, diamond_6) == hubble_opened)
+```
+
+Closing has the effect of first expanding bright objects with the footprint
+shape (by dilation), followed by trimming those expanded objects (with
+erosion):
+
+```{python}
+# Recalculate the dilated Hubble image.
+hubble_dilated = ski.morphology.dilation(hubble_blue_ubyte, diamond_6)
+# Calculate the closing image by eroded the dilated image.
+hubble_closed = ski.morphology.erosion(hubble_dilated, diamond_6)
+plt.imshow(hubble_closed)
+plt.title('Hubble image, closed');
+```
+
+```{python}
+# Is ski.morphology.closing actually the same as erosion on dilation?
+np.all(ski.morphology.closing(hubble_blue_ubyte, diamond_6) == hubble_closed)
+```
+
+As you can see, in this particular case, the closed image is rather similar to
+the original, but this will depend, as usual, on the shape and size of the
+footprint in relation to the objects in the image.
+
+```{python}
+plt.imshow(hubble_blue_ubyte)
+plt.title('Hubble original image');
+```
 
 ## Skeletonizing an image
 
@@ -595,7 +782,6 @@ show_attributes(horse)
 ```{python}
 # Skeletonize `horse`.
 skeleton_horse = ski.morphology.skeletonize(horse == 0) # The image must be binary numeric, not Boolean, to `skeletonize`.
-
 plt.imshow(skeleton_horse);
 ```
 
