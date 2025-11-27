@@ -4,6 +4,8 @@ import shutil
 from warnings import warn
 
 import numpy as np
+import matplotlib.pyplot as plt
+
 import skimage as ski
 import sympy as sy
 
@@ -27,3 +29,17 @@ def save_load_show_mat(arr, img_fname, ndigits=2, dpi=600):
                 dvioptions=["-T", "tight", "-z", "0", f"-D {dpi}"],
                 filename=img_fname)
     return ski.io.imread(img_fname)
+
+def show_both(original,
+              altered,
+              alteration='',
+              figsize=(14, 14)):
+    """ Display original and altered image side by side.
+    """
+    plt.figure(figsize=figsize)
+    plt.subplot(1, 2, 1)
+    plt.title('Original')
+    plt.imshow(original)
+    plt.subplot(1, 2, 2)
+    plt.title(alteration)
+    plt.imshow(altered)
