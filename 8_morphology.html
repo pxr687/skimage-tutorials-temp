@@ -191,13 +191,6 @@
 
 
 <li class="toctree-l1 current active"><a class="current reference internal" href="#">Morphology</a></li>
-
-
-
-
-
-
-
 </ul>
 
     </div>
@@ -441,16 +434,18 @@ document.write(`
             </div>
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Morphology</a></li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#structuring-elements">Structuring elements</a></li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#erosion">Erosion</a></li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#dilation">Dilation</a></li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#morphology-using-more-complex-images">Morphology using more complex images</a></li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#skeletonizing-an-image">Skeletonizing an image</a></li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#summary">Summary</a></li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#references">References</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#morphology-and-footprints">Morphology and footprints</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#erosion-is-footprint-function-filtering-with-minimum">Erosion is footprint / function filtering with <code class="docutils literal notranslate"><span class="pre">minimum</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#footprints-as-template-shapes">Footprints as template shapes</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#erosion-on-a-binary-image">Erosion on a binary image</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#dilation">Dilation</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#morphology-using-more-complex-images">Morphology using more complex images</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#erosion-and-dilation-on-greyscale-images">Erosion and dilation on greyscale images</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#opening-and-closing">Opening and closing</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#skeletonizing-an-image">Skeletonizing an image</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#summary">Summary</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#references">References</a></li>
 </ul>
-
             </nav>
         </div>
     </div>
@@ -463,21 +458,71 @@ document.write(`
                   
   <section class="tex2jax_ignore mathjax_ignore" id="morphology">
 <h1>Morphology<a class="headerlink" href="#morphology" title="Link to this heading">#</a></h1>
-<p><a class="reference external" href="https://en.wikipedia.org/wiki/Mathematical_morphology">Morphology</a> is the mathematical study of shapes and has numerous applications in image processing. As such, Scikit-image has a dedicated module (<code class="docutils literal notranslate"><span class="pre">ski.morphology</span></code>) for associated functions.</p>
-<p>We already encountered structuring elements - (of which kernels are one type) - on <a class="reference internal" href="4_threshold_filters.html"><span class="doc std std-doc">earlier</span></a> <a class="reference internal" href="5_mean_filter.html"><span class="doc std std-doc">pages</span></a>. A structuring element is a grid of a certain shape - you can think of it as a “template” - which is used to define the “neighborhood” of pixels which an image processing operation affects.</p>
-<p>A (3, 3) structuring element can be applied as a square which affects 9 pixels - we might alter the image by centering this structuring element over every pixel, and replacing each pixel with the mean of the other pixels in its “neighborhood”, for instance:</p>
+<p><a class="reference external" href="https://en.wikipedia.org/wiki/Mathematical_morphology">Morphology</a> is the
+mathematical study of shapes and has numerous applications in image processing.
+As such, Scikit-image has a dedicated module (<code class="docutils literal notranslate"><span class="pre">ski.morphology</span></code>) for associated
+functions.</p>
+<p>We have already encountered footprints and kernels
+on <a class="reference internal" href="4_threshold_filters.html"><span class="doc std std-doc">earlier</span></a> <a class="reference internal" href="5_mean_filter.html"><span class="doc std std-doc">pages</span></a>. A footprint is a grid
+of a certain shape - you can think of it as a “template” — which is used to
+define the “neighborhood” of pixels which an image processing operation
+affects.  As you remember, a <em>kernel</em> is a footprint containing <em>weights</em>.  We
+might consider kernels as specialized footprints.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p><strong>Footprints and structuring elements</strong></p>
+<p>You will see other tutorials refer to <em>footprints</em> as <a class="reference external" href="https://en.wikipedia.org/wiki/Structuring_element">structuring
+elements</a> or <em>structural
+elements</em>.  We stick to “footprint” here for compatibility with the
+Scikit-image terminology, but a footprint is the same a structuring/structural
+element.</p>
+</div>
+<p>A (3, 3) footprint can be applied as a square which affects 9 pixels - we
+might alter the image by centering this footprint over every pixel, and
+replacing each pixel with the mean of the other pixels in its “neighborhood”,
+for instance:</p>
 <p><img alt="" src="_images/footprint_general.png" /></p>
-<p>You will also recall that we need a strategy for pixels at the edge of the image, where we center the structuring element on a pixel where part of the structuring element “falls off” the edge of the image:</p>
+<p>You will also recall that we need a strategy for pixels at the edge of the
+image, where we center the footprint on a pixel where part of the footprint
+“falls off” the edge of the image:</p>
 <p><img alt="" src="_images/footprint_hit_the_edge.png" /></p>
-<p>Options here including “padding” the empty structuring element locations with a repeated value (like 0), or just duplicating the existing pixels at the edge of the image.</p>
-<p>We have seen structuring elements applied during filtering operations, courtesy of the <code class="docutils literal notranslate"><span class="pre">ski.filters</span></code> module. Morphological operations also make use of structuring elements, though in morphological operations, structuring elements are binary (contain only 0s and 1s).</p>
-<p>Morphological operations differ from the filtering operations we have seen previously because they are specifically related to the shape (…or, well, <a class="reference external" href="https://www.cs.auckland.ac.nz/courses/compsci773s1c/lectures/ImageProcessing-html/topic4.htm"><em>morphology</em></a>) of features with in the image. This contrasts with operations like <a class="reference internal" href="5_mean_filter.html"><span class="doc std std-doc">mean filtering</span></a> which “spread” pixel values around within a neighborhood, rather than identifying and altering features with a specific shape/morphology.</p>
+<p>Options here including “padding” the empty footprint locations with a repeated
+value (like 0), or just duplicating the existing pixels at the edge of the
+image.</p>
+<p>We have seen footprints and kernels applied during filtering operations,
+courtesy of the <code class="docutils literal notranslate"><span class="pre">ski.filters</span></code> module. Morphological operations also make use of
+footprints. As you remember, footprints (but not kernels) are binary (contain
+only True / False or 0 / 1).</p>
+<section id="morphology-and-footprints">
+<h2>Morphology and footprints<a class="headerlink" href="#morphology-and-footprints" title="Link to this heading">#</a></h2>
+<p>The fundamental operations of morphological image processing are <a class="reference external" href="https://en.wikipedia.org/wiki/Erosion_(morphology)">erosion</a> and
+<a class="reference external" href="https://en.wikipedia.org/wiki/Dilation_(morphology)">dilation</a>.</p>
+<p>As you about to see, basic morphological operations come about by:</p>
+<ul class="simple">
+<li><p>Choosing a footprint that matches a shape in the image you are interested
+in, and</p></li>
+<li><p>Applying this footprint via footprint / function filter with:</p>
+<ul>
+<li><p>the <code class="docutils literal notranslate"><span class="pre">minimum</span></code> function, to do an operation called <em>erosion</em> or</p></li>
+<li><p>the <code class="docutils literal notranslate"><span class="pre">maximum</span></code> function, to do an operation called <em>dilation</em> or</p></li>
+<li><p>some combination of these.</p></li>
+</ul>
+</li>
+</ul>
+<p>The primary new thing we see in morphology, compared to our previous filters,
+is an increased interest in the shape of the binary <em>footprint</em> (to match
+features we are interested in, in the image).  But we also introduce <code class="docutils literal notranslate"><span class="pre">minimum</span></code>
+and <code class="docutils literal notranslate"><span class="pre">maximum</span></code> functions to use in footprint / function filters.</p>
+<p>Using filters and crafted footprints allows us to tune our filtering to the
+shape (…or, well,
+<a class="reference external" href="https://www.cs.auckland.ac.nz/courses/compsci773s1c/lectures/ImageProcessing-html/topic4.htm"><em>morphology</em></a>)
+of features within the image.</p>
 </section>
-<section class="tex2jax_ignore mathjax_ignore" id="structuring-elements">
-<h1>Structuring elements<a class="headerlink" href="#structuring-elements" title="Link to this heading">#</a></h1>
-<p>Because morphological operations are part of image processing, they involve the modification of array pixel values, which is <a class="reference internal" href="3_skimage_processing_from_numpy_and_scipy.html"><span class="doc std std-doc">all image processing is</span></a>. In morphological operations, the structural element will alter pixel values <em>depending upon the match between the shape of the structural element and the shape of the pixels in the “neighborhood” of the structural element</em>.</p>
-<p>The structural element, typically, is centered once on every pixel in an image, and this central pixel is modified (or not) depending upon the match between the shape of the structural element and the shape depicted by the pixels in that neighborhood.</p>
-<p>Let’s make ourselves a simple binary image, so we can clearly see the effect of the foundational morphological operations:</p>
+<section id="erosion-is-footprint-function-filtering-with-minimum">
+<h2>Erosion is footprint / function filtering with <code class="docutils literal notranslate"><span class="pre">minimum</span></code><a class="headerlink" href="#erosion-is-footprint-function-filtering-with-minimum" title="Link to this heading">#</a></h2>
+<p>Let us leap ahead to show you the morphological operation of <a class="reference external" href="https://en.wikipedia.org/wiki/Erosion_(morphology)">erosion</a>.</p>
+<p>As we said above, erosion is the application of a footprint / function filter,
+where the function is “minimum”.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">skimage</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">ski</span>
@@ -487,24 +532,126 @@ document.write(`
 <span class="c1"># A custom function for displaying image attributes.</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">skitut</span><span class="w"> </span><span class="kn">import</span> <span class="n">show_attributes</span>
 
-<span class="c1"># A custom function for comparison plots.</span>
-<span class="k">def</span><span class="w"> </span><span class="nf">show_both</span><span class="p">(</span><span class="n">original</span><span class="p">,</span>
-              <span class="n">altered</span><span class="p">,</span>
-              <span class="n">alteration</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">,</span>
-              <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">14</span><span class="p">,</span> <span class="mi">14</span><span class="p">)):</span>
-    <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="n">figsize</span><span class="p">)</span>
-    <span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
-    <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Original&#39;</span><span class="p">)</span>
-    <span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">original</span><span class="p">)</span>
-    <span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
-    <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="n">alteration</span><span class="p">)</span>
-    <span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">altered</span><span class="p">)</span>
-    <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+<span class="c1"># A custom function to show original and altered images side-by-side.</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">skitut</span><span class="w"> </span><span class="kn">import</span> <span class="n">show_both</span>
 
 <span class="c1"># Set &#39;gray&#39; as the default colormap</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">rcParams</span><span class="p">[</span><span class="s1">&#39;image.cmap&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;gray&#39;</span>
-
-<span class="c1"># Make a binary square.</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>The morphology (shape) part of erosion, is the choice of a footprint to identify the shape you are interested in, within in the image.</p>
+<p>For example, consider this image — the blue channel of an image from the Hubble Space Telescope:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Blue channel of Hubble image, as uint8</span>
+<span class="n">hubble_blue</span> <span class="o">=</span> <span class="n">ski</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">hubble_deep_field</span><span class="p">()[:,</span> <span class="p">:,</span> <span class="mi">2</span><span class="p">]</span>
+<span class="c1"># As uint8 integer image type.</span>
+<span class="n">hubble_blue_ubyte</span> <span class="o">=</span> <span class="n">ski</span><span class="o">.</span><span class="n">util</span><span class="o">.</span><span class="n">img_as_ubyte</span><span class="p">(</span><span class="n">hubble_blue</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">hubble_blue_ubyte</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/544bbeda97c5627f9000d7d3328091952208fe86c56842df6a28e05c42e1237f.png" src="_images/544bbeda97c5627f9000d7d3328091952208fe86c56842df6a28e05c42e1237f.png" />
+</div>
+</div>
+<p>There are a small number of bright, large stars in this field, and a much larger number of smaller stars.</p>
+<p>We might want to keep the larger disk-shaped objects in this image (brighter stars), and suppress the smaller objects.</p>
+<p>We can do this by first specifying a disk as our footprint — identifying the shape of the local neighborhood:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Our footprint is a disk of radius 5 pixels.</span>
+<span class="n">disk_5</span> <span class="o">=</span> <span class="n">ski</span><span class="o">.</span><span class="n">morphology</span><span class="o">.</span><span class="n">disk</span><span class="p">(</span><span class="n">radius</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
+<span class="n">disk_5</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([[0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0],
+       [0, 0, 1, 1, 1, 1, 1, 1, 1, 0, 0],
+       [0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0],
+       [0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0],
+       [0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0],
+       [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+       [0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0],
+       [0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0],
+       [0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0],
+       [0, 0, 1, 1, 1, 1, 1, 1, 1, 0, 0],
+       [0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0]], dtype=uint8)
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Footprint as image.</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">disk_5</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/0bc564e553da37dd7b76fec2740d00b3cc6d773f1f6743f697ff34193b1f433a.png" src="_images/0bc564e553da37dd7b76fec2740d00b3cc6d773f1f6743f697ff34193b1f433a.png" />
+</div>
+</div>
+<p>This will be our footprint when applying a <code class="docutils literal notranslate"><span class="pre">minimum</span></code> function, from <code class="docutils literal notranslate"><span class="pre">ski.filter.rank</span></code>, like this:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">hubble_eroded</span> <span class="o">=</span> <span class="n">ski</span><span class="o">.</span><span class="n">filters</span><span class="o">.</span><span class="n">rank</span><span class="o">.</span><span class="n">minimum</span><span class="p">(</span><span class="n">hubble_blue_ubyte</span><span class="p">,</span> <span class="n">disk_5</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">hubble_eroded</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/fe9c971b0dda2ba6b4a550a39b94fa705da39fc05bdec11ff57198e12510704a.png" src="_images/fe9c971b0dda2ba6b4a550a39b94fa705da39fc05bdec11ff57198e12510704a.png" />
+</div>
+</div>
+<p>This is the algorithm for <em>erosion</em>, one of the two basic operations in
+morphology (the other being <em>dilation</em>).</p>
+<p>You will see above, the minimum filtering with the disk footprint has the effect of keeping areas which are disks of the given size or bigger, and suppressing areas which have objects of smaller size.  The next section explains how this works, using binary images as examples.</p>
+<p>We have said that <em>erosion</em> is the process of applying a footprint / function filter, where the function is <em>minimum</em> (as above).  Just to show this is the case, here we use the <code class="docutils literal notranslate"><span class="pre">ski.morphology.erosion</span></code> function to apply the same operation, and get exactly the same result:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">hubble_eroded_again</span> <span class="o">=</span> <span class="n">ski</span><span class="o">.</span><span class="n">morphology</span><span class="o">.</span><span class="n">erosion</span><span class="p">(</span><span class="n">hubble_blue_ubyte</span><span class="p">,</span> <span class="n">disk_5</span><span class="p">)</span>
+<span class="c1"># We get exactly the result we got by applying the minimum filter above.</span>
+<span class="n">np</span><span class="o">.</span><span class="n">all</span><span class="p">(</span><span class="n">hubble_eroded_again</span> <span class="o">==</span> <span class="n">hubble_eroded</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>np.True_
+</pre></div>
+</div>
+</div>
+</div>
+<p>With that example, let us return to a discussion of the erosion (footprint
+/ minimum) algorithm.</p>
+</section>
+<section id="footprints-as-template-shapes">
+<h2>Footprints as template shapes<a class="headerlink" href="#footprints-as-template-shapes" title="Link to this heading">#</a></h2>
+<p>Because morphological operations are part of image processing, they involve
+the modification of array pixel values. In morphological operations, the
+footprint guides changes to pixel values <em>depending upon the match between the
+shape of the footprint and the shape of the pixels in the “neighborhood” of
+the footprint</em>.</p>
+<p>The footprint is centered once on every pixel in an image, and this central
+pixel is modified (or not) depending upon the match between the shape of the
+footprint and the shape described by the pixel values in that neighborhood.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p><strong>Footprints and centering</strong></p>
+<p>We asserted above that we center the footprint on each pixel in the image, and
+this by far the most common procedure.  However, you can ask Scikit-image or
+Scipy <code class="docutils literal notranslate"><span class="pre">ndimage</span></code> to offset the footprint centering by a given number of pixels.  See the corresponding help for the Scikit-image and <code class="docutils literal notranslate"><span class="pre">ndimage</span></code> functions for detail on how to do this.</p>
+</div>
+</section>
+<section id="erosion-on-a-binary-image">
+<h2>Erosion on a binary image<a class="headerlink" href="#erosion-on-a-binary-image" title="Link to this heading">#</a></h2>
+<p>It can be easier to think of erosion (and dilation) in terms of their effects on simple binary (True / False, 1 / 0) images.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Make a binary square.</span>
 <span class="n">square</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span>
                    <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span>
                    <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span>
@@ -520,28 +667,39 @@ document.write(`
 <img alt="_images/08d091eeb7bcdcb9326e54f43612811154ae379047d17666e181136d291c131f.png" src="_images/08d091eeb7bcdcb9326e54f43612811154ae379047d17666e181136d291c131f.png" />
 </div>
 </div>
-<p>Let’s get fancy and ostentatious now, and invest in some diamonds, by which we mean let’s use <code class="docutils literal notranslate"><span class="pre">ski.morphology.diamond()</span></code> to construct a structuring element:</p>
+<p>Let’s get fancy and ostentatious now, and invest in some diamonds, by which we
+mean, let’s use <code class="docutils literal notranslate"><span class="pre">ski.morphology.diamond()</span></code> to construct a new footprint:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Create a `diamond` structuring element.</span>
-<span class="n">diamond</span> <span class="o">=</span> <span class="n">ski</span><span class="o">.</span><span class="n">morphology</span><span class="o">.</span><span class="n">diamond</span><span class="p">(</span><span class="n">radius</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span> <span class="c1"># Changing `radius` will change the size of the diamond.</span>
-
-<span class="c1"># Show the diamond.</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">diamond</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">matshow</span><span class="p">(</span><span class="n">diamond</span><span class="p">);</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Create a `diamond` footprint.</span>
+<span class="c1"># Changing `radius` will change the size of the diamond.</span>
+<span class="n">diamond</span> <span class="o">=</span> <span class="n">ski</span><span class="o">.</span><span class="n">morphology</span><span class="o">.</span><span class="n">diamond</span><span class="p">(</span><span class="n">radius</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">diamond</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[[0 1 0]
- [1 1 1]
- [0 1 0]]
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([[0, 1, 0],
+       [1, 1, 1],
+       [0, 1, 0]], dtype=uint8)
 </pre></div>
 </div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">matshow</span><span class="p">(</span><span class="n">diamond</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
 <img alt="_images/820110710d5573bec941b6373e3ccec31b5c1f375ad4f2ce8d1e3ee42edf4c36.png" src="_images/820110710d5573bec941b6373e3ccec31b5c1f375ad4f2ce8d1e3ee42edf4c36.png" />
 </div>
 </div>
-<p>Using <code class="docutils literal notranslate"><span class="pre">ski.morphology.diamond(radius=1)</span></code> gives us a diamond shaped structuring element of <code class="docutils literal notranslate"><span class="pre">shape</span></code> (3, 3). We’d call it a “cross” but “diamond” is the canonical term… be assured that it will look more diamond-like (diamond-y?) when set to a bigger <code class="docutils literal notranslate"><span class="pre">radius</span></code>…:</p>
+<p>Using <code class="docutils literal notranslate"><span class="pre">ski.morphology.diamond(radius=1)</span></code> gives us a diamond shaped footprint of
+<code class="docutils literal notranslate"><span class="pre">shape</span></code> (3, 3). We’d call it a “cross” but “diamond” is the canonical term…
+Be assured that it will look more diamond-like (diamond-y?) when set to
+a bigger <code class="docutils literal notranslate"><span class="pre">radius</span></code>…:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">diamond</span><span class="o">.</span><span class="n">shape</span>
@@ -554,45 +712,79 @@ document.write(`
 </div>
 </div>
 </div>
-</section>
-<section class="tex2jax_ignore mathjax_ignore" id="erosion">
-<h1>Erosion<a class="headerlink" href="#erosion" title="Link to this heading">#</a></h1>
-<p>The fundamental operations of morphological image processing are <em>erosion</em> and <em>dilation</em>. These affect bright and dark regions in an image. We will consider erosion first.</p>
-<p>Much like when bad behaviour spreads through a social group, erosion will lower a given pixels value down to lowest value within its neighborhood - which is to say the lowest pixel value under the structuring element. The structuring element is centered on a pixel, and it is this central pixel that is altered and set to the lowest value in the neighborhood. However, it will only perform this lowering <em>if the pixels in the neighborhood do not match the shape of the structuring element</em>, else it will leave the central pixel unchanged.</p>
-<p>As mentioned above, a full morphological operation involves centering the structuring element on <em>every pixel in the image</em>, so every pixel gets assessed for alteration with reference to the other pixels in its neighborhood. Like most (efficient) processes in computing, the operation is done in parallel (at the same time to all pixels in the images, rather than sequentially).</p>
-<p>We can erode our binary square using <code class="docutils literal notranslate"><span class="pre">ski.morphology.erosion()</span></code>, we use the <code class="docutils literal notranslate"><span class="pre">footprint</span></code> argument to specify our structuring element:</p>
+<p>As you read above, erosion proceeds by applying the following algorithm at each pixel of the image.</p>
+<ol class="arabic simple">
+<li><p>Placing the footprint over the pixel and</p></li>
+<li><p>Selecting the pixel values under the footprint (where the footprint is
+1 / True) and</p></li>
+<li><p>Setting the output value at the given pixel to the minimum of the selected
+values.</p></li>
+</ol>
+<p>Here we erode our binary square using <code class="docutils literal notranslate"><span class="pre">ski.morphology.erosion()</span></code>.  We could
+equivalently have used <code class="docutils literal notranslate"><span class="pre">ski.filter.rank.minimum</span></code>.  In either case, we use the
+<code class="docutils literal notranslate"><span class="pre">footprint</span></code> argument to specify our footprint:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Erode our image.</span>
 <span class="n">eroded_square</span> <span class="o">=</span> <span class="n">ski</span><span class="o">.</span><span class="n">morphology</span><span class="o">.</span><span class="n">erosion</span><span class="p">(</span><span class="n">square</span><span class="p">,</span>
                                        <span class="n">footprint</span><span class="o">=</span><span class="n">diamond</span><span class="p">)</span>
-
 <span class="c1"># Show the result.</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">eroded_square</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">eroded_square</span><span class="p">);</span>
+<span class="n">eroded_square</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[[0 0 0 0 0 0 0]
- [0 0 0 0 0 0 0]
- [0 0 0 0 0 0 0]
- [0 0 0 1 0 0 0]
- [0 0 0 0 0 0 0]
- [0 0 0 0 0 0 0]
- [0 0 0 0 0 0 0]]
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([[0, 0, 0, 0, 0, 0, 0],
+       [0, 0, 0, 0, 0, 0, 0],
+       [0, 0, 0, 0, 0, 0, 0],
+       [0, 0, 0, 1, 0, 0, 0],
+       [0, 0, 0, 0, 0, 0, 0],
+       [0, 0, 0, 0, 0, 0, 0],
+       [0, 0, 0, 0, 0, 0, 0]], dtype=uint8)
 </pre></div>
 </div>
+</div>
+</div>
+<div class="cell tag_hide-input docutils container">
+<details class="admonition hide above-input">
+<summary aria-label="Toggle hidden content">
+<p class="collapsed admonition-title">Show code cell source</p>
+<p class="expanded admonition-title">Hide code cell source</p>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">eroded_square</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+</details>
+<div class="cell_output docutils container">
 <img alt="_images/bda0609e9ab49e5814ee3fbfa1bd51fbb9b4c23984918a5c2328052f749118eb.png" src="_images/bda0609e9ab49e5814ee3fbfa1bd51fbb9b4c23984918a5c2328052f749118eb.png" />
 </div>
 </div>
-<p>What has happened here? We can think of our <code class="docutils literal notranslate"><span class="pre">diamond</span></code> structing element as being a bit like a weird <a class="reference external" href="https://en.wikipedia.org/wiki/Reticle">crosshair/reticle</a> of a gun. In a morphological operation, we “target” the crosshair on a given array pixel. Because we are eroding, the central pixel will be <em>lowered to the value of the lowest pixel in its neighborhood</em> if the pixels in the neighborhood do not “match” the shape of the structuring element. This is illustrated below.</p>
-<p>Now, because our <code class="docutils literal notranslate"><span class="pre">square</span></code> array contains only 1s and 0s, central pixels “match” the structuring element if the pixels under the structuring element are 1 where the values in the structuring element are 1. The image below shows the <code class="docutils literal notranslate"><span class="pre">diamond</span></code> structuring element being applied to three different central pixels. “Matches” between the structuring element and the array pixels are depicted with a green tick; “clashes” between the structuring element and the array pixels are depicted with a red X. “Clashes” occur where the structuring element value is 1 and the array pixel value is 0.</p>
-<p>If a “clash” occurs, then the central pixel gets lowered to the lowest value under the structuring element (0). (We call this, loosely, the central pixel “dying”).</p>
-<p>If a full “match” occurs between the neighborhood values and the structuring element, then the central pixel is left altered (we say that it “survives”):</p>
+<p>What has happened here? We can think of our <code class="docutils literal notranslate"><span class="pre">diamond</span></code> footprint as being a bit
+like a weird <a class="reference external" href="https://en.wikipedia.org/wiki/Reticle">crosshair/reticle</a> of
+a gun. In a morphological operation, we “target” the crosshair on a given
+array pixel. Because we are eroding, the central pixel will be <em>lowered to the
+value of the lowest pixel in its neighborhood</em>. This is illustrated below.</p>
+<p>When we apply the footprint to each pixel in the image, call the pixels under
+the footprint — <em>the pixel neighborhood</em>.  Because our <code class="docutils literal notranslate"><span class="pre">square</span></code> array contains
+only 1s and 0s, the output pixels will be 1 <em>only if</em> all pixels in the local
+neighborhood are 1, and 0 otherwise.  The image below shows the <code class="docutils literal notranslate"><span class="pre">diamond</span></code>
+footprint being applied to three different central pixels. Call pixels
+“matches” where all the pixels in the pixel local neighborhood are 1.  All
+other pixels are “clashes”.  These are pixels where at least one pixel in the
+pixel local neighborhood is 0. Matches between the footprint and the array
+pixels are depicted with a green tick; clashes between the footprint and the
+array pixels are depicted with a red X.</p>
+<p>Whether there is a match or a clash, the output pixel gets set to the minimum
+of the pixel local neighborhood.  For matches this is 1 (all pixels in the
+neighborhood are 1).  For clashes this is 0 (at least one pixel in the
+neighborhood is 0).</p>
 <p><img alt="" src="_images/hit_n_miss_with_text.png" /></p>
-<p>Let’s repeat this erosion process with two <code class="docutils literal notranslate"><span class="pre">square</span></code> arrays <code class="docutils literal notranslate"><span class="pre">concatenate</span></code>d together.</p>
-<p>What do you think will happen when we erode them using the <code class="docutils literal notranslate"><span class="pre">diamond</span></code> structuring element? Try to predict before you check:</p>
+<p>Let’s repeat this erosion process with two <code class="docutils literal notranslate"><span class="pre">square</span></code> arrays <code class="docutils literal notranslate"><span class="pre">concatenate</span></code>d
+together.</p>
+<p>What do you think will happen when we erode them using the <code class="docutils literal notranslate"><span class="pre">diamond</span></code>
+footprint? Try to predict before you check:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># `concatenate` two `square` arrays.</span>
@@ -609,7 +801,6 @@ document.write(`
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Perform the erosion.</span>
 <span class="n">eroded_two_squares</span> <span class="o">=</span> <span class="n">ski</span><span class="o">.</span><span class="n">morphology</span><span class="o">.</span><span class="n">erosion</span><span class="p">(</span><span class="n">two_squares</span><span class="p">,</span> <span class="n">diamond</span><span class="p">)</span>
-
 <span class="n">eroded_two_squares</span>
 </pre></div>
 </div>
@@ -637,10 +828,15 @@ document.write(`
 <img alt="_images/02058f217ac257dbf443c5cf4c4063d4dfc2bc83184347e881635846cef8845b.png" src="_images/02058f217ac257dbf443c5cf4c4063d4dfc2bc83184347e881635846cef8845b.png" />
 </div>
 </div>
-<p>What happened here? Well, again a “match” only occurs for two pixels in the image, the pixels at the center of each white square. This illustration below shows what happened:</p>
+<p>What happened here? Well, again a “match” only occurs for two pixels in the
+image, the pixels at the center of each white square. This illustration below
+shows what happened:</p>
 <p><img alt="" src="_images/hit_n_miss_with_text_2.png" /></p>
-<p>All other “neighborhoods” did not match the structuring element, and so the values in the neighborhood were lowered to 0, 0 being the lowest value in each neighborhood. This has the effect, if a non-matching pixel has the value of 1, of setting it to 0. If a non-matching pixel has a value of 0, it also gets set to 0, but it was already 0, so there is no appreciable change.</p>
-<p>Let’s alter our image array slightly, to see how this affects the erosion operation with our <code class="docutils literal notranslate"><span class="pre">diamond</span></code> structuring element. We will place a black array pixel inside the right-hand white square:</p>
+<p>All other “neighborhoods” did not match the footprint, and so the values in the
+neighborhood were lowered to 0, 0 being the lowest value in each neighborhood.
+This has the effect, if a non-matching pixel has the value of 1, of setting it
+to 0.</p>
+<p>Let’s alter our image array slightly, to see how this affects the erosion operation with our <code class="docutils literal notranslate"><span class="pre">diamond</span></code> footprint. We will place a black array pixel inside the right-hand white square:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># A modified array.</span>
@@ -650,7 +846,7 @@ document.write(`
                                <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span>
                                <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span>
                                <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span>
-                               <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]],</span> 
+                               <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]],</span>
                                <span class="n">dtype</span><span class="o">=</span><span class="s2">&quot;uint8&quot;</span><span class="p">)</span>
 
 <span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">square_the_circle</span><span class="p">);</span>
@@ -661,12 +857,15 @@ document.write(`
 <img alt="_images/cb3da9d07066f941b8537e46fef3faba77adc205e0cb07607fc1f0ea875e99d5.png" src="_images/cb3da9d07066f941b8537e46fef3faba77adc205e0cb07607fc1f0ea875e99d5.png" />
 </div>
 </div>
-<p>Before looking at the output of the cell below, try to think carefully about how you think this will affect the erosion operation, using the (3, 3) <code class="docutils literal notranslate"><span class="pre">diamond</span></code> structuring element. Picture what will happen on the black pixel in the center of the right-hand square.</p>
-<p>Scroll down to the output of the cell below to see if your prediction was correct:</p>
+<p>Before looking at the output of the cell below, try to think carefully about
+how you think this will affect the erosion operation, using the (3, 3)
+<code class="docutils literal notranslate"><span class="pre">diamond</span></code> footprint. Picture what will happen on the black pixel in the center
+of the right-hand square.</p>
+<p>Scroll down to the output of the cell below to see if your prediction was
+correct:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">eroded_square_the_circle</span> <span class="o">=</span> <span class="n">ski</span><span class="o">.</span><span class="n">morphology</span><span class="o">.</span><span class="n">erosion</span><span class="p">(</span><span class="n">square_the_circle</span><span class="p">,</span> <span class="n">diamond</span><span class="p">)</span>
-
 <span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">eroded_square_the_circle</span><span class="p">);</span>
 </pre></div>
 </div>
@@ -676,83 +875,122 @@ document.write(`
 </div>
 </div>
 <p>Ok, so now the whole right-hand square got taken out. Brutal.</p>
-<p>Why did this happen? The cell below illustrates, again using green ticks for “matches” between the structuring element and the pixel “neighborhood”, and red X’s for “clashes” between the structuring element and the pixel “neighborhood”.</p>
-<p>Remember that a “clash” means the central pixel “dies”; a “match” means the central pixel “survives”:</p>
+<p>Why did this happen? The cell below illustrates, again using green ticks for
+“matches” between the footprint and the pixel “neighborhood”, and red X’s for
+“clashes” between the footprint and the pixel “neighborhood”.</p>
+<p>Remember that a “clash” means the central pixel “dies” (gets set to 0);
+a “match” means the central pixel “survives” (gets set to 1).</p>
 <p><img alt="" src="_images/hit_n_miss_with_text_3.png" /></p>
+<p>Think of erosion as searching for, and maintaining, areas matching the
+footprint shape, while suppressing areas not of that shape.</p>
 </section>
-<section class="tex2jax_ignore mathjax_ignore" id="dilation">
-<h1>Dilation<a class="headerlink" href="#dilation" title="Link to this heading">#</a></h1>
-<p>The other foundational operation in morphological image processing is <em>dilation</em>. Dilation works the same as erosion in terms of centering a structuring element on each pixel and looking for “matches” or “clashes”. However, it does exactly the opposite thing for pixels where it finds a “clash”. Where, in the event of a “clash”, erosion <em>lowers</em> central pixel values down to the neighborhood minimum, dilation instead <em>raises</em> central pixel to the value of the neighborhood maximum.</p>
+<section id="dilation">
+<h2>Dilation<a class="headerlink" href="#dilation" title="Link to this heading">#</a></h2>
+<p>The other foundational operation in morphological image processing is
+<em>dilation</em>.</p>
+<p>Dilation is nothing but a footprint / function filter, where the function is
+<code class="docutils literal notranslate"><span class="pre">maximum</span></code> rather than <code class="docutils literal notranslate"><span class="pre">minimum</span></code>.</p>
+<p>Dilation works in the same way as erosion, or any other footprint / function
+filter, in terms of centering a footprint on each pixel, to select the pixel local neighborhood.  It takes the maximum of the local pixel values.</p>
+<p>Now, if <em>any</em> of the pixels in the local neighborhood are 1, the output pixel
+is 1.  Call this a <em>dilation</em> match.  Only if <em>all</em> the local neighborhood pixels are 0, is the output pixel 0.  Call this a <em>dilation</em> clash.</p>
 <p>Let’s dilate the <code class="docutils literal notranslate"><span class="pre">square</span></code> array:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Show the `square` array.</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">square</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">square</span><span class="p">);</span>
+<span class="n">square</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[[0 0 0 0 0 0 0]
- [0 0 0 0 0 0 0]
- [0 0 1 1 1 0 0]
- [0 0 1 1 1 0 0]
- [0 0 1 1 1 0 0]
- [0 0 0 0 0 0 0]
- [0 0 0 0 0 0 0]]
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([[0, 0, 0, 0, 0, 0, 0],
+       [0, 0, 0, 0, 0, 0, 0],
+       [0, 0, 1, 1, 1, 0, 0],
+       [0, 0, 1, 1, 1, 0, 0],
+       [0, 0, 1, 1, 1, 0, 0],
+       [0, 0, 0, 0, 0, 0, 0],
+       [0, 0, 0, 0, 0, 0, 0]], dtype=uint8)
 </pre></div>
 </div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">square</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
 <img alt="_images/08d091eeb7bcdcb9326e54f43612811154ae379047d17666e181136d291c131f.png" src="_images/08d091eeb7bcdcb9326e54f43612811154ae379047d17666e181136d291c131f.png" />
 </div>
 </div>
-<p>Now, we use <code class="docutils literal notranslate"><span class="pre">ski.morphology.dilation()</span></code> to dilate the image, again using <code class="docutils literal notranslate"><span class="pre">diamond</span></code> as our structuring element:</p>
+<p>Now, we use <code class="docutils literal notranslate"><span class="pre">ski.morphology.dilation()</span></code> to dilate the image.   We could,
+equivalently, use the <code class="docutils literal notranslate"><span class="pre">ski.filter.rank.maximum</span></code> function. Again we will use
+<code class="docutils literal notranslate"><span class="pre">diamond</span></code> as our footprint:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Perform the dilaton.</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Perform the dilation.</span>
 <span class="n">dilated_square</span> <span class="o">=</span> <span class="n">ski</span><span class="o">.</span><span class="n">morphology</span><span class="o">.</span><span class="n">dilation</span><span class="p">(</span><span class="n">square</span><span class="p">,</span>
                                          <span class="n">footprint</span><span class="o">=</span><span class="n">diamond</span><span class="p">)</span>
-
-<span class="c1"># Show the result.</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">dilated_square</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">dilated_square</span><span class="p">);</span>
+<span class="n">dilated_square</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[[0 0 0 0 0 0 0]
- [0 0 1 1 1 0 0]
- [0 1 1 1 1 1 0]
- [0 1 1 1 1 1 0]
- [0 1 1 1 1 1 0]
- [0 0 1 1 1 0 0]
- [0 0 0 0 0 0 0]]
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([[0, 0, 0, 0, 0, 0, 0],
+       [0, 0, 1, 1, 1, 0, 0],
+       [0, 1, 1, 1, 1, 1, 0],
+       [0, 1, 1, 1, 1, 1, 0],
+       [0, 1, 1, 1, 1, 1, 0],
+       [0, 0, 1, 1, 1, 0, 0],
+       [0, 0, 0, 0, 0, 0, 0]], dtype=uint8)
 </pre></div>
 </div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">dilated_square</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
 <img alt="_images/d64494039023a5760c23615d1f9488e04741a88130233bd3e8337e1e530aaf57.png" src="_images/d64494039023a5760c23615d1f9488e04741a88130233bd3e8337e1e530aaf57.png" />
 </div>
 </div>
-<p>Ok, so now some of the “clashes” have resulted in <em>more</em> white pixels in the image. The illustration below shows this for three pixels, two “clashes” and the one “match”:</p>
+<p>Ok, so now some of the “clashes” have resulted in <em>more</em> white pixels in the
+image. The illustration below shows this for three pixels, two “clashes” and
+the one “match”:</p>
 <p><img alt="" src="_images/hit_n_miss_dilation.png" /></p>
-<p>What do you think will happen if we dilate the <code class="docutils literal notranslate"><span class="pre">square_the_circle</span></code> array image shown below, using the <code class="docutils literal notranslate"><span class="pre">diamond</span></code> structuring element?</p>
+<p>What do you think will happen if we dilate the <code class="docutils literal notranslate"><span class="pre">square_the_circle</span></code> array image
+shown below, using the <code class="docutils literal notranslate"><span class="pre">diamond</span></code> footprint?</p>
 <p>Try to predict before checking:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Show the array.</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">square_the_circle</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">square_the_circle</span><span class="p">);</span>
+<span class="n">square_the_circle</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[[0 0 0 0 0 0 0 0 0 0 0 0 0 0]
- [0 0 0 0 0 0 0 0 0 0 0 0 0 0]
- [0 0 1 1 1 0 0 0 0 1 1 1 0 0]
- [0 0 1 1 1 0 0 0 0 1 0 1 0 0]
- [0 0 1 1 1 0 0 0 0 1 1 1 0 0]
- [0 0 0 0 0 0 0 0 0 0 0 0 0 0]
- [0 0 0 0 0 0 0 0 0 0 0 0 0 0]]
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+       [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+       [0, 0, 1, 1, 1, 0, 0, 0, 0, 1, 1, 1, 0, 0],
+       [0, 0, 1, 1, 1, 0, 0, 0, 0, 1, 0, 1, 0, 0],
+       [0, 0, 1, 1, 1, 0, 0, 0, 0, 1, 1, 1, 0, 0],
+       [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+       [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]], dtype=uint8)
 </pre></div>
 </div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">square_the_circle</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
 <img alt="_images/cb3da9d07066f941b8537e46fef3faba77adc205e0cb07607fc1f0ea875e99d5.png" src="_images/cb3da9d07066f941b8537e46fef3faba77adc205e0cb07607fc1f0ea875e99d5.png" />
 </div>
 </div>
@@ -760,8 +998,8 @@ document.write(`
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Dilate the `square_the_circle` array, and show the result.</span>
-<span class="n">dilated_square_the_circle</span> <span class="o">=</span> <span class="n">ski</span><span class="o">.</span><span class="n">morphology</span><span class="o">.</span><span class="n">dilation</span><span class="p">(</span><span class="n">square_the_circle</span><span class="p">,</span> 
-                                                   <span class="n">footprint</span><span class="o">=</span><span class="n">diamond</span><span class="p">)</span>
+<span class="n">dilated_square_the_circle</span> <span class="o">=</span> <span class="n">ski</span><span class="o">.</span><span class="n">morphology</span><span class="o">.</span><span class="n">dilation</span><span class="p">(</span><span class="n">square_the_circle</span><span class="p">,</span>
+                                                    <span class="n">footprint</span><span class="o">=</span><span class="n">diamond</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">dilated_square_the_circle</span><span class="p">);</span>
 </pre></div>
 </div>
@@ -772,14 +1010,20 @@ document.write(`
 </div>
 <p>Why did this happen? The image below explains:</p>
 <p><img alt="" src="_images/hit_n_miss_with_text_3_dilation.png" /></p>
-<p>For erosion, all of the “clashing” pixels in the right-hand square get <em>lowered</em> to their neighborhood minimum, in this case 0, and so they “die” and fade into the black background.</p>
-<p>For dilation, clashing central pixels get <em>raised</em> to the neighborhood maximum, which in this case is 1.</p>
-<p>So, <a class="reference external" href="https://scikit-image.org/docs/0.25.x/auto_examples/applications/plot_morphology.html">remember</a>:</p>
-<p><em>Erosion enlarges dark regions and shrinks bright regions.</em></p>
-<p><em>Dilation enlarges bright regions and shrinks dark regions.</em></p>
+<p>For erosion, all of the “clashing” pixels in the right-hand square get
+<em>lowered</em> to their neighborhood minimum, in this case 0, and so they “die” and
+fade into the black background.</p>
+<p>For dilation, clashing central pixels get <em>raised</em> to the neighborhood maximum,
+which in this case is 1.</p>
+<p>Think of dilation as extending bright areas with the footprint shape.</p>
+<p><a class="reference external" href="https://scikit-image.org/docs/0.25.x/auto_examples/applications/plot_morphology.html">Another way of thinking of this</a> is:</p>
+<ul class="simple">
+<li><p><em>Erosion enlarges dark regions and shrinks bright regions.</em></p></li>
+<li><p><em>Dilation enlarges bright regions and shrinks dark regions.</em></p></li>
+</ul>
 </section>
-<section class="tex2jax_ignore mathjax_ignore" id="morphology-using-more-complex-images">
-<h1>Morphology using more complex images<a class="headerlink" href="#morphology-using-more-complex-images" title="Link to this heading">#</a></h1>
+<section id="morphology-using-more-complex-images">
+<h2>Morphology using more complex images<a class="headerlink" href="#morphology-using-more-complex-images" title="Link to this heading">#</a></h2>
 <p>Let’s apply some of this to more complex images. Fittingly, we will use
 a terrifying picture of
 a <a class="reference external" href="https://en.wikipedia.org/wiki/Xenomorph">Xenomorph</a>, which at the time of
@@ -794,22 +1038,30 @@ franchises”. Yikes.</p>
 <span class="c1"># Convert to binary.</span>
 <span class="n">xenomorph</span> <span class="o">=</span> <span class="n">ski</span><span class="o">.</span><span class="n">util</span><span class="o">.</span><span class="n">img_as_bool</span><span class="p">(</span><span class="n">xenomorph</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span>
 
-<span class="c1"># Show the &quot;raw&quot; array, then show graphically.</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">xenomorph</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">xenomorph</span><span class="p">);</span>
+<span class="c1"># Show the &quot;raw&quot; array.</span>
+<span class="n">xenomorph</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[[0 0 0 ... 0 0 0]
- [0 0 0 ... 0 0 0]
- [0 0 0 ... 0 0 0]
- ...
- [0 0 0 ... 0 0 0]
- [0 0 0 ... 0 0 0]
- [0 0 0 ... 0 0 0]]
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([[0, 0, 0, ..., 0, 0, 0],
+       [0, 0, 0, ..., 0, 0, 0],
+       [0, 0, 0, ..., 0, 0, 0],
+       ...,
+       [0, 0, 0, ..., 0, 0, 0],
+       [0, 0, 0, ..., 0, 0, 0],
+       [0, 0, 0, ..., 0, 0, 0]], shape=(1456, 816))
 </pre></div>
 </div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">xenomorph</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
 <img alt="_images/60e85a9ead856605301c4e5f1f03c844368a82b8904c8bb149691797000f9926.png" src="_images/60e85a9ead856605301c4e5f1f03c844368a82b8904c8bb149691797000f9926.png" />
 </div>
 </div>
@@ -831,7 +1083,8 @@ Min Pixel Value: 0
 </div>
 </div>
 <p>Scary, especially as a binary image, but not quite as scary as the <code class="docutils literal notranslate"><span class="pre">smiley</span></code> image we <a class="reference internal" href="0_images_as_numpy_arrays.html"><span class="doc std std-doc">made</span></a> that still haunts our dreams.</p>
-<p>True to form, eroding this image using the <code class="docutils literal notranslate"><span class="pre">diamond</span></code> structuring element increases the size of dark regions:</p>
+<p>True to form, eroding this image using the <code class="docutils literal notranslate"><span class="pre">diamond</span></code> footprint increases the
+size of dark regions:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Erode the xenomorph.</span>
@@ -847,7 +1100,8 @@ Min Pixel Value: 0
 <img alt="_images/32bc9059e3de03e0c178e65fa9ac5af5368cfdadcc7f30cb8598e942bc2dae73.png" src="_images/32bc9059e3de03e0c178e65fa9ac5af5368cfdadcc7f30cb8598e942bc2dae73.png" />
 </div>
 </div>
-<p>Whilst dilation increases the size of bright regions (creating a truly, truly terrifying image):</p>
+<p>Whilst dilation increases the size of bright regions (creating a truly, truly
+terrifying image):</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Dilate the xenomorph.</span>
@@ -863,41 +1117,54 @@ Min Pixel Value: 0
 <img alt="_images/b99c187a2500da943c88091bf7848574fb774c2a3a731c3b4e14f878a55af309.png" src="_images/b99c187a2500da943c88091bf7848574fb774c2a3a731c3b4e14f878a55af309.png" />
 </div>
 </div>
-<p>We can alter the size of the structuring element to change the nature of the effect. The exact change will be heavily dependent on the image array we are processing. Here we create a diamond with <code class="docutils literal notranslate"><span class="pre">radius</span> <span class="pre">=</span> <span class="pre">6</span></code>:</p>
+<p>We can alter the size of the footprint to change the nature of the effect. The
+exact change will be heavily dependent on the image array we are processing.
+Here we create a diamond with <code class="docutils literal notranslate"><span class="pre">radius=6</span></code>:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Create and show a larger diamond structuring element.</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Create and show a larger diamond footprint.</span>
 <span class="n">diamond_6</span> <span class="o">=</span> <span class="n">ski</span><span class="o">.</span><span class="n">morphology</span><span class="o">.</span><span class="n">diamond</span><span class="p">(</span><span class="n">radius</span><span class="o">=</span><span class="mi">6</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">diamond_6</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">diamond_6</span><span class="p">);</span>
+<span class="n">diamond_6</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[[0 0 0 0 0 0 1 0 0 0 0 0 0]
- [0 0 0 0 0 1 1 1 0 0 0 0 0]
- [0 0 0 0 1 1 1 1 1 0 0 0 0]
- [0 0 0 1 1 1 1 1 1 1 0 0 0]
- [0 0 1 1 1 1 1 1 1 1 1 0 0]
- [0 1 1 1 1 1 1 1 1 1 1 1 0]
- [1 1 1 1 1 1 1 1 1 1 1 1 1]
- [0 1 1 1 1 1 1 1 1 1 1 1 0]
- [0 0 1 1 1 1 1 1 1 1 1 0 0]
- [0 0 0 1 1 1 1 1 1 1 0 0 0]
- [0 0 0 0 1 1 1 1 1 0 0 0 0]
- [0 0 0 0 0 1 1 1 0 0 0 0 0]
- [0 0 0 0 0 0 1 0 0 0 0 0 0]]
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([[0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0],
+       [0, 0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 0],
+       [0, 0, 0, 0, 1, 1, 1, 1, 1, 0, 0, 0, 0],
+       [0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0],
+       [0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0],
+       [0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0],
+       [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+       [0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0],
+       [0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0],
+       [0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0],
+       [0, 0, 0, 0, 1, 1, 1, 1, 1, 0, 0, 0, 0],
+       [0, 0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 0],
+       [0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0]], dtype=uint8)
 </pre></div>
 </div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">diamond_6</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
 <img alt="_images/9be3e6344f182130fe13c1872aec51000c3716742108f48607a271a55b0cd768.png" src="_images/9be3e6344f182130fe13c1872aec51000c3716742108f48607a271a55b0cd768.png" />
 </div>
 </div>
-<p>Applied to the <code class="docutils literal notranslate"><span class="pre">xenomorph</span></code> image in an erosion operation, this has some radical results:</p>
+<p>Applied to the <code class="docutils literal notranslate"><span class="pre">xenomorph</span></code> image in an erosion operation, this has some radical
+results:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">xeno_binary_ero_rad_6_diamond</span> <span class="o">=</span> <span class="n">ski</span><span class="o">.</span><span class="n">morphology</span><span class="o">.</span><span class="n">erosion</span><span class="p">(</span><span class="n">xenomorph</span><span class="p">,</span> 
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">xeno_binary_ero_rad_6_diamond</span> <span class="o">=</span> <span class="n">ski</span><span class="o">.</span><span class="n">morphology</span><span class="o">.</span><span class="n">erosion</span><span class="p">(</span><span class="n">xenomorph</span><span class="p">,</span>
                                                        <span class="n">footprint</span><span class="o">=</span><span class="n">diamond_6</span><span class="p">)</span>
-<span class="n">show_both</span><span class="p">(</span><span class="n">xenomorph</span><span class="p">,</span> <span class="n">xeno_binary_ero_rad_6_diamond</span><span class="p">,</span> <span class="s2">&quot;Eroded </span><span class="se">\n</span><span class="s2">(13, 13) Diamond SE&quot;</span><span class="p">);</span>
+<span class="n">show_both</span><span class="p">(</span><span class="n">xenomorph</span><span class="p">,</span>
+          <span class="n">xeno_binary_ero_rad_6_diamond</span><span class="p">,</span>
+          <span class="s2">&quot;Eroded </span><span class="se">\n</span><span class="s2">(13, 13) Diamond SE&quot;</span><span class="p">);</span>
 </pre></div>
 </div>
 </div>
@@ -905,14 +1172,22 @@ Min Pixel Value: 0
 <img alt="_images/e3878b7301cbc6101a6fb24fbf1bf8453c57404f497990ff7da1a31edf578464.png" src="_images/e3878b7301cbc6101a6fb24fbf1bf8453c57404f497990ff7da1a31edf578464.png" />
 </div>
 </div>
-<p>There are less “matches” between the large structuring element and pixel neighborhoods in the image - this leaves less central pixels unchanged, than for a smaller structuring element of the same shape. Thus, because in erorison we are <em>lowering</em> central pixel values in the event of a “clash”, the darker regions have expanded substantially more than when we used a smaller <code class="docutils literal notranslate"><span class="pre">diamond</span></code>, which gave more “matches”.</p>
-<p>Dilation, again has the opposite effect of increasing brighter regions, in the event of “clashes”:</p>
+<p>There are fewer areas for this large footprint where the all the values (and
+therefore the minimum value) is high.  Therefore, erosion leaves less central
+pixels with relatively high values, than for a smaller footprint of the same
+shape.  For all the pixels where the local neighborhood includes at least one
+low-value pixel, the erosion output is low-value, so the darker regions have
+expanded substantially more than when we used a smaller <code class="docutils literal notranslate"><span class="pre">diamond</span></code>, which gave
+more “matches”.</p>
+<p>Dilation, again has the opposite effect of increasing brighter regions around regions that are already bright:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Dilate the xenomorph with the `radius = 6` diamond.</span>
-<span class="n">xeno_binary_dilate_rad_6_diamond</span> <span class="o">=</span> <span class="n">ski</span><span class="o">.</span><span class="n">morphology</span><span class="o">.</span><span class="n">dilation</span><span class="p">(</span><span class="n">xenomorph</span><span class="p">,</span> 
+<span class="n">xeno_binary_dilate_rad_6_diamond</span> <span class="o">=</span> <span class="n">ski</span><span class="o">.</span><span class="n">morphology</span><span class="o">.</span><span class="n">dilation</span><span class="p">(</span><span class="n">xenomorph</span><span class="p">,</span>
                                                            <span class="n">footprint</span><span class="o">=</span><span class="n">diamond_6</span><span class="p">)</span>
-<span class="n">show_both</span><span class="p">(</span><span class="n">xenomorph</span><span class="p">,</span> <span class="n">xeno_binary_dilate_rad_6_diamond</span><span class="p">,</span> <span class="s2">&quot;Dilated </span><span class="se">\n</span><span class="s2">(13, 13) Diamond SE&quot;</span><span class="p">);</span>
+<span class="n">show_both</span><span class="p">(</span><span class="n">xenomorph</span><span class="p">,</span>
+          <span class="n">xeno_binary_dilate_rad_6_diamond</span><span class="p">,</span>
+          <span class="s2">&quot;Dilated </span><span class="se">\n</span><span class="s2">(13, 13) Diamond SE&quot;</span><span class="p">);</span>
 </pre></div>
 </div>
 </div>
@@ -920,10 +1195,11 @@ Min Pixel Value: 0
 <img alt="_images/8e2eaead5e6fb67c0ba1a84cdc509c7978cd64c331092d9b1ab60cd096e51e58.png" src="_images/8e2eaead5e6fb67c0ba1a84cdc509c7978cd64c331092d9b1ab60cd096e51e58.png" />
 </div>
 </div>
-<p>We can also change the shape of the structuring element - here we create a rectangle of <code class="docutils literal notranslate"><span class="pre">shape</span></code> (3, 3):</p>
+<p>We can also change the shape of the footprint - here we create a rectangle
+(Ok, a square) of <code class="docutils literal notranslate"><span class="pre">shape</span></code> (3, 3):</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># A square structuring element.</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># A square footprint.</span>
 <span class="n">square_SE</span> <span class="o">=</span> <span class="n">ski</span><span class="o">.</span><span class="n">morphology</span><span class="o">.</span><span class="n">footprint_rectangle</span><span class="p">((</span><span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">))</span>
 <span class="n">square_SE</span>
 </pre></div>
@@ -937,13 +1213,16 @@ Min Pixel Value: 0
 </div>
 </div>
 </div>
-<p>This new structuring element is the same <code class="docutils literal notranslate"><span class="pre">shape</span></code> as the kernels we used on the <a class="reference internal" href="5_mean_filter.html"><span class="doc std std-doc">filtering page</span></a>. Below we use it to erode the xenomorph image:</p>
+<p>This new footprint is the same <code class="docutils literal notranslate"><span class="pre">shape</span></code> as the kernels we used on the
+<a class="reference internal" href="5_mean_filter.html"><span class="doc std std-doc">filtering page</span></a>. Below we use it to erode the xenomorph image:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Erode the xenomorph (with the square structuring element).</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Erode the xenomorph (with the square footprint).</span>
 <span class="n">xeno_binary_ero_square</span> <span class="o">=</span> <span class="n">ski</span><span class="o">.</span><span class="n">morphology</span><span class="o">.</span><span class="n">erosion</span><span class="p">(</span><span class="n">xenomorph</span><span class="p">,</span>
                                                 <span class="n">footprint</span><span class="o">=</span><span class="n">square_SE</span><span class="p">)</span>
-<span class="n">show_both</span><span class="p">(</span><span class="n">xenomorph</span><span class="p">,</span> <span class="n">xeno_binary_ero_square</span><span class="p">,</span> <span class="s2">&quot;Eroded </span><span class="se">\n</span><span class="s2">(3,3) Square SE&quot;</span><span class="p">);</span>
+<span class="n">show_both</span><span class="p">(</span><span class="n">xenomorph</span><span class="p">,</span>
+          <span class="n">xeno_binary_ero_square</span><span class="p">,</span>
+          <span class="s2">&quot;Eroded </span><span class="se">\n</span><span class="s2">(3,3) Square SE&quot;</span><span class="p">);</span>
 </pre></div>
 </div>
 </div>
@@ -951,11 +1230,12 @@ Min Pixel Value: 0
 <img alt="_images/20a99d454a444594e62ea541b1140d8582fa7831f1d3c06f8b07295627fd079e.png" src="_images/20a99d454a444594e62ea541b1140d8582fa7831f1d3c06f8b07295627fd079e.png" />
 </div>
 </div>
-<p>Dilation with this new structuring element once more enlarges brighter regions, again with horrific results:</p>
+<p>Dilation with this new footprint once more enlarges brighter regions, again
+with horrific results:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Dilate the xenomorph, with the new structuring element.</span>
-<span class="n">xeno_binary_dilate_square</span> <span class="o">=</span> <span class="n">ski</span><span class="o">.</span><span class="n">morphology</span><span class="o">.</span><span class="n">dilation</span><span class="p">(</span><span class="n">xenomorph</span><span class="p">,</span> 
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Dilate the xenomorph, with the new footprint.</span>
+<span class="n">xeno_binary_dilate_square</span> <span class="o">=</span> <span class="n">ski</span><span class="o">.</span><span class="n">morphology</span><span class="o">.</span><span class="n">dilation</span><span class="p">(</span><span class="n">xenomorph</span><span class="p">,</span>
                                                     <span class="n">footprint</span><span class="o">=</span><span class="n">square_SE</span><span class="p">)</span>
 <span class="n">show_both</span><span class="p">(</span><span class="n">xenomorph</span><span class="p">,</span> <span class="n">xeno_binary_dilate_square</span><span class="p">,</span> <span class="s2">&quot;Dilated </span><span class="se">\n</span><span class="s2">(3,3) Square SE&quot;</span><span class="p">);</span>
 </pre></div>
@@ -965,14 +1245,23 @@ Min Pixel Value: 0
 <img alt="_images/443823947f0c91bf73fef55af791a7059b3ce44784592d48f83e942386a02b51.png" src="_images/443823947f0c91bf73fef55af791a7059b3ce44784592d48f83e942386a02b51.png" />
 </div>
 </div>
-<p>Changing the shape or size of the structuring element (likely) changes the number of “matches”, and therefore the degree and location of changes to the bright/dark regions, for both erosion and dilation. We are essentially looking for features of a certain shape (the shape of our structuring element) in the image, and then dilating/eroding on the basis of the number of matches/clashes.</p>
+<p>Changing the shape or size of the footprint will change the local pixel
+neighborhood, and therefore the degree and location of changes to the
+bright/dark regions, for both erosion and dilation. We are essentially looking
+for features of a certain shape (the shape of our footprint) in the image, and
+then dilating (increasing to neighborhood maximum) / eroding (decreasing to
+neighborhood minimum) on that basis.</p>
 <div class="exercise dropdown admonition" id="block-xeno">
 
 <p class="admonition-title"><span class="caption-number">Exercise 27 </span></p>
 <section id="exercise-content">
-<p>Try to recreate the following image by processing <code class="docutils literal notranslate"><span class="pre">xenomorph</span></code>, using only <code class="docutils literal notranslate"><span class="pre">skimage</span></code> morphological operations, as well as operations from the other tutorials, from <code class="docutils literal notranslate"><span class="pre">numpy</span></code>, <code class="docutils literal notranslate"><span class="pre">scipy</span></code> and <code class="docutils literal notranslate"><span class="pre">skimage</span></code>:</p>
+<p>Try to recreate the following image by processing <code class="docutils literal notranslate"><span class="pre">xenomorph</span></code>, using only
+<code class="docutils literal notranslate"><span class="pre">skimage</span></code> morphological operations, as well as operations from the other
+tutorials, from <code class="docutils literal notranslate"><span class="pre">numpy</span></code>, <code class="docutils literal notranslate"><span class="pre">scipy</span></code> and <code class="docutils literal notranslate"><span class="pre">skimage</span></code>:</p>
 <p><img alt="" src="_images/xeno_ex_1.png" /></p>
-<p>Look at the shape, the <em>morphology</em> of the features in the image - what shape and size structuring element do you think you need? Do you think you need dilation or erosion?</p>
+<p>Look at the shape, the <em>morphology</em> of the features in the image - what shape
+and size footprint do you think you need? Do you think you need dilation or
+erosion?</p>
 <p>For comparison, here is the original binarized image:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -998,7 +1287,9 @@ Min Pixel Value: 0
 
 <p class="admonition-title">Solution to<a class="reference internal" href="#block-xeno"> Exercise 27</a></p>
 <section id="solution-content">
-<p>We promised earlier that the <code class="docutils literal notranslate"><span class="pre">diamond</span></code> structuring element would get more diamond-like when it is larger. To complete this exercise, you need <code class="docutils literal notranslate"><span class="pre">big_diamond</span></code> with <code class="docutils literal notranslate"><span class="pre">radius</span> <span class="pre">=</span> <span class="pre">30</span></code>:</p>
+<p>We promised earlier that the <code class="docutils literal notranslate"><span class="pre">diamond</span></code> footprint would get more diamond-like
+when it is larger. To complete this exercise, you need <code class="docutils literal notranslate"><span class="pre">big_diamond</span></code> with
+<code class="docutils literal notranslate"><span class="pre">radius</span> <span class="pre">=</span> <span class="pre">30</span></code>:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Expensive!</span>
@@ -1011,7 +1302,8 @@ Min Pixel Value: 0
 <img alt="_images/c8941c12d9dbfd54ebc1867c56a5eeca19f18630788976af7b95be242f09870e.png" src="_images/c8941c12d9dbfd54ebc1867c56a5eeca19f18630788976af7b95be242f09870e.png" />
 </div>
 </div>
-<p>Dilating with this <code class="docutils literal notranslate"><span class="pre">big_diamond</span></code> will give you the right outline, but the wrong colors:</p>
+<p>Dilating with this <code class="docutils literal notranslate"><span class="pre">big_diamond</span></code> will give you the right outline, but the
+wrong colors:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution, part 1:</span>
@@ -1041,9 +1333,165 @@ Min Pixel Value: 0
 </section>
 </div>
 </section>
-<section class="tex2jax_ignore mathjax_ignore" id="skeletonizing-an-image">
-<h1>Skeletonizing an image<a class="headerlink" href="#skeletonizing-an-image" title="Link to this heading">#</a></h1>
-<p>In keeping with the horror theme of the <code class="docutils literal notranslate"><span class="pre">xenomorph</span></code> image, and the legacy of the <a class="reference internal" href="0_images_as_numpy_arrays.html"><span class="doc std std-doc"><code class="docutils literal notranslate"><span class="pre">smiley</span></code></span></a> array, let’s look at the <code class="docutils literal notranslate"><span class="pre">ski.morpholoy.skeletonize()</span></code> function.</p>
+<section id="erosion-and-dilation-on-greyscale-images">
+<h2>Erosion and dilation on greyscale images<a class="headerlink" href="#erosion-and-dilation-on-greyscale-images" title="Link to this heading">#</a></h2>
+<p>For most of this tutorial we have used binary images to show erosion and
+dilation, but as you know the algorithm, it will be obvious how erosion and
+dilation apply to greyscale images.</p>
+<p>Erosion is the application of a footprint / minimum filter, so bright regions matching the footprint shape will continue to be bright, but other regions, including those at the edge of bright regions, will become dark (as they acquire the minimum of the local neighborhood.  You have already seen erosion with a radius 6 disk applied to the Hubble Space Telescope image above.  Let’s apply the <code class="docutils literal notranslate"><span class="pre">diamond_6</span></code> footprint to this image.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># The original image (blue channel of Hubble image).</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">hubble_blue_ubyte</span><span class="p">);</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Input image&#39;</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/f45e861736c843da1317cd028f79213380f3e8c4b938add44b812236e1c7e85f.png" src="_images/f45e861736c843da1317cd028f79213380f3e8c4b938add44b812236e1c7e85f.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># The footprint we will use.</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">diamond_6</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Footprint&#39;</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/76c3142d8dabd33b21d98905a99659a0647406e1faf070840cb0a4634c69286f.png" src="_images/76c3142d8dabd33b21d98905a99659a0647406e1faf070840cb0a4634c69286f.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Eroded image.</span>
+<span class="c1"># We used the equivalent ski.filters.rank.minimum call previously.</span>
+<span class="n">hubble_eroded</span> <span class="o">=</span> <span class="n">ski</span><span class="o">.</span><span class="n">morphology</span><span class="o">.</span><span class="n">erosion</span><span class="p">(</span><span class="n">hubble_blue_ubyte</span><span class="p">,</span> <span class="n">diamond_6</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">hubble_eroded</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Eroded image&#39;</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/0492ba5d62d49ecc9b20f76c9403fea555f1de7ed20bac9869633a8229af4688.png" src="_images/0492ba5d62d49ecc9b20f76c9403fea555f1de7ed20bac9869633a8229af4688.png" />
+</div>
+</div>
+<p>We can also apply dilation.  Here pixels with <em>any</em> bright pixel in the local
+neighborhood become bright, so small bright objects will become larger.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Dilated image.</span>
+<span class="n">hubble_dilated</span> <span class="o">=</span> <span class="n">ski</span><span class="o">.</span><span class="n">morphology</span><span class="o">.</span><span class="n">dilation</span><span class="p">(</span><span class="n">hubble_blue_ubyte</span><span class="p">,</span> <span class="n">diamond_6</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">hubble_dilated</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Eroded image&#39;</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/c347a6167356281b1de67bc267c82ede54ec6a39a33f56f1626d6c887249a114.png" src="_images/c347a6167356281b1de67bc267c82ede54ec6a39a33f56f1626d6c887249a114.png" />
+</div>
+</div>
+</section>
+<section id="opening-and-closing">
+<h2>Opening and closing<a class="headerlink" href="#opening-and-closing" title="Link to this heading">#</a></h2>
+<p><a class="reference external" href="https://en.wikipedia.org/wiki/Opening_(morphology)">Opening</a> and
+[closing](<a class="reference external" href="https://en.wikipedia.org/wiki/Closing_(morphology)">https://en.wikipedia.org/wiki/Closing_(morphology)</a> are two other
+important morphological operations.</p>
+<p>Opening is the result of:</p>
+<ul class="simple">
+<li><p>Applying erosion to an image and then</p></li>
+<li><p>Applying dilation to the result.</p></li>
+</ul>
+<p>Closing is the result of</p>
+<ul class="simple">
+<li><p>Applying dilation to an image and then</p></li>
+<li><p>Applying erosion to the result.</p></li>
+</ul>
+<p>Some reflection might reveal what kind of effects these will have.</p>
+<p>For <em>opening</em>, we are first trimming the image down to objects matching the
+footprint, and then expanding the remaining objects.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Recalculate the eroded Hubble image.</span>
+<span class="n">hubble_eroded</span> <span class="o">=</span> <span class="n">ski</span><span class="o">.</span><span class="n">morphology</span><span class="o">.</span><span class="n">erosion</span><span class="p">(</span><span class="n">hubble_blue_ubyte</span><span class="p">,</span> <span class="n">diamond_6</span><span class="p">)</span>
+<span class="c1"># Calculate the opened image by dilating the eroded image.</span>
+<span class="n">hubble_opened</span> <span class="o">=</span> <span class="n">ski</span><span class="o">.</span><span class="n">morphology</span><span class="o">.</span><span class="n">dilation</span><span class="p">(</span><span class="n">hubble_eroded</span><span class="p">,</span> <span class="n">diamond_6</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">hubble_opened</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Hubble image, opened&#39;</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/b4cbaaab2d3845d2a60ef2dc0f51839ac0e4bf0058f039f6cc30b1b9cc1b829b.png" src="_images/b4cbaaab2d3845d2a60ef2dc0f51839ac0e4bf0058f039f6cc30b1b9cc1b829b.png" />
+</div>
+</div>
+<p>We asserted that opening was erosion followed by dilation, but you will want
+confirmation of this:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Is ski.morphology.opening actually the same as dilation on erosion?</span>
+<span class="n">np</span><span class="o">.</span><span class="n">all</span><span class="p">(</span><span class="n">ski</span><span class="o">.</span><span class="n">morphology</span><span class="o">.</span><span class="n">opening</span><span class="p">(</span><span class="n">hubble_blue_ubyte</span><span class="p">,</span> <span class="n">diamond_6</span><span class="p">)</span> <span class="o">==</span> <span class="n">hubble_opened</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>np.True_
+</pre></div>
+</div>
+</div>
+</div>
+<p>Closing has the effect of first expanding bright objects with the footprint
+shape (by dilation), followed by trimming those expanded objects (with
+erosion):</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Recalculate the dilated Hubble image.</span>
+<span class="n">hubble_dilated</span> <span class="o">=</span> <span class="n">ski</span><span class="o">.</span><span class="n">morphology</span><span class="o">.</span><span class="n">dilation</span><span class="p">(</span><span class="n">hubble_blue_ubyte</span><span class="p">,</span> <span class="n">diamond_6</span><span class="p">)</span>
+<span class="c1"># Calculate the closing image by eroded the dilated image.</span>
+<span class="n">hubble_closed</span> <span class="o">=</span> <span class="n">ski</span><span class="o">.</span><span class="n">morphology</span><span class="o">.</span><span class="n">erosion</span><span class="p">(</span><span class="n">hubble_dilated</span><span class="p">,</span> <span class="n">diamond_6</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">hubble_closed</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Hubble image, closed&#39;</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/6dd3aeff06c69066429e96cfb440a948417118f90f00bbe9f5946c8360050940.png" src="_images/6dd3aeff06c69066429e96cfb440a948417118f90f00bbe9f5946c8360050940.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Is ski.morphology.closing actually the same as erosion on dilation?</span>
+<span class="n">np</span><span class="o">.</span><span class="n">all</span><span class="p">(</span><span class="n">ski</span><span class="o">.</span><span class="n">morphology</span><span class="o">.</span><span class="n">closing</span><span class="p">(</span><span class="n">hubble_blue_ubyte</span><span class="p">,</span> <span class="n">diamond_6</span><span class="p">)</span> <span class="o">==</span> <span class="n">hubble_closed</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>np.True_
+</pre></div>
+</div>
+</div>
+</div>
+<p>As you can see, in this particular case, the closed image is rather similar to
+the original, but this will depend, as usual, on the shape and size of the
+footprint in relation to the objects in the image.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">hubble_blue_ubyte</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Hubble original image&#39;</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/2fb883d2a111fc09480561a4c7c75bd34fd060f1cc352ca9498d13b6fe4f2629.png" src="_images/2fb883d2a111fc09480561a4c7c75bd34fd060f1cc352ca9498d13b6fe4f2629.png" />
+</div>
+</div>
+</section>
+<section id="skeletonizing-an-image">
+<h2>Skeletonizing an image<a class="headerlink" href="#skeletonizing-an-image" title="Link to this heading">#</a></h2>
+<p>In keeping with the horror theme of the <code class="docutils literal notranslate"><span class="pre">xenomorph</span></code> image, and the legacy of
+the <a class="reference internal" href="0_images_as_numpy_arrays.html"><span class="doc std std-doc"><code class="docutils literal notranslate"><span class="pre">smiley</span></code></span></a> array, let’s look at the
+<code class="docutils literal notranslate"><span class="pre">ski.morpholoy.skeletonize()</span></code> function.</p>
 <p>This takes a binary image and finds its “skeleton” - e.g. the centerline of shapes in the image, and marks it out with a <a class="reference external" href="https://scikit-image.org/docs/0.25.x/auto_examples/applications/plot_morphology.html#skeletonize">single pixel-wide set of lines</a>:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -1057,7 +1505,8 @@ Min Pixel Value: 0
 <img alt="_images/e49fc471a3a615b3a378f4e41bd7ad9537a46c34583a8bef16b8de6d93e7e79c.png" src="_images/e49fc471a3a615b3a378f4e41bd7ad9537a46c34583a8bef16b8de6d93e7e79c.png" />
 </div>
 </div>
-<p>We can also do this with less nightmarish results, to other images, such as the much more friendly <code class="docutils literal notranslate"><span class="pre">horse</span></code> from <code class="docutils literal notranslate"><span class="pre">ski.data</span></code>:</p>
+<p>We can also do this with less nightmarish results, to other images, such as the
+much more friendly <code class="docutils literal notranslate"><span class="pre">horse</span></code> from <code class="docutils literal notranslate"><span class="pre">ski.data</span></code>:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Import the `horse` image from `ski.data`</span>
@@ -1090,7 +1539,6 @@ Min Pixel Value: False
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Skeletonize `horse`.</span>
 <span class="n">skeleton_horse</span> <span class="o">=</span> <span class="n">ski</span><span class="o">.</span><span class="n">morphology</span><span class="o">.</span><span class="n">skeletonize</span><span class="p">(</span><span class="n">horse</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span> <span class="c1"># The image must be binary numeric, not Boolean, to `skeletonize`.</span>
-
 <span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">skeleton_horse</span><span class="p">);</span>
 </pre></div>
 </div>
@@ -1101,14 +1549,21 @@ Min Pixel Value: False
 </div>
 <p>Ok, maybe that is still quite nightmarish…</p>
 </section>
-<section class="tex2jax_ignore mathjax_ignore" id="summary">
-<h1>Summary<a class="headerlink" href="#summary" title="Link to this heading">#</a></h1>
-<p>On this page we have looked at fundamental morphological operations in <code class="docutils literal notranslate"><span class="pre">skimage</span></code>.</p>
+<section id="summary">
+<h2>Summary<a class="headerlink" href="#summary" title="Link to this heading">#</a></h2>
+<p>On this page we have looked at fundamental morphological operations in
+<code class="docutils literal notranslate"><span class="pre">skimage</span></code>, and particularly <em>erosion</em> and <em>dilation</em>.</p>
 </section>
-<section class="tex2jax_ignore mathjax_ignore" id="references">
-<h1>References<a class="headerlink" href="#references" title="Link to this heading">#</a></h1>
-<p>Based on: <a class="reference external" href="https://scikit-image.org/skimage-tutorials/lectures/3_morphological_operations.html">https://scikit-image.org/skimage-tutorials/lectures/3_morphological_operations.html</a></p>
-<p>Based on on: <a class="reference external" href="https://biapol.github.io/Image-data-science-with-Python-and-Napari-EPFL2022/day2d_image_segmentation/03_Morphological_operations.html">https://biapol.github.io/Image-data-science-with-Python-and-Napari-EPFL2022/day2d_image_segmentation/03_Morphological_operations.html</a></p>
+<section id="references">
+<h2>References<a class="headerlink" href="#references" title="Link to this heading">#</a></h2>
+<p>Based on:</p>
+<ul class="simple">
+<li><p><a class="reference external" href="https://scikit-image.org/skimage-tutorials/lectures/3_morphological_operations.html">Scientific Python Lectures on morphological
+operations</a></p></li>
+<li><p><a class="reference external" href="https://biapol.github.io/Image-data-science-with-Python-and-Napari-EPFL2022/day2d_image_segmentation/03_Morphological_operations.html">This Napari-based
+tutorial</a>.</p></li>
+</ul>
+</section>
 </section>
 
     <script type="text/x-thebe-config">
@@ -1166,16 +1621,18 @@ Min Pixel Value: False
   </div>
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Morphology</a></li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#structuring-elements">Structuring elements</a></li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#erosion">Erosion</a></li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#dilation">Dilation</a></li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#morphology-using-more-complex-images">Morphology using more complex images</a></li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#skeletonizing-an-image">Skeletonizing an image</a></li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#summary">Summary</a></li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#references">References</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#morphology-and-footprints">Morphology and footprints</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#erosion-is-footprint-function-filtering-with-minimum">Erosion is footprint / function filtering with <code class="docutils literal notranslate"><span class="pre">minimum</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#footprints-as-template-shapes">Footprints as template shapes</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#erosion-on-a-binary-image">Erosion on a binary image</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#dilation">Dilation</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#morphology-using-more-complex-images">Morphology using more complex images</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#erosion-and-dilation-on-greyscale-images">Erosion and dilation on greyscale images</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#opening-and-closing">Opening and closing</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#skeletonizing-an-image">Skeletonizing an image</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#summary">Summary</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#references">References</a></li>
 </ul>
-
   </nav></div>
 
 </div></div>
