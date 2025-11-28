@@ -924,8 +924,8 @@ is 1.  Call this a <em>dilation</em> match.  Only if <em>all</em> the local neig
 <img alt="_images/08d091eeb7bcdcb9326e54f43612811154ae379047d17666e181136d291c131f.png" src="_images/08d091eeb7bcdcb9326e54f43612811154ae379047d17666e181136d291c131f.png" />
 </div>
 </div>
-<p>Now, we use <code class="docutils literal notranslate"><span class="pre">ski.morphology.dilation()</span></code> to dilate the image.   We could,
-equivalently, use the <code class="docutils literal notranslate"><span class="pre">ski.filter.rank.maximum</span></code> function. Again we will use
+<p>Next we use <code class="docutils literal notranslate"><span class="pre">ski.morphology.dilation()</span></code> to dilate the image.   We could,
+equivalently, use the <code class="docutils literal notranslate"><span class="pre">ski.filter.rank.maximum</span></code> function. Again, we will use
 <code class="docutils literal notranslate"><span class="pre">diamond</span></code> as our footprint:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -1338,7 +1338,12 @@ wrong colors:</p>
 <p>For most of this tutorial we have used binary images to show erosion and
 dilation, but as you know the algorithm, it will be obvious how erosion and
 dilation apply to greyscale images.</p>
-<p>Erosion is the application of a footprint / minimum filter, so bright regions matching the footprint shape will continue to be bright, but other regions, including those at the edge of bright regions, will become dark (as they acquire the minimum of the local neighborhood.  You have already seen erosion with a radius 6 disk applied to the Hubble Space Telescope image above.  Let’s apply the <code class="docutils literal notranslate"><span class="pre">diamond_6</span></code> footprint to this image.</p>
+<p>Erosion is the application of a footprint / minimum filter, so bright regions
+matching the footprint shape will continue to be bright, but other regions,
+including those at the edge of bright regions, will become dark (as they
+acquire the minimum of the local neighborhood).  You have already seen erosion
+with a radius 6 disk applied to the Hubble Space Telescope image above.  Let’s
+apply the <code class="docutils literal notranslate"><span class="pre">diamond_6</span></code> footprint to this image.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># The original image (blue channel of Hubble image).</span>
@@ -1384,12 +1389,12 @@ neighborhood become bright, so small bright objects will become larger.</p>
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Dilated image.</span>
 <span class="n">hubble_dilated</span> <span class="o">=</span> <span class="n">ski</span><span class="o">.</span><span class="n">morphology</span><span class="o">.</span><span class="n">dilation</span><span class="p">(</span><span class="n">hubble_blue_ubyte</span><span class="p">,</span> <span class="n">diamond_6</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">hubble_dilated</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Eroded image&#39;</span><span class="p">);</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Dilated image&#39;</span><span class="p">);</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/c347a6167356281b1de67bc267c82ede54ec6a39a33f56f1626d6c887249a114.png" src="_images/c347a6167356281b1de67bc267c82ede54ec6a39a33f56f1626d6c887249a114.png" />
+<img alt="_images/679ddead7f4d985b6ff63608833544950ab813fdae4d04c71644aa5dc6c8b17b.png" src="_images/679ddead7f4d985b6ff63608833544950ab813fdae4d04c71644aa5dc6c8b17b.png" />
 </div>
 </div>
 </section>
