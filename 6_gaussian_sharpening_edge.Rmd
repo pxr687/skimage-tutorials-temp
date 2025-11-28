@@ -1720,6 +1720,35 @@ plt.imshow(edgy_both_from_2by2_kernel);
 :::
 
 
+(on-convolution)=
+
+## Kernels, correlation and convolution
+
+We have used and explained the `ndi.correlate` function to apply the kernel
+filter.
+
+We should say here that we could also have used `ndi.convolve` to achieve the
+same effect.
+[Convolution](https://betterexplained.com/articles/intuitive-convolution) is
+another way of thinking of the same fundamental operation, of applying
+a kernel at each pixel.
+
+Let's start by demonstrating that this is the same underling operation.  For reasons that will soon become clear, this time we're going to use a kernel that is not left-right or up-down symmetric.  Please bear with us:
+
+```{python}
+odd_kernel = np.array([[-1, 4, 1],
+                       [ 0, 5, 2],
+                       [ 2, 3, -2]])
+```
+
+This is the image we are applying the mean filter to:
+
+```{python}
+
+```
+
+
+
 ## Summary
 
 This page has showed how to use various kernels to filter images, using
