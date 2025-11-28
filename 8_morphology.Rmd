@@ -375,8 +375,8 @@ square
 plt.imshow(square);
 ```
 
-Now, we use `ski.morphology.dilation()` to dilate the image.   We could,
-equivalently, use the `ski.filter.rank.maximum` function. Again we will use
+Next we use `ski.morphology.dilation()` to dilate the image.   We could,
+equivalently, use the `ski.filter.rank.maximum` function. Again, we will use
 `diamond` as our footprint:
 
 ```{python}
@@ -655,7 +655,12 @@ For most of this tutorial we have used binary images to show erosion and
 dilation, but as you know the algorithm, it will be obvious how erosion and
 dilation apply to greyscale images.
 
-Erosion is the application of a footprint / minimum filter, so bright regions matching the footprint shape will continue to be bright, but other regions, including those at the edge of bright regions, will become dark (as they acquire the minimum of the local neighborhood.  You have already seen erosion with a radius 6 disk applied to the Hubble Space Telescope image above.  Let's apply the `diamond_6` footprint to this image.
+Erosion is the application of a footprint / minimum filter, so bright regions
+matching the footprint shape will continue to be bright, but other regions,
+including those at the edge of bright regions, will become dark (as they
+acquire the minimum of the local neighborhood).  You have already seen erosion
+with a radius 6 disk applied to the Hubble Space Telescope image above.  Let's
+apply the `diamond_6` footprint to this image.
 
 ```{python}
 # The original image (blue channel of Hubble image).
@@ -684,7 +689,7 @@ neighborhood become bright, so small bright objects will become larger.
 # Dilated image.
 hubble_dilated = ski.morphology.dilation(hubble_blue_ubyte, diamond_6)
 plt.imshow(hubble_dilated)
-plt.title('Eroded image');
+plt.title('Dilated image');
 ```
 
 
