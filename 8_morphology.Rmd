@@ -21,11 +21,11 @@ As such, Scikit-image has a dedicated module (`ski.morphology`) for associated
 functions.
 
 We have already encountered footprints and kernels
-on [earlier](4_threshold_filters) [pages](5_mean_filter). A footprint is a grid
-of a certain shape - you can think of it as a "template" — which is used to
-define the "neighborhood" of pixels which an image processing operation
-affects.  As you remember, a *kernel* is a footprint containing *weights*.  We
-might consider kernels as specialized footprints.
+on [earlier](4_threshold_filters) [pages](5_mean_filter). A footprint is
+a binary array defining a certain shape - you can think of it as a "template"
+— which is used to define the "neighborhood" of pixels which an image
+processing operation affects.  As you remember, a *kernel* is a footprint
+containing *weights*.  We might consider kernels as specialized footprints.
 
 ::: {note}
 
@@ -34,15 +34,15 @@ might consider kernels as specialized footprints.
 You will see other tutorials refer to *footprints* as [structuring
 elements](https://en.wikipedia.org/wiki/Structuring_element) or *structural
 elements*.  We stick to "footprint" here for compatibility with the
-Scikit-image terminology, but a footprint is the same a structuring/structural
-element.
+Scikit-image terminology, but a footprint is identical in meaning to
+structuring/structural element.
 
 :::
 
-A (3, 3) footprint can be applied as a square which affects 9 pixels - we
-might alter the image by centering this footprint over every pixel, and
-replacing each pixel with the mean of the other pixels in its "neighborhood",
-for instance:
+When applying our familiar mean filter, a (say) (3, 3) footprint can be
+applied as a square which affects 9 pixels - we might alter the image by
+centering this footprint over every pixel, and replacing each pixel with the
+mean of the other pixels in its "neighborhood", for instance:
 
 ![](images/footprint_general.png)
 
@@ -61,6 +61,7 @@ courtesy of the `ski.filters` module. Morphological operations also make use of
 footprints. As you remember, footprints (but not kernels) are binary (contain
 only True / False or 0 / 1).
 
+
 ## Morphology and footprints
 
 The fundamental operations of morphological image processing are [erosion](https://en.wikipedia.org/wiki/Erosion_(morphology)) and
@@ -76,9 +77,10 @@ images by:
   * some combination of these.
 
 The primary new thing we see in morphology, compared to our previous filters,
-is an increased interest in the shape of the binary *footprint* (to match
-features we are interested in, in the image).  But we also introduce `minimum`
-and `maximum` functions to use in footprint / function filters.
+is an increased interest in the shape defined by the binary *footprint* — in
+order to match features we are interested in, in the image.  But we also
+introduce `minimum` and `maximum` functions to use in footprint / function
+filters.
 
 Using filters and crafted footprints allows us to tune our filtering to the
 shape (...or, well,
@@ -109,7 +111,7 @@ from skitut import show_both
 plt.rcParams['image.cmap'] = 'gray'
 ```
 
-The morphology (shape) part of erosion, is the choice of a footprint to identify the shape you are interested in, within in the image.
+The morphology (shape) part of erosion, is the choice of a footprint to identify the shape you are interested in, within the image.
 
 For example, consider this image — the blue channel of an image from the Hubble Space Telescope:
 
@@ -391,9 +393,12 @@ dilated_square
 plt.imshow(dilated_square);
 ```
 
-Ok, so now some of the "clashes" have resulted in *more* white pixels in the
-image. The illustration below shows this for three pixels, two "clashes" and
-the one "match":
+Notice that a *erosion* "clash" (taking the minimum) is different from
+a dilation "clash" (taking the maximum). Using the dilation definition, what
+were (in erosion) "clashes", are not dilation "matches", and  have resulted in
+*more* white pixels in the image. The illustration below shows this for three
+pixels, two with two dilation "matches", and one "clash".  Notice that this
+corresponds to two erosion "clashes" and the one "match":
 
 ![](images/hit_n_miss_dilation.png)
 
