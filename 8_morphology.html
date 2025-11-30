@@ -463,24 +463,24 @@ mathematical study of shapes and has numerous applications in image processing.
 As such, Scikit-image has a dedicated module (<code class="docutils literal notranslate"><span class="pre">ski.morphology</span></code>) for associated
 functions.</p>
 <p>We have already encountered footprints and kernels
-on <a class="reference internal" href="4_threshold_filters.html"><span class="doc std std-doc">earlier</span></a> <a class="reference internal" href="5_mean_filter.html"><span class="doc std std-doc">pages</span></a>. A footprint is a grid
-of a certain shape - you can think of it as a “template” — which is used to
-define the “neighborhood” of pixels which an image processing operation
-affects.  As you remember, a <em>kernel</em> is a footprint containing <em>weights</em>.  We
-might consider kernels as specialized footprints.</p>
+on <a class="reference internal" href="4_threshold_filters.html"><span class="doc std std-doc">earlier</span></a> <a class="reference internal" href="5_mean_filter.html"><span class="doc std std-doc">pages</span></a>. A footprint is
+a binary array defining a certain shape - you can think of it as a “template”
+— which is used to define the “neighborhood” of pixels which an image
+processing operation affects.  As you remember, a <em>kernel</em> is a footprint
+containing <em>weights</em>.  We might consider kernels as specialized footprints.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p><strong>Footprints and structuring elements</strong></p>
 <p>You will see other tutorials refer to <em>footprints</em> as <a class="reference external" href="https://en.wikipedia.org/wiki/Structuring_element">structuring
 elements</a> or <em>structural
 elements</em>.  We stick to “footprint” here for compatibility with the
-Scikit-image terminology, but a footprint is the same a structuring/structural
-element.</p>
+Scikit-image terminology, but a footprint is identical in meaning to
+structuring/structural element.</p>
 </div>
-<p>A (3, 3) footprint can be applied as a square which affects 9 pixels - we
-might alter the image by centering this footprint over every pixel, and
-replacing each pixel with the mean of the other pixels in its “neighborhood”,
-for instance:</p>
+<p>When applying our familiar mean filter, a (say) (3, 3) footprint can be
+applied as a square which affects 9 pixels - we might alter the image by
+centering this footprint over every pixel, and replacing each pixel with the
+mean of the other pixels in its “neighborhood”, for instance:</p>
 <p><img alt="" src="_images/footprint_general.png" /></p>
 <p>You will also recall that we need a strategy for pixels at the edge of the
 image, where we center the footprint on a pixel where part of the footprint
@@ -510,9 +510,10 @@ images by:</p>
 </li>
 </ul>
 <p>The primary new thing we see in morphology, compared to our previous filters,
-is an increased interest in the shape of the binary <em>footprint</em> (to match
-features we are interested in, in the image).  But we also introduce <code class="docutils literal notranslate"><span class="pre">minimum</span></code>
-and <code class="docutils literal notranslate"><span class="pre">maximum</span></code> functions to use in footprint / function filters.</p>
+is an increased interest in the shape defined by the binary <em>footprint</em> — in
+order to match features we are interested in, in the image.  But we also
+introduce <code class="docutils literal notranslate"><span class="pre">minimum</span></code> and <code class="docutils literal notranslate"><span class="pre">maximum</span></code> functions to use in footprint / function
+filters.</p>
 <p>Using filters and crafted footprints allows us to tune our filtering to the
 shape (…or, well,
 <a class="reference external" href="https://www.cs.auckland.ac.nz/courses/compsci773s1c/lectures/ImageProcessing-html/topic4.htm"><em>morphology</em></a>)
@@ -541,7 +542,7 @@ where the function is “minimum”.</p>
 </div>
 </div>
 </div>
-<p>The morphology (shape) part of erosion, is the choice of a footprint to identify the shape you are interested in, within in the image.</p>
+<p>The morphology (shape) part of erosion, is the choice of a footprint to identify the shape you are interested in, within the image.</p>
 <p>For example, consider this image — the blue channel of an image from the Hubble Space Telescope:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -958,9 +959,12 @@ equivalently, use the <code class="docutils literal notranslate"><span class="pr
 <img alt="_images/d64494039023a5760c23615d1f9488e04741a88130233bd3e8337e1e530aaf57.png" src="_images/d64494039023a5760c23615d1f9488e04741a88130233bd3e8337e1e530aaf57.png" />
 </div>
 </div>
-<p>Ok, so now some of the “clashes” have resulted in <em>more</em> white pixels in the
-image. The illustration below shows this for three pixels, two “clashes” and
-the one “match”:</p>
+<p>Notice that a <em>erosion</em> “clash” (taking the minimum) is different from
+a dilation “clash” (taking the maximum). Using the dilation definition, what
+were (in erosion) “clashes”, are not dilation “matches”, and  have resulted in
+<em>more</em> white pixels in the image. The illustration below shows this for three
+pixels, two with two dilation “matches”, and one “clash”.  Notice that this
+corresponds to two erosion “clashes” and the one “match”:</p>
 <p><img alt="" src="_images/hit_n_miss_dilation.png" /></p>
 <p>What do you think will happen if we dilate the <code class="docutils literal notranslate"><span class="pre">square_the_circle</span></code> array image
 shown below, using the <code class="docutils literal notranslate"><span class="pre">diamond</span></code> footprint?</p>
