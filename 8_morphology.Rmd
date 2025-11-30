@@ -66,10 +66,10 @@ only True / False or 0 / 1).
 The fundamental operations of morphological image processing are [erosion](https://en.wikipedia.org/wiki/Erosion_(morphology)) and
 [dilation](https://en.wikipedia.org/wiki/Dilation_(morphology)).
 
-As you about to see, basic morphological operations come about by:
+As you are about to see, basic morphological operations work on shapes within
+images by:
 
-* Choosing a footprint that matches a shape in the image you are interested
-  in, and
+* Choosing a footprint that matches a shape in the image, and
 * Applying this footprint via footprint / function filter with:
   * the `minimum` function, to do an operation called *erosion* or
   * the `maximum` function, to do an operation called *dilation* or
@@ -84,6 +84,7 @@ Using filters and crafted footprints allows us to tune our filtering to the
 shape (...or, well,
 [*morphology*](https://www.cs.auckland.ac.nz/courses/compsci773s1c/lectures/ImageProcessing-html/topic4.htm))
 of features within the image.
+
 
 ## Erosion is footprint / function filtering with `minimum`
 
