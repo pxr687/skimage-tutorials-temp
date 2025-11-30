@@ -698,6 +698,9 @@ plt.imshow(hubble_dilated)
 plt.title('Dilated image');
 ```
 
+Notice that you can think of erosion is dilation of the dark areas in the
+image, and dilation as erosion of the dark areas.
+
 
 ## Opening and closing
 
