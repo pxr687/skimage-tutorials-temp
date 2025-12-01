@@ -443,6 +443,7 @@ document.write(`
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#edge-detection-filtering">Edge detection filtering</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#sobel-edge-detection-filtering">Sobel edge detection filtering</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#edge-detection-filters-in-skimage">Edge detection filters in <code class="docutils literal notranslate"><span class="pre">skimage</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#kernels-correlation-and-convolution">Kernels, correlation and convolution</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#summary">Summary</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#references">References</a></li>
 </ul>
@@ -2418,7 +2419,10 @@ effects:</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Type: &lt;class &#39;numpy.ndarray&#39;&gt;
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Type:
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> &lt;class &#39;numpy.ndarray&#39;&gt;
 dtype: float64
 Shape: (400, 600)
 Max Pixel Value: 1.0
@@ -2914,6 +2918,155 @@ kernels:</p>
 </section>
 </div>
 </section>
+<section id="kernels-correlation-and-convolution">
+<span id="on-convolution"></span><h2>Kernels, correlation and convolution<a class="headerlink" href="#kernels-correlation-and-convolution" title="Link to this heading">#</a></h2>
+<p>We have used and explained the <code class="docutils literal notranslate"><span class="pre">ndi.correlate</span></code> function to apply the kernel
+filter.</p>
+<p>We should say here that we could also have used <code class="docutils literal notranslate"><span class="pre">ndi.convolve</span></code> to achieve the
+same effect.
+<a class="reference external" href="https://betterexplained.com/articles/intuitive-convolution">Convolution</a> is
+another way of thinking of the same fundamental operation, of applying
+a kernel at each pixel.</p>
+<p>Here we will show that this is the same underling operation.  For reasons that
+will soon become clear, this time we’re going to use a kernel that is not
+left-right or up-down symmetric.  Please bear with us:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">odd_kernel</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="o">-</span><span class="mf">1.</span><span class="p">,</span>  <span class="mf">3.</span><span class="p">,</span>  <span class="mf">1.</span><span class="p">],</span>
+                       <span class="p">[</span> <span class="mf">0.</span><span class="p">,</span>  <span class="mf">2.</span><span class="p">,</span> <span class="o">-</span><span class="mf">2.</span><span class="p">],</span>
+                       <span class="p">[</span> <span class="mf">2.</span><span class="p">,</span> <span class="o">-</span><span class="mf">3.</span><span class="p">,</span> <span class="o">-</span><span class="mf">2.</span><span class="p">]])</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Next we’ll make a floating point image to apply our kernel to:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Floating point version of camera image.</span>
+<span class="n">f_camera</span> <span class="o">=</span> <span class="n">ski</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">camera</span><span class="p">()</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">float</span><span class="p">)</span>
+<span class="n">f_camera</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([[200., 200., 200., ..., 189., 190., 190.],
+       [200., 199., 199., ..., 190., 190., 190.],
+       [199., 199., 199., ..., 190., 190., 190.],
+       ...,
+       [ 25.,  25.,  27., ..., 139., 122., 147.],
+       [ 25.,  25.,  26., ..., 158., 141., 168.],
+       [ 25.,  25.,  27., ..., 151., 152., 149.]], shape=(512, 512))
+</pre></div>
+</div>
+</div>
+</div>
+<p>Now we’ll use our usual <code class="docutils literal notranslate"><span class="pre">ndi.correlate</span></code> operation to apply the kernel.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">odd_image</span> <span class="o">=</span> <span class="n">ndi</span><span class="o">.</span><span class="n">correlate</span><span class="p">(</span><span class="n">f_camera</span><span class="p">,</span> <span class="n">odd_kernel</span><span class="p">)</span>
+<span class="n">odd_image</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([[   2.,    5.,    1., ...,   -4.,    1.,    0.],
+       [   5.,    3.,   -1., ...,   -2.,    1.,    0.],
+       [  -1.,   -2.,    1., ...,    0.,    0.,    0.],
+       ...,
+       [   1.,   -2.,    6., ...,   -8.,  -34.,  -47.],
+       [   0.,   -4.,    3., ...,  -72., -132.,   25.],
+       [   0.,   -7.,    0., ...,    5.,  -13.,   90.]], shape=(512, 512))
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">odd_image</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.image.AxesImage at 0x7fd88d2e2850&gt;
+</pre></div>
+</div>
+<img alt="_images/6ee08d339869fdee5c460649c505a97c8dbb1b904d1df3535ce2d879a0abbe6b.png" src="_images/6ee08d339869fdee5c460649c505a97c8dbb1b904d1df3535ce2d879a0abbe6b.png" />
+</div>
+</div>
+<p>Now — <code class="docutils literal notranslate"><span class="pre">ndi.convolve</span></code> does <em>not</em> give use the same output when applying the same kernel.   You’ll soon see why.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Application of convolution using the same kernel.</span>
+<span class="n">conv_img</span> <span class="o">=</span> <span class="n">ndi</span><span class="o">.</span><span class="n">convolve</span><span class="p">(</span><span class="n">f_camera</span><span class="p">,</span> <span class="n">odd_kernel</span><span class="p">)</span>
+<span class="n">conv_img</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([[   1.,   -2.,   -4., ...,    5.,    4.,    0.],
+       [  -3.,   -5.,   -4., ...,    5.,    2.,    0.],
+       [  -2.,    2.,    3., ...,    0.,    0.,    0.],
+       ...,
+       [   2.,   -2.,    1., ..., -107.,  -44.,   64.],
+       [   0.,    2.,    0., ...,  -42.,   74.,  113.],
+       [   0.,    0.,    5., ...,  -11.,   57.,   -6.]], shape=(512, 512))
+</pre></div>
+</div>
+</div>
+</div>
+<p>Notice from the display above that the numbers in this image differ from those in <code class="docutils literal notranslate"><span class="pre">odd_image</span></code> — the result of applying <code class="docutils literal notranslate"><span class="pre">ndi.correlate</span></code> with this kernel.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Applying ndi.convolve with same kernel gives different result.</span>
+<span class="n">np</span><span class="o">.</span><span class="n">all</span><span class="p">(</span><span class="n">conv_img</span> <span class="o">==</span> <span class="n">odd_image</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>np.False_
+</pre></div>
+</div>
+</div>
+</div>
+<p>However, <code class="docutils literal notranslate"><span class="pre">ndi.convolve</span></code> is <em>applying</em> the kernel in a different way.  Specifically, it is applying the same calculations as <code class="docutils literal notranslate"><span class="pre">ndi.correlate</span></code> with a kernel that has been flipped on both left-right and up-down axes:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">flipped_kernel</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">fliplr</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">flipud</span><span class="p">(</span><span class="n">odd_kernel</span><span class="p">))</span>
+<span class="n">flipped_kernel</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([[-2., -3.,  2.],
+       [-2.,  2.,  0.],
+       [ 1.,  3., -1.]])
+</pre></div>
+</div>
+</div>
+</div>
+<p>If we use this flipped kernel with <code class="docutils literal notranslate"><span class="pre">ndi.convolve</span></code>, we get the same result when
+we applied the original kernel with <code class="docutils literal notranslate"><span class="pre">ndi.correlate</span></code>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">reconv_img</span> <span class="o">=</span> <span class="n">ndi</span><span class="o">.</span><span class="n">convolve</span><span class="p">(</span><span class="n">f_camera</span><span class="p">,</span> <span class="n">flipped_kernel</span><span class="p">)</span>
+<span class="n">np</span><span class="o">.</span><span class="n">all</span><span class="p">(</span><span class="n">reconv_img</span> <span class="o">==</span> <span class="n">odd_image</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>np.True_
+</pre></div>
+</div>
+</div>
+</div>
+<p>The difference in <code class="docutils literal notranslate"><span class="pre">ndi.correlate</span></code> and <code class="docutils literal notranslate"><span class="pre">ndi.convolve</span></code> are just differences in
+the interpretation of the kernel.  The <em>flipped</em> interpretation of convolution
+comes from its roots in signal (1D) processing; in convolution, we often think
+of the kernel as a response to an impulse, in which case applying the
+kernel in an efficient way does require us to flip the kernel from left to
+right.  See this <a class="reference external" href="https://betterexplained.com/articles/intuitive-convolution">intuitive explanation of
+convolution</a> for more on this idea.</p>
+</section>
 <section id="summary">
 <h2>Summary<a class="headerlink" href="#summary" title="Link to this heading">#</a></h2>
 <p>This page has showed how to use various kernels to filter images, using
@@ -3028,6 +3181,7 @@ distributions</a>.</p>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#edge-detection-filtering">Edge detection filtering</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#sobel-edge-detection-filtering">Sobel edge detection filtering</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#edge-detection-filters-in-skimage">Edge detection filters in <code class="docutils literal notranslate"><span class="pre">skimage</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#kernels-correlation-and-convolution">Kernels, correlation and convolution</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#summary">Summary</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#references">References</a></li>
 </ul>
