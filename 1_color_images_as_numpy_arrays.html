@@ -1105,49 +1105,6 @@ amount of red in the image. We can therefore (for now) call this slice the
 </div>
 <p>We can visualise this new 3D array as:</p>
 <p><img alt="" src="_images/three_slice_green.png" /></p>
-<p>We can proceed with another “walk” through the image again, with the familiar indexing operations:</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># First 2D place of the stack.</span>
-<span class="n">three_D_stack_array_altered_second</span><span class="p">[:,</span> <span class="p">:,</span> <span class="mi">0</span><span class="p">]</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([[0., 0.],
-       [0., 0.]])
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Second 2D place of the stack.</span>
-<span class="n">three_D_stack_array_altered_second</span><span class="p">[:,</span> <span class="p">:,</span> <span class="mi">1</span><span class="p">]</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([[1., 0.],
-       [0., 1.]])
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Third 2D slice of the stack.</span>
-<span class="n">three_D_stack_array_altered_second</span><span class="p">[:,</span> <span class="p">:,</span> <span class="mi">2</span><span class="p">]</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([[0., 0.],
-       [0., 0.]])
-</pre></div>
-</div>
-</div>
-</div>
 <p>How does this 3D array look when we visualise it with Matplotlib?</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -1186,50 +1143,7 @@ amount of red in the image. We can therefore (for now) call this slice the
 </div>
 <p>Which gives us the following stacked slices:</p>
 <p><img alt="" src="_images/three_slice_blue.png" /></p>
-<p>…and the following “walk” through the slices, via array indexing:</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># First 2D slice of the stack.</span>
-<span class="n">three_D_stack_array_altered_third</span><span class="p">[:,</span> <span class="p">:,</span> <span class="mi">0</span><span class="p">]</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([[0., 0.],
-       [0., 0.]])
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Second 2D slice of the stack.</span>
-<span class="n">three_D_stack_array_altered_third</span><span class="p">[:,</span> <span class="p">:,</span> <span class="mi">1</span><span class="p">]</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([[0., 0.],
-       [0., 0.]])
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Third 2D slice of the stack.</span>
-<span class="n">three_D_stack_array_altered_third</span><span class="p">[:,</span> <span class="p">:,</span> <span class="mi">2</span><span class="p">]</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([[1., 0.],
-       [0., 1.]])
-</pre></div>
-</div>
-</div>
-</div>
-<p>Finally, when plotted, we get:</p>
+<p>When plotted, we get:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">matshow</span><span class="p">(</span><span class="n">three_D_stack_array_altered_third</span><span class="p">);</span>
@@ -1275,9 +1189,9 @@ interactively, to see the random draw a few times:</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>X1 = 0.07
-X2 = 0.26
-X3 = 0.07
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>X1 = 0.81
+X2 = 0.9
+X3 = 0.32
 </pre></div>
 </div>
 </div>
@@ -1304,12 +1218,12 @@ X3 = 0.07
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Red (X1) = 0.71
-Green (X2) = 0.11
-Blue (X3) = 0.05
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Red (X1) = 0.07
+Green (X2) = 0.14
+Blue (X3) = 0.15
 </pre></div>
 </div>
-<img alt="_images/55d0e59e8291b283ffb765119c421a1d9c0cb9439a2a46ba6c1dfde8232ec8f1.png" src="_images/55d0e59e8291b283ffb765119c421a1d9c0cb9439a2a46ba6c1dfde8232ec8f1.png" />
+<img alt="_images/bf56128449da3f83358c882bd63bc850ddc17202e7388bdb018ace2f87886e80.png" src="_images/bf56128449da3f83358c882bd63bc850ddc17202e7388bdb018ace2f87886e80.png" />
 </div>
 </div>
 <p>So, each two-dimensional display image has a “hidden” three-dimensional array behind it. Each slice of the third dimension is a color channel. The mix of values at a given element in each color channel determines the color of that pixel in the rendered image. You may want to view this image in a new browser window, to see more clearly the exact mixes of the color channels, which are shown above each square on the right-hand side of the image:</p>
@@ -1326,7 +1240,7 @@ Blue (X3) = 0.05
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/f631b8c96722a1f627752f1b5633cbb1dccce73069d1ce5c5e6b20a14f45986f.png" src="_images/f631b8c96722a1f627752f1b5633cbb1dccce73069d1ce5c5e6b20a14f45986f.png" />
+<img alt="_images/e5bf62321247be8d65ffd2aa0ff290e68ec086ffb6e9512834ae2f351a1971be.png" src="_images/e5bf62321247be8d65ffd2aa0ff290e68ec086ffb6e9512834ae2f351a1971be.png" />
 </div>
 </div>
 <p>We have now completed our perilous expedition into the third dimension… We
@@ -1905,7 +1819,7 @@ Min Pixel Value: 0
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/4f7ec2a28eccbf5a315d00054a04b48c99d6d137df864ef552106f4052367bbd.png" src="_images/4f7ec2a28eccbf5a315d00054a04b48c99d6d137df864ef552106f4052367bbd.png" />
+<img alt="_images/51ef52377ac2273e64df2ad1b9d055b2a50bed69433f5c71284603dc2a946c81.png" src="_images/51ef52377ac2273e64df2ad1b9d055b2a50bed69433f5c71284603dc2a946c81.png" />
 </div>
 </div>
 </section>
