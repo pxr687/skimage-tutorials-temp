@@ -187,12 +187,6 @@
 <li class="toctree-l1"><a class="reference internal" href="5_mean_filter.html">Filtering with kernels - the mean filter</a></li>
 <li class="toctree-l1"><a class="reference internal" href="6_gaussian_sharpening_edge.html">Filtering with kernels II - Gaussian blur, sharpening and edge detection</a></li>
 <li class="toctree-l1 current active"><a class="current reference internal" href="#">More filters: the median filter and non-local filters</a></li>
-
-
-
-
-
-
 <li class="toctree-l1"><a class="reference internal" href="8_morphology.html">Morphology</a></li>
 </ul>
 
@@ -235,6 +229,37 @@
         <div class="header-article-item">
 
 <div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-launch-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Launch interactive content">
+    <i class="fas fa-rocket"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="interact/lab/index.html?path=7_median_nonlocal_filters.ipynb" target="_blank"
+   class="btn btn-sm dropdown-item"
+   title="Launch via JupyterLite"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  
+    <img alt="JupyterLite logo" src="_static/images/logo_jupyterlite.svg">
+  </span>
+<span class="btn__text-container">JupyterLite</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
 
 
 
@@ -406,15 +431,13 @@ document.write(`
             </div>
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">More filters: the median filter and non-local filters</a></li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#local-filtering-without-kernels">Local filtering without kernels</a></li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#edge-preservation">Edge preservation</a></li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#non-local-filters">Non-local filters</a></li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#histogram-equalisation-in-skimage">Histogram equalisation in <code class="docutils literal notranslate"><span class="pre">skimage</span></code></a></li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#summary">Summary</a></li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#references">References</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#local-filtering-without-kernels">Local filtering without kernels</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#edge-preservation">Edge preservation</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#non-local-filters">Non-local filters</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#histogram-equalisation-in-skimage">Histogram equalisation in <code class="docutils literal notranslate"><span class="pre">skimage</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#summary">Summary</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#references">References</a></li>
 </ul>
-
             </nav>
         </div>
     </div>
@@ -427,17 +450,22 @@ document.write(`
                   
   <section class="tex2jax_ignore mathjax_ignore" id="more-filters-the-median-filter-and-non-local-filters">
 <h1>More filters: the median filter and non-local filters<a class="headerlink" href="#more-filters-the-median-filter-and-non-local-filters" title="Link to this heading">#</a></h1>
-<p>This page will cover filters which do not use filtering kernels. First, we will look at the median filter, which differs in important ways from the other local filters we saw on <a class="reference internal" href="5_mean_filter.html"><span class="doc std std-doc">previous</span></a> pages, because it cannot be implemented through kernels.</p>
-<p>After the median filter, we will look at another filter, the histogram equalisation filter, which does not use kernel methods. In fact, histogram equalisation does not use a kernel at all. Because it eschews kernels completely, the histogram equalisation filter is a <em>non-local</em> filter. More on this below.</p>
+<p>This page will cover filters which do not use filtering kernels. First, we
+will look at the median filter, which differs in important ways from the other
+local filters we saw on <a class="reference internal" href="5_mean_filter.html"><span class="doc std std-doc">previous</span></a> pages, because it cannot be
+implemented through kernels.  In fact, it is a footprint/function filter.</p>
+<p>After the median filter, we will look at another filter, the histogram
+equalisation filter, which does not use kernel methods. In fact, histogram
+equalisation does not use a footprint at all. Because it eschews footprints
+completely, the histogram equalisation filter is a <em>non-local</em> filter. More on
+this below.</p>
 <p>As normal, we begin with some imports:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Library imports.</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">scipy.ndimage</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">ndi</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">skimage</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">ski</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">mpl_toolkits.mplot3d</span><span class="w"> </span><span class="kn">import</span> <span class="n">Axes3D</span>
 
 <span class="c1"># Set &#39;gray&#39; as the default colormap</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">rcParams</span><span class="p">[</span><span class="s1">&#39;image.cmap&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;gray&#39;</span>
@@ -451,24 +479,56 @@ document.write(`
 </div>
 </div>
 </div>
-</section>
-<section class="tex2jax_ignore mathjax_ignore" id="local-filtering-without-kernels">
-<h1>Local filtering without kernels<a class="headerlink" href="#local-filtering-without-kernels" title="Link to this heading">#</a></h1>
-<p>When compared to the other local filters we have seen, the median filter uses the same process of “walking” through the image with a small array which denfines the “local neighborhood” of each pixel. In median filtering, you can <em>loosely</em> think of this small array as a kernel, but there are some major differences in the calculations, so let’s call it the “neighborhood array” instead.</p>
-<p>Like with the other kernels we have seen, the “neighborhood array” is centered on every pixel during the filtering operation. The central pixel value is replaced with a number computed from the other values in the local neighborhood, e.g. the other pixel values under the “neighborhood array”.  However, instead of <em>applying a kernel</em> to the neighborhood array and the image, as we would for a mean filter or Gaussian filter etc., the median filter, shockingly, takes the median value of the pixels under the small array.</p>
+<section id="local-filtering-without-kernels">
+<h2>Local filtering without kernels<a class="headerlink" href="#local-filtering-without-kernels" title="Link to this heading">#</a></h2>
+<p>When compared to the other local filters we have seen, the median filter uses
+the same process of “walking” through the image with a small <em>footprint</em> array
+that defines the “local neighborhood” of each pixel.</p>
+<p>Median filtering is an example of footprint/function filtering.  That is, the
+footprint defines the local neighborhood, and we apply the <code class="docutils literal notranslate"><span class="pre">np.median</span></code> function
+to that local neighborhood.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p><strong>Footprints and kernels</strong></p>
+<p>Remember — a <em>footprint</em> is a binary (True / False, 1 / 0) array defining the
+pixel neighborhood.  A <em>kernel</em> is a footprint with weights.</p>
+</div>
+<p>As with the other footprints and kernels we have seen, the footprint is
+centered on every pixel during the filtering operation. The central pixel
+value is replaced with a number computed from the other values in the local
+neighborhood, e.g. the other pixel values under the footprint.</p>
+<p>When we <em>apply a kernel</em>, we calculate the new pixel value by taking a weighted
+sum of the pixels in the neighborhood, defined by the weights in the kernel.</p>
+<p>Footprint / function filters, such as the median filter, work in a different
+way.  They first select the pixels within the neighborhood, using the
+footprint, and then apply a function to the selected (neighborhood) pixel
+values. The median filter, you will not be astonished to hear, takes the
+<em>median</em> value of the pixels under the footprint.</p>
 <p><img alt="" src="_images/footprint_general.png" /></p>
-<p>There is no way of using a kernel to calculate the median, and this is why <a class="reference external" href="https://dsp.stackexchange.com/questions/13211/convolution-kernels-for-image-filtering">some people</a> will tell you not to call the “neighborhood array” a “kernel”, when we are doing median filtering. Calculating the median utilizes ranking and indexing, and cannot be expressed as set of additions, subtractions, multiplications, divisions etc, in the way that calculating a mean can, for instance.</p>
-<p>One way to think of this, is that when we write the formula for the mean, we can write it without reference to any Python indexing operations:</p>
+<p>There is no way of using a kernel (a weighted sum) to calculate the median, and
+this is why we and
+<a class="reference external" href="https://dsp.stackexchange.com/questions/13211/convolution-kernels-for-image-filtering">others</a>
+will remind to be careful to distinguish footprint filters (and footprints)
+from kernel filters (and kernels).Calculating the median utilizes ranking and
+indexing, and cannot be expressed as a weighted sum, in the way that
+calculating a mean can, for instance.</p>
+<p>One way to think of this, is that when we write the formula for the mean, we
+can write it without reference to any Python indexing operations:</p>
 <p><span class="math notranslate nohighlight">\( \large \text{mean} = \frac{\sum X}{n} \)</span></p>
-<p>…we can read that as “to get the mean of a set of numbers (where <span class="math notranslate nohighlight">\(X\)</span> refers all of the numbers), add them up and divide by however many numbers there are (<span class="math notranslate nohighlight">\(n\)</span>)”.</p>
-<p>Conversely for the median we first have to order the numbers from lowest to highest (<span class="math notranslate nohighlight">\(X_{\text{sorted}}\)</span>), and then find the value that is <em>at the central index</em>. So where <span class="math notranslate nohighlight">\(X\)</span> is an array containing all the numbers, if <span class="math notranslate nohighlight">\(n\)</span> is odd:</p>
-<p><span class="math notranslate nohighlight">\( \large \text{median} = X_{\text{sorted}}[\frac{n}{2}]\)</span></p>
-<p>Where the square brackets are a <em>Python</em> indexing operation (we will need a different indexing operation if using a programming language that does not count indexes from 0, or if <span class="math notranslate nohighlight">\(n\)</span> is even…). So for the numbers in the array below:</p>
+<p>…we can read that as “to get the mean of a set of numbers (where <span class="math notranslate nohighlight">\(X\)</span> refers
+all of the numbers), add them up and divide by however many numbers there are
+(<span class="math notranslate nohighlight">\(n\)</span>)”.</p>
+<p>Conversely for the median we first have to order the numbers from lowest to
+highest (<span class="math notranslate nohighlight">\(X_{\text{sorted}}\)</span>), and then find the value that is <em>at the central
+index</em>. So where <span class="math notranslate nohighlight">\(X\)</span> is an array containing all the numbers, if <span class="math notranslate nohighlight">\(n\)</span> is odd:</p>
+<p><span class="math notranslate nohighlight">\( \large \text{median} = X_{\text{sorted}}[\frac{n - 1}{2}]\)</span></p>
+<p>— where the square brackets are an indexing operation.</p>
+<p>Recall that, in Python, indices start at 0, and therefore, the central element is at index <span class="math notranslate nohighlight">\(\frac{n - 1}{2}\)</span>.</p>
+<p>Consider the numbers in the array below:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Some numbers.</span>
 <span class="n">nums</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">10</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">7</span><span class="p">])</span>
-
 <span class="n">nums</span>
 </pre></div>
 </div>
@@ -483,7 +543,7 @@ document.write(`
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Take the sum, divide by n.</span>
-<span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">nums</span><span class="p">)</span><span class="o">/</span><span class="nb">len</span><span class="p">(</span><span class="n">nums</span><span class="p">)</span>
+<span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">nums</span><span class="p">)</span> <span class="o">/</span> <span class="nb">len</span><span class="p">(</span><span class="n">nums</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -496,7 +556,7 @@ document.write(`
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Compare to the same calculation from NumPy.</span>
-<span class="n">nums</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+<span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">nums</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -506,7 +566,8 @@ document.write(`
 </div>
 </div>
 </div>
-<p>Whereas we get the median from: <span class="math notranslate nohighlight">\( \large \text{median} = X_{\text{sorted}}[\frac{n}{2}]\)</span></p>
+<p>Whereas we get the median from: <span class="math notranslate nohighlight">\( \large \text{median}
+= X_{\text{sorted}}[\frac{n - 1}{2}]\)</span></p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Get the median.</span>
@@ -541,16 +602,40 @@ document.write(`
 </div>
 </div>
 </div>
-<p>There is no kernel method that can do this - instead we use the “neighborhood array” to define a pixel neighborhood, then replace the central value with the median from that neighborhood, using the sorting and indexing we have seen above. So, the median filter <em>is</em> a local filter, because it alters pixel values based on other pixel values in the local neighborhood. However, it is not a <em>kernel filter</em> because it does use a weighted weighted sum of the local neighborhood, in contrast to other local filters like the mean filter, Gaussian filter etc.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p><strong>Median and even-length arrays</strong></p>
+<p>You will have spotted at once that the central position <span class="math notranslate nohighlight">\(\frac{n - 1}{2}\)</span> will
+not be an integer for even-length arrays.  In code, the central position is <code class="docutils literal notranslate"><span class="pre">c</span> <span class="pre">=</span> <span class="pre">(len(arr)</span> <span class="pre">-</span> <span class="pre">1)</span> <span class="pre">/</span> <span class="pre">2</span></code>, and, for even-length arrays (<code class="docutils literal notranslate"><span class="pre">len(arr)</span></code> is even), <code class="docutils literal notranslate"><span class="pre">c</span></code>
+will not be an integer.</p>
+<p><code class="docutils literal notranslate"><span class="pre">np.median</span></code> solves this in the standard way, by giving the median value as the
+mean of the values in the sorted array at indices <code class="docutils literal notranslate"><span class="pre">np.floor(c)</span></code> and
+<code class="docutils literal notranslate"><span class="pre">np.ceil(c)</span></code> — in other words, the mean of the sorted values either side of position
+<code class="docutils literal notranslate"><span class="pre">c</span></code>.</p>
+</div>
+<p>There is no kernel method that can do the median calculation, because the
+median cannot be expressed as a weighted sum.   Instead we use the footprint to
+define a pixel neighborhood, then replace the central value with the median
+from that neighborhood, using the sorting and indexing we have seen above. So,
+the median filter <em>is</em> a local filter, because it alters pixel values based on
+other pixel values in the local neighborhood (footprint). However, it is not
+a <em>kernel filter</em> because it does not use a weighted sum of the local
+neighborhood, in contrast to other kernel-based filters like the mean filter,
+Gaussian filter etc.</p>
 </section>
-<section class="tex2jax_ignore mathjax_ignore" id="edge-preservation">
-<h1>Edge preservation<a class="headerlink" href="#edge-preservation" title="Link to this heading">#</a></h1>
-<p>The median filter is especially useful for removing noise from images, while preserving the “edges” in the image. You’ll recall that the edges are big changes in the gradient of pixel intensities, between nearby pixels (e.g. black-to-white, white-to-black etc). Let’s look at why the median filter is “edge preserving”, by expanding the <code class="docutils literal notranslate"><span class="pre">nums</span></code> array into a low-resolution image, using <code class="docutils literal notranslate"><span class="pre">np.tile()</span></code> and <code class="docutils literal notranslate"><span class="pre">.reshape()</span></code>.</p>
+<section id="edge-preservation">
+<h2>Edge preservation<a class="headerlink" href="#edge-preservation" title="Link to this heading">#</a></h2>
+<p>The median filter is especially useful for removing noise from images, while
+preserving the “edges” in the image. You’ll recall that the edges are big
+changes in the gradient of pixel intensities, between nearby pixels (e.g.
+black-to-white, white-to-black etc). Let’s look at why the median filter is
+“edge preserving”, by expanding the <code class="docutils literal notranslate"><span class="pre">nums</span></code> array into a low-resolution image,
+using <code class="docutils literal notranslate"><span class="pre">np.tile()</span></code> and <code class="docutils literal notranslate"><span class="pre">np.reshape()</span></code>.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Make `nums` into a image array.</span>
-<span class="n">nums_img</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">tile</span><span class="p">(</span><span class="n">nums</span><span class="p">,</span> <span class="n">reps</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">((</span><span class="mi">3</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>
-<span class="n">nums_img</span> 
+<span class="n">nums_img</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">tile</span><span class="p">(</span><span class="n">nums</span><span class="p">,</span> <span class="n">reps</span><span class="o">=</span><span class="mi">3</span><span class="p">),</span> <span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>
+<span class="n">nums_img</span>
 </pre></div>
 </div>
 </div>
@@ -573,17 +658,22 @@ document.write(`
 <img alt="_images/825d1eb2e51ac15ec9ff8fe936be9fd273ba9998e4ad622bacfc46764eeb8c11.png" src="_images/825d1eb2e51ac15ec9ff8fe936be9fd273ba9998e4ad622bacfc46764eeb8c11.png" />
 </div>
 </div>
-<p>Now, imagine we “walk” a 3-by-3 kernel (sorry pedants!) through the <code class="docutils literal notranslate"><span class="pre">nums_img</span></code> array, and replace the central pixel of each kernel (sorry again, pedants!) with the median of the pixels under the kernel.</p>
-<p>This process is shown below, for three kernels (OK, pedants, three “local neighborhoods under a 3-by-3 array very much resembling a kernel”). The central pixel is highlighted in red, and the index of the current local neighborhood is shown above the pixel values.</p>
-<p>The flattened and sorted values from each local neighborhood are also shown, along with the median value of the neighborhood:</p>
+<p>Now, imagine we “walk” a 3-by-3 footprint through the <code class="docutils literal notranslate"><span class="pre">nums_img</span></code> array, and
+replace the central pixel of each footprint with the median of the pixels
+under the kernel.</p>
+<p>This process is shown below, for three footprints (“local neighborhoods” under
+a 3-by-3 array). The central pixel is highlighted in red, and the index of the
+current local neighborhood is shown above the pixel values.</p>
+<p>The flattened and sorted values from each local neighborhood are also shown,
+along with the median value of the neighborhood:</p>
 <p><img alt="" src="_images/median_filter.png" /></p>
 <p>We can also show this in “Python space”, using a for loop:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Show some local neighborhoods of `nums_img` and their medians.</span>
-<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">3</span><span class="p">):</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">3</span><span class="p">):</span>
     <span class="n">i_row_start</span><span class="p">,</span> <span class="n">i_col_start</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="n">i</span>
-    <span class="n">i_row_end</span><span class="p">,</span> <span class="n">i_col_end</span> <span class="o">=</span> <span class="mi">3</span><span class="p">,</span> <span class="n">i</span><span class="o">+</span><span class="mi">3</span>
+    <span class="n">i_row_end</span><span class="p">,</span> <span class="n">i_col_end</span> <span class="o">=</span> <span class="mi">3</span><span class="p">,</span> <span class="n">i</span> <span class="o">+</span> <span class="mi">3</span>
     <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">nums_img[</span><span class="si">{</span><span class="n">i_row_start</span><span class="si">}</span><span class="s2">:</span><span class="si">{</span><span class="n">i_row_end</span><span class="si">}</span><span class="s2">, </span><span class="si">{</span><span class="n">i_col_start</span><span class="si">}</span><span class="s2">:</span><span class="si">{</span><span class="n">i_col_end</span><span class="si">}</span><span class="s2">]&quot;</span><span class="p">)</span>
     <span class="n">current_selection</span> <span class="o">=</span> <span class="n">nums_img</span><span class="p">[</span><span class="n">i_row_start</span><span class="p">:</span><span class="n">i_row_end</span><span class="p">,</span> <span class="n">i_col_start</span><span class="p">:</span><span class="n">i_col_end</span><span class="p">]</span>
     <span class="nb">print</span><span class="p">(</span><span class="n">current_selection</span><span class="p">)</span>
@@ -617,12 +707,16 @@ Median = 7.0
 </div>
 </div>
 </div>
-<p>Because the median is not a function which can be applied via kernel filtering, we cannot apply it using <code class="docutils literal notranslate"><span class="pre">ndi.correlate()</span></code>, as we did with the other <a class="reference internal" href="5_mean_filter.html"><span class="doc std std-doc">local filters</span></a>.</p>
-<p>We can apply it in <code class="docutils literal notranslate"><span class="pre">skimage</span></code> using <code class="docutils literal notranslate"><span class="pre">ski.filters.median()</span></code>. Again,  we supply a <code class="docutils literal notranslate"><span class="pre">footprint</span></code> argument to determine the size of each pixel’s “local neighborhood”:</p>
+<p>Because the median is not a function that can be applied via kernel filtering,
+we cannot apply it using <code class="docutils literal notranslate"><span class="pre">ndi.correlate()</span></code>, as we did with the other <a class="reference internal" href="5_mean_filter.html"><span class="doc std std-doc">local
+filters</span></a>.</p>
+<p>We can apply the median filter in <code class="docutils literal notranslate"><span class="pre">skimage</span></code> using <code class="docutils literal notranslate"><span class="pre">ski.filters.median()</span></code>.
+Again,  we supply a <code class="docutils literal notranslate"><span class="pre">footprint</span></code> argument to determine the size and shape of
+each pixel’s “local neighborhood”:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Median filter `nums_img`.</span>
-<span class="n">nums_median_filtered</span> <span class="o">=</span> <span class="n">ski</span><span class="o">.</span><span class="n">filters</span><span class="o">.</span><span class="n">median</span><span class="p">(</span><span class="n">nums_img</span><span class="p">,</span> 
+<span class="n">nums_median_filtered</span> <span class="o">=</span> <span class="n">ski</span><span class="o">.</span><span class="n">filters</span><span class="o">.</span><span class="n">median</span><span class="p">(</span><span class="n">nums_img</span><span class="p">,</span>
                                           <span class="n">footprint</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">((</span><span class="mi">3</span><span class="p">,</span><span class="mi">3</span><span class="p">)))</span>
 <span class="n">nums_median_filtered</span>
 </pre></div>
@@ -651,7 +745,7 @@ Median = 7.0
 </div>
 </div>
 </div>
-<p>The effect of the “edges” of the image is easier to see graphically:</p>
+<p>The effect on the “edges” of the image is easier to see graphically:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Show the images.</span>
@@ -668,10 +762,15 @@ Median = 7.0
 <img alt="_images/b07fad263136558a17aab4677671ad1a933c76361870ef0205abec403be59819.png" src="_images/b07fad263136558a17aab4677671ad1a933c76361870ef0205abec403be59819.png" />
 </div>
 </div>
-<p>Edges involving a bigger gradient have been preserved, whilst less prominent edges have been merged into more prominent ones. We show this, for comparison, alongside a mean filtered version of <code class="docutils literal notranslate"><span class="pre">nums_img</span></code>, filtered using the same size <code class="docutils literal notranslate"><span class="pre">footprint</span></code> ((3, 3)):</p>
+<p>Edges involving a bigger gradient have been preserved, whilst less prominent
+edges have been merged into more prominent ones nearby. We show this, for comparison,
+alongside a mean filtered version of <code class="docutils literal notranslate"><span class="pre">nums_img</span></code>, filtered using the same size
+<code class="docutils literal notranslate"><span class="pre">footprint</span></code> ((3, 3)):</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">nums_img</span> <span class="o">=</span> <span class="n">ski</span><span class="o">.</span><span class="n">util</span><span class="o">.</span><span class="n">img_as_ubyte</span><span class="p">(</span><span class="n">nums_img</span><span class="p">)</span> <span class="c1"># Avoid `dtype` warning.</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Avoid dtype warning.  In our case, `nums_img` already fits within the </span>
+<span class="c1"># np.uint8 range (0 to 255).</span>
+<span class="n">nums_img</span> <span class="o">=</span> <span class="n">nums_img</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">uint8</span><span class="p">)</span>
 <span class="n">nums_mean_filtered</span> <span class="o">=</span> <span class="n">ski</span><span class="o">.</span><span class="n">filters</span><span class="o">.</span><span class="n">rank</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">nums_img</span><span class="p">,</span>
                                            <span class="n">footprint</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">((</span><span class="mi">3</span><span class="p">,</span><span class="mi">3</span><span class="p">)))</span>
 <span class="c1"># Show the images.</span>
@@ -689,15 +788,16 @@ Median = 7.0
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/opt/hostedtoolcache/Python/3.13.9/x64/lib/python3.13/site-packages/skimage/util/dtype.py:576: UserWarning: Downcasting int64 to uint8 without scaling because max value 10 fits in uint8
-  return _convert(image, np.uint8, force_copy)
-</pre></div>
-</div>
 <img alt="_images/7d6f5b5db3b449abfc3708f29b0d386cf113fc952333056618e865c97a9cd7f7.png" src="_images/7d6f5b5db3b449abfc3708f29b0d386cf113fc952333056618e865c97a9cd7f7.png" />
 </div>
 </div>
-<p>You can see that the median filter gives a better “summary” of the distribution of edges in the original image - the mean filter has spread the edges around more, which makes sense, given that it averages pixels within a kernel.</p>
-<p>In a higher resolution image, the median filter can have the effect of removing noise whilst preserving edges to a greater extent than some other filters. We will demonstrate the median filter again with the <code class="docutils literal notranslate"><span class="pre">brick</span></code> image from <code class="docutils literal notranslate"><span class="pre">ski.data</span></code>:</p>
+<p>You can see that the median filter gives a better “summary” of the distribution
+of edges in the original image - the mean filter has blurred the edges more,
+which makes sense, given that it averages pixels within a kernel.</p>
+<p>In a higher resolution image, the median filter can have the effect of removing
+noise whilst preserving edges to a greater extent than some other filters. We
+will demonstrate the median filter again with the <code class="docutils literal notranslate"><span class="pre">brick</span></code> image from
+<code class="docutils literal notranslate"><span class="pre">ski.data</span></code>:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Load in the `brick` image.</span>
@@ -718,14 +818,15 @@ Min Pixel Value: 63
 <img alt="_images/c7b80769183299078e5ab4339df4c51966f28bae48a1f0c68b5bb917cdedb60c.png" src="_images/c7b80769183299078e5ab4339df4c51966f28bae48a1f0c68b5bb917cdedb60c.png" />
 </div>
 </div>
-<p>We will also filter <code class="docutils literal notranslate"><span class="pre">brick</span></code> using a mean filter, with the same size kernel as the median filter:</p>
+<p>We will also filter <code class="docutils literal notranslate"><span class="pre">brick</span></code> using a mean filter, with the same size kernel as
+the median filter:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Apply a median filter.</span>
-<span class="n">median_filtered_brick</span> <span class="o">=</span> <span class="n">ski</span><span class="o">.</span><span class="n">filters</span><span class="o">.</span><span class="n">median</span><span class="p">(</span><span class="n">brick</span><span class="p">,</span> 
+<span class="n">median_filtered_brick</span> <span class="o">=</span> <span class="n">ski</span><span class="o">.</span><span class="n">filters</span><span class="o">.</span><span class="n">median</span><span class="p">(</span><span class="n">brick</span><span class="p">,</span>
                                            <span class="n">footprint</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">((</span><span class="mi">9</span><span class="p">,</span><span class="mi">9</span><span class="p">)))</span>
 
-<span class="n">mean_filtered_brick</span> <span class="o">=</span> <span class="n">ski</span><span class="o">.</span><span class="n">filters</span><span class="o">.</span><span class="n">rank</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">brick</span><span class="p">,</span> 
+<span class="n">mean_filtered_brick</span> <span class="o">=</span> <span class="n">ski</span><span class="o">.</span><span class="n">filters</span><span class="o">.</span><span class="n">rank</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">brick</span><span class="p">,</span>
                                             <span class="n">footprint</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">((</span><span class="mi">9</span><span class="p">,</span><span class="mi">9</span><span class="p">)))</span>
 <span class="c1"># Plot both image to compare</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">14</span><span class="p">,</span> <span class="mi">4</span><span class="p">))</span>
@@ -745,15 +846,65 @@ Min Pixel Value: 63
 <img alt="_images/04f90d3419692c5392a3f82a5e5ece1618400b101417924e107e624d790519d2.png" src="_images/04f90d3419692c5392a3f82a5e5ece1618400b101417924e107e624d790519d2.png" />
 </div>
 </div>
-<p>You can see that the edges in the images (transitions between pixels of very different intensities - in this case between the dark bricks and the lighter mortar lines) are less smoothed by the median filter than by the mean filter. This is considered a desirable property of the median filter.</p>
+<p>You can see that the edges in the images (transitions between pixels of very
+different intensities - in this case between the dark bricks and the lighter
+mortar lines) are less smoothed (less blurred) by the median filter than by the
+mean filter. This can be a desirable property of the median filter, depending
+on your application.</p>
 </section>
-<section class="tex2jax_ignore mathjax_ignore" id="non-local-filters">
-<h1>Non-local filters<a class="headerlink" href="#non-local-filters" title="Link to this heading">#</a></h1>
-<p>Whilst the median filter does not use a kernel, it is still a local filter, because it filters pixels based on the values of other pixels in the local neighborhood. Other filters use neither kernel filtering nor a local pixel neighborhood. These filters are called <em>non-local filters</em>.</p>
-<p>Non-local filters have their name because they filter all of the pixels in an image based on characteristics of a specific region of the image, or based upon characteristics of the entire image. As a result, a non-local filter might modify a given pixel’s value based on the values of pixels in a region of the image which is nowhere near the “local neighborhood” of the pixel being modified.</p>
-<p>One foundational non-local filter is a <a class="reference external" href="https://en.wikipedia.org/wiki/Histogram_equalization"><em>histogram equalisation filter</em></a>. This filter modifies pixels based on the histogram of the entire image. Essentially, this process “smoothes out” the histogram into a even “hill”, so that there is less variance between the pixel intensities. The image below illustrates this principle:</p>
-<p><img alt="" src="_images/hist_equal.png" /></p>
-<p>We will demonstrate the histogram equalisation filter with the <code class="docutils literal notranslate"><span class="pre">eagle</span></code> image from <code class="docutils literal notranslate"><span class="pre">ski.data</span></code>:</p>
+<section id="non-local-filters">
+<h2>Non-local filters<a class="headerlink" href="#non-local-filters" title="Link to this heading">#</a></h2>
+<p>Whilst the median filter does not use a kernel, it is still a local filter,
+because it filters pixels based on the values of other pixels in the local
+neighborhood, defined by <code class="docutils literal notranslate"><span class="pre">footprint</span></code>. Other filters use neither kernel
+filtering nor a local pixel neighborhood. These filters are called <em>non-local
+filters</em>.</p>
+<p>Non-local filters filter all of pixels in an image based on characteristics of
+a specific region of the image, or based upon characteristics of the entire
+image. As a result, a non-local filter might modify a given pixel’s value based
+on the values of pixels in parts of the image that are nowhere near the “local
+neighborhood” of the pixel being modified.</p>
+<p>One foundational non-local filter is a <a class="reference external" href="https://en.wikipedia.org/wiki/Histogram_equalization"><em>histogram equalisation
+filter</em></a>. This filter
+modifies pixels based on the intensity histogram of the entire image.
+Essentially, this process flattens the image intensity histogram into a uniform
+distribution, so that there is less variance between the pixel intensities. The
+image below illustrates this principle:</p>
+<div class="cell tag_hide-input docutils container">
+<details class="admonition hide above-input">
+<summary aria-label="Toggle hidden content">
+<p class="collapsed admonition-title">Show code cell source</p>
+<p class="expanded admonition-title">Hide code cell source</p>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">gray_coffee</span> <span class="o">=</span> <span class="n">ski</span><span class="o">.</span><span class="n">color</span><span class="o">.</span><span class="n">rgb2gray</span><span class="p">(</span><span class="n">ski</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">coffee</span><span class="p">())</span>
+<span class="n">eq_coffee</span> <span class="o">=</span> <span class="n">ski</span><span class="o">.</span><span class="n">exposure</span><span class="o">.</span><span class="n">equalize_hist</span><span class="p">(</span><span class="n">gray_coffee</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+<span class="n">edges</span><span class="p">,</span> <span class="n">counts</span><span class="p">,</span> <span class="n">obj</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">gray_coffee</span><span class="o">.</span><span class="n">ravel</span><span class="p">(),</span> <span class="n">bins</span><span class="o">=</span><span class="mi">50</span><span class="p">);</span>
+<span class="n">ylims</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">ylim</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xticks</span><span class="p">([])</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">yticks</span><span class="p">([])</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Pixel intensity&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Bin count&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Original image&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">eq_coffee</span><span class="o">.</span><span class="n">ravel</span><span class="p">(),</span> <span class="n">bins</span><span class="o">=</span><span class="mi">50</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylim</span><span class="p">(</span><span class="n">ylims</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xticks</span><span class="p">([])</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">yticks</span><span class="p">([])</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Pixel intensity&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Bin count&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Equalised&#39;</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+</details>
+<div class="cell_output docutils container">
+<img alt="_images/83765482b99def05d718d6e4a695fbcc43d3af52a2f31a65744f10198a0e9711.png" src="_images/83765482b99def05d718d6e4a695fbcc43d3af52a2f31a65744f10198a0e9711.png" />
+</div>
+</div>
+<p>We will demonstrate the histogram equalisation filter with the <code class="docutils literal notranslate"><span class="pre">eagle</span></code> image
+from <code class="docutils literal notranslate"><span class="pre">ski.data</span></code>:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Load in the `eagle` image.</span>
@@ -774,14 +925,16 @@ Min Pixel Value: 1
 <img alt="_images/71124bfd18fd879b704ba5d14ac587fcef67a13f528d188ea4635a29f27bbf91.png" src="_images/71124bfd18fd879b704ba5d14ac587fcef67a13f528d188ea4635a29f27bbf91.png" />
 </div>
 </div>
-<p>Let’s first view the histogram of <code class="docutils literal notranslate"><span class="pre">eagle</span></code>, before we apply the filter. As we know, we can use the <code class="docutils literal notranslate"><span class="pre">.ravel()</span></code> array method to flatten this 2D image to 1D, and then inspect a histogram of the pixel intensities:</p>
+<p>Let’s first view the intensity histogram of <code class="docutils literal notranslate"><span class="pre">eagle</span></code>, before we apply the
+filter. As we know, we can use the <code class="docutils literal notranslate"><span class="pre">.ravel()</span></code> array method to flatten this 2D
+image to 1D, and then inspect a histogram of the pixel intensities:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Flatted to 1D.</span>
 <span class="n">one_D_eagle</span> <span class="o">=</span> <span class="n">eagle</span><span class="o">.</span><span class="n">ravel</span><span class="p">()</span>
 
 <span class="c1"># Show a histogram.</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">eagle</span><span class="o">.</span><span class="n">ravel</span><span class="p">(),</span> 
+<span class="n">plt</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">eagle</span><span class="o">.</span><span class="n">ravel</span><span class="p">(),</span>
          <span class="n">bins</span><span class="o">=</span><span class="mi">128</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Pixel Intensity&#39;</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Pixel Count&#39;</span><span class="p">);</span>
@@ -792,15 +945,21 @@ Min Pixel Value: 1
 <img alt="_images/2fcddee4d23b8afedb3ae4ef518516fe5a3b50688ee01ec3dfd6375ca8f71ebc.png" src="_images/2fcddee4d23b8afedb3ae4ef518516fe5a3b50688ee01ec3dfd6375ca8f71ebc.png" />
 </div>
 </div>
-<p>In order to apply the histogram equalisation filter, we first “deconstruct” into separate arrays using <code class="docutils literal notranslate"><span class="pre">np.histogram()</span></code>. This returns two arrays. One array we will call <code class="docutils literal notranslate"><span class="pre">counts</span></code>; this contains the height of the histogram within each <span class="math notranslate nohighlight">\(x\)</span>-axis bin. The second array we will call <code class="docutils literal notranslate"><span class="pre">bin_intervals</span></code>; adjacent values in this array are the start and end points of each <span class="math notranslate nohighlight">\(x\)</span>-axis bin. We use <code class="docutils literal notranslate"><span class="pre">bin_intervals</span></code> to calculate the centerpoint of each bin, by taking the average of the adjacent values.</p>
-<p><em>Note</em>: alternatively we could use <code class="docutils literal notranslate"><span class="pre">ski.exposure.histogram()</span></code>, to the same effect.</p>
+<p>In order to apply the histogram equalisation filter, we first “deconstruct”
+into separate arrays using <code class="docutils literal notranslate"><span class="pre">np.histogram()</span></code>. This returns two arrays. One array
+we will call <code class="docutils literal notranslate"><span class="pre">counts</span></code>; this contains the height of the histogram within each
+<span class="math notranslate nohighlight">\(x\)</span>-axis bin. The second array we will call <code class="docutils literal notranslate"><span class="pre">bin_intervals</span></code>; adjacent values in
+this array are the start and end points of each <span class="math notranslate nohighlight">\(x\)</span>-axis bin. We use
+<code class="docutils literal notranslate"><span class="pre">bin_intervals</span></code> to calculate the center point of each bin, by taking the
+average of the adjacent values.</p>
+<p><em>Note</em>: we could also use <code class="docutils literal notranslate"><span class="pre">ski.exposure.histogram()</span></code>, to the same effect.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Centers and bin intervals, from the histogram of the flattened `eagle` image.</span>
 <span class="n">counts</span><span class="p">,</span> <span class="n">bin_intervals</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">histogram</span><span class="p">(</span><span class="n">one_D_eagle</span><span class="p">,</span>
                                      <span class="n">bins</span><span class="o">=</span><span class="mi">256</span><span class="p">)</span>
 
-<span class="c1"># Calculate the bin centers.</span>
+<span class="c1"># Calculate the bin centers from the bin edges.</span>
 <span class="n">bin_centers</span> <span class="o">=</span> <span class="p">(</span><span class="n">bin_intervals</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span> <span class="o">+</span> <span class="n">bin_intervals</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span> <span class="o">/</span> <span class="mi">2</span>
 
 <span class="c1"># Show the `counts` and `bin_centers`.</span>
@@ -865,20 +1024,35 @@ Bin centers:
 </div>
 </div>
 </div>
-<p>We chose to use 256 bins, for this histogram, for reasons that will become apparent further down the page (remember this!).</p>
+<p>We chose to use 256 bins, for this histogram, for reasons that will become
+apparent further down the page (remember this!).</p>
 <p>There are several steps in equalising the histogram:</p>
-<ul class="simple">
-<li><p>First, we normalise the histogram, so that the counts sum to 1. We do this by dividing each count by the total number of pixels in the image, which converts each count to a proportion.</p></li>
-<li><p>Then we calculate the <em>cumulative density</em> of the normalised histogram. Basically, this means we add up the proportions as we go along the <span class="math notranslate nohighlight">\(x\)</span>-axis, so each bin indicates the total proportion of pixels up to that point (e.g. pixels in that particular bin, or bins situated lower down the <span class="math notranslate nohighlight">\(x\)</span>-axis).</p></li>
-<li><p>We then “map” each pixel intensity value to its corresponding cumulative proportion. After this “mapping”, we have our equalised histogram.</p></li>
-</ul>
-<p>This may all sound quite abstract, but bear with us. It is easier to follow in code, and is a visually striking effect when we compare the resulting histogram to the original.</p>
-<p>For the first step, we can normalise the <code class="docutils literal notranslate"><span class="pre">counts</span></code> by dividing each individual count by the total number of pixels in the image. Note that we could also do this using the optional <code class="docutils literal notranslate"><span class="pre">density=True</span></code> argument to <code class="docutils literal notranslate"><span class="pre">np.histogram()</span></code>, but we do it manually to show what the actual operations involve:</p>
+<ol class="arabic simple">
+<li><p>We normalise the histogram, so that the counts sum to 1. We do this by
+dividing each count by the total number of pixels in the image, which
+converts each count to a proportion.</p></li>
+<li><p>Then we calculate the <em>cumulative density</em> of the normalised histogram.
+Basically, this means we add up the proportions as we go along the <span class="math notranslate nohighlight">\(x\)</span>-axis,
+so each bin indicates the total proportion of pixels <em>up to</em> that point
+(ie pixels in that particular bin, or bins situated lower down the
+<span class="math notranslate nohighlight">\(x\)</span>-axis).</p></li>
+<li><p>We “map” each pixel intensity value to its corresponding cumulative
+proportion. After this “mapping”, we have our equalised histogram.</p></li>
+</ol>
+<p>This may all sound quite abstract, but bear with us. It is easier to follow in
+code, and is a visually striking effect when we compare the resulting histogram
+to the original.</p>
+<p>For the first step, we can normalise the <code class="docutils literal notranslate"><span class="pre">counts</span></code> by dividing each individual
+count by the total number of pixels in the image. Note that we could also do
+this using the optional <code class="docutils literal notranslate"><span class="pre">density=True</span></code> argument to <code class="docutils literal notranslate"><span class="pre">np.histogram()</span></code>, but we do
+it manually to show what the operations involve:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Centers and bin intervals, from the histogram of the flattened `eagle` image.</span>
-<span class="n">n_pixels</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">one_D_eagle</span><span class="p">)</span> <span class="c1"># Get the total number of pixels.</span>
-<span class="n">counts_normed</span> <span class="o">=</span> <span class="n">counts</span><span class="o">/</span><span class="n">n_pixels</span> <span class="c1"># Normalize by dividing each count by the total number of pixels.</span>
+<span class="c1"># Get the total number of pixels.</span>
+<span class="n">n_pixels</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">one_D_eagle</span><span class="p">)</span>
+<span class="c1"># Normalize by dividing each count by the total number of pixels.</span>
+<span class="n">counts_normed</span> <span class="o">=</span> <span class="n">counts</span><span class="o">/</span><span class="n">n_pixels</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">bin_centers</span><span class="p">,</span> <span class="n">counts_normed</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Pixel Intensity&#39;</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Pixel Probability&#39;</span><span class="p">);</span>
@@ -903,11 +1077,18 @@ Bin centers:
 </div>
 </div>
 </div>
-<p>When we equalise the histogram, we want it to be roughly uniform across the pixel intensities. As a tool to perform this “uniformization”, we first we calculate the cumulative distribution (<code class="docutils literal notranslate"><span class="pre">cdf</span></code>) of the histogram. To do this we take cumulative sum of the normalised counts (<code class="docutils literal notranslate"><span class="pre">counts_normed</span></code>). For a given bin, the cumulative sum operation adds up the proportion of pixels that are in that bin and in all of the lower bins (e.g. the bins closer to 0 on the <span class="math notranslate nohighlight">\(x\)</span>-axis). Essentially it is a running total of the <code class="docutils literal notranslate"><span class="pre">counts_normed</span></code> as we move from left to right across the <span class="math notranslate nohighlight">\(x\)</span>-axis:</p>
+<p>When we equalise the histogram, we want it to be roughly uniform across the
+pixel intensities. As a tool to perform this “uniformization”, we first we
+calculate the cumulative distribution (<code class="docutils literal notranslate"><span class="pre">cdf</span></code>) of the histogram. To do this we
+take cumulative sum of the normalised counts (<code class="docutils literal notranslate"><span class="pre">counts_normed</span></code>). For a given
+bin, the cumulative sum operation adds up the proportion of pixels that are in
+that bin and in all of the lower bins (e.g. the bins closer to 0 on the
+<span class="math notranslate nohighlight">\(x\)</span>-axis). Essentially it is a running total of the <code class="docutils literal notranslate"><span class="pre">counts_normed</span></code> as we move
+from left to right across the <span class="math notranslate nohighlight">\(x\)</span>-axis:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Get the cumulative distribution of the pixel intensities.</span>
-<span class="n">cdf</span> <span class="o">=</span> <span class="n">counts_normed</span><span class="o">.</span><span class="n">cumsum</span><span class="p">()</span> 
+<span class="n">cdf</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">cumsum</span><span class="p">(</span><span class="n">counts_normed</span><span class="p">)</span>
 
 <span class="c1"># Show a plot of the cumulative distribution.</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">bin_centers</span><span class="p">,</span> <span class="n">cdf</span><span class="p">)</span>
@@ -920,7 +1101,10 @@ Bin centers:
 <img alt="_images/2f1e15b9a3d7493d1750cf070c2bd6ef3f9a2363795c6e38fcd65bed8aff0a88.png" src="_images/2f1e15b9a3d7493d1750cf070c2bd6ef3f9a2363795c6e38fcd65bed8aff0a88.png" />
 </div>
 </div>
-<p>The final value in <code class="docutils literal notranslate"><span class="pre">cdf</span></code> is 1 (or at least damn near close, given precision loss in the calculations). Remember, we are adding up proportions here, so a value of 1 indicates that the final bin and all of the lower bins together contain 100% of the pixels in the image:</p>
+<p>The final value in <code class="docutils literal notranslate"><span class="pre">cdf</span></code> is 1 (or at least close-as-dammit, given precision
+loss in the calculations). Remember, we are adding up proportions here, so
+a value of 1 indicates that the final bin and all of the lower bins together
+contain 100% (proportion 1.0) of the pixels in the image:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">cdf</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
@@ -933,8 +1117,15 @@ Bin centers:
 </div>
 </div>
 </div>
-<p>The next step requires some thought, to follow what is going on. We want to “map” the pixel values in the flattened <code class="docutils literal notranslate"><span class="pre">one_D_eagle</span></code> array to the values in the <code class="docutils literal notranslate"><span class="pre">cdf</span></code>. We can do this, for the current <code class="docutils literal notranslate"><span class="pre">eagle</span></code> image, by using the <code class="docutils literal notranslate"><span class="pre">one_D_eagle</span></code> pixel intensity values as <em>indexes</em> for the <code class="docutils literal notranslate"><span class="pre">cdf</span></code> array. This might seem like a hack, so lets break it down.</p>
-<p>Recall that we asked you to remember that we asked <code class="docutils literal notranslate"><span class="pre">np.histogram()</span></code> to give us a histogram with 256 bins? Well, as a result our <code class="docutils literal notranslate"><span class="pre">cdf</span></code> array, which contains the running total of the proportions in a given bin and lower bins, has 256 elements:</p>
+<p>The next step requires some thought, to follow what is going on. We want to
+“map” the pixel values in the flattened <code class="docutils literal notranslate"><span class="pre">one_D_eagle</span></code> array to the values in
+the <code class="docutils literal notranslate"><span class="pre">cdf</span></code>. We can do this, for the current <code class="docutils literal notranslate"><span class="pre">eagle</span></code> image, by using the
+<code class="docutils literal notranslate"><span class="pre">one_D_eagle</span></code> pixel intensity values as <em>indexes</em> for the <code class="docutils literal notranslate"><span class="pre">cdf</span></code> array. This
+might seem like a hack, so lets break it down.</p>
+<p>Recall that we asked you to remember that we asked <code class="docutils literal notranslate"><span class="pre">np.histogram()</span></code> to give us
+a histogram with 256 bins? Well, as a result our <code class="docutils literal notranslate"><span class="pre">cdf</span></code> array, which contains
+the running total of the proportions in a given bin and lower bins, has 256
+elements:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Show the `shape` of the `cdf` array.</span>
@@ -948,7 +1139,8 @@ Bin centers:
 </div>
 </div>
 </div>
-<p>Because we count from 0, when indexing arrays, the final value in <code class="docutils literal notranslate"><span class="pre">cdf</span></code> is at index location 255:</p>
+<p>Because we count from 0, when indexing arrays, the final value in <code class="docutils literal notranslate"><span class="pre">cdf</span></code> is at
+index location 255:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Show the final value of the `cdf` array, at integer index location 255.</span>
@@ -962,7 +1154,9 @@ Bin centers:
 </div>
 </div>
 </div>
-<p>Given that <code class="docutils literal notranslate"><span class="pre">one_D_eagle</span></code> is in the <code class="docutils literal notranslate"><span class="pre">uint8</span></code> <code class="docutils literal notranslate"><span class="pre">dtype</span></code>, the maximum value allowed is 255, and the minimum is 1:</p>
+<p>Given that <code class="docutils literal notranslate"><span class="pre">one_D_eagle</span></code> is in the <code class="docutils literal notranslate"><span class="pre">uint8</span></code> <code class="docutils literal notranslate"><span class="pre">dtype</span></code>, the maximum and minimum
+values allowed are 255 and 0.  The actual image is has maximum, minimum of 255
+and 1.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Show the `dtype` and `min`/`max` values of `eagle`.</span>
@@ -980,8 +1174,17 @@ Min Pixel Value: 1
 </div>
 </div>
 </div>
-<p>Conveniently here, each pixel intensity value in <code class="docutils literal notranslate"><span class="pre">one_D_eagle</span></code> will work as an index into <code class="docutils literal notranslate"><span class="pre">cdf</span></code>. This allows us to replace each pixel intensity value with its corresponding cumulative proportion. So, if a pixel intensity value <span class="math notranslate nohighlight">\(p\)</span> falls in bin <span class="math notranslate nohighlight">\(b\)</span>, then bin <span class="math notranslate nohighlight">\(b\)</span> has a corresponding cumulative proportion in the <code class="docutils literal notranslate"><span class="pre">cdf</span></code> array. We use this “mapped” values as our output image - this has the effect of “smoothing out”, or, in fact, “equalising” the histogram, because bins without many pixels in them “inherit” the proportions from lower bins. Again, this is easier to appreciate visually, by viewing the histograms below.</p>
-<p>Let’s perform the indexing/equalisation, and then inspect the histograms, so this effect becomes apparent. We show this mapping first with ten pixel intensity values from <code class="docutils literal notranslate"><span class="pre">one_D_eagle</span></code>:</p>
+<p>Conveniently here, each pixel intensity value in <code class="docutils literal notranslate"><span class="pre">one_D_eagle</span></code> will work as an
+index into <code class="docutils literal notranslate"><span class="pre">cdf</span></code>. This allows us to replace each pixel intensity value with its
+corresponding cumulative proportion. So, if a pixel intensity value <span class="math notranslate nohighlight">\(p\)</span> falls
+in bin <span class="math notranslate nohighlight">\(b\)</span>, then bin <span class="math notranslate nohighlight">\(b\)</span> has a corresponding cumulative proportion in the <code class="docutils literal notranslate"><span class="pre">cdf</span></code>
+array. We use this “mapped” values as our output image - this has the effect of
+“smoothing out”, or, in fact, “equalising” the histogram, because bins without
+many pixels in them “inherit” the proportions from lower bins. Again, this is
+easier to appreciate visually, by viewing the histograms below.</p>
+<p>Let’s perform the indexing/equalisation, and then inspect the histograms, so
+this effect becomes apparent. We show this mapping first with ten pixel
+intensity values from <code class="docutils literal notranslate"><span class="pre">one_D_eagle</span></code>:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">first_ten_pixels</span> <span class="o">=</span> <span class="n">one_D_eagle</span><span class="p">[:</span><span class="mi">10</span><span class="p">]</span>
@@ -995,7 +1198,8 @@ Min Pixel Value: 1
 </div>
 </div>
 </div>
-<p>…we then show the corresponding cumulative proportions that these values will be mapped to, when we use them as indexes for <code class="docutils literal notranslate"><span class="pre">cdf</span></code>:</p>
+<p>…we then show the corresponding cumulative proportions that these values will
+be mapped to, when we use them as indexes for <code class="docutils literal notranslate"><span class="pre">cdf</span></code>:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">cdf</span><span class="p">[</span><span class="n">first_ten_pixels</span><span class="p">]</span>
@@ -1008,7 +1212,8 @@ Min Pixel Value: 1
 </div>
 </div>
 </div>
-<p>To perform this mapping for <em>every</em> pixel intensity value, we use the following operation:</p>
+<p>To perform this mapping for <em>every</em> pixel intensity value, we use the following
+operation:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Equalise the histogram of `eagle`, by using the pixel intensity values in `one_D_eagle` (1 - 255)</span>
@@ -1018,7 +1223,10 @@ Min Pixel Value: 1
 </div>
 </div>
 </div>
-<p>The original histogram and the equalised histogram, along with the corresponding images, are shown below. We first <code class="docutils literal notranslate"><span class="pre">.reshape()</span></code> the <code class="docutils literal notranslate"><span class="pre">equalised_hist</span></code> back into the shape of the original, non-flattened <code class="docutils literal notranslate"><span class="pre">eagle</span></code> image, thus restoring its status as a 2D image array:</p>
+<p>The original histogram and the equalised histogram, along with the
+corresponding images, are shown below. We first <code class="docutils literal notranslate"><span class="pre">.reshape()</span></code> the
+<code class="docutils literal notranslate"><span class="pre">equalised_hist</span></code> back into the shape of the original, non-flattened <code class="docutils literal notranslate"><span class="pre">eagle</span></code>
+image, thus restoring its status as a 2D image array:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Reshape to 2D.</span>
@@ -1045,7 +1253,13 @@ Min Pixel Value: 1
 <img alt="_images/22b76a7b6f7da26bd3ac522698b072ca4f1105c2a8a0c83221bb853ff1ccb47c.png" src="_images/22b76a7b6f7da26bd3ac522698b072ca4f1105c2a8a0c83221bb853ff1ccb47c.png" />
 </div>
 </div>
-<p>The equalised histogram now much more closely resembles a <a class="reference external" href="https://en.wikipedia.org/wiki/Uniform_distribution">uniform distribution</a> - the notable “peaks and valleys” of the original and been replaced with a uniform block. The effect on the perceived visual image is one of heightened contrast - pay particular attention to the wall behind the noble eagle. Each image, without the histograms, can be viewed below, for easier inspection:</p>
+<p>The equalised histogram now much more closely resembles a <a class="reference external" href="https://en.wikipedia.org/wiki/Uniform_distribution">uniform
+distribution</a> - the notable
+“peaks and valleys” of the original and been replaced with a uniform
+distribution. In this case, the effect on the perceived visual image is one of
+heightened contrast — pay particular attention to the wall behind the noble
+eagle. Each image, without the histograms, can be viewed below, for easier
+inspection:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Generate the plot.</span>
@@ -1063,7 +1277,42 @@ Min Pixel Value: 1
 <img alt="_images/8a45606b15aa0d5362a298bb6992eaf642a734b87b5de5fe02e8a7dd63462c95.png" src="_images/8a45606b15aa0d5362a298bb6992eaf642a734b87b5de5fe02e8a7dd63462c95.png" />
 </div>
 </div>
-<p>Obviously, this operation has changed the <code class="docutils literal notranslate"><span class="pre">dtype</span></code> of the image because we have replaced values ranging from 1 to 255 with proportions ranging from 0 to 1:</p>
+<p>Let’s consider how the equalisation works.   Consider the original normalised (density) histogram and the cumulative density that we calculated above:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plat_x</span> <span class="o">=</span> <span class="p">[</span><span class="mi">130</span><span class="p">,</span> <span class="mi">200</span><span class="p">]</span>
+<span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+<span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">bin_centers</span><span class="p">,</span> <span class="n">counts_normed</span><span class="p">)</span>
+<span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;Intensity proportion&#39;</span><span class="p">);</span>
+<span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;Proportional histogram&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_xticks</span><span class="p">([])</span>
+<span class="n">y_lims</span> <span class="o">=</span> <span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">get_ylim</span><span class="p">()</span>
+<span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">add_patch</span><span class="p">(</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">Rectangle</span><span class="p">([</span><span class="n">plat_x</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">y_lims</span><span class="p">[</span><span class="mi">0</span><span class="p">]],</span>
+                  <span class="n">plat_x</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="n">plat_x</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span>
+                  <span class="n">y_lims</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="n">y_lims</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span>
+                  <span class="n">color</span><span class="o">=</span><span class="s1">&#39;gray&#39;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.3</span><span class="p">))</span>
+<span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">bin_centers</span><span class="p">,</span> <span class="n">cdf</span><span class="p">)</span>
+<span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;Pixel Intensity&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;Cumulative Proportion&#39;</span><span class="p">);</span>
+<span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;Cumulative proportion&#39;</span><span class="p">);</span>
+<span class="n">y_lims</span> <span class="o">=</span> <span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">get_ylim</span><span class="p">()</span>
+<span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">add_patch</span><span class="p">(</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">Rectangle</span><span class="p">([</span><span class="n">plat_x</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">y_lims</span><span class="p">[</span><span class="mi">0</span><span class="p">]],</span>
+                  <span class="n">plat_x</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="n">plat_x</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span>
+                  <span class="n">y_lims</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="n">y_lims</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span>
+                  <span class="n">color</span><span class="o">=</span><span class="s1">&#39;gray&#39;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.3</span><span class="p">));</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/252cd0cb5424ae302d1b6618b9bbe11f605f898461c324c6e938034e72167ff5.png" src="_images/252cd0cb5424ae302d1b6618b9bbe11f605f898461c324c6e938034e72167ff5.png" />
+</div>
+</div>
+<p>Now consider the low plateau in the proportional histogram between about pixel intensities of 130 to 200 (gray box).  This corresponds to a plateau in the cumulative proportion in the same region, because there are relatively few pixels in the image within this wide range.  In the original image there is a fairly wide difference (of 70) between pixels at either end of this plateau.  However, there is a small difference in cumulative density (less than 0.1) for pixels between 130 and 200.  If we replace the pixel values with the cumulative proportion values, this has the effect of compressing the image range devoted to difference along this plateau.  Conversely, for parts of the intensity range where the there is a rapid change in cumulative proportion, replacing image intensity with cumulative proportion will have the effect of expanding the available image range for those image intensities.  Thus the normalization has the effect of devoting greater image range to regions of rapid change in the original histogram.
+from matplotlib.patches import Rectangle</p>
+<p>The Numpy implementation of histogram equalisation has changed the <code class="docutils literal notranslate"><span class="pre">dtype</span></code> of the image because we have
+replaced values ranging from 1 to 255 with proportions ranging from 0 to 1:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># The `dtype` and `min`/`max` values of the original image.</span>
@@ -1098,11 +1347,17 @@ Min Pixel Value: 0.0
 </div>
 </div>
 </div>
-<p>This is important to be aware of, but we can easily convert back to the original <code class="docutils literal notranslate"><span class="pre">dtype</span></code> using the relevant function from <code class="docutils literal notranslate"><span class="pre">ski.util</span></code>. Speaking of <code class="docutils literal notranslate"><span class="pre">ski</span></code>, les look at how to apply this filter in <code class="docutils literal notranslate"><span class="pre">skimage</span></code> in the next section…</p>
+<p>This is important to be aware of, but we can easily convert back to the
+original <code class="docutils literal notranslate"><span class="pre">dtype</span></code> using the relevant function from <code class="docutils literal notranslate"><span class="pre">ski.util</span></code>. Speaking of
+<code class="docutils literal notranslate"><span class="pre">ski</span></code>, lets look at how to apply this filter in <code class="docutils literal notranslate"><span class="pre">skimage</span></code> in the next
+section…</p>
 </section>
-<section class="tex2jax_ignore mathjax_ignore" id="histogram-equalisation-in-skimage">
-<h1>Histogram equalisation in <code class="docutils literal notranslate"><span class="pre">skimage</span></code><a class="headerlink" href="#histogram-equalisation-in-skimage" title="Link to this heading">#</a></h1>
-<p>As normal, <code class="docutils literal notranslate"><span class="pre">skimage</span></code> makes it easy to implement this filter, in just a single line of code. We just pass our <code class="docutils literal notranslate"><span class="pre">eagle</span></code> image to the <code class="docutils literal notranslate"><span class="pre">ski.exposure.equalize_hist()</span></code> function, and it will carry out all we saw above, behind the scenes:</p>
+<section id="histogram-equalisation-in-skimage">
+<h2>Histogram equalisation in <code class="docutils literal notranslate"><span class="pre">skimage</span></code><a class="headerlink" href="#histogram-equalisation-in-skimage" title="Link to this heading">#</a></h2>
+<p>As usual, <code class="docutils literal notranslate"><span class="pre">skimage</span></code> makes it easy to implement this filter, in just a single
+line of code. We just pass our <code class="docutils literal notranslate"><span class="pre">eagle</span></code> image to the
+<code class="docutils literal notranslate"><span class="pre">ski.exposure.equalize_hist()</span></code> function, and it will carry out all the
+operations we saw above:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Equalise `eagle` using `skimage.</span>
@@ -1130,8 +1385,17 @@ Min Pixel Value: 0.0
 <img alt="_images/88d583308814a3397a4a67e572287d77b4d727012d58e547bee116b69f328402.png" src="_images/88d583308814a3397a4a67e572287d77b4d727012d58e547bee116b69f328402.png" />
 </div>
 </div>
-<p>Easy peasy. If you consult the <a class="reference external" href="https://scikit-image.org/docs/0.25.x/api/skimage.exposure.html#skimage.exposure.equalize_hist">documentation</a> for <code class="docutils literal notranslate"><span class="pre">ski.exposure.equalize_hist()</span></code>, you notice that by default, it uses 256 bins. In fact, for the <code class="docutils literal notranslate"><span class="pre">nbins</span></code> optional argument, the documentation states that it will be ignored for integer data. This is so the “indexing trick” that we saw above can be performed.</p>
-<p>It is no problem to use this filter with <code class="docutils literal notranslate"><span class="pre">float</span></code> image data however - the principle is the same pixel intensities get mapped to their corresponding cumulative proportion. Only now this occurs without the neat indexing trick, there is just an intermediate (boring!) step in the mapping. We demonstrate this below with the <code class="docutils literal notranslate"><span class="pre">coins</span></code> image from <code class="docutils literal notranslate"><span class="pre">ski.data</span></code>:</p>
+<p>Easy-peasy. If you consult the
+<a class="reference external" href="https://scikit-image.org/docs/0.25.x/api/skimage.exposure.html#skimage.exposure.equalize_hist">documentation</a>
+for <code class="docutils literal notranslate"><span class="pre">ski.exposure.equalize_hist()</span></code>, you notice that by default, it uses 256
+bins. In fact, for the <code class="docutils literal notranslate"><span class="pre">nbins</span></code> optional argument, the documentation states that
+it will be ignored for integer data. This is so the “indexing trick” that we
+saw above can be performed.</p>
+<p>It is no problem to use this filter with <code class="docutils literal notranslate"><span class="pre">float</span></code> image data however - the
+principle is the same pixel intensities get mapped to their corresponding
+cumulative proportion. Only now this occurs without the neat indexing trick,
+there is just an intermediate (boring!) step in the mapping. We demonstrate
+this below with the <code class="docutils literal notranslate"><span class="pre">coins</span></code> image from <code class="docutils literal notranslate"><span class="pre">ski.data</span></code>:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Import the `coins` image.</span>
@@ -1194,26 +1458,23 @@ Min Pixel Value: 0.0
 </div>
 </div>
 </section>
-<section class="tex2jax_ignore mathjax_ignore" id="summary">
-<h1>Summary<a class="headerlink" href="#summary" title="Link to this heading">#</a></h1>
-<p>This page has shown a local filter (the median filter) and a non-local filter (histogram equalisation) which do not use kernel filtering to perform their filtering operations. On the <a class="reference internal" href="8_morphology.html"><span class="doc std std-doc">next page</span></a> we will introduce another method for modifying pixels based on a <code class="docutils literal notranslate"><span class="pre">footprint</span></code>.</p>
+<section id="summary">
+<h2>Summary<a class="headerlink" href="#summary" title="Link to this heading">#</a></h2>
+<p>This page has shown a local filter (the median filter) and a non-local filter
+(histogram equalisation) which do not use kernel filtering to perform their
+filtering operations. On the <a class="reference internal" href="8_morphology.html"><span class="doc std std-doc">next page</span></a> we will introduce
+another method for modifying pixels based on a <code class="docutils literal notranslate"><span class="pre">footprint</span></code>.</p>
 </section>
-<section class="tex2jax_ignore mathjax_ignore" id="references">
-<h1>References<a class="headerlink" href="#references" title="Link to this heading">#</a></h1>
-<p>Gulati, J. (2024) <em>NumPy for Image Processing</em>. KDnuggets. Available from: <a class="reference external" href="https://www.kdnuggets.com/numpy-for-image-processing">https://www.kdnuggets.com/numpy-for-image-processing</a></p>
-<p>Reference: <a class="reference external" href="https://setosa.io/ev/image-kernels">https://setosa.io/ev/image-kernels</a></p>
-<p>Reference: <a class="reference external" href="https://wiki.imindlabs.com.au/ds/aml/4_problem_domains/1-image-processing/3_edge_detectors">https://wiki.imindlabs.com.au/ds/aml/4_problem_domains/1-image-processing/3_edge_detectors</a></p>
-<p>Reference: <a class="reference external" href="https://www.geeksforgeeks.org/deep-learning/types-of-convolution-kernels">https://www.geeksforgeeks.org/deep-learning/types-of-convolution-kernels</a></p>
+<section id="references">
+<h2>References<a class="headerlink" href="#references" title="Link to this heading">#</a></h2>
 <p>Adapted from:</p>
-<p>Histogram equalisation adapted from: <a class="reference external" href="https://www.janeriksolem.net/histogram-equalization-with-python-and.html">https://www.janeriksolem.net/histogram-equalization-with-python-and.html</a></p>
-<p>Histogram equalisation: <a class="reference external" href="https://medium.com/jungletronics/histogram-equalization-34149fc299a6">https://medium.com/jungletronics/histogram-equalization-34149fc299a6</a></p>
 <ul class="simple">
-<li><p><a class="reference external" href="https://lectures.scientific-python.org/advanced/image_processing">Scientific Python Lecture Notes - image
-processing</a></p></li>
-<li><p><a class="reference external" href="https://lectures.scientific-python.org/packages/scikit-image/index.html">Scientific Python Lecture Notes: scikit-image</a></p></li>
-<li><p><a class="reference external" href="https://textbook.nipraxis.org/otsu_threshold.html">Nipraxis course - Otsu threshold</a></p></li>
+<li><p><a class="reference external" href="https://www.janeriksolem.net/histogram-equalization-with-python-and.html">Jan Erik Solem on histogram
+equalisation</a></p></li>
+<li><p><a class="reference external" href="https://medium.com/jungletronics/histogram-equalization-34149fc299a6">Jungletronics on histogram equalisation in
+OpenCV</a></p></li>
 </ul>
-<p>with further inspiration from <a class="reference external" href="https://jni.github.io/i2k-skimage-napari/lectures/1_image_filters.html">Napari tutorial</a> and <a class="reference external" href="https://github.com/scikit-image/skimage-tutorials"><code class="docutils literal notranslate"><span class="pre">skimage</span></code></a> <a class="reference external" href="https://scipy-2024-image-analysis.github.io/tutorial/01_images_are_arrays.html">tutorials</a>.</p>
+</section>
 </section>
 
     <script type="text/x-thebe-config">
@@ -1280,15 +1541,13 @@ processing</a></p></li>
   </div>
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">More filters: the median filter and non-local filters</a></li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#local-filtering-without-kernels">Local filtering without kernels</a></li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#edge-preservation">Edge preservation</a></li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#non-local-filters">Non-local filters</a></li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#histogram-equalisation-in-skimage">Histogram equalisation in <code class="docutils literal notranslate"><span class="pre">skimage</span></code></a></li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#summary">Summary</a></li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#references">References</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#local-filtering-without-kernels">Local filtering without kernels</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#edge-preservation">Edge preservation</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#non-local-filters">Non-local filters</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#histogram-equalisation-in-skimage">Histogram equalisation in <code class="docutils literal notranslate"><span class="pre">skimage</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#summary">Summary</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#references">References</a></li>
 </ul>
-
   </nav></div>
 
 </div></div>
