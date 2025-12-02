@@ -7,6 +7,14 @@ Adapted from:
 
 ## To do
 
+> Looks good in general.
+
+> However, I missed a good explanation of why replacing the pixel value with
+its corresponding position in the CDF gives a uniform distribution. Did you
+run across a good explanation somewhere?
+
+> Can you add that?
+
 - Add opening/closing to morphology page
 
 - Show 3D edge detection kernels, it is visually obvious how they detect gradients
