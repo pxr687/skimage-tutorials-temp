@@ -1,0 +1,329 @@
+[33mcommit c63b921a70fde26c8df469143524a84510028cf7[m
+Author: Matthew Brett <matthew.brett@gmail.com>
+Date:   Sat Nov 22 16:17:25 2025 +0000
+
+    Refactor to jljb package.
+
+[33mcommit a57d09f4c24b2e95c23cd20da1d962dbcbb22893[m
+Author: Matthew Brett <matthew.brett@gmail.com>
+Date:   Sat Nov 22 10:51:38 2025 +0000
+
+    Refactor Gaussian page with display utilities.
+
+[33mcommit 80cf9a3d29d313332d5e314d3a24fae2d14426bc[m
+Author: Matthew Brett <matthew.brett@gmail.com>
+Date:   Thu Nov 20 12:29:24 2025 +0000
+
+    Move supporting code into own module
+    
+    Make module with supporting code, and import from module.
+
+[33mcommit 6345a8488c3ac81156ab40bff521dce9b72ce550[m
+Author: Matthew Brett <matthew.brett@gmail.com>
+Date:   Wed Nov 19 14:49:05 2025 +0000
+
+    Rewording up to overflow exercise.
+
+[33mcommit d952e6f1be8c781114039283831f4f2c7fc585b7[m
+Author: Matthew Brett <matthew.brett@gmail.com>
+Date:   Wed Nov 19 14:17:46 2025 +0000
+
+    Remove "convolved" from image.
+
+[33mcommit e0761284b910e642452edcd32d8aac2a17619975[m
+Author: Matthew Brett <matthew.brett@gmail.com>
+Date:   Sat Nov 8 19:26:42 2025 +0000
+
+    More workround static images.
+
+[33mcommit 05c89be9c17dda1d18c3f3ba430901641ac81360[m
+Author: Matthew Brett <matthew.brett@gmail.com>
+Date:   Sat Nov 8 18:39:58 2025 +0000
+
+    Workin on generalizing figures.
+
+[33mcommit 09849270ae0e043bb3a504c123f57a93f7190bc6[m
+Author: Matthew Brett <matthew.brett@gmail.com>
+Date:   Sat Nov 8 13:52:19 2025 +0000
+
+    Rewrite with footprint / function vs kernel
+    
+    Also generate rather than ship maths figure.
+
+[33mcommit e0c9cbc506005e9bc4c2258cb6f376b5c7b51625[m
+Author: Matthew Brett <matthew.brett@gmail.com>
+Date:   Fri Nov 7 14:05:07 2025 +0000
+
+    Finish edits to page 5
+
+[33mcommit 75ad011e1fbfeb856e68e6d52a552b68cbe9a695[m
+Author: Matthew Brett <matthew.brett@gmail.com>
+Date:   Wed Nov 5 15:36:06 2025 +0000
+
+    Finish rewrite of page 4.
+
+[33mcommit 29161b143415842e81301229ec2b2bf79d1d59aa[m
+Author: Matthew Brett <matthew.brett@gmail.com>
+Date:   Wed Nov 5 12:58:00 2025 +0000
+
+    Finish Numpy / Scipy page.
+
+[33mcommit b9f0a97770ae68cbc23a669f1e978be81d4809d9[m
+Author: Matthew Brett <matthew.brett@gmail.com>
+Date:   Wed Nov 5 11:22:10 2025 +0000
+
+    Working through page 3
+
+[33mcommit 973078f429d6bf8117de344a17d1f5cbd7500713[m
+Author: Matthew Brett <matthew.brett@gmail.com>
+Date:   Mon Nov 3 15:50:26 2025 +0000
+
+    Continuing rewrite of page 3
+
+[33mcommit f12709cb72cdd298f4b8e3938c0e6d6e668c755c[m
+Author: Peter Rush (Psychology) <57416249+pxr687@users.noreply.github.com>
+Date:   Sat Nov 1 13:42:15 2025 +0700
+
+    update refs
+
+[33mcommit a058ad981994fa8c9daad5a0f2910c13b4d14860[m
+Author: Peter Rush (Psychology) <57416249+pxr687@users.noreply.github.com>
+Date:   Sat Nov 1 13:18:06 2025 +0700
+
+    better arrows of our nature
+
+[33mcommit 1aaf9f92142991c64a390102d8681c9348650618[m
+Author: Peter Rush (Psychology) <57416249+pxr687@users.noreply.github.com>
+Date:   Sat Nov 1 13:01:45 2025 +0700
+
+    x,y,z to i, j, k
+
+[33mcommit 0b4e44d4cf77809b5cb5640dc48d9211b279f4ce[m
+Author: Peter Rush (Psychology) <57416249+pxr687@users.noreply.github.com>
+Date:   Sat Nov 1 12:34:36 2025 +0700
+
+    remove confusing axis/dimension labels in image
+
+[33mcommit 446747090934c4c61c8dfc342ecba6befb426498[m
+Author: Matthew Brett <matthew.brett@gmail.com>
+Date:   Fri Oct 31 17:06:32 2025 +0000
+
+    Finish edits to page 2
+
+[33mcommit da4600de4d113cb1cf8dcd9c869c04cc5d908a29[m
+Author: Matthew Brett <matthew.brett@gmail.com>
+Date:   Fri Oct 31 15:42:46 2025 +0000
+
+    Remove camera_plot image in favor of original data.
+
+[33mcommit c7720528887e683b5113189d707f2396f392487d[m
+Author: Matthew Brett <matthew.brett@gmail.com>
+Date:   Fri Oct 31 13:36:02 2025 +0000
+
+    Start of page 2 edits.
+
+[33mcommit daa215a842e8f79f392caf99f8ee3aaf60b3723d[m
+Author: Matthew Brett <matthew.brett@gmail.com>
+Date:   Fri Oct 31 11:29:59 2025 +0000
+
+    Rewrite exercise and brain image discussion.
+
+[33mcommit e18c6457f34da7c60b770598595cfe959170ee8c[m
+Author: Matthew Brett <matthew.brett@gmail.com>
+Date:   Mon Oct 27 13:22:47 2025 +0000
+
+    Standarize the coffee grayscale image.
+
+[33mcommit 44cf0632b892e70690e43bdc85a999ff1e3bad83[m
+Author: Matthew Brett <matthew.brett@gmail.com>
+Date:   Tue Sep 9 13:46:54 2025 +0100
+
+    Proposed edits.
+
+[33mcommit 85c69f9fd22d7c982c5e497ce072dff7f26081d0[m
+Author: Matthew Brett <matthew.brett@gmail.com>
+Date:   Fri Oct 10 14:43:01 2025 +0100
+
+    Replace and document Alien image
+    
+    Add README to give image copyrights.  Rebuild images in solutions.
+
+[33mcommit 4a05ed0d90e0a31733c3fa958a779ca01f00d6eb[m
+Author: Matthew Brett <matthew.brett@gmail.com>
+Date:   Fri Sep 5 13:11:48 2025 +0100
+
+    Don't copy missing data directory.
+
+[33mcommit 7a2a453b93250087663bdaaeea53d1cff6684bd5[m
+Author: Matthew Brett <matthew.brett@gmail.com>
+Date:   Fri Sep 5 12:40:01 2025 +0100
+
+    Add scripts directory, enable tests
+
+[33mcommit 6356acc861334d085b98f620f496043392807697[m
+Author: Matthew Brett <matthew.brett@gmail.com>
+Date:   Fri Sep 5 12:24:48 2025 +0100
+
+    Add CI
+
+[33mcommit 76e45088f6c45950c19bacdc78fa6d8c8677ad0e[m
+Author: Matthew Brett <matthew.brett@gmail.com>
+Date:   Fri Sep 5 12:24:01 2025 +0100
+
+    Add codespell files
+
+[33mcommit 5d3066e4e224b0daa5bd393c2ca3af46c99613cb[m
+Author: Matthew Brett <matthew.brett@gmail.com>
+Date:   Fri Sep 5 11:48:34 2025 +0100
+
+    Build requirements
+
+[33mcommit 7a558ac9d68b4580559ab0e52a45c2f7a59c24e8[m
+Author: Peter Rush (Psychology) <57416249+pxr687@users.noreply.github.com>
+Date:   Wed Sep 3 13:08:33 2025 +0700
+
+    merge nonlocal and median filter content
+
+[33mcommit 22272f59c0fab66d9745d2126bd0bde516039b07[m
+Author: Peter Rush (Psychology) <57416249+pxr687@users.noreply.github.com>
+Date:   Tue Sep 2 14:09:44 2025 +0700
+
+    work on nonlocal filters page
+
+[33mcommit 8f82527c6899f2d382a5c86c58870e6de2b1d39b[m
+Author: Peter Rush (Psychology) <57416249+pxr687@users.noreply.github.com>
+Date:   Mon Sep 1 16:07:45 2025 +0700
+
+    add short median filters page
+
+[33mcommit a3eb9bf8af5d97dd340a944fd85b42345a4cb747[m
+Author: Peter Rush (Psychology) <57416249+pxr687@users.noreply.github.com>
+Date:   Mon Sep 1 12:38:38 2025 +0700
+
+    fix image
+
+[33mcommit 68a67721110cc5f1fc3343054949a7137d24f4ba[m
+Author: Peter Rush (Psychology) <57416249+pxr687@users.noreply.github.com>
+Date:   Sun Aug 31 21:06:20 2025 +0700
+
+    update image
+
+[33mcommit cd4d6fbed515b4806b4fa83150047eb8bcc6ad6e[m
+Author: Peter Rush (Psychology) <57416249+pxr687@users.noreply.github.com>
+Date:   Sun Aug 31 21:02:39 2025 +0700
+
+    update image
+
+[33mcommit 26940f22b5fcef73a6a4e60f123d4d333f7461a2[m
+Author: Peter Rush (Psychology) <57416249+pxr687@users.noreply.github.com>
+Date:   Sun Aug 31 18:26:13 2025 +0700
+
+    update images and plots on early pages
+
+[33mcommit 78ad8672aa69ae71ce389d5e18e5daecd6a9741b[m
+Author: Peter Rush (Psychology) <57416249+pxr687@users.noreply.github.com>
+Date:   Sun Aug 31 17:40:45 2025 +0700
+
+    delete stray png file
+
+[33mcommit 3e732a9987022d67d16661b343017d6886efc545[m
+Author: Peter Rush (Psychology) <57416249+pxr687@users.noreply.github.com>
+Date:   Sun Aug 31 16:10:23 2025 +0700
+
+    new exercise for the edge detection section
+
+[33mcommit cf4e0a04f381eacede1f5bad3c27828e6ff7d0ce[m
+Author: Peter Rush (Psychology) <57416249+pxr687@users.noreply.github.com>
+Date:   Sun Aug 31 12:18:21 2025 +0700
+
+    delete stray picture
+
+[33mcommit 76504c3c8eeee7d7ba38f219376fd42b051f18c2[m
+Author: Peter Rush (Psychology) <57416249+pxr687@users.noreply.github.com>
+Date:   Sun Aug 31 12:17:23 2025 +0700
+
+    new image for first page, and ensure consistent NumPy/SciPy/3D/2D use across multiple files
+
+[33mcommit fcc87721c8c2766333871bb41645bb4425966b0d[m
+Author: Peter Rush (Psychology) <57416249+pxr687@users.noreply.github.com>
+Date:   Sat Aug 30 16:34:22 2025 +0700
+
+    extra illustration for edge detection
+
+[33mcommit 603a729162c20b2487b9968be15b779d0304b05b[m
+Author: Peter Rush (Psychology) <57416249+pxr687@users.noreply.github.com>
+Date:   Sat Aug 30 15:55:14 2025 +0700
+
+    sharpening exercise added
+
+[33mcommit e63988f3d9cedd91f5904492738ab9085eecf152[m
+Author: Peter Rush (Psychology) <57416249+pxr687@users.noreply.github.com>
+Date:   Sat Aug 30 14:39:17 2025 +0700
+
+    split filtering pages
+
+[33mcommit 0e094926d0f6c13a296ae2499bd41c0a4b12620b[m
+Author: Peter Rush (Psychology) <57416249+pxr687@users.noreply.github.com>
+Date:   Sat Aug 30 12:20:09 2025 +0700
+
+    new exercises for gaussian filtering
+
+[33mcommit 24d9819deaecdb9e51fccaeebbd0987ee8c378e4[m
+Author: Peter Rush (Psychology) <57416249+pxr687@users.noreply.github.com>
+Date:   Fri Aug 29 23:19:06 2025 +0700
+
+    add notes from meeting and halfway through adding new exercise to 2nd filtering page
+
+[33mcommit 0f0624c832f092e9a36816019d0ae3e52f166146[m
+Author: Peter Rush (Psychology) <57416249+pxr687@users.noreply.github.com>
+Date:   Fri Aug 29 19:42:50 2025 +0700
+
+    add Otsu latex recap from nipraxis
+
+[33mcommit 2359059a4f6e5826d8871791a02aaf6b00e9866a[m
+Author: Peter Rush (Psychology) <57416249+pxr687@users.noreply.github.com>
+Date:   Fri Aug 29 16:30:32 2025 +0700
+
+    add 3D filtering to first filter page, and sharpening to second filter page
+
+[33mcommit 2b4cbe0c6f557888c062b745eae10c3899648bb6[m
+Author: Peter Rush (Psychology) <57416249+pxr687@users.noreply.github.com>
+Date:   Thu Aug 28 02:48:08 2025 +0700
+
+    update image
+
+[33mcommit acf8f0d1724af75d87b480ad460cd01317345362[m
+Author: Peter Rush (Psychology) <57416249+pxr687@users.noreply.github.com>
+Date:   Thu Aug 28 01:34:12 2025 +0700
+
+    update image
+
+[33mcommit 9f0cbf0ff74832b094b4c033e9fdd81e486c3fbc[m
+Author: Peter Rush (Psychology) <57416249+pxr687@users.noreply.github.com>
+Date:   Thu Aug 28 01:11:20 2025 +0700
+
+    first pass at filters II
+
+[33mcommit 70fc3ce86d84d30bf8e3af97f5c4c09874b1aee4[m
+Author: Peter Rush (Psychology) <57416249+pxr687@users.noreply.github.com>
+Date:   Wed Aug 27 18:18:48 2025 +0700
+
+    work on Gaussian filtering
+
+[33mcommit 67689c5330be696c2c37afb8ed0003ddf17bb6ba[m
+Author: Peter Rush (Psychology) <57416249+pxr687@users.noreply.github.com>
+Date:   Wed Aug 27 14:20:34 2025 +0700
+
+    loop through filters page
+
+[33mcommit 55d0deb59502b00e632380298319884fda0d68ad[m
+Author: Peter Rush (Psychology) <57416249+pxr687@users.noreply.github.com>
+Date:   Wed Aug 27 11:39:14 2025 +0700
+
+    loop through second page
+
+[33mcommit 174abafad59849d0ae63bec866b36a1d6b29028f[m
+Author: Peter Rush (Psychology) <57416249+pxr687@users.noreply.github.com>
+Date:   Wed Aug 27 00:42:31 2025 +0700
+
+    first commit

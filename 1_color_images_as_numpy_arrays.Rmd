@@ -6,7 +6,7 @@ jupyter:
       extension: .Rmd
       format_name: rmarkdown
       format_version: '1.2'
-      jupytext_version: 1.18.1
+      jupytext_version: 1.17.3
   kernelspec:
     display_name: Python 3 (ipykernel)
     language: python
@@ -484,22 +484,6 @@ We can visualise this new 3D array as:
 
 ![](images/three_slice_green.png)
 
-We can proceed with another "walk" through the image again, with the familiar indexing operations:
-
-```{python}
-# First 2D place of the stack.
-three_D_stack_array_altered_second[:, :, 0]
-```
-
-```{python}
-# Second 2D place of the stack.
-three_D_stack_array_altered_second[:, :, 1]
-```
-
-```{python}
-# Third 2D slice of the stack.
-three_D_stack_array_altered_second[:, :, 2]
-```
 
 How does this 3D array look when we visualise it with Matplotlib?
 
@@ -528,24 +512,8 @@ Which gives us the following stacked slices:
 
 ![](images/three_slice_blue.png)
 
-...and the following "walk" through the slices, via array indexing:
 
-```{python}
-# First 2D slice of the stack.
-three_D_stack_array_altered_third[:, :, 0]
-```
-
-```{python}
-# Second 2D slice of the stack.
-three_D_stack_array_altered_third[:, :, 1]
-```
-
-```{python}
-# Third 2D slice of the stack.
-three_D_stack_array_altered_third[:, :, 2]
-```
-
-Finally, when plotted, we get:
+When plotted, we get:
 
 ```{python}
 plt.matshow(three_D_stack_array_altered_third);
