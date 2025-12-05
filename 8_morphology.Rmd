@@ -6,7 +6,7 @@ jupyter:
       extension: .Rmd
       format_name: rmarkdown
       format_version: '1.2'
-      jupytext_version: 1.18.1
+      jupytext_version: 1.17.3
   kernelspec:
     display_name: Python 3 (ipykernel)
     language: python
@@ -705,7 +705,7 @@ image, and dilation as erosion of the dark areas.
 ## Opening and closing
 
 [Opening](https://en.wikipedia.org/wiki/Opening_(morphology)) and
-[closing](https://en.wikipedia.org/wiki/Closing_(morphology) are two other
+[closing](https://en.wikipedia.org/wiki/Closing_(morphology)) are two other
 important morphological operations.
 
 Opening is the result of:
