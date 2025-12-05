@@ -393,7 +393,7 @@ dilated_square
 plt.imshow(dilated_square);
 ```
 
-Notice that a *erosion* "clash" (taking the minimum) is different from
+Notice that an *erosion* "clash" (taking the minimum) is different from
 a dilation "clash" (taking the maximum). Using the dilation definition, what
 were (in erosion) "clashes", are not dilation "matches", and  have resulted in
 *more* white pixels in the image. The illustration below shows this for three
