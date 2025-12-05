@@ -292,7 +292,7 @@ surface_mat_pair(big_gaussian_kernel, 'images/big_gaussian_kernel.png')
 
 You may (or may not) recognise the "red mountain" - when we plot the
 `big_gaussian_kernel` - as a multivariate [Gaussian
-distribution](https://en.wikipedia.org/wiki/Gaussian_function). Here is [one way](https://www.math.csi.cuny.edu/~mvj/MTH410-S20/lectures/Lecture21.html)
+distribution](https://en.wikipedia.org/wiki/Gaussian_function). Here is [one way](https://www.math.csi.cuny.edu/~mvj/MTH410-S20/lectures/Lecture21.html#6)
 of writing the formula for a multivariate Gaussian distribution:
 
 $
