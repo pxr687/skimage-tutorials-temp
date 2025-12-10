@@ -6,7 +6,7 @@ jupyter:
       extension: .Rmd
       format_name: rmarkdown
       format_version: '1.2'
-      jupytext_version: 1.18.1
+      jupytext_version: 1.17.3
   kernelspec:
     display_name: Python 3 (ipykernel)
     language: python
@@ -364,10 +364,9 @@ Dilation is nothing but a footprint / function filter, where the function is
 Dilation works in the same way as erosion, or any other footprint / function
 filter, in terms of centering a footprint on each pixel, to select the pixel local neighborhood.  It takes the maximum of the local pixel values.
 
-Now, if *any* of the pixels in the local neighborhood are 1, the output pixel
-is 1.  Call this a *dilation* match.  Only if *all* the local neighborhood pixels are 0, is the output pixel 0.  Call this a *dilation* clash.
+Dilation is less like a reticle/crosshair than erosion. Wherever the footprint "lands" the central pixel will be raised to the neighbourhood maximum, regardless of whether the values under the footprint "match" those in the footprint.
 
-Let's dilate the `square` array:
+Let's dilate the `square` array to illustrate:
 
 ```{python}
 # Show the `square` array.
@@ -393,12 +392,9 @@ dilated_square
 plt.imshow(dilated_square);
 ```
 
-Notice that a *erosion* "clash" (taking the minimum) is different from
-a dilation "clash" (taking the maximum). Using the dilation definition, what
-were (in erosion) "clashes", are not dilation "matches", and  have resulted in
-*more* white pixels in the image. The illustration below shows this for three
-pixels, two with two dilation "matches", and one "clash".  Notice that this
-corresponds to two erosion "clashes" and the one "match":
+Here we use blue squares to represent the footprint, with white text showing what value is in the array at that location. Remember, *dilation will raise the central pixel to the neighbourhood maximum*.
+
+So, if the values under the footprint are all 0, the central pixel will remain as 0. If there is a single 1 under the footprint, then the central value will be raised to 1:
 
 ![](images/hit_n_miss_dilation.png)
 
@@ -435,7 +431,7 @@ For erosion, all of the "clashing" pixels in the right-hand square get
 *lowered* to their neighborhood minimum, in this case 0, and so they "die" and
 fade into the black background.
 
-For dilation, clashing central pixels get *raised* to the neighborhood maximum,
+For dilation, central pixels get *raised* to the neighborhood maximum,
 which in this case is 1.
 
 Think of dilation as extending bright areas with the footprint shape.
