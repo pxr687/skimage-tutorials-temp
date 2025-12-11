@@ -619,11 +619,10 @@ ax[1].add_patch(
 ```
 
 Now consider the low plateau in the proportional histogram between about pixel intensities of 130 to 200 (gray box).  This corresponds to a plateau in the cumulative proportion in the same region, because there are relatively few pixels in the image within this wide range.  In the original image there is a fairly wide difference (of 70) between pixels at either end of this plateau.  However, there is a small difference in cumulative density (less than 0.1) for pixels between 130 and 200.  If we replace the pixel values with the cumulative proportion values, this has the effect of compressing the image range devoted to difference along this plateau.  Conversely, for parts of the intensity range where the there is a rapid change in cumulative proportion, replacing image intensity with cumulative proportion will have the effect of expanding the available image range for those image intensities.  Thus the normalization has the effect of devoting greater image range to regions of rapid change in the original histogram.
-from matplotlib.patches import Rectangle
 
-
-The Numpy implementation of histogram equalisation has changed the `dtype` of the image because we have
-replaced values ranging from 1 to 255 with proportions ranging from 0 to 1:
+The Numpy implementation of histogram equalisation has changed the `dtype` of
+the image because we have replaced values ranging from 1 to 255 with
+proportions ranging from 0 to 1:
 
 ```{python}
 # The `dtype` and `min`/`max` values of the original image.
