@@ -528,7 +528,7 @@ identical to the principles we have seen for representing images in NumPy:</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/68263706613df0ced43f23f905ac7be8e9515872ddb6fa5b76d169a7ed40469a.png" src="_images/68263706613df0ced43f23f905ac7be8e9515872ddb6fa5b76d169a7ed40469a.png" />
+<img alt="_images/537da698d538dc2e027b8fef4e66635a37eb47d3d8fe0b431d863547b3f90def.png" src="_images/537da698d538dc2e027b8fef4e66635a37eb47d3d8fe0b431d863547b3f90def.png" />
 </div>
 </div>
 <p>You will recall that this array — in virtue of being 2D and having only one
@@ -558,7 +558,7 @@ Max Pixel Value: 1.0
 Min Pixel Value: 0.0
 </pre></div>
 </div>
-<img alt="_images/26677f31560dc35c0238b5d3ceedf5aea493000dd2cb5f368a0d21fb1973347e.png" src="_images/26677f31560dc35c0238b5d3ceedf5aea493000dd2cb5f368a0d21fb1973347e.png" />
+<img alt="_images/9c8008b193d754d16733b519dc26fb71b21c6070e548f56afcecdc04e5cff7c5.png" src="_images/9c8008b193d754d16733b519dc26fb71b21c6070e548f56afcecdc04e5cff7c5.png" />
 </div>
 </div>
 <p>We show this principle again below, for each color channel. The top row of the plot shows the channels for <code class="docutils literal notranslate"><span class="pre">uint8</span></code> data with 255 as the maximum pixel intensity value. The second row of the plot shows each channel for <code class="docutils literal notranslate"><span class="pre">float64</span></code> data, using 1 as the maximum pixel intensity value:</p>
@@ -573,7 +573,7 @@ Min Pixel Value: 0.0
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/9159f0e5f1f40c662ca18a6bc7b2cf6a82b37e52ee75300e0c16f2d948bc3a71.png" src="_images/9159f0e5f1f40c662ca18a6bc7b2cf6a82b37e52ee75300e0c16f2d948bc3a71.png" />
+<img alt="_images/0a7388245c4028131fc7f69ef773feb2d8c17a5d39372297df6fd5878c038ef2.png" src="_images/0a7388245c4028131fc7f69ef773feb2d8c17a5d39372297df6fd5878c038ef2.png" />
 </div>
 </div>
 <p>These are the basic aspects of images represented as NumPy arrays. Other ways of representing color exist and are supported by <code class="docutils literal notranslate"><span class="pre">skimage</span></code>, and indeed, not all 3D arrays representing images contain color information (e.g. structural brain images, as we saw for <a class="reference internal" href="1_color_images_as_numpy_arrays.html#brain-images"><span class="std std-ref">brain images</span></a>). We will look at these concepts in later sections, but <code class="docutils literal notranslate"><span class="pre">skimage</span></code> can work with these images as easily as the basic colored squares we have just made — all these images <em>are just NumPy arrays</em> and can be handled just as any NumPy array.</p>
@@ -606,7 +606,7 @@ Max Pixel Value: 1.0
 Min Pixel Value: 0.0
 </pre></div>
 </div>
-<img alt="_images/26677f31560dc35c0238b5d3ceedf5aea493000dd2cb5f368a0d21fb1973347e.png" src="_images/26677f31560dc35c0238b5d3ceedf5aea493000dd2cb5f368a0d21fb1973347e.png" />
+<img alt="_images/9c8008b193d754d16733b519dc26fb71b21c6070e548f56afcecdc04e5cff7c5.png" src="_images/9c8008b193d754d16733b519dc26fb71b21c6070e548f56afcecdc04e5cff7c5.png" />
 </div>
 </div>
 <p>Now, we just pass the <code class="docutils literal notranslate"><span class="pre">squares</span></code> array to <code class="docutils literal notranslate"><span class="pre">ski.color.rgb2gray()</span></code> as an argument:</p>
@@ -627,7 +627,7 @@ Max Pixel Value: 0.21
 Min Pixel Value: 0.0
 </pre></div>
 </div>
-<img alt="_images/68263706613df0ced43f23f905ac7be8e9515872ddb6fa5b76d169a7ed40469a.png" src="_images/68263706613df0ced43f23f905ac7be8e9515872ddb6fa5b76d169a7ed40469a.png" />
+<img alt="_images/537da698d538dc2e027b8fef4e66635a37eb47d3d8fe0b431d863547b3f90def.png" src="_images/537da698d538dc2e027b8fef4e66635a37eb47d3d8fe0b431d863547b3f90def.png" />
 </div>
 </div>
 <p>Many Scikit-image functions work like this - they take a NumPy array as input, do something to the array pixel values, then return an altered image array. As we mentioned above, under the hood <code class="docutils literal notranslate"><span class="pre">skimage</span></code> is often using NumPy and SciPy functions to do the image manipulation, something we will explore in more detail on the <a class="reference internal" href="3_skimage_processing_from_numpy_and_scipy.html"><span class="doc std std-doc">next page</span></a>.</p>
@@ -779,7 +779,7 @@ Min Pixel Value: 0
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/b3ace24347b7b925e99bc97c1a18d888eadd605c054739fbb0aab93b14c39f1f.png" src="_images/b3ace24347b7b925e99bc97c1a18d888eadd605c054739fbb0aab93b14c39f1f.png" />
+<img alt="_images/97fe6e20ae416a866bb7ec14a2e5b284f2a37fea6a05fbac65c3646d0ddd8270.png" src="_images/97fe6e20ae416a866bb7ec14a2e5b284f2a37fea6a05fbac65c3646d0ddd8270.png" />
 </div>
 </div>
 <p>Because these images are nothing but NumPy arrays, we can use standard array slicing to interact with them. For instance, we can use slicing to ruin the <code class="docutils literal notranslate"><span class="pre">coffee</span></code> image by placing a huge green square over it:</p>
@@ -792,7 +792,7 @@ Min Pixel Value: 0
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/4ba479cb5e7ad611bba4b0fee65fe9848fa0c17683c63b49f17ccc4dcea16628.png" src="_images/4ba479cb5e7ad611bba4b0fee65fe9848fa0c17683c63b49f17ccc4dcea16628.png" />
+<img alt="_images/1d4d8d5b3cafce28fff5afe31a7ca85878a1cf0978fd1387838b13dccca9ad31.png" src="_images/1d4d8d5b3cafce28fff5afe31a7ca85878a1cf0978fd1387838b13dccca9ad31.png" />
 </div>
 </div>
 <p>Remember our <a class="reference internal" href="0_images_as_numpy_arrays.html#ip-maxim"><span class="std std-ref">maxim</span></a>?  stating that <em>“image processing” is when we do something that analyzes or changes the numbers inside the image array</em>.</p>
@@ -839,7 +839,7 @@ Min Pixel Value: 0
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/7cfdc6dd3d8123c0f05f1accdd1dbf70cdca4a6c44fdaed51e43db9b33d59f7f.png" src="_images/7cfdc6dd3d8123c0f05f1accdd1dbf70cdca4a6c44fdaed51e43db9b33d59f7f.png" />
+<img alt="_images/297417f252b33580627496dc96632dbea90dfdee6aa49d13f19d2eee0af24a22.png" src="_images/297417f252b33580627496dc96632dbea90dfdee6aa49d13f19d2eee0af24a22.png" />
 </div>
 </div>
 <div class="cell docutils container">
@@ -909,7 +909,7 @@ Min Pixel Value: 0.0
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/14c622896f9a19e57779b234f6436e5d549d4cfe58eaccc5e1f45a411da3c875.png" src="_images/14c622896f9a19e57779b234f6436e5d549d4cfe58eaccc5e1f45a411da3c875.png" />
+<img alt="_images/40b470d016f2edce9a78e7627cf9b6edb8e4a3a891dab5b74dc6bcaaa8e61c79.png" src="_images/40b470d016f2edce9a78e7627cf9b6edb8e4a3a891dab5b74dc6bcaaa8e61c79.png" />
 </div>
 </div>
 <p><code class="docutils literal notranslate"><span class="pre">smiley</span></code> only gets more terrifying with each manipulation, it seems…</p>
@@ -925,7 +925,7 @@ Min Pixel Value: 0.0
 <div class="cell_output docutils container">
 <div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
 <span class="ne">KeyError</span><span class="g g-Whitespace">                                  </span>Traceback (most recent call last)
-<span class="nn">File /opt/hostedtoolcache/Python/3.13.9/x64/lib/python3.13/site-packages/PIL/PngImagePlugin.py:1370,</span> in <span class="ni">_save</span><span class="nt">(im, fp, filename, chunk, save_all)</span>
+<span class="nn">File /opt/hostedtoolcache/Python/3.13.11/x64/lib/python3.13/site-packages/PIL/PngImagePlugin.py:1370,</span> in <span class="ni">_save</span><span class="nt">(im, fp, filename, chunk, save_all)</span>
 <span class="g g-Whitespace">   </span><span class="mi">1369</span> <span class="k">try</span><span class="p">:</span>
 <span class="ne">-&gt; </span><span class="mi">1370</span>     <span class="n">rawmode</span><span class="p">,</span> <span class="n">bit_depth</span><span class="p">,</span> <span class="n">color_type</span> <span class="o">=</span> <span class="n">_OUTMODES</span><span class="p">[</span><span class="n">outmode</span><span class="p">]</span>
 <span class="g g-Whitespace">   </span><span class="mi">1371</span> <span class="k">except</span> <span class="ne">KeyError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
@@ -940,28 +940,28 @@ Min Pixel Value: 0.0
 <span class="ne">----&gt; </span><span class="mi">2</span> <span class="n">ski</span><span class="o">.</span><span class="n">io</span><span class="o">.</span><span class="n">imsave</span><span class="p">(</span><span class="s2">&quot;images/smiley_swirled.png&quot;</span><span class="p">,</span> <span class="c1"># Path to save image to.</span>
 <span class="g g-Whitespace">      </span><span class="mi">3</span>               <span class="n">smiley_swirled</span><span class="p">)</span>              <span class="c1"># Image array to save.</span>
 
-<span class="nn">File /opt/hostedtoolcache/Python/3.13.9/x64/lib/python3.13/site-packages/skimage/_shared/utils.py:328,</span> in <span class="ni">deprecate_parameter.__call__.&lt;locals&gt;.fixed_func</span><span class="nt">(*args, **kwargs)</span>
+<span class="nn">File /opt/hostedtoolcache/Python/3.13.11/x64/lib/python3.13/site-packages/skimage/_shared/utils.py:328,</span> in <span class="ni">deprecate_parameter.__call__.&lt;locals&gt;.fixed_func</span><span class="nt">(*args, **kwargs)</span>
 <span class="g g-Whitespace">    </span><span class="mi">324</span>     <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">new_name</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
 <span class="g g-Whitespace">    </span><span class="mi">325</span>         <span class="c1"># Assign old value to new one</span>
 <span class="g g-Whitespace">    </span><span class="mi">326</span>         <span class="n">kwargs</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">new_name</span><span class="p">]</span> <span class="o">=</span> <span class="n">deprecated_value</span>
 <span class="ne">--&gt; </span><span class="mi">328</span> <span class="k">return</span> <span class="n">func</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
 
-<span class="nn">File /opt/hostedtoolcache/Python/3.13.9/x64/lib/python3.13/site-packages/skimage/io/_io.py:206,</span> in <span class="ni">imsave</span><span class="nt">(fname, arr, plugin, check_contrast, **plugin_args)</span>
+<span class="nn">File /opt/hostedtoolcache/Python/3.13.11/x64/lib/python3.13/site-packages/skimage/io/_io.py:206,</span> in <span class="ni">imsave</span><span class="nt">(fname, arr, plugin, check_contrast, **plugin_args)</span>
 <span class="g g-Whitespace">    </span><span class="mi">203</span>     <span class="n">warn</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">fname</span><span class="si">}</span><span class="s1"> is a low contrast image&#39;</span><span class="p">)</span>
 <span class="g g-Whitespace">    </span><span class="mi">205</span> <span class="k">with</span> <span class="n">_hide_plugin_deprecation_warnings</span><span class="p">():</span>
 <span class="ne">--&gt; </span><span class="mi">206</span>     <span class="k">return</span> <span class="n">call_plugin</span><span class="p">(</span><span class="s1">&#39;imsave&#39;</span><span class="p">,</span> <span class="n">fname</span><span class="p">,</span> <span class="n">arr</span><span class="p">,</span> <span class="n">plugin</span><span class="o">=</span><span class="n">plugin</span><span class="p">,</span> <span class="o">**</span><span class="n">plugin_args</span><span class="p">)</span>
 
-<span class="nn">File /opt/hostedtoolcache/Python/3.13.9/x64/lib/python3.13/site-packages/skimage/_shared/utils.py:538,</span> in <span class="ni">deprecate_func.__call__.&lt;locals&gt;.wrapped</span><span class="nt">(*args, **kwargs)</span>
+<span class="nn">File /opt/hostedtoolcache/Python/3.13.11/x64/lib/python3.13/site-packages/skimage/_shared/utils.py:538,</span> in <span class="ni">deprecate_func.__call__.&lt;locals&gt;.wrapped</span><span class="nt">(*args, **kwargs)</span>
 <span class="g g-Whitespace">    </span><span class="mi">536</span> <span class="n">stacklevel</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_stack_length</span><span class="p">(</span><span class="n">func</span><span class="p">)</span> <span class="o">-</span> <span class="n">stack_rank</span>
 <span class="g g-Whitespace">    </span><span class="mi">537</span> <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span><span class="n">message</span><span class="p">,</span> <span class="n">category</span><span class="o">=</span><span class="ne">FutureWarning</span><span class="p">,</span> <span class="n">stacklevel</span><span class="o">=</span><span class="n">stacklevel</span><span class="p">)</span>
 <span class="ne">--&gt; </span><span class="mi">538</span> <span class="k">return</span> <span class="n">func</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
 
-<span class="nn">File /opt/hostedtoolcache/Python/3.13.9/x64/lib/python3.13/site-packages/skimage/io/manage_plugins.py:254,</span> in <span class="ni">call_plugin</span><span class="nt">(kind, *args, **kwargs)</span>
+<span class="nn">File /opt/hostedtoolcache/Python/3.13.11/x64/lib/python3.13/site-packages/skimage/io/manage_plugins.py:254,</span> in <span class="ni">call_plugin</span><span class="nt">(kind, *args, **kwargs)</span>
 <span class="g g-Whitespace">    </span><span class="mi">251</span>     <span class="k">except</span> <span class="ne">IndexError</span><span class="p">:</span>
 <span class="g g-Whitespace">    </span><span class="mi">252</span>         <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Could not find the plugin &quot;</span><span class="si">{</span><span class="n">plugin</span><span class="si">}</span><span class="s1">&quot; for </span><span class="si">{</span><span class="n">kind</span><span class="si">}</span><span class="s1">.&#39;</span><span class="p">)</span>
 <span class="ne">--&gt; </span><span class="mi">254</span> <span class="k">return</span> <span class="n">func</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
 
-<span class="nn">File /opt/hostedtoolcache/Python/3.13.9/x64/lib/python3.13/site-packages/imageio/v3.py:139,</span> in <span class="ni">imwrite</span><span class="nt">(uri, image, plugin, extension, format_hint, **kwargs)</span>
+<span class="nn">File /opt/hostedtoolcache/Python/3.13.11/x64/lib/python3.13/site-packages/imageio/v3.py:139,</span> in <span class="ni">imwrite</span><span class="nt">(uri, image, plugin, extension, format_hint, **kwargs)</span>
 <span class="g g-Whitespace">    </span><span class="mi">104</span> <span class="k">def</span><span class="w"> </span><span class="nf">imwrite</span><span class="p">(</span><span class="n">uri</span><span class="p">,</span> <span class="n">image</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">plugin</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">extension</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">format_hint</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
 <span class="g g-Whitespace">    </span><span class="mi">105</span><span class="w">     </span><span class="sd">&quot;&quot;&quot;Write an ndimage to the given URI.</span>
 <span class="g g-Whitespace">    </span><span class="mi">106</span><span class="sd"> </span>
@@ -979,31 +979,31 @@ Min Pixel Value: 0.0
 <span class="g g-Whitespace">    </span><span class="mi">147</span>         <span class="n">encoded</span> <span class="o">=</span> <span class="n">img_file</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">image</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
 <span class="g g-Whitespace">    </span><span class="mi">149</span>     <span class="k">return</span> <span class="n">encoded</span>
 
-<span class="nn">File /opt/hostedtoolcache/Python/3.13.9/x64/lib/python3.13/site-packages/imageio/core/v3_plugin_api.py:367,</span> in <span class="ni">PluginV3.__exit__</span><span class="nt">(self, type, value, traceback)</span>
+<span class="nn">File /opt/hostedtoolcache/Python/3.13.11/x64/lib/python3.13/site-packages/imageio/core/v3_plugin_api.py:367,</span> in <span class="ni">PluginV3.__exit__</span><span class="nt">(self, type, value, traceback)</span>
 <span class="g g-Whitespace">    </span><span class="mi">366</span> <span class="k">def</span><span class="w"> </span><span class="fm">__exit__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">type</span><span class="p">,</span> <span class="n">value</span><span class="p">,</span> <span class="n">traceback</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 <span class="ne">--&gt; </span><span class="mi">367</span>     <span class="bp">self</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
 
-<span class="nn">File /opt/hostedtoolcache/Python/3.13.9/x64/lib/python3.13/site-packages/imageio/plugins/pillow.py:145,</span> in <span class="ni">PillowPlugin.close</span><span class="nt">(self)</span>
+<span class="nn">File /opt/hostedtoolcache/Python/3.13.11/x64/lib/python3.13/site-packages/imageio/plugins/pillow.py:145,</span> in <span class="ni">PillowPlugin.close</span><span class="nt">(self)</span>
 <span class="g g-Whitespace">    </span><span class="mi">144</span> <span class="k">def</span><span class="w"> </span><span class="nf">close</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 <span class="ne">--&gt; </span><span class="mi">145</span>     <span class="bp">self</span><span class="o">.</span><span class="n">_flush_writer</span><span class="p">()</span>
 <span class="g g-Whitespace">    </span><span class="mi">147</span>     <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_image</span><span class="p">:</span>
 <span class="g g-Whitespace">    </span><span class="mi">148</span>         <span class="bp">self</span><span class="o">.</span><span class="n">_image</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
 
-<span class="nn">File /opt/hostedtoolcache/Python/3.13.9/x64/lib/python3.13/site-packages/imageio/plugins/pillow.py:486,</span> in <span class="ni">PillowPlugin._flush_writer</span><span class="nt">(self)</span>
+<span class="nn">File /opt/hostedtoolcache/Python/3.13.11/x64/lib/python3.13/site-packages/imageio/plugins/pillow.py:486,</span> in <span class="ni">PillowPlugin._flush_writer</span><span class="nt">(self)</span>
 <span class="g g-Whitespace">    </span><span class="mi">483</span>     <span class="bp">self</span><span class="o">.</span><span class="n">save_args</span><span class="p">[</span><span class="s2">&quot;save_all&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">True</span>
 <span class="g g-Whitespace">    </span><span class="mi">484</span>     <span class="bp">self</span><span class="o">.</span><span class="n">save_args</span><span class="p">[</span><span class="s2">&quot;append_images&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">images_to_write</span>
 <span class="ne">--&gt; </span><span class="mi">486</span> <span class="n">primary_image</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_request</span><span class="o">.</span><span class="n">get_file</span><span class="p">(),</span> <span class="o">**</span><span class="bp">self</span><span class="o">.</span><span class="n">save_args</span><span class="p">)</span>
 <span class="g g-Whitespace">    </span><span class="mi">487</span> <span class="bp">self</span><span class="o">.</span><span class="n">images_to_write</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
 <span class="g g-Whitespace">    </span><span class="mi">488</span> <span class="bp">self</span><span class="o">.</span><span class="n">save_args</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
 
-<span class="nn">File /opt/hostedtoolcache/Python/3.13.9/x64/lib/python3.13/site-packages/PIL/Image.py:2571,</span> in <span class="ni">Image.save</span><span class="nt">(self, fp, format, **params)</span>
+<span class="nn">File /opt/hostedtoolcache/Python/3.13.11/x64/lib/python3.13/site-packages/PIL/Image.py:2571,</span> in <span class="ni">Image.save</span><span class="nt">(self, fp, format, **params)</span>
 <span class="g g-Whitespace">   </span><span class="mi">2568</span>     <span class="n">fp</span> <span class="o">=</span> <span class="n">cast</span><span class="p">(</span><span class="n">IO</span><span class="p">[</span><span class="nb">bytes</span><span class="p">],</span> <span class="n">fp</span><span class="p">)</span>
 <span class="g g-Whitespace">   </span><span class="mi">2570</span> <span class="k">try</span><span class="p">:</span>
 <span class="ne">-&gt; </span><span class="mi">2571</span>     <span class="n">save_handler</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fp</span><span class="p">,</span> <span class="n">filename</span><span class="p">)</span>
 <span class="g g-Whitespace">   </span><span class="mi">2572</span> <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
 <span class="g g-Whitespace">   </span><span class="mi">2573</span>     <span class="k">if</span> <span class="n">open_fp</span><span class="p">:</span>
 
-<span class="nn">File /opt/hostedtoolcache/Python/3.13.9/x64/lib/python3.13/site-packages/PIL/PngImagePlugin.py:1373,</span> in <span class="ni">_save</span><span class="nt">(im, fp, filename, chunk, save_all)</span>
+<span class="nn">File /opt/hostedtoolcache/Python/3.13.11/x64/lib/python3.13/site-packages/PIL/PngImagePlugin.py:1373,</span> in <span class="ni">_save</span><span class="nt">(im, fp, filename, chunk, save_all)</span>
 <span class="g g-Whitespace">   </span><span class="mi">1371</span> <span class="k">except</span> <span class="ne">KeyError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
 <span class="g g-Whitespace">   </span><span class="mi">1372</span>     <span class="n">msg</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;cannot write mode </span><span class="si">{</span><span class="n">mode</span><span class="si">}</span><span class="s2"> as PNG&quot;</span>
 <span class="ne">-&gt; </span><span class="mi">1373</span>     <span class="k">raise</span> <span class="ne">OSError</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span> <span class="kn">from</span><span class="w"> </span><span class="nn">e</span>
@@ -1072,7 +1072,7 @@ to address them.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/75793bbf45d54792ec482b3f01887e3a57bd179f753308ed87339b5170d888e2.png" src="_images/75793bbf45d54792ec482b3f01887e3a57bd179f753308ed87339b5170d888e2.png" />
+<img alt="_images/5c5dff20914097f082ba000ba46b21d7905e628daae0e0e77305efcbcb1c556d.png" src="_images/5c5dff20914097f082ba000ba46b21d7905e628daae0e0e77305efcbcb1c556d.png" />
 </div>
 </div>
 <p>We can see that the <code class="docutils literal notranslate"><span class="pre">dtype</span></code> of the freshly saved, freshly loaded image is indeed <code class="docutils literal notranslate"><span class="pre">uint8</span></code>:</p>
@@ -1135,7 +1135,7 @@ Min Pixel Value: 0
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/f8cc97b320242de206b3267154c6ea191d1476d46c2eea8d903745df4d1a082c.png" src="_images/f8cc97b320242de206b3267154c6ea191d1476d46c2eea8d903745df4d1a082c.png" />
+<img alt="_images/2459635bcf7e3471c9634473e92f050c485c20c9ba1ef7898ab427c002f50722.png" src="_images/2459635bcf7e3471c9634473e92f050c485c20c9ba1ef7898ab427c002f50722.png" />
 </div>
 </div>
 <p>Pretty trippy…</p>
@@ -1152,7 +1152,7 @@ Min Pixel Value: 0
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/50aff3d36362558deba307a37ae4682958e48d2b46c8fe49483f0733bf1123b0.png" src="_images/50aff3d36362558deba307a37ae4682958e48d2b46c8fe49483f0733bf1123b0.png" />
+<img alt="_images/35f9dfe13bfb22923a0ffb4e30a0a71877c6b8ffb9cf0556ebe377899835cbf3.png" src="_images/35f9dfe13bfb22923a0ffb4e30a0a71877c6b8ffb9cf0556ebe377899835cbf3.png" />
 </div>
 </div>
 <p>Try to recreate something like the image below, by adding noise to the image with <code class="docutils literal notranslate"><span class="pre">ski.util.random_noise()</span></code>. Like most <code class="docutils literal notranslate"><span class="pre">skimage</span></code> functions, <code class="docutils literal notranslate"><span class="pre">random_noise()</span></code> takes a NumPy image array as an argument, and adds random quantities to the array pixel values. To match the target image below, you will need to adjust an optional argument, see if you can work out which argument it is by reading the <a class="reference external" href="https://scikit-image.org/docs/0.25.x/api/skimage.util.html#skimage.util.random_noise">documentation</a>.</p>
@@ -1205,7 +1205,7 @@ Max Pixel Value: 1.0
 Min Pixel Value: 0.0
 </pre></div>
 </div>
-<img alt="_images/67f526c54212de9ed3e6299655262ba34d6ac8066a6b6766ca8ccc828f6935cd.png" src="_images/67f526c54212de9ed3e6299655262ba34d6ac8066a6b6766ca8ccc828f6935cd.png" />
+<img alt="_images/7030f27a653284d1a5b31ecd936ac7d1b9066538b1941256c157a699d966e9d4.png" src="_images/7030f27a653284d1a5b31ecd936ac7d1b9066538b1941256c157a699d966e9d4.png" />
 </div>
 </div>
 </section>
@@ -1310,7 +1310,7 @@ Max Pixel Value: 231
 Min Pixel Value: 0
 </pre></div>
 </div>
-<img alt="_images/60b7cd61208645b425827f7a1ad2f07076f41c86351b79cba077558e9f2a5174.png" src="_images/60b7cd61208645b425827f7a1ad2f07076f41c86351b79cba077558e9f2a5174.png" />
+<img alt="_images/4ee7477b739aa9fda7066966d5336ad7e5db317659e8f8e26fc7d7318b27b680.png" src="_images/4ee7477b739aa9fda7066966d5336ad7e5db317659e8f8e26fc7d7318b27b680.png" />
 </div>
 </div>
 <p>On the <a class="reference internal" href="1_color_images_as_numpy_arrays.html"><span class="doc std std-doc">previous page</span></a> we manually converted color images to grayscale, using NumPy operations. As we saw earlier on the present page, functions from the <code class="docutils literal notranslate"><span class="pre">ski.color</span></code> module, like <code class="docutils literal notranslate"><span class="pre">ski.color.rgb2gray()</span></code>, can do this more elegantly, with less code:</p>
@@ -1331,7 +1331,7 @@ Max Pixel Value: 0.76
 Min Pixel Value: 0.02
 </pre></div>
 </div>
-<img alt="_images/12227d6a6aaad732b021a534269fb2007a7a9bfff2d7e26d134d57239ca738a9.png" src="_images/12227d6a6aaad732b021a534269fb2007a7a9bfff2d7e26d134d57239ca738a9.png" />
+<img alt="_images/9c3ae295adbaf0628ca3aed667e93d398aa75b4efab21b06d3bf6f5eccb172c6.png" src="_images/9c3ae295adbaf0628ca3aed667e93d398aa75b4efab21b06d3bf6f5eccb172c6.png" />
 </div>
 </div>
 <p>This grayscale conversion is achieved by calculating the luminance of the image via a weighted sum of the information in each color channel:</p>
@@ -1381,7 +1381,7 @@ Min Pixel Value: 0.0
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/3bdca8058ea5609bed899f241abab6bc5ec9f3fd4d48a2aeaa738318b2227e89.png" src="_images/3bdca8058ea5609bed899f241abab6bc5ec9f3fd4d48a2aeaa738318b2227e89.png" />
+<img alt="_images/e6c11487d993970c8e639a9539d85f5ee6622b56e5f26cfe58eaa4c1a504e0cd.png" src="_images/e6c11487d993970c8e639a9539d85f5ee6622b56e5f26cfe58eaa4c1a504e0cd.png" />
 </div>
 </div>
 <p>However, this leaves our image with a not-standard pixel intensity range,
@@ -1429,7 +1429,7 @@ Max Pixel Value: 1.0
 Min Pixel Value: 0.0
 </pre></div>
 </div>
-<img alt="_images/3bdca8058ea5609bed899f241abab6bc5ec9f3fd4d48a2aeaa738318b2227e89.png" src="_images/3bdca8058ea5609bed899f241abab6bc5ec9f3fd4d48a2aeaa738318b2227e89.png" />
+<img alt="_images/e6c11487d993970c8e639a9539d85f5ee6622b56e5f26cfe58eaa4c1a504e0cd.png" src="_images/e6c11487d993970c8e639a9539d85f5ee6622b56e5f26cfe58eaa4c1a504e0cd.png" />
 </div>
 </div>
 </section>
@@ -1457,7 +1457,7 @@ Max Pixel Value: 1.0
 Min Pixel Value: 0.0
 </pre></div>
 </div>
-<img alt="_images/9482504a413b452b78ca4310588f9af3acdde26f7879097fc902fea8b77f73ff.png" src="_images/9482504a413b452b78ca4310588f9af3acdde26f7879097fc902fea8b77f73ff.png" />
+<img alt="_images/5c0fd3bcc2fedb56d4a43734a3fdf855c12e9eac10bcb112d639640f18e7e3dd.png" src="_images/5c0fd3bcc2fedb56d4a43734a3fdf855c12e9eac10bcb112d639640f18e7e3dd.png" />
 </div>
 </div>
 <p>Psychedelic! Maybe this is how cats look, from the perspective of other cats (e.g. from within their “<a class="reference external" href="https://en.wikipedia.org/wiki/Umwelt">umwelt</a>”), but sadly this is probably not the case…</p>
@@ -1488,7 +1488,7 @@ Min Pixel Value: 0.0
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/ea461b32c47ed04e93c206909388590816a7c8d8981c698a4b311a98cbb6c452.png" src="_images/ea461b32c47ed04e93c206909388590816a7c8d8981c698a4b311a98cbb6c452.png" />
+<img alt="_images/877be7df3ccb4fac5cd43ca9a030dbc2b71b0ed94f5ff9ebb03973056be34184.png" src="_images/877be7df3ccb4fac5cd43ca9a030dbc2b71b0ed94f5ff9ebb03973056be34184.png" />
 </div>
 </div>
 </section>
@@ -1506,7 +1506,7 @@ Red-Green-Blue-Alpha (RGBA), where Alpha is the opacity of the color.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/68263706613df0ced43f23f905ac7be8e9515872ddb6fa5b76d169a7ed40469a.png" src="_images/68263706613df0ced43f23f905ac7be8e9515872ddb6fa5b76d169a7ed40469a.png" />
+<img alt="_images/537da698d538dc2e027b8fef4e66635a37eb47d3d8fe0b431d863547b3f90def.png" src="_images/537da698d538dc2e027b8fef4e66635a37eb47d3d8fe0b431d863547b3f90def.png" />
 </div>
 </div>
 <p>Let’s <code class="docutils literal notranslate"><span class="pre">np.stack()</span></code> this image array into 4-D, and set only the 1st and 4th channels to have nonzero values (e.g. so all values in the other, green and blue, channels are 0’s):</p>
@@ -1524,7 +1524,7 @@ Red-Green-Blue-Alpha (RGBA), where Alpha is the opacity of the color.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/31db10b9fb5518300ca25a4e1fd6c019fd9c39ab4ca5a805b95a01e5edd61262.png" src="_images/31db10b9fb5518300ca25a4e1fd6c019fd9c39ab4ca5a805b95a01e5edd61262.png" />
+<img alt="_images/fb13f0ca0ead2d649bcb7368dcf9238d34960190c3400236d189782b7b956234.png" src="_images/fb13f0ca0ead2d649bcb7368dcf9238d34960190c3400236d189782b7b956234.png" />
 </div>
 </div>
 <p>Ok, so we just get red nonzero pixels. So what does the 4th channel do?</p>
@@ -1540,7 +1540,7 @@ solid, non-see through color.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/5113bdd9257c45de598b6e3b83395c5a495f872d18dc97880bc55938bb5474de.png" src="_images/5113bdd9257c45de598b6e3b83395c5a495f872d18dc97880bc55938bb5474de.png" />
+<img alt="_images/fead857b3222e1f3d4d5e89c66d584e87b69fd2e734fc79b72854c69fe624d32.png" src="_images/fead857b3222e1f3d4d5e89c66d584e87b69fd2e734fc79b72854c69fe624d32.png" />
 </div>
 </div>
 <p>This new transparency channel is called an <em>alpha channel</em>. Let’s add one to our <code class="docutils literal notranslate"><span class="pre">cat</span></code> image. We’ll duplicate the first slice of the third dimension, as the fourth slice:</p>
@@ -1557,7 +1557,7 @@ solid, non-see through color.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/587ab8f9efc1d1b0f8ac8be8d7aa61fb7e0e5b70bc7fcf6f07c1de79398b2a8c.png" src="_images/587ab8f9efc1d1b0f8ac8be8d7aa61fb7e0e5b70bc7fcf6f07c1de79398b2a8c.png" />
+<img alt="_images/ebe0525cf3f8415499da93d19f643424610c66d06b48167451c46fce4a4754d0.png" src="_images/ebe0525cf3f8415499da93d19f643424610c66d06b48167451c46fce4a4754d0.png" />
 </div>
 </div>
 <p>Pretty ghostly…maybe <em>this</em> is how cats look to one another…</p>
@@ -1574,10 +1574,10 @@ solid, non-see through color.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.image.AxesImage at 0x7efc8ce33890&gt;
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.image.AxesImage at 0x7fdd1296b750&gt;
 </pre></div>
 </div>
-<img alt="_images/50aff3d36362558deba307a37ae4682958e48d2b46c8fe49483f0733bf1123b0.png" src="_images/50aff3d36362558deba307a37ae4682958e48d2b46c8fe49483f0733bf1123b0.png" />
+<img alt="_images/35f9dfe13bfb22923a0ffb4e30a0a71877c6b8ffb9cf0556ebe377899835cbf3.png" src="_images/35f9dfe13bfb22923a0ffb4e30a0a71877c6b8ffb9cf0556ebe377899835cbf3.png" />
 </div>
 </div>
 <p>The original image has the following attributes:</p>
@@ -1654,7 +1654,7 @@ Max Pixel Value: 1.0
 Min Pixel Value: 0.0
 </pre></div>
 </div>
-<img alt="_images/38eab88762ab83254b5e1e79f61c8a07e96cf03a0591d28fd6ce0e3ab28ed38f.png" src="_images/38eab88762ab83254b5e1e79f61c8a07e96cf03a0591d28fd6ce0e3ab28ed38f.png" />
+<img alt="_images/65e3ea9693d950ad691b32556c3910b16e8ff0eb5b604e8e95b9710b5930edb3.png" src="_images/65e3ea9693d950ad691b32556c3910b16e8ff0eb5b604e8e95b9710b5930edb3.png" />
 </div>
 </div>
 <p>Now, if you tried to do the <code class="docutils literal notranslate"><span class="pre">float64</span></code> conversion using the <code class="docutils literal notranslate"><span class="pre">numpy</span></code> <code class="docutils literal notranslate"><span class="pre">.astype()</span></code> method, things will seem OK at first:</p>
@@ -1711,7 +1711,7 @@ Min Pixel Value: 0.0
 <div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Clipping input data to the valid range for imshow with RGB data ([0..1] for floats or [0..255] for integers). Got range [0.0..255.0].
 </pre></div>
 </div>
-<img alt="_images/bf0105a6d77114e7aa23c170edcd790620589004690b34f6568516fc54e7a31e.png" src="_images/bf0105a6d77114e7aa23c170edcd790620589004690b34f6568516fc54e7a31e.png" />
+<img alt="_images/766557909954b2541c9232dc92525c9831709714ae24e858d8cd31b8ef0f222e.png" src="_images/766557909954b2541c9232dc92525c9831709714ae24e858d8cd31b8ef0f222e.png" />
 </div>
 </div>
 <p>Matplotlib complains that the maximum values (255.0) violate the required 0 to 1 range of <code class="docutils literal notranslate"><span class="pre">float64</span></code> images. It tries to clip the data to the valid range, but with horrible visual results. Use <code class="docutils literal notranslate"><span class="pre">skimage</span></code> conversion functions, to ensure the proper pixel intensity range for the current <code class="docutils literal notranslate"><span class="pre">dtype</span></code>, to avoid these sorts of errors…</p>
@@ -1755,7 +1755,7 @@ Min Pixel Value: 0
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/5df6d13815340aa063bb2168f3dc35fedac2e285bf0e5a86cb917118e7f324ad.png" src="_images/5df6d13815340aa063bb2168f3dc35fedac2e285bf0e5a86cb917118e7f324ad.png" />
+<img alt="_images/c740f16456e13bd9cd7b3e88ce8c0ec11ea16c0e6e2e616d5e318ca2c74b6d32.png" src="_images/c740f16456e13bd9cd7b3e88ce8c0ec11ea16c0e6e2e616d5e318ca2c74b6d32.png" />
 </div>
 </div>
 <p>You can see that we are walking through the iguana’s head, in the vertical direction.</p>
