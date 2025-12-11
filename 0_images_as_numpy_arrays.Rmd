@@ -19,7 +19,7 @@ jupyter:
 :class: dropdown
 :name: adapted-from-0
 
-This tutorial is adapted from "Image manipulation and processing using NumPy and SciPy" by Emmanuelle Gouillart and Gaël Varoquaux. Please see the References section at the end of the page for other resources that inspired this tutorial.
+This tutorial is adapted from "Image manipulation and processing using NumPy and SciPy" by Emmanuelle Gouillart and Gaël Varoquaux. Please see the References section at the end of the page for other sources and resources.
 
 :::
 
