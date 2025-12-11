@@ -15,13 +15,11 @@ run across a good explanation somewhere?
 
 > Can you add that?
 
-- Add opening/closing to morphology page
-
 - Show 3D edge detection kernels, it is visually obvious how they detect gradients
 which correspond to edges.
 
 - Maybe show the between classes variances for the Otsu method (show that it converges on same threshold?)...
-  
+
 - Notes for potential additions to Gaussian filtering section: Use gaussian from here: https://sbme-tutorials.github.io/2018/cv/notes/4_week4.html [Highlight that skimage filter is built from NumPy and SciPy - wrapper for `scipy.ndimage.gaussian_filter`?]
 
 ## Notes and admonitions
