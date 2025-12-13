@@ -15,6 +15,14 @@ jupyter:
 
 # (Scikit-) Image processing, via NumPy and SciPy
 
+::: {note}
+:class: dropdown
+:name: adapted-from-3
+
+This tutorial is adapted from "Image manipulation and processing using NumPy and SciPy" by Emmanuelle Gouillart and Gaël Varoquaux, and "`scikit-image`: image processing" by Emmanuelle Gouillart. Please see the References section at the end of the page for other sources and resources.
+
+:::
+
 This page will explore foundational image processing techniques, as operations
 on the values in a NumPy image array. First, we will explore how to achieve
 specific effects using NumPy and SciPy. We will demonstrate what these

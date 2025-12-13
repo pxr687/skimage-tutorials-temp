@@ -15,6 +15,14 @@ jupyter:
 
 # Filtering with kernels II - Gaussian blur, sharpening and edge detection
 
+::: {note}
+:class: dropdown
+:name: adapted-from-6
+
+This tutorial is adapted from "Image manipulation and processing using NumPy and SciPy" by Emmanuelle Gouillart and Gaël Varoquaux, and "`scikit-image`: image processing" by Emmanuelle Gouillart. Please see the References section at the end of the page for other sources and resources.
+
+:::
+
 This page will explore additional foundational filters which use kernels, implementing them first with NumPy and SciPy, and then with Scikit-image. As usual, we begin with some imports:
 
 ```{python}

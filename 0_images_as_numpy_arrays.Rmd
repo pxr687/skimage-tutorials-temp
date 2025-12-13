@@ -15,6 +15,14 @@ jupyter:
 
 # Images as NumPy arrays
 
+::: {note}
+:class: dropdown
+:name: adapted-from-0
+
+This tutorial is adapted from "Image manipulation and processing using NumPy and SciPy" by Emmanuelle Gouillart and Gaël Varoquaux. Please see the References section at the end of the page for other sources and resources.
+
+:::
+
 This page explores how images can be represented as NumPy arrays. To get
 started, let's think about the meaning of the word "image".  The *intuitive
 meaning* is roughly "a picture of something", or perhaps more broadly "a

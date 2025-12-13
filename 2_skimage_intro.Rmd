@@ -6,7 +6,7 @@ jupyter:
       extension: .Rmd
       format_name: rmarkdown
       format_version: '1.2'
-      jupytext_version: 1.18.1
+      jupytext_version: 1.17.3
   kernelspec:
     display_name: Python 3 (ipykernel)
     language: python
@@ -14,6 +14,14 @@ jupyter:
 ---
 
 # Introducing Scikit-image
+
+::: {note}
+:class: dropdown
+:name: adapted-from-2
+
+This tutorial is adapted from "Image manipulation and processing using NumPy and SciPy" by Emmanuelle Gouillart and Gaël Varoquaux, and "`scikit-image`: image processing" by Emmanuelle Gouillart. Please see the References section at the end of the page for other sources and resources.
+
+:::
 
 [Scikit-image](https://scikit-image.org) (`skimage`) is a powerful image processing package which is built in a large part from NumPy and SciPy, and uses NumPy arrays as its fundamental image representation. This page will show some foundational aspects of `skimage`, focusing on its coherence with the NumPy image array concepts we saw on the last two pages.
 

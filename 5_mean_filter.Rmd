@@ -15,6 +15,14 @@ jupyter:
 
 # Filtering with kernels - the mean filter
 
+::: {note}
+:class: dropdown
+:name: adapted-from-5
+
+This tutorial is adapted from "Image manipulation and processing using NumPy and SciPy" by Emmanuelle Gouillart and Gaël Varoquaux, and "`scikit-image`: image processing" by Emmanuelle Gouillart. Please see the References section at the end of the page for other sources and resources.
+
+:::
+
 ## Footprints and pixel neighborhoods
 
 
