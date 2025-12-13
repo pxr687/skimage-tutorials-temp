@@ -639,9 +639,7 @@ to this value (of 100).  Therefore, when we have replaced the pixel value of
 100 with the CDF value of 0.6, we have made it such that there are exactly 60%
 of the (new, CDF-derived) pixel values less than or equal to the new value.
 
-Have a look at [this explanation](does this contain the explanation you were
-looking for re: histogram equalisation?:
-https://benqwilson.com/blog/R8Vz/histogram-equalization-part-1-theory), and in
+Have a look at [this explanation](https://benqwilson.com/blog/R8Vz/histogram-equalization-part-1-theory), and in
 particular, the last graph on that page.  You may be able to see that, by
 doing the operation above, we have made the CDF of the new values be
 a diagonal straight line (as in the graph on that page), and therefore, we
