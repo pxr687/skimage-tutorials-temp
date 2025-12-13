@@ -842,7 +842,7 @@ Max Pixel Value: 252
 Min Pixel Value: 1
 </pre></div>
 </div>
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.image.AxesImage at 0x7f812e539a90&gt;
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.image.AxesImage at 0x7f03c347da90&gt;
 </pre></div>
 </div>
 <img alt="_images/b00bf4e77a51a0155fb2aaf95d76d118cad19d6795317f50488f39bf092f5fb3.png" src="_images/b00bf4e77a51a0155fb2aaf95d76d118cad19d6795317f50488f39bf092f5fb3.png" />
@@ -1380,7 +1380,7 @@ to the image:</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/f61e9dd8e554c51cad1cdd2787cb034a8b36d4bde6904a2118728ca2bb463208.png" src="_images/f61e9dd8e554c51cad1cdd2787cb034a8b36d4bde6904a2118728ca2bb463208.png" />
+<img alt="_images/63ccb51a5256d49f9326e94f8a1443d5ea5366d802e0dd3a4e14c45af1c91929.png" src="_images/63ccb51a5256d49f9326e94f8a1443d5ea5366d802e0dd3a4e14c45af1c91929.png" />
 </div>
 </div>
 <p>The mean filter can remove some of the noise, restoring the clarity of the
@@ -1412,7 +1412,7 @@ it to anything like the same extent as the pixel-to-pixel noise.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/a74222fec22cdbb836c9c53d94ef932339b13a37005cabe8b114d651e74696ee.png" src="_images/a74222fec22cdbb836c9c53d94ef932339b13a37005cabe8b114d651e74696ee.png" />
+<img alt="_images/242eb89830f094fabf52a9ecb2735b37533cb9e755e7c905c69a08669f19bdfc.png" src="_images/242eb89830f094fabf52a9ecb2735b37533cb9e755e7c905c69a08669f19bdfc.png" />
 </div>
 </div>
 <p>We can see that the image is clearer, the noise has been reduced and some of
@@ -1443,7 +1443,7 @@ the signal has been restored.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/b9888a66c8bba0c745ad08f145986cd636d95722edb1f74961403569883bc2cf.png" src="_images/b9888a66c8bba0c745ad08f145986cd636d95722edb1f74961403569883bc2cf.png" />
+<img alt="_images/1081ea6a62f209c614c4a3c97ab83fcf095f4bc451585797db3780b654e4fe4e.png" src="_images/1081ea6a62f209c614c4a3c97ab83fcf095f4bc451585797db3780b654e4fe4e.png" />
 </div>
 </div>
 <p>As with many filtering operations, the effect of altering aspects of the
@@ -1524,7 +1524,7 @@ to build the kernel for given kernel shape:</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.image.AxesImage at 0x7f812813f890&gt;
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.image.AxesImage at 0x7f03bde1f390&gt;
 </pre></div>
 </div>
 <img alt="_images/a7bddd3f5c3dd1f069f64e49372e51e14b86012341f266299c277c358c706a9c.png" src="_images/a7bddd3f5c3dd1f069f64e49372e51e14b86012341f266299c277c358c706a9c.png" />
@@ -1608,7 +1608,7 @@ Min Pixel Value: 0
 <span class="g g-Whitespace">      </span><span class="mi">1</span> <span class="c1"># Oh dear.</span>
 <span class="ne">----&gt; </span><span class="mi">2</span> <span class="n">astronaut_mean_filtered</span> <span class="o">=</span> <span class="n">ndi</span><span class="o">.</span><span class="n">correlate</span><span class="p">(</span><span class="n">astronaut</span><span class="p">,</span> <span class="n">weights</span><span class="o">=</span><span class="n">mean_kernel</span><span class="p">)</span>
 
-<span class="nn">File /opt/hostedtoolcache/Python/3.13.9/x64/lib/python3.13/site-packages/scipy/ndimage/_filters.py:1375,</span> in <span class="ni">correlate</span><span class="nt">(input, weights, output, mode, cval, origin, axes)</span>
+<span class="nn">File /opt/hostedtoolcache/Python/3.13.11/x64/lib/python3.13/site-packages/scipy/ndimage/_filters.py:1375,</span> in <span class="ni">correlate</span><span class="nt">(input, weights, output, mode, cval, origin, axes)</span>
 <span class="g g-Whitespace">   </span><span class="mi">1309</span> <span class="nd">@_ni_docstrings</span><span class="o">.</span><span class="n">docfiller</span>
 <span class="g g-Whitespace">   </span><span class="mi">1310</span> <span class="k">def</span><span class="w"> </span><span class="nf">correlate</span><span class="p">(</span><span class="nb">input</span><span class="p">,</span> <span class="n">weights</span><span class="p">,</span> <span class="n">output</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s1">&#39;reflect&#39;</span><span class="p">,</span> <span class="n">cval</span><span class="o">=</span><span class="mf">0.0</span><span class="p">,</span>
 <span class="g g-Whitespace">   </span><span class="mi">1311</span>               <span class="n">origin</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">axes</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
@@ -1620,7 +1620,7 @@ Min Pixel Value: 0
 <span class="ne">-&gt; </span><span class="mi">1375</span>     <span class="k">return</span> <span class="n">_correlate_or_convolve</span><span class="p">(</span><span class="nb">input</span><span class="p">,</span> <span class="n">weights</span><span class="p">,</span> <span class="n">output</span><span class="p">,</span> <span class="n">mode</span><span class="p">,</span> <span class="n">cval</span><span class="p">,</span>
 <span class="g g-Whitespace">   </span><span class="mi">1376</span>                                   <span class="n">origin</span><span class="p">,</span> <span class="kc">False</span><span class="p">,</span> <span class="n">axes</span><span class="p">)</span>
 
-<span class="nn">File /opt/hostedtoolcache/Python/3.13.9/x64/lib/python3.13/site-packages/scipy/ndimage/_filters.py:1277,</span> in <span class="ni">_correlate_or_convolve</span><span class="nt">(input, weights, output, mode, cval, origin, convolution, axes)</span>
+<span class="nn">File /opt/hostedtoolcache/Python/3.13.11/x64/lib/python3.13/site-packages/scipy/ndimage/_filters.py:1277,</span> in <span class="ni">_correlate_or_convolve</span><span class="nt">(input, weights, output, mode, cval, origin, convolution, axes)</span>
 <span class="g g-Whitespace">   </span><span class="mi">1275</span> <span class="n">wshape</span> <span class="o">=</span> <span class="p">[</span><span class="n">ii</span> <span class="k">for</span> <span class="n">ii</span> <span class="ow">in</span> <span class="n">weights</span><span class="o">.</span><span class="n">shape</span> <span class="k">if</span> <span class="n">ii</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">]</span>
 <span class="g g-Whitespace">   </span><span class="mi">1276</span> <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">wshape</span><span class="p">)</span> <span class="o">!=</span> <span class="nb">input</span><span class="o">.</span><span class="n">ndim</span><span class="p">:</span>
 <span class="ne">-&gt; </span><span class="mi">1277</span>     <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;weights.ndim (</span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">wshape</span><span class="p">)</span><span class="si">}</span><span class="s2">) must match &quot;</span>
