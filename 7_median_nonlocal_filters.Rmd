@@ -620,6 +620,34 @@ ax[1].add_patch(
 
 Now consider the low plateau in the proportional histogram between about pixel intensities of 130 to 200 (gray box).  This corresponds to a plateau in the cumulative proportion in the same region, because there are relatively few pixels in the image within this wide range.  In the original image there is a fairly wide difference (of 70) between pixels at either end of this plateau.  However, there is a small difference in cumulative density (less than 0.1) for pixels between 130 and 200.  If we replace the pixel values with the cumulative proportion values, this has the effect of compressing the image range devoted to difference along this plateau.  Conversely, for parts of the intensity range where the there is a rapid change in cumulative proportion, replacing image intensity with cumulative proportion will have the effect of expanding the available image range for those image intensities.  Thus the normalization has the effect of devoting greater image range to regions of rapid change in the original histogram.
 
+
+::: {note}
+
+**Why does histogram equalization work?**
+
+This note is for those of you who would like a more complete explanation for
+why the process of replacing the image count with the corresponding value from
+the cumulative distribution function (CDF) has the effect of making the image
+histogram flat.
+
+Consider, say, a pixel with pixel intensity of 100.  See the figures above for where this is in the image histogram.
+
+We now look up this value (100) in the cumulative distribution function.  As
+you can see in the figures above, the value is about 0.6.  By definition, the
+0.6 value means that 60% of the image intensity values are less than or equal
+to this value (of 100).  Therefore, when we have replaced the pixel value of
+100 with the CDF value of 0.6, we have made it such that there are exactly 60%
+of the (new, CDF-derived) pixel values less than or equal to the new value.
+
+Have a look at [this explanation](https://benqwilson.com/blog/R8Vz/histogram-equalization-part-1-theory), and in
+particular, the last graph on that page.  You may be able to see that, by
+doing the operation above, we have made the CDF of the new values be
+a diagonal straight line (as in the graph on that page), and therefore, we
+have made the proportional histogram (that we can also call the Probability
+Density Function) be flat, with the image intensity divided into even bins.
+
+:::
+
 The Numpy implementation of histogram equalisation has changed the `dtype` of
 the image because we have replaced values ranging from 1 to 255 with
 proportions ranging from 0 to 1:
