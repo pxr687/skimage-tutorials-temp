@@ -452,6 +452,10 @@ document.write(`
                   
   <section class="tex2jax_ignore mathjax_ignore" id="filtering-with-kernels-the-mean-filter">
 <h1>Filtering with kernels - the mean filter<a class="headerlink" href="#filtering-with-kernels-the-mean-filter" title="Link to this heading">#</a></h1>
+<div class="dropdown admonition note" id="adapted-from-5">
+<p class="admonition-title">Note</p>
+<p>This tutorial is adapted from “Image manipulation and processing using NumPy and SciPy” by Emmanuelle Gouillart and Gaël Varoquaux, and “<code class="docutils literal notranslate"><span class="pre">scikit-image</span></code>: image processing” by Emmanuelle Gouillart. Please see the References section at the end of the page for other sources and resources.</p>
+</div>
 <section id="footprints-and-pixel-neighborhoods">
 <h2>Footprints and pixel neighborhoods<a class="headerlink" href="#footprints-and-pixel-neighborhoods" title="Link to this heading">#</a></h2>
 <p>On the last page we filtered images based on a single threshold value, or based on multiple threshold values. Other filters work differently: they work by adjusting a given pixel’s value based on the value of other pixels which surround it, in a specified area. The mean filter is one such filter.</p>
@@ -842,7 +846,7 @@ Max Pixel Value: 252
 Min Pixel Value: 1
 </pre></div>
 </div>
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.image.AxesImage at 0x7f03c347da90&gt;
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.image.AxesImage at 0x7fc36bf1da90&gt;
 </pre></div>
 </div>
 <img alt="_images/b00bf4e77a51a0155fb2aaf95d76d118cad19d6795317f50488f39bf092f5fb3.png" src="_images/b00bf4e77a51a0155fb2aaf95d76d118cad19d6795317f50488f39bf092f5fb3.png" />
@@ -1380,7 +1384,7 @@ to the image:</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/63ccb51a5256d49f9326e94f8a1443d5ea5366d802e0dd3a4e14c45af1c91929.png" src="_images/63ccb51a5256d49f9326e94f8a1443d5ea5366d802e0dd3a4e14c45af1c91929.png" />
+<img alt="_images/93b4b73c8ebe44ac5d61945a6134fc266312d251fe57c6effbeef89468421df8.png" src="_images/93b4b73c8ebe44ac5d61945a6134fc266312d251fe57c6effbeef89468421df8.png" />
 </div>
 </div>
 <p>The mean filter can remove some of the noise, restoring the clarity of the
@@ -1412,7 +1416,7 @@ it to anything like the same extent as the pixel-to-pixel noise.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/242eb89830f094fabf52a9ecb2735b37533cb9e755e7c905c69a08669f19bdfc.png" src="_images/242eb89830f094fabf52a9ecb2735b37533cb9e755e7c905c69a08669f19bdfc.png" />
+<img alt="_images/1429bdfa34af31b4e831d1964fed9c7d1d91fbfae84487330ea60cb243d8d1fd.png" src="_images/1429bdfa34af31b4e831d1964fed9c7d1d91fbfae84487330ea60cb243d8d1fd.png" />
 </div>
 </div>
 <p>We can see that the image is clearer, the noise has been reduced and some of
@@ -1443,7 +1447,7 @@ the signal has been restored.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/1081ea6a62f209c614c4a3c97ab83fcf095f4bc451585797db3780b654e4fe4e.png" src="_images/1081ea6a62f209c614c4a3c97ab83fcf095f4bc451585797db3780b654e4fe4e.png" />
+<img alt="_images/65677a51b71113768998840a3e8fb7492347f0e42d113e450c8ed209ace09d25.png" src="_images/65677a51b71113768998840a3e8fb7492347f0e42d113e450c8ed209ace09d25.png" />
 </div>
 </div>
 <p>As with many filtering operations, the effect of altering aspects of the
@@ -1524,7 +1528,7 @@ to build the kernel for given kernel shape:</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.image.AxesImage at 0x7f03bde1f390&gt;
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.image.AxesImage at 0x7fc35fb151d0&gt;
 </pre></div>
 </div>
 <img alt="_images/a7bddd3f5c3dd1f069f64e49372e51e14b86012341f266299c277c358c706a9c.png" src="_images/a7bddd3f5c3dd1f069f64e49372e51e14b86012341f266299c277c358c706a9c.png" />

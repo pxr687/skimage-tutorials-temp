@@ -13,7 +13,17 @@ jupyter:
     name: python3
 ---
 
+<!-- #region -->
 # Threshold filtering
+
+::: {note}
+:class: dropdown
+:name: adapted-from-4
+
+This tutorial is adapted from "Image manipulation and processing using NumPy and SciPy" by Emmanuelle Gouillart and Gaël Varoquaux, and "`scikit-image`: image processing" by Emmanuelle Gouillart. Please see the References section at the end of the page for other sources and resources.
+
+:::
+
 
 A common operation we will want to perform on images is *filtering*. This is
 where we modify the pixels in an image according to a certain rule or
@@ -26,6 +36,7 @@ Here we will look at *threshold filtering* where we filter an image based on
 specific pixel intensity values. We will show how threshold filtering works at
 the pixel-level, using `numpy` and `scipy`, and then we will show how to apply
 it in `skimage`.
+<!-- #endregion -->
 
 ```{python}
 # Library imports.

@@ -462,6 +462,10 @@ document.write(`
                   
   <section class="tex2jax_ignore mathjax_ignore" id="scikit-image-processing-via-numpy-and-scipy">
 <h1>(Scikit-) Image processing, via NumPy and SciPy<a class="headerlink" href="#scikit-image-processing-via-numpy-and-scipy" title="Link to this heading">#</a></h1>
+<div class="dropdown admonition note" id="adapted-from-3">
+<p class="admonition-title">Note</p>
+<p>This tutorial is adapted from “Image manipulation and processing using NumPy and SciPy” by Emmanuelle Gouillart and Gaël Varoquaux, and “<code class="docutils literal notranslate"><span class="pre">scikit-image</span></code>: image processing” by Emmanuelle Gouillart. Please see the References section at the end of the page for other sources and resources.</p>
+</div>
 <p>This page will explore foundational image processing techniques, as operations
 on the values in a NumPy image array. First, we will explore how to achieve
 specific effects using NumPy and SciPy. We will demonstrate what these
@@ -1603,7 +1607,7 @@ spoon!</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.image.AxesImage at 0x7f7209ca4cd0&gt;
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.image.AxesImage at 0x7f928bdccb90&gt;
 </pre></div>
 </div>
 <img alt="_images/35f9dfe13bfb22923a0ffb4e30a0a71877c6b8ffb9cf0556ebe377899835cbf3.png" src="_images/35f9dfe13bfb22923a0ffb4e30a0a71877c6b8ffb9cf0556ebe377899835cbf3.png" />
@@ -1762,7 +1766,7 @@ Min Pixel Value: 0.0
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.image.AxesImage at 0x7f72079a4910&gt;
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.image.AxesImage at 0x7f928e0ac7d0&gt;
 </pre></div>
 </div>
 <img alt="_images/4ee7477b739aa9fda7066966d5336ad7e5db317659e8f8e26fc7d7318b27b680.png" src="_images/4ee7477b739aa9fda7066966d5336ad7e5db317659e8f8e26fc7d7318b27b680.png" />
@@ -1964,7 +1968,7 @@ using specific NumPy (or <code class="docutils literal notranslate"><span class=
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.image.AxesImage at 0x7f7209f74a50&gt;
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.image.AxesImage at 0x7f928e400f50&gt;
 </pre></div>
 </div>
 <img alt="_images/35f9dfe13bfb22923a0ffb4e30a0a71877c6b8ffb9cf0556ebe377899835cbf3.png" src="_images/35f9dfe13bfb22923a0ffb4e30a0a71877c6b8ffb9cf0556ebe377899835cbf3.png" />
@@ -2235,7 +2239,7 @@ image:</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/tmp/ipykernel_2661/2746963989.py:8: RuntimeWarning: invalid value encountered in power
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/tmp/ipykernel_2686/2746963989.py:8: RuntimeWarning: invalid value encountered in power
   mask_camera = ((i_cam - cam_c_i) ** 3 + (j_cam - cam_c_j) ** 3) ** (1 / 3) &gt; p
 </pre></div>
 </div>
@@ -2411,7 +2415,7 @@ Max Pixel Value: 207
 Min Pixel Value: 63
 </pre></div>
 </div>
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.image.AxesImage at 0x7f721819a210&gt;
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.image.AxesImage at 0x7f929c751f90&gt;
 </pre></div>
 </div>
 <img alt="_images/0517c8f9ad13e398cd75c28dd662d822fea0b72500e97428433c29c274fc04bc.png" src="_images/0517c8f9ad13e398cd75c28dd662d822fea0b72500e97428433c29c274fc04bc.png" />
@@ -2605,7 +2609,7 @@ Min Pixel Value: 0
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.image.AxesImage at 0x7f7209f8fd90&gt;
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.image.AxesImage at 0x7f928e3ce990&gt;
 </pre></div>
 </div>
 <img alt="_images/f24138b0cdd47cb5338b4891429c156c8631b62e59cf4c9d060c8ff6d5be0a74.png" src="_images/f24138b0cdd47cb5338b4891429c156c8631b62e59cf4c9d060c8ff6d5be0a74.png" />
@@ -2748,7 +2752,7 @@ of the channels.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.image.AxesImage at 0x7f7209d425d0&gt;
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.image.AxesImage at 0x7f928e1c2490&gt;
 </pre></div>
 </div>
 <img alt="_images/a45f666e5776e35adfcfa813430b2f2d3006553ddc5420ec486e87d226653365.png" src="_images/a45f666e5776e35adfcfa813430b2f2d3006553ddc5420ec486e87d226653365.png" />
