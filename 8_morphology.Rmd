@@ -253,24 +253,24 @@ plt.imshow(eroded_square);
 What has happened here? We can think of our `diamond` footprint as being a bit
 like a weird [crosshair/reticle](https://en.wikipedia.org/wiki/Reticle) of
 a gun. In a morphological operation, we "target" the crosshair on a given
-array pixel. Because we are eroding, the central pixel will be *lowered to the
-value of the lowest pixel in its neighborhood*. This is illustrated below.
+array pixel. 
 
 When we apply the footprint to each pixel in the image, call the pixels under
-the footprint — *the pixel neighborhood*.  Because our `square` array contains
-only 1s and 0s, the output pixels will be 1 *only if* all pixels in the local
-neighborhood are 1, and 0 otherwise.  The image below shows the `diamond`
-footprint being applied to three different central pixels. Call pixels
-"matches" where all the pixels in the pixel local neighborhood are 1.  All
-other pixels are "clashes".  These are pixels where at least one pixel in the
-pixel local neighborhood is 0. Matches between the footprint and the array
-pixels are depicted with a green tick; clashes between the footprint and the
-array pixels are depicted with a red X.
+the footprint — *the pixel neighborhood*. Because we are eroding, the central pixel will be *lowered to thevalue of the lowest pixel in its neighborhood*. 
 
-Whether there is a match or a clash, the output pixel gets set to the minimum
-of the pixel local neighborhood.  For matches this is 1 (all pixels in the
-neighborhood are 1).  For clashes this is 0 (at least one pixel in the
-neighborhood is 0).
+In our specific case the *pixel neighbourhood* is the pixels in the image which fall
+under the "crosshair" shape of the footprint. E.g. the image
+pixels under the elements of the footprint which equal 1:
+
+```{python}
+# Here is our footprint...
+diamond
+```
+
+Because we are eroding, and because our `square` array contains only 1s and 0s, 
+the output pixels will be 1 *only if* all pixels in the local
+neighborhood are 1, and 0 otherwise.  The image below shows the `diamond`
+footprint being applied to three different central pixels. We we use blue squares to represent the footprint, with white text showing what value is in the image array at that location. 
 
 ![](images/hit_n_miss_with_text.png)
 
@@ -297,17 +297,16 @@ eroded_two_squares
 plt.imshow(eroded_two_squares);
 ```
 
-What happened here? Well, again a "match" only occurs for two pixels in the
-image, the pixels at the center of each white square. This illustration below
+What happened here? Well, only two pixels have 1 as their neighbourhood minimum - 
+the pixels at the center of each white square. This illustration below
 shows what happened:
 
 ![](images/hit_n_miss_with_text_2.png)
 
 
-All other "neighborhoods" did not match the footprint, and so the values in the
-neighborhood were lowered to 0, 0 being the lowest value in each neighborhood.
-This has the effect, if a non-matching pixel has the value of 1, of setting it
-to 0.
+All other "neighborhoods" had at least one 0 in them, and so their central pixels were lowered to 0, resulting in 1-to-0 changes if the central pixel had a value of 1. 
+
+One way to think of this is that the erosion footprint is "searching" for areas of the image which "match" its shape. For a central pixel with a value of 1 to "survive", all the values in its neighbourhood must also be 1. In this instance, therefore the neighbourhood "matches" the footprint - the neighbourhood has 1's everywhere the footprint has 1's. If at least one value in the neighbourhood does not match the shape of the 1's in the footprint (e.g. there is a 0 under the "crosshair") 
 
 Let's alter our image array slightly, to see how this affects the erosion operation with our `diamond` footprint. We will place a black array pixel inside the right-hand white square:
 
@@ -340,11 +339,11 @@ plt.imshow(eroded_square_the_circle);
 
 Ok, so now the whole right-hand square got taken out. Brutal.
 
-Why did this happen? The cell below illustrates, again using green ticks for
+Why did this happen? The cell below illustrates, using green ticks for
 "matches" between the footprint and the pixel "neighborhood", and red X's for
 "clashes" between the footprint and the pixel "neighborhood".
 
-Remember that a "clash" means the central pixel "dies" (gets set to 0);
+Remember that any "clash" means the central pixel "dies" (gets set to 0);
 a "match" means the central pixel "survives" (gets set to 1).
 
 ![](images/hit_n_miss_with_text_3.png)
@@ -362,9 +361,7 @@ Dilation is nothing but a footprint / function filter, where the function is
 `maximum` rather than `minimum`.
 
 Dilation works in the same way as erosion, or any other footprint / function
-filter, in terms of centering a footprint on each pixel, to select the pixel local neighborhood.  It takes the maximum of the local pixel values.
-
-Dilation is less like a reticle/crosshair than erosion. Wherever the footprint "lands" the central pixel will be raised to the neighbourhood maximum, regardless of whether the values under the footprint "match" those in the footprint.
+filter, in terms of centering a footprint on each pixel, to select the pixel local neighborhood.  It takes the maximum of the local pixel values. Wherever the footprint "lands" the central pixel will be raised to the neighbourhood maximum.
 
 Let's dilate the `square` array to illustrate:
 
@@ -392,7 +389,7 @@ dilated_square
 plt.imshow(dilated_square);
 ```
 
-Here we use blue squares to represent the footprint, with white text showing what value is in the array at that location. Remember, *dilation will raise the central pixel to the neighbourhood maximum*.
+Again, here we use blue squares to represent the footprint, with white text showing what value is in the array at that location. Remember, *dilation will raise the central pixel to the neighbourhood maximum*.
 
 So, if the values under the footprint are all 0, the central pixel will remain as 0. If there is a single 1 under the footprint, then the central value will be raised to 1:
 
@@ -427,12 +424,12 @@ Why did this happen? The image below explains:
 
 ![](images/hit_n_miss_with_text_3_dilation.png)
 
-For erosion, all of the "clashing" pixels in the right-hand square get
+For erosion, all of the central pixels in the right-hand square get
 *lowered* to their neighborhood minimum, in this case 0, and so they "die" and
 fade into the black background.
 
 For dilation, central pixels get *raised* to the neighborhood maximum,
-which in this case is 1.
+which in this case is 1. So the black central pixel is brightened to white.
 
 Think of dilation as extending bright areas with the footprint shape.
 
@@ -809,6 +806,6 @@ On this page we have looked at fundamental morphological operations in
 Based on:
 
 * [Scientific Python Lectures on morphological
-  operations](https://scikit-image.org/skimage-tutorials/lectures/3_morphological_operations.html)
+  operations](https://scikit-image.org/skimage-tutorials/lectures/3_morphological_operations.html).
 * [This Napari-based
   tutorial](https://biapol.github.io/Image-data-science-with-Python-and-Napari-EPFL2022/day2d_image_segmentation/03_Morphological_operations.html).
