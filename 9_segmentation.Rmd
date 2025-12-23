@@ -16,25 +16,42 @@ jupyter:
 
 # Image segmentation
 
-Based on [the Skimage segmentation tutoria](https://scikit-image.org/skimage-tutorials/lectures/4_segmentation.html)
+This page based on [the Skimage segmentation
+tutoria](https://scikit-image.org/skimage-tutorials/lectures/4_segmentation.html)
 
-[Recap how we saw it before]
+We do image segmentation when we classify the image into parts (segments).
 
-[Terminator image from skimage lectures]
+One very common use of segmentation is to identify objects or parts of objects
+in images.  For example, we might use segmentation to detect faces or people
+within a larger image.
 
-## Otsu method - great if it works
+There are various ways to do this, many of them implemented in Scikit-image.
+
+
+## Thresholding
+
+If the image has two components to it, and these components have different intensity values, it may be useful to use a simple intensity threshold method, such as the [Otsu method](otsu-method), that we have already seen.
 
 ```{python}
+import numpy as np
+import scipy as sp
 import matplotlib.pyplot as plt
+
 import skimage as ski
-from skimage import data
-from skimage import filters
-from skimage import exposure
+```
 
-camera = data.camera()
-val = filters.threshold_otsu(camera)
+Get the familiar cameraman image:
 
-hist, bins_center = exposure.histogram(camera)
+```{python}
+camera = ski.data.camera()
+plt.imshow(camera)
+```
+
+A simple threshold, such at the Otsu, may be able to identify parts of the image that contain objects of interest.
+
+```{python}
+val = ski.filters.threshold_otsu(camera)
+hist, bins_center = ski.exposure.histogram(camera)
 
 plt.figure(figsize=(9, 4))
 plt.subplot(131)
@@ -48,28 +65,24 @@ plt.plot(bins_center, hist, lw=2)
 plt.axvline(val, color="k", ls="--")
 
 plt.tight_layout()
-plt.show()
 ```
 
-# Labelling connected components
+## Labelling connected components
+
+Another approach is to identify connected components.
 
 ```{python}
-from skimage import measure
-from skimage import filters
-import matplotlib.pyplot as plt
-import numpy as np
-
 n = 12
 l = 256
 rng = np.random.default_rng(27446968)
 im = np.zeros((l, l))
 points = l * rng.random((2, n**2))
 im[(points[0]).astype(int), (points[1]).astype(int)] = 1
-im = filters.gaussian(im, sigma=l / (4.0 * n))
+im = ski.filters.gaussian(im, sigma=l / (4.0 * n))
 blobs = im > 0.7 * im.mean()
 
-all_labels = measure.label(blobs)
-blobs_labels = measure.label(blobs, background=0)
+all_labels = ski.measure.label(blobs)
+blobs_labels = ski.measure.label(blobs, background=0)
 
 plt.figure(figsize=(9, 3.5))
 plt.subplot(131)
@@ -86,23 +99,11 @@ plt.tight_layout()
 plt.show()
 ```
 
-# Marker based methods
+## Marker based methods
+
+## Watershed and random walker segmentation
 
 ```{python}
-
-```
-
-# Watershed and random walker segmentation
-
-```{python}
-import numpy as np
-from skimage.segmentation import watershed
-from skimage.feature import peak_local_max
-from skimage import measure
-from skimage.segmentation import random_walker
-import matplotlib.pyplot as plt
-import scipy as sp
-
 # Generate an initial image with two overlapping circles
 x, y = np.indices((80, 80))
 x1, y1, x2, y2 = 28, 28, 44, 52
@@ -110,18 +111,20 @@ r1, r2 = 16, 20
 mask_circle1 = (x - x1) ** 2 + (y - y1) ** 2 < r1**2
 mask_circle2 = (x - x2) ** 2 + (y - y2) ** 2 < r2**2
 image = np.logical_or(mask_circle1, mask_circle2)
+
 # Now we want to separate the two objects in image
 # Generate the markers as local maxima of the distance
 # to the background
 distance = sp.ndimage.distance_transform_edt(image)
-peak_idx = peak_local_max(distance, footprint=np.ones((3, 3)), labels=image)
+peak_idx = ski.feature.peak_local_max(
+    distance, footprint=np.ones((3, 3)), labels=image)
 peak_mask = np.zeros_like(distance, dtype=bool)
 peak_mask[tuple(peak_idx.T)] = True
-markers = measure.label(peak_mask)
-labels_ws = watershed(-distance, markers, mask=image)
+markers = ski.measure.label(peak_mask)
+labels_ws = ski.segmentation.watershed(-distance, markers, mask=image)
 
 markers[~image] = -1
-labels_rw = random_walker(image, markers)
+labels_rw = ski.segmentation.random_walker(image, markers)
 
 plt.figure(figsize=(12, 3.5))
 plt.subplot(141)
@@ -142,9 +145,4 @@ plt.axis("off")
 plt.title("random walker segmentation")
 
 plt.tight_layout()
-plt.show()
-```
-
-```{python}
-
 ```
