@@ -70,25 +70,23 @@ The fundamental operations of morphological image processing are [erosion](https
 As you are about to see, basic morphological operations work on shapes within
 images by:
 
-* Choosing a footprint that act as a ["probe"](https://biapol.github.io/Image-data-science-with-Python-and-Napari-EPFL2022/day2d_image_segmentation/03_Morphological_operations.html), which:
-    - looks for part of the image which are "hits"
+* Choosing a footprint of a specific shape. This footprint acts as a ["probe"](https://biapol.github.io/Image-data-science-with-Python-and-Napari-EPFL2022/day2d_image_segmentation/03_Morphological_operations.html), which scans the image pixel-by-pixel. The relationship between the probe and a given region of the image determines whether (and what) changes will be applied to that region.  
     
-* Applying this footprint via footprint / function filter with:
+* Common changes applied via this probe are:
   * the `minimum` function, to do an operation called *erosion* or
   * the `maximum` function, to do an operation called *dilation* or
   * some combination of these.
 
 The primary new thing we see in morphology, compared to our previous filters,
-is an increased interest in the shape defined by the binary *footprint* — in
-order to match features we are interested in, in the image, or to alter regions
-of the image based upon that shape.  But we also
-introduce `minimum` and `maximum` functions to use in footprint / function
-filters.
+is an increased interest in the *shape* defined by the binary *footprint*.
+Regions of the image are altered based upon that shape, and so the specific
+shape of the footprint matters a lot for determining the result of morphological 
+operations. In addition, the morphological operations covered on this page
+introduce `minimum` and `maximum` functions to use in footprint / function filters.
 
 Using filters and crafted footprints allows us to tune our filtering to the
 shape (...or, well,
-[*morphology*](https://www.cs.auckland.ac.nz/courses/compsci773s1c/lectures/ImageProcessing-html/topic4.htm))
-of features within the image.
+[*morphology*](https://www.cs.auckland.ac.nz/courses/compsci773s1c/lectures/ImageProcessing-html/topic4.htm)) of features within the image.
 
 
 ## Erosion is footprint / function filtering with `minimum`
