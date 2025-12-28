@@ -31,8 +31,8 @@ containing *weights*.  We might consider kernels as specialized footprints.
 
 **Footprints and structuring elements**
 
-You will see other tutorials refer to *footprints* as [structuring
-elements](https://en.wikipedia.org/wiki/Structuring_element) or *structural
+You will see other tutorials refer to *footprints* as *[structuring
+elements](https://en.wikipedia.org/wiki/Structuring_element)* or *structural
 elements*.  We stick to "footprint" here for compatibility with the
 Scikit-image terminology, but a footprint is identical in meaning to
 structuring/structural element.
@@ -70,7 +70,9 @@ The fundamental operations of morphological image processing are [erosion](https
 As you are about to see, basic morphological operations work on shapes within
 images by:
 
-* Choosing a footprint that matches a shape in the image, and
+* Choosing a footprint that act as a ["probe"](https://biapol.github.io/Image-data-science-with-Python-and-Napari-EPFL2022/day2d_image_segmentation/03_Morphological_operations.html), which:
+    - looks for part of the image which are "hits"
+    
 * Applying this footprint via footprint / function filter with:
   * the `minimum` function, to do an operation called *erosion* or
   * the `maximum` function, to do an operation called *dilation* or
@@ -78,7 +80,8 @@ images by:
 
 The primary new thing we see in morphology, compared to our previous filters,
 is an increased interest in the shape defined by the binary *footprint* — in
-order to match features we are interested in, in the image.  But we also
+order to match features we are interested in, in the image, or to alter regions
+of the image based upon that shape.  But we also
 introduce `minimum` and `maximum` functions to use in footprint / function
 filters.
 
@@ -168,12 +171,12 @@ With that example, let us return to a discussion of the erosion (footprint
 
 Because morphological operations are part of image processing, they involve
 the modification of array pixel values. In morphological operations, the
-footprint guides changes to pixel values *depending upon the match between the
+footprint guides changes to pixel values *depending upon the match/relationship between the
 shape of the footprint and the shape of the pixels in the "neighborhood" of
 the footprint*.
 
 The footprint is centered once on every pixel in an image, and this central
-pixel is modified (or not) depending upon the match between the shape of the
+pixel is modified (or not) depending upon the match/relationship between the shape of the
 footprint and the shape described by the pixel values in that neighborhood.
 
 ::: {note}
