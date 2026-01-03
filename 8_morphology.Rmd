@@ -77,8 +77,7 @@ images by:
   * the `maximum` function, to do an operation called *dilation* or
   * some combination of these.
 
-The primary new thing we see in morphology, compared to our previous filters,is the increased importance of the *shape* defined by the binary *footprint*.Regions of the image are altered based upon that shape, and so the specific shape of the footprint has a large impact on the result of morphological  operations. In addition, the morphological operations covered on this page
-introduce the use of `minimum` and `maximum` functions in footprint / function filters.
+The primary new thing we see in morphology, compared to our previous filters,is the increased importance of the *shape* defined by the binary *footprint*. Just to note, here we mean *shape* in the sense of square, diamond, triangle etc., not `shape` in the sense of the Numpy [`shape`](https://numpy.org/doc/stable/reference/generated/numpy.ndarray.shape.html) attribute. Regions of the image are altered based upon the shape of the footprint, and so the specific shape of the footprint has a large impact on the result of morphological  operations. In addition, the morphological operations covered on this page introduce the use of `minimum` and `maximum` functions in footprint / function filters.
 
 Using filters and crafted footprints allows us to tune our filtering to the
 shape (...or, well,
@@ -171,7 +170,9 @@ the footprint*.
 
 The footprint is centered once on every pixel in an image, and this central
 pixel is modified (or not) depending upon the relationship between the shape of the
-footprint and the shape described by the pixel values in that neighborhood.
+footprint and the shape described by the pixel values in that neighborhood. Changing the
+shape of the footprint will change these relationships, and hence will alter the
+output of the operation.
 
 ::: {note}
 
@@ -566,7 +567,7 @@ show_both(xeno_binary_ero_rad_1_diamond,
           "Eroded \n(3,3) Diamond");
 ```
 
-Below we use an indexing operation to "zoom in" on the same region in each image, for easier comparison - changing the shape of the (3,3) probe (diamond vs square) alters which pixels "survive" the erosion:
+Below we use an indexing operation to "zoom in" on the same region in each image, for easier comparison. We can now easily see that changing the shape of the (3,3) probe (diamond vs square) alters which pixels "survive" the erosion:
 
 ```{python}
 show_both(xeno_binary_ero_rad_1_diamond[100:400,400:600],
