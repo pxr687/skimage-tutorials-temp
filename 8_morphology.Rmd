@@ -72,7 +72,7 @@ images by:
 
 * Choosing a footprint of a specific shape. This footprint acts as a ["probe"](https://biapol.github.io/Image-data-science-with-Python-and-Napari-EPFL2022/day2d_image_segmentation/03_Morphological_operations.html), which scans the image for the footprint shape, centering on each pixel. The relationship between the probe and a given region of the image determines whether (and what) changes will be applied to that region.  
     
-* Common changes applied via this probe are:
+* Common footprint / function filtering operations applied via this probe are:
   * the `minimum` function, to do an operation called *erosion* or
   * the `maximum` function, to do an operation called *dilation* or
   * some combination of these.
