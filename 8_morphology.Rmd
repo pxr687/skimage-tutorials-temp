@@ -77,12 +77,8 @@ images by:
   * the `maximum` function, to do an operation called *dilation* or
   * some combination of these.
 
-The primary new thing we see in morphology, compared to our previous filters,
-is an increased interest in the *shape* defined by the binary *footprint*.
-Regions of the image are altered based upon that shape, and so the specific
-shape of the footprint has a large impact on the result of morphological 
-operations. In addition, the morphological operations covered on this page
-introduce `minimum` and `maximum` functions to use in footprint / function filters.
+The primary new thing we see in morphology, compared to our previous filters,is the increased importance of the *shape* defined by the binary *footprint*.Regions of the image are altered based upon that shape, and so the specific shape of the footprint has a large impact on the result of morphological  operations. In addition, the morphological operations covered on this page
+introduce the use of `minimum` and `maximum` functions in footprint / function filters.
 
 Using filters and crafted footprints allows us to tune our filtering to the
 shape (...or, well,
