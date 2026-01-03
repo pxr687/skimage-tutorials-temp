@@ -165,12 +165,12 @@ With that example, let us return to a discussion of the erosion (footprint
 
 Because morphological operations are part of image processing, they involve
 the modification of array pixel values. In morphological operations, the
-footprint guides changes to pixel values *depending upon the match/relationship between the
+footprint guides changes to pixel values *depending upon the relationship between the
 shape of the footprint and the shape of the pixels in the "neighborhood" of
 the footprint*.
 
 The footprint is centered once on every pixel in an image, and this central
-pixel is modified (or not) depending upon the match/relationship between the shape of the
+pixel is modified (or not) depending upon the relationship between the shape of the
 footprint and the shape described by the pixel values in that neighborhood.
 
 ::: {note}
@@ -247,9 +247,9 @@ eroded_square
 plt.imshow(eroded_square);
 ```
 
-What has happened here? We can think of our `diamond` footprint as being a bit
+What has happened here? For the purposes of the erosion operation, we can think of our `diamond` footprint as being a bit
 like a weird [crosshair/reticle](https://en.wikipedia.org/wiki/Reticle) of
-a gun. In a morphological operation, we "target" the crosshair on a given
+a gun. We "target" this crosshair on a given
 array pixel. 
 
 When we apply the footprint to each pixel in the image, call the pixels under
@@ -303,7 +303,7 @@ shows what happened:
 
 All other "neighborhoods" had at least one 0 in them, and so their central pixels were lowered to 0, resulting in 1-to-0 changes if the central pixel had a value of 1. 
 
-One way to think of this is that the erosion footprint is "searching" for areas of the image which "match" its shape. For a central pixel with a value of 1 to "survive", all the values in its neighbourhood must also be 1. In this instance, therefore the neighbourhood "matches" the footprint - the neighbourhood has 1's everywhere the footprint has 1's. If at least one value in the neighbourhood does not match the shape of the 1's in the footprint (e.g. there is a 0 *anywhere* under the "crosshair"), then the output pixel value gets set to 0.
+One way to think of this is that the erosion footprint is "searching" for areas of the image which "match" its shape. For a central pixel with a value of 1 to "survive", all the values in its neighbourhood must also be 1. In this instance, the neighbourhood "matches" the footprint because the neighbourhood has 1's everywhere the footprint has 1's. If at least one value in the neighbourhood does not match the shape of the 1's in the footprint (e.g. there is a 0 *anywhere* under the "crosshair"), then the output pixel value gets set to 0.
 
 Let's alter our image array slightly, to see how this affects the erosion operation with our `diamond` footprint. We will place a black array pixel inside the right-hand white square:
 
@@ -388,7 +388,7 @@ plt.imshow(dilated_square);
 
 Again, here we use blue squares to represent the footprint, with white text showing the value in the array at that location. Remember, *dilation will raise the central pixel to the neighbourhood maximum*.
 
-So, if the values under the footprint are all 0, the central pixel will remain as 0. If there is a single 1 under the footprint, then the central value will be raised to 1:
+So, if the values under the footprint are *all* 0, the central pixel will remain as 0. If there are *any* 1 values under the footprint, then the central value will be raised to 1:
 
 ![](images/hit_n_miss_dilation.png)
 
