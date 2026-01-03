@@ -260,7 +260,7 @@ When we apply the footprint to each pixel in the image, call the pixels under
 the footprint — *the pixel neighborhood*. Because we are eroding, the central pixel will be *lowered to the value of the lowest pixel in its neighborhood*. 
 
 In our specific case the *pixel neighbourhood* is the set of pixels in the image which fall
-under the "crosshair" shape of the footprint. E.g. the image
+under the "crosshair" shape of the footprint. In other words, the neighbourhood is the set of image
 pixels under the elements of the footprint which equal 1:
 
 ```{python}
