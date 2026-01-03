@@ -535,7 +535,7 @@ show_both(xenomorph,
           "Dilated \n(13, 13) Diamond SE");
 ```
 
-Remember that the increased importance of *shape* is what makes *morphological* operations different to other footprint / function filtering operations. As a result, chaning the shape of the footprint can alter the effect of a morphological operation, sometimes substantially.
+Remember that the increased importance of *shape* is what makes *morphological* operations different to other footprint / function filtering operations. As a result, changing the shape of the footprint can alter the effect of a morphological operation, sometimes substantially.
 
 Below we change the shape of the footprint - here we create a rectangle (Ok, a square) of `shape` (3, 3):
 
