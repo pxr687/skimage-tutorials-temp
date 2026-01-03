@@ -257,7 +257,7 @@ a gun. In a morphological operation, we "target" the crosshair on a given
 array pixel. 
 
 When we apply the footprint to each pixel in the image, call the pixels under
-the footprint — *the pixel neighborhood*. Because we are eroding, the central pixel will be *lowered to thevalue of the lowest pixel in its neighborhood*. 
+the footprint — *the pixel neighborhood*. Because we are eroding, the central pixel will be *lowered to the value of the lowest pixel in its neighborhood*. 
 
 In our specific case the *pixel neighbourhood* is the pixels in the image which fall
 under the "crosshair" shape of the footprint. E.g. the image
