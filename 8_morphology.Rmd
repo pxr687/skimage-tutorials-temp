@@ -390,7 +390,7 @@ dilated_square
 plt.imshow(dilated_square);
 ```
 
-Again, here we use blue squares to represent the footprint, with white text showing what value is in the array at that location. Remember, *dilation will raise the central pixel to the neighbourhood maximum*.
+Again, here we use blue squares to represent the footprint, with white text showing the value in the array at that location. Remember, *dilation will raise the central pixel to the neighbourhood maximum*.
 
 So, if the values under the footprint are all 0, the central pixel will remain as 0. If there is a single 1 under the footprint, then the central value will be raised to 1:
 
