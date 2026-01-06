@@ -158,9 +158,9 @@ We will use two methods, which segment using very different approaches:
 
 ### Active contour segmentation
 
-We must have a set of initial parameters to 'seed' our segmentation this.  Let's draw a circle around the astronaut's head to initialize the snake.
+We must have a set of initial parameters to 'seed' our segmentation for this.  Let's draw a circle around the astronaut's head to initialize the snake.
 
-This could be done interactively, with a GUI, but for simplicity we will start at the point [100, 220] and use a radius of 100 pixels.  Just a little trigonometry in this helper function...
+This could be done interactively, with a GUI, but for simplicity we will start at the point [100, 220] and use a radius of 100 pixels. We add just a little trigonometry in this helper function...
 
 ```{python}
 def circle_points(resolution, center, radius):
@@ -493,9 +493,4 @@ fig, ax = image_show(chelsea)
 
 ax.plot(270, 240, marker='o', markersize=15, color="g")
 ax.plot(172, 110, marker='o', markersize=15, color="r");
-```
-
-```{python}
-cat_felz = seg.felzenszwalb(chelsea)
-np.unique(cat_felz).size
 ```
