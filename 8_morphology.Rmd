@@ -64,8 +64,7 @@ only True / False or 0 / 1).
 
 ## Morphology and footprints
 
-The fundamental operations of morphological image processing are [erosion](https://en.wikipedia.org/wiki/Erosion_(morphology)) and
-[dilation](https://en.wikipedia.org/wiki/Dilation_(morphology)).
+The fundamental operations of morphological image processing are [erosion](https://en.wikipedia.org/wiki/Erosion_(morphology)) and [dilation](https://en.wikipedia.org/wiki/Dilation_(morphology)).
 
 As you are about to see, basic morphological operations work on shapes within
 images by:
@@ -77,11 +76,10 @@ images by:
   * the `maximum` function, to do an operation called *dilation* or
   * some combination of these.
 
-The primary new thing we see in morphology, compared to our previous filters, is the increased importance of the *shape* defined by the binary *footprint*. Just to note, here we mean *shape* in the sense of square, diamond, triangle etc., not `shape` in the sense of the Numpy [`shape`](https://numpy.org/doc/stable/reference/generated/numpy.ndarray.shape.html) attribute. Morphological operations alter regions of the image based on the shape of the footprint, and so the specific shape of the footprint has a large impact on the result of morphological  operations. In addition, the morphological operations covered on this page introduce the use of `minimum` and `maximum` functions in footprint / function filters.
+The primary new thing we see in morphology, compared to our previous filters, is the increased importance of the *shape* defined by the binary *footprint*. Just to note, here we mean *shape* in the sense of square, diamond, triangle etc., not `shape` in the sense of the Numpy [`shape`](https://numpy.org/doc/stable/reference/generated/numpy.ndarray.shape.html) attribute. Morphological operations alter regions of the image based on the shape of the footprint, and as a consequence the specific shape of the footprint has a large impact on the effect of morphological  operations. In addition, the morphological operations covered on this page introduce the use of `minimum` and `maximum` functions in footprint / function filters.
 
 Using filters and crafted footprints allows us to tune our filtering to the
-shape (...or, well,
-[*morphology*](https://www.cs.auckland.ac.nz/courses/compsci773s1c/lectures/ImageProcessing-html/topic4.htm)) of features within the image.
+shape (...or, well, [*morphology*](https://www.cs.auckland.ac.nz/courses/compsci773s1c/lectures/ImageProcessing-html/topic4.htm)) of features within the image.
 
 
 ## Erosion is footprint / function filtering with `minimum`
@@ -90,7 +88,7 @@ Let us leap ahead to show you the morphological operation of [erosion](
 https://en.wikipedia.org/wiki/Erosion_(morphology)).
 
 As we said above, erosion is the application of a footprint / function filter,
-where the function is "minimum".
+where the function is `minimum`.
 
 ```{python}
 import skimage as ski
@@ -148,7 +146,7 @@ morphology (the other being *dilation*).
 
 You will see above, the minimum filtering with the disk footprint has the effect of keeping areas which are disks of the given size or bigger, and suppressing areas which have objects of smaller size.  The next section explains how this works, using binary images as examples.
 
-We have said that *erosion* is the process of applying a footprint / function filter, where the function is *minimum* (as above).  Just to show this is the case, here we use the `ski.morphology.erosion` function to apply the same operation, and get exactly the same result:
+We have said that *erosion* is the process of applying a footprint / function filter, where the function is `minimum` (as above).  Just to show this is the case, here we use the `ski.morphology.erosion` function to apply the same operation, and get exactly the same result:
 
 ```{python}
 hubble_eroded_again = ski.morphology.erosion(hubble_blue_ubyte, disk_5)
@@ -389,7 +387,9 @@ plt.imshow(dilated_square);
 
 Again, here we use blue squares to represent the footprint, with white text showing the value in the array at that location. Remember, *dilation will raise the central pixel to the neighbourhood maximum*.
 
-So, if the values under the footprint are *all* 0, the central pixel will remain as 0. If there are *any* 1 values under the footprint, then the central value will be raised to 1:
+So, if the values under the footprint are *all* 0, then the central pixel will remain as 0. 
+
+If there are *any* 1 values under the footprint, then the central value will be raised to 1:
 
 ![](images/hit_n_miss_dilation.png)
 
@@ -564,7 +564,7 @@ The difference here between eroding with a (3,3) diamond vs a (3,3) square is su
 show_both(xeno_binary_ero_rad_1_diamond,
           xeno_binary_ero_square,
           "Eroded \n(3,3) Square SE",
-          "Eroded \n(3,3) Diamond");
+          "Eroded \n(3,3) Diamond SE");
 ```
 
 Below we use an indexing operation to "zoom in" on the same region in each image, for easier comparison. We can now see that changing the shape of the (3,3) probe (diamond vs square) alters which pixels "survive" the erosion:
@@ -573,7 +573,7 @@ Below we use an indexing operation to "zoom in" on the same region in each image
 show_both(xeno_binary_ero_rad_1_diamond[100:400,400:600],
           xeno_binary_ero_square[100:400,400:600],
           "Eroded \n(3,3) Square SE",
-          "Eroded \n(3,3) Diamond");
+          "Eroded \n(3,3) Diamond SE");
 ```
 
 By comparison, dilation with this new square footprint once more enlarges brighter regions, again
