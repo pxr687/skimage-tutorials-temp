@@ -7,7 +7,7 @@ jupyter:
       extension: .Rmd
       format_name: rmarkdown
       format_version: '1.2'
-      jupytext_version: 1.18.1
+      jupytext_version: 1.16.6
   kernelspec:
     display_name: Python 3 (ipykernel)
     language: python
@@ -441,8 +441,7 @@ def display_edges(image, g, threshold):
         r2, c2 = map(int, rag.nodes[n2]['centroid'])
 
         line  = ski.draw.line(r1, c1, r2, c2)
-        circle = ski.draw.circle(r1,c1,2)
-
+        circle = ski.draw.circle_perimeter(r1,c1, 2)
         if g[n1][n2]['weight'] < threshold :
             image[line] = 0,255,0
         image[circle] = 255,255,0
@@ -458,8 +457,8 @@ image_show(edges_drawn_all);
 
 Try a range of thresholds out, see what happens.
 
-```{python tags=c("raises-exception", "remove-output")}
-threshold = 5 # Experiment.  You can do better than this.
+```{python}
+threshold = 5 # Experiment with this value.  You can do better than this.
 
 edges_drawn_few = display_edges(astronaut_felzenszwalb_colored, rag, threshold)
 image_show(edges_drawn_few);
@@ -469,7 +468,7 @@ image_show(edges_drawn_few);
 
 Once you are happy with the (dis)connected regions above, the graph can be cut to merge the regions which are still connected.
 
-```{python tags=c("raises-exception", "remove-output")}
+```{python}
 final_labels = ski.graph.cut_threshold(astronaut_felzenszwalb + 1, rag, threshold)
 final_label_rgb = ski.color.label2rgb(final_labels, astronaut, kind='avg')
 
@@ -478,7 +477,7 @@ image_show(final_label_rgb);
 
 How many regions exist now?
 
-```{python tags=c("raises-exception", "remove-output")}
+```{python}
 np.unique(final_labels).size
 ```
 
