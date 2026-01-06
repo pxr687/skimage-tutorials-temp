@@ -558,7 +558,7 @@ show_both(xenomorph,
           "Eroded \n(3,3) Square SE");
 ```
 
-The difference here between eroding with a (3,3) diamond vs a (3,3) square is subtle, but changing the *morphology* of the probe changes the impact of the filtering operation. The output images are shown below - can you find regions where the different probes have resulted in different white pixels "surviving" each operation?:
+The difference here between eroding with a (3,3) diamond vs a (3,3) square is subtle, but changing the *morphology* (shape) of the probe changes the impact of the filtering operation. The output images are shown below - can you find regions where the different probes have resulted in different white pixels "surviving" each operation?:
 
 ```{python}
 show_both(xeno_binary_ero_rad_1_diamond,
