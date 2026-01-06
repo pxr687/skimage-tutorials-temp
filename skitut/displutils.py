@@ -33,12 +33,13 @@ def save_load_show_mat(arr, img_fname, ndigits=2, dpi=600):
 def show_both(original,
               altered,
               alteration='',
+	      original_title="Original",
               figsize=(14, 14)):
     """ Display original and altered image side by side.
     """
     plt.figure(figsize=figsize)
     plt.subplot(1, 2, 1)
-    plt.title('Original')
+    plt.title(original_title)
     plt.imshow(original)
     plt.subplot(1, 2, 2)
     plt.title(alteration)
