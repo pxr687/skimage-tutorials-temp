@@ -567,7 +567,7 @@ show_both(xeno_binary_ero_rad_1_diamond,
           "Eroded \n(3,3) Diamond");
 ```
 
-Below we use an indexing operation to "zoom in" on the same region in each image, for easier comparison. We can now easily see that changing the shape of the (3,3) probe (diamond vs square) alters which pixels "survive" the erosion:
+Below we use an indexing operation to "zoom in" on the same region in each image, for easier comparison. We can now see that changing the shape of the (3,3) probe (diamond vs square) alters which pixels "survive" the erosion:
 
 ```{python}
 show_both(xeno_binary_ero_rad_1_diamond[100:400,400:600],
