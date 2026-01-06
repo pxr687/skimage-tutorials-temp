@@ -77,7 +77,7 @@ images by:
   * the `maximum` function, to do an operation called *dilation* or
   * some combination of these.
 
-The primary new thing we see in morphology, compared to our previous filters,is the increased importance of the *shape* defined by the binary *footprint*. Just to note, here we mean *shape* in the sense of square, diamond, triangle etc., not `shape` in the sense of the Numpy [`shape`](https://numpy.org/doc/stable/reference/generated/numpy.ndarray.shape.html) attribute. Regions of the image are altered based upon the shape of the footprint, and so the specific shape of the footprint has a large impact on the result of morphological  operations. In addition, the morphological operations covered on this page introduce the use of `minimum` and `maximum` functions in footprint / function filters.
+The primary new thing we see in morphology, compared to our previous filters, is the increased importance of the *shape* defined by the binary *footprint*. Just to note, here we mean *shape* in the sense of square, diamond, triangle etc., not `shape` in the sense of the Numpy [`shape`](https://numpy.org/doc/stable/reference/generated/numpy.ndarray.shape.html) attribute. Morphological operations alter regions of the image based on the shape of the footprint, and so the specific shape of the footprint has a large impact on the result of morphological  operations. In addition, the morphological operations covered on this page introduce the use of `minimum` and `maximum` functions in footprint / function filters.
 
 Using filters and crafted footprints allows us to tune our filtering to the
 shape (...or, well,
