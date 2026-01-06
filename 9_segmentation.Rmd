@@ -29,7 +29,7 @@ To take another example, self-driving cars use cameras, and therefore digital
 images, to look for (segment) important objects in their environment, such as
 other cars.  Here's an example where an image segmentation algorithm has split
 the input image (in the left panel) into segments (in the right panel),
-including a car passing, to the right of the panel.
+including a nearby car.
 
 ![](images/road_segmentation.jpg)
 
@@ -216,7 +216,8 @@ image_show(astronaut_labels);
 ```
 
 ```{python}
-astronaut_segmented = seg.random_walker(astronaut_gray, astronaut_labels)
+# Experiment with different beta values here.  Can you do a better job than we have?
+astronaut_segmented = seg.random_walker(astronaut_gray, astronaut_labels, beta=2500)
 ```
 
 ```{python}
@@ -244,10 +245,11 @@ flood_mask = seg.flood(astronaut_gray, seed_point, tolerance=0.3)  # Experiment 
 
 ```{python}
 fig, ax = image_show(astronaut_gray)
-ax.imshow(flood_mask, alpha=0.3);
+ax.imshow(flood_mask, alpha=0.3)
+ax.plot(220, 100, 'bo');  # Show the seed point.
 ```
 
-Not ideal! The flood runs away into the background through the right earlobe.
+With our initial `tolerance=0.3`, the results are not ideal! The flood runs away into the background through the right earlobe.
 
 Let's think outside the box:
 
@@ -331,14 +333,20 @@ astronaut_felzenszwalb = seg.felzenszwalb(astronaut)  # Color required
 image_show(astronaut_felzenszwalb);
 ```
 
-Whoa, lots of regions!  How many is that?
+::: {exercise-start}
+:label: how-many-regions
+:class: dropdown
+:::
+
+We found lots of regions!  How many is that?
 
 ```{python}
 # Find the number of unique labels
-
+n_labels = ...
 ```
 
-Let's see if they make sense; label them with the region average (see above with SLIC)
+To see if the labels make sense, label them with the region average (see above
+with SLIC):
 
 ```{python tags=c("raises-exception", "remove-output")}
 astronaut_felzenszwalb_colored = ... # Your code here
@@ -346,7 +354,34 @@ astronaut_felzenszwalb_colored = ... # Your code here
 image_show(astronaut_felzenszwalb_colored);
 ```
 
-Actually reasonable small regions.  If we wanted fewer regions, we could change the `scale` parameter (try it!) or start here and combine them.
+::: {exercise-end}
+:::
+
+::: {solution-start} how-many-regions
+:class: dropdown
+:::
+
+```{python}
+n_labels = np.unique(astronaut_felzenszwalb).size
+n_labels
+```
+
+To label the regions with the region average:
+
+```{python}
+astronaut_felzenszwalb_colored = ski.color.label2rgb(
+    astronaut_felzenszwalb,
+    astronaut,
+    kind='avg')
+image_show(astronaut_felzenszwalb_colored);
+```
+
+::: {solution-end}
+:::
+
+If you did the exercise, you will know that we have a large number of
+reasonably small regions. If we wanted fewer regions, we could change the
+`scale` parameter (try it!) or start here and combine them.
 
 This approach is sometimes called **oversegmentation**.
 
@@ -424,7 +459,7 @@ image_show(edges_drawn_all);
 Try a range of thresholds out, see what happens.
 
 ```{python tags=c("raises-exception", "remove-output")}
-threshold = ... # Experiment
+threshold = 5 # Experiment.  You can do better than this.
 
 edges_drawn_few = display_edges(astronaut_felzenszwalb_colored, rag, threshold)
 image_show(edges_drawn_few);
