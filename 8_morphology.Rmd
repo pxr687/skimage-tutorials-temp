@@ -64,24 +64,38 @@ only True / False or 0 / 1).
 
 ## Morphology and footprints
 
-The fundamental operations of morphological image processing are [erosion](https://en.wikipedia.org/wiki/Erosion_(morphology)) and
+The fundamental operations of morphological image processing are
+[erosion](https://en.wikipedia.org/wiki/Erosion_(morphology)) and
 [dilation](https://en.wikipedia.org/wiki/Dilation_(morphology)).
 
 As you are about to see, basic morphological operations work on shapes within
 images by:
 
-* Choosing a footprint of a specific shape. This footprint acts as a ["probe"](https://biapol.github.io/Image-data-science-with-Python-and-Napari-EPFL2022/day2d_image_segmentation/03_Morphological_operations.html), which scans over the image, centering on each pixel. The relationship between the probe and a given region of the image determines whether (and what) changes will be applied to that region.  
-    
+* Choosing a footprint of a specific shape. This footprint acts as
+  a ["probe"](https://biapol.github.io/Image-data-science-with-Python-and-Napari-EPFL2022/day2d_image_segmentation/03_Morphological_operations.html),
+  which scans over the image, centering on each pixel. The relationship between
+  the probe and a given region of the image determines whether (and what)
+  changes will be applied to that region.  
 * Common footprint / function filtering operations applied via this probe are:
   * the `minimum` function, to do an operation called *erosion* or
   * the `maximum` function, to do an operation called *dilation* or
   * some combination of these.
 
-The primary new thing we see in morphology, compared to our previous filters, is the increased importance of the *shape* defined by the binary *footprint*. Just to note, here we mean *shape* in the sense of square, diamond, triangle etc., not `shape` in the sense of the Numpy [`shape`](https://numpy.org/doc/stable/reference/generated/numpy.ndarray.shape.html) attribute. Morphological operations alter regions of the image based on the shape of the footprint, and so the specific shape of the footprint has a large impact on the result of morphological  operations. In addition, the morphological operations covered on this page introduce the use of `minimum` and `maximum` functions in footprint / function filters.
+The primary new thing we see in morphology, compared to our previous filters,
+is the increased importance of the *shape* defined by the binary *footprint*.
+Just to note, here we mean *shape* in the sense of square, diamond, triangle
+etc., not `shape` in the sense of the Numpy
+[`shape`](https://numpy.org/doc/stable/reference/generated/numpy.ndarray.shape.html)
+attribute. Morphological operations alter regions of the image based on the
+shape of the footprint, and so the specific shape of the footprint has a large
+impact on the result of morphological  operations. In addition, the
+morphological operations covered on this page introduce the use of `minimum`
+and `maximum` functions in footprint / function filters.
 
-Using filters and crafted footprints allows us to tune our filtering to the
-shape (...or, well,
-[*morphology*](https://www.cs.auckland.ac.nz/courses/compsci773s1c/lectures/ImageProcessing-html/topic4.htm)) of features within the image.
+Therefore, morphology uses filters and crafted footprints to allow us to tune
+our filtering to the shape (...or, well,
+[*morphology*](https://www.cs.auckland.ac.nz/courses/compsci773s1c/lectures/ImageProcessing-html/topic4.htm))
+of features within the image.
 
 
 ## Erosion is footprint / function filtering with `minimum`
