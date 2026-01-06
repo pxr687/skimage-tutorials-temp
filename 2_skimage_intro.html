@@ -929,10 +929,10 @@ Min Pixel Value: 0.0
 <div class="cell_output docutils container">
 <div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
 <span class="ne">KeyError</span><span class="g g-Whitespace">                                  </span>Traceback (most recent call last)
-<span class="nn">File /opt/hostedtoolcache/Python/3.13.11/x64/lib/python3.13/site-packages/PIL/PngImagePlugin.py:1370,</span> in <span class="ni">_save</span><span class="nt">(im, fp, filename, chunk, save_all)</span>
-<span class="g g-Whitespace">   </span><span class="mi">1369</span> <span class="k">try</span><span class="p">:</span>
-<span class="ne">-&gt; </span><span class="mi">1370</span>     <span class="n">rawmode</span><span class="p">,</span> <span class="n">bit_depth</span><span class="p">,</span> <span class="n">color_type</span> <span class="o">=</span> <span class="n">_OUTMODES</span><span class="p">[</span><span class="n">outmode</span><span class="p">]</span>
-<span class="g g-Whitespace">   </span><span class="mi">1371</span> <span class="k">except</span> <span class="ne">KeyError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+<span class="nn">File /opt/hostedtoolcache/Python/3.13.11/x64/lib/python3.13/site-packages/PIL/PngImagePlugin.py:1380,</span> in <span class="ni">_save</span><span class="nt">(im, fp, filename, chunk, save_all)</span>
+<span class="g g-Whitespace">   </span><span class="mi">1379</span> <span class="k">try</span><span class="p">:</span>
+<span class="ne">-&gt; </span><span class="mi">1380</span>     <span class="n">rawmode</span><span class="p">,</span> <span class="n">bit_depth</span><span class="p">,</span> <span class="n">color_type</span> <span class="o">=</span> <span class="n">_OUTMODES</span><span class="p">[</span><span class="n">outmode</span><span class="p">]</span>
+<span class="g g-Whitespace">   </span><span class="mi">1381</span> <span class="k">except</span> <span class="ne">KeyError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
 
 <span class="ne">KeyError</span>: &#39;F&#39;
 
@@ -944,21 +944,25 @@ Min Pixel Value: 0.0
 <span class="ne">----&gt; </span><span class="mi">2</span> <span class="n">ski</span><span class="o">.</span><span class="n">io</span><span class="o">.</span><span class="n">imsave</span><span class="p">(</span><span class="s2">&quot;images/smiley_swirled.png&quot;</span><span class="p">,</span> <span class="c1"># Path to save image to.</span>
 <span class="g g-Whitespace">      </span><span class="mi">3</span>               <span class="n">smiley_swirled</span><span class="p">)</span>              <span class="c1"># Image array to save.</span>
 
-<span class="nn">File /opt/hostedtoolcache/Python/3.13.11/x64/lib/python3.13/site-packages/skimage/_shared/utils.py:328,</span> in <span class="ni">deprecate_parameter.__call__.&lt;locals&gt;.fixed_func</span><span class="nt">(*args, **kwargs)</span>
-<span class="g g-Whitespace">    </span><span class="mi">324</span>     <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">new_name</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-<span class="g g-Whitespace">    </span><span class="mi">325</span>         <span class="c1"># Assign old value to new one</span>
-<span class="g g-Whitespace">    </span><span class="mi">326</span>         <span class="n">kwargs</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">new_name</span><span class="p">]</span> <span class="o">=</span> <span class="n">deprecated_value</span>
-<span class="ne">--&gt; </span><span class="mi">328</span> <span class="k">return</span> <span class="n">func</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+<span class="nn">File /opt/hostedtoolcache/Python/3.13.11/x64/lib/python3.13/site-packages/skimage/_shared/utils.py:386,</span> in <span class="ni">deprecate_parameter.__call__.&lt;locals&gt;.fixed_func</span><span class="nt">(*args, **kwargs)</span>
+<span class="g g-Whitespace">    </span><span class="mi">382</span>     <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">new_name</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+<span class="g g-Whitespace">    </span><span class="mi">383</span>         <span class="c1"># Assign old value to new one</span>
+<span class="g g-Whitespace">    </span><span class="mi">384</span>         <span class="n">kwargs</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">new_name</span><span class="p">]</span> <span class="o">=</span> <span class="n">deprecated_value</span>
+<span class="ne">--&gt; </span><span class="mi">386</span> <span class="k">return</span> <span class="n">func</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
 
 <span class="nn">File /opt/hostedtoolcache/Python/3.13.11/x64/lib/python3.13/site-packages/skimage/io/_io.py:206,</span> in <span class="ni">imsave</span><span class="nt">(fname, arr, plugin, check_contrast, **plugin_args)</span>
 <span class="g g-Whitespace">    </span><span class="mi">203</span>     <span class="n">warn</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">fname</span><span class="si">}</span><span class="s1"> is a low contrast image&#39;</span><span class="p">)</span>
 <span class="g g-Whitespace">    </span><span class="mi">205</span> <span class="k">with</span> <span class="n">_hide_plugin_deprecation_warnings</span><span class="p">():</span>
 <span class="ne">--&gt; </span><span class="mi">206</span>     <span class="k">return</span> <span class="n">call_plugin</span><span class="p">(</span><span class="s1">&#39;imsave&#39;</span><span class="p">,</span> <span class="n">fname</span><span class="p">,</span> <span class="n">arr</span><span class="p">,</span> <span class="n">plugin</span><span class="o">=</span><span class="n">plugin</span><span class="p">,</span> <span class="o">**</span><span class="n">plugin_args</span><span class="p">)</span>
 
-<span class="nn">File /opt/hostedtoolcache/Python/3.13.11/x64/lib/python3.13/site-packages/skimage/_shared/utils.py:538,</span> in <span class="ni">deprecate_func.__call__.&lt;locals&gt;.wrapped</span><span class="nt">(*args, **kwargs)</span>
-<span class="g g-Whitespace">    </span><span class="mi">536</span> <span class="n">stacklevel</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_stack_length</span><span class="p">(</span><span class="n">func</span><span class="p">)</span> <span class="o">-</span> <span class="n">stack_rank</span>
-<span class="g g-Whitespace">    </span><span class="mi">537</span> <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span><span class="n">message</span><span class="p">,</span> <span class="n">category</span><span class="o">=</span><span class="ne">FutureWarning</span><span class="p">,</span> <span class="n">stacklevel</span><span class="o">=</span><span class="n">stacklevel</span><span class="p">)</span>
-<span class="ne">--&gt; </span><span class="mi">538</span> <span class="k">return</span> <span class="n">func</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+<span class="nn">File /opt/hostedtoolcache/Python/3.13.11/x64/lib/python3.13/site-packages/skimage/_shared/utils.py:690,</span> in <span class="ni">deprecate_func.__call__.&lt;locals&gt;.wrapped</span><span class="nt">(*args, **kwargs)</span>
+<span class="g g-Whitespace">    </span><span class="mi">684</span> <span class="n">stacklevel</span> <span class="o">=</span> <span class="p">(</span>
+<span class="g g-Whitespace">    </span><span class="mi">685</span>     <span class="bp">self</span><span class="o">.</span><span class="n">stacklevel</span>
+<span class="g g-Whitespace">    </span><span class="mi">686</span>     <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">stacklevel</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span>
+<span class="g g-Whitespace">    </span><span class="mi">687</span>     <span class="k">else</span> <span class="n">_warning_stacklevel</span><span class="p">(</span><span class="n">func</span><span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">688</span> <span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">689</span> <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span><span class="n">message</span><span class="p">,</span> <span class="n">category</span><span class="o">=</span><span class="ne">FutureWarning</span><span class="p">,</span> <span class="n">stacklevel</span><span class="o">=</span><span class="n">stacklevel</span><span class="p">)</span>
+<span class="ne">--&gt; </span><span class="mi">690</span> <span class="k">return</span> <span class="n">func</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
 
 <span class="nn">File /opt/hostedtoolcache/Python/3.13.11/x64/lib/python3.13/site-packages/skimage/io/manage_plugins.py:254,</span> in <span class="ni">call_plugin</span><span class="nt">(kind, *args, **kwargs)</span>
 <span class="g g-Whitespace">    </span><span class="mi">251</span>     <span class="k">except</span> <span class="ne">IndexError</span><span class="p">:</span>
@@ -1000,19 +1004,19 @@ Min Pixel Value: 0.0
 <span class="g g-Whitespace">    </span><span class="mi">487</span> <span class="bp">self</span><span class="o">.</span><span class="n">images_to_write</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
 <span class="g g-Whitespace">    </span><span class="mi">488</span> <span class="bp">self</span><span class="o">.</span><span class="n">save_args</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
 
-<span class="nn">File /opt/hostedtoolcache/Python/3.13.11/x64/lib/python3.13/site-packages/PIL/Image.py:2571,</span> in <span class="ni">Image.save</span><span class="nt">(self, fp, format, **params)</span>
-<span class="g g-Whitespace">   </span><span class="mi">2568</span>     <span class="n">fp</span> <span class="o">=</span> <span class="n">cast</span><span class="p">(</span><span class="n">IO</span><span class="p">[</span><span class="nb">bytes</span><span class="p">],</span> <span class="n">fp</span><span class="p">)</span>
-<span class="g g-Whitespace">   </span><span class="mi">2570</span> <span class="k">try</span><span class="p">:</span>
-<span class="ne">-&gt; </span><span class="mi">2571</span>     <span class="n">save_handler</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fp</span><span class="p">,</span> <span class="n">filename</span><span class="p">)</span>
-<span class="g g-Whitespace">   </span><span class="mi">2572</span> <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
-<span class="g g-Whitespace">   </span><span class="mi">2573</span>     <span class="k">if</span> <span class="n">open_fp</span><span class="p">:</span>
+<span class="nn">File /opt/hostedtoolcache/Python/3.13.11/x64/lib/python3.13/site-packages/PIL/Image.py:2590,</span> in <span class="ni">Image.save</span><span class="nt">(self, fp, format, **params)</span>
+<span class="g g-Whitespace">   </span><span class="mi">2587</span>     <span class="n">fp</span> <span class="o">=</span> <span class="n">cast</span><span class="p">(</span><span class="n">IO</span><span class="p">[</span><span class="nb">bytes</span><span class="p">],</span> <span class="n">fp</span><span class="p">)</span>
+<span class="g g-Whitespace">   </span><span class="mi">2589</span> <span class="k">try</span><span class="p">:</span>
+<span class="ne">-&gt; </span><span class="mi">2590</span>     <span class="n">save_handler</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fp</span><span class="p">,</span> <span class="n">filename</span><span class="p">)</span>
+<span class="g g-Whitespace">   </span><span class="mi">2591</span> <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
+<span class="g g-Whitespace">   </span><span class="mi">2592</span>     <span class="k">if</span> <span class="n">open_fp</span><span class="p">:</span>
 
-<span class="nn">File /opt/hostedtoolcache/Python/3.13.11/x64/lib/python3.13/site-packages/PIL/PngImagePlugin.py:1373,</span> in <span class="ni">_save</span><span class="nt">(im, fp, filename, chunk, save_all)</span>
-<span class="g g-Whitespace">   </span><span class="mi">1371</span> <span class="k">except</span> <span class="ne">KeyError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
-<span class="g g-Whitespace">   </span><span class="mi">1372</span>     <span class="n">msg</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;cannot write mode </span><span class="si">{</span><span class="n">mode</span><span class="si">}</span><span class="s2"> as PNG&quot;</span>
-<span class="ne">-&gt; </span><span class="mi">1373</span>     <span class="k">raise</span> <span class="ne">OSError</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span> <span class="kn">from</span><span class="w"> </span><span class="nn">e</span>
-<span class="g g-Whitespace">   </span><span class="mi">1374</span> <span class="k">if</span> <span class="n">outmode</span> <span class="o">==</span> <span class="s2">&quot;I&quot;</span><span class="p">:</span>
-<span class="g g-Whitespace">   </span><span class="mi">1375</span>     <span class="n">deprecate</span><span class="p">(</span><span class="s2">&quot;Saving I mode images as PNG&quot;</span><span class="p">,</span> <span class="mi">13</span><span class="p">,</span> <span class="n">stacklevel</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span>
+<span class="nn">File /opt/hostedtoolcache/Python/3.13.11/x64/lib/python3.13/site-packages/PIL/PngImagePlugin.py:1383,</span> in <span class="ni">_save</span><span class="nt">(im, fp, filename, chunk, save_all)</span>
+<span class="g g-Whitespace">   </span><span class="mi">1381</span> <span class="k">except</span> <span class="ne">KeyError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+<span class="g g-Whitespace">   </span><span class="mi">1382</span>     <span class="n">msg</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;cannot write mode </span><span class="si">{</span><span class="n">mode</span><span class="si">}</span><span class="s2"> as PNG&quot;</span>
+<span class="ne">-&gt; </span><span class="mi">1383</span>     <span class="k">raise</span> <span class="ne">OSError</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span> <span class="kn">from</span><span class="w"> </span><span class="nn">e</span>
+<span class="g g-Whitespace">   </span><span class="mi">1384</span> <span class="k">if</span> <span class="n">outmode</span> <span class="o">==</span> <span class="s2">&quot;I&quot;</span><span class="p">:</span>
+<span class="g g-Whitespace">   </span><span class="mi">1385</span>     <span class="n">deprecate</span><span class="p">(</span><span class="s2">&quot;Saving I mode images as PNG&quot;</span><span class="p">,</span> <span class="mi">13</span><span class="p">,</span> <span class="n">stacklevel</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span>
 
 <span class="ne">OSError</span>: cannot write mode F as PNG
 </pre></div>
@@ -1209,7 +1213,7 @@ Max Pixel Value: 1.0
 Min Pixel Value: 0.0
 </pre></div>
 </div>
-<img alt="_images/47cf28706f31034bf6817fefdbbff51807896b28e72d9a28f15682414df7ffec.png" src="_images/47cf28706f31034bf6817fefdbbff51807896b28e72d9a28f15682414df7ffec.png" />
+<img alt="_images/948d3449dfa5b1b414d293e750696a2d90cd8287ba5fa033b7577ef954a8337f.png" src="_images/948d3449dfa5b1b414d293e750696a2d90cd8287ba5fa033b7577ef954a8337f.png" />
 </div>
 </div>
 </section>
@@ -1578,7 +1582,7 @@ solid, non-see through color.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.image.AxesImage at 0x7f5edfa4f610&gt;
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.image.AxesImage at 0x7f9b1aba9590&gt;
 </pre></div>
 </div>
 <img alt="_images/35f9dfe13bfb22923a0ffb4e30a0a71877c6b8ffb9cf0556ebe377899835cbf3.png" src="_images/35f9dfe13bfb22923a0ffb4e30a0a71877c6b8ffb9cf0556ebe377899835cbf3.png" />
