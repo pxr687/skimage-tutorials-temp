@@ -112,7 +112,7 @@ Let us leap ahead to show you the morphological operation of [erosion](
 https://en.wikipedia.org/wiki/Erosion_(morphology)).
 
 As we said above, erosion is the application of a footprint / function filter,
-where the function is "minimum".
+where the function is `minimum`.
 
 ```{python}
 import skimage as ski
@@ -170,7 +170,7 @@ morphology (the other being *dilation*).
 
 You will see above, the minimum filtering with the disk footprint has the effect of keeping areas which are disks of the given size or bigger, and suppressing areas which have objects of smaller size.  The next section explains how this works, using binary images as examples.
 
-We have said that *erosion* is the process of applying a footprint / function filter, where the function is *minimum* (as above).  Just to show this is the case, here we use the `ski.morphology.erosion` function to apply the same operation, and get exactly the same result:
+We have said that *erosion* is the process of applying a footprint / function filter, where the function is `minimum` (as above).  Just to show this is the case, here we use the `ski.morphology.erosion` function to apply the same operation, and get exactly the same result:
 
 ```{python}
 hubble_eroded_again = ski.morphology.erosion(hubble_blue_ubyte, disk_5)
@@ -411,7 +411,9 @@ plt.imshow(dilated_square);
 
 Again, here we use blue squares to represent the footprint, with white text showing the value in the array at that location. Remember, *dilation will raise the central pixel to the neighbourhood maximum*.
 
-So, if the values under the footprint are *all* 0, the central pixel will remain as 0. If there are *any* 1 values under the footprint, then the central value will be raised to 1:
+So, if the values under the footprint are *all* 0, then the central pixel will remain as 0. 
+
+If there are *any* 1 values under the footprint, then the central value will be raised to 1:
 
 ![](images/hit_n_miss_dilation.png)
 
@@ -586,7 +588,7 @@ The difference here between eroding with a (3,3) diamond vs a (3,3) square is su
 show_both(xeno_binary_ero_rad_1_diamond,
           xeno_binary_ero_square,
           "Eroded \n(3,3) Square SE",
-          "Eroded \n(3,3) Diamond");
+          "Eroded \n(3,3) Diamond SE");
 ```
 
 Below we use an indexing operation to "zoom in" on the same region in each image, for easier comparison. We can now see that changing the shape of the (3,3) probe (diamond vs square) alters which pixels "survive" the erosion:
@@ -595,7 +597,7 @@ Below we use an indexing operation to "zoom in" on the same region in each image
 show_both(xeno_binary_ero_rad_1_diamond[100:400,400:600],
           xeno_binary_ero_square[100:400,400:600],
           "Eroded \n(3,3) Square SE",
-          "Eroded \n(3,3) Diamond");
+          "Eroded \n(3,3) Diamond SE");
 ```
 
 By comparison, dilation with this new square footprint once more enlarges brighter regions, again

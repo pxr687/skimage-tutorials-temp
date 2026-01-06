@@ -531,7 +531,7 @@ of features within the image.</p>
 <h2>Erosion is footprint / function filtering with <code class="docutils literal notranslate"><span class="pre">minimum</span></code><a class="headerlink" href="#erosion-is-footprint-function-filtering-with-minimum" title="Link to this heading">#</a></h2>
 <p>Let us leap ahead to show you the morphological operation of <a class="reference external" href="https://en.wikipedia.org/wiki/Erosion_(morphology)">erosion</a>.</p>
 <p>As we said above, erosion is the application of a footprint / function filter,
-where the function is “minimum”.</p>
+where the function is <code class="docutils literal notranslate"><span class="pre">minimum</span></code>.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">skimage</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">ski</span>
@@ -619,7 +619,7 @@ where the function is “minimum”.</p>
 <p>This is the algorithm for <em>erosion</em>, one of the two basic operations in
 morphology (the other being <em>dilation</em>).</p>
 <p>You will see above, the minimum filtering with the disk footprint has the effect of keeping areas which are disks of the given size or bigger, and suppressing areas which have objects of smaller size.  The next section explains how this works, using binary images as examples.</p>
-<p>We have said that <em>erosion</em> is the process of applying a footprint / function filter, where the function is <em>minimum</em> (as above).  Just to show this is the case, here we use the <code class="docutils literal notranslate"><span class="pre">ski.morphology.erosion</span></code> function to apply the same operation, and get exactly the same result:</p>
+<p>We have said that <em>erosion</em> is the process of applying a footprint / function filter, where the function is <code class="docutils literal notranslate"><span class="pre">minimum</span></code> (as above).  Just to show this is the case, here we use the <code class="docutils literal notranslate"><span class="pre">ski.morphology.erosion</span></code> function to apply the same operation, and get exactly the same result:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">hubble_eroded_again</span> <span class="o">=</span> <span class="n">ski</span><span class="o">.</span><span class="n">morphology</span><span class="o">.</span><span class="n">erosion</span><span class="p">(</span><span class="n">hubble_blue_ubyte</span><span class="p">,</span> <span class="n">disk_5</span><span class="p">)</span>
@@ -975,7 +975,8 @@ equivalently, use the <code class="docutils literal notranslate"><span class="pr
 </div>
 </div>
 <p>Again, here we use blue squares to represent the footprint, with white text showing the value in the array at that location. Remember, <em>dilation will raise the central pixel to the neighbourhood maximum</em>.</p>
-<p>So, if the values under the footprint are <em>all</em> 0, the central pixel will remain as 0. If there are <em>any</em> 1 values under the footprint, then the central value will be raised to 1:</p>
+<p>So, if the values under the footprint are <em>all</em> 0, then the central pixel will remain as 0.</p>
+<p>If there are <em>any</em> 1 values under the footprint, then the central value will be raised to 1:</p>
 <p><img alt="" src="_images/hit_n_miss_dilation.png" /></p>
 <p>What do you think will happen if we dilate the <code class="docutils literal notranslate"><span class="pre">square_the_circle</span></code> array image
 shown below, using the <code class="docutils literal notranslate"><span class="pre">diamond</span></code> footprint?</p>
@@ -1251,12 +1252,12 @@ more “matches”.</p>
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">show_both</span><span class="p">(</span><span class="n">xeno_binary_ero_rad_1_diamond</span><span class="p">,</span>
           <span class="n">xeno_binary_ero_square</span><span class="p">,</span>
           <span class="s2">&quot;Eroded </span><span class="se">\n</span><span class="s2">(3,3) Square SE&quot;</span><span class="p">,</span>
-          <span class="s2">&quot;Eroded </span><span class="se">\n</span><span class="s2">(3,3) Diamond&quot;</span><span class="p">);</span>
+          <span class="s2">&quot;Eroded </span><span class="se">\n</span><span class="s2">(3,3) Diamond SE&quot;</span><span class="p">);</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/379b1270958a519f6682434941b151e00cd36b6fc9f30255292da60ba8af3f06.png" src="_images/379b1270958a519f6682434941b151e00cd36b6fc9f30255292da60ba8af3f06.png" />
+<img alt="_images/b51859bce60c7c4bfe6dca7260438595d07114f70aed5bf981ee20a76821e458.png" src="_images/b51859bce60c7c4bfe6dca7260438595d07114f70aed5bf981ee20a76821e458.png" />
 </div>
 </div>
 <p>Below we use an indexing operation to “zoom in” on the same region in each image, for easier comparison. We can now see that changing the shape of the (3,3) probe (diamond vs square) alters which pixels “survive” the erosion:</p>
@@ -1265,12 +1266,12 @@ more “matches”.</p>
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">show_both</span><span class="p">(</span><span class="n">xeno_binary_ero_rad_1_diamond</span><span class="p">[</span><span class="mi">100</span><span class="p">:</span><span class="mi">400</span><span class="p">,</span><span class="mi">400</span><span class="p">:</span><span class="mi">600</span><span class="p">],</span>
           <span class="n">xeno_binary_ero_square</span><span class="p">[</span><span class="mi">100</span><span class="p">:</span><span class="mi">400</span><span class="p">,</span><span class="mi">400</span><span class="p">:</span><span class="mi">600</span><span class="p">],</span>
           <span class="s2">&quot;Eroded </span><span class="se">\n</span><span class="s2">(3,3) Square SE&quot;</span><span class="p">,</span>
-          <span class="s2">&quot;Eroded </span><span class="se">\n</span><span class="s2">(3,3) Diamond&quot;</span><span class="p">);</span>
+          <span class="s2">&quot;Eroded </span><span class="se">\n</span><span class="s2">(3,3) Diamond SE&quot;</span><span class="p">);</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/2e07c0b878bf2f60aa443af1d264a83a434d43abdb1c600ad9e494f966a586af.png" src="_images/2e07c0b878bf2f60aa443af1d264a83a434d43abdb1c600ad9e494f966a586af.png" />
+<img alt="_images/88e9330bd320443615d1da32151ee5d90c37e61c51529a564ac1f9e820a4cf60.png" src="_images/88e9330bd320443615d1da32151ee5d90c37e61c51529a564ac1f9e820a4cf60.png" />
 </div>
 </div>
 <p>By comparison, dilation with this new square footprint once more enlarges brighter regions, again
