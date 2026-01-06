@@ -488,8 +488,14 @@ The data directory also has an excellent image of Stéfan's cat, Chelsea.  With 
 Hint: the cat's nose is located close to [240, 270] and the right eye center is near [110, 172] in row, column notation.
 
 ```{python}
-fig, ax = image_show(ski.data.chelsea())
+chelsea = ski.data.chelsea()
+fig, ax = image_show(chelsea)
 
 ax.plot(270, 240, marker='o', markersize=15, color="g")
 ax.plot(172, 110, marker='o', markersize=15, color="r");
+```
+
+```{python}
+cat_felz = seg.felzenszwalb(chelsea)
+np.unique(cat_felz).size
 ```
