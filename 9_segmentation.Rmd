@@ -187,6 +187,38 @@ ax.plot(points[:, 1], points[:, 0], '--r', lw=3)
 ax.plot(snake[:, 1], snake[:, 0], '-b', lw=3);
 ```
 
+### Aside — making masks from contours
+
+`snake` above contains a *contour* — that is, a line enclosing an area of
+interest.
+
+Sometimes we want to make a *mask* or *region label* from such a contour.
+
+The trick to doing this, is to think of the contour as the vertices (points)
+defining a *polygon* in Scikit-image terms.
+
+A polygon is a shape defined by points (vertices).
+
+`ski.draw.polygon` returns row and column indices for all points *inside* the
+polygon.
+
+Here is `ski.draw.polygon` in action, for the `snake` contour above:
+
+```{python}
+mask_shape = astronaut.shape[:-1]  # 2D mask shape (no color).
+face_mask = np.zeros(mask_shape)
+in_face_rows, in_face_cols = ski.draw.polygon(snake[:, 0],
+                                              snake[:, 1],
+                                              mask_shape)
+face_mask[in_face_rows, in_face_cols] = 1
+```
+
+```{python}
+fig, ax = image_show(astronaut)
+ax.imshow(face_mask, alpha=0.3);
+```
+
+
 ### Random walker
 
 One good analogy for random walker uses graph theory.
@@ -481,16 +513,78 @@ How many regions exist now?
 np.unique(final_labels).size
 ```
 
-## Exercise: Cat picture
+::: {exercise-start}
+:label: chelseas-face
+:class: dropdown
+:::
 
-The data directory also has an excellent image of Stéfan's cat, Chelsea.  With what you've learned, can you segment the cat's nose?  How about the eyes?  Why is the eye particularly challenging?
+The data directory also has an excellent image of Stéfan's cat, Chelsea.  With
+what you've learned, can you segment the cat's nose?  How about the right eye?
+Why is the eye particularly challenging?
 
-Hint: the cat's nose is located close to [240, 270] and the right eye center is near [110, 172] in row, column notation.
+Specifically, please define *mask* images for each region.  That is, define
+a 2D image `reye_mask` that has 0 for pixels outside Chelsea's right eye, and
+1 for pixels inside.  Similarly, define `nose_mask` with 0 for pixels outside
+Chelsea's nose, and 1 for pixels inside the nose area.
+
+We've given you starting coordinates for Chelsea's nose and right eye, but you
+can choose your own if you prefer.
 
 ```{python}
 chelsea = ski.data.chelsea()
 fig, ax = image_show(chelsea)
 
-ax.plot(270, 240, marker='o', markersize=15, color="g")
-ax.plot(172, 110, marker='o', markersize=15, color="r");
+nose = np.array([270, 240])
+reye = np.array([172, 110])
+
+ax.plot(nose[0], nose[1], marker='o', markersize=15, color="g")
+ax.plot(reye[0], reye[1], marker='o', markersize=15, color="r");
 ```
+
+**Hint** : the nose is a strangely difficult problem.  You might consider
+trying filtered versions of the image to first detect the edges defining the
+nose (and other edges), and then find the pixels inside the nose area from the
+filtered image.  But any successful method is fine.
+
+::: {exercise-end}
+:::
+
+::: {solution-start} chelseas-face
+:class: dropdown
+:::
+
+```{python}
+cat_gray = ski.color.rgb2gray(chelsea)
+
+# Use the utility routine above.
+reye_points = circle_points(resolution=200, center=reye[::-1], radius=40)[:-1]
+# Refine the circle with an active contour to get the outline.
+reye_snake = seg.active_contour(cat_gray, points, alpha=0.23)
+
+# Make a region from the outline.
+reye_mask = np.zeros(cat_gray.shape)
+rows, cols = ski.draw.polygon(reye_snake[:, 0],
+                              reye_snake[:, 1],
+                              cat_gray.shape)
+reye_mask[rows, cols] = 1
+
+# Show the circle, refined contour and region
+fig, ax = image_show(chelsea)
+ax.imshow(reye_mask, alpha=0.3)
+
+ax.plot(reye[0], reye[1], marker='o', markersize=15, color="r");
+ax.plot(reye_points[:, 1], reye_points[:, 0], '--r', lw=3)
+ax.plot(reye_snake[:, 1], reye_snake[:, 0], '-b', lw=3);
+```
+
+```{python}
+cat_sobel = ski.filters.sobel(chelsea[..., 0])
+nose_mask = seg.flood(cat_sobel, tuple(nose)[::-1], tolerance=0.03)
+
+fig, ax = image_show(chelsea)
+ax.imshow(nose_mask, alpha=0.3)
+ax.plot(*nose, 'bo');  # Show the seed point.
+```
+
+::: {solution-end}
+:::
