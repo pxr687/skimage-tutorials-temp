@@ -108,7 +108,7 @@ ax.set_xlim(0, 256);
 
 Try simple NumPy methods and a few different thresholds on this image.  Because *we* are setting the threshold, this is *supervised* segmentation.
 
-```{python tags=c("raises-exception", "remove-output")}
+```{python}
 text_segmented = text < 100  # Try different values here
 image_show(text_segmented);
 ```
