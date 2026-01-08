@@ -39,8 +39,8 @@ containing *weights*.  We might consider kernels as specialized footprints.
 
 **Footprints and structuring elements**
 
-You will see other tutorials refer to *footprints* as [structuring
-elements](https://en.wikipedia.org/wiki/Structuring_element) or *structural
+You will see other tutorials refer to *footprints* as *[structuring
+elements](https://en.wikipedia.org/wiki/Structuring_element)* or *structural
 elements*.  We stick to "footprint" here for compatibility with the
 Scikit-image terminology, but a footprint is identical in meaning to
 structuring/structural element.
@@ -72,26 +72,36 @@ only True / False or 0 / 1).
 
 ## Morphology and footprints
 
-The fundamental operations of morphological image processing are [erosion](https://en.wikipedia.org/wiki/Erosion_(morphology)) and
+The fundamental operations of morphological image processing are
+[erosion](https://en.wikipedia.org/wiki/Erosion_(morphology)) and
 [dilation](https://en.wikipedia.org/wiki/Dilation_(morphology)).
 
 As you are about to see, basic morphological operations work on shapes within
 images by:
 
-* Choosing a footprint that matches a shape in the image, and
-* Applying this footprint via footprint / function filter with:
+* Choosing a footprint of a specific shape. This footprint acts as
+  a ["probe"](https://biapol.github.io/Image-data-science-with-Python-and-Napari-EPFL2022/day2d_image_segmentation/03_Morphological_operations.html),
+  which scans over the image, centering on each pixel. The relationship between
+  the probe and a given region of the image determines whether (and what)
+  changes will be applied to that region.  
+* Common footprint / function filtering operations applied via this probe are:
   * the `minimum` function, to do an operation called *erosion* or
   * the `maximum` function, to do an operation called *dilation* or
   * some combination of these.
 
 The primary new thing we see in morphology, compared to our previous filters,
-is an increased interest in the shape defined by the binary *footprint* — in
-order to match features we are interested in, in the image.  But we also
-introduce `minimum` and `maximum` functions to use in footprint / function
-filters.
+is the increased importance of the *shape* defined by the binary *footprint*.
+Just to note, here we mean *shape* in the sense of square, diamond, triangle
+etc., not `shape` in the sense of the Numpy
+[`shape`](https://numpy.org/doc/stable/reference/generated/numpy.ndarray.shape.html)
+attribute. Morphological operations alter regions of the image based on the
+shape of the footprint, and so the specific shape of the footprint has a large
+impact on the result of morphological  operations. In addition, the
+morphological operations covered on this page introduce the use of `minimum`
+and `maximum` functions in footprint / function filters.
 
-Using filters and crafted footprints allows us to tune our filtering to the
-shape (...or, well,
+Therefore, morphology uses filters and crafted footprints to allow us to tune
+our filtering to the shape (...or, well,
 [*morphology*](https://www.cs.auckland.ac.nz/courses/compsci773s1c/lectures/ImageProcessing-html/topic4.htm))
 of features within the image.
 
@@ -102,7 +112,7 @@ Let us leap ahead to show you the morphological operation of [erosion](
 https://en.wikipedia.org/wiki/Erosion_(morphology)).
 
 As we said above, erosion is the application of a footprint / function filter,
-where the function is "minimum".
+where the function is `minimum`.
 
 ```{python}
 import skimage as ski
@@ -160,7 +170,7 @@ morphology (the other being *dilation*).
 
 You will see above, the minimum filtering with the disk footprint has the effect of keeping areas which are disks of the given size or bigger, and suppressing areas which have objects of smaller size.  The next section explains how this works, using binary images as examples.
 
-We have said that *erosion* is the process of applying a footprint / function filter, where the function is *minimum* (as above).  Just to show this is the case, here we use the `ski.morphology.erosion` function to apply the same operation, and get exactly the same result:
+We have said that *erosion* is the process of applying a footprint / function filter, where the function is `minimum` (as above).  Just to show this is the case, here we use the `ski.morphology.erosion` function to apply the same operation, and get exactly the same result:
 
 ```{python}
 hubble_eroded_again = ski.morphology.erosion(hubble_blue_ubyte, disk_5)
@@ -176,13 +186,15 @@ With that example, let us return to a discussion of the erosion (footprint
 
 Because morphological operations are part of image processing, they involve
 the modification of array pixel values. In morphological operations, the
-footprint guides changes to pixel values *depending upon the match between the
+footprint guides changes to pixel values *depending upon the relationship between the
 shape of the footprint and the shape of the pixels in the "neighborhood" of
 the footprint*.
 
 The footprint is centered once on every pixel in an image, and this central
-pixel is modified (or not) depending upon the match between the shape of the
-footprint and the shape described by the pixel values in that neighborhood.
+pixel is modified (or not) depending upon the relationship between the shape of the
+footprint and the shape described by the pixel values in that neighborhood. Changing the
+shape of the footprint will change these relationships, and hence will alter the
+output of the operation.
 
 ::: {note}
 
@@ -258,27 +270,27 @@ eroded_square
 plt.imshow(eroded_square);
 ```
 
-What has happened here? We can think of our `diamond` footprint as being a bit
+What has happened here? For the purposes of the erosion operation, we can think of our `diamond` footprint as being a bit
 like a weird [crosshair/reticle](https://en.wikipedia.org/wiki/Reticle) of
-a gun. In a morphological operation, we "target" the crosshair on a given
-array pixel. Because we are eroding, the central pixel will be *lowered to the
-value of the lowest pixel in its neighborhood*. This is illustrated below.
+a gun. We "target" this crosshair on a given
+array pixel. 
 
 When we apply the footprint to each pixel in the image, call the pixels under
-the footprint — *the pixel neighborhood*.  Because our `square` array contains
-only 1s and 0s, the output pixels will be 1 *only if* all pixels in the local
-neighborhood are 1, and 0 otherwise.  The image below shows the `diamond`
-footprint being applied to three different central pixels. Call pixels
-"matches" where all the pixels in the pixel local neighborhood are 1.  All
-other pixels are "clashes".  These are pixels where at least one pixel in the
-pixel local neighborhood is 0. Matches between the footprint and the array
-pixels are depicted with a green tick; clashes between the footprint and the
-array pixels are depicted with a red X.
+the footprint — *the pixel neighborhood*. Because we are eroding, the central pixel will be *lowered to the value of the lowest pixel in its neighborhood*. 
 
-Whether there is a match or a clash, the output pixel gets set to the minimum
-of the pixel local neighborhood.  For matches this is 1 (all pixels in the
-neighborhood are 1).  For clashes this is 0 (at least one pixel in the
-neighborhood is 0).
+In our specific case the *pixel neighbourhood* is the set of pixels in the image which fall
+under the "crosshair" shape of the footprint. In other words, the neighbourhood is the set of image
+pixels under the elements of the footprint which equal 1:
+
+```{python}
+# Here is our footprint...
+diamond
+```
+
+Because we are eroding, and because our `square` array contains only 1s and 0s, 
+the output pixels will be 1 *only if* all pixels in the local
+neighborhood are 1, and 0 otherwise.  The image below shows the `diamond`
+footprint being applied to three different central pixels. We we use blue squares to represent the footprint, with white text showing what value is in the image array at that location. 
 
 ![](images/hit_n_miss_with_text.png)
 
@@ -305,17 +317,16 @@ eroded_two_squares
 plt.imshow(eroded_two_squares);
 ```
 
-What happened here? Well, again a "match" only occurs for two pixels in the
-image, the pixels at the center of each white square. This illustration below
+What happened here? Well, only two pixels have 1 as their neighbourhood minimum - 
+the pixels at the center of each white square. This illustration below
 shows what happened:
 
 ![](images/hit_n_miss_with_text_2.png)
 
 
-All other "neighborhoods" did not match the footprint, and so the values in the
-neighborhood were lowered to 0, 0 being the lowest value in each neighborhood.
-This has the effect, if a non-matching pixel has the value of 1, of setting it
-to 0.
+All other "neighborhoods" had at least one 0 in them, and so their central pixels were lowered to 0, resulting in 1-to-0 changes if the central pixel had a value of 1. 
+
+One way to think of this is that the erosion footprint is "searching" for areas of the image which "match" its shape. For a central pixel with a value of 1 to "survive", all the values in its neighbourhood must also be 1. In this instance, the neighbourhood "matches" the footprint because the neighbourhood has 1's everywhere the footprint has 1's. If at least one value in the neighbourhood does not match the shape of the 1's in the footprint (e.g. there is a 0 *anywhere* under the "crosshair"), then the output pixel value gets set to 0.
 
 Let's alter our image array slightly, to see how this affects the erosion operation with our `diamond` footprint. We will place a black array pixel inside the right-hand white square:
 
@@ -348,11 +359,11 @@ plt.imshow(eroded_square_the_circle);
 
 Ok, so now the whole right-hand square got taken out. Brutal.
 
-Why did this happen? The cell below illustrates, again using green ticks for
+Why did this happen? The cell below illustrates, using green ticks for
 "matches" between the footprint and the pixel "neighborhood", and red X's for
 "clashes" between the footprint and the pixel "neighborhood".
 
-Remember that a "clash" means the central pixel "dies" (gets set to 0);
+Remember that any "clash" means the central pixel "dies" (gets set to 0);
 a "match" means the central pixel "survives" (gets set to 1).
 
 ![](images/hit_n_miss_with_text_3.png)
@@ -370,12 +381,9 @@ Dilation is nothing but a footprint / function filter, where the function is
 `maximum` rather than `minimum`.
 
 Dilation works in the same way as erosion, or any other footprint / function
-filter, in terms of centering a footprint on each pixel, to select the pixel local neighborhood.  It takes the maximum of the local pixel values.
+filter, in terms of centering a footprint on each pixel, to select the pixel local neighborhood.  It takes the maximum of the local pixel values. Wherever the footprint "lands" the central pixel will be raised to the neighbourhood maximum.
 
-Now, if *any* of the pixels in the local neighborhood are 1, the output pixel
-is 1.  Call this a *dilation* match.  Only if *all* the local neighborhood pixels are 0, is the output pixel 0.  Call this a *dilation* clash.
-
-Let's dilate the `square` array:
+Let's dilate the `square` array to illustrate:
 
 ```{python}
 # Show the `square` array.
@@ -401,12 +409,11 @@ dilated_square
 plt.imshow(dilated_square);
 ```
 
-Notice that a *erosion* "clash" (taking the minimum) is different from
-a dilation "clash" (taking the maximum). Using the dilation definition, what
-were (in erosion) "clashes", are not dilation "matches", and  have resulted in
-*more* white pixels in the image. The illustration below shows this for three
-pixels, two with two dilation "matches", and one "clash".  Notice that this
-corresponds to two erosion "clashes" and the one "match":
+Again, here we use blue squares to represent the footprint, with white text showing the value in the array at that location. Remember, *dilation will raise the central pixel to the neighbourhood maximum*.
+
+So, if the values under the footprint are *all* 0, then the central pixel will remain as 0. 
+
+If there are *any* 1 values under the footprint, then the central value will be raised to 1:
 
 ![](images/hit_n_miss_dilation.png)
 
@@ -439,12 +446,12 @@ Why did this happen? The image below explains:
 
 ![](images/hit_n_miss_with_text_3_dilation.png)
 
-For erosion, all of the "clashing" pixels in the right-hand square get
+For erosion, all of the central pixels in the right-hand square get
 *lowered* to their neighborhood minimum, in this case 0, and so they "die" and
 fade into the black background.
 
-For dilation, clashing central pixels get *raised* to the neighborhood maximum,
-which in this case is 1.
+For dilation, central pixels get *raised* to the neighborhood maximum,
+which in this case is 1. So the black central pixel is brightened to white.
 
 Think of dilation as extending bright areas with the footprint shape.
 
@@ -553,8 +560,9 @@ show_both(xenomorph,
           "Dilated \n(13, 13) Diamond SE");
 ```
 
-We can also change the shape of the footprint - here we create a rectangle
-(Ok, a square) of `shape` (3, 3):
+Remember that the increased importance of *shape* is what makes *morphological* operations different to other footprint / function filtering operations. As a result, changing the shape of the footprint can alter the effect of a morphological operation, sometimes substantially.
+
+Below we change the shape of the footprint - here we create a rectangle (Ok, a square) of `shape` (3, 3):
 
 ```{python}
 # A square footprint.
@@ -574,7 +582,25 @@ show_both(xenomorph,
           "Eroded \n(3,3) Square SE");
 ```
 
-Dilation with this new footprint once more enlarges brighter regions, again
+The difference here between eroding with a (3,3) diamond vs a (3,3) square is subtle, but changing the *morphology* (shape) of the probe changes the impact of the filtering operation. The output images are shown below - can you find regions where the different probes have resulted in different white pixels "surviving" each operation?:
+
+```{python}
+show_both(xeno_binary_ero_rad_1_diamond,
+          xeno_binary_ero_square,
+          "Eroded \n(3,3) Square SE",
+          "Eroded \n(3,3) Diamond SE");
+```
+
+Below we use an indexing operation to "zoom in" on the same region in each image, for easier comparison. We can now see that changing the shape of the (3,3) probe (diamond vs square) alters which pixels "survive" the erosion:
+
+```{python}
+show_both(xeno_binary_ero_rad_1_diamond[100:400,400:600],
+          xeno_binary_ero_square[100:400,400:600],
+          "Eroded \n(3,3) Square SE",
+          "Eroded \n(3,3) Diamond SE");
+```
+
+By comparison, dilation with this new square footprint once more enlarges brighter regions, again
 with horrific results:
 
 ```{python}
@@ -821,6 +847,6 @@ On this page we have looked at fundamental morphological operations in
 Based on:
 
 * [Scientific Python Lectures on morphological
-  operations](https://scikit-image.org/skimage-tutorials/lectures/3_morphological_operations.html)
+  operations](https://scikit-image.org/skimage-tutorials/lectures/3_morphological_operations.html).
 * [This Napari-based
   tutorial](https://biapol.github.io/Image-data-science-with-Python-and-Napari-EPFL2022/day2d_image_segmentation/03_Morphological_operations.html).
