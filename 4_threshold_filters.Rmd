@@ -342,6 +342,8 @@ plt.imshow(camera > crude_threshold);
 Stylish! Someone should put that on a t-shirt...
 
 
+(otsu-method)=
+
 ## Threshold filters in `skimage` - the Otsu method
 
 `skimage` contains many threshold filters, the cell below uses the `dir()` function to show the available selection:
