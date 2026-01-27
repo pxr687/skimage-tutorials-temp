@@ -30,7 +30,7 @@
 
     <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=03e43079" />
     <link rel="stylesheet" type="text/css" href="_static/styles/sphinx-book-theme.css?v=eba8b062" />
-    <link rel="stylesheet" type="text/css" href="_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="_static/togglebutton.css?v=9c3e77be" />
     <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
     <link rel="stylesheet" type="text/css" href="_static/mystnb.8ecb98da25f57f5357bf6f572d296f466b2cfe2517ffebfabe82451661e28f02.css" />
     <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css?v=4fa983c6" />
@@ -51,7 +51,7 @@
     <script>let toggleHintShow = 'Click to show';</script>
     <script>let toggleHintHide = 'Click to hide';</script>
     <script>let toggleOpenOnPrint = 'true';</script>
-    <script src="_static/togglebutton.js?v=4a39c7ea"></script>
+    <script src="_static/togglebutton.js?v=1ae7504c"></script>
     <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
     <script src="_static/design-tabs.js?v=f930bc37"></script>
     <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
@@ -188,6 +188,7 @@
 <li class="toctree-l1"><a class="reference internal" href="6_gaussian_sharpening_edge.html">Filtering with kernels II - Gaussian blur, sharpening and edge detection</a></li>
 <li class="toctree-l1"><a class="reference internal" href="7_median_nonlocal_filters.html">More filters: the median filter and non-local filters</a></li>
 <li class="toctree-l1"><a class="reference internal" href="8_morphology.html">Morphology</a></li>
+<li class="toctree-l1"><a class="reference internal" href="9_segmentation.html">Segmentation</a></li>
 </ul>
 
     </div>
@@ -1193,9 +1194,9 @@ interactively, to see the random draw a few times:</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>X1 = 0.69
-X2 = 0.6
-X3 = 0.6
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>X1 = 0.63
+X2 = 0.82
+X3 = 0.28
 </pre></div>
 </div>
 </div>
@@ -1222,12 +1223,12 @@ X3 = 0.6
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Red (X1) = 0.26
-Green (X2) = 0.13
-Blue (X3) = 0.66
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Red (X1) = 0.27
+Green (X2) = 0.1
+Blue (X3) = 0.4
 </pre></div>
 </div>
-<img alt="_images/83d6ba18a87cecf79efd42950666e82643861b5958ecac8df3aed7a4ec437b71.png" src="_images/83d6ba18a87cecf79efd42950666e82643861b5958ecac8df3aed7a4ec437b71.png" />
+<img alt="_images/0117a16b9abcfb5e2acbee2743c6e5eeac7a1b43291ec25c4b19b73fac8a3659.png" src="_images/0117a16b9abcfb5e2acbee2743c6e5eeac7a1b43291ec25c4b19b73fac8a3659.png" />
 </div>
 </div>
 <p>So, each two-dimensional display image has a “hidden” three-dimensional array behind it. Each slice of the third dimension is a color channel. The mix of values at a given element in each color channel determines the color of that pixel in the rendered image. You may want to view this image in a new browser window, to see more clearly the exact mixes of the color channels, which are shown above each square on the right-hand side of the image:</p>
@@ -1244,7 +1245,7 @@ Blue (X3) = 0.66
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/508c0dd88926cf7bb44532f4fb0d5dce0483a67a4d5ca575dcfba650a388cf2d.png" src="_images/508c0dd88926cf7bb44532f4fb0d5dce0483a67a4d5ca575dcfba650a388cf2d.png" />
+<img alt="_images/6986710e57d04110efc16aaa7feacb9c388b6462a83c3634d6a0ed80a9a5d5ec.png" src="_images/6986710e57d04110efc16aaa7feacb9c388b6462a83c3634d6a0ed80a9a5d5ec.png" />
 </div>
 </div>
 <p>We have now completed our perilous expedition into the third dimension… We
@@ -1823,7 +1824,7 @@ Min Pixel Value: 0
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/7931897852f281827f15d3940a3b88434426586b2982b59170e5da6fb02605f9.png" src="_images/7931897852f281827f15d3940a3b88434426586b2982b59170e5da6fb02605f9.png" />
+<img alt="_images/021c9fb237d8d8f58d43a3f10722e845c0712c7441ed6791e35cdc8831bc58eb.png" src="_images/021c9fb237d8d8f58d43a3f10722e845c0712c7441ed6791e35cdc8831bc58eb.png" />
 </div>
 </div>
 </section>

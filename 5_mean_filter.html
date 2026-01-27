@@ -30,7 +30,7 @@
 
     <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=03e43079" />
     <link rel="stylesheet" type="text/css" href="_static/styles/sphinx-book-theme.css?v=eba8b062" />
-    <link rel="stylesheet" type="text/css" href="_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="_static/togglebutton.css?v=9c3e77be" />
     <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
     <link rel="stylesheet" type="text/css" href="_static/mystnb.8ecb98da25f57f5357bf6f572d296f466b2cfe2517ffebfabe82451661e28f02.css" />
     <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css?v=4fa983c6" />
@@ -51,7 +51,7 @@
     <script>let toggleHintShow = 'Click to show';</script>
     <script>let toggleHintHide = 'Click to hide';</script>
     <script>let toggleOpenOnPrint = 'true';</script>
-    <script src="_static/togglebutton.js?v=4a39c7ea"></script>
+    <script src="_static/togglebutton.js?v=1ae7504c"></script>
     <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
     <script src="_static/design-tabs.js?v=f930bc37"></script>
     <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
@@ -188,6 +188,7 @@
 <li class="toctree-l1"><a class="reference internal" href="6_gaussian_sharpening_edge.html">Filtering with kernels II - Gaussian blur, sharpening and edge detection</a></li>
 <li class="toctree-l1"><a class="reference internal" href="7_median_nonlocal_filters.html">More filters: the median filter and non-local filters</a></li>
 <li class="toctree-l1"><a class="reference internal" href="8_morphology.html">Morphology</a></li>
+<li class="toctree-l1"><a class="reference internal" href="9_segmentation.html">Segmentation</a></li>
 </ul>
 
     </div>
@@ -846,7 +847,7 @@ Max Pixel Value: 252
 Min Pixel Value: 1
 </pre></div>
 </div>
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.image.AxesImage at 0x7f3d3be98b90&gt;
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.image.AxesImage at 0x7ffb5e0e42d0&gt;
 </pre></div>
 </div>
 <img alt="_images/b00bf4e77a51a0155fb2aaf95d76d118cad19d6795317f50488f39bf092f5fb3.png" src="_images/b00bf4e77a51a0155fb2aaf95d76d118cad19d6795317f50488f39bf092f5fb3.png" />
@@ -1307,36 +1308,36 @@ we can choose an option by specifying the <code class="docutils literal notransl
     The `mode` parameter determines how the input array is extended
     beyond its boundaries. Default is &#39;reflect&#39;. Behavior for each valid
     value is as follows:
-
+    
     &#39;reflect&#39; (`d c b a | a b c d | d c b a`)
         The input is extended by reflecting about the edge of the last
         pixel. This mode is also sometimes referred to as half-sample
         symmetric.
-
+    
     &#39;constant&#39; (`k k k k | a b c d | k k k k`)
         The input is extended by filling all values beyond the edge with
         the same constant value, defined by the `cval` parameter.
-
+    
     &#39;nearest&#39; (`a a a a | a b c d | d d d d`)
         The input is extended by replicating the last pixel.
-
+    
     &#39;mirror&#39; (`d c b | a b c d | c b a`)
         The input is extended by reflecting about the center of the last
         pixel. This mode is also sometimes referred to as whole-sample
         symmetric.
-
+    
     &#39;wrap&#39; (`a b c d | a b c d | a b c d`)
         The input is extended by wrapping around to the opposite edge.
-
+    
     For consistency with the interpolation functions, the following mode
     names can also be used:
-
+    
     &#39;grid-mirror&#39;
         This is a synonym for &#39;reflect&#39;.
-
+    
     &#39;grid-constant&#39;
         This is a synonym for &#39;constant&#39;.
-
+    
     &#39;grid-wrap&#39;
         This is a synonym for &#39;wrap&#39;.
 </pre></div>
@@ -1384,7 +1385,7 @@ to the image:</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/0ebedc5e88b599afa1c3e5824aed75db22932b222592be2750bf1109f0dd1a1f.png" src="_images/0ebedc5e88b599afa1c3e5824aed75db22932b222592be2750bf1109f0dd1a1f.png" />
+<img alt="_images/519bee789978cdfd2228a56f3540500cdd049a75c43549428fb38281874b3d97.png" src="_images/519bee789978cdfd2228a56f3540500cdd049a75c43549428fb38281874b3d97.png" />
 </div>
 </div>
 <p>The mean filter can remove some of the noise, restoring the clarity of the
@@ -1416,7 +1417,7 @@ it to anything like the same extent as the pixel-to-pixel noise.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/885e5c7dd0a1996993d2712302ef6425a6f22b58dbdd61f7bb72fb46fbc1014e.png" src="_images/885e5c7dd0a1996993d2712302ef6425a6f22b58dbdd61f7bb72fb46fbc1014e.png" />
+<img alt="_images/4dd89285b785f30d2fdf87d7a0bbacad5a9e96684dc3b8ed7dfef7edab1b7ee5.png" src="_images/4dd89285b785f30d2fdf87d7a0bbacad5a9e96684dc3b8ed7dfef7edab1b7ee5.png" />
 </div>
 </div>
 <p>We can see that the image is clearer, the noise has been reduced and some of
@@ -1447,7 +1448,7 @@ the signal has been restored.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/f1f972176772ab4ef6b170cd5be2dba2ac518046b26ad9b41c0703d6380e5675.png" src="_images/f1f972176772ab4ef6b170cd5be2dba2ac518046b26ad9b41c0703d6380e5675.png" />
+<img alt="_images/75d2fd2114bbb4fe6f4de21479e58cd1c8215d9b6573ee0a016422dcce5eadaf.png" src="_images/75d2fd2114bbb4fe6f4de21479e58cd1c8215d9b6573ee0a016422dcce5eadaf.png" />
 </div>
 </div>
 <p>As with many filtering operations, the effect of altering aspects of the
@@ -1528,7 +1529,7 @@ to build the kernel for given kernel shape:</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.image.AxesImage at 0x7f3d31ba02d0&gt;
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.image.AxesImage at 0x7ffb529691d0&gt;
 </pre></div>
 </div>
 <img alt="_images/a7bddd3f5c3dd1f069f64e49372e51e14b86012341f266299c277c358c706a9c.png" src="_images/a7bddd3f5c3dd1f069f64e49372e51e14b86012341f266299c277c358c706a9c.png" />

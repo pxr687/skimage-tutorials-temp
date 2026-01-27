@@ -30,7 +30,7 @@
 
     <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=03e43079" />
     <link rel="stylesheet" type="text/css" href="_static/styles/sphinx-book-theme.css?v=eba8b062" />
-    <link rel="stylesheet" type="text/css" href="_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="_static/togglebutton.css?v=9c3e77be" />
     <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
     <link rel="stylesheet" type="text/css" href="_static/mystnb.8ecb98da25f57f5357bf6f572d296f466b2cfe2517ffebfabe82451661e28f02.css" />
     <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css?v=4fa983c6" />
@@ -51,7 +51,7 @@
     <script>let toggleHintShow = 'Click to show';</script>
     <script>let toggleHintHide = 'Click to hide';</script>
     <script>let toggleOpenOnPrint = 'true';</script>
-    <script src="_static/togglebutton.js?v=4a39c7ea"></script>
+    <script src="_static/togglebutton.js?v=1ae7504c"></script>
     <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
     <script src="_static/design-tabs.js?v=f930bc37"></script>
     <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
@@ -188,6 +188,7 @@
 <li class="toctree-l1"><a class="reference internal" href="6_gaussian_sharpening_edge.html">Filtering with kernels II - Gaussian blur, sharpening and edge detection</a></li>
 <li class="toctree-l1"><a class="reference internal" href="7_median_nonlocal_filters.html">More filters: the median filter and non-local filters</a></li>
 <li class="toctree-l1"><a class="reference internal" href="8_morphology.html">Morphology</a></li>
+<li class="toctree-l1"><a class="reference internal" href="9_segmentation.html">Segmentation</a></li>
 </ul>
 
     </div>
@@ -1607,7 +1608,7 @@ spoon!</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.image.AxesImage at 0x7f56a837bed0&gt;
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.image.AxesImage at 0x7f1b15918a50&gt;
 </pre></div>
 </div>
 <img alt="_images/35f9dfe13bfb22923a0ffb4e30a0a71877c6b8ffb9cf0556ebe377899835cbf3.png" src="_images/35f9dfe13bfb22923a0ffb4e30a0a71877c6b8ffb9cf0556ebe377899835cbf3.png" />
@@ -1766,7 +1767,7 @@ Min Pixel Value: 0.0
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.image.AxesImage at 0x7f56a8097610&gt;
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.image.AxesImage at 0x7f1b10289450&gt;
 </pre></div>
 </div>
 <img alt="_images/4ee7477b739aa9fda7066966d5336ad7e5db317659e8f8e26fc7d7318b27b680.png" src="_images/4ee7477b739aa9fda7066966d5336ad7e5db317659e8f8e26fc7d7318b27b680.png" />
@@ -1968,7 +1969,7 @@ using specific NumPy (or <code class="docutils literal notranslate"><span class=
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.image.AxesImage at 0x7f56b658ac10&gt;
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.image.AxesImage at 0x7f1b24466d50&gt;
 </pre></div>
 </div>
 <img alt="_images/35f9dfe13bfb22923a0ffb4e30a0a71877c6b8ffb9cf0556ebe377899835cbf3.png" src="_images/35f9dfe13bfb22923a0ffb4e30a0a71877c6b8ffb9cf0556ebe377899835cbf3.png" />
@@ -2239,7 +2240,7 @@ image:</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/tmp/ipykernel_2650/2746963989.py:8: RuntimeWarning: invalid value encountered in power
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/tmp/ipykernel_2783/2746963989.py:8: RuntimeWarning: invalid value encountered in power
   mask_camera = ((i_cam - cam_c_i) ** 3 + (j_cam - cam_c_j) ** 3) ** (1 / 3) &gt; p
 </pre></div>
 </div>
@@ -2415,7 +2416,7 @@ Max Pixel Value: 207
 Min Pixel Value: 63
 </pre></div>
 </div>
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.image.AxesImage at 0x7f56a7f9f250&gt;
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.image.AxesImage at 0x7f1b243c4050&gt;
 </pre></div>
 </div>
 <img alt="_images/0517c8f9ad13e398cd75c28dd662d822fea0b72500e97428433c29c274fc04bc.png" src="_images/0517c8f9ad13e398cd75c28dd662d822fea0b72500e97428433c29c274fc04bc.png" />
@@ -2609,7 +2610,7 @@ Min Pixel Value: 0
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.image.AxesImage at 0x7f56a4d58190&gt;
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.image.AxesImage at 0x7f1b158cce10&gt;
 </pre></div>
 </div>
 <img alt="_images/f24138b0cdd47cb5338b4891429c156c8631b62e59cf4c9d060c8ff6d5be0a74.png" src="_images/f24138b0cdd47cb5338b4891429c156c8631b62e59cf4c9d060c8ff6d5be0a74.png" />
@@ -2752,7 +2753,7 @@ of the channels.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.image.AxesImage at 0x7f56a4c98410&gt;
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.image.AxesImage at 0x7f1b15699e50&gt;
 </pre></div>
 </div>
 <img alt="_images/a45f666e5776e35adfcfa813430b2f2d3006553ddc5420ec486e87d226653365.png" src="_images/a45f666e5776e35adfcfa813430b2f2d3006553ddc5420ec486e87d226653365.png" />

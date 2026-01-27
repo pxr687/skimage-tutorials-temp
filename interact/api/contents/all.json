@@ -2,11 +2,11 @@
   "content": [
     {
       "content": null,
-      "created": "2026-01-06T16:13:52.879602Z",
+      "created": "2026-01-27T10:00:57.772529Z",
       "format": null,
       "hash": null,
       "hash_algorithm": null,
-      "last_modified": "2026-01-06T16:13:52.879602Z",
+      "last_modified": "2026-01-27T10:00:57.772529Z",
       "mimetype": null,
       "name": "images",
       "path": "images",
@@ -16,11 +16,11 @@
     },
     {
       "content": null,
-      "created": "2026-01-06T16:13:52.880602Z",
+      "created": "2026-01-27T10:00:57.773529Z",
       "format": null,
       "hash": null,
       "hash_algorithm": null,
-      "last_modified": "2026-01-06T16:13:49.831592Z",
+      "last_modified": "2026-01-27T10:00:54.704538Z",
       "mimetype": null,
       "name": "index.ipynb",
       "path": "index.ipynb",
@@ -29,11 +29,11 @@
       "writable": true
     }
   ],
-  "created": "2026-01-06T16:13:52.880602Z",
+  "created": "2026-01-27T10:00:57.773529Z",
   "format": "json",
   "hash": null,
   "hash_algorithm": null,
-  "last_modified": "2026-01-06T16:13:52.880602Z",
+  "last_modified": "2026-01-27T10:00:57.773529Z",
   "mimetype": null,
   "name": "",
   "path": "",
